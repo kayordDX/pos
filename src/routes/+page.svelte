@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { Badge, Button, Card } from "@kayord/ui";
 	import { Clock } from "lucide-svelte";
-	import { page } from "$app/stores";
 	import { enhance } from "$app/forms";
+	import { user } from "$lib/stores/userStore";
 </script>
 
 <div class="m-8">
@@ -34,16 +34,11 @@
 	</div>
 </div>
 
-<form action="/session?/login" method="POST" use:enhance>
-	<Button type="submit">Login In</Button>
-</form>
-
-<form action="/session?/logout" method="POST" use:enhance>
-	<Button type="submit">Log out</Button>
-</form>
-
-{#if $page.data.user}
-	<p>Welcome {$page.data.user.name}</p>
-	<p>Welcome {$page.data.user.email}</p>
-	<p>Welcome {$page.data.user.type}</p>
+{#if $user}
+	<p>Welcome {$user.name}</p>
+	<p>Welcome {$user.email}</p>
+	<p>Welcome {$user.type}</p>
 {/if}
+
+<Button on:click={user.login}>Log in test</Button>
+<Button on:click={user.logout}>Log out test</Button>

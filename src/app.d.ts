@@ -1,4 +1,4 @@
-import type { User } from "./types";
+import type { User } from "./lib/types";
 
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
@@ -8,9 +8,7 @@ declare global {
 		interface Locals {
 			user: User | null;
 		}
-		interface PageData {
-			user: User | null;
-		}
+		// interface PageData {}
 		// interface Platform {}
 	}
 }
