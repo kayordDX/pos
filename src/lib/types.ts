@@ -8,3 +8,8 @@ export interface User {
 export interface UserToken {
 	token: string;
 }
+
+export interface Outlet {
+	id: number;
+	salesPeriod: string;
+}

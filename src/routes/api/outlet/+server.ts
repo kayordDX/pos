@@ -15,7 +15,7 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 	});
 	const userToken = (await result.json()) as UserToken;
 
-	cookies.set("session", userToken.token, {
+	cookies.set("outlet", userToken.token, {
 		path: "/",
 		httpOnly: true,
 		sameSite: "strict",

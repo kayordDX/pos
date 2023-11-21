@@ -9,10 +9,17 @@ const createUser = (user: User | undefined) => {
 		set(undefined);
 	};
 
-	const login = async () => {
-		const result = await fetch("/api/session/login", { method: "POST" });
-		const user = (await result.json()) as { user: User };
-		set(user.user);
+	const login = async (staffId: number) => {
+		try {
+			const result = await fetch("/api/session/login", {
+				method: "POST",
+				body: JSON.stringify({ staffId: staffId }),
+			});
+			const user = (await result.json()) as { user: User };
+			set(user.user);
+		} catch {
+			set(undefined);
+		}
 	};
 
 	return { subscribe, logout, login, set };

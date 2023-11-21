@@ -3,6 +3,7 @@
 	import { Clock } from "lucide-svelte";
 	import { enhance } from "$app/forms";
 	import { user } from "$lib/stores/userStore";
+	import { outlet } from "$lib/stores/outletStore";
 </script>
 
 <div class="m-8">
@@ -40,5 +41,9 @@
 	<p>Welcome {$user.type}</p>
 {/if}
 
-<Button on:click={user.login}>Log in test</Button>
+<Button on:click={() => user.login(1)}>Log in test</Button>
 <Button on:click={user.logout}>Log out test</Button>
+
+{$outlet?.id}
+
+<Button on:click={() => outlet.setup({ id: 2, salesPeriod: "test" })}>Outlet</Button>

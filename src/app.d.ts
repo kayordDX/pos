@@ -7,6 +7,7 @@ declare global {
 		// interface Error {}
 		interface Locals {
 			user: User | null;
+			outlet: Outlet | null;
 		}
 		// interface PageData {}
 		// interface Platform {}
