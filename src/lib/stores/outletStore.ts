@@ -8,15 +8,6 @@ const createOutlet = (outlet: Outlet | undefined) => {
 
 	const { subscribe, set } = writable<Outlet | undefined>(appState);
 
-	subscribe((value) => {
-		if (!browser) return;
-		if (value) {
-			localStorage.setItem("outlet", JSON.stringify(value));
-		} else {
-			localStorage.removeItem("outlet");
-		}
-	});
-
 	const setup = async (outlet: Outlet) => {
 		set(outlet);
 	};

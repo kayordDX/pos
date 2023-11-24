@@ -1,4 +1,4 @@
-import type { User } from "./lib/types";
+import type { User, Outlet } from "./lib/types";
 
 // See https://kit.svelte.dev/docs/types#app
 // for information about these interfaces
@@ -9,7 +9,9 @@ declare global {
 			user: User | null;
 			outlet: Outlet | null;
 		}
-		// interface PageData {}
+		interface PageData {
+			flash?: { type: "success" | "error"; message: string };
+		}
 		// interface Platform {}
 	}
 }

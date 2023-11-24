@@ -1,9 +1,17 @@
 <script lang="ts">
 	import { Badge, Button, Card } from "@kayord/ui";
 	import { Clock } from "lucide-svelte";
-	import { enhance } from "$app/forms";
-	import { user } from "$lib/stores/userStore";
 	import { outlet } from "$lib/stores/outletStore";
+	import { user } from "$lib/stores/userStore";
+	import type { PageData } from "./$types";
+
+	export let data: PageData;
+
+	if (data.outlet) {
+		$outlet = data.outlet;
+	} else {
+		$outlet = undefined;
+	}
 </script>
 
 <div class="m-8">
@@ -44,6 +52,5 @@
 <Button on:click={() => user.login(1)}>Log in test</Button>
 <Button on:click={user.logout}>Log out test</Button>
 
-{$outlet?.id}
-
-<Button on:click={() => outlet.setup({ id: 2, salesPeriod: "test" })}>Outlet</Button>
+{JSON.stringify($outlet?.outletId)}
+<Button variant="link" href="/setup">Setup</Button>

@@ -1,4 +1,4 @@
-import { json } from "@sveltejs/kit";
+import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import type { User, UserToken } from "$lib/types";
 
@@ -13,17 +13,22 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 		body: bodyContent,
 		headers: headersList,
 	});
-	const userToken = (await result.json()) as UserToken;
 
-	cookies.set("session", userToken.token, {
-		path: "/",
-		httpOnly: true,
-		sameSite: "strict",
-		secure: true,
-		maxAge: 60 * 60 * 24 * 7, // 1 week
-	});
+	if (result.status == 200) {
+		const userToken = (await result.json()) as UserToken;
 
-	const user = JSON.parse(atob(userToken.token.split(".")[1])) as User;
+		cookies.set("session", userToken.token, {
+			path: "/",
+			httpOnly: true,
+			sameSite: "strict",
+			secure: true,
+			maxAge: 60 * 60 * 24 * 7, // 1 week
+		});
 
-	return json({ user });
+		const user = JSON.parse(atob(userToken.token.split(".")[1])) as User;
+
+		return json({ user });
+	} else {
+		throw error(500, { message: "Error logging in" });
+	}
 };

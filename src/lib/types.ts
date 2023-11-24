@@ -1,3 +1,5 @@
+import type { OutletSchema, Outlet } from "../routes/setup/schema";
+
 export interface User {
 	id: number;
 	name: string;
@@ -9,7 +11,4 @@ export interface UserToken {
 	token: string;
 }
 
-export interface Outlet {
-	id: number;
-	salesPeriod: string;
-}
+export { OutletSchema, Outlet };
