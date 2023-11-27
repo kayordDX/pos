@@ -8,6 +8,7 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 	};
 	const body = await request.json();
 	const bodyContent = JSON.stringify({ staffId: body.staffId });
+	// TODO: Fix hardcoded url
 	const result = await fetch("http://localhost:5117/session/login", {
 		method: "POST",
 		body: bodyContent,

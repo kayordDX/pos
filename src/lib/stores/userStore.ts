@@ -1,5 +1,6 @@
 import { writable } from "svelte/store";
-import type { User } from "$lib/types";
+import { StaffType, type User } from "$lib/types";
+import { goto } from "$app/navigation";
 
 const createUser = (user: User | undefined) => {
 	const { subscribe, set } = writable<User | undefined>(user);
@@ -7,6 +8,17 @@ const createUser = (user: User | undefined) => {
 	const logout = async () => {
 		await fetch("/api/session/logout", { method: "POST" });
 		set(undefined);
+		goto("/");
+	};
+
+	const redirectToPage = (user: User) => {
+		if (Number(user.type) == StaffType.Manager) {
+			goto("/manager");
+		} else if (Number(user.type) == StaffType.Chef) {
+			goto("/chef");
+		} else {
+			goto("/waiter");
+		}
 	};
 
 	const login = async (staffId: number) => {
@@ -17,6 +29,7 @@ const createUser = (user: User | undefined) => {
 			});
 			const user = (await result.json()) as { user: User };
 			set(user.user);
+			redirectToPage(user.user);
 		} catch {
 			set(undefined);
 		}

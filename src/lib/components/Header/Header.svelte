@@ -1,19 +1,19 @@
 <script lang="ts">
-	import { ThemeSwitch } from '@kayord/ui';
+	import { ThemeSwitch } from "@kayord/ui";
+	import Menu from "./Manu.svelte";
+	import { user } from "$lib/stores/userStore";
+	import { Button } from "@kayord/ui";
 </script>
 
-<div
-	class="bg-secondary p-2 flex justify-between p-2 h-14 items-center border-b-2 border-secondary"
->
-	<div class="flex items-center"><img src="logo.svg" alt="logo" class="h-10" />ayord.Pos</div>
+<div class="bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary">
+	<div class="flex items-center"><img src="/logo.svg" alt="logo" class="h-10" />ayord.Pos</div>
 	<span></span>
-	<ThemeSwitch />
+	<div class="flex gap-2">
+		<ThemeSwitch />
+		{#if $user}
+			<Button on:click={user.logout}>Logout</Button>
+		{:else}
+			<Menu />
+		{/if}
+	</div>
 </div>
-
-<!-- <div
-	class="dark:bg-neutral-900 bg-neutral-50 flex justify-between p-2 h-14 items-center border-b-2 border-secondary"
->
-	<div class="flex items-center"><img src="logo.svg" alt="logo" class="h-10" />ayord.IOT</div>
-	<span></span>
-	<ThemeSwitch class="text-secondary-foreground" />
-</div> -->

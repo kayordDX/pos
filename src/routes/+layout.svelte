@@ -11,7 +11,6 @@
 	import type { PageData } from "./$types";
 
 	export let data: PageData;
-	console.log(data);
 
 	if (data.user) {
 		$user = data.user;
