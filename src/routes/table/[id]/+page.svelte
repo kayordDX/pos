@@ -29,7 +29,7 @@
 	<div class="mt-10">
 		<Button href="/waiter" variant="outline">Dashboard</Button>
 		<Button>Send to Kitchen</Button>
-		<Button>Add Item</Button>
+		<Button href={`/table/${data.tableId}/menu`}>Add Item</Button>
 		<Button>Pay Bill</Button>
 	</div>
 </div>
