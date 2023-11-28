@@ -31,10 +31,14 @@ export const isValidationError = (apiError: any): apiError is ValidationError =>
 	return "statusCode" in apiError && "message" in apiError && "errors" in apiError;
 };
 
-export interface User {
+export interface UserDTO {
 	id: number;
 	name: string;
 	type: number;
+}
+
+export interface User extends UserDTO {
+	token: string;
 }
 
 export interface UserToken {

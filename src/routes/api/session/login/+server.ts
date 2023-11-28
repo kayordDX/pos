@@ -1,6 +1,6 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
-import type { User, UserToken } from "$lib/types";
+import type { User, UserDTO, UserToken } from "$lib/types";
 import { PUBLIC_API_URL } from "$env/static/public";
 
 export const POST: RequestHandler = async ({ cookies, request }) => {
@@ -26,7 +26,8 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 			maxAge: 60 * 60 * 24 * 7, // 1 week
 		});
 
-		const user = JSON.parse(atob(userToken.token.split(".")[1])) as User;
+		const userDto = JSON.parse(atob(userToken.token.split(".")[1])) as UserDTO;
+		const user: User = { token: userToken.token, ...userDto };
 
 		return json({ user });
 	} else {

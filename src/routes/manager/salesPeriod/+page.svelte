@@ -10,7 +10,6 @@
 		Label,
 	} from "@kayord/ui";
 	import type { PageData } from "./$types";
-	import SetupForm from "./SetupForm.svelte";
 	import { Button } from "@kayord/ui";
 
 	export let data: PageData;

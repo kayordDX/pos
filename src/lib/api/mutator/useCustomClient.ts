@@ -1,6 +1,7 @@
-// import { useToken } from "hooks/useToken";
+import { get } from "svelte/store";
 import { isAPIError, isValidationError } from "$lib/types";
 import { PUBLIC_API_URL } from "$env/static/public";
+import { user } from "$lib/stores/userStore";
 import qs from "qs";
 
 type CustomClient<T> = (data: {
@@ -15,6 +16,8 @@ type CustomClient<T> = (data: {
 }) => Promise<T>;
 
 export const useCustomClient = <T>(): CustomClient<T> => {
+	const userData = get(user);
+	console.log("kj", userData);
 	// const token = useToken();
 	return async ({ url, method, params, headers, data }) => {
 		let fullUrl = `${PUBLIC_API_URL}${url}`;
@@ -24,6 +27,12 @@ export const useCustomClient = <T>(): CustomClient<T> => {
 				fullUrl = fullUrl + "?" + urlParams;
 			}
 		}
+
+		// if (headers != undefined) {
+		// 	if (user) {
+		// 		headers["Authorization"] = `Bearer ${token}`;
+		// 	}
+		// }
 
 		const response = await fetch(fullUrl, {
 			method,

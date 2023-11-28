@@ -12,8 +12,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 			event.locals.user = {
 				id: Number(decodedSession.id),
 				name: decodedSession.name,
-				email: decodedSession.email,
-				type: decodedSession.type,
+				token: session,
+				type: Number(decodedSession.type),
 			};
 		} catch {
 			return await resolve(event);
