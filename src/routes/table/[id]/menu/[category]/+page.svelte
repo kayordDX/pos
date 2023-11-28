@@ -6,6 +6,29 @@
 </script>
 
 <div class="m-8">
+	<div class="flex h-16 items-center gap-4">
+		<a
+			href="#top"
+			class="text-sm font-medium transition-colors hover:text-primary"
+			data-svelte-h="svelte-rv1goo">Overview</a
+		>
+		<a
+			href="/examples/dashboard"
+			class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+			data-svelte-h="svelte-1l86vod">Customers</a
+		>
+		<a
+			href="/examples/dashboard"
+			class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+			data-svelte-h="svelte-ycuaxa">Products</a
+		>
+		<a
+			href="/examples/dashboard"
+			class="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
+			data-svelte-h="svelte-i9jxor">Settings</a
+		>
+	</div>
+
 	<h1>Menu {data.category}</h1>
 	<div class="flex flex-wrap gap-4 mt-4">
 		<a href="1">

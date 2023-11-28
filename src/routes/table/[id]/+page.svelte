@@ -30,6 +30,6 @@
 		<Button href="/waiter" variant="outline">Dashboard</Button>
 		<Button>Send to Kitchen</Button>
 		<Button href={`/table/${data.bookingId}/menu/0`}>Add Item</Button>
-		<Button>Pay Bill</Button>
+		<Button href={`/table/${data.bookingId}/pay`}>Pay Bill</Button>
 	</div>
 </div>
