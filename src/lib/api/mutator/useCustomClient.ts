@@ -1,9 +1,7 @@
 // import { useToken } from "hooks/useToken";
 import { isAPIError, isValidationError } from "$lib/types";
+import { PUBLIC_API_URL } from "$env/static/public";
 import qs from "qs";
-
-// TODO: Fix this
-const baseURL = "http://localhost:5117";
 
 type CustomClient<T> = (data: {
 	url: string;
@@ -19,7 +17,7 @@ type CustomClient<T> = (data: {
 export const useCustomClient = <T>(): CustomClient<T> => {
 	// const token = useToken();
 	return async ({ url, method, params, headers, data }) => {
-		let fullUrl = `${baseURL}${url}`;
+		let fullUrl = `${PUBLIC_API_URL}${url}`;
 		if (params !== undefined) {
 			const urlParams = qs.stringify(params);
 			if (urlParams.length > 0) {

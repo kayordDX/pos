@@ -4,5 +4,8 @@ Front End for Kayord.Pos
 
 ## Todo:
 
-Setup Store that saves current outlet to localstorage
-Save current clocked in user -> JWT from server?
+Select Table
+Add items to order
+Add categories
+Browse by category
+List order total

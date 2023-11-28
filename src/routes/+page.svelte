@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Badge, Button, Card } from "@kayord/ui";
+	import { Button, Card } from "@kayord/ui";
 	import { Clock } from "lucide-svelte";
 	import { outlet } from "$lib/stores/outletStore";
 	import { user } from "$lib/stores/userStore";
@@ -8,11 +8,7 @@
 
 	export let data: PageData;
 
-	if (data.outlet) {
-		$outlet = data.outlet;
-	} else {
-		$outlet = undefined;
-	}
+	$outlet = data.outlet ? data.outlet : undefined;
 </script>
 
 <div class="m-8">

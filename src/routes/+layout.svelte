@@ -11,14 +11,12 @@
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
 
 	import type { PageData } from "./$types";
+	import { salesPeriod } from "$lib/stores/salesPeriodStore";
 
 	export let data: PageData;
 
-	if (data.user) {
-		$user = data.user;
-	} else {
-		$user = undefined;
-	}
+	$user = data.user ? data.user : undefined;
+	$salesPeriod = data.salesPeriod ? data.salesPeriod : undefined;
 
 	const flash = getFlash(page);
 	flash.subscribe(($flash) => {

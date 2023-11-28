@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { Badge, Button, Card, CardFooter } from "@kayord/ui";
+	import { PUBLIC_API_URL } from "$env/static/public";
 	import type { PageData } from "./$types";
 	import { getFlash } from "sveltekit-flash-message";
 	import { page } from "$app/stores";
@@ -19,7 +20,7 @@
 		};
 		const bodyContent = JSON.stringify(body);
 		// TODO: Fix hardcoded url
-		const result = await fetch("http://localhost:5117/ClockIn", {
+		const result = await fetch(`${PUBLIC_API_URL}/ClockIn`, {
 			method: "POST",
 			body: bodyContent,
 			headers: headersList,

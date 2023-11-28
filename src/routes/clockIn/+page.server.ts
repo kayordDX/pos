@@ -1,9 +1,11 @@
 import type { ClockUser } from "$lib/types";
 import type { PageServerLoad } from "./$types";
+import { PUBLIC_API_URL } from "$env/static/public";
 
-export const load = (async ({ fetch }) => {
-	// TODO: Fix hardcoded url
-	const result = await fetch("http://localhost:5117/clock/list?OutletId=1&StatusId=1");
+export const load = (async ({ fetch, locals }) => {
+	const result = await fetch(
+		`${PUBLIC_API_URL}/clock/list?OutletId=${locals.outlet?.outletId}&StatusId=1`
+	);
 	const outletUsers = (await result.json()) as Array<ClockUser>;
 	return {
 		outletUsers: outletUsers,

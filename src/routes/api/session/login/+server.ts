@@ -1,6 +1,7 @@
 import { error, json } from "@sveltejs/kit";
 import type { RequestHandler } from "./$types";
 import type { User, UserToken } from "$lib/types";
+import { PUBLIC_API_URL } from "$env/static/public";
 
 export const POST: RequestHandler = async ({ cookies, request }) => {
 	const headersList = {
@@ -8,7 +9,7 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 	};
 	const body = await request.json();
 	const bodyContent = JSON.stringify({ staffId: body.staffId });
-	const result = await fetch("http://localhost:5117/session/login", {
+	const result = await fetch(`${PUBLIC_API_URL}/session/login`, {
 		method: "POST",
 		body: bodyContent,
 		headers: headersList,
