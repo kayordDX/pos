@@ -15,6 +15,7 @@
 		Loader,
 	} from "@kayord/ui";
 	import type { PageData } from "./$types";
+	import { goto } from "$app/navigation";
 	import { createTableGetAvailable, createTableBookingCreate } from "$lib/api";
 	import { outlet } from "$lib/stores/outletStore";
 	import Error from "$lib/components/Error.svelte";
@@ -43,6 +44,7 @@
 			},
 		});
 		dialogOpen = false;
+		goto("/waiter");
 	};
 </script>
 
