@@ -13,9 +13,11 @@
 	<p class="text-muted-foreground">List of my current tables</p>
 
 	<div class="flex flex-wrap gap-4 mt-4">
-		<Card class="p-5 w-48">
-			<h3>Test</h3>
-		</Card>
+		<a href="/table/1">
+			<Card class="p-5 w-48">
+				<h3>Test</h3>
+			</Card>
+		</a>
 		<!-- {#each data.outletUsers as clockUser}
 			<button class="text-start" on:click={() => user.login(clockUser.id)}>
 				<Card class="p-5 w-48">
