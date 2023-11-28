@@ -710,7 +710,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request2"
+                "$ref": "#/components/schemas/Request"
               }
             }
           },
@@ -774,7 +774,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request4"
+                "$ref": "#/components/schemas/Request3"
               }
             }
           },
@@ -1433,7 +1433,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response2"
+                  "$ref": "#/components/schemas/Response"
                 }
               }
             }
@@ -1634,7 +1634,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request8"
+                "$ref": "#/components/schemas/Request7"
               }
             }
           },
@@ -1675,6 +1675,68 @@
         }
       }
     },
+    "/table/available": {
+      "get": {
+        "tags": [
+          "Table"
+        ],
+        "operationId": "TableGetAvailable",
+        "parameters": [
+          {
+            "name": "OutletId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Table"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/tablebooking": {
       "post": {
         "tags": [
@@ -1687,7 +1749,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request7"
+                "$ref": "#/components/schemas/Request6"
               }
             }
           },
@@ -1740,7 +1802,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request6"
+                "$ref": "#/components/schemas/Request5"
               }
             }
           },
@@ -1824,107 +1886,10 @@
           }
         }
       }
-    },
-    "/token": {
-      "post": {
-        "tags": [
-          "Token"
-        ],
-        "operationId": "Token",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Request"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Response"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
     }
   },
   "components": {
     "schemas": {
-      "Response": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "token"
-        ],
-        "properties": {
-          "token": {
-            "type": "string"
-          }
-        }
-      },
-      "InternalErrorResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "status",
-          "code",
-          "reason",
-          "note"
-        ],
-        "properties": {
-          "status": {
-            "type": "string",
-            "default": "Internal Server Error!"
-          },
-          "code": {
-            "type": "integer",
-            "format": "int32",
-            "default": 500
-          },
-          "reason": {
-            "type": "string",
-            "default": "Something unexpected has happened"
-          },
-          "note": {
-            "type": "string",
-            "default": "See application log for stack trace."
-          }
-        }
-      },
-      "Request": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
       "TableOrder": {
         "type": "object",
         "additionalProperties": false,
@@ -2022,7 +1987,36 @@
           }
         }
       },
-      "Request2": {
+      "InternalErrorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "code",
+          "reason",
+          "note"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "default": "Internal Server Error!"
+          },
+          "code": {
+            "type": "integer",
+            "format": "int32",
+            "default": 500
+          },
+          "reason": {
+            "type": "string",
+            "default": "Something unexpected has happened"
+          },
+          "note": {
+            "type": "string",
+            "default": "See application log for stack trace."
+          }
+        }
+      },
+      "Request": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2037,7 +2031,7 @@
           }
         }
       },
-      "Request3": {
+      "Request2": {
         "type": "object",
         "additionalProperties": false
       },
@@ -2276,7 +2270,7 @@
           }
         }
       },
-      "Request4": {
+      "Request3": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2466,11 +2460,11 @@
           3
         ]
       },
-      "Request5": {
+      "Request4": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request6": {
+      "Request5": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2509,7 +2503,7 @@
           }
         }
       },
-      "Request7": {
+      "Request6": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2544,7 +2538,7 @@
           }
         }
       },
-      "Request8": {
+      "Request7": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2567,6 +2561,10 @@
             "format": "int32"
           }
         }
+      },
+      "Request8": {
+        "type": "object",
+        "additionalProperties": false
       },
       "Request9": {
         "type": "object",
@@ -2665,7 +2663,7 @@
           }
         }
       },
-      "Response2": {
+      "Response": {
         "type": "object",
         "additionalProperties": false,
         "required": [

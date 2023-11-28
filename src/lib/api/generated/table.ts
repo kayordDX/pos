@@ -4,14 +4,22 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
-import { createMutation } from "@tanstack/svelte-query";
-import type { CreateMutationOptions, MutationFunction } from "@tanstack/svelte-query";
+import { createMutation, createQuery } from "@tanstack/svelte-query";
+import type {
+	CreateMutationOptions,
+	CreateQueryOptions,
+	CreateQueryResult,
+	MutationFunction,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 import type {
 	ErrorResponse,
 	InternalErrorResponse,
-	Request8,
+	Request7,
 	Request9,
 	Table,
+	TableGetAvailableParams,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
@@ -85,12 +93,12 @@ export const createTableCreate = <
 export const useTableUpdateHook = () => {
 	const tableUpdate = useCustomClient<Table>();
 
-	return (tableId: number, request8: BodyType<Request8>) => {
+	return (tableId: number, request7: BodyType<Request7>) => {
 		return tableUpdate({
 			url: `/table/${tableId}`,
 			method: "put",
 			headers: { "Content-Type": "application/json" },
-			data: request8,
+			data: request7,
 		});
 	};
 };
@@ -102,13 +110,13 @@ export const useTableUpdateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
 		TError,
-		{ tableId: number; data: BodyType<Request8> },
+		{ tableId: number; data: BodyType<Request7> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
 	TError,
-	{ tableId: number; data: BodyType<Request8> },
+	{ tableId: number; data: BodyType<Request7> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -117,7 +125,7 @@ export const useTableUpdateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
-		{ tableId: number; data: BodyType<Request8> }
+		{ tableId: number; data: BodyType<Request7> }
 	> = (props) => {
 		const { tableId, data } = props ?? {};
 
@@ -130,7 +138,7 @@ export const useTableUpdateMutationOptions = <
 export type TableUpdateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>
 >;
-export type TableUpdateMutationBody = BodyType<Request8>;
+export type TableUpdateMutationBody = BodyType<Request7>;
 export type TableUpdateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableUpdate = <
@@ -140,11 +148,81 @@ export const createTableUpdate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
 		TError,
-		{ tableId: number; data: BodyType<Request8> },
+		{ tableId: number; data: BodyType<Request7> },
 		TContext
 	>;
 }) => {
 	const mutationOptions = useTableUpdateMutationOptions(options);
 
 	return createMutation(mutationOptions);
+};
+export const useTableGetAvailableHook = () => {
+	const tableGetAvailable = useCustomClient<Table[]>();
+
+	return (params: TableGetAvailableParams) => {
+		return tableGetAvailable({ url: `/table/available`, method: "get", params });
+	};
+};
+
+export const getTableGetAvailableQueryKey = (params: TableGetAvailableParams) => {
+	return [`/table/available`, ...(params ? [params] : [])] as const;
+};
+
+export const useTableGetAvailableQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: TableGetAvailableParams,
+	options?: {
+		query?: CreateQueryOptions<
+			Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>,
+			TError,
+			TData
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTableGetAvailableQueryKey(params);
+
+	const tableGetAvailable = useTableGetAvailableHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>
+	> = () => tableGetAvailable(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type TableGetAvailableQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>
+>;
+export type TableGetAvailableQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createTableGetAvailable = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: TableGetAvailableParams,
+	options?: {
+		query?: CreateQueryOptions<
+			Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>,
+			TError,
+			TData
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useTableGetAvailableQueryOptions(params, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
 };

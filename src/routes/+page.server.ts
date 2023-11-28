@@ -13,5 +13,5 @@ export const load = (async ({ locals }) => {
 	);
 	const outletUsers = (await outletUsersResult.json()) as Array<ClockUser>;
 
-	return { user: locals.user, outlet: locals.outlet, outletUsers };
+	return { outletUsers };
 }) satisfies PageServerLoad;

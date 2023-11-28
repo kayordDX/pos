@@ -3,6 +3,7 @@
 	import { Header } from "$lib/components/Header";
 	import "../app.postcss";
 	import { user } from "$lib/stores/userStore";
+	import { outlet } from "$lib/stores/outletStore";
 	import { page } from "$app/stores";
 	import { getFlash } from "sveltekit-flash-message";
 	import { HeadlessToast } from "$lib/components/HeadlessToast";
@@ -16,6 +17,7 @@
 	export let data: PageData;
 
 	$user = data.user ? data.user : undefined;
+	$outlet = data.outlet ? data.outlet : undefined;
 	$salesPeriod = data.salesPeriod ? data.salesPeriod : undefined;
 
 	const flash = getFlash(page);

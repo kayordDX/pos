@@ -27,9 +27,11 @@ export const useCustomClient = <T>(): CustomClient<T> => {
 			}
 		}
 
-		if (headers != undefined) {
+		if (headers == undefined) {
 			if (userData != undefined) {
-				headers["Authorization"] = `Bearer ${userData.token}`;
+				headers = {
+					Authorization: `Bearer ${userData.token}`,
+				};
 			}
 		}
 

@@ -13,4 +13,3 @@ export * from "./staff";
 export * from "./table";
 export * from "./tablebooking";
 export * from "./tablecashup";
-export * from "./token";

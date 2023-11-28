@@ -6,12 +6,12 @@
  */
 import { createMutation } from "@tanstack/svelte-query";
 import type { CreateMutationOptions, MutationFunction } from "@tanstack/svelte-query";
-import type { ErrorResponse, InternalErrorResponse, Request12, Response2 } from "./api.schemas";
+import type { ErrorResponse, InternalErrorResponse, Request12, Response } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useSessionLoginHook = () => {
-	const sessionLogin = useCustomClient<Response2>();
+	const sessionLogin = useCustomClient<Response>();
 
 	return (request12: BodyType<Request12>) => {
 		return sessionLogin({

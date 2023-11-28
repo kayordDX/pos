@@ -4,6 +4,10 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
+export type TableGetAvailableParams = {
+	OutletId: number;
+};
+
 export type SectionListParams = {
 	OutletId: number;
 };
@@ -125,8 +129,15 @@ export interface Request12 {
 	staffId: number;
 }
 
-export interface Response2 {
+export interface Response {
 	token: string;
+}
+
+export interface Request11 {
+	businessId: number;
+	name: string;
+	outletId: number;
+	staffType: StaffType;
 }
 
 export interface Request10 {
@@ -150,19 +161,23 @@ export interface Request9 {
 }
 
 export interface Request8 {
+	[key: string]: any;
+}
+
+export interface Request7 {
 	capacity: number;
 	name: string;
 	sectionId: number;
 }
 
-export interface Request7 {
+export interface Request6 {
 	bookingName: string;
 	salesPeriodId: number;
 	staffId: number;
 	tableId: number;
 }
 
-export interface Request6 {
+export interface Request5 {
 	cashUpDate: string;
 	outletId: number;
 	salesAmount: number;
@@ -170,7 +185,7 @@ export interface Request6 {
 	totalAmount: number;
 }
 
-export interface Request5 {
+export interface Request4 {
 	[key: string]: any;
 }
 
@@ -183,14 +198,7 @@ export const StaffType = {
 	Chef: 3,
 } as const;
 
-export interface Request11 {
-	businessId: number;
-	name: string;
-	outletId: number;
-	staffType: StaffType;
-}
-
-export interface Request4 {
+export interface Request3 {
 	menuItemId: number;
 }
 
@@ -291,12 +299,19 @@ export interface Menu {
 	outletId: number;
 }
 
-export interface Request3 {
+export interface Request2 {
 	[key: string]: any;
 }
 
-export interface Request2 {
+export interface Request {
 	tableBookingId: number;
+}
+
+export interface InternalErrorResponse {
+	code: number;
+	note: string;
+	reason: string;
+	status: string;
 }
 
 export type ErrorResponseErrors = { [key: string]: string[] };
@@ -327,19 +342,4 @@ export interface TableOrder {
 	orderDate: string;
 	tableBookingId: number;
 	tableOrderId: number;
-}
-
-export interface Request {
-	id: number;
-}
-
-export interface InternalErrorResponse {
-	code: number;
-	note: string;
-	reason: string;
-	status: string;
-}
-
-export interface Response {
-	token: string;
 }

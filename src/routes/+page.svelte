@@ -1,14 +1,11 @@
 <script lang="ts">
 	import { Button, Card } from "@kayord/ui";
 	import { Clock } from "lucide-svelte";
-	import { outlet } from "$lib/stores/outletStore";
 	import { user } from "$lib/stores/userStore";
 	import type { PageData } from "./$types";
 	import StaffTypeBadge from "$lib/components/StaffTypeBadge.svelte";
 
 	export let data: PageData;
-
-	$outlet = data.outlet ? data.outlet : undefined;
 </script>
 
 <div class="m-8">
