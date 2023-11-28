@@ -16,11 +16,13 @@ import type {
 import type {
 	ErrorResponse,
 	InternalErrorResponse,
+	Request10,
 	Request7,
-	Request9,
 	Response,
+	Response2,
 	Table,
 	TableGetAvailableParams,
+	TableGetMyBookedParams,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
@@ -28,12 +30,12 @@ import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 export const useTableCreateHook = () => {
 	const tableCreate = useCustomClient<Table>();
 
-	return (request9: BodyType<Request9>) => {
+	return (request10: BodyType<Request10>) => {
 		return tableCreate({
 			url: `/table`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request9,
+			data: request10,
 		});
 	};
 };
@@ -45,13 +47,13 @@ export const useTableCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
 		TError,
-		{ data: BodyType<Request9> },
+		{ data: BodyType<Request10> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
 	TError,
-	{ data: BodyType<Request9> },
+	{ data: BodyType<Request10> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -60,7 +62,7 @@ export const useTableCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
-		{ data: BodyType<Request9> }
+		{ data: BodyType<Request10> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -73,7 +75,7 @@ export const useTableCreateMutationOptions = <
 export type TableCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>
 >;
-export type TableCreateMutationBody = BodyType<Request9>;
+export type TableCreateMutationBody = BodyType<Request10>;
 export type TableCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableCreate = <
@@ -83,7 +85,7 @@ export const createTableCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
 		TError,
-		{ data: BodyType<Request9> },
+		{ data: BodyType<Request10> },
 		TContext
 	>;
 }) => {
@@ -158,7 +160,7 @@ export const createTableUpdate = <
 	return createMutation(mutationOptions);
 };
 export const useTableGetAvailableHook = () => {
-	const tableGetAvailable = useCustomClient<Response[]>();
+	const tableGetAvailable = useCustomClient<Response2[]>();
 
 	return (params: TableGetAvailableParams) => {
 		return tableGetAvailable({ url: `/table/available`, method: "GET", params });
@@ -218,6 +220,77 @@ export const createTableGetAvailable = <
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
 	const queryOptions = useTableGetAvailableQueryOptions(params, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
+
+export const useTableGetMyBookedHook = () => {
+	const tableGetMyBooked = useCustomClient<Response[]>();
+
+	return (params: TableGetMyBookedParams) => {
+		return tableGetMyBooked({ url: `/table/booked`, method: "GET", params });
+	};
+};
+
+export const getTableGetMyBookedQueryKey = (params: TableGetMyBookedParams) => {
+	return [`/table/booked`, ...(params ? [params] : [])] as const;
+};
+
+export const useTableGetMyBookedQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableGetMyBookedHook>>>,
+	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+>(
+	params: TableGetMyBookedParams,
+	options?: {
+		query?: CreateQueryOptions<
+			Awaited<ReturnType<ReturnType<typeof useTableGetMyBookedHook>>>,
+			TError,
+			TData
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTableGetMyBookedQueryKey(params);
+
+	const tableGetMyBooked = useTableGetMyBookedHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableGetMyBookedHook>>>
+	> = () => tableGetMyBooked(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableGetMyBookedHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type TableGetMyBookedQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableGetMyBookedHook>>>
+>;
+export type TableGetMyBookedQueryError = ErrorType<ErrorResponse | InternalErrorResponse>;
+
+export const createTableGetMyBooked = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableGetMyBookedHook>>>,
+	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+>(
+	params: TableGetMyBookedParams,
+	options?: {
+		query?: CreateQueryOptions<
+			Awaited<ReturnType<ReturnType<typeof useTableGetMyBookedHook>>>,
+			TError,
+			TData
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useTableGetMyBookedQueryOptions(params, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;

@@ -19,9 +19,9 @@ import type {
 	Menu,
 	MenuItem,
 	MenuListParams,
-	Request23,
 	Request24,
-	Request27,
+	Request25,
+	Request28,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
@@ -99,12 +99,12 @@ export const createMenuList = <
 export const useMenuCreateHook = () => {
 	const menuCreate = useCustomClient<Menu>();
 
-	return (request27: BodyType<Request27>) => {
+	return (request28: BodyType<Request28>) => {
 		return menuCreate({
 			url: `/menu`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request27,
+			data: request28,
 		});
 	};
 };
@@ -116,13 +116,13 @@ export const useMenuCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>,
 		TError,
-		{ data: BodyType<Request27> },
+		{ data: BodyType<Request28> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>,
 	TError,
-	{ data: BodyType<Request27> },
+	{ data: BodyType<Request28> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -131,7 +131,7 @@ export const useMenuCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>,
-		{ data: BodyType<Request27> }
+		{ data: BodyType<Request28> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -144,7 +144,7 @@ export const useMenuCreateMutationOptions = <
 export type MenuCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>
 >;
-export type MenuCreateMutationBody = BodyType<Request27>;
+export type MenuCreateMutationBody = BodyType<Request28>;
 export type MenuCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createMenuCreate = <
@@ -154,7 +154,7 @@ export const createMenuCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>,
 		TError,
-		{ data: BodyType<Request27> },
+		{ data: BodyType<Request28> },
 		TContext
 	>;
 }) => {
@@ -165,12 +165,12 @@ export const createMenuCreate = <
 export const useMenuUpdateHook = () => {
 	const menuUpdate = useCustomClient<Menu>();
 
-	return (menuId: string | null, request24: BodyType<Request24>) => {
+	return (menuId: string | null, request25: BodyType<Request25>) => {
 		return menuUpdate({
 			url: `/menu/${menuId}`,
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			data: request24,
+			data: request25,
 		});
 	};
 };
@@ -182,13 +182,13 @@ export const useMenuUpdateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>,
 		TError,
-		{ menuId: string | null; data: BodyType<Request24> },
+		{ menuId: string | null; data: BodyType<Request25> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>,
 	TError,
-	{ menuId: string | null; data: BodyType<Request24> },
+	{ menuId: string | null; data: BodyType<Request25> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -197,7 +197,7 @@ export const useMenuUpdateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>,
-		{ menuId: string | null; data: BodyType<Request24> }
+		{ menuId: string | null; data: BodyType<Request25> }
 	> = (props) => {
 		const { menuId, data } = props ?? {};
 
@@ -210,7 +210,7 @@ export const useMenuUpdateMutationOptions = <
 export type MenuUpdateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>
 >;
-export type MenuUpdateMutationBody = BodyType<Request24>;
+export type MenuUpdateMutationBody = BodyType<Request25>;
 export type MenuUpdateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createMenuUpdate = <
@@ -220,7 +220,7 @@ export const createMenuUpdate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>,
 		TError,
-		{ menuId: string | null; data: BodyType<Request24> },
+		{ menuId: string | null; data: BodyType<Request25> },
 		TContext
 	>;
 }) => {
@@ -372,12 +372,12 @@ export const createMenuListMenuItems = <
 export const useMenuCreateMenuItemHook = () => {
 	const menuCreateMenuItem = useCustomClient<MenuItem>();
 
-	return (menuId: number, request23: BodyType<Request23>) => {
+	return (menuId: number, request24: BodyType<Request24>) => {
 		return menuCreateMenuItem({
 			url: `/menu/${menuId}/menuitem`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request23,
+			data: request24,
 		});
 	};
 };
@@ -389,13 +389,13 @@ export const useMenuCreateMenuItemMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuCreateMenuItemHook>>>,
 		TError,
-		{ menuId: number; data: BodyType<Request23> },
+		{ menuId: number; data: BodyType<Request24> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useMenuCreateMenuItemHook>>>,
 	TError,
-	{ menuId: number; data: BodyType<Request23> },
+	{ menuId: number; data: BodyType<Request24> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -404,7 +404,7 @@ export const useMenuCreateMenuItemMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useMenuCreateMenuItemHook>>>,
-		{ menuId: number; data: BodyType<Request23> }
+		{ menuId: number; data: BodyType<Request24> }
 	> = (props) => {
 		const { menuId, data } = props ?? {};
 
@@ -417,7 +417,7 @@ export const useMenuCreateMenuItemMutationOptions = <
 export type MenuCreateMenuItemMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuCreateMenuItemHook>>>
 >;
-export type MenuCreateMenuItemMutationBody = BodyType<Request23>;
+export type MenuCreateMenuItemMutationBody = BodyType<Request24>;
 export type MenuCreateMenuItemMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createMenuCreateMenuItem = <
@@ -427,7 +427,7 @@ export const createMenuCreateMenuItem = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuCreateMenuItemHook>>>,
 		TError,
-		{ menuId: number; data: BodyType<Request23> },
+		{ menuId: number; data: BodyType<Request24> },
 		TContext
 	>;
 }) => {

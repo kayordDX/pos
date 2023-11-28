@@ -6,19 +6,19 @@
  */
 import { createMutation } from "@tanstack/svelte-query";
 import type { CreateMutationOptions, MutationFunction } from "@tanstack/svelte-query";
-import type { ErrorResponse, InternalErrorResponse, Request12, Response2 } from "./api.schemas";
+import type { ErrorResponse, InternalErrorResponse, Request13, Response3 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useSessionLoginHook = () => {
-	const sessionLogin = useCustomClient<Response2>();
+	const sessionLogin = useCustomClient<Response3>();
 
-	return (request12: BodyType<Request12>) => {
+	return (request13: BodyType<Request13>) => {
 		return sessionLogin({
 			url: `/session/login`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request12,
+			data: request13,
 		});
 	};
 };
@@ -30,13 +30,13 @@ export const useSessionLoginMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSessionLoginHook>>>,
 		TError,
-		{ data: BodyType<Request12> },
+		{ data: BodyType<Request13> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useSessionLoginHook>>>,
 	TError,
-	{ data: BodyType<Request12> },
+	{ data: BodyType<Request13> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -45,7 +45,7 @@ export const useSessionLoginMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useSessionLoginHook>>>,
-		{ data: BodyType<Request12> }
+		{ data: BodyType<Request13> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -58,7 +58,7 @@ export const useSessionLoginMutationOptions = <
 export type SessionLoginMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useSessionLoginHook>>>
 >;
-export type SessionLoginMutationBody = BodyType<Request12>;
+export type SessionLoginMutationBody = BodyType<Request13>;
 export type SessionLoginMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createSessionLogin = <
@@ -68,7 +68,7 @@ export const createSessionLogin = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSessionLoginHook>>>,
 		TError,
-		{ data: BodyType<Request12> },
+		{ data: BodyType<Request13> },
 		TContext
 	>;
 }) => {

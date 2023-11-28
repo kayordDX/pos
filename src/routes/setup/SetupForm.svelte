@@ -3,7 +3,7 @@
 	import { outletSchema, type OutletSchema } from "./schema";
 	import type { SuperValidated } from "sveltekit-superforms";
 
-	import { createOutletList, useOutletListQueryOptions } from "$lib/api";
+	import { createOutletList } from "$lib/api";
 	import Error from "$lib/components/Error.svelte";
 
 	const query = createOutletList();

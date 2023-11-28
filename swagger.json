@@ -54,7 +54,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request32"
+                "$ref": "#/components/schemas/Request33"
               }
             }
           },
@@ -106,12 +106,12 @@
           "content": {
             "*/*": {
               "schema": {
-                "$ref": "#/components/schemas/Request33"
+                "$ref": "#/components/schemas/Request34"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request33"
+                "$ref": "#/components/schemas/Request34"
               }
             }
           },
@@ -163,7 +163,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request34"
+                "$ref": "#/components/schemas/Request35"
               }
             }
           },
@@ -320,7 +320,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request30"
+                "$ref": "#/components/schemas/Request31"
               }
             }
           },
@@ -363,7 +363,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request29"
+                "$ref": "#/components/schemas/Request30"
               }
             }
           },
@@ -448,7 +448,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request27"
+                "$ref": "#/components/schemas/Request28"
               }
             }
           },
@@ -512,7 +512,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request24"
+                "$ref": "#/components/schemas/Request25"
               }
             }
           },
@@ -657,7 +657,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request23"
+                "$ref": "#/components/schemas/Request24"
               }
             }
           },
@@ -911,7 +911,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request21"
+                "$ref": "#/components/schemas/Request22"
               }
             }
           },
@@ -975,7 +975,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request20"
+                "$ref": "#/components/schemas/Request21"
               }
             }
           },
@@ -1067,7 +1067,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request18"
+                "$ref": "#/components/schemas/Request19"
               }
             }
           },
@@ -1254,7 +1254,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request16"
+                "$ref": "#/components/schemas/Request17"
               }
             }
           },
@@ -1318,7 +1318,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request13"
+                "$ref": "#/components/schemas/Request14"
               }
             }
           },
@@ -1420,7 +1420,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request12"
+                "$ref": "#/components/schemas/Request13"
               }
             }
           },
@@ -1433,7 +1433,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response2"
+                  "$ref": "#/components/schemas/Response3"
                 }
               }
             }
@@ -1473,7 +1473,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request11"
+                "$ref": "#/components/schemas/Request12"
               }
             }
           },
@@ -1570,7 +1570,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request9"
+                "$ref": "#/components/schemas/Request10"
               }
             }
           },
@@ -1689,6 +1689,68 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Response2"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/table/booked": {
+      "get": {
+        "tags": [
+          "Table"
+        ],
+        "operationId": "TableGetMyBooked",
+        "parameters": [
+          {
+            "name": "OutletId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "myBooking",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -2463,7 +2525,6 @@
           "tableBookingId",
           "salesAmount",
           "totalAmount",
-          "cashUpDate",
           "outletId"
         ],
         "properties": {
@@ -2484,10 +2545,6 @@
             "format": "decimal",
             "minimum": 0.0,
             "exclusiveMinimum": true
-          },
-          "cashUpDate": {
-            "type": "string",
-            "format": "date-time"
           },
           "outletId": {
             "type": "integer",
@@ -2558,10 +2615,49 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
+          "id",
+          "tableId",
+          "bookingName",
+          "bookingDate",
+          "salesPeriodId",
+          "staffId",
+          "table"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bookingName": {
+            "type": "string"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "staffId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "table": {
+            "$ref": "#/components/schemas/TableDto"
+          }
+        }
+      },
+      "TableDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
           "tableId",
           "name",
-          "capacity",
-          "sectionId",
           "section"
         ],
         "properties": {
@@ -2571,14 +2667,6 @@
           },
           "name": {
             "type": "string"
-          },
-          "capacity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "sectionId": {
-            "type": "integer",
-            "format": "int32"
           },
           "section": {
             "$ref": "#/components/schemas/SectionDto"
@@ -2606,7 +2694,59 @@
         "type": "object",
         "additionalProperties": false
       },
+      "Response2": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableId",
+          "name",
+          "capacity",
+          "sectionId",
+          "section"
+        ],
+        "properties": {
+          "tableId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "capacity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "sectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "section": {
+            "$ref": "#/components/schemas/SectionDto2"
+          }
+        }
+      },
+      "SectionDto2": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
       "Request9": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request10": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2671,11 +2811,11 @@
           }
         }
       },
-      "Request10": {
+      "Request11": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request11": {
+      "Request12": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2703,7 +2843,7 @@
           }
         }
       },
-      "Response2": {
+      "Response3": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2715,7 +2855,7 @@
           }
         }
       },
-      "Request12": {
+      "Request13": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2730,7 +2870,7 @@
           }
         }
       },
-      "Request13": {
+      "Request14": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2751,15 +2891,15 @@
           }
         }
       },
-      "Request14": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "Request15": {
         "type": "object",
         "additionalProperties": false
       },
       "Request16": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request17": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2778,11 +2918,11 @@
           }
         }
       },
-      "Request17": {
+      "Request18": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request18": {
+      "Request19": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2806,28 +2946,9 @@
           }
         }
       },
-      "Request19": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "Request20": {
         "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "name",
-          "businessId"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "minLength": 1,
-            "nullable": false
-          },
-          "businessId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
+        "additionalProperties": false
       },
       "Request21": {
         "type": "object",
@@ -2850,9 +2971,28 @@
       },
       "Request22": {
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "businessId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "businessId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "Request23": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request24": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2873,7 +3013,7 @@
           }
         }
       },
-      "Request24": {
+      "Request25": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2894,15 +3034,15 @@
           }
         }
       },
-      "Request25": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "Request26": {
         "type": "object",
         "additionalProperties": false
       },
       "Request27": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request28": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2923,27 +3063,9 @@
           }
         }
       },
-      "Request28": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "Request29": {
         "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "staffId",
-          "salesPeriodId"
-        ],
-        "properties": {
-          "staffId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "salesPeriodId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
+        "additionalProperties": false
       },
       "Request30": {
         "type": "object",
@@ -2965,9 +3087,27 @@
       },
       "Request31": {
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "required": [
+          "staffId",
+          "salesPeriodId"
+        ],
+        "properties": {
+          "staffId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "Request32": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request33": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2988,7 +3128,7 @@
           }
         }
       },
-      "Request33": {
+      "Request34": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3003,7 +3143,7 @@
           }
         }
       },
-      "Request34": {
+      "Request35": {
         "type": "object",
         "additionalProperties": false,
         "required": [

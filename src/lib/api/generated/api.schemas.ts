@@ -4,6 +4,11 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
+export type TableGetMyBookedParams = {
+	OutletId: number;
+	myBooking: boolean;
+};
+
 export type TableGetAvailableParams = {
 	OutletId: number;
 };
@@ -25,21 +30,26 @@ export type ClockListParams = {
 	StatusId: number;
 };
 
-export interface Request34 {
+export interface Request35 {
 	name: string;
+}
+
+export interface Request34 {
+	id: number;
 }
 
 export interface Request33 {
 	id: number;
-}
-
-export interface Request32 {
-	id: number;
 	name: string;
 }
 
-export interface Request31 {
+export interface Request32 {
 	[key: string]: any;
+}
+
+export interface Request31 {
+	salesPeriodId: number;
+	staffId: number;
 }
 
 export interface Request30 {
@@ -48,17 +58,16 @@ export interface Request30 {
 }
 
 export interface Request29 {
-	salesPeriodId: number;
-	staffId: number;
-}
-
-export interface Request28 {
 	[key: string]: any;
 }
 
-export interface Request27 {
+export interface Request28 {
 	name: string;
 	outletId: number;
+}
+
+export interface Request27 {
+	[key: string]: any;
 }
 
 export interface Request26 {
@@ -66,21 +75,22 @@ export interface Request26 {
 }
 
 export interface Request25 {
-	[key: string]: any;
-}
-
-export interface Request24 {
 	id: number;
 	name: string;
 }
 
-export interface Request23 {
+export interface Request24 {
 	name: string;
 	price: number;
 }
 
-export interface Request22 {
+export interface Request23 {
 	[key: string]: any;
+}
+
+export interface Request22 {
+	businessId: number;
+	name: string;
 }
 
 export interface Request21 {
@@ -89,27 +99,26 @@ export interface Request21 {
 }
 
 export interface Request20 {
-	businessId: number;
-	name: string;
-}
-
-export interface Request19 {
 	[key: string]: any;
 }
 
-export interface Request18 {
+export interface Request19 {
 	name: string;
 	outletId: number;
 	startDate: string;
 }
 
-export interface Request17 {
+export interface Request18 {
 	[key: string]: any;
 }
 
-export interface Request16 {
+export interface Request17 {
 	name: string;
 	outletId: number;
+}
+
+export interface Request16 {
+	[key: string]: any;
 }
 
 export interface Request15 {
@@ -117,30 +126,26 @@ export interface Request15 {
 }
 
 export interface Request14 {
-	[key: string]: any;
-}
-
-export interface Request13 {
 	id: number;
 	name: string;
 }
 
-export interface Request12 {
+export interface Request13 {
 	staffId: number;
 }
 
-export interface Response2 {
+export interface Response3 {
 	token: string;
 }
 
-export interface Request11 {
+export interface Request12 {
 	businessId: number;
 	name: string;
 	outletId: number;
 	staffType: StaffType;
 }
 
-export interface Request10 {
+export interface Request11 {
 	[key: string]: any;
 }
 
@@ -154,10 +159,27 @@ export interface Clock {
 	startDate: string;
 }
 
-export interface Request9 {
+export interface Request10 {
 	capacity: number;
 	name: string;
 	sectionId: number;
+}
+
+export interface Request9 {
+	[key: string]: any;
+}
+
+export interface SectionDto2 {
+	id: number;
+	name: string;
+}
+
+export interface Response2 {
+	capacity: number;
+	name: string;
+	section: SectionDto2;
+	sectionId: number;
+	tableId: number;
 }
 
 export interface Request8 {
@@ -169,11 +191,19 @@ export interface SectionDto {
 	name: string;
 }
 
-export interface Response {
-	capacity: number;
+export interface TableDto {
 	name: string;
 	section: SectionDto;
-	sectionId: number;
+	tableId: number;
+}
+
+export interface Response {
+	bookingDate: string;
+	bookingName: string;
+	id: number;
+	salesPeriodId: number;
+	staffId: number;
+	table: TableDto;
 	tableId: number;
 }
 
@@ -191,7 +221,6 @@ export interface Request6 {
 }
 
 export interface Request5 {
-	cashUpDate: string;
 	outletId: number;
 	salesAmount: number;
 	tableBookingId: number;

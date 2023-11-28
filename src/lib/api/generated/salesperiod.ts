@@ -13,19 +13,19 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { ErrorResponse, InternalErrorResponse, Request18, SalesPeriod } from "./api.schemas";
+import type { ErrorResponse, InternalErrorResponse, Request19, SalesPeriod } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useSalesPeriodCreateHook = () => {
 	const salesPeriodCreate = useCustomClient<SalesPeriod>();
 
-	return (request18: BodyType<Request18>) => {
+	return (request19: BodyType<Request19>) => {
 		return salesPeriodCreate({
 			url: `/salesperiod`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request18,
+			data: request19,
 		});
 	};
 };
@@ -37,13 +37,13 @@ export const useSalesPeriodCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>,
 		TError,
-		{ data: BodyType<Request18> },
+		{ data: BodyType<Request19> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>,
 	TError,
-	{ data: BodyType<Request18> },
+	{ data: BodyType<Request19> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -52,7 +52,7 @@ export const useSalesPeriodCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>,
-		{ data: BodyType<Request18> }
+		{ data: BodyType<Request19> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -65,7 +65,7 @@ export const useSalesPeriodCreateMutationOptions = <
 export type SalesPeriodCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>
 >;
-export type SalesPeriodCreateMutationBody = BodyType<Request18>;
+export type SalesPeriodCreateMutationBody = BodyType<Request19>;
 export type SalesPeriodCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createSalesPeriodCreate = <
@@ -75,7 +75,7 @@ export const createSalesPeriodCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>,
 		TError,
-		{ data: BodyType<Request18> },
+		{ data: BodyType<Request19> },
 		TContext
 	>;
 }) => {

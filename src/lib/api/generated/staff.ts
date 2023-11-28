@@ -13,19 +13,19 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { Clock, ErrorResponse, InternalErrorResponse, Request11, Staff } from "./api.schemas";
+import type { Clock, ErrorResponse, InternalErrorResponse, Request12, Staff } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useStaffCreateHook = () => {
 	const staffCreate = useCustomClient<Staff>();
 
-	return (request11: BodyType<Request11>) => {
+	return (request12: BodyType<Request12>) => {
 		return staffCreate({
 			url: `/staff`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request11,
+			data: request12,
 		});
 	};
 };
@@ -37,13 +37,13 @@ export const useStaffCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useStaffCreateHook>>>,
 		TError,
-		{ data: BodyType<Request11> },
+		{ data: BodyType<Request12> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useStaffCreateHook>>>,
 	TError,
-	{ data: BodyType<Request11> },
+	{ data: BodyType<Request12> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -52,7 +52,7 @@ export const useStaffCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useStaffCreateHook>>>,
-		{ data: BodyType<Request11> }
+		{ data: BodyType<Request12> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -65,7 +65,7 @@ export const useStaffCreateMutationOptions = <
 export type StaffCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useStaffCreateHook>>>
 >;
-export type StaffCreateMutationBody = BodyType<Request11>;
+export type StaffCreateMutationBody = BodyType<Request12>;
 export type StaffCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createStaffCreate = <
@@ -75,7 +75,7 @@ export const createStaffCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useStaffCreateHook>>>,
 		TError,
-		{ data: BodyType<Request11> },
+		{ data: BodyType<Request12> },
 		TContext
 	>;
 }) => {

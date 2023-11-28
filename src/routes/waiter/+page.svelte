@@ -1,6 +1,14 @@
 <script lang="ts">
-	import { Card, Button } from "@kayord/ui";
+	import { Card, Button, Badge } from "@kayord/ui";
 	import type { PageData } from "./$types";
+	import { createTableGetMyBooked } from "$lib/api";
+	import { Loader } from "lucide-svelte";
+	import Error from "$lib/components/Error.svelte";
+	import { getError } from "$lib/types";
+	import { outlet } from "$lib/stores/outletStore";
+
+	const query = createTableGetMyBooked({ myBooking: true, OutletId: $outlet?.outletId ?? 0 });
+	const queryOther = createTableGetMyBooked({ myBooking: false, OutletId: $outlet?.outletId ?? 0 });
 
 	export let data: PageData;
 </script>
@@ -11,28 +19,49 @@
 
 	<h1 class="mt-8">My Tables</h1>
 	<p class="text-muted-foreground">List of my current tables</p>
-
-	<div class="flex flex-wrap gap-4 mt-4">
-		<a href="/table/1">
-			<Card class="p-5 w-48">
-				<h3>Test</h3>
-			</Card>
-		</a>
-		<!-- {#each data.outletUsers as clockUser}
-			<button class="text-start" on:click={() => user.login(clockUser.id)}>
-				<Card class="p-5 w-48">
-					<h3>{clockUser.name}</h3>
-					<StaffTypeBadge type={clockUser.staffType} />
-				</Card>
-			</button>
-		{/each} -->
-	</div>
+	{#if $query.isPending}
+		<Loader />
+	{/if}
+	{#if $query.error}
+		<Error message={getError($query.error).message} />
+	{/if}
+	{#if $query.isSuccess}
+		<div class="flex flex-wrap gap-4 mt-4">
+			{#each $query.data as myTable}
+				<a href={`/table/${myTable.id}`}>
+					<Card class="p-5 w-48">
+						<div class="flex justify-between">
+							<h3>{myTable.table.name}</h3>
+							<Badge>{myTable.table.section.name}</Badge>
+						</div>
+						<p class="text-xs">{myTable.bookingName}</p>
+					</Card>
+				</a>
+			{/each}
+		</div>
+	{/if}
 
 	<h1 class="mt-8">Other Tables</h1>
 	<p class="text-muted-foreground">Tables managed by other users</p>
-	<div class="flex flex-wrap gap-4 mt-4">
-		<Card class="p-5 w-48">
-			<h3>Test</h3>
-		</Card>
-	</div>
+	{#if $queryOther.isPending}
+		<Loader />
+	{/if}
+	{#if $queryOther.error}
+		<Error message={getError($queryOther.error).message} />
+	{/if}
+	{#if $queryOther.isSuccess}
+		<div class="flex flex-wrap gap-4 mt-4">
+			{#each $queryOther.data as otherTable}
+				<a href={`/table/${otherTable.id}`}>
+					<Card class="p-5 w-48">
+						<div class="flex justify-between">
+							<h3>{otherTable.table.name}</h3>
+							<p>{otherTable.table.section.name}</p>
+						</div>
+						<p class="text-xs">{otherTable.bookingName}</p>
+					</Card>
+				</a>
+			{/each}
+		</div>
+	{/if}
 </div>

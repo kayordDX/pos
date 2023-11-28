@@ -6,19 +6,19 @@
  */
 import { createMutation } from "@tanstack/svelte-query";
 import type { CreateMutationOptions, MutationFunction } from "@tanstack/svelte-query";
-import type { Clock, InternalErrorResponse, Request29 } from "./api.schemas";
+import type { Clock, InternalErrorResponse, Request30 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useClockClockOutHook = () => {
 	const clockClockOut = useCustomClient<Clock>();
 
-	return (request29: BodyType<Request29>) => {
+	return (request30: BodyType<Request30>) => {
 		return clockClockOut({
 			url: `/clockout`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request29,
+			data: request30,
 		});
 	};
 };
@@ -30,13 +30,13 @@ export const useClockClockOutMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>,
 		TError,
-		{ data: BodyType<Request29> },
+		{ data: BodyType<Request30> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>,
 	TError,
-	{ data: BodyType<Request29> },
+	{ data: BodyType<Request30> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -45,7 +45,7 @@ export const useClockClockOutMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>,
-		{ data: BodyType<Request29> }
+		{ data: BodyType<Request30> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -58,7 +58,7 @@ export const useClockClockOutMutationOptions = <
 export type ClockClockOutMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>
 >;
-export type ClockClockOutMutationBody = BodyType<Request29>;
+export type ClockClockOutMutationBody = BodyType<Request30>;
 export type ClockClockOutMutationError = ErrorType<InternalErrorResponse>;
 
 export const createClockClockOut = <
@@ -68,7 +68,7 @@ export const createClockClockOut = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>,
 		TError,
-		{ data: BodyType<Request29> },
+		{ data: BodyType<Request30> },
 		TContext
 	>;
 }) => {
