@@ -7,6 +7,8 @@
 	import { getFlash } from "sveltekit-flash-message";
 	import { HeadlessToast } from "$lib/components/HeadlessToast";
 	import { Toaster, toast } from "svelte-sonner";
+	import { browser } from "$app/environment";
+	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
 
 	import type { PageData } from "./$types";
 
@@ -24,9 +26,19 @@
 		toast.custom(HeadlessToast, { componentProps: { message: $flash.message, type: $flash.type } });
 		flash.set(undefined);
 	});
+
+	const queryClient = new QueryClient({
+		defaultOptions: {
+			queries: {
+				enabled: browser,
+			},
+		},
+	});
 </script>
 
 <Toaster />
 <ModeWatcher />
 <Header />
-<slot />
+<QueryClientProvider client={queryClient}>
+	<slot />
+</QueryClientProvider>
