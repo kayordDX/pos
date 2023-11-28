@@ -7,7 +7,7 @@
 
 <div class="m-8">
 	<h1>Table Booking</h1>
-	<Button>Book a Table</Button>
+	<Button href="/table/book">Book a Table</Button>
 
 	<h1 class="mt-8">My Tables</h1>
 	<p class="text-muted-foreground">List of my current tables</p>
