@@ -7,7 +7,6 @@
 	import Error from "$lib/components/Error.svelte";
 
 	const query = createOutletList();
-	console.log($query.isPending);
 
 	export let form: SuperValidated<OutletSchema>;
 </script>

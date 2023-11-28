@@ -17,8 +17,7 @@ type CustomClient<T> = (data: {
 
 export const useCustomClient = <T>(): CustomClient<T> => {
 	const userData = get(user);
-	console.log("kj", userData);
-	// const token = useToken();
+
 	return async ({ url, method, params, headers, data }) => {
 		let fullUrl = `${PUBLIC_API_URL}${url}`;
 		if (params !== undefined) {
@@ -28,11 +27,11 @@ export const useCustomClient = <T>(): CustomClient<T> => {
 			}
 		}
 
-		// if (headers != undefined) {
-		// 	if (user) {
-		// 		headers["Authorization"] = `Bearer ${token}`;
-		// 	}
-		// }
+		if (headers != undefined) {
+			if (userData != undefined) {
+				headers["Authorization"] = `Bearer ${userData.token}`;
+			}
+		}
 
 		const response = await fetch(fullUrl, {
 			method,
