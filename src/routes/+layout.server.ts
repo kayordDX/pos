@@ -9,7 +9,9 @@ export const load = loadFlash(async ({ locals }) => {
 		const salesPeriodResult = await fetch(
 			`${PUBLIC_API_URL}/SalesPeriod/${locals.outlet.outletId}`
 		);
-		salesPeriod = (await salesPeriodResult.json()) as SalesPeriod;
+		if (salesPeriodResult.ok) {
+			salesPeriod = (await salesPeriodResult.json()) as SalesPeriod;
+		}
 	}
 	return { user: locals.user, outlet: locals.outlet, salesPeriod };
 }) satisfies LayoutServerLoad;

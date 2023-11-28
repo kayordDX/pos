@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Separator, Button } from "@kayord/ui";
+	import { Button, Separator } from "@kayord/ui";
 	import type { PageData } from "./$types";
-	import Item from "./Item.svelte";
+	import Item from "../Item.svelte";
 
 	export let data: PageData;
 </script>
@@ -11,13 +11,20 @@
 	<p class="text-muted-foreground">Current bill for table {data.bookingId}</p>
 	<Separator />
 	<div class="my-5">
-		<p>Add Items to Order to get started</p>
+		<Item
+			name="KWV 10 Year"
+			price={30}
+			quantity={5}
+			subItems={[
+				{ name: "Ice", price: 0, quantity: 1 },
+				{ name: "Coke", price: 10, quantity: 1 },
+			]}
+		/>
 	</div>
-
 	<Separator />
 	<div class="flex justify-between">
 		<h2>Total</h2>
-		<h2>R0.00</h2>
+		<h2>R40.00</h2>
 	</div>
 
 	<div class="mt-10">

@@ -92,6 +92,6 @@
 	</div>
 	<Button variant="secondary" class="mt-8" href={`/table/${data.bookingId}`}>Cancel</Button>
 	{#if count > 0}
-		<Button class="mt-8 ml-2" href={`/table/${data.bookingId}`}>Add to Order</Button>
+		<Button class="mt-8 ml-2" href={`/table/${data.bookingId}/temp`}>Add to Order</Button>
 	{/if}
 </div>
