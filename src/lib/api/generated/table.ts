@@ -170,7 +170,7 @@ export const getTableGetAvailableQueryKey = (params: TableGetAvailableParams) =>
 
 export const useTableGetAvailableQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>,
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
 >(
 	params: TableGetAvailableParams,
 	options?: {
@@ -201,11 +201,11 @@ export const useTableGetAvailableQueryOptions = <
 export type TableGetAvailableQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>
 >;
-export type TableGetAvailableQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type TableGetAvailableQueryError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableGetAvailable = <
 	TData = Awaited<ReturnType<ReturnType<typeof useTableGetAvailableHook>>>,
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
 >(
 	params: TableGetAvailableParams,
 	options?: {

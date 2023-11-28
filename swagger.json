@@ -1706,9 +1706,6 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "400": {
             "description": "Bad Request",
             "content": {
@@ -1729,12 +1726,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWTBearerAuth": []
-          }
-        ]
+        }
       }
     },
     "/tablebooking": {
