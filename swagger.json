@@ -2226,6 +2226,13 @@
             "items": {
               "$ref": "#/components/schemas/Section"
             }
+          },
+          "staff": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Staff"
+            }
           }
         }
       },
@@ -2323,6 +2330,50 @@
             }
           }
         }
+      },
+      "Staff": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "staffType",
+          "outletId",
+          "outlet"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "staffType": {
+            "$ref": "#/components/schemas/StaffType"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outlet": {
+            "$ref": "#/components/schemas/Outlet"
+          }
+        }
+      },
+      "StaffType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Manager",
+          "Waiter",
+          "Chef"
+        ],
+        "enum": [
+          1,
+          2,
+          3
+        ]
       },
       "Request3": {
         "type": "object",
@@ -2469,50 +2520,6 @@
             "format": "int32"
           }
         }
-      },
-      "Staff": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "name",
-          "staffType",
-          "outletId",
-          "outlet"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "staffType": {
-            "$ref": "#/components/schemas/StaffType"
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "outlet": {
-            "$ref": "#/components/schemas/Outlet"
-          }
-        }
-      },
-      "StaffType": {
-        "type": "integer",
-        "description": "",
-        "x-enumNames": [
-          "Manager",
-          "Waiter",
-          "Chef"
-        ],
-        "enum": [
-          1,
-          2,
-          3
-        ]
       },
       "Request4": {
         "type": "object",
@@ -2778,8 +2785,8 @@
           "staffId",
           "staff",
           "startDate",
-          "salesPeriodId",
-          "salesPeriod"
+          "outletId",
+          "outlet"
         ],
         "properties": {
           "id": {
@@ -2802,12 +2809,12 @@
             "format": "date-time",
             "nullable": true
           },
-          "salesPeriodId": {
+          "outletId": {
             "type": "integer",
             "format": "int32"
           },
-          "salesPeriod": {
-            "$ref": "#/components/schemas/SalesPeriod"
+          "outlet": {
+            "$ref": "#/components/schemas/Outlet"
           }
         }
       },
@@ -2927,7 +2934,6 @@
         "additionalProperties": false,
         "required": [
           "name",
-          "startDate",
           "outletId"
         ],
         "properties": {
@@ -2935,10 +2941,6 @@
             "type": "string",
             "minLength": 1,
             "nullable": false
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
           },
           "outletId": {
             "type": "integer",
@@ -3072,14 +3074,14 @@
         "additionalProperties": false,
         "required": [
           "staffId",
-          "salesPeriodId"
+          "outletId"
         ],
         "properties": {
           "staffId": {
             "type": "integer",
             "format": "int32"
           },
-          "salesPeriodId": {
+          "outletId": {
             "type": "integer",
             "format": "int32"
           }
@@ -3090,14 +3092,14 @@
         "additionalProperties": false,
         "required": [
           "staffId",
-          "salesPeriodId"
+          "outletId"
         ],
         "properties": {
           "staffId": {
             "type": "integer",
             "format": "int32"
           },
-          "salesPeriodId": {
+          "outletId": {
             "type": "integer",
             "format": "int32"
           }

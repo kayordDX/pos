@@ -48,12 +48,12 @@ export interface Request32 {
 }
 
 export interface Request31 {
-	salesPeriodId: number;
+	outletId: number;
 	staffId: number;
 }
 
 export interface Request30 {
-	salesPeriodId: number;
+	outletId: number;
 	staffId: number;
 }
 
@@ -105,7 +105,6 @@ export interface Request20 {
 export interface Request19 {
 	name: string;
 	outletId: number;
-	startDate: string;
 }
 
 export interface Request18 {
@@ -152,8 +151,8 @@ export interface Request11 {
 export interface Clock {
 	endDate?: string | null;
 	id: number;
-	salesPeriod: SalesPeriod;
-	salesPeriodId: number;
+	outlet: Outlet;
+	outletId: number;
 	staff: Staff;
 	staffId: number;
 	startDate: string;
@@ -231,6 +230,10 @@ export interface Request4 {
 	[key: string]: any;
 }
 
+export interface Request3 {
+	menuItemId: number;
+}
+
 export type StaffType = (typeof StaffType)[keyof typeof StaffType];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -240,24 +243,13 @@ export const StaffType = {
 	Chef: 3,
 } as const;
 
-export interface Request3 {
-	menuItemId: number;
-}
-
 export interface Outlet {
 	business: Business;
 	businessId: number;
 	id: number;
 	name: string;
 	sections?: Section[] | null;
-}
-
-export interface Staff {
-	id: number;
-	name: string;
-	outlet: Outlet;
-	outletId: number;
-	staffType: StaffType;
+	staff?: Staff[] | null;
 }
 
 export interface SalesPeriod {
@@ -278,6 +270,14 @@ export interface TableCashUp {
 	tableBooking: TableBooking;
 	tableBookingId: number;
 	totalAmount: number;
+}
+
+export interface Staff {
+	id: number;
+	name: string;
+	outlet: Outlet;
+	outletId: number;
+	staffType: StaffType;
 }
 
 export interface Section {

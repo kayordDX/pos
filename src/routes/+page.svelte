@@ -4,6 +4,7 @@
 	import { user } from "$lib/stores/userStore";
 	import type { PageData } from "./$types";
 	import StaffTypeBadge from "$lib/components/StaffTypeBadge.svelte";
+	import { salesPeriod } from "$lib/stores/salesPeriodStore";
 
 	export let data: PageData;
 </script>

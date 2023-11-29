@@ -1,37 +1,28 @@
 <script lang="ts">
-	import { Badge, Button, Card, CardFooter } from "@kayord/ui";
-	import { PUBLIC_API_URL } from "$env/static/public";
+	import { Button, Card } from "@kayord/ui";
 	import type { PageData } from "./$types";
 	import { getFlash } from "sveltekit-flash-message";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
 	import StaffTypeBadge from "$lib/components/StaffTypeBadge.svelte";
+	import { outlet } from "$lib/stores/outletStore";
+	import { createClockClockIn } from "$lib/api";
 	const flash = getFlash(page);
 
 	export let data: PageData;
 
+	const mutation = createClockClockIn();
+
 	const clockIn = async (userId: number) => {
-		const headersList = {
-			"Content-Type": "application/json",
-		};
-		const body = {
-			SalesPeriodId: 1,
-			StaffId: userId,
-		};
-		const bodyContent = JSON.stringify(body);
-		// TODO: Fix hardcoded url
-		const result = await fetch(`${PUBLIC_API_URL}/ClockIn`, {
-			method: "POST",
-			body: bodyContent,
-			headers: headersList,
-		});
-		if (result.ok) {
+		try {
+			await $mutation.mutateAsync({
+				data: { outletId: $outlet?.outletId ?? 0, staffId: userId },
+			});
 			$flash = { type: "success", message: "Successfully Clocked in User" };
 			goto("/");
-		} else {
+		} catch (err) {
 			$flash = { type: "error", message: "Error clocking in user" };
 		}
-		return result.ok;
 	};
 </script>
 

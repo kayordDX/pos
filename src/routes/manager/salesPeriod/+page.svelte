@@ -11,13 +11,28 @@
 	} from "@kayord/ui";
 	import type { PageData } from "./$types";
 	import { Button } from "@kayord/ui";
-
+	import { createSalesPeriodCreate } from "$lib/api";
+	import { page } from "$app/stores";
+	import { getFlash } from "sveltekit-flash-message/client";
+	import { goto, invalidateAll } from "$app/navigation";
+	import { outlet } from "$lib/stores/outletStore";
 	export let data: PageData;
 
 	let name: string;
 
-	const openSalesPeriod = () => {
-		console.log("Whuut", name);
+	const flash = getFlash(page);
+	const mutation = createSalesPeriodCreate();
+
+	const openSalesPeriod = async () => {
+		try {
+			await $mutation.mutateAsync({
+				data: { outletId: $outlet?.outletId ?? 0, name: name },
+			});
+			$flash = { type: "success", message: "Successfully opened sales period" };
+			goto("/");
+		} catch (err) {
+			$flash = { type: "error", message: "Error opening sales period" };
+		}
 	};
 </script>
 

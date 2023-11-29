@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from "svelte";
 	import { ModeWatcher, mode } from "@kayord/ui";
 	import { Header } from "$lib/components/Header";
 	import "../app.postcss";
@@ -16,9 +17,12 @@
 
 	export let data: PageData;
 
-	$user = data.user ? data.user : undefined;
-	$outlet = data.outlet ? data.outlet : undefined;
-	$salesPeriod = data.salesPeriod ? data.salesPeriod : undefined;
+	onMount(() => {
+		console.log("mount");
+		$user = data.user ? data.user : undefined;
+		$outlet = data.outlet ? data.outlet : undefined;
+		$salesPeriod = data.salesPeriod ? data.salesPeriod : undefined;
+	});
 
 	const flash = getFlash(page);
 	flash.subscribe(($flash) => {

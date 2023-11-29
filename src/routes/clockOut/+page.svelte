@@ -6,32 +6,24 @@
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
 	import StaffTypeBadge from "$lib/components/StaffTypeBadge.svelte";
+	import { createClockClockOut } from "$lib/api";
+	import { outlet } from "$lib/stores/outletStore";
 	const flash = getFlash(page);
 
 	export let data: PageData;
 
+	const mutation = createClockClockOut();
+
 	const clockIn = async (userId: number) => {
-		const headersList = {
-			"Content-Type": "application/json",
-		};
-		const body = {
-			SalesPeriodId: 1,
-			StaffId: userId,
-		};
-		const bodyContent = JSON.stringify(body);
-		// TODO: Fix hardcoded url
-		const result = await fetch(`${PUBLIC_API_URL}/ClockOut`, {
-			method: "POST",
-			body: bodyContent,
-			headers: headersList,
-		});
-		if (result.ok) {
+		try {
+			await $mutation.mutateAsync({
+				data: { outletId: $outlet?.outletId ?? 0, staffId: userId },
+			});
 			$flash = { type: "success", message: "Successfully Clocked out User" };
 			goto("/");
-		} else {
-			$flash = { type: "error", message: "Error clocking in user" };
+		} catch (err) {
+			$flash = { type: "error", message: "Error clocking out user" };
 		}
-		return result.ok;
 	};
 </script>
 
