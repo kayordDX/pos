@@ -31,6 +31,6 @@ export const POST: RequestHandler = async ({ cookies, request }) => {
 
 		return json({ user });
 	} else {
-		throw error(500, { message: "Error logging in" });
+		error(500, { message: "Error logging in" });
 	}
 };

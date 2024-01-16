@@ -15,8 +15,9 @@
 	"devDependencies": {
 		"@kayord/tw-plugin": "^0.0.7",
 		"@kayord/ui": "^0.3.4",
-		"@sveltejs/adapter-node": "^3.0.1",
-		"@sveltejs/kit": "^1.27.6",
+		"@sveltejs/adapter-node": "^2.0.0",
+		"@sveltejs/kit": "^2.3.3",
+		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@tanstack/svelte-query": "^5.17.14",
 		"@types/qs": "^6.9.11",
 		"@typescript-eslint/eslint-plugin": "^6.19.0",

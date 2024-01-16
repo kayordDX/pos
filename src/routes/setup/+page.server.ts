@@ -37,7 +37,7 @@ export const actions: Actions = {
 		}
 		setFlash({ type: "success", message: "Successfully updated outlet" }, event);
 		// throw redirect(303, "/");
-		throw redirect(302, "/");
+		redirect(302, "/");
 		// return {
 		// 	form,
 		// };

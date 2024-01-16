@@ -5,7 +5,7 @@ import { PUBLIC_API_URL } from "$env/static/public";
 
 export const load = (async ({ locals }) => {
 	if (locals.outlet == null) {
-		throw redirect(303, "/setup");
+		redirect(303, "/setup");
 	}
 
 	const outletUsersResult = await fetch(
