@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { Card, CardContent, CardHeader, CardTitle } from "@kayord/ui";
+	import { Card } from "@kayord/ui";
 	import type { PageData } from "./$types";
 	import SetupForm from "./SetupForm.svelte";
 
 	export let data: PageData;
 </script>
 
-<Card class="p-5 m-5">
-	<CardHeader>
-		<CardTitle>Setup Device</CardTitle>
-	</CardHeader>
-	<CardContent>
+<Card.Root class="p-5 m-5">
+	<Card.Header>
+		<Card.Title>Setup Device</Card.Title>
+	</Card.Header>
+	<Card.Content>
 		<SetupForm form={data.form} />
-	</CardContent>
-</Card>
+	</Card.Content>
+</Card.Root>

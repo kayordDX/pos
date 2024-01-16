@@ -27,10 +27,10 @@
 	<div class="flex flex-wrap gap-4 mt-4">
 		{#each data.outletUsers as clockUser}
 			<button class="text-start" on:click={() => user.login(clockUser.id)}>
-				<Card class="p-5 w-48">
+				<Card.Root class="p-5 w-48">
 					<h3>{clockUser.name}</h3>
 					<StaffTypeBadge type={clockUser.staffType} />
-				</Card>
+				</Card.Root>
 			</button>
 		{/each}
 	</div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Badge, Button, Card, CardFooter } from "@kayord/ui";
+	import { Badge, Button, Card } from "@kayord/ui";
 	import { PUBLIC_API_URL } from "$env/static/public";
 	import type { PageData } from "./$types";
 	import { getFlash } from "sveltekit-flash-message";
@@ -33,12 +33,12 @@
 	<div class="mt-2 flex flex-col gap-4">
 		{#each data.outletUsers as clockUser}
 			<button class="text-start" on:click={() => clockIn(clockUser.id)}>
-				<Card class="p-5 hover:cursor-pointer flex justify-between items-center">
+				<Card.Root class="p-5 hover:cursor-pointer flex justify-between items-center">
 					<div>
 						<h3>{clockUser.name}</h3>
 						<StaffTypeBadge type={clockUser.staffType} />
 					</div>
-				</Card>
+				</Card.Root>
 			</button>
 		{/each}
 	</div>

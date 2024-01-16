@@ -1,21 +1,13 @@
 <script lang="ts">
-	import {
-		DropdownMenu,
-		DropdownMenuTrigger,
-		DropdownMenuContent,
-		DropdownMenuGroup,
-		DropdownMenuSeparator,
-		DropdownMenuItem,
-		DropdownMenuLabel,
-	} from "@kayord/ui";
+	import { DropdownMenu } from "@kayord/ui";
 	import { MoreVerticalIcon } from "lucide-svelte";
 </script>
 
-<DropdownMenu>
-	<DropdownMenuTrigger><MoreVerticalIcon /></DropdownMenuTrigger>
-	<DropdownMenuContent>
-		<DropdownMenuGroup>
-			<DropdownMenuItem href="/setup">Setup Device</DropdownMenuItem>
-		</DropdownMenuGroup>
-	</DropdownMenuContent>
-</DropdownMenu>
+<DropdownMenu.Root>
+	<DropdownMenu.Trigger><MoreVerticalIcon /></DropdownMenu.Trigger>
+	<DropdownMenu.Content>
+		<DropdownMenu.Group>
+			<DropdownMenu.Item href="/setup">Setup Device</DropdownMenu.Item>
+		</DropdownMenu.Group>
+	</DropdownMenu.Content>
+</DropdownMenu.Root>

@@ -1,19 +1,5 @@
 <script lang="ts">
-	import {
-		Badge,
-		Button,
-		Card,
-		Dialog,
-		DialogContent,
-		DialogDescription,
-		DialogFooter,
-		DialogHeader,
-		DialogTitle,
-		DialogTrigger,
-		Input,
-		Label,
-		Loader,
-	} from "@kayord/ui";
+	import { Badge, Button, Card, Dialog, Input, Label, Loader } from "@kayord/ui";
 	import type { PageData } from "./$types";
 	import { goto } from "$app/navigation";
 	import { createTableGetAvailable, createTableBookingCreate } from "$lib/api";
@@ -63,25 +49,25 @@
 		<div class="flex flex-wrap gap-4 mt-4">
 			{#each $query.data as table}
 				<button class="text-start" on:click={() => selectTable(table.tableId)}>
-					<Card class="p-5 w-48">
+					<Card.Root class="p-5 w-48">
 						<div class="flex justify-between">
 							<h3>{table.name}</h3>
 							<Badge>{table.capacity}</Badge>
 						</div>
 						<p class="text-xs">{table.section.name}</p>
-					</Card>
+					</Card.Root>
 				</button>
 			{/each}
 		</div>
 	{/if}
 
-	<Dialog bind:open={dialogOpen}>
-		<DialogTrigger />
-		<DialogContent>
-			<DialogHeader>
-				<DialogTitle>Book Table</DialogTitle>
-				<DialogDescription>This will book the table and assign it to you</DialogDescription>
-			</DialogHeader>
+	<Dialog.Root bind:open={dialogOpen}>
+		<Dialog.Trigger />
+		<Dialog.Content>
+			<Dialog.Header>
+				<Dialog.Title>Book Table</Dialog.Title>
+				<Dialog.Description>This will book the table and assign it to you</Dialog.Description>
+			</Dialog.Header>
 			{#if $mutate.isPending}
 				<Loader />
 			{/if}
@@ -91,11 +77,11 @@
 				<Input id="name" bind:value={name} class="col-span-3" />
 			</div>
 
-			<DialogFooter>
+			<Dialog.Footer>
 				<Button on:click={makeBooking}>Make Booking</Button>
-			</DialogFooter>
-		</DialogContent>
-	</Dialog>
+			</Dialog.Footer>
+		</Dialog.Content>
+	</Dialog.Root>
 
 	<Button class="mt-4" href="/waiter">Cancel</Button>
 </div>

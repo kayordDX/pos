@@ -1,13 +1,5 @@
 <script lang="ts">
-	import {
-		Button,
-		Card,
-		CardContent,
-		CardDescription,
-		CardFooter,
-		CardHeader,
-		CardTitle,
-	} from "@kayord/ui";
+	import { Button, Card } from "@kayord/ui";
 	import type { PageData } from "./$types";
 	import { createTableCashUpCreate } from "$lib/api";
 	import { outlet } from "$lib/stores/outletStore";
@@ -33,18 +25,18 @@
 	export let data: PageData;
 </script>
 
-<Card class="m-8">
-	<CardHeader>
-		<CardTitle>R23.09</CardTitle>
-		<CardDescription>Amount</CardDescription>
-	</CardHeader>
-	<CardContent>
+<Card.Root class="m-8">
+	<Card.Header>
+		<Card.Title>R23.09</Card.Title>
+		<Card.Description>Amount</Card.Description>
+	</Card.Header>
+	<Card.Content>
 		<div class="text-center flex items-center justify-center flex-col">
 			<div>Please tap your card on the back of the phone</div>
 			<Nfc class="mt-10 h-20 w-20" />
 		</div>
-	</CardContent>
-	<CardFooter class="flex flex-col gap-2">
+	</Card.Content>
+	<Card.Footer class="flex flex-col gap-2">
 		{#if $mutation.error}
 			<Error message={getError($mutation.error).message} />
 		{/if}
@@ -54,5 +46,5 @@
 		{:else}
 			<Button class="w-full" on:click={pay} variant="default">Pay with Card</Button>
 		{/if}
-	</CardFooter>
-</Card>
+	</Card.Footer>
+</Card.Root>

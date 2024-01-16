@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { ModeWatcher, mode } from "@kayord/ui";
+	import { ModeWatcher, mode } from "@kayord/ui/mode-watcher";
 	import { Header } from "$lib/components/Header";
 	import "../app.postcss";
 	import { user } from "$lib/stores/userStore";

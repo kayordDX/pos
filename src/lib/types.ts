@@ -74,7 +74,7 @@ export interface UserToken {
 	token: string;
 }
 
-export { OutletSchema, Outlet };
+export type { OutletSchema, Outlet };
 
 export interface ClockUser {
 	id: number;

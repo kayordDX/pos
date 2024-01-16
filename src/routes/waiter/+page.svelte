@@ -27,13 +27,13 @@
 		<div class="flex flex-wrap gap-4 mt-4">
 			{#each $query.data as myTable}
 				<a href={`/table/${myTable.id}`}>
-					<Card class="p-5 w-48">
+					<Card.Root class="p-5 w-48">
 						<div class="flex justify-between">
 							<h3>{myTable.table.name}</h3>
 							<Badge>{myTable.table.section.name}</Badge>
 						</div>
 						<p class="text-xs">{myTable.bookingName}</p>
-					</Card>
+					</Card.Root>
 				</a>
 			{/each}
 		</div>
@@ -51,13 +51,13 @@
 		<div class="flex flex-wrap gap-4 mt-4">
 			{#each $queryOther.data as otherTable}
 				<a href={`/table/${otherTable.id}`}>
-					<Card class="p-5 w-48">
+					<Card.Root class="p-5 w-48">
 						<div class="flex justify-between">
 							<h3>{otherTable.table.name}</h3>
 							<p>{otherTable.table.section.name}</p>
 						</div>
 						<p class="text-xs">{otherTable.bookingName}</p>
-					</Card>
+					</Card.Root>
 				</a>
 			{/each}
 		</div>
