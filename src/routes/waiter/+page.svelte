@@ -9,8 +9,6 @@
 
 	const query = createTableGetMyBooked({ myBooking: true, OutletId: $outlet?.outletId ?? 0 });
 	const queryOther = createTableGetMyBooked({ myBooking: false, OutletId: $outlet?.outletId ?? 0 });
-
-	export let data: PageData;
 </script>
 
 <div class="m-8">

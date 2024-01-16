@@ -14,9 +14,8 @@
 	import { createSalesPeriodCreate } from "$lib/api";
 	import { page } from "$app/stores";
 	import { getFlash } from "sveltekit-flash-message/client";
-	import { goto, invalidateAll } from "$app/navigation";
+	import { goto } from "$app/navigation";
 	import { outlet } from "$lib/stores/outletStore";
-	export let data: PageData;
 
 	let name: string;
 

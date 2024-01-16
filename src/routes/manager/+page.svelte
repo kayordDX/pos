@@ -1,10 +1,7 @@
 <script lang="ts">
 	import { Button, Card, CardDescription, CardFooter, CardHeader, CardTitle } from "@kayord/ui";
-	import type { PageData } from "./$types";
 	import { salesPeriod } from "$lib/stores/salesPeriodStore";
 	import { stringToFDate } from "$lib/util";
-
-	export let data: PageData;
 </script>
 
 <div class="m-8">
