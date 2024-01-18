@@ -12,5 +12,6 @@ export const load = (async ({ locals }) => {
 			salesPeriod = (await salesPeriodResult.json()) as SalesPeriod;
 		}
 	}
-	return { user: locals.user, outlet: locals.outlet, salesPeriod };
+	const session = await locals.getSession();
+	return { user: locals.user, outlet: locals.outlet, salesPeriod, session };
 }) satisfies LayoutServerLoad;

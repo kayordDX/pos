@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Button, Input, Label } from "@kayord/ui";
 	import type { PageData } from "./$types";
+	import { page } from "$app/stores";
 
 	type DeepLink = {
 		url: string;
@@ -26,6 +27,7 @@
 	};
 </script>
 
+{JSON.stringify($page.data.session?.user)}
 <div class="m-8 flex flex-col gap-4">
 	<Label>Amount</Label>
 	<Input bind:value={amount} />

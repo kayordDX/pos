@@ -1,33 +1,22 @@
-import type { Handle } from "@sveltejs/kit";
-import type { Outlet, User } from "./lib/types";
+import { SvelteKitAuth } from "@auth/sveltekit";
+import Google from "@auth/core/providers/google";
+import { GOOGLE_ID, GOOGLE_SECRET } from "$env/static/private";
 
-export const handle: Handle = async ({ event, resolve }) => {
-	const session = event.cookies.get("session");
-	const outlet = event.cookies.get("outlet");
-
-	if (session) {
-		try {
-			const decodedSession = JSON.parse(atob(session.split(".")[1])) as User;
-
-			event.locals.user = {
-				id: Number(decodedSession.id),
-				name: decodedSession.name,
-				token: session,
-				type: Number(decodedSession.type),
-			};
-		} catch {
-			return await resolve(event);
-		}
-	}
-
-	if (outlet) {
-		try {
-			const outletJson = JSON.parse(outlet) as Outlet;
-			event.locals.outlet = outletJson;
-		} catch {
-			return await resolve(event);
-		}
-	}
-
-	return await resolve(event);
-};
+export const handle = SvelteKitAuth({
+	providers: [Google({ clientId: GOOGLE_ID, clientSecret: GOOGLE_SECRET })],
+	callbacks: {
+		async jwt({ token, account }) {
+			token.token ??= account?.id_token;
+			return token;
+		},
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		async session({ session, token }) {
+			if (session.user) {
+				session.user.id = token.sub;
+				session.user.token = token.token;
+			}
+			return session;
+		},
+	},
+});

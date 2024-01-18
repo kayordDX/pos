@@ -1,7 +1,6 @@
 import type { User, Outlet } from "./lib/types";
+import type { DefaultSession } from "@auth/core/types";
 
-// See https://kit.svelte.dev/docs/types#app
-// for information about these interfaces
 declare global {
 	namespace App {
 		// interface Error {}
@@ -13,6 +12,15 @@ declare global {
 			flash?: { type: "success" | "error"; message: string };
 		}
 		// interface Platform {}
+	}
+}
+
+declare module "@auth/core/types" {
+	interface Session {
+		user?: DefaultSession["user"] & {
+			id: string;
+			token: string;
+		};
 	}
 }
 
