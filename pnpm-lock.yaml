@@ -79,12 +79,6 @@ devDependencies:
   svelte-check:
     specifier: ^3.6.3
     version: 3.6.3(postcss-load-config@5.0.2)(postcss@8.4.33)(svelte@4.2.9)
-  svelte-french-toast:
-    specifier: ^1.2.0
-    version: 1.2.0(svelte@4.2.9)
-  svelte-sonner:
-    specifier: ^0.3.11
-    version: 0.3.11(svelte@4.2.9)
   sveltekit-flash-message:
     specifier: ^2.3.1
     version: 2.3.1(@sveltejs/kit@2.4.1)(svelte@4.2.9)
@@ -4225,15 +4219,6 @@ packages:
       svelte: 4.2.9
     dev: true
 
-  /svelte-french-toast@1.2.0(svelte@4.2.9):
-    resolution: {integrity: sha512-5PW+6RFX3xQPbR44CngYAP1Sd9oCq9P2FOox4FZffzJuZI2mHOB7q5gJBVnOiLF5y3moVGZ7u2bYt7+yPAgcEQ==}
-    peerDependencies:
-      svelte: ^3.57.0 || ^4.0.0
-    dependencies:
-      svelte: 4.2.9
-      svelte-writable-derived: 3.1.0(svelte@4.2.9)
-    dev: true
-
   /svelte-headless-table@0.18.1(svelte@4.2.9):
     resolution: {integrity: sha512-pcZIi36u8RV9B3m0oG6000az7tvT6CCK+c8qBUuNUQSChsfJySC5ryGdJSTFlAYBVRGUgZlqYOKGUgSbOfIrnA==}
     peerDependencies:
@@ -4332,14 +4317,6 @@ packages:
     resolution: {integrity: sha512-eKXIjLxB4C7eQWPqKEdxcGfNXm2g/qJ67zmEZK/GigCZMfrTR3m7DPY93R6MX+5uoqM1FRYxl8LZ1oy4URWi2A==}
     peerDependencies:
       svelte: ^4.0.0
-    dependencies:
-      svelte: 4.2.9
-    dev: true
-
-  /svelte-writable-derived@3.1.0(svelte@4.2.9):
-    resolution: {integrity: sha512-cTvaVFNIJ036vSDIyPxJYivKC7ZLtcFOPm1Iq6qWBDo1fOHzfk6ZSbwaKrxhjgy52Rbl5IHzRcWgos6Zqn9/rg==}
-    peerDependencies:
-      svelte: ^3.2.1 || ^4.0.0-next.1
     dependencies:
       svelte: 4.2.9
     dev: true

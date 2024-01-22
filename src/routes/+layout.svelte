@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { ModeWatcher, mode } from "@kayord/ui/mode-watcher";
+	import { ModeWatcher } from "@kayord/ui/mode-watcher";
 	import { Header } from "$lib/components/Header";
 	import "../app.postcss";
 	import { user } from "$lib/stores/userStore";
@@ -8,7 +8,7 @@
 	import { page } from "$app/stores";
 	import { getFlash } from "sveltekit-flash-message";
 	import { HeadlessToast } from "$lib/components/HeadlessToast";
-	import { Toaster, toast } from "svelte-sonner";
+	import { Toaster, toast } from "@kayord/ui";
 	import { browser } from "$app/environment";
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
 
@@ -18,7 +18,6 @@
 	export let data: PageData;
 
 	onMount(() => {
-		console.log("mount");
 		$user = data.user ? data.user : undefined;
 		$outlet = data.outlet ? data.outlet : undefined;
 		$salesPeriod = data.salesPeriod ? data.salesPeriod : undefined;
@@ -27,7 +26,15 @@
 	const flash = getFlash(page);
 	flash.subscribe(($flash) => {
 		if (!$flash) return;
-		toast.custom(HeadlessToast, { componentProps: { message: $flash.message, type: $flash.type } });
+		if ($flash.type === "success") {
+			toast.success($flash.message);
+		} else if ($flash.type === "error") {
+			toast.error($flash.message);
+		} else {
+			toast.custom(HeadlessToast, {
+				componentProps: { message: $flash.message, type: $flash.type },
+			});
+		}
 		flash.set(undefined);
 	});
 
