@@ -49,7 +49,9 @@
 
 <Toaster />
 <ModeWatcher />
-<Header />
+{#if !($page.route?.id ?? "").startsWith("/login")}
+	<Header />
+{/if}
 <QueryClientProvider client={queryClient}>
 	<slot />
 </QueryClientProvider>
