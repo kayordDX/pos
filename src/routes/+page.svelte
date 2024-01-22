@@ -10,6 +10,7 @@
 
 {#if $page.data.session?.user}
 	<p>{$page.data.session.user.id}</p>
+	<p>Role: {$page.data.session.user.roles}</p>
 	<p>{$page.data.session.user.token}</p>
 	<p>Signed in as {$page.data.session.user.email}</p>
 	<p>Signed in as {$page.data.session.user.image}</p>

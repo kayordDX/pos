@@ -9,7 +9,7 @@
 	<div class="flex items-center"><img src="/logo.svg" alt="logo" class="h-10" />ayord.Pos</div>
 	<span></span>
 	<div class="flex gap-2">
-		<ThemeSwitch />
+		<ThemeSwitch class="text-secondary-foreground" />
 		{#if $user}
 			<Button on:click={user.logout}>Logout</Button>
 		{:else}

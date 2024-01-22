@@ -20,6 +20,7 @@ declare module "@auth/core/types" {
 		user?: DefaultSession["user"] & {
 			id: string;
 			token: string;
+			roles: Array<string>;
 		};
 	}
 }
