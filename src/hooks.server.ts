@@ -5,27 +5,26 @@ import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { jwtDecode } from "jwt-decode";
 import type { JWT } from "@auth/core/jwt";
-import { PUBLIC_API_URL } from "$env/static/public";
-import { client } from "$lib/api/generated/open/test";
+import { client } from "$lib/api";
 
-export async function handleFetch({ request, fetch, event }) {
-	if (request.url.startsWith(PUBLIC_API_URL)) {
-		const session = await event.locals.auth();
-		request = new Request(request);
-		if (session?.token) {
-			request.headers.append("Authorization", `Bearer ${session.token}`);
-		}
-	}
-	return fetch(request);
-}
+// export async function handleFetch({ request, fetch, event }) {
+// 	if (request.url.startsWith(PUBLIC_API_URL)) {
+// 		const session = await event.locals.auth();
+// 		request = new Request(request);
+// 		if (session?.token) {
+// 			request.headers.append("Authorization", `Bearer ${session.token}`);
+// 		}
+// 	}
+// 	return fetch(request);
+// }
 
-// const filterFetch: Handle = async ({ event, resolve }) => {
-// 	return resolve(event, {
-// 		filterSerializedResponseHeaders(name) {
-// 			return name === "content-length";
-// 		},
-// 	});
-// };
+const filterFetch: Handle = async ({ event, resolve }) => {
+	return resolve(event, {
+		filterSerializedResponseHeaders(name) {
+			return name === "content-length";
+		},
+	});
+};
 
 const authorization: Handle = async ({ event, resolve }) => {
 	const session = await event.locals.auth();
@@ -89,15 +88,11 @@ const authentication: Handle = async ({ event, resolve }) => {
 		],
 		callbacks: {
 			async jwt({ token, account, user, profile }) {
-				// Temp test
-				// const rrr = await event.fetch(`${PUBLIC_API_URL}/business`);
-				// console.log(rrr.json());
-
 				if (account && user && profile) {
 					const t = account?.id_token ?? "";
 					const decoded = jwtDecode(t);
 
-					const roleRequest = await client.POST("/User/Validate", {
+					const roleRequest = await client().POST("/User/Validate", {
 						body: {
 							email: profile.email ?? "",
 							firstName: profile.given_name ?? "",
@@ -106,11 +101,12 @@ const authentication: Handle = async ({ event, resolve }) => {
 							name: profile.name ?? "",
 							userId: user.id ?? "",
 						},
+						fetch: event.fetch,
 					});
 
 					return {
 						token: account?.id_token,
-						tokenExpires: Date.now() + (decoded.exp ?? 0) * 1000,
+						tokenExpires: (decoded.exp ?? 0) * 1000,
 						refreshToken: account?.refresh_token,
 						user,
 						roles: roleRequest.data?.userRoles,
@@ -131,6 +127,7 @@ const authentication: Handle = async ({ event, resolve }) => {
 				if (token) {
 					session.user = token.user;
 					session.token = token.token;
+					session.refreshToken = token.refreshToken;
 					session.tokenExpires = token.tokenExpires;
 				}
 				if (session.user) {
@@ -143,4 +140,4 @@ const authentication: Handle = async ({ event, resolve }) => {
 	return authHandle;
 };
 
-export const handle: Handle = sequence(authentication, authorization);
+export const handle: Handle = sequence(authentication, authorization, filterFetch);

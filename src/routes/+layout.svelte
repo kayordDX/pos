@@ -20,9 +20,9 @@
 
 	onMount(() => {
 		console.log("mount");
-		$user = { id: 1, name: "test", token: "test", type: 2 };
-		$outlet = data.outlet ? data.outlet : undefined;
-		$salesPeriod = data.salesPeriod ? data.salesPeriod : undefined;
+		// $user = { id: 1, name: "test", token: "test", type: 2 };
+		// $outlet = data.outlet ? data.outlet : undefined;
+		// $salesPeriod = data.salesPeriod ? data.salesPeriod : undefined;
 		$session = data.session;
 	});
 
