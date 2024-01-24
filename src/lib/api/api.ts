@@ -1,5 +1,5 @@
 import createClient from "openapi-fetch";
-import type { paths } from "./schema";
+import type { paths } from "./generated/schema";
 import { PUBLIC_API_URL } from "$env/static/public";
 import { get } from "svelte/store";
 import { outlet } from "$lib/stores/outletStore";
