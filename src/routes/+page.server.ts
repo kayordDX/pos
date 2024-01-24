@@ -1,9 +1,13 @@
-import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
-import type { ClockUser } from "$lib/types";
 import { PUBLIC_API_URL } from "$env/static/public";
+import { client } from "$lib/api/generated/open/test";
 
-export const load = (async ({ locals }) => {
+export const load = (async ({ fetch }) => {
+	// const rrr = await fetch(`${PUBLIC_API_URL}/business`);
+	// const rrr = await fetch(`${PUBLIC_API_URL}/outlet`);
+	// console.log(await rrr.json());
+	// const what = await client.GET("/business", { fetch });
+	// console.log(what.response.status);
 	// if (locals.outlet == null) {
 	// 	redirect(303, "/setup");
 	// }
@@ -11,5 +15,5 @@ export const load = (async ({ locals }) => {
 	// 	`${PUBLIC_API_URL}/clock/list?OutletId=${locals.outlet.outletId}&StatusId=2`
 	// );
 	// const outletUsers = (await outletUsersResult.json()) as Array<ClockUser>;
-	// return { outletUsers };
+	return {};
 }) satisfies PageServerLoad;

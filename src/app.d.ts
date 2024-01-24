@@ -17,9 +17,11 @@ declare global {
 
 declare module "@auth/core/types" {
 	interface Session {
+		token: string;
+		tokenExpires: number;
+		refreshToken: string;
 		user?: DefaultSession["user"] & {
 			id: string;
-			token: string;
 			roles: Array<string>;
 		};
 	}

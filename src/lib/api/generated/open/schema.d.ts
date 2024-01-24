@@ -5,99 +5,111 @@
 
 
 export interface paths {
+  "/User/Validate": {
+    post: operations["KayordPosFeaturesUserValidateEndpoint"];
+  };
+  "/user/getroles": {
+    get: operations["KayordPosFeaturesUserGetRolesEndpoint"];
+  };
+  "/role/createrole": {
+    post: operations["KayordPosFeaturesRoleCreateEndpoint"];
+  };
+  "/role/adduserinrole": {
+    post: operations["KayordPosFeaturesRoleAddUserInRoleEndpoint"];
+  };
   "/order": {
-    post: operations["TableOrderCreate"];
+    post: operations["KayordPosFeaturesTableOrderCreateEndpoint"];
   };
   "/order/table/{tableId}": {
-    get: operations["OrderViewOrders"];
+    get: operations["KayordPosFeaturesOrderViewOrdersEndpoint"];
   };
   "/order/{orderId}/additem": {
-    post: operations["OrderAddItem"];
+    post: operations["KayordPosFeaturesOrderAddItemEndpoint"];
   };
   "/tablecashup/tablebooking/{tableBookingId}": {
-    get: operations["TableCashUpViewTableCashUps"];
+    get: operations["KayordPosFeaturesTableCashUpViewTableCashUpsEndpoint"];
   };
   "/tablecashup": {
-    post: operations["TableCashUpCreate"];
+    post: operations["KayordPosFeaturesTableCashUpCreateEndpoint"];
   };
   "/tablebooking": {
-    post: operations["TableBookingCreate"];
+    post: operations["KayordPosFeaturesTableBookingCreateEndpoint"];
   };
   "/table/{tableId}": {
-    put: operations["TableUpdate"];
+    put: operations["KayordPosFeaturesTableUpdateEndpoint"];
   };
   "/table/booked": {
-    get: operations["TableGetMyBooked"];
+    get: operations["KayordPosFeaturesTableGetMyBookedEndpoint"];
   };
   "/table/available": {
-    get: operations["TableGetAvailable"];
+    get: operations["KayordPosFeaturesTableGetAvailableEndpoint"];
   };
   "/table": {
-    post: operations["TableCreate"];
+    post: operations["KayordPosFeaturesTableCreateEndpoint"];
   };
   "/staff/{OutletId}": {
-    get: operations["StaffGetAllClockedIn"];
+    get: operations["KayordPosFeaturesStaffGetAllClockedInEndpoint"];
   };
   "/staff": {
-    post: operations["StaffCreate"];
+    post: operations["KayordPosFeaturesStaffCreateEndpoint"];
   };
   "/session/login": {
-    post: operations["SessionLogin"];
+    post: operations["KayordPosFeaturesSessionLoginEndpoint"];
   };
   "/section/{sectionId}": {
-    get: operations["SectionGet"];
-    put: operations["SectionUpdate"];
+    get: operations["KayordPosFeaturesSectionGetEndpoint"];
+    put: operations["KayordPosFeaturesSectionUpdateEndpoint"];
   };
   "/section": {
-    get: operations["SectionList"];
-    post: operations["SectionCreate"];
+    get: operations["KayordPosFeaturesSectionListEndpoint"];
+    post: operations["KayordPosFeaturesSectionCreateEndpoint"];
   };
   "/SalesPeriod/{OutletId}": {
-    get: operations["SalesPeriodGet"];
+    get: operations["KayordPosFeaturesSalesPeriodGetEndpoint"];
   };
   "/salesperiod": {
-    post: operations["SalesPeriodCreate"];
+    post: operations["KayordPosFeaturesSalesPeriodCreateEndpoint"];
   };
   "/salesperiod/{SalesPeriodId}": {
-    post: operations["SalesPeriodClose"];
+    post: operations["KayordPosFeaturesSalesPeriodCloseEndpoint"];
   };
   "/outlet/{id}": {
-    get: operations["OutletGet"];
-    put: operations["OutletUpdate"];
+    get: operations["KayordPosFeaturesOutletGetEndpoint"];
+    put: operations["KayordPosFeaturesOutletUpdateEndpoint"];
   };
   "/outlet": {
-    get: operations["OutletList"];
-    post: operations["OutletCreate"];
+    get: operations["KayordPosFeaturesOutletListEndpoint"];
+    post: operations["KayordPosFeaturesOutletCreateEndpoint"];
   };
   "/menu/{menuId}/menuitem": {
-    get: operations["MenuListMenuItems"];
-    post: operations["MenuCreateMenuItem"];
+    get: operations["KayordPosFeaturesMenuListMenuItemsEndpoint"];
+    post: operations["KayordPosFeaturesMenuCreateMenuItemEndpoint"];
   };
   "/menu/{menuId}": {
-    get: operations["MenuGet"];
-    put: operations["MenuUpdate"];
+    get: operations["KayordPosFeaturesMenuGetEndpoint"];
+    put: operations["KayordPosFeaturesMenuUpdateEndpoint"];
   };
   "/menu": {
-    get: operations["MenuList"];
-    post: operations["MenuCreate"];
+    get: operations["KayordPosFeaturesMenuListEndpoint"];
+    post: operations["KayordPosFeaturesMenuCreateEndpoint"];
   };
   "/clock/list": {
-    get: operations["ClockList"];
+    get: operations["KayordPosFeaturesClockListEndpoint"];
   };
   "/clockout": {
-    post: operations["ClockClockOut"];
+    post: operations["KayordPosFeaturesClockClockOutEndpoint"];
   };
   "/clockin": {
-    post: operations["ClockClockIn"];
+    post: operations["KayordPosFeaturesClockClockInEndpoint"];
   };
   "/business": {
-    get: operations["BusinessGetAll"];
-    put: operations["BusinessEdit"];
-    post: operations["BusinessCreate"];
-    delete: operations["BusinessDelete"];
+    get: operations["KayordPosFeaturesBusinessGetAllEndpoint"];
+    put: operations["KayordPosFeaturesBusinessEditEndpoint"];
+    post: operations["KayordPosFeaturesBusinessCreateEndpoint"];
+    delete: operations["KayordPosFeaturesBusinessDeleteEndpoint"];
   };
   "/business/{Id}": {
-    get: operations["BusinessGet"];
+    get: operations["KayordPosFeaturesBusinessGetEndpoint"];
   };
 }
 
@@ -105,360 +117,406 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    TableOrder: {
-      /** Format: int32 */
-      tableOrderId: number;
-      /** Format: date-time */
-      orderDate: string;
-      /** Format: int32 */
-      customerId: number;
-      customer: components["schemas"]["Customer"];
-      /** Format: int32 */
-      tableBookingId: number;
+    KayordPosFeaturesUserValidateResponse: {
+      userId?: string;
+      userRoles?: string[] | null;
     };
-    Customer: {
-      /** Format: int32 */
-      customerId: number;
-      name: string;
-      orders: components["schemas"]["Order"][];
-    };
-    /** @enum {integer} */
-    Order: 0 | 1;
-    ErrorResponse: {
-      /**
-       * Format: int32
-       * @default 400
-       */
-      statusCode: number;
-      /** @default One or more errors occurred! */
-      message: string;
-      errors: {
-        [key: string]: string[];
-      };
-    };
-    InternalErrorResponse: {
+    FastEndpointsInternalErrorResponse: {
       /** @default Internal Server Error! */
-      status: string;
+      status?: string;
       /**
        * Format: int32
        * @default 500
        */
-      code: number;
+      code?: number;
       /** @default Something unexpected has happened */
-      reason: string;
+      reason?: string;
       /** @default See application log for stack trace. */
-      note: string;
+      note?: string;
     };
-    Request: {
-      /** Format: int32 */
-      tableBookingId: number;
+    KayordPosFeaturesUserValidateRequest: {
+      userId?: string | null;
+      email?: string | null;
+      image?: string | null;
+      firstName?: string | null;
+      lastName?: string | null;
+      name?: string | null;
     };
-    Request2: Record<string, never>;
-    OrderItem: {
+    KayordPosFeaturesUserGetRolesRequest: Record<string, never>;
+    KayordPosEntitiesRole: {
       /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      quantity: number;
-      /** Format: int32 */
-      orderId: number;
-      order: components["schemas"]["Order"];
-      menuItem: components["schemas"]["MenuItem"];
+      roleId?: number;
+      name?: string;
+      description?: string;
+      userRole?: components["schemas"]["KayordPosEntitiesUserRole"][] | null;
     };
-    MenuItem: {
+    KayordPosEntitiesUserRole: {
       /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
+      userRoleId?: number;
+      userId?: string;
       /** Format: int32 */
-      menuId: number;
-      menu: components["schemas"]["Menu"];
-      orderItems: components["schemas"]["OrderItem"][];
+      roleId?: number;
+      user?: components["schemas"]["KayordPosEntitiesUser"];
+      role?: components["schemas"]["KayordPosEntitiesRole"];
     };
-    Menu: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["Outlet"];
-      menuItems: components["schemas"]["MenuItem"][];
+    KayordPosEntitiesUser: {
+      userId?: string;
+      email?: string;
+      image?: string;
+      name?: string;
+      isActive?: boolean;
+      userRole?: components["schemas"]["KayordPosEntitiesUserRole"][] | null;
     };
-    Outlet: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      /** Format: int32 */
-      businessId: number;
-      business: components["schemas"]["Business"];
-      sections?: components["schemas"]["Section"][] | null;
-      staff?: components["schemas"]["Staff"][] | null;
+    KayordPosFeaturesRoleCreateRequest: {
+      name?: string;
+      description?: string;
     };
-    Business: {
+    KayordPosFeaturesRoleAddUserInRoleRequest: {
+      userId?: string;
       /** Format: int32 */
-      id: number;
-      name: string;
-      outlets?: components["schemas"]["Outlet"][] | null;
+      roleId?: number;
     };
-    Section: {
+    KayordPosEntitiesTableOrder: {
       /** Format: int32 */
-      id: number;
-      name: string;
+      tableOrderId?: number;
+      /** Format: date-time */
+      orderDate?: string;
       /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["Outlet"];
-      tables?: components["schemas"]["Table"][] | null;
+      customerId?: number;
+      customer?: components["schemas"]["KayordPosEntitiesCustomer"];
+      /** Format: int32 */
+      tableBookingId?: number;
     };
-    Table: {
+    KayordPosEntitiesCustomer: {
       /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      capacity: number;
-      /** Format: int32 */
-      sectionId: number;
-      section: components["schemas"]["Section"];
-      customers: components["schemas"]["Customer"][];
-    };
-    Staff: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      staffType: components["schemas"]["StaffType"];
-      /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["Outlet"];
+      customerId?: number;
+      name?: string;
+      orders?: components["schemas"]["FastEndpointsOrder"][];
     };
     /** @enum {integer} */
-    StaffType: 1 | 2 | 3;
-    Request3: {
-      /** Format: int32 */
-      menuItemId: number;
+    FastEndpointsOrder: 0 | 1;
+    FastEndpointsErrorResponse: {
+      /**
+       * Format: int32
+       * @default 400
+       */
+      statusCode?: number;
+      /** @default One or more errors occurred! */
+      message?: string;
+      errors?: {
+        [key: string]: string[];
+      };
     };
-    TableCashUp: {
+    KayordPosFeaturesTableOrderCreateRequest: {
       /** Format: int32 */
-      id: number;
+      tableBookingId?: number;
+    };
+    KayordPosFeaturesOrderViewOrdersRequest: Record<string, never>;
+    KayordPosEntitiesOrderItem: {
       /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["TableBooking"];
+      orderItemId?: number;
+      /** Format: int32 */
+      menuItemId?: number;
+      /** Format: int32 */
+      quantity?: number;
+      /** Format: int32 */
+      orderId?: number;
+      order?: components["schemas"]["FastEndpointsOrder"];
+      menuItem?: components["schemas"]["KayordPosEntitiesMenuItem"];
+    };
+    KayordPosEntitiesMenuItem: {
+      /** Format: int32 */
+      menuItemId?: number;
+      name?: string;
       /** Format: decimal */
-      salesAmount: number;
+      price?: number;
+      /** Format: int32 */
+      menuId?: number;
+      menu?: components["schemas"]["KayordPosEntitiesMenu"];
+      orderItems?: components["schemas"]["KayordPosEntitiesOrderItem"][];
+    };
+    KayordPosEntitiesMenu: {
+      /** Format: int32 */
+      id?: number;
+      name?: string;
+      /** Format: int32 */
+      outletId?: number;
+      outlet?: components["schemas"]["KayordPosEntitiesOutlet"];
+      menuItems?: components["schemas"]["KayordPosEntitiesMenuItem"][];
+    };
+    KayordPosEntitiesOutlet: {
+      /** Format: int32 */
+      id?: number;
+      name?: string;
+      /** Format: int32 */
+      businessId?: number;
+      business?: components["schemas"]["KayordPosEntitiesBusiness"];
+      sections?: components["schemas"]["KayordPosEntitiesSection"][] | null;
+      staff?: components["schemas"]["KayordPosEntitiesStaff"][] | null;
+    };
+    KayordPosEntitiesBusiness: {
+      /** Format: int32 */
+      id?: number;
+      name?: string;
+      outlets?: components["schemas"]["KayordPosEntitiesOutlet"][] | null;
+    };
+    KayordPosEntitiesSection: {
+      /** Format: int32 */
+      id?: number;
+      name?: string;
+      /** Format: int32 */
+      outletId?: number;
+      outlet?: components["schemas"]["KayordPosEntitiesOutlet"];
+      tables?: components["schemas"]["KayordPosEntitiesTable"][] | null;
+    };
+    KayordPosEntitiesTable: {
+      /** Format: int32 */
+      tableId?: number;
+      name?: string;
+      /** Format: int32 */
+      capacity?: number;
+      /** Format: int32 */
+      sectionId?: number;
+      section?: components["schemas"]["KayordPosEntitiesSection"];
+      customers?: components["schemas"]["KayordPosEntitiesCustomer"][];
+    };
+    KayordPosEntitiesStaff: {
+      /** Format: int32 */
+      id?: number;
+      name?: string;
+      staffType?: components["schemas"]["KayordPosCommonEnumsStaffType"];
+      /** Format: int32 */
+      outletId?: number;
+      outlet?: components["schemas"]["KayordPosEntitiesOutlet"];
+    };
+    /** @enum {integer} */
+    KayordPosCommonEnumsStaffType: 1 | 2 | 3;
+    KayordPosFeaturesOrderAddItemRequest: {
+      /** Format: int32 */
+      menuItemId?: number;
+    };
+    KayordPosEntitiesTableCashUp: {
+      /** Format: int32 */
+      id?: number;
+      /** Format: int32 */
+      tableBookingId?: number;
+      tableBooking?: components["schemas"]["KayordPosEntitiesTableBooking"];
       /** Format: decimal */
-      totalAmount: number;
+      salesAmount?: number;
+      /** Format: decimal */
+      totalAmount?: number;
       /** Format: date-time */
-      cashUpDate: string;
+      cashUpDate?: string;
       /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["Outlet"];
+      outletId?: number;
+      outlet?: components["schemas"]["KayordPosEntitiesOutlet"];
     };
-    TableBooking: {
+    KayordPosEntitiesTableBooking: {
       /** Format: int32 */
-      id: number;
+      id?: number;
       /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["Table"];
-      bookingName: string;
+      tableId?: number;
+      table?: components["schemas"]["KayordPosEntitiesTable"];
+      bookingName?: string;
       /** Format: date-time */
-      bookingDate: string;
+      bookingDate?: string;
       /** Format: int32 */
-      salesPeriodId: number;
-      salesPeriod: components["schemas"]["SalesPeriod"];
+      salesPeriodId?: number;
+      salesPeriod?: components["schemas"]["KayordPosEntitiesSalesPeriod"];
       /** Format: int32 */
-      staffId: number;
-      staff: components["schemas"]["Staff"];
+      staffId?: number;
+      staff?: components["schemas"]["KayordPosEntitiesStaff"];
     };
-    SalesPeriod: {
+    KayordPosEntitiesSalesPeriod: {
       /** Format: int32 */
-      id: number;
+      id?: number;
       name?: string | null;
       /** Format: date-time */
       startDate?: string | null;
       /** Format: date-time */
       endDate?: string | null;
-      outlet: components["schemas"]["Outlet"];
+      outlet?: components["schemas"]["KayordPosEntitiesOutlet"];
       /** Format: int32 */
-      outletId: number;
+      outletId?: number;
     };
-    Request4: Record<string, never>;
-    Request5: {
+    KayordPosFeaturesTableCashUpViewTableCashUpsRequest: Record<string, never>;
+    KayordPosFeaturesTableCashUpCreateRequest: {
       /** Format: int32 */
-      tableBookingId: number;
+      tableBookingId?: number;
       /** Format: decimal */
-      salesAmount: number;
+      salesAmount?: number;
       /** Format: decimal */
-      totalAmount: number;
+      totalAmount?: number;
       /** Format: int32 */
-      outletId: number;
+      outletId?: number;
     };
-    Request6: {
+    KayordPosFeaturesTableBookingCreateRequest: {
       /** Format: int32 */
-      tableId: number;
+      tableId?: number;
       bookingName: string;
       /** Format: int32 */
-      salesPeriodId: number;
+      salesPeriodId?: number;
       /** Format: int32 */
-      staffId: number;
+      staffId?: number;
     };
-    Request7: {
+    KayordPosFeaturesTableUpdateRequest: {
       name: string;
       /** Format: int32 */
-      sectionId: number;
+      sectionId?: number;
       /** Format: int32 */
-      capacity: number;
+      capacity?: number;
     };
-    Response: {
+    KayordPosFeaturesTableGetMyBookedResponse: {
       /** Format: int32 */
-      id: number;
+      id?: number;
       /** Format: int32 */
-      tableId: number;
-      bookingName: string;
+      tableId?: number;
+      bookingName?: string;
       /** Format: date-time */
-      bookingDate: string;
+      bookingDate?: string;
       /** Format: int32 */
-      salesPeriodId: number;
+      salesPeriodId?: number;
       /** Format: int32 */
-      staffId: number;
-      table: components["schemas"]["TableDto"];
+      staffId?: number;
+      table?: components["schemas"]["KayordPosFeaturesTableGetMyBookedTableDto"];
     };
-    TableDto: {
+    KayordPosFeaturesTableGetMyBookedTableDto: {
       /** Format: int32 */
-      tableId: number;
+      tableId?: number;
+      name?: string;
+      section?: components["schemas"]["KayordPosFeaturesTableGetMyBookedSectionDto"];
+    };
+    KayordPosFeaturesTableGetMyBookedSectionDto: {
+      /** Format: int32 */
+      id?: number;
+      name?: string;
+    };
+    KayordPosFeaturesTableGetMyBookedRequest: Record<string, never>;
+    KayordPosFeaturesTableGetAvailableResponse: {
+      /** Format: int32 */
+      tableId?: number;
+      name?: string;
+      /** Format: int32 */
+      capacity?: number;
+      /** Format: int32 */
+      sectionId?: number;
+      section?: components["schemas"]["KayordPosFeaturesTableGetAvailableSectionDto"];
+    };
+    KayordPosFeaturesTableGetAvailableSectionDto: {
+      /** Format: int32 */
+      id?: number;
+      name?: string;
+    };
+    KayordPosFeaturesTableGetAvailableRequest: Record<string, never>;
+    KayordPosFeaturesTableCreateRequest: {
       name: string;
-      section: components["schemas"]["SectionDto"];
+      /** Format: int32 */
+      sectionId?: number;
+      /** Format: int32 */
+      capacity?: number;
     };
-    SectionDto: {
+    KayordPosEntitiesClock: {
       /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    Request8: Record<string, never>;
-    Response2: {
+      id?: number;
       /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      capacity: number;
-      /** Format: int32 */
-      sectionId: number;
-      section: components["schemas"]["SectionDto2"];
-    };
-    SectionDto2: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    Request9: Record<string, never>;
-    Request10: {
-      name: string;
-      /** Format: int32 */
-      sectionId: number;
-      /** Format: int32 */
-      capacity: number;
-    };
-    Clock: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      staffId: number;
-      staff: components["schemas"]["Staff"];
+      staffId?: number;
+      staff?: components["schemas"]["KayordPosEntitiesStaff"];
       /** Format: date-time */
-      startDate: string;
+      startDate?: string;
       /** Format: date-time */
       endDate?: string | null;
       /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["Outlet"];
+      outletId?: number;
+      outlet?: components["schemas"]["KayordPosEntitiesOutlet"];
     };
-    Request11: Record<string, never>;
-    Request12: {
+    KayordPosFeaturesStaffGetAllClockedInRequest: Record<string, never>;
+    KayordPosFeaturesStaffCreateRequest: {
       name: string;
       /** Format: int32 */
-      businessId: number;
-      staffType: components["schemas"]["StaffType"];
+      businessId?: number;
+      staffType?: components["schemas"]["KayordPosCommonEnumsStaffType"];
       /** Format: int32 */
-      outletId: number;
+      outletId?: number;
     };
-    Response3: {
-      token: string;
+    KayordPosFeaturesSessionLoginResponse: {
+      token?: string;
     };
-    Request13: {
+    KayordPosFeaturesSessionLoginRequest: {
       /** Format: int32 */
       staffId: number;
     };
-    Request14: {
+    KayordPosFeaturesSectionUpdateRequest: {
       /** Format: int32 */
-      id: number;
+      id?: number;
       name: string;
     };
-    Request15: Record<string, never>;
-    Request16: Record<string, never>;
-    Request17: {
+    KayordPosFeaturesSectionListRequest: Record<string, never>;
+    KayordPosFeaturesSectionGetRequest: Record<string, never>;
+    KayordPosFeaturesSectionCreateRequest: {
       name: string;
       /** Format: int32 */
-      outletId: number;
+      outletId?: number;
     };
-    Request18: Record<string, never>;
-    Request19: {
+    KayordPosFeaturesSalesPeriodGetRequest: Record<string, never>;
+    KayordPosFeaturesSalesPeriodCreateRequest: {
       name: string;
       /** Format: int32 */
-      outletId: number;
+      outletId?: number;
     };
-    Request20: Record<string, never>;
-    Request21: {
+    KayordPosFeaturesSalesPeriodCloseRequest: Record<string, never>;
+    KayordPosFeaturesOutletUpdateRequest: {
       name: string;
       /** Format: int32 */
-      businessId: number;
+      businessId?: number;
     };
-    Request22: Record<string, never>;
-    Request23: {
+    KayordPosFeaturesOutletGetRequest: Record<string, never>;
+    KayordPosFeaturesOutletCreateRequest: {
       name: string;
       /** Format: int32 */
-      businessId: number;
+      businessId?: number;
     };
-    Request24: Record<string, never>;
-    Request25: {
+    KayordPosFeaturesMenuListMenuItemsRequest: Record<string, never>;
+    KayordPosFeaturesMenuCreateMenuItemRequest: {
       name: string;
       /** Format: decimal */
-      price: number;
+      price?: number;
     };
-    Request26: {
+    KayordPosFeaturesMenuUpdateRequest: {
+      /** Format: int32 */
+      id?: number;
+      name: string;
+    };
+    KayordPosFeaturesMenuListRequest: Record<string, never>;
+    KayordPosFeaturesMenuGetRequest: Record<string, never>;
+    KayordPosFeaturesMenuCreateRequest: {
+      /** Format: int32 */
+      outletId?: number;
+      name: string;
+    };
+    KayordPosFeaturesClockListRequest: Record<string, never>;
+    KayordPosFeaturesClockClockOutRequest: {
+      /** Format: int32 */
+      staffId?: number;
+      /** Format: int32 */
+      outletId?: number;
+    };
+    KayordPosFeaturesClockClockInRequest: {
+      /** Format: int32 */
+      staffId?: number;
+      /** Format: int32 */
+      outletId?: number;
+    };
+    KayordPosFeaturesBusinessGetRequest: Record<string, never>;
+    KayordPosFeaturesBusinessEditRequest: {
       /** Format: int32 */
       id: number;
       name: string;
     };
-    Request27: Record<string, never>;
-    Request28: Record<string, never>;
-    Request29: {
-      /** Format: int32 */
-      outletId: number;
-      name: string;
-    };
-    Request30: Record<string, never>;
-    Request31: {
-      /** Format: int32 */
-      staffId: number;
-      /** Format: int32 */
-      outletId: number;
-    };
-    Request32: {
-      /** Format: int32 */
-      staffId: number;
-      /** Format: int32 */
-      outletId: number;
-    };
-    Request33: Record<string, never>;
-    Request34: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    Request35: {
+    KayordPosFeaturesBusinessDeleteRequest: {
       /** Format: int32 */
       id: number;
     };
-    Request36: {
+    KayordPosFeaturesBusinessCreateRequest: {
       name: string;
     };
   };
@@ -475,34 +533,118 @@ export type external = Record<string, never>;
 
 export interface operations {
 
-  TableOrderCreate: {
+  KayordPosFeaturesUserValidateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request"];
+        "application/json": components["schemas"]["KayordPosFeaturesUserValidateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableOrder"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/json": components["schemas"]["KayordPosFeaturesUserValidateResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  OrderViewOrders: {
+  KayordPosFeaturesUserGetRolesEndpoint: {
+    parameters: {
+      query: {
+        userId: string | null;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": string[];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
+        };
+      };
+    };
+  };
+  KayordPosFeaturesRoleCreateEndpoint: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["KayordPosFeaturesRoleCreateRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["KayordPosEntitiesRole"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
+        };
+      };
+    };
+  };
+  KayordPosFeaturesRoleAddUserInRoleEndpoint: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["KayordPosFeaturesRoleAddUserInRoleRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["KayordPosEntitiesUserRole"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
+        };
+      };
+    };
+  };
+  KayordPosFeaturesTableOrderCreateEndpoint: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["KayordPosFeaturesTableOrderCreateRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["KayordPosEntitiesTableOrder"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
+        };
+      };
+    };
+  };
+  KayordPosFeaturesOrderViewOrdersEndpoint: {
     parameters: {
       query: {
         tableBookingId: number;
@@ -515,18 +657,18 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableOrder"][];
+          "application/json": components["schemas"]["KayordPosEntitiesTableOrder"][];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  OrderAddItem: {
+  KayordPosFeaturesOrderAddItemEndpoint: {
     parameters: {
       path: {
         orderId: number;
@@ -534,31 +676,31 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request3"];
+        "application/json": components["schemas"]["KayordPosFeaturesOrderAddItemRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["OrderItem"];
+          "application/json": components["schemas"]["KayordPosEntitiesOrderItem"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  TableCashUpViewTableCashUps: {
+  KayordPosFeaturesTableCashUpViewTableCashUpsEndpoint: {
     parameters: {
       path: {
         tableBookingId: number;
@@ -568,72 +710,72 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableCashUp"][];
+          "application/json": components["schemas"]["KayordPosEntitiesTableCashUp"][];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  TableCashUpCreate: {
+  KayordPosFeaturesTableCashUpCreateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request5"];
+        "application/json": components["schemas"]["KayordPosFeaturesTableCashUpCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableCashUp"];
+          "application/json": components["schemas"]["KayordPosEntitiesTableCashUp"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  TableBookingCreate: {
+  KayordPosFeaturesTableBookingCreateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request6"];
+        "application/json": components["schemas"]["KayordPosFeaturesTableBookingCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableBooking"];
+          "application/json": components["schemas"]["KayordPosEntitiesTableBooking"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  TableUpdate: {
+  KayordPosFeaturesTableUpdateEndpoint: {
     parameters: {
       path: {
         tableId: number;
@@ -641,31 +783,31 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request7"];
+        "application/json": components["schemas"]["KayordPosFeaturesTableUpdateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Table"];
+          "application/json": components["schemas"]["KayordPosEntitiesTable"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  TableGetMyBooked: {
+  KayordPosFeaturesTableGetMyBookedEndpoint: {
     parameters: {
       query: {
         outletId: number;
@@ -676,24 +818,24 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response"][];
+          "application/json": components["schemas"]["KayordPosFeaturesTableGetMyBookedResponse"][];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  TableGetAvailable: {
+  KayordPosFeaturesTableGetAvailableEndpoint: {
     parameters: {
       query: {
         outletId: number;
@@ -703,51 +845,51 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response2"][];
+          "application/json": components["schemas"]["KayordPosFeaturesTableGetAvailableResponse"][];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  TableCreate: {
+  KayordPosFeaturesTableCreateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request10"];
+        "application/json": components["schemas"]["KayordPosFeaturesTableCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Table"];
+          "application/json": components["schemas"]["KayordPosEntitiesTable"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  StaffGetAllClockedIn: {
+  KayordPosFeaturesStaffGetAllClockedInEndpoint: {
     parameters: {
       path: {
         outletId: number;
@@ -757,72 +899,72 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Clock"][];
+          "application/json": components["schemas"]["KayordPosEntitiesClock"][];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  StaffCreate: {
+  KayordPosFeaturesStaffCreateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request12"];
+        "application/json": components["schemas"]["KayordPosFeaturesStaffCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Staff"];
+          "application/json": components["schemas"]["KayordPosEntitiesStaff"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  SessionLogin: {
+  KayordPosFeaturesSessionLoginEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request13"];
+        "application/json": components["schemas"]["KayordPosFeaturesSessionLoginRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response3"];
+          "application/json": components["schemas"]["KayordPosFeaturesSessionLoginResponse"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  SectionGet: {
+  KayordPosFeaturesSectionGetEndpoint: {
     parameters: {
       path: {
         sectionId: number;
@@ -832,24 +974,24 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Section"];
+          "application/json": components["schemas"]["KayordPosEntitiesSection"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  SectionUpdate: {
+  KayordPosFeaturesSectionUpdateEndpoint: {
     parameters: {
       path: {
         sectionId: string | null;
@@ -857,31 +999,31 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request14"];
+        "application/json": components["schemas"]["KayordPosFeaturesSectionUpdateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Section"];
+          "application/json": components["schemas"]["KayordPosEntitiesSection"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  SectionList: {
+  KayordPosFeaturesSectionListEndpoint: {
     parameters: {
       query: {
         outletId: number;
@@ -891,51 +1033,51 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Section"][];
+          "application/json": components["schemas"]["KayordPosEntitiesSection"][];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  SectionCreate: {
+  KayordPosFeaturesSectionCreateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request17"];
+        "application/json": components["schemas"]["KayordPosFeaturesSectionCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Section"];
+          "application/json": components["schemas"]["KayordPosEntitiesSection"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  SalesPeriodGet: {
+  KayordPosFeaturesSalesPeriodGetEndpoint: {
     parameters: {
       path: {
         outletId: number;
@@ -945,45 +1087,45 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["SalesPeriod"];
+          "application/json": components["schemas"]["KayordPosEntitiesSalesPeriod"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  SalesPeriodCreate: {
+  KayordPosFeaturesSalesPeriodCreateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request19"];
+        "application/json": components["schemas"]["KayordPosFeaturesSalesPeriodCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["SalesPeriod"];
+          "application/json": components["schemas"]["KayordPosEntitiesSalesPeriod"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  SalesPeriodClose: {
+  KayordPosFeaturesSalesPeriodCloseEndpoint: {
     parameters: {
       path: {
         salesPeriodId: number;
@@ -993,18 +1135,18 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["SalesPeriod"];
+          "application/json": components["schemas"]["KayordPosEntitiesSalesPeriod"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  OutletGet: {
+  KayordPosFeaturesOutletGetEndpoint: {
     parameters: {
       path: {
         id: number;
@@ -1014,18 +1156,18 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Outlet"];
+          "application/json": components["schemas"]["KayordPosEntitiesOutlet"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  OutletUpdate: {
+  KayordPosFeaturesOutletUpdateEndpoint: {
     parameters: {
       path: {
         id: number;
@@ -1033,74 +1175,74 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request21"];
+        "application/json": components["schemas"]["KayordPosFeaturesOutletUpdateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Outlet"];
+          "application/json": components["schemas"]["KayordPosEntitiesOutlet"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  OutletList: {
+  KayordPosFeaturesOutletListEndpoint: {
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Outlet"][];
+          "application/json": components["schemas"]["KayordPosEntitiesOutlet"][];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  OutletCreate: {
+  KayordPosFeaturesOutletCreateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request23"];
+        "application/json": components["schemas"]["KayordPosFeaturesOutletCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Outlet"];
+          "application/json": components["schemas"]["KayordPosEntitiesOutlet"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  MenuListMenuItems: {
+  KayordPosFeaturesMenuListMenuItemsEndpoint: {
     parameters: {
       path: {
         menuId: number;
@@ -1110,18 +1252,18 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["MenuItem"][];
+          "application/json": components["schemas"]["KayordPosEntitiesMenuItem"][];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  MenuCreateMenuItem: {
+  KayordPosFeaturesMenuCreateMenuItemEndpoint: {
     parameters: {
       path: {
         menuId: number;
@@ -1129,31 +1271,31 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request25"];
+        "application/json": components["schemas"]["KayordPosFeaturesMenuCreateMenuItemRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["MenuItem"];
+          "application/json": components["schemas"]["KayordPosEntitiesMenuItem"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  MenuGet: {
+  KayordPosFeaturesMenuGetEndpoint: {
     parameters: {
       path: {
         menuId: number;
@@ -1163,18 +1305,18 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Menu"];
+          "application/json": components["schemas"]["KayordPosEntitiesMenu"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  MenuUpdate: {
+  KayordPosFeaturesMenuUpdateEndpoint: {
     parameters: {
       path: {
         menuId: string | null;
@@ -1182,31 +1324,31 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request26"];
+        "application/json": components["schemas"]["KayordPosFeaturesMenuUpdateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Menu"];
+          "application/json": components["schemas"]["KayordPosEntitiesMenu"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  MenuList: {
+  KayordPosFeaturesMenuListEndpoint: {
     parameters: {
       query: {
         outletId: number;
@@ -1216,45 +1358,45 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Menu"][];
+          "application/json": components["schemas"]["KayordPosEntitiesMenu"][];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  MenuCreate: {
+  KayordPosFeaturesMenuCreateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request29"];
+        "application/json": components["schemas"]["KayordPosFeaturesMenuCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Menu"];
+          "application/json": components["schemas"]["KayordPosEntitiesMenu"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  ClockList: {
+  KayordPosFeaturesClockListEndpoint: {
     parameters: {
       query: {
         outletId: number;
@@ -1265,71 +1407,71 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Staff"][];
+          "application/json": components["schemas"]["KayordPosEntitiesStaff"][];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  ClockClockOut: {
+  KayordPosFeaturesClockClockOutEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request31"];
+        "application/json": components["schemas"]["KayordPosFeaturesClockClockOutRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Clock"];
+          "application/json": components["schemas"]["KayordPosEntitiesClock"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  ClockClockIn: {
+  KayordPosFeaturesClockClockInEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request32"];
+        "application/json": components["schemas"]["KayordPosFeaturesClockClockInRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Clock"];
+          "application/json": components["schemas"]["KayordPosEntitiesClock"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  BusinessGetAll: {
+  KayordPosFeaturesBusinessGetAllEndpoint: {
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Business"][];
+          "application/json": components["schemas"]["KayordPosEntitiesBusiness"][];
         };
       };
       /** @description Unauthorized */
@@ -1339,15 +1481,15 @@ export interface operations {
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  BusinessEdit: {
+  KayordPosFeaturesBusinessEditEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request34"];
+        "application/json": components["schemas"]["KayordPosFeaturesBusinessEditRequest"];
       };
     };
     responses: {
@@ -1361,49 +1503,49 @@ export interface operations {
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  BusinessCreate: {
+  KayordPosFeaturesBusinessCreateEndpoint: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request36"];
+        "application/json": components["schemas"]["KayordPosFeaturesBusinessCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Business"];
+          "application/json": components["schemas"]["KayordPosEntitiesBusiness"];
         };
       };
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  BusinessDelete: {
+  KayordPosFeaturesBusinessDeleteEndpoint: {
     requestBody: {
       content: {
-        "*/*": components["schemas"]["Request35"];
-        "application/json": components["schemas"]["Request35"];
+        "*/*": components["schemas"]["KayordPosFeaturesBusinessDeleteRequest"];
+        "application/json": components["schemas"]["KayordPosFeaturesBusinessDeleteRequest"];
       };
     };
     responses: {
@@ -1417,18 +1559,18 @@ export interface operations {
       /** @description Bad Request */
       400: {
         content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };
   };
-  BusinessGet: {
+  KayordPosFeaturesBusinessGetEndpoint: {
     parameters: {
       path: {
         id: number;
@@ -1438,13 +1580,13 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Business"];
+          "application/json": components["schemas"]["KayordPosEntitiesBusiness"];
         };
       };
       /** @description Server Error */
       500: {
         content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
+          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
         };
       };
     };

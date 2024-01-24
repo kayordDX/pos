@@ -49,6 +49,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"jwt-decode": "^4.0.0",
 		"lucide-svelte": "^0.314.0"
 	}
 }

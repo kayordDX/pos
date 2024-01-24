@@ -14,13 +14,16 @@
 
 	import type { PageData } from "./$types";
 	import { salesPeriod } from "$lib/stores/salesPeriodStore";
+	import { session } from "$lib/stores/session";
 
 	export let data: PageData;
 
 	onMount(() => {
-		$user = data.user ? data.user : undefined;
+		console.log("mount");
+		$user = { id: 1, name: "test", token: "test", type: 2 };
 		$outlet = data.outlet ? data.outlet : undefined;
 		$salesPeriod = data.salesPeriod ? data.salesPeriod : undefined;
+		$session = data.session;
 	});
 
 	const flash = getFlash(page);
