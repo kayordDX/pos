@@ -429,21 +429,6 @@ export interface Request3 {
 	name: string;
 }
 
-export interface Role {
-	description: string;
-	name: string;
-	roleId: number;
-	userRole?: UserRole[] | null;
-}
-
-export interface UserRole {
-	role: Role;
-	roleId: number;
-	user: User;
-	userId: string;
-	userRoleId: number;
-}
-
 export interface User {
 	email: string;
 	image: string;
@@ -451,6 +436,23 @@ export interface User {
 	name: string;
 	userId: string;
 	userRole?: UserRole[] | null;
+}
+
+export interface Role {
+	description: string;
+	name: string;
+	roleId: number;
+	userRole?: UserRole[] | null;
+}
+
+export type UserRoleRole = Role | null;
+
+export interface UserRole {
+	role?: UserRoleRole;
+	roleId: number;
+	user: User;
+	userId: string;
+	userRoleId: number;
 }
 
 export interface Request2 {

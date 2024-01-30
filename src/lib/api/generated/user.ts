@@ -23,7 +23,7 @@ export const useUserValidateHook = () => {
 
 	return (request: BodyType<Request>) => {
 		return userValidate({
-			url: `/User/Validate`,
+			url: `/user/validate`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			data: request,
@@ -88,12 +88,12 @@ export const useUserGetRolesHook = () => {
 	const userGetRoles = useCustomClient<string[]>();
 
 	return (params: UserGetRolesParams) => {
-		return userGetRoles({ url: `/user/getroles`, method: "GET", params });
+		return userGetRoles({ url: `/user/getRoles`, method: "GET", params });
 	};
 };
 
 export const getUserGetRolesQueryKey = (params: UserGetRolesParams) => {
-	return [`/user/getroles`, ...(params ? [params] : [])] as const;
+	return [`/user/getRoles`, ...(params ? [params] : [])] as const;
 };
 
 export const useUserGetRolesQueryOptions = <

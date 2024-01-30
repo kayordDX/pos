@@ -99,7 +99,7 @@ const authentication: Handle = async ({ event, resolve }) => {
 					const t = account?.id_token ?? "";
 					const decoded = jwtDecode(t);
 
-					const roleRequest = await client(t).POST("/User/Validate", {
+					const roleRequest = await client(t).POST("/user/validate", {
 						body: {
 							email: profile.email ?? "",
 							firstName: profile.given_name ?? "",

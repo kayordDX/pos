@@ -177,7 +177,7 @@ export const useOrderAddItemHook = () => {
 
 	return (orderId: number, request7: BodyType<Request7>) => {
 		return orderAddItem({
-			url: `/order/${orderId}/additem`,
+			url: `/order/${orderId}/addItem`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			data: request7,

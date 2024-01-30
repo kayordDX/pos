@@ -23,14 +23,14 @@ export const useTableCashUpViewTableCashUpsHook = () => {
 
 	return (tableBookingId: number) => {
 		return tableCashUpViewTableCashUps({
-			url: `/tablecashup/tablebooking/${tableBookingId}`,
+			url: `/tableCashUp/tableBooking/${tableBookingId}`,
 			method: "GET",
 		});
 	};
 };
 
 export const getTableCashUpViewTableCashUpsQueryKey = (tableBookingId: number) => {
-	return [`/tablecashup/tablebooking/${tableBookingId}`] as const;
+	return [`/tableCashUp/tableBooking/${tableBookingId}`] as const;
 };
 
 export const useTableCashUpViewTableCashUpsQueryOptions = <
@@ -101,7 +101,7 @@ export const useTableCashUpCreateHook = () => {
 
 	return (request9: BodyType<Request9>) => {
 		return tableCashUpCreate({
-			url: `/tableCashup`,
+			url: `/tableCashUp`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			data: request9,

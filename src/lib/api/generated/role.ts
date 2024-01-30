@@ -16,7 +16,7 @@ export const useRoleCreateHook = () => {
 
 	return (request3: BodyType<Request3>) => {
 		return roleCreate({
-			url: `/role/createrole`,
+			url: `/role/createRole`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			data: request3,
@@ -82,7 +82,7 @@ export const useRoleAddUserInRoleHook = () => {
 
 	return (request4: BodyType<Request4>) => {
 		return roleAddUserInRole({
-			url: `/role/adduserinrole`,
+			url: `/role/addUserInRole`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
 			data: request4,

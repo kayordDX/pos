@@ -11,7 +11,7 @@
     }
   ],
   "paths": {
-    "/User/Validate": {
+    "/user/validate": {
       "post": {
         "tags": [
           "User"
@@ -54,7 +54,7 @@
         }
       }
     },
-    "/user/getroles": {
+    "/user/getRoles": {
       "get": {
         "tags": [
           "User"
@@ -98,7 +98,7 @@
         }
       }
     },
-    "/role/createrole": {
+    "/role/createRole": {
       "post": {
         "tags": [
           "Role"
@@ -141,7 +141,7 @@
         }
       }
     },
-    "/role/adduserinrole": {
+    "/role/addUserInRole": {
       "post": {
         "tags": [
           "Role"
@@ -290,7 +290,7 @@
         }
       }
     },
-    "/order/{orderId}/additem": {
+    "/order/{orderId}/addItem": {
       "post": {
         "tags": [
           "Order"
@@ -354,7 +354,7 @@
         }
       }
     },
-    "/tablecashup/tablebooking/{tableBookingId}": {
+    "/tableCashUp/tableBooking/{tableBookingId}": {
       "get": {
         "tags": [
           "Tablecashup"
@@ -398,7 +398,7 @@
         }
       }
     },
-    "/tableCashup": {
+    "/tableCashUp": {
       "post": {
         "tags": [
           "Tablecashup"
@@ -1105,7 +1105,7 @@
         }
       }
     },
-    "/salesPeriod/{OutletId}": {
+    "/salesPeriod/{outletId}": {
       "get": {
         "tags": [
           "Salesperiod"
@@ -2126,8 +2126,7 @@
           "userRoleId",
           "userId",
           "roleId",
-          "user",
-          "role"
+          "user"
         ],
         "properties": {
           "userRoleId": {
@@ -2145,7 +2144,12 @@
             "$ref": "#/components/schemas/User"
           },
           "role": {
-            "$ref": "#/components/schemas/Role"
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/Role"
+              }
+            ]
           }
         }
       },
