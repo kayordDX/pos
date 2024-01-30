@@ -1,4 +1,4 @@
-import { SvelteKitAuth } from "@auth/sveltekit";
+import { SvelteKitAuth, type User } from "@auth/sveltekit";
 import Google from "@auth/core/providers/google";
 import { GOOGLE_ID, GOOGLE_SECRET } from "$env/static/private";
 import { redirect, type Handle } from "@sveltejs/kit";
@@ -6,6 +6,7 @@ import { sequence } from "@sveltejs/kit/hooks";
 import { jwtDecode } from "jwt-decode";
 import type { JWT } from "@auth/core/jwt";
 import { client } from "$lib/api";
+import type { AdapterUser } from "@auth/core/adapters";
 
 // export async function handleFetch({ request, fetch, event }) {
 // 	if (request.url.startsWith(PUBLIC_API_URL)) {
@@ -24,6 +25,12 @@ const filterFetch: Handle = async ({ event, resolve }) => {
 			return name === "content-length";
 		},
 	});
+};
+
+const outlet: Handle = async ({ event, resolve }) => {
+	const cookieOutlet = JSON.parse(event.cookies.get("outlet") ?? "") as { outletId: number };
+	event.locals.outlet = cookieOutlet;
+	return await resolve(event);
 };
 
 const authorization: Handle = async ({ event, resolve }) => {
@@ -125,13 +132,13 @@ const authentication: Handle = async ({ event, resolve }) => {
 			// @ts-ignore
 			async session({ session, token }) {
 				if (token) {
-					session.user = token.user;
-					session.token = token.token;
-					session.refreshToken = token.refreshToken;
-					session.tokenExpires = token.tokenExpires;
+					session.user = token.user as AdapterUser & User & { id: string; roles: string[] };
+					session.token = token.token as string;
+					session.refreshToken = token.refreshToken as string;
+					session.tokenExpires = token.tokenExpires as number;
 				}
 				if (session.user) {
-					session.user.roles = token.roles;
+					session.user.roles = token.roles as Array<string>;
 				}
 				return session;
 			},
@@ -140,4 +147,4 @@ const authentication: Handle = async ({ event, resolve }) => {
 	return authHandle;
 };
 
-export const handle: Handle = sequence(authentication, authorization, filterFetch);
+export const handle: Handle = sequence(authentication, authorization, filterFetch, outlet);
