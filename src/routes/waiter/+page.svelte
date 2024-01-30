@@ -4,14 +4,11 @@
 	export let data: PageData;
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import { outlet } from "$lib/stores/outlet";
+	import { NotebookIcon, Rows4Icon } from "lucide-svelte";
 </script>
 
 <div class="m-8">
-	<h1>Table Booking</h1>
-	<Button href="/table/book">Book a Table</Button>
-
-	<h1 class="mt-8">My Tables</h1>
+	<h1>My Tables</h1>
 	<p class="text-muted-foreground">List of my current tables</p>
 
 	{#if data.myTables.error}
@@ -32,27 +29,11 @@
 		{/each}
 	</div>
 
+	<h1 class="mt-8">Table Booking</h1>
+	<p class="text-muted-foreground mb-4">Book a new table</p>
+	<Button href="/table/book"><NotebookIcon class="h-5 w-5 mr-2" /> Book a Table</Button>
+
 	<h1 class="mt-8">Other Tables</h1>
-	<p class="text-muted-foreground">Tables managed by other users</p>
-	<!-- {#if $queryOther.isPending}
-		<Loader />
-	{/if}
-	{#if $queryOther.error}
-		<Error message={getError($queryOther.error).message} />
-	{/if}
-	{#if $queryOther.isSuccess}
-		<div class="flex flex-wrap gap-4 mt-4">
-			{#each $queryOther.data as otherTable}
-				<a href={`/table/${otherTable.id}`}>
-					<Card.Root class="p-5 w-48">
-						<div class="flex justify-between">
-							<h3>{otherTable.table.name}</h3>
-							<p>{otherTable.table.section.name}</p>
-						</div>
-						<p class="text-xs">{otherTable.bookingName}</p>
-					</Card.Root>
-				</a>
-			{/each}
-		</div>
-	{/if} -->
+	<p class="text-muted-foreground mb-4">Tables managed by other users</p>
+	<Button href="/tables"><Rows4Icon class="h-5 w-5 mr-2" /> View Tables</Button>
 </div>
