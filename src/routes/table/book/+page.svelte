@@ -84,5 +84,5 @@
 		</Dialog.Content>
 	</Dialog.Root>
 
-	<Button class="mt-4" href="/waiter">Cancel</Button>
+	<Button class="mt-4" on:click={() => history.back()}>Cancel</Button>
 </div>
