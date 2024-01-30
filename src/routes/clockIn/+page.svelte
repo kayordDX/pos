@@ -5,7 +5,7 @@
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
 	import StaffTypeBadge from "$lib/components/StaffTypeBadge.svelte";
-	import { outlet } from "$lib/stores/outletStore";
+	import { outlet } from "$lib/stores/outlet";
 	import { createClockClockIn } from "$lib/api";
 	const flash = getFlash(page);
 

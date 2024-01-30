@@ -2,7 +2,7 @@
 	import { Button, Card } from "@kayord/ui";
 	import type { PageData } from "./$types";
 	import { createTableCashUpCreate } from "$lib/api";
-	import { outlet } from "$lib/stores/outletStore";
+	import { outlet } from "$lib/stores/outlet";
 	import { Loader, Nfc } from "lucide-svelte";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";

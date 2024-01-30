@@ -5,8 +5,8 @@ import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { jwtDecode } from "jwt-decode";
 import type { JWT } from "@auth/core/jwt";
-import { client } from "$lib/api";
 import type { AdapterUser } from "@auth/core/adapters";
+import { client } from "$lib/api";
 
 // export async function handleFetch({ request, fetch, event }) {
 // 	if (request.url.startsWith(PUBLIC_API_URL)) {
@@ -99,7 +99,7 @@ const authentication: Handle = async ({ event, resolve }) => {
 					const t = account?.id_token ?? "";
 					const decoded = jwtDecode(t);
 
-					const roleRequest = await client().POST("/User/Validate", {
+					const roleRequest = await client(t).POST("/User/Validate", {
 						body: {
 							email: profile.email ?? "",
 							firstName: profile.given_name ?? "",

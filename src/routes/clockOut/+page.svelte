@@ -7,7 +7,7 @@
 	import { goto } from "$app/navigation";
 	import StaffTypeBadge from "$lib/components/StaffTypeBadge.svelte";
 	import { createClockClockOut } from "$lib/api";
-	import { outlet } from "$lib/stores/outletStore";
+	import { outlet } from "$lib/stores/outlet";
 	const flash = getFlash(page);
 
 	export let data: PageData;

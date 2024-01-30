@@ -11,6 +11,6 @@
 		<Card.Title>Setup Device</Card.Title>
 	</Card.Header>
 	<Card.Content>
-		<SetupForm form={data.form} />
+		<SetupForm form={data.form} {data} />
 	</Card.Content>
 </Card.Root>

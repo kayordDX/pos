@@ -3,8 +3,6 @@
 	import { ModeWatcher } from "@kayord/ui/mode-watcher";
 	import { Header } from "$lib/components/Header";
 	import "../app.postcss";
-	import { user } from "$lib/stores/userStore";
-	import { outlet } from "$lib/stores/outletStore";
 	import { page } from "$app/stores";
 	import { getFlash } from "sveltekit-flash-message";
 	import { HeadlessToast } from "$lib/components/HeadlessToast";
@@ -13,17 +11,17 @@
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
 
 	import type { PageData } from "./$types";
-	import { salesPeriod } from "$lib/stores/salesPeriodStore";
+	import { salesPeriod } from "$lib/stores/salesPeriod";
 	import { session } from "$lib/stores/session";
+	import { outlet } from "$lib/stores/outlet";
 
 	export let data: PageData;
 
 	onMount(() => {
-		console.log("mount");
-		// $user = { id: 1, name: "test", token: "test", type: 2 };
-		// $outlet = data.outlet ? data.outlet : undefined;
-		// $salesPeriod = data.salesPeriod ? data.salesPeriod : undefined;
+		console.log("mount", data);
 		$session = data.session;
+		$outlet = data.outlet ?? { outletId: 0 };
+		$salesPeriod = data.salesPeriod;
 	});
 
 	const flash = getFlash(page);

@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { Card, Input, Label } from "@kayord/ui";
 	import { Button } from "@kayord/ui";
-	import { createSalesPeriodCreate } from "$lib/api";
+	import { createSalesPeriodCreate, createSalesPeriodGet } from "$lib/api";
 	import { page } from "$app/stores";
 	import { getFlash } from "sveltekit-flash-message/client";
 	import { goto } from "$app/navigation";
-	import { outlet } from "$lib/stores/outletStore";
+	import { outlet } from "$lib/stores/outlet";
 
 	let name: string;
 

@@ -1,17 +1,15 @@
+import { client, type SalesPeriod } from "$lib/api";
 import type { LayoutServerLoad } from "./$types";
-import { PUBLIC_API_URL } from "$env/static/public";
-// import type { SalesPeriod } from "$lib/api";
 
 export const load = (async ({ locals }) => {
-	// let salesPeriod: SalesPeriod | undefined = undefined;
-	// if (locals.outlet) {
-	// 	const salesPeriodResult = await fetch(
-	// 		`${PUBLIC_API_URL}/SalesPeriod/${locals.outlet.outletId}`
-	// 	);
-	// 	if (salesPeriodResult.ok) {
-	// 		salesPeriod = (await salesPeriodResult.json()) as SalesPeriod;
-	// 	}
-	// }
 	const session = await locals.auth();
-	return { user: locals.user, outlet: locals.outlet, session };
+	let salesPeriod: SalesPeriod | undefined = undefined;
+	const { data } = await client(session?.token).GET("/salesPeriod/{outletId}", {
+		params: { path: { outletId: locals.outlet?.outletId ?? 0 } },
+		fetch,
+	});
+	if (data) {
+		salesPeriod = data;
+	}
+	return { outlet: locals.outlet, session, salesPeriod };
 }) satisfies LayoutServerLoad;

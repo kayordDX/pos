@@ -1,8 +1,6 @@
 <script lang="ts">
 	import { Avatar, ThemeSwitch } from "@kayord/ui";
 	import Menu from "./Menu.svelte";
-	import { user } from "$lib/stores/userStore";
-	import { Button } from "@kayord/ui";
 	import { session } from "$lib/stores/session";
 	import { goto } from "$app/navigation";
 </script>

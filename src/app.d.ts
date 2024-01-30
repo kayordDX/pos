@@ -1,11 +1,11 @@
-import type { User, Outlet } from "./lib/types";
+import type { Outlet } from "./lib/types";
 import type { DefaultSession } from "@auth/core/types";
 
 declare global {
 	namespace App {
 		// interface Error {}
 		interface Locals {
-			user: User | null;
+			session: Session | undefined;
 			outlet: Outlet | null;
 		}
 		interface PageData {

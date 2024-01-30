@@ -1,14 +1,10 @@
 <script lang="ts">
 	import { Card, Button, Badge } from "@kayord/ui";
 	import type { PageData } from "./$types";
-	import { createTableGetMyBooked } from "$lib/api";
-	import { Loader } from "lucide-svelte";
+	export let data: PageData;
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import { outlet } from "$lib/stores/outletStore";
-
-	const query = createTableGetMyBooked({ myBooking: true, OutletId: $outlet?.outletId ?? 0 });
-	const queryOther = createTableGetMyBooked({ myBooking: false, OutletId: $outlet?.outletId ?? 0 });
+	import { outlet } from "$lib/stores/outlet";
 </script>
 
 <div class="m-8">
@@ -17,31 +13,28 @@
 
 	<h1 class="mt-8">My Tables</h1>
 	<p class="text-muted-foreground">List of my current tables</p>
-	{#if $query.isPending}
-		<Loader />
+
+	{#if data.myTables.error}
+		<Error message={getError(data.myTables.error).message} />
 	{/if}
-	{#if $query.error}
-		<Error message={getError($query.error).message} />
-	{/if}
-	{#if $query.isSuccess}
-		<div class="flex flex-wrap gap-4 mt-4">
-			{#each $query.data as myTable}
-				<a href={`/table/${myTable.id}`}>
-					<Card.Root class="p-5 w-48">
-						<div class="flex justify-between">
-							<h3>{myTable.table.name}</h3>
-							<Badge>{myTable.table.section.name}</Badge>
-						</div>
-						<p class="text-xs">{myTable.bookingName}</p>
-					</Card.Root>
-				</a>
-			{/each}
-		</div>
-	{/if}
+
+	<div class="flex flex-wrap gap-4 mt-4">
+		{#each data.myTables.data ?? [] as myTable}
+			<a href={`/table/${myTable.id}`}>
+				<Card.Root class="p-5 w-48">
+					<div class="flex justify-between">
+						<h3>{myTable?.table?.name}</h3>
+						<Badge>{myTable?.table?.section?.name}</Badge>
+					</div>
+					<p class="text-xs">{myTable.bookingName}</p>
+				</Card.Root>
+			</a>
+		{/each}
+	</div>
 
 	<h1 class="mt-8">Other Tables</h1>
 	<p class="text-muted-foreground">Tables managed by other users</p>
-	{#if $queryOther.isPending}
+	<!-- {#if $queryOther.isPending}
 		<Loader />
 	{/if}
 	{#if $queryOther.error}
@@ -61,5 +54,5 @@
 				</a>
 			{/each}
 		</div>
-	{/if}
+	{/if} -->
 </div>

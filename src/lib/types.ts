@@ -1,5 +1,5 @@
 import type { OutletSchema, Outlet } from "../routes/setup/schema";
-import type { ErrorResponse, InternalErrorResponse } from "./api";
+import type { ErrorResponse, InternalErrorResponse } from "$lib/api";
 
 export interface APIError {
 	type: string;
@@ -66,8 +66,11 @@ export interface UserDTO {
 	type: number;
 }
 
-export interface User extends UserDTO {
+export interface User {
+	id: number;
+	name: string;
 	token: string;
+	roles: Array<string>;
 }
 
 export interface UserToken {

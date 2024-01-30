@@ -1,6 +1,17 @@
 <script lang="ts">
+	import { Button } from "@kayord/ui";
 	import type { PageData } from "./$types";
 	export let data: PageData;
 </script>
 
-Home
+<div class="m-8 flex gap-4">
+	<div class="flex flex-col">
+		<Button href="/waiter">Waiter</Button>
+	</div>
+	<div class="flex flex-col">
+		<Button href="/manager">Manager</Button>
+	</div>
+	<div class="flex flex-col">
+		<Button href="/chef">Chef</Button>
+	</div>
+</div>

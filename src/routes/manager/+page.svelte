@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card } from "@kayord/ui";
-	import { salesPeriod } from "$lib/stores/salesPeriodStore";
+	import { salesPeriod } from "$lib/stores/salesPeriod";
 	import { stringToFDate } from "$lib/util";
 </script>
 
@@ -12,7 +12,7 @@
 				<Card.Description>{stringToFDate($salesPeriod.startDate)}</Card.Description>
 			</Card.Header>
 			<Card.Footer>
-				<Button href="/manager/salesPeriod">Cash Up</Button>
+				<Button href="/">Cash Up</Button>
 			</Card.Footer>
 		</Card.Root>
 	{:else}
