@@ -1,6 +1,7 @@
 import type { PageServerLoad } from "./$types";
 import { PUBLIC_API_URL } from "$env/static/public";
 import { client } from "$lib/api";
+import { redirect } from "@sveltejs/kit";
 
 export const load = (async ({ fetch, locals }) => {
 	// const rrr = await fetch(`${PUBLIC_API_URL}/business`);
@@ -8,9 +9,9 @@ export const load = (async ({ fetch, locals }) => {
 	// console.log(await rrr.json());
 	// const what = await client.GET("/business", { fetch });
 	// console.log(what.response.status);
-	// if (locals.outlet == null) {
-	// 	redirect(303, "/setup");
-	// }
+	if (locals.outlet == null) {
+		redirect(303, "/setup");
+	}
 	// const outletUsersResult = await fetch(
 	// 	`${PUBLIC_API_URL}/clock/list?OutletId=${locals.outlet.outletId}&StatusId=2`
 	// );

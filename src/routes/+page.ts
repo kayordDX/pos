@@ -1,7 +1,4 @@
-import { PUBLIC_API_URL } from "$env/static/public";
 import { client } from "$lib/api";
-import { session } from "$lib/stores/session";
-import { get } from "svelte/store";
 import type { PageLoad } from "./$types";
 
 export const load = (async ({ fetch, parent }) => {

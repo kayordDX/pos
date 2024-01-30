@@ -3,14 +3,20 @@ import { superValidate } from "sveltekit-superforms/server";
 import { setFlash } from "sveltekit-flash-message/server";
 import { outletSchema } from "./schema";
 import { fail, redirect } from "@sveltejs/kit";
+import { client } from "$lib/api";
 // import { outlet } from "$lib/stores/localStoreExample";
 
-export const load: PageServerLoad = async ({ parent }) => {
+export const load: PageServerLoad = async ({ fetch, parent }) => {
 	const data = await parent();
 	const outlet = data.outlet;
+	const result = await client(data.session?.token).GET("/outlet", { fetch });
 	const form = await superValidate(outlet, outletSchema);
 	return {
 		form,
+		outlets: {
+			data: result.data,
+			error: result.error,
+		},
 		outlet: data.outlet,
 	};
 };
@@ -32,6 +38,8 @@ export const actions: Actions = {
 				secure: true,
 				maxAge: 60 * 60 * 24 * 365, // 1 year
 			});
+			// console.log("setting", form.data);
+			// event.locals.outlet = form.data;
 		} catch (err) {
 			setFlash({ type: "error", message: (err as Error).message }, event);
 		}

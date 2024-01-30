@@ -29,10 +29,10 @@ export interface paths {
   "/tablecashup/tablebooking/{tableBookingId}": {
     get: operations["KayordPosFeaturesTableCashUpViewTableCashUpsEndpoint"];
   };
-  "/tablecashup": {
+  "/tableCashup": {
     post: operations["KayordPosFeaturesTableCashUpCreateEndpoint"];
   };
-  "/tablebooking": {
+  "/tableBooking": {
     post: operations["KayordPosFeaturesTableBookingCreateEndpoint"];
   };
   "/table/{tableId}": {
@@ -64,13 +64,13 @@ export interface paths {
     get: operations["KayordPosFeaturesSectionListEndpoint"];
     post: operations["KayordPosFeaturesSectionCreateEndpoint"];
   };
-  "/SalesPeriod/{OutletId}": {
+  "/salesPeriod/{OutletId}": {
     get: operations["KayordPosFeaturesSalesPeriodGetEndpoint"];
   };
-  "/salesperiod": {
+  "/salesPeriod": {
     post: operations["KayordPosFeaturesSalesPeriodCreateEndpoint"];
   };
-  "/salesperiod/{SalesPeriodId}": {
+  "/salesPeriod/{SalesPeriodId}": {
     post: operations["KayordPosFeaturesSalesPeriodCloseEndpoint"];
   };
   "/outlet/{id}": {
@@ -80,10 +80,6 @@ export interface paths {
   "/outlet": {
     get: operations["KayordPosFeaturesOutletListEndpoint"];
     post: operations["KayordPosFeaturesOutletCreateEndpoint"];
-  };
-  "/menu/{menuId}/menuitem": {
-    get: operations["KayordPosFeaturesMenuListMenuItemsEndpoint"];
-    post: operations["KayordPosFeaturesMenuCreateMenuItemEndpoint"];
   };
   "/menu/{menuId}": {
     get: operations["KayordPosFeaturesMenuGetEndpoint"];
@@ -227,13 +223,29 @@ export interface components {
     KayordPosEntitiesMenuItem: {
       /** Format: int32 */
       menuItemId?: number;
-      name?: string;
+      menuSection?: components["schemas"]["KayordPosEntitiesMenuSection"];
+      /** Format: int32 */
+      menuSectionId?: number;
+      name?: string | null;
       /** Format: decimal */
       price?: number;
+      options?: components["schemas"]["KayordPosEntitiesOption"][] | null;
+      tags?: components["schemas"]["KayordPosEntitiesTag"][] | null;
+      extras?: components["schemas"]["KayordPosEntitiesExtra"][] | null;
+      division?: components["schemas"]["KayordPosCommonEnumsDivision"];
+    };
+    KayordPosEntitiesMenuSection: {
+      /** Format: int32 */
+      menuSectionId?: number;
+      name?: string | null;
+      menu?: components["schemas"]["KayordPosEntitiesMenu"];
       /** Format: int32 */
       menuId?: number;
-      menu?: components["schemas"]["KayordPosEntitiesMenu"];
-      orderItems?: components["schemas"]["KayordPosEntitiesOrderItem"][];
+      parent?: components["schemas"]["KayordPosEntitiesMenuSection"] | null;
+      /** Format: int32 */
+      parentId?: number | null;
+      subMenuSections?: components["schemas"]["KayordPosEntitiesMenuSection"][] | null;
+      menuItems?: components["schemas"]["KayordPosEntitiesMenuItem"][] | null;
     };
     KayordPosEntitiesMenu: {
       /** Format: int32 */
@@ -242,7 +254,6 @@ export interface components {
       /** Format: int32 */
       outletId?: number;
       outlet?: components["schemas"]["KayordPosEntitiesOutlet"];
-      menuItems?: components["schemas"]["KayordPosEntitiesMenuItem"][];
     };
     KayordPosEntitiesOutlet: {
       /** Format: int32 */
@@ -291,6 +302,23 @@ export interface components {
     };
     /** @enum {integer} */
     KayordPosCommonEnumsStaffType: 1 | 2 | 3;
+    KayordPosEntitiesOption: {
+      /** Format: int32 */
+      optionId?: number;
+      name?: string | null;
+    };
+    KayordPosEntitiesTag: {
+      /** Format: int32 */
+      tagId?: number;
+      name?: string;
+    };
+    KayordPosEntitiesExtra: {
+      /** Format: int32 */
+      extraId?: number;
+      name?: string;
+    };
+    /** @enum {integer} */
+    KayordPosCommonEnumsDivision: 0 | 1 | 2;
     KayordPosFeaturesOrderAddItemRequest: {
       /** Format: int32 */
       menuItemId?: number;
@@ -475,12 +503,6 @@ export interface components {
       /** Format: int32 */
       businessId?: number;
     };
-    KayordPosFeaturesMenuListMenuItemsRequest: Record<string, never>;
-    KayordPosFeaturesMenuCreateMenuItemRequest: {
-      name: string;
-      /** Format: decimal */
-      price?: number;
-    };
     KayordPosFeaturesMenuUpdateRequest: {
       /** Format: int32 */
       id?: number;
@@ -491,7 +513,8 @@ export interface components {
     KayordPosFeaturesMenuCreateRequest: {
       /** Format: int32 */
       outletId?: number;
-      name: string;
+      name?: string;
+      division?: components["schemas"]["KayordPosCommonEnumsDivision"];
     };
     KayordPosFeaturesClockListRequest: Record<string, never>;
     KayordPosFeaturesClockClockOutRequest: {
@@ -1242,59 +1265,6 @@ export interface operations {
       };
     };
   };
-  KayordPosFeaturesMenuListMenuItemsEndpoint: {
-    parameters: {
-      path: {
-        menuId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["KayordPosEntitiesMenuItem"][];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
-        };
-      };
-    };
-  };
-  KayordPosFeaturesMenuCreateMenuItemEndpoint: {
-    parameters: {
-      path: {
-        menuId: number;
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["KayordPosFeaturesMenuCreateMenuItemRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["KayordPosEntitiesMenuItem"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["FastEndpointsInternalErrorResponse"];
-        };
-      };
-    };
-  };
   KayordPosFeaturesMenuGetEndpoint: {
     parameters: {
       path: {
@@ -1380,12 +1350,6 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["KayordPosEntitiesMenu"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["FastEndpointsErrorResponse"];
         };
       };
       /** @description Server Error */
