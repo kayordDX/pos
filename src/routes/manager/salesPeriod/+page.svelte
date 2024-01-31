@@ -4,9 +4,10 @@
 	import { createSalesPeriodCreate, createSalesPeriodGet } from "$lib/api";
 	import { page } from "$app/stores";
 	import { getFlash } from "sveltekit-flash-message/client";
-	import { goto } from "$app/navigation";
-	import { outlet } from "$lib/stores/outlet";
+	import { goto, invalidateAll } from "$app/navigation";
+	import type { PageData } from "./$types";
 
+	export let data: PageData;
 	let name: string;
 
 	const flash = getFlash(page);
@@ -15,12 +16,14 @@
 	const openSalesPeriod = async () => {
 		try {
 			await $mutation.mutateAsync({
-				data: { outletId: $outlet?.outletId ?? 0, name: name },
+				data: { outletId: data.outlet?.outletId ?? 0, name: name },
 			});
 			$flash = { type: "success", message: "Successfully opened sales period" };
-			goto("/");
+			await goto("/");
 		} catch (err) {
 			$flash = { type: "error", message: "Error opening sales period" };
+		} finally {
+			invalidateAll();
 		}
 	};
 </script>

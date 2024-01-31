@@ -1,0 +1,19 @@
+<script lang="ts">
+	import { Button, Card } from "@kayord/ui";
+	import { CalendarOffIcon, CalendarCheck2Icon } from "lucide-svelte";
+</script>
+
+<div class="m-8">
+	<Card.Root>
+		<Card.Header class="flex flex-row items-center gap-4">
+			<CalendarOffIcon />
+			<div>
+				<Card.Title>No Active sales period</Card.Title>
+				<Card.Description>Once a sales period has been opened you can get started</Card.Description>
+			</div>
+		</Card.Header>
+		<Card.Footer>
+			<Button href="/"><CalendarCheck2Icon class="h-5 w-5 mr-2" />Check</Button>
+		</Card.Footer>
+	</Card.Root>
+</div>

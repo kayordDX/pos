@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from "svelte";
 	import { ModeWatcher } from "@kayord/ui/mode-watcher";
 	import { Header } from "$lib/components/Header";
 	import "../app.postcss";
@@ -11,18 +10,7 @@
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
 
 	import type { PageData } from "./$types";
-	import { salesPeriod } from "$lib/stores/salesPeriod";
-	import { session } from "$lib/stores/session";
-	import { outlet } from "$lib/stores/outlet";
-
 	export let data: PageData;
-
-	onMount(() => {
-		console.log("mount", data);
-		$session = data.session;
-		$outlet = data.outlet ?? { outletId: 0 };
-		$salesPeriod = data.salesPeriod;
-	});
 
 	const flash = getFlash(page);
 	flash.subscribe(($flash) => {

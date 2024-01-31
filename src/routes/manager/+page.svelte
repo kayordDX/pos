@@ -2,14 +2,16 @@
 	import { Button, Card } from "@kayord/ui";
 	import { salesPeriod } from "$lib/stores/salesPeriod";
 	import { stringToFDate } from "$lib/util";
+	import type { PageData } from "./$types";
+	export let data: PageData;
 </script>
 
 <div class="m-8">
-	{#if $salesPeriod != undefined}
+	{#if data.salesPeriod != undefined}
 		<Card.Root>
 			<Card.Header>
-				<Card.Title>{$salesPeriod.name ?? "Sales Period"}</Card.Title>
-				<Card.Description>{stringToFDate($salesPeriod.startDate)}</Card.Description>
+				<Card.Title>{data.salesPeriod.name ?? "Sales Period"}</Card.Title>
+				<Card.Description>{stringToFDate(data.salesPeriod.startDate)}</Card.Description>
 			</Card.Header>
 			<Card.Footer>
 				<Button href="/">Cash Up</Button>
