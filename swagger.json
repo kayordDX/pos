@@ -128,6 +128,57 @@
         }
       }
     },
+    "/user/assignOutlet": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserAssignOutlet",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Request3"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserOutlet"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/role/createRole": {
       "post": {
         "tags": [
@@ -140,7 +191,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request3"
+                "$ref": "#/components/schemas/Request4"
               }
             }
           },
@@ -184,7 +235,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request4"
+                "$ref": "#/components/schemas/Request5"
               }
             }
           },
@@ -228,7 +279,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request5"
+                "$ref": "#/components/schemas/Request6"
               }
             }
           },
@@ -345,7 +396,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request7"
+                "$ref": "#/components/schemas/Request8"
               }
             }
           },
@@ -442,7 +493,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request9"
+                "$ref": "#/components/schemas/Request10"
               }
             }
           },
@@ -495,7 +546,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request10"
+                "$ref": "#/components/schemas/Request11"
               }
             }
           },
@@ -559,7 +610,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request11"
+                "$ref": "#/components/schemas/Request12"
               }
             }
           },
@@ -728,7 +779,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request14"
+                "$ref": "#/components/schemas/Request15"
               }
             }
           },
@@ -792,7 +843,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request15"
+                "$ref": "#/components/schemas/Request16"
               }
             }
           },
@@ -946,7 +997,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request18"
+                "$ref": "#/components/schemas/Request19"
               }
             }
           },
@@ -1040,7 +1091,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request20"
+                "$ref": "#/components/schemas/Request21"
               }
             }
           },
@@ -1145,7 +1196,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request22"
+                "$ref": "#/components/schemas/Request23"
               }
             }
           },
@@ -1268,7 +1319,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request24"
+                "$ref": "#/components/schemas/Request25"
               }
             }
           },
@@ -1332,7 +1383,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request25"
+                "$ref": "#/components/schemas/Request26"
               }
             }
           },
@@ -1510,7 +1561,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request29"
+                "$ref": "#/components/schemas/Request30"
               }
             }
           },
@@ -1616,7 +1667,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request31"
+                "$ref": "#/components/schemas/Request32"
               }
             }
           },
@@ -1659,7 +1710,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request32"
+                "$ref": "#/components/schemas/Request33"
               }
             }
           },
@@ -1741,7 +1792,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request34"
+                "$ref": "#/components/schemas/Request35"
               }
             }
           },
@@ -1793,12 +1844,12 @@
           "content": {
             "*/*": {
               "schema": {
-                "$ref": "#/components/schemas/Request35"
+                "$ref": "#/components/schemas/Request36"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request35"
+                "$ref": "#/components/schemas/Request36"
               }
             }
           },
@@ -1850,7 +1901,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request36"
+                "$ref": "#/components/schemas/Request37"
               }
             }
           },
@@ -2243,7 +2294,46 @@
         "type": "object",
         "additionalProperties": false
       },
+      "UserOutlet": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "outletId",
+          "userId",
+          "isCurrent"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "isCurrent": {
+            "type": "boolean"
+          }
+        }
+      },
       "Request3": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "outletId"
+        ],
+        "properties": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Request4": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2259,7 +2349,7 @@
           }
         }
       },
-      "Request4": {
+      "Request5": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2337,7 +2427,7 @@
           }
         }
       },
-      "Request5": {
+      "Request6": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2352,7 +2442,7 @@
           }
         }
       },
-      "Request6": {
+      "Request7": {
         "type": "object",
         "additionalProperties": false
       },
@@ -2599,7 +2689,7 @@
           2
         ]
       },
-      "Request7": {
+      "Request8": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2805,11 +2895,11 @@
           }
         }
       },
-      "Request8": {
+      "Request9": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request9": {
+      "Request10": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2843,7 +2933,7 @@
           }
         }
       },
-      "Request10": {
+      "Request11": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2871,7 +2961,7 @@
           }
         }
       },
-      "Request11": {
+      "Request12": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2974,7 +3064,7 @@
           }
         }
       },
-      "Request12": {
+      "Request13": {
         "type": "object",
         "additionalProperties": false
       },
@@ -3026,11 +3116,11 @@
           }
         }
       },
-      "Request13": {
+      "Request14": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request14": {
+      "Request15": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3054,7 +3144,7 @@
           }
         }
       },
-      "Request15": {
+      "Request16": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3074,10 +3164,6 @@
             "nullable": false
           }
         }
-      },
-      "Request16": {
-        "type": "object",
-        "additionalProperties": false
       },
       "Request17": {
         "type": "object",
@@ -3085,28 +3171,32 @@
       },
       "Request18": {
         "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "name",
-          "outletId"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "minLength": 1,
-            "nullable": false
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
+        "additionalProperties": false
       },
       "Request19": {
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "outletId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "Request20": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request21": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3125,34 +3215,34 @@
           }
         }
       },
-      "Request21": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "Request22": {
         "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "name",
-          "businessId"
-        ],
-        "properties": {
-          "name": {
-            "type": "string",
-            "minLength": 1,
-            "nullable": false
-          },
-          "businessId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
+        "additionalProperties": false
       },
       "Request23": {
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "businessId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
+          },
+          "businessId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "Request24": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request25": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3171,7 +3261,7 @@
           }
         }
       },
-      "Request25": {
+      "Request26": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3191,10 +3281,6 @@
             "nullable": false
           }
         }
-      },
-      "Request26": {
-        "type": "object",
-        "additionalProperties": false
       },
       "Request27": {
         "type": "object",
@@ -3205,6 +3291,10 @@
         "additionalProperties": false
       },
       "Request29": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request30": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3225,7 +3315,7 @@
           }
         }
       },
-      "Request30": {
+      "Request31": {
         "type": "object",
         "additionalProperties": false
       },
@@ -3269,19 +3359,6 @@
           }
         }
       },
-      "Request31": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "outletId"
-        ],
-        "properties": {
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
       "Request32": {
         "type": "object",
         "additionalProperties": false,
@@ -3297,9 +3374,22 @@
       },
       "Request33": {
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "required": [
+          "outletId"
+        ],
+        "properties": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "Request34": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request35": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3320,7 +3410,7 @@
           }
         }
       },
-      "Request35": {
+      "Request36": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3335,7 +3425,7 @@
           }
         }
       },
-      "Request36": {
+      "Request37": {
         "type": "object",
         "additionalProperties": false,
         "required": [

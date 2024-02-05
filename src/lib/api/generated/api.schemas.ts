@@ -39,28 +39,28 @@ export type UserGetRolesParams = {
 	userId: string | null;
 };
 
-export interface Request36 {
+export interface Request37 {
 	name: string;
+}
+
+export interface Request36 {
+	id: number;
 }
 
 export interface Request35 {
 	id: number;
-}
-
-export interface Request34 {
-	id: number;
 	name: string;
 }
 
-export interface Request33 {
+export interface Request34 {
 	[key: string]: any;
 }
 
-export interface Request32 {
+export interface Request33 {
 	outletId: number;
 }
 
-export interface Request31 {
+export interface Request32 {
 	outletId: number;
 }
 
@@ -74,14 +74,18 @@ export interface Clock {
 	userId: string;
 }
 
-export interface Request30 {
+export interface Request31 {
 	[key: string]: any;
 }
 
-export interface Request29 {
+export interface Request30 {
 	division: Division;
 	name: string;
 	outletId: number;
+}
+
+export interface Request29 {
+	[key: string]: any;
 }
 
 export interface Request28 {
@@ -93,44 +97,44 @@ export interface Request27 {
 }
 
 export interface Request26 {
-	[key: string]: any;
-}
-
-export interface Request25 {
 	id: number;
 	name: string;
 }
 
-export interface Request24 {
+export interface Request25 {
 	businessId: number;
 	name: string;
+}
+
+export interface Request24 {
+	[key: string]: any;
 }
 
 export interface Request23 {
-	[key: string]: any;
-}
-
-export interface Request22 {
 	businessId: number;
 	name: string;
 }
 
-export interface Request21 {
+export interface Request22 {
 	[key: string]: any;
+}
+
+export interface Request21 {
+	name: string;
+	outletId: number;
 }
 
 export interface Request20 {
-	name: string;
-	outletId: number;
-}
-
-export interface Request19 {
 	[key: string]: any;
 }
 
-export interface Request18 {
+export interface Request19 {
 	name: string;
 	outletId: number;
+}
+
+export interface Request18 {
+	[key: string]: any;
 }
 
 export interface Request17 {
@@ -138,21 +142,17 @@ export interface Request17 {
 }
 
 export interface Request16 {
-	[key: string]: any;
-}
-
-export interface Request15 {
 	id: number;
 	name: string;
 }
 
-export interface Request14 {
+export interface Request15 {
 	capacity: number;
 	name: string;
 	sectionId: number;
 }
 
-export interface Request13 {
+export interface Request14 {
 	[key: string]: any;
 }
 
@@ -169,7 +169,7 @@ export interface Response4 {
 	tableId: number;
 }
 
-export interface Request12 {
+export interface Request13 {
 	[key: string]: any;
 }
 
@@ -194,26 +194,26 @@ export interface Response3 {
 	tableId: number;
 }
 
-export interface Request11 {
+export interface Request12 {
 	capacity: number;
 	name: string;
 	sectionId: number;
 }
 
-export interface Request10 {
+export interface Request11 {
 	bookingName: string;
 	salesPeriodId: number;
 	tableId: number;
 }
 
-export interface Request9 {
+export interface Request10 {
 	outletId: number;
 	salesAmount: number;
 	tableBookingId: number;
 	totalAmount: number;
 }
 
-export interface Request8 {
+export interface Request9 {
 	[key: string]: any;
 }
 
@@ -266,7 +266,7 @@ export interface TableCashUp {
 	totalAmount: number;
 }
 
-export interface Request7 {
+export interface Request8 {
 	menuItemId: number;
 }
 
@@ -294,6 +294,14 @@ export interface Option {
 	optionId: number;
 }
 
+export interface Menu {
+	id: number;
+	menuSections?: MenuSection[] | null;
+	name: string;
+	outlet: Outlet;
+	outletId: number;
+}
+
 export type MenuSectionParent = MenuSection | null;
 
 export interface MenuItem {
@@ -319,28 +327,11 @@ export interface MenuSection {
 	subMenuSections?: MenuSection[] | null;
 }
 
-export interface Menu {
-	id: number;
-	menuSections?: MenuSection[] | null;
-	name: string;
-	outlet: Outlet;
-	outletId: number;
-}
-
-export interface OrderItem {
-	menuItem: MenuItem;
-	menuItemId: number;
-	order: Order;
-	orderId: number;
-	orderItemId: number;
-	quantity: number;
-}
-
-export interface Request6 {
+export interface Request7 {
 	[key: string]: any;
 }
 
-export interface Request5 {
+export interface Request6 {
 	tableBookingId: number;
 }
 
@@ -360,14 +351,25 @@ export interface TableOrder {
 	tableOrderId: number;
 }
 
-export interface Request4 {
+export interface Request5 {
 	roleId: number;
 	userId: string;
 }
 
-export interface Request3 {
+export interface Request4 {
 	description: string;
 	name: string;
+}
+
+export interface Request3 {
+	outletId: number;
+}
+
+export interface UserOutlet {
+	id: number;
+	isCurrent: boolean;
+	outletId: number;
+	userId: string;
 }
 
 export interface Request2 {
@@ -381,6 +383,15 @@ export const Order = {
 	Before: 0,
 	After: 1,
 } as const;
+
+export interface OrderItem {
+	menuItem: MenuItem;
+	menuItemId: number;
+	order: Order;
+	orderId: number;
+	orderItemId: number;
+	quantity: number;
+}
 
 export interface Customer {
 	customerId: number;

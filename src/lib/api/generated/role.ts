@@ -7,19 +7,19 @@
  */
 import { createMutation } from "@tanstack/svelte-query";
 import type { CreateMutationOptions, MutationFunction } from "@tanstack/svelte-query";
-import type { InternalErrorResponse, Request3, Request4 } from "./api.schemas";
+import type { InternalErrorResponse, Request4, Request5 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useRoleCreateHook = () => {
 	const roleCreate = useCustomClient<unknown>();
 
-	return (request3: BodyType<Request3>) => {
+	return (request4: BodyType<Request4>) => {
 		return roleCreate({
 			url: `/role/createRole`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request3,
+			data: request4,
 		});
 	};
 };
@@ -31,13 +31,13 @@ export const useRoleCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useRoleCreateHook>>>,
 		TError,
-		{ data: BodyType<Request3> },
+		{ data: BodyType<Request4> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useRoleCreateHook>>>,
 	TError,
-	{ data: BodyType<Request3> },
+	{ data: BodyType<Request4> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -46,7 +46,7 @@ export const useRoleCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useRoleCreateHook>>>,
-		{ data: BodyType<Request3> }
+		{ data: BodyType<Request4> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -59,7 +59,7 @@ export const useRoleCreateMutationOptions = <
 export type RoleCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useRoleCreateHook>>>
 >;
-export type RoleCreateMutationBody = BodyType<Request3>;
+export type RoleCreateMutationBody = BodyType<Request4>;
 export type RoleCreateMutationError = ErrorType<InternalErrorResponse>;
 
 export const createRoleCreate = <
@@ -69,7 +69,7 @@ export const createRoleCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useRoleCreateHook>>>,
 		TError,
-		{ data: BodyType<Request3> },
+		{ data: BodyType<Request4> },
 		TContext
 	>;
 }) => {
@@ -80,12 +80,12 @@ export const createRoleCreate = <
 export const useRoleAddUserInRoleHook = () => {
 	const roleAddUserInRole = useCustomClient<unknown>();
 
-	return (request4: BodyType<Request4>) => {
+	return (request5: BodyType<Request5>) => {
 		return roleAddUserInRole({
 			url: `/role/addUserInRole`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request4,
+			data: request5,
 		});
 	};
 };
@@ -97,13 +97,13 @@ export const useRoleAddUserInRoleMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useRoleAddUserInRoleHook>>>,
 		TError,
-		{ data: BodyType<Request4> },
+		{ data: BodyType<Request5> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useRoleAddUserInRoleHook>>>,
 	TError,
-	{ data: BodyType<Request4> },
+	{ data: BodyType<Request5> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -112,7 +112,7 @@ export const useRoleAddUserInRoleMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useRoleAddUserInRoleHook>>>,
-		{ data: BodyType<Request4> }
+		{ data: BodyType<Request5> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -125,7 +125,7 @@ export const useRoleAddUserInRoleMutationOptions = <
 export type RoleAddUserInRoleMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useRoleAddUserInRoleHook>>>
 >;
-export type RoleAddUserInRoleMutationBody = BodyType<Request4>;
+export type RoleAddUserInRoleMutationBody = BodyType<Request5>;
 export type RoleAddUserInRoleMutationError = ErrorType<InternalErrorResponse>;
 
 export const createRoleAddUserInRole = <
@@ -135,7 +135,7 @@ export const createRoleAddUserInRole = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useRoleAddUserInRoleHook>>>,
 		TError,
-		{ data: BodyType<Request4> },
+		{ data: BodyType<Request5> },
 		TContext
 	>;
 }) => {

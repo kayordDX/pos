@@ -19,8 +19,8 @@ import type {
 	InternalErrorResponse,
 	OrderItem,
 	OrderViewOrdersParams,
-	Request5,
-	Request7,
+	Request6,
+	Request8,
 	TableOrder,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
@@ -29,12 +29,12 @@ import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 export const useTableOrderCreateHook = () => {
 	const tableOrderCreate = useCustomClient<TableOrder>();
 
-	return (request5: BodyType<Request5>) => {
+	return (request6: BodyType<Request6>) => {
 		return tableOrderCreate({
 			url: `/order`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request5,
+			data: request6,
 		});
 	};
 };
@@ -46,13 +46,13 @@ export const useTableOrderCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>,
 		TError,
-		{ data: BodyType<Request5> },
+		{ data: BodyType<Request6> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>,
 	TError,
-	{ data: BodyType<Request5> },
+	{ data: BodyType<Request6> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -61,7 +61,7 @@ export const useTableOrderCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>,
-		{ data: BodyType<Request5> }
+		{ data: BodyType<Request6> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -74,7 +74,7 @@ export const useTableOrderCreateMutationOptions = <
 export type TableOrderCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>
 >;
-export type TableOrderCreateMutationBody = BodyType<Request5>;
+export type TableOrderCreateMutationBody = BodyType<Request6>;
 export type TableOrderCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableOrderCreate = <
@@ -84,7 +84,7 @@ export const createTableOrderCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>,
 		TError,
-		{ data: BodyType<Request5> },
+		{ data: BodyType<Request6> },
 		TContext
 	>;
 }) => {
@@ -175,12 +175,12 @@ export const createOrderViewOrders = <
 export const useOrderAddItemHook = () => {
 	const orderAddItem = useCustomClient<OrderItem>();
 
-	return (orderId: number, request7: BodyType<Request7>) => {
+	return (orderId: number, request8: BodyType<Request8>) => {
 		return orderAddItem({
 			url: `/order/${orderId}/addItem`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request7,
+			data: request8,
 		});
 	};
 };
@@ -192,13 +192,13 @@ export const useOrderAddItemMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
 		TError,
-		{ orderId: number; data: BodyType<Request7> },
+		{ orderId: number; data: BodyType<Request8> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
 	TError,
-	{ orderId: number; data: BodyType<Request7> },
+	{ orderId: number; data: BodyType<Request8> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -207,7 +207,7 @@ export const useOrderAddItemMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
-		{ orderId: number; data: BodyType<Request7> }
+		{ orderId: number; data: BodyType<Request8> }
 	> = (props) => {
 		const { orderId, data } = props ?? {};
 
@@ -220,7 +220,7 @@ export const useOrderAddItemMutationOptions = <
 export type OrderAddItemMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>
 >;
-export type OrderAddItemMutationBody = BodyType<Request7>;
+export type OrderAddItemMutationBody = BodyType<Request8>;
 export type OrderAddItemMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createOrderAddItem = <
@@ -230,7 +230,7 @@ export const createOrderAddItem = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
 		TError,
-		{ orderId: number; data: BodyType<Request7> },
+		{ orderId: number; data: BodyType<Request8> },
 		TContext
 	>;
 }) => {

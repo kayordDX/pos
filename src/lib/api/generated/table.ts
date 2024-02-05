@@ -17,8 +17,8 @@ import type {
 import type {
 	ErrorResponse,
 	InternalErrorResponse,
-	Request11,
-	Request14,
+	Request12,
+	Request15,
 	Response3,
 	Response4,
 	Table,
@@ -31,12 +31,12 @@ import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 export const useTableUpdateHook = () => {
 	const tableUpdate = useCustomClient<Table>();
 
-	return (tableId: number, request11: BodyType<Request11>) => {
+	return (tableId: number, request12: BodyType<Request12>) => {
 		return tableUpdate({
 			url: `/table/${tableId}`,
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			data: request11,
+			data: request12,
 		});
 	};
 };
@@ -48,13 +48,13 @@ export const useTableUpdateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
 		TError,
-		{ tableId: number; data: BodyType<Request11> },
+		{ tableId: number; data: BodyType<Request12> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
 	TError,
-	{ tableId: number; data: BodyType<Request11> },
+	{ tableId: number; data: BodyType<Request12> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -63,7 +63,7 @@ export const useTableUpdateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
-		{ tableId: number; data: BodyType<Request11> }
+		{ tableId: number; data: BodyType<Request12> }
 	> = (props) => {
 		const { tableId, data } = props ?? {};
 
@@ -76,7 +76,7 @@ export const useTableUpdateMutationOptions = <
 export type TableUpdateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>
 >;
-export type TableUpdateMutationBody = BodyType<Request11>;
+export type TableUpdateMutationBody = BodyType<Request12>;
 export type TableUpdateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableUpdate = <
@@ -86,7 +86,7 @@ export const createTableUpdate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
 		TError,
-		{ tableId: number; data: BodyType<Request11> },
+		{ tableId: number; data: BodyType<Request12> },
 		TContext
 	>;
 }) => {
@@ -247,12 +247,12 @@ export const createTableGetAvailable = <
 export const useTableCreateHook = () => {
 	const tableCreate = useCustomClient<Table>();
 
-	return (request14: BodyType<Request14>) => {
+	return (request15: BodyType<Request15>) => {
 		return tableCreate({
 			url: `/table`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request14,
+			data: request15,
 		});
 	};
 };
@@ -264,13 +264,13 @@ export const useTableCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
 		TError,
-		{ data: BodyType<Request14> },
+		{ data: BodyType<Request15> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
 	TError,
-	{ data: BodyType<Request14> },
+	{ data: BodyType<Request15> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -279,7 +279,7 @@ export const useTableCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
-		{ data: BodyType<Request14> }
+		{ data: BodyType<Request15> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -292,7 +292,7 @@ export const useTableCreateMutationOptions = <
 export type TableCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>
 >;
-export type TableCreateMutationBody = BodyType<Request14>;
+export type TableCreateMutationBody = BodyType<Request15>;
 export type TableCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableCreate = <
@@ -302,7 +302,7 @@ export const createTableCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
 		TError,
-		{ data: BodyType<Request14> },
+		{ data: BodyType<Request15> },
 		TContext
 	>;
 }) => {
