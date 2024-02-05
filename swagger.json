@@ -1530,6 +1530,50 @@
         }
       }
     },
+    "/menu/outletMenus": {
+      "get": {
+        "tags": [
+          "Menu"
+        ],
+        "operationId": "MenuGetOutletMenuGetOutletMenus",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Menu"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/menu": {
       "get": {
         "tags": [
@@ -1584,7 +1628,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request31"
+                "$ref": "#/components/schemas/Request32"
               }
             }
           },
@@ -1690,7 +1734,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request33"
+                "$ref": "#/components/schemas/Request34"
               }
             }
           },
@@ -1733,7 +1777,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request34"
+                "$ref": "#/components/schemas/Request35"
               }
             }
           },
@@ -1815,7 +1859,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request36"
+                "$ref": "#/components/schemas/Request37"
               }
             }
           },
@@ -1867,12 +1911,12 @@
           "content": {
             "*/*": {
               "schema": {
-                "$ref": "#/components/schemas/Request37"
+                "$ref": "#/components/schemas/Request38"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request37"
+                "$ref": "#/components/schemas/Request38"
               }
             }
           },
@@ -1924,7 +1968,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request38"
+                "$ref": "#/components/schemas/Request39"
               }
             }
           },
@@ -2505,6 +2549,13 @@
           },
           "outlet": {
             "$ref": "#/components/schemas/Outlet"
+          },
+          "menuSections": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/MenuSection"
+            }
           }
         }
       },
@@ -3402,6 +3453,10 @@
       },
       "Request31": {
         "type": "object",
+        "additionalProperties": false
+      },
+      "Request32": {
+        "type": "object",
         "additionalProperties": false,
         "required": [
           "outletId",
@@ -3421,27 +3476,9 @@
           }
         }
       },
-      "Request32": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "Request33": {
         "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "staffId",
-          "outletId"
-        ],
-        "properties": {
-          "staffId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
+        "additionalProperties": false
       },
       "Request34": {
         "type": "object",
@@ -3463,9 +3500,27 @@
       },
       "Request35": {
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "required": [
+          "staffId",
+          "outletId"
+        ],
+        "properties": {
+          "staffId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "Request36": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request37": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3486,7 +3541,7 @@
           }
         }
       },
-      "Request37": {
+      "Request38": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3501,7 +3556,7 @@
           }
         }
       },
-      "Request38": {
+      "Request39": {
         "type": "object",
         "additionalProperties": false,
         "required": [

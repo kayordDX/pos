@@ -85,6 +85,9 @@ export interface paths {
     get: operations["MenuGet"];
     put: operations["MenuUpdate"];
   };
+  "/menu/outletMenus": {
+    get: operations["MenuGetOutletMenuGetOutletMenus"];
+  };
   "/menu": {
     get: operations["MenuList"];
     post: operations["MenuCreate"];
@@ -254,6 +257,7 @@ export interface components {
       /** Format: int32 */
       outletId: number;
       outlet: components["schemas"]["Outlet"];
+      menuSections?: components["schemas"]["MenuSection"][] | null;
     };
     Outlet: {
       /** Format: int32 */
@@ -510,36 +514,37 @@ export interface components {
     };
     Request29: Record<string, never>;
     Request30: Record<string, never>;
-    Request31: {
+    Request31: Record<string, never>;
+    Request32: {
       /** Format: int32 */
       outletId: number;
       name: string;
       division: components["schemas"]["Division"];
     };
-    Request32: Record<string, never>;
-    Request33: {
-      /** Format: int32 */
-      staffId: number;
-      /** Format: int32 */
-      outletId: number;
-    };
+    Request33: Record<string, never>;
     Request34: {
       /** Format: int32 */
       staffId: number;
       /** Format: int32 */
       outletId: number;
     };
-    Request35: Record<string, never>;
-    Request36: {
+    Request35: {
+      /** Format: int32 */
+      staffId: number;
+      /** Format: int32 */
+      outletId: number;
+    };
+    Request36: Record<string, never>;
+    Request37: {
       /** Format: int32 */
       id: number;
       name: string;
     };
-    Request37: {
+    Request38: {
       /** Format: int32 */
       id: number;
     };
-    Request38: {
+    Request39: {
       name: string;
     };
   };
@@ -1318,6 +1323,27 @@ export interface operations {
       };
     };
   };
+  MenuGetOutletMenuGetOutletMenus: {
+    parameters: {
+      query: {
+        outletId: number;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Menu"][];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   MenuList: {
     parameters: {
       query: {
@@ -1342,7 +1368,7 @@ export interface operations {
   MenuCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request31"];
+        "application/json": components["schemas"]["Request32"];
       };
     };
     responses: {
@@ -1391,7 +1417,7 @@ export interface operations {
   ClockClockOut: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request33"];
+        "application/json": components["schemas"]["Request34"];
       };
     };
     responses: {
@@ -1412,7 +1438,7 @@ export interface operations {
   ClockClockIn: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request34"];
+        "application/json": components["schemas"]["Request35"];
       };
     };
     responses: {
@@ -1453,7 +1479,7 @@ export interface operations {
   BusinessEdit: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request36"];
+        "application/json": components["schemas"]["Request37"];
       };
     };
     responses: {
@@ -1481,7 +1507,7 @@ export interface operations {
   BusinessCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request38"];
+        "application/json": components["schemas"]["Request39"];
       };
     };
     responses: {
@@ -1508,8 +1534,8 @@ export interface operations {
   BusinessDelete: {
     requestBody: {
       content: {
-        "*/*": components["schemas"]["Request37"];
-        "application/json": components["schemas"]["Request37"];
+        "*/*": components["schemas"]["Request38"];
+        "application/json": components["schemas"]["Request38"];
       };
     };
     responses: {
