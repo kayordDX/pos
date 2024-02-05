@@ -39,31 +39,17 @@ export type UserGetRolesParams = {
 	userId: string | null;
 };
 
-export interface Request39 {
-	name: string;
-}
-
-export interface Request38 {
-	id: number;
-}
-
-export interface Request37 {
-	id: number;
-	name: string;
-}
-
 export interface Request36 {
-	[key: string]: any;
+	name: string;
 }
 
 export interface Request35 {
-	outletId: number;
-	staffId: number;
+	id: number;
 }
 
 export interface Request34 {
-	outletId: number;
-	staffId: number;
+	id: number;
+	name: string;
 }
 
 export interface Request33 {
@@ -71,90 +57,11 @@ export interface Request33 {
 }
 
 export interface Request32 {
-	division: Division;
-	name: string;
 	outletId: number;
 }
 
 export interface Request31 {
-	[key: string]: any;
-}
-
-export interface Request30 {
-	[key: string]: any;
-}
-
-export interface Request29 {
-	[key: string]: any;
-}
-
-export interface Request28 {
-	id: number;
-	name: string;
-}
-
-export interface Request27 {
-	businessId: number;
-	name: string;
-}
-
-export interface Request26 {
-	[key: string]: any;
-}
-
-export interface Request25 {
-	businessId: number;
-	name: string;
-}
-
-export interface Request24 {
-	[key: string]: any;
-}
-
-export interface Request23 {
-	name: string;
 	outletId: number;
-}
-
-export interface Request22 {
-	[key: string]: any;
-}
-
-export interface Request21 {
-	name: string;
-	outletId: number;
-}
-
-export interface Request20 {
-	[key: string]: any;
-}
-
-export interface Request19 {
-	[key: string]: any;
-}
-
-export interface Request18 {
-	id: number;
-	name: string;
-}
-
-export interface Request17 {
-	staffId: number;
-}
-
-export interface Response4 {
-	token: string;
-}
-
-export interface Request16 {
-	businessId: number;
-	name: string;
-	outletId: number;
-	staffType: StaffType;
-}
-
-export interface Request15 {
-	[key: string]: any;
 }
 
 export interface Clock {
@@ -162,9 +69,81 @@ export interface Clock {
 	id: number;
 	outlet: Outlet;
 	outletId: number;
-	staff: Staff;
-	staffId: number;
 	startDate: string;
+	user: User;
+	userId: string;
+}
+
+export interface Request30 {
+	[key: string]: any;
+}
+
+export interface Request29 {
+	division: Division;
+	name: string;
+	outletId: number;
+}
+
+export interface Request28 {
+	[key: string]: any;
+}
+
+export interface Request27 {
+	[key: string]: any;
+}
+
+export interface Request26 {
+	[key: string]: any;
+}
+
+export interface Request25 {
+	id: number;
+	name: string;
+}
+
+export interface Request24 {
+	businessId: number;
+	name: string;
+}
+
+export interface Request23 {
+	[key: string]: any;
+}
+
+export interface Request22 {
+	businessId: number;
+	name: string;
+}
+
+export interface Request21 {
+	[key: string]: any;
+}
+
+export interface Request20 {
+	name: string;
+	outletId: number;
+}
+
+export interface Request19 {
+	[key: string]: any;
+}
+
+export interface Request18 {
+	name: string;
+	outletId: number;
+}
+
+export interface Request17 {
+	[key: string]: any;
+}
+
+export interface Request16 {
+	[key: string]: any;
+}
+
+export interface Request15 {
+	id: number;
+	name: string;
 }
 
 export interface Request14 {
@@ -182,7 +161,7 @@ export interface SectionDto2 {
 	name: string;
 }
 
-export interface Response3 {
+export interface Response4 {
 	capacity: number;
 	name: string;
 	section: SectionDto2;
@@ -205,7 +184,7 @@ export interface TableDto {
 	tableId: number;
 }
 
-export interface Response2 {
+export interface Response3 {
 	bookingDate: string;
 	bookingName: string;
 	id: number;
@@ -224,7 +203,6 @@ export interface Request11 {
 export interface Request10 {
 	bookingName: string;
 	salesPeriodId: number;
-	staffId: number;
 	tableId: number;
 }
 
@@ -239,13 +217,42 @@ export interface Request8 {
 	[key: string]: any;
 }
 
-export interface SalesPeriod {
-	endDate?: string | null;
+export type UserRoleRole = Role | null;
+
+export interface User {
+	email: string;
+	image: string;
+	isActive: boolean;
+	name: string;
+	userId: string;
+	userRole?: UserRole[] | null;
+}
+
+export interface UserRole {
+	role?: UserRoleRole;
+	roleId: number;
+	user: User;
+	userId: string;
+	userRoleId: number;
+}
+
+export interface Role {
+	description: string;
+	name: string;
+	roleId: number;
+	userRole?: UserRole[] | null;
+}
+
+export interface TableBooking {
+	bookingDate: string;
+	bookingName: string;
 	id: number;
-	name?: string | null;
-	outlet: Outlet;
-	outletId: number;
-	startDate?: string | null;
+	salesPeriod: SalesPeriod;
+	salesPeriodId: number;
+	table: Table;
+	tableId: number;
+	user: User;
+	userId: string;
 }
 
 export interface TableCashUp {
@@ -287,67 +294,6 @@ export interface Option {
 	optionId: number;
 }
 
-export type StaffType = (typeof StaffType)[keyof typeof StaffType];
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const StaffType = {
-	Manager: 1,
-	Waiter: 2,
-	Chef: 3,
-} as const;
-
-export interface Outlet {
-	business: Business;
-	businessId: number;
-	id: number;
-	name: string;
-	sections?: Section[] | null;
-	staff?: Staff[] | null;
-}
-
-export interface Staff {
-	id: number;
-	name: string;
-	outlet: Outlet;
-	outletId: number;
-	staffType: StaffType;
-}
-
-export interface Section {
-	id: number;
-	name: string;
-	outlet: Outlet;
-	outletId: number;
-	tables?: Table[] | null;
-}
-
-export interface Table {
-	capacity: number;
-	customers: Customer[];
-	name: string;
-	section: Section;
-	sectionId: number;
-	tableId: number;
-}
-
-export interface TableBooking {
-	bookingDate: string;
-	bookingName: string;
-	id: number;
-	salesPeriod: SalesPeriod;
-	salesPeriodId: number;
-	staff: Staff;
-	staffId: number;
-	table: Table;
-	tableId: number;
-}
-
-export interface Business {
-	id: number;
-	name: string;
-	outlets?: Outlet[] | null;
-}
-
 export type MenuSectionParent = MenuSection | null;
 
 export interface MenuItem {
@@ -381,6 +327,15 @@ export interface Menu {
 	outletId: number;
 }
 
+export interface OrderItem {
+	menuItem: MenuItem;
+	menuItemId: number;
+	order: Order;
+	orderId: number;
+	orderItemId: number;
+	quantity: number;
+}
+
 export interface Request6 {
 	[key: string]: any;
 }
@@ -395,29 +350,6 @@ export interface ErrorResponse {
 	errors: ErrorResponseErrors;
 	message: string;
 	statusCode: number;
-}
-
-export type Order = (typeof Order)[keyof typeof Order];
-
-// eslint-disable-next-line @typescript-eslint/no-redeclare
-export const Order = {
-	Before: 0,
-	After: 1,
-} as const;
-
-export interface OrderItem {
-	menuItem: MenuItem;
-	menuItemId: number;
-	order: Order;
-	orderId: number;
-	orderItemId: number;
-	quantity: number;
-}
-
-export interface Customer {
-	customerId: number;
-	name: string;
-	orders: Order[];
 }
 
 export interface TableOrder {
@@ -438,34 +370,69 @@ export interface Request3 {
 	name: string;
 }
 
-export interface User {
-	email: string;
-	image: string;
-	isActive: boolean;
-	name: string;
-	userId: string;
-	userRole?: UserRole[] | null;
-}
-
-export interface Role {
-	description: string;
-	name: string;
-	roleId: number;
-	userRole?: UserRole[] | null;
-}
-
-export type UserRoleRole = Role | null;
-
-export interface UserRole {
-	role?: UserRoleRole;
-	roleId: number;
-	user: User;
-	userId: string;
-	userRoleId: number;
-}
-
 export interface Request2 {
 	[key: string]: any;
+}
+
+export type Order = (typeof Order)[keyof typeof Order];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const Order = {
+	Before: 0,
+	After: 1,
+} as const;
+
+export interface Customer {
+	customerId: number;
+	name: string;
+	orders: Order[];
+}
+
+export interface Outlet {
+	business: Business;
+	businessId: number;
+	id: number;
+	name: string;
+	sections?: Section[] | null;
+}
+
+export interface Section {
+	id: number;
+	name: string;
+	outlet: Outlet;
+	outletId: number;
+	tables?: Table[] | null;
+}
+
+export interface Table {
+	capacity: number;
+	customers: Customer[];
+	name: string;
+	section: Section;
+	sectionId: number;
+	tableId: number;
+}
+
+export interface Business {
+	id: number;
+	name: string;
+	outlets?: Outlet[] | null;
+}
+
+export interface SalesPeriod {
+	endDate?: string | null;
+	id: number;
+	name?: string | null;
+	outlet: Outlet;
+	outletId: number;
+	startDate?: string | null;
+}
+
+export interface Response2 {
+	clockedIn: boolean;
+	outletId: number;
+	salesPeriod: SalesPeriod;
+	salesPeriodId: number;
 }
 
 export interface Request {

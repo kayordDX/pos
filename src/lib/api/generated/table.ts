@@ -19,8 +19,8 @@ import type {
 	InternalErrorResponse,
 	Request11,
 	Request14,
-	Response2,
 	Response3,
+	Response4,
 	Table,
 	TableGetAvailableParams,
 	TableGetMyBookedParams,
@@ -95,7 +95,7 @@ export const createTableUpdate = <
 	return createMutation(mutationOptions);
 };
 export const useTableGetMyBookedHook = () => {
-	const tableGetMyBooked = useCustomClient<Response2[]>();
+	const tableGetMyBooked = useCustomClient<Response3[]>();
 
 	return (params: TableGetMyBookedParams) => {
 		return tableGetMyBooked({ url: `/table/booked`, method: "GET", params });
@@ -170,7 +170,7 @@ export const createTableGetMyBooked = <
 };
 
 export const useTableGetAvailableHook = () => {
-	const tableGetAvailable = useCustomClient<Response3[]>();
+	const tableGetAvailable = useCustomClient<Response4[]>();
 
 	return (params: TableGetAvailableParams) => {
 		return tableGetAvailable({ url: `/table/available`, method: "GET", params });

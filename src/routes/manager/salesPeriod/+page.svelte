@@ -16,7 +16,7 @@
 	const openSalesPeriod = async () => {
 		try {
 			await $mutation.mutateAsync({
-				data: { outletId: data.outlet?.outletId ?? 0, name: name },
+				data: { outletId: data.status?.outletId ?? 0, name: name },
 			});
 			$flash = { type: "success", message: "Successfully opened sales period" };
 			await goto("/");

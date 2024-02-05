@@ -18,8 +18,8 @@ import type {
 	ErrorResponse,
 	InternalErrorResponse,
 	Outlet,
-	Request25,
-	Request27,
+	Request22,
+	Request24,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
@@ -27,12 +27,12 @@ import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 export const useOutletUpdateHook = () => {
 	const outletUpdate = useCustomClient<Outlet>();
 
-	return (id: number, request25: BodyType<Request25>) => {
+	return (id: number, request22: BodyType<Request22>) => {
 		return outletUpdate({
 			url: `/outlet/${id}`,
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			data: request25,
+			data: request22,
 		});
 	};
 };
@@ -44,13 +44,13 @@ export const useOutletUpdateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>,
 		TError,
-		{ id: number; data: BodyType<Request25> },
+		{ id: number; data: BodyType<Request22> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>,
 	TError,
-	{ id: number; data: BodyType<Request25> },
+	{ id: number; data: BodyType<Request22> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -59,7 +59,7 @@ export const useOutletUpdateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>,
-		{ id: number; data: BodyType<Request25> }
+		{ id: number; data: BodyType<Request22> }
 	> = (props) => {
 		const { id, data } = props ?? {};
 
@@ -72,7 +72,7 @@ export const useOutletUpdateMutationOptions = <
 export type OutletUpdateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>
 >;
-export type OutletUpdateMutationBody = BodyType<Request25>;
+export type OutletUpdateMutationBody = BodyType<Request22>;
 export type OutletUpdateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createOutletUpdate = <
@@ -82,7 +82,7 @@ export const createOutletUpdate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>,
 		TError,
-		{ id: number; data: BodyType<Request25> },
+		{ id: number; data: BodyType<Request22> },
 		TContext
 	>;
 }) => {
@@ -219,12 +219,12 @@ export const createOutletList = <
 export const useOutletCreateHook = () => {
 	const outletCreate = useCustomClient<Outlet>();
 
-	return (request27: BodyType<Request27>) => {
+	return (request24: BodyType<Request24>) => {
 		return outletCreate({
 			url: `/outlet`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request27,
+			data: request24,
 		});
 	};
 };
@@ -236,13 +236,13 @@ export const useOutletCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>,
 		TError,
-		{ data: BodyType<Request27> },
+		{ data: BodyType<Request24> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>,
 	TError,
-	{ data: BodyType<Request27> },
+	{ data: BodyType<Request24> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -251,7 +251,7 @@ export const useOutletCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>,
-		{ data: BodyType<Request27> }
+		{ data: BodyType<Request24> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -264,7 +264,7 @@ export const useOutletCreateMutationOptions = <
 export type OutletCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>
 >;
-export type OutletCreateMutationBody = BodyType<Request27>;
+export type OutletCreateMutationBody = BodyType<Request24>;
 export type OutletCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createOutletCreate = <
@@ -274,7 +274,7 @@ export const createOutletCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>,
 		TError,
-		{ data: BodyType<Request27> },
+		{ data: BodyType<Request24> },
 		TContext
 	>;
 }) => {

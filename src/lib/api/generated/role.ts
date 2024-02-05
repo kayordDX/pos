@@ -7,12 +7,12 @@
  */
 import { createMutation } from "@tanstack/svelte-query";
 import type { CreateMutationOptions, MutationFunction } from "@tanstack/svelte-query";
-import type { InternalErrorResponse, Request3, Request4, Role, UserRole } from "./api.schemas";
+import type { InternalErrorResponse, Request3, Request4 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useRoleCreateHook = () => {
-	const roleCreate = useCustomClient<Role>();
+	const roleCreate = useCustomClient<unknown>();
 
 	return (request3: BodyType<Request3>) => {
 		return roleCreate({
@@ -78,7 +78,7 @@ export const createRoleCreate = <
 	return createMutation(mutationOptions);
 };
 export const useRoleAddUserInRoleHook = () => {
-	const roleAddUserInRole = useCustomClient<UserRole>();
+	const roleAddUserInRole = useCustomClient<unknown>();
 
 	return (request4: BodyType<Request4>) => {
 		return roleAddUserInRole({

@@ -9,10 +9,10 @@
 	import { Card, Loader } from "@kayord/ui";
 	import { getError } from "$lib/types";
 
-	const query = createTableGetMyBooked({ myBooking: false, outletId: data.outlet?.outletId ?? 0 });
+	const query = createTableGetMyBooked({ myBooking: true, outletId: data.status?.outletId ?? 0 });
 </script>
 
-<div>
+<div class="m-8">
 	{#if $query.isPending}
 		<Loader />
 	{/if}

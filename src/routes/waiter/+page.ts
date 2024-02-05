@@ -3,7 +3,7 @@ import { redirect } from "@sveltejs/kit";
 
 export const load = (async ({ parent }) => {
 	const parentData = await parent();
-	if (!parentData.salesPeriod) {
+	if (!parentData.status?.salesPeriod) {
 		redirect(303, "/noSalesPeriod");
 	}
 	// const { data, error } = await client(d.session?.token).GET("/table/booked", {

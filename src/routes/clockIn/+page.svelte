@@ -1,45 +1,29 @@
 <script lang="ts">
-	import { Button, Card } from "@kayord/ui";
+	import { ClockIcon } from "lucide-svelte";
+	import { Button, Card, toast } from "@kayord/ui";
 	import type { PageData } from "./$types";
-	import { getFlash } from "sveltekit-flash-message";
-	import { page } from "$app/stores";
-	import { goto } from "$app/navigation";
-	import StaffTypeBadge from "$lib/components/StaffTypeBadge.svelte";
-	import { outlet } from "$lib/stores/outlet";
-	import { createClockClockIn } from "$lib/api";
-	const flash = getFlash(page);
-
 	export let data: PageData;
+	import { createClockClockIn } from "$lib/api";
+	import { goto } from "$app/navigation";
+	import { getError } from "$lib/types";
 
 	const mutation = createClockClockIn();
 
-	const clockIn = async (userId: number) => {
+	const clockIn = async () => {
 		try {
 			await $mutation.mutateAsync({
-				data: { outletId: $outlet?.outletId ?? 0, staffId: userId },
+				data: { outletId: data.status?.outletId ?? 0 },
 			});
-			$flash = { type: "success", message: "Successfully Clocked in User" };
+			toast.info("Successfully Clocked in User");
 			goto("/");
 		} catch (err) {
-			$flash = { type: "error", message: "Error clocking in user" };
+			toast.error(getError(err).message);
 		}
 	};
 </script>
 
 <div class="m-8">
 	<h1>Clock In</h1>
-	<p class="text-muted-foreground">Select User to clock in</p>
-	<div class="mt-2 flex flex-col gap-4">
-		{#each data.outletUsers as clockUser}
-			<button class="text-start" on:click={() => clockIn(clockUser.id)}>
-				<Card.Root class="p-5 hover:cursor-pointer flex justify-between items-center">
-					<div>
-						<h3>{clockUser.name}</h3>
-						<StaffTypeBadge type={clockUser.staffType} />
-					</div>
-				</Card.Root>
-			</button>
-		{/each}
-	</div>
-	<Button variant="secondary" class="mt-4" href="/">Cancel</Button>
+	<p class="text-muted-foreground">Clock in to get started</p>
+	<Button class="mt-4" on:click={clockIn}><ClockIcon class="mr-2 h-5 w-5" /> Clock In</Button>
 </div>

@@ -5,15 +5,13 @@
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { NotebookIcon, Rows4Icon, CalendarOffIcon } from "lucide-svelte";
-
 	import { createTableGetMyBooked } from "$lib/api";
-	import { error } from "@sveltejs/kit";
 
-	const query = createTableGetMyBooked({ myBooking: false, outletId: data.outlet?.outletId ?? 0 });
+	const query = createTableGetMyBooked({ myBooking: false, outletId: data.status?.outletId ?? 0 });
 </script>
 
 <div class="m-8">
-	{#if !data.salesPeriod}
+	{#if !data.status?.salesPeriod}
 		<Card.Root>
 			<Card.Header class="flex flex-row items-center gap-4">
 				<CalendarOffIcon />
@@ -27,7 +25,7 @@
 		</Card.Root>
 	{/if}
 
-	{#if data.salesPeriod}
+	{#if data.status?.salesPeriod}
 		<h1>My Tables</h1>
 		<p class="text-muted-foreground">List of my current tables</p>
 

@@ -6,7 +6,7 @@ export const client = (token?: string) => {
 	let headers: HeadersOptions = {};
 	if (token) {
 		headers = {
-			"content-type": "application-json",
+			// "content-type": "application-json",
 			Authorization: `Bearer ${token}`,
 		};
 	}

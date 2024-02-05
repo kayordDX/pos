@@ -1,14 +1,14 @@
 import type { PageServerLoad, Actions } from "./$types";
 import { superValidate } from "sveltekit-superforms/server";
-import { setFlash } from "sveltekit-flash-message/server";
 import { outletSchema } from "./schema";
 import { fail, redirect } from "@sveltejs/kit";
 import { client } from "$lib/api";
-// import { outlet } from "$lib/stores/localStoreExample";
+import { toast } from "@kayord/ui";
+import { getError } from "$lib/types";
 
 export const load: PageServerLoad = async ({ fetch, parent }) => {
 	const data = await parent();
-	const outlet = data.outlet;
+	const outlet = { outletId: data.status?.outletId ?? 0 };
 	const result = await client(data.session?.token).GET("/outlet", { fetch });
 	const form = await superValidate(outlet, outletSchema);
 	return {
@@ -17,11 +17,13 @@ export const load: PageServerLoad = async ({ fetch, parent }) => {
 			data: result.data,
 			error: result.error,
 		},
-		outlet: data.outlet,
+		outlet: data.status?.outletId,
 	};
 };
+
 export const actions: Actions = {
 	default: async (event) => {
+		const session = await event.locals.auth();
 		const form = await superValidate(event, outletSchema);
 
 		if (!form.valid) {
@@ -31,23 +33,11 @@ export const actions: Actions = {
 		}
 
 		try {
-			event.cookies.set("outlet", JSON.stringify(form.data), {
-				path: "/",
-				httpOnly: true,
-				sameSite: "strict",
-				secure: true,
-				maxAge: 60 * 60 * 24 * 365, // 1 year
-			});
-			// console.log("setting", form.data);
-			// event.locals.outlet = form.data;
+			client(session?.token).POST("");
 		} catch (err) {
-			setFlash({ type: "error", message: (err as Error).message }, event);
+			toast.error(getError(err).message);
 		}
-		setFlash({ type: "success", message: "Successfully updated outlet" }, event);
-		// throw redirect(303, "/");
+		toast.info("Successfully updated outlet");
 		redirect(302, "/");
-		// return {
-		// 	form,
-		// };
 	},
 };

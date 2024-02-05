@@ -8,6 +8,9 @@ export interface paths {
   "/user/validate": {
     post: operations["UserValidate"];
   };
+  "/user/getStatus": {
+    get: operations["UserGetStatus"];
+  };
   "/user/getRoles": {
     get: operations["UserGetRoles"];
   };
@@ -46,15 +49,6 @@ export interface paths {
   };
   "/table": {
     post: operations["TableCreate"];
-  };
-  "/staff/{OutletId}": {
-    get: operations["StaffGetAllClockedIn"];
-  };
-  "/staff": {
-    post: operations["StaffCreate"];
-  };
-  "/session/login": {
-    post: operations["SessionLogin"];
   };
   "/section/{sectionId}": {
     get: operations["SectionGet"];
@@ -95,10 +89,10 @@ export interface paths {
   "/clock/list": {
     get: operations["ClockList"];
   };
-  "/clockout": {
+  "/clock/out": {
     post: operations["ClockClockOut"];
   };
-  "/clockin": {
+  "/clock/in": {
     post: operations["ClockClockIn"];
   };
   "/business": {
@@ -141,31 +135,70 @@ export interface components {
       lastName?: string | null;
       name?: string | null;
     };
+    Response2: {
+      /** Format: int32 */
+      outletId: number;
+      clockedIn: boolean;
+      /** Format: int32 */
+      salesPeriodId: number;
+      salesPeriod: components["schemas"]["SalesPeriod"];
+    };
+    SalesPeriod: {
+      /** Format: int32 */
+      id: number;
+      name?: string | null;
+      /** Format: date-time */
+      startDate?: string | null;
+      /** Format: date-time */
+      endDate?: string | null;
+      outlet: components["schemas"]["Outlet"];
+      /** Format: int32 */
+      outletId: number;
+    };
+    Outlet: {
+      /** Format: int32 */
+      id: number;
+      name: string;
+      /** Format: int32 */
+      businessId: number;
+      business: components["schemas"]["Business"];
+      sections?: components["schemas"]["Section"][] | null;
+    };
+    Business: {
+      /** Format: int32 */
+      id: number;
+      name: string;
+      outlets?: components["schemas"]["Outlet"][] | null;
+    };
+    Section: {
+      /** Format: int32 */
+      id: number;
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+      outlet: components["schemas"]["Outlet"];
+      tables?: components["schemas"]["Table"][] | null;
+    };
+    Table: {
+      /** Format: int32 */
+      tableId: number;
+      name: string;
+      /** Format: int32 */
+      capacity: number;
+      /** Format: int32 */
+      sectionId: number;
+      section: components["schemas"]["Section"];
+      customers: components["schemas"]["Customer"][];
+    };
+    Customer: {
+      /** Format: int32 */
+      customerId: number;
+      name: string;
+      orders: components["schemas"]["Order"][];
+    };
+    /** @enum {integer} */
+    Order: 0 | 1;
     Request2: Record<string, never>;
-    Role: {
-      /** Format: int32 */
-      roleId: number;
-      name: string;
-      description: string;
-      userRole?: components["schemas"]["UserRole"][] | null;
-    };
-    UserRole: {
-      /** Format: int32 */
-      userRoleId: number;
-      userId: string;
-      /** Format: int32 */
-      roleId: number;
-      user: components["schemas"]["User"];
-      role?: components["schemas"]["Role"] | null;
-    };
-    User: {
-      userId: string;
-      email: string;
-      image: string;
-      name: string;
-      isActive: boolean;
-      userRole?: components["schemas"]["UserRole"][] | null;
-    };
     Request3: {
       name: string;
       description: string;
@@ -186,14 +219,6 @@ export interface components {
       /** Format: int32 */
       tableBookingId: number;
     };
-    Customer: {
-      /** Format: int32 */
-      customerId: number;
-      name: string;
-      orders: components["schemas"]["Order"][];
-    };
-    /** @enum {integer} */
-    Order: 0 | 1;
     ErrorResponse: {
       /**
        * Format: int32
@@ -259,53 +284,6 @@ export interface components {
       outlet: components["schemas"]["Outlet"];
       menuSections?: components["schemas"]["MenuSection"][] | null;
     };
-    Outlet: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      /** Format: int32 */
-      businessId: number;
-      business: components["schemas"]["Business"];
-      sections?: components["schemas"]["Section"][] | null;
-      staff?: components["schemas"]["Staff"][] | null;
-    };
-    Business: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      outlets?: components["schemas"]["Outlet"][] | null;
-    };
-    Section: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["Outlet"];
-      tables?: components["schemas"]["Table"][] | null;
-    };
-    Table: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      capacity: number;
-      /** Format: int32 */
-      sectionId: number;
-      section: components["schemas"]["Section"];
-      customers: components["schemas"]["Customer"][];
-    };
-    Staff: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      staffType: components["schemas"]["StaffType"];
-      /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["Outlet"];
-    };
-    /** @enum {integer} */
-    StaffType: 1 | 2 | 3;
     Option: {
       /** Format: int32 */
       optionId: number;
@@ -355,21 +333,32 @@ export interface components {
       /** Format: int32 */
       salesPeriodId: number;
       salesPeriod: components["schemas"]["SalesPeriod"];
-      /** Format: int32 */
-      staffId: number;
-      staff: components["schemas"]["Staff"];
+      userId: string;
+      user: components["schemas"]["User"];
     };
-    SalesPeriod: {
+    User: {
+      userId: string;
+      email: string;
+      image: string;
+      name: string;
+      isActive: boolean;
+      userRole?: components["schemas"]["UserRole"][] | null;
+    };
+    UserRole: {
       /** Format: int32 */
-      id: number;
-      name?: string | null;
-      /** Format: date-time */
-      startDate?: string | null;
-      /** Format: date-time */
-      endDate?: string | null;
-      outlet: components["schemas"]["Outlet"];
+      userRoleId: number;
+      userId: string;
       /** Format: int32 */
-      outletId: number;
+      roleId: number;
+      user: components["schemas"]["User"];
+      role?: components["schemas"]["Role"] | null;
+    };
+    Role: {
+      /** Format: int32 */
+      roleId: number;
+      name: string;
+      description: string;
+      userRole?: components["schemas"]["UserRole"][] | null;
     };
     Request8: Record<string, never>;
     Request9: {
@@ -388,8 +377,6 @@ export interface components {
       bookingName: string;
       /** Format: int32 */
       salesPeriodId: number;
-      /** Format: int32 */
-      staffId: number;
     };
     Request11: {
       name: string;
@@ -398,7 +385,7 @@ export interface components {
       /** Format: int32 */
       capacity: number;
     };
-    Response2: {
+    Response3: {
       /** Format: int32 */
       id: number;
       /** Format: int32 */
@@ -424,7 +411,7 @@ export interface components {
       name: string;
     };
     Request12: Record<string, never>;
-    Response3: {
+    Response4: {
       /** Format: int32 */
       tableId: number;
       name: string;
@@ -447,12 +434,56 @@ export interface components {
       /** Format: int32 */
       capacity: number;
     };
+    Request15: {
+      /** Format: int32 */
+      id: number;
+      name: string;
+    };
+    Request16: Record<string, never>;
+    Request17: Record<string, never>;
+    Request18: {
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+    };
+    Request19: Record<string, never>;
+    Request20: {
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+    };
+    Request21: Record<string, never>;
+    Request22: {
+      name: string;
+      /** Format: int32 */
+      businessId: number;
+    };
+    Request23: Record<string, never>;
+    Request24: {
+      name: string;
+      /** Format: int32 */
+      businessId: number;
+    };
+    Request25: {
+      /** Format: int32 */
+      id: number;
+      name: string;
+    };
+    Request26: Record<string, never>;
+    Request27: Record<string, never>;
+    Request28: Record<string, never>;
+    Request29: {
+      /** Format: int32 */
+      outletId: number;
+      name: string;
+      division: components["schemas"]["Division"];
+    };
+    Request30: Record<string, never>;
     Clock: {
       /** Format: int32 */
       id: number;
-      /** Format: int32 */
-      staffId: number;
-      staff: components["schemas"]["Staff"];
+      userId: string;
+      user: components["schemas"]["User"];
       /** Format: date-time */
       startDate: string;
       /** Format: date-time */
@@ -461,90 +492,25 @@ export interface components {
       outletId: number;
       outlet: components["schemas"]["Outlet"];
     };
-    Request15: Record<string, never>;
-    Request16: {
-      name: string;
-      /** Format: int32 */
-      businessId: number;
-      staffType: components["schemas"]["StaffType"];
+    Request31: {
       /** Format: int32 */
       outletId: number;
     };
-    Response4: {
-      token: string;
-    };
-    Request17: {
-      /** Format: int32 */
-      staffId: number;
-    };
-    Request18: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    Request19: Record<string, never>;
-    Request20: Record<string, never>;
-    Request21: {
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-    };
-    Request22: Record<string, never>;
-    Request23: {
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-    };
-    Request24: Record<string, never>;
-    Request25: {
-      name: string;
-      /** Format: int32 */
-      businessId: number;
-    };
-    Request26: Record<string, never>;
-    Request27: {
-      name: string;
-      /** Format: int32 */
-      businessId: number;
-    };
-    Request28: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    Request29: Record<string, never>;
-    Request30: Record<string, never>;
-    Request31: Record<string, never>;
     Request32: {
       /** Format: int32 */
       outletId: number;
-      name: string;
-      division: components["schemas"]["Division"];
     };
     Request33: Record<string, never>;
     Request34: {
       /** Format: int32 */
-      staffId: number;
-      /** Format: int32 */
-      outletId: number;
-    };
-    Request35: {
-      /** Format: int32 */
-      staffId: number;
-      /** Format: int32 */
-      outletId: number;
-    };
-    Request36: Record<string, never>;
-    Request37: {
-      /** Format: int32 */
       id: number;
       name: string;
     };
-    Request38: {
+    Request35: {
       /** Format: int32 */
       id: number;
     };
-    Request39: {
+    Request36: {
       name: string;
     };
   };
@@ -572,6 +538,22 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["Response"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  UserGetStatus: {
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Response2"];
         };
       };
       /** @description Server Error */
@@ -613,7 +595,8 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Role"];
+          "text/plain": unknown;
+          "application/json": unknown;
         };
       };
       /** @description Server Error */
@@ -634,7 +617,8 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["UserRole"];
+          "text/plain": unknown;
+          "application/json": unknown;
         };
       };
       /** @description Server Error */
@@ -846,7 +830,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response2"][];
+          "application/json": components["schemas"]["Response3"][];
         };
       };
       /** @description Bad Request */
@@ -873,7 +857,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response3"][];
+          "application/json": components["schemas"]["Response4"][];
         };
       };
       /** @description Bad Request */
@@ -901,81 +885,6 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["Table"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  StaffGetAllClockedIn: {
-    parameters: {
-      path: {
-        outletId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["Clock"][];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  StaffCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["Request16"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["Staff"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SessionLogin: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["Request17"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["Response4"];
         };
       };
       /** @description Bad Request */
@@ -1027,7 +936,7 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request18"];
+        "application/json": components["schemas"]["Request15"];
       };
     };
     responses: {
@@ -1081,7 +990,7 @@ export interface operations {
   SectionCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request21"];
+        "application/json": components["schemas"]["Request18"];
       };
     };
     responses: {
@@ -1129,7 +1038,7 @@ export interface operations {
   SalesPeriodCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request23"];
+        "application/json": components["schemas"]["Request20"];
       };
     };
     responses: {
@@ -1203,7 +1112,7 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request25"];
+        "application/json": components["schemas"]["Request22"];
       };
     };
     responses: {
@@ -1246,7 +1155,7 @@ export interface operations {
   OutletCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request27"];
+        "application/json": components["schemas"]["Request24"];
       };
     };
     responses: {
@@ -1299,7 +1208,7 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request28"];
+        "application/json": components["schemas"]["Request25"];
       };
     };
     responses: {
@@ -1368,7 +1277,7 @@ export interface operations {
   MenuCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request32"];
+        "application/json": components["schemas"]["Request29"];
       };
     };
     responses: {
@@ -1397,7 +1306,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Staff"][];
+          "application/json": components["schemas"]["User"][];
         };
       };
       /** @description Bad Request */
@@ -1417,7 +1326,7 @@ export interface operations {
   ClockClockOut: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request34"];
+        "application/json": components["schemas"]["Request31"];
       };
     };
     responses: {
@@ -1438,7 +1347,7 @@ export interface operations {
   ClockClockIn: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request35"];
+        "application/json": components["schemas"]["Request32"];
       };
     };
     responses: {
@@ -1479,7 +1388,7 @@ export interface operations {
   BusinessEdit: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request37"];
+        "application/json": components["schemas"]["Request34"];
       };
     };
     responses: {
@@ -1507,7 +1416,7 @@ export interface operations {
   BusinessCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request39"];
+        "application/json": components["schemas"]["Request36"];
       };
     };
     responses: {
@@ -1534,8 +1443,8 @@ export interface operations {
   BusinessDelete: {
     requestBody: {
       content: {
-        "*/*": components["schemas"]["Request38"];
-        "application/json": components["schemas"]["Request38"];
+        "*/*": components["schemas"]["Request35"];
+        "application/json": components["schemas"]["Request35"];
       };
     };
     responses: {

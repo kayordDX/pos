@@ -27,14 +27,14 @@ const filterFetch: Handle = async ({ event, resolve }) => {
 	});
 };
 
-const outlet: Handle = async ({ event, resolve }) => {
-	const cookieOutlet = event.cookies.get("outlet");
-	if (cookieOutlet) {
-		const cookieOutletJSON = JSON.parse(event.cookies.get("outlet") ?? "") as { outletId: number };
-		event.locals.outlet = cookieOutletJSON;
-	}
-	return await resolve(event);
-};
+// const outlet: Handle = async ({ event, resolve }) => {
+// 	const cookieOutlet = event.cookies.get("outlet");
+// 	if (cookieOutlet) {
+// 		const cookieOutletJSON = JSON.parse(event.cookies.get("outlet") ?? "") as { outletId: number };
+// 		event.locals.outlet = cookieOutletJSON;
+// 	}
+// 	return await resolve(event);
+// };
 
 const authorization: Handle = async ({ event, resolve }) => {
 	const session = await event.locals.auth();
@@ -109,10 +109,21 @@ const authentication: Handle = async ({ event, resolve }) => {
 							image: profile.picture,
 							lastName: profile.family_name ?? "",
 							name: profile.name ?? "",
-							userId: user.id ?? "",
+							userId: profile.sub ?? "",
 						},
 						fetch: event.fetch,
 					});
+
+					console.log("body", {
+						email: profile.email ?? "",
+						firstName: profile.given_name ?? "",
+						image: profile.picture,
+						lastName: profile.family_name ?? "",
+						name: profile.name ?? "",
+						userId: profile.sub ?? "",
+					});
+					console.log("roleRequest", roleRequest);
+					console.log("roleRequest", roleRequest.data);
 
 					return {
 						token: account?.id_token,
@@ -150,4 +161,4 @@ const authentication: Handle = async ({ event, resolve }) => {
 	return authHandle;
 };
 
-export const handle: Handle = sequence(authentication, authorization, filterFetch, outlet);
+export const handle: Handle = sequence(authentication, authorization, filterFetch);

@@ -14,7 +14,13 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { InternalErrorResponse, Request, Response, UserGetRolesParams } from "./api.schemas";
+import type {
+	InternalErrorResponse,
+	Request,
+	Response,
+	Response2,
+	UserGetRolesParams,
+} from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
@@ -84,6 +90,66 @@ export const createUserValidate = <
 
 	return createMutation(mutationOptions);
 };
+export const useUserGetStatusHook = () => {
+	const userGetStatus = useCustomClient<Response2>();
+
+	return () => {
+		return userGetStatus({ url: `/user/getStatus`, method: "GET" });
+	};
+};
+
+export const getUserGetStatusQueryKey = () => {
+	return [`/user/getStatus`] as const;
+};
+
+export const useUserGetStatusQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useUserGetStatusHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof useUserGetStatusHook>>>, TError, TData>
+	>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getUserGetStatusQueryKey();
+
+	const userGetStatus = useUserGetStatusHook();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<ReturnType<typeof useUserGetStatusHook>>>> = () =>
+		userGetStatus();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useUserGetStatusHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type UserGetStatusQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useUserGetStatusHook>>>
+>;
+export type UserGetStatusQueryError = ErrorType<InternalErrorResponse>;
+
+export const createUserGetStatus = <
+	TData = Awaited<ReturnType<ReturnType<typeof useUserGetStatusHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof useUserGetStatusHook>>>, TError, TData>
+	>;
+}): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useUserGetStatusQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
+
 export const useUserGetRolesHook = () => {
 	const userGetRoles = useCustomClient<string[]>();
 

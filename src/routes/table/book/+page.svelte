@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { Badge, Button, Card, Dialog, Input, Label, Loader } from "@kayord/ui";
-	import type { PageData } from "./$types";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { salesPeriod } from "$lib/stores/salesPeriod";
 	import { outlet } from "$lib/stores/outlet";
 	import { createTableBookingCreate, createTableGetAvailable } from "$lib/api";
-	import { session } from "$lib/stores/session";
 
 	const query = createTableGetAvailable({ outletId: $outlet?.outletId ?? 0 });
 	let dialogOpen = false;
@@ -25,8 +23,6 @@
 			data: {
 				bookingName: name,
 				salesPeriodId: $salesPeriod?.id ?? 0,
-				// staffId: $session?.user?.id ?? 0,
-				staffId: 23,
 				tableId: tableId,
 			},
 		});
@@ -83,6 +79,4 @@
 			</Dialog.Footer>
 		</Dialog.Content>
 	</Dialog.Root>
-
-	<Button class="mt-4" on:click={() => history.back()}>Cancel</Button>
 </div>
