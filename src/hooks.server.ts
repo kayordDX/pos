@@ -28,8 +28,11 @@ const filterFetch: Handle = async ({ event, resolve }) => {
 };
 
 const outlet: Handle = async ({ event, resolve }) => {
-	const cookieOutlet = JSON.parse(event.cookies.get("outlet") ?? "") as { outletId: number };
-	event.locals.outlet = cookieOutlet;
+	const cookieOutlet = event.cookies.get("outlet");
+	if (cookieOutlet) {
+		const cookieOutletJSON = JSON.parse(event.cookies.get("outlet") ?? "") as { outletId: number };
+		event.locals.outlet = cookieOutletJSON;
+	}
 	return await resolve(event);
 };
 

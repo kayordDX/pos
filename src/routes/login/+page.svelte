@@ -2,7 +2,6 @@
 	import { Button, Card } from "@kayord/ui";
 	import { signIn } from "@auth/sveltekit/client";
 	import { toast } from "@kayord/ui";
-	import { LogInIcon } from "lucide-svelte";
 	import GoogleSvg from "$lib/SVG/GoogleSVG.svelte";
 
 	let isLoading = false;

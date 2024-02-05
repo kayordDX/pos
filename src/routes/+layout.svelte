@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { ModeWatcher } from "@kayord/ui/mode-watcher";
 	import { Header } from "$lib/components/Header";
-	import "../app.postcss";
+	import "../app.pcss";
 	import { page } from "$app/stores";
 	import { getFlash } from "sveltekit-flash-message";
 	import { HeadlessToast } from "$lib/components/HeadlessToast";
