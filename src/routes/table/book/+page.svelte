@@ -1,13 +1,13 @@
 <script lang="ts">
+	import type { PageData } from "./$types";
+	export let data: PageData;
 	import { Badge, Button, Card, Dialog, Input, Label, Loader } from "@kayord/ui";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import { salesPeriod } from "$lib/stores/salesPeriod";
-	import { outlet } from "$lib/stores/outlet";
 	import { createTableBookingCreate, createTableGetAvailable } from "$lib/api";
 
-	const query = createTableGetAvailable({ outletId: $outlet?.outletId ?? 0 });
+	const query = createTableGetAvailable({ outletId: data.status?.outletId ?? 0 });
 	let dialogOpen = false;
 	let tableId: number = 0;
 	let name: string;
@@ -22,7 +22,7 @@
 		await $mutate.mutateAsync({
 			data: {
 				bookingName: name,
-				salesPeriodId: $salesPeriod?.id ?? 0,
+				salesPeriodId: data.status?.salesPeriodId ?? 0,
 				tableId: tableId,
 			},
 		});

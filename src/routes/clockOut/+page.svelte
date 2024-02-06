@@ -2,22 +2,20 @@
 	import { Badge, Button, Card } from "@kayord/ui";
 	import { PUBLIC_API_URL } from "$env/static/public";
 	import type { PageData } from "./$types";
+	export let data: PageData;
 	import { getFlash } from "sveltekit-flash-message";
 	import { page } from "$app/stores";
 	import { goto } from "$app/navigation";
 	import StaffTypeBadge from "$lib/components/StaffTypeBadge.svelte";
 	import { createClockClockOut } from "$lib/api";
-	import { outlet } from "$lib/stores/outlet";
 	const flash = getFlash(page);
-
-	export let data: PageData;
 
 	const mutation = createClockClockOut();
 
 	const clockIn = async (userId: number) => {
 		try {
 			await $mutation.mutateAsync({
-				data: { outletId: $outlet?.outletId ?? 0, staffId: userId },
+				data: { outletId: data.status?.outletId ?? 0 },
 			});
 			$flash = { type: "success", message: "Successfully Clocked out User" };
 			goto("/");

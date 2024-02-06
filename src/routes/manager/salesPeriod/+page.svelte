@@ -18,12 +18,10 @@
 			await $mutation.mutateAsync({
 				data: { outletId: data.status?.outletId ?? 0, name: name },
 			});
+			await goto("/", { invalidateAll: true });
 			$flash = { type: "success", message: "Successfully opened sales period" };
-			await goto("/");
 		} catch (err) {
 			$flash = { type: "error", message: "Error opening sales period" };
-		} finally {
-			invalidateAll();
 		}
 	};
 </script>

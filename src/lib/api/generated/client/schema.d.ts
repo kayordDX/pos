@@ -67,7 +67,7 @@ export interface paths {
   "/salesPeriod": {
     post: operations["SalesPeriodCreate"];
   };
-  "/salesPeriod/{SalesPeriodId}": {
+  "/salesPeriod/close": {
     post: operations["SalesPeriodClose"];
   };
   "/outlet/{id}": {
@@ -104,7 +104,7 @@ export interface paths {
     post: operations["BusinessCreate"];
     delete: operations["BusinessDelete"];
   };
-  "/business/{Id}": {
+  "/business/{id}": {
     get: operations["BusinessGet"];
   };
 }
@@ -467,7 +467,10 @@ export interface components {
       /** Format: int32 */
       outletId: number;
     };
-    Request22: Record<string, never>;
+    Request22: {
+      /** Format: int32 */
+      salesPeriodId: number;
+    };
     Request23: {
       name: string;
       /** Format: int32 */
@@ -1103,9 +1106,9 @@ export interface operations {
     };
   };
   SalesPeriodClose: {
-    parameters: {
-      path: {
-        salesPeriodId: number;
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["Request22"];
       };
     };
     responses: {

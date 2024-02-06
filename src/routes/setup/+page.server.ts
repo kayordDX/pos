@@ -33,7 +33,6 @@ export const actions: Actions = {
 		}
 
 		try {
-			console.log(session?.token, "token");
 			await client(session?.token).POST("/user/assignOutlet", {
 				body: { outletId: form.data.outletId },
 			});

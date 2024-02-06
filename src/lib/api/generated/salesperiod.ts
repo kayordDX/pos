@@ -14,7 +14,13 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { ErrorResponse, InternalErrorResponse, Request21, SalesPeriod } from "./api.schemas";
+import type {
+	ErrorResponse,
+	InternalErrorResponse,
+	Request21,
+	Request22,
+	SalesPeriod,
+} from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
@@ -162,8 +168,13 @@ export const createSalesPeriodCreate = <
 export const useSalesPeriodCloseHook = () => {
 	const salesPeriodClose = useCustomClient<SalesPeriod>();
 
-	return (salesPeriodId: number) => {
-		return salesPeriodClose({ url: `/salesPeriod/${salesPeriodId}`, method: "POST" });
+	return (request22: BodyType<Request22>) => {
+		return salesPeriodClose({
+			url: `/salesPeriod/close`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: request22,
+		});
 	};
 };
 
@@ -174,13 +185,13 @@ export const useSalesPeriodCloseMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>,
 		TError,
-		{ salesPeriodId: number },
+		{ data: BodyType<Request22> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>,
 	TError,
-	{ salesPeriodId: number },
+	{ data: BodyType<Request22> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -189,11 +200,11 @@ export const useSalesPeriodCloseMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>,
-		{ salesPeriodId: number }
+		{ data: BodyType<Request22> }
 	> = (props) => {
-		const { salesPeriodId } = props ?? {};
+		const { data } = props ?? {};
 
-		return salesPeriodClose(salesPeriodId);
+		return salesPeriodClose(data);
 	};
 
 	return { mutationFn, ...mutationOptions };
@@ -202,7 +213,7 @@ export const useSalesPeriodCloseMutationOptions = <
 export type SalesPeriodCloseMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>
 >;
-
+export type SalesPeriodCloseMutationBody = BodyType<Request22>;
 export type SalesPeriodCloseMutationError = ErrorType<InternalErrorResponse>;
 
 export const createSalesPeriodClose = <
@@ -212,7 +223,7 @@ export const createSalesPeriodClose = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>,
 		TError,
-		{ salesPeriodId: number },
+		{ data: BodyType<Request22> },
 		TContext
 	>;
 }) => {

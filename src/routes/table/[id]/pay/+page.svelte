@@ -2,18 +2,18 @@
 	import { Button, Card } from "@kayord/ui";
 	import type { PageData } from "./$types";
 	import { createTableCashUpCreate } from "$lib/api";
-	import { outlet } from "$lib/stores/outlet";
 	import { Loader, Nfc } from "lucide-svelte";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
+	export let data: PageData;
 
 	const mutation = createTableCashUpCreate();
 
 	const pay = async () => {
 		const result = await $mutation.mutateAsync({
 			data: {
-				outletId: $outlet?.outletId ?? 0,
+				outletId: data.status?.outletId ?? 0,
 				salesAmount: 100,
 				totalAmount: 120,
 				tableBookingId: Number(data.bookingId),
@@ -21,8 +21,6 @@
 		});
 		goto("/waiter");
 	};
-
-	export let data: PageData;
 </script>
 
 <Card.Root class="m-8">

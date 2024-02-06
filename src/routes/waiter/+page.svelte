@@ -7,7 +7,7 @@
 	import { NotebookIcon, Rows4Icon, CalendarOffIcon } from "lucide-svelte";
 	import { createTableGetMyBooked } from "$lib/api";
 
-	const query = createTableGetMyBooked({ myBooking: false, outletId: data.status?.outletId ?? 0 });
+	const query = createTableGetMyBooked({ myBooking: true, outletId: data.status?.outletId ?? 0 });
 </script>
 
 <div class="m-8">

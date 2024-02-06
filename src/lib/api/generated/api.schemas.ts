@@ -116,7 +116,7 @@ export interface Request23 {
 }
 
 export interface Request22 {
-	[key: string]: any;
+	salesPeriodId: number;
 }
 
 export interface Request21 {

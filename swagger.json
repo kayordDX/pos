@@ -1132,23 +1132,25 @@
         }
       }
     },
-    "/salesPeriod/{SalesPeriodId}": {
+    "/salesPeriod/close": {
       "post": {
         "tags": [
           "Salesperiod"
         ],
         "operationId": "SalesPeriodClose",
-        "parameters": [
-          {
-            "name": "salesPeriodId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Request22"
+              }
             }
-          }
-        ],
+          },
+          "required": true,
+          "x-position": 1
+        },
         "responses": {
           "200": {
             "description": "Success",
@@ -1942,7 +1944,7 @@
         }
       }
     },
-    "/business/{Id}": {
+    "/business/{id}": {
       "get": {
         "tags": [
           "Business"
@@ -3217,7 +3219,16 @@
       },
       "Request22": {
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "required": [
+          "salesPeriodId"
+        ],
+        "properties": {
+          "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "Request23": {
         "type": "object",
