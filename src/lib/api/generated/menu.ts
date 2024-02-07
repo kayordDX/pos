@@ -19,9 +19,11 @@ import type {
 	InternalErrorResponse,
 	Menu,
 	MenuGetOutletMenuGetOutletMenusParams,
+	MenuGetSectionsGetOutletMenusParams,
 	MenuListParams,
 	Request26,
-	Request30,
+	Request31,
+	Response5,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
@@ -148,6 +150,83 @@ export const createMenuGet = <
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
 	const queryOptions = useMenuGetQueryOptions(menuId, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
+
+export const useMenuGetSectionsGetOutletMenusHook = () => {
+	const menuGetSectionsGetOutletMenus = useCustomClient<Response5>();
+
+	return (params: MenuGetSectionsGetOutletMenusParams) => {
+		return menuGetSectionsGetOutletMenus({ url: `/menu/sections`, method: "GET", params });
+	};
+};
+
+export const getMenuGetSectionsGetOutletMenusQueryKey = (
+	params: MenuGetSectionsGetOutletMenusParams
+) => {
+	return [`/menu/sections`, ...(params ? [params] : [])] as const;
+};
+
+export const useMenuGetSectionsGetOutletMenusQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetSectionsGetOutletMenusHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: MenuGetSectionsGetOutletMenusParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useMenuGetSectionsGetOutletMenusHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getMenuGetSectionsGetOutletMenusQueryKey(params);
+
+	const menuGetSectionsGetOutletMenus = useMenuGetSectionsGetOutletMenusHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useMenuGetSectionsGetOutletMenusHook>>>
+	> = () => menuGetSectionsGetOutletMenus(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useMenuGetSectionsGetOutletMenusHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type MenuGetSectionsGetOutletMenusQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useMenuGetSectionsGetOutletMenusHook>>>
+>;
+export type MenuGetSectionsGetOutletMenusQueryError = ErrorType<InternalErrorResponse>;
+
+export const createMenuGetSectionsGetOutletMenus = <
+	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetSectionsGetOutletMenusHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: MenuGetSectionsGetOutletMenusParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useMenuGetSectionsGetOutletMenusHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useMenuGetSectionsGetOutletMenusQueryOptions(params, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;
@@ -304,12 +383,12 @@ export const createMenuList = <
 export const useMenuCreateHook = () => {
 	const menuCreate = useCustomClient<Menu>();
 
-	return (request30: BodyType<Request30>) => {
+	return (request31: BodyType<Request31>) => {
 		return menuCreate({
 			url: `/menu`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request30,
+			data: request31,
 		});
 	};
 };
@@ -321,13 +400,13 @@ export const useMenuCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>,
 		TError,
-		{ data: BodyType<Request30> },
+		{ data: BodyType<Request31> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>,
 	TError,
-	{ data: BodyType<Request30> },
+	{ data: BodyType<Request31> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -336,7 +415,7 @@ export const useMenuCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>,
-		{ data: BodyType<Request30> }
+		{ data: BodyType<Request31> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -349,7 +428,7 @@ export const useMenuCreateMutationOptions = <
 export type MenuCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>
 >;
-export type MenuCreateMutationBody = BodyType<Request30>;
+export type MenuCreateMutationBody = BodyType<Request31>;
 export type MenuCreateMutationError = ErrorType<InternalErrorResponse>;
 
 export const createMenuCreate = <
@@ -359,7 +438,7 @@ export const createMenuCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>,
 		TError,
-		{ data: BodyType<Request30> },
+		{ data: BodyType<Request31> },
 		TContext
 	>;
 }) => {

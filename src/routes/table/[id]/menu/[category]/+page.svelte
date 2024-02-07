@@ -1,7 +1,25 @@
 <script lang="ts">
-	import { Badge, Button, Card } from "@kayord/ui";
+	import { Badge, Button, Card, Input, Loader, Select, Separator, ToggleGroup } from "@kayord/ui";
 	import type { PageData } from "./$types";
-	import { Minus, MoveUp, Plus } from "lucide-svelte";
+	import {
+		Minus,
+		MoveUp,
+		Plus,
+		ArrowLeft,
+		BoldIcon,
+		ItalicIcon,
+		UnderlineIcon,
+	} from "lucide-svelte";
+	import {
+		createMenuGetOutletMenuGetOutletMenus,
+		createMenuGetSectionsGetOutletMenus,
+		type MenuGetSectionsGetOutletMenusParams,
+	} from "$lib/api";
+	import Error from "$lib/components/Error.svelte";
+	import { getError } from "$lib/types";
+	import { FilterIcon } from "lucide-svelte";
+	import { writable, type Writable } from "svelte/store";
+	import Header from "$lib/components/Header/Header.svelte";
 
 	export let data: PageData;
 	let count: number = 0;
@@ -13,85 +31,97 @@
 	const decrement = () => {
 		count--;
 	};
+
+	let sectionParams: MenuGetSectionsGetOutletMenusParams = {
+		outletId: data.status?.outletId ?? 0,
+		sectionId: 0,
+	};
+
+	let searchString = "";
+	$: sectionParams.search = searchString;
+
+	const query = createMenuGetOutletMenuGetOutletMenus({ outletId: data.status?.outletId ?? 0 });
+
+	let sectionsQuery = createMenuGetSectionsGetOutletMenus(sectionParams);
+	$: sectionsQuery = createMenuGetSectionsGetOutletMenus(sectionParams);
+
+	const setSection = (sectionId: number) => {
+		sectionParams.sectionId = sectionId;
+		$sectionsQuery.refetch();
+		console.log("sectionId", sectionId);
+	};
 </script>
 
-<div class="m-8">
-	<h1>Menu</h1>
-	<div class="flex flex-wrap gap-4 mt-4">
-		{#if data.category == "0"}
-			<a href="1">
-				<Card.Root class="p-5 w-48">
-					<h3>Drinks</h3>
-				</Card.Root>
-			</a>
-			<a href="2">
-				<Card.Root class="p-5 w-48">
-					<h3>Desert</h3>
-				</Card.Root>
-			</a>
-		{:else if data.category == "1"}
-			<a href="3">
-				<Card.Root class="p-5 w-48">
-					<h3>Alcoholic</h3>
-				</Card.Root>
-			</a>
-			<a href="4">
-				<Card.Root class="p-5 w-48">
-					<h3>Non Alcoholic</h3>
-				</Card.Root>
-			</a>
-		{:else if data.category == "2"}
-			<a href="5">
-				<Card.Root class="p-5 w-48">
-					<h3>Apple Pie</h3>
-				</Card.Root>
-			</a>
-			<a href="6">
-				<Card.Root class="p-5 w-48">
-					<h3>Baklava</h3>
-				</Card.Root>
-			</a>
-		{:else if data.category == "4"}
-			<a href="7">
-				<Card.Root class="p-5 w-48">
-					<h3>Coke</h3>
-				</Card.Root>
-			</a>
-			<a href="8">
-				<Card.Root class="p-5 w-48">
-					<h3>Cream Sode</h3>
-				</Card.Root>
-			</a>
-		{:else if data.category == "3"}
-			<a href="9">
-				<Card.Root class="p-5 w-48">
-					<h3>Brandy</h3>
-				</Card.Root>
-			</a>
-			<a href="10">
-				<Card.Root class="p-5 w-48">
-					<h3>Devilspeak Lager</h3>
-				</Card.Root>
-			</a>
-		{:else if data.category == "9"}
-			<a href="9">
-				<Card.Root class="p-5">
-					<div class="flex gap-4 items-center">
-						<Badge>{count}</Badge>
-						<Button variant="outline" size="icon" on:click={decrement}
-							><Minus class="w-4 h-4" /></Button
-						>
-						<h3>KWV 10 Year</h3>
-						<Button variant="outline" size="icon" on:click={increment}
-							><Plus class="w-4 h-4" /></Button
-						>
-					</div>
-				</Card.Root>
-			</a>
-		{/if}
+{#if $query.isPending}
+	<Loader />
+{/if}
+
+{#if $query.error}
+	<Error message={getError($query.error).message} />
+{/if}
+
+<Select.Root>
+	<Select.Trigger class="w-[180px]">
+		<Select.Value placeholder="Theme" />
+	</Select.Trigger>
+	<Select.Content>
+		<Select.Item value="light">Food</Select.Item>
+		<Select.Item value="dark">Drinks</Select.Item>
+		<Select.Item value="system">System</Select.Item>
+	</Select.Content>
+</Select.Root>
+
+<ToggleGroup.Root type="single" value="bold">
+	<ToggleGroup.Item value="bold" aria-label="Toggle bold">
+		<div class="p-2">Monkey</div>
+	</ToggleGroup.Item>
+	<ToggleGroup.Item value="italic" aria-label="Toggle italic">
+		<ItalicIcon class="h-4 w-4" />
+	</ToggleGroup.Item>
+	<ToggleGroup.Item value="strikethrough" aria-label="Toggle strikethrough">
+		<BoldIcon class="h-4 w-4" />
+	</ToggleGroup.Item>
+</ToggleGroup.Root>
+
+{#if $query.data}
+	<div class="flex justify-center">
+		<div class="max-w-lg w-full flex gap-2">
+			<Input bind:value={searchString} />
+			<Button><FilterIcon class="w-5 h-5" /> Filter</Button>
+		</div>
 	</div>
-	<Button variant="secondary" class="mt-8" href={`/table/${data.bookingId}`}>Cancel</Button>
-	{#if count > 0}
-		<Button class="mt-8 ml-2" href={`/table/${data.bookingId}/temp`}>Add to Order</Button>
-	{/if}
-</div>
+{/if}
+
+{#if $sectionsQuery.data}
+	<div class="flex justify-center gap-2 my-8 flex-wrap items-center">
+		{#if sectionParams.sectionId > 0}
+			<button
+				on:click={() => {
+					sectionParams.sectionId = 0;
+				}}
+				class="flex items-center"
+			>
+				<Badge variant="secondary" class="h-6"><ArrowLeft class="h-4 w-4" /></Badge>
+			</button>
+		{/if}
+		{#each $sectionsQuery.data.sections ?? [] as section}
+			<button on:click={() => setSection(section.menuSectionId)}>
+				<Badge class="h-6">{section.name}</Badge>
+			</button>
+		{/each}
+	</div>
+	<div class="flex justify-center gap-2 my-8 flex-wrap">
+		{#each $sectionsQuery.data.items ?? [] as item}
+			<Card.Root class="p-2">
+				<Card.Header>
+					<Card.Title>
+						{item.name}
+					</Card.Title>
+					<Card.Description>
+						{item.description}
+					</Card.Description>
+				</Card.Header>
+			</Card.Root>
+		{/each}
+	</div>
+{/if}

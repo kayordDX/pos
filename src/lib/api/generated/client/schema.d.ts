@@ -82,6 +82,9 @@ export interface paths {
     get: operations["MenuGet"];
     put: operations["MenuUpdate"];
   };
+  "/menu/sections": {
+    get: operations["MenuGetSectionsGetOutletMenus"];
+  };
   "/menu/outletMenus": {
     get: operations["MenuGetOutletMenuGetOutletMenus"];
   };
@@ -269,9 +272,13 @@ export interface components {
       menuSection: components["schemas"]["MenuSection"];
       /** Format: int32 */
       menuSectionId: number;
-      name?: string | null;
+      name: string;
+      description: string;
       /** Format: decimal */
       price: number;
+      searchVector: components["schemas"]["NpgsqlTsVector_Lexeme"][];
+      /** Format: int32 */
+      position: number;
       options?: components["schemas"]["Option"][] | null;
       tags?: components["schemas"]["Tag"][] | null;
       extras?: components["schemas"]["Extra"][] | null;
@@ -298,6 +305,11 @@ export interface components {
       outletId: number;
       outlet: components["schemas"]["Outlet"];
       menuSections?: components["schemas"]["MenuSection"][] | null;
+    };
+    NpgsqlTsVector_Lexeme: {
+      text: string;
+      /** Format: int32 */
+      count: number;
     };
     Option: {
       /** Format: int32 */
@@ -487,16 +499,21 @@ export interface components {
       id: number;
       name: string;
     };
+    Response5: {
+      sections: components["schemas"]["MenuSection"][];
+      items: components["schemas"]["MenuItem"][];
+    };
     Request27: Record<string, never>;
     Request28: Record<string, never>;
     Request29: Record<string, never>;
-    Request30: {
+    Request30: Record<string, never>;
+    Request31: {
       /** Format: int32 */
       outletId: number;
       name: string;
       division: components["schemas"]["Division"];
     };
-    Request31: Record<string, never>;
+    Request32: Record<string, never>;
     Clock: {
       /** Format: int32 */
       id: number;
@@ -510,25 +527,25 @@ export interface components {
       outletId: number;
       outlet: components["schemas"]["Outlet"];
     };
-    Request32: {
-      /** Format: int32 */
-      outletId: number;
-    };
     Request33: {
       /** Format: int32 */
       outletId: number;
     };
-    Request34: Record<string, never>;
-    Request35: {
+    Request34: {
+      /** Format: int32 */
+      outletId: number;
+    };
+    Request35: Record<string, never>;
+    Request36: {
       /** Format: int32 */
       id: number;
       name: string;
     };
-    Request36: {
+    Request37: {
       /** Format: int32 */
       id: number;
     };
-    Request37: {
+    Request38: {
       name: string;
     };
   };
@@ -1275,6 +1292,29 @@ export interface operations {
       };
     };
   };
+  MenuGetSectionsGetOutletMenus: {
+    parameters: {
+      query: {
+        outletId: number;
+        sectionId: number;
+        search?: string | null;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["Response5"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   MenuGetOutletMenuGetOutletMenus: {
     parameters: {
       query: {
@@ -1320,7 +1360,7 @@ export interface operations {
   MenuCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request30"];
+        "application/json": components["schemas"]["Request31"];
       };
     };
     responses: {
@@ -1369,7 +1409,7 @@ export interface operations {
   ClockClockOut: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request32"];
+        "application/json": components["schemas"]["Request33"];
       };
     };
     responses: {
@@ -1390,7 +1430,7 @@ export interface operations {
   ClockClockIn: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request33"];
+        "application/json": components["schemas"]["Request34"];
       };
     };
     responses: {
@@ -1431,7 +1471,7 @@ export interface operations {
   BusinessEdit: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request35"];
+        "application/json": components["schemas"]["Request36"];
       };
     };
     responses: {
@@ -1459,7 +1499,7 @@ export interface operations {
   BusinessCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request37"];
+        "application/json": components["schemas"]["Request38"];
       };
     };
     responses: {
@@ -1486,8 +1526,8 @@ export interface operations {
   BusinessDelete: {
     requestBody: {
       content: {
-        "*/*": components["schemas"]["Request36"];
-        "application/json": components["schemas"]["Request36"];
+        "*/*": components["schemas"]["Request37"];
+        "application/json": components["schemas"]["Request37"];
       };
     };
     responses: {

@@ -18,6 +18,12 @@ export type MenuGetOutletMenuGetOutletMenusParams = {
 	outletId: number;
 };
 
+export type MenuGetSectionsGetOutletMenusParams = {
+	outletId: number;
+	sectionId: number;
+	search?: string | null;
+};
+
 export type SectionListParams = {
 	outletId: number;
 };
@@ -39,28 +45,28 @@ export type UserGetRolesParams = {
 	userId: string | null;
 };
 
-export interface Request37 {
+export interface Request38 {
 	name: string;
+}
+
+export interface Request37 {
+	id: number;
 }
 
 export interface Request36 {
 	id: number;
-}
-
-export interface Request35 {
-	id: number;
 	name: string;
 }
 
-export interface Request34 {
+export interface Request35 {
 	[key: string]: any;
 }
 
-export interface Request33 {
+export interface Request34 {
 	outletId: number;
 }
 
-export interface Request32 {
+export interface Request33 {
 	outletId: number;
 }
 
@@ -74,14 +80,18 @@ export interface Clock {
 	userId: string;
 }
 
-export interface Request31 {
+export interface Request32 {
 	[key: string]: any;
 }
 
-export interface Request30 {
+export interface Request31 {
 	division: Division;
 	name: string;
 	outletId: number;
+}
+
+export interface Request30 {
+	[key: string]: any;
 }
 
 export interface Request29 {
@@ -94,6 +104,11 @@ export interface Request28 {
 
 export interface Request27 {
 	[key: string]: any;
+}
+
+export interface Response5 {
+	items: MenuItem[];
+	sections: MenuSection[];
 }
 
 export interface Request26 {
@@ -294,6 +309,11 @@ export interface Option {
 	optionId: number;
 }
 
+export interface NpgsqlTsVectorLexeme {
+	count: number;
+	text: string;
+}
+
 export interface Menu {
 	id: number;
 	menuSections?: MenuSection[] | null;
@@ -305,14 +325,17 @@ export interface Menu {
 export type MenuSectionParent = MenuSection | null;
 
 export interface MenuItem {
+	description: string;
 	division: Division;
 	extras?: Extra[] | null;
 	menuItemId: number;
 	menuSection: MenuSection;
 	menuSectionId: number;
-	name?: string | null;
+	name: string;
 	options?: Option[] | null;
+	position: number;
 	price: number;
+	searchVector: NpgsqlTsVectorLexeme[];
 	tags?: Tag[] | null;
 }
 
