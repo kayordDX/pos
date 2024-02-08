@@ -8,7 +8,8 @@
 	export let data: LayoutData;
 </script>
 
-<div class="w-full flex m-2 items-center justify-center">
+<slot />
+<div class="w-full flex m-2 items-center justify-center fixed bottom-0">
 	<Tabs.Root
 		value={$page.route.id?.includes("menu") ? "menu" : "bill"}
 		onValueChange={(s) => {
@@ -28,4 +29,3 @@
 		</Tabs.List>
 	</Tabs.Root>
 </div>
-<slot />

@@ -1,5 +1,16 @@
 <script lang="ts">
-	import { Badge, Button, Card, Input, Loader, Select, Separator, ToggleGroup } from "@kayord/ui";
+	import {
+		Badge,
+		Button,
+		Card,
+		Drawer,
+		Input,
+		Loader,
+		Select,
+		Separator,
+		Skeleton,
+		ToggleGroup,
+	} from "@kayord/ui";
 	import type { PageData } from "./$types";
 	import {
 		Minus,
@@ -20,6 +31,7 @@
 	import { FilterIcon } from "lucide-svelte";
 	import { writable, type Writable } from "svelte/store";
 	import Header from "$lib/components/Header/Header.svelte";
+	import MenuItem from "./MenuItem.svelte";
 
 	export let data: PageData;
 	let count: number = 0;
@@ -59,6 +71,26 @@
 {#if $query.error}
 	<Error message={getError($query.error).message} />
 {/if}
+
+<Drawer.Root>
+	<Drawer.Trigger>Open</Drawer.Trigger>
+	<Drawer.Content class="fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full">
+		<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4">
+			<Drawer.Header>
+				<Drawer.Title>Add item to basket</Drawer.Title>
+				<Drawer.Description>The very interesting sub title</Drawer.Description>
+			</Drawer.Header>
+			<div class="flex flex-col gap-2">
+				{#each { length: 15 } as _, i}
+					<Skeleton class="h-6" />
+				{/each}
+			</div>
+			<Drawer.Footer>
+				<Button>Add</Button>
+			</Drawer.Footer>
+		</div>
+	</Drawer.Content>
+</Drawer.Root>
 
 <Select.Root>
 	<Select.Trigger class="w-[180px]">
@@ -110,18 +142,9 @@
 			</button>
 		{/each}
 	</div>
-	<div class="flex justify-center gap-2 my-8 flex-wrap">
+	<div class="flex justify-center gap-2 my-8 flex-wrap p-2">
 		{#each $sectionsQuery.data.items ?? [] as item}
-			<Card.Root class="p-2">
-				<Card.Header>
-					<Card.Title>
-						{item.name}
-					</Card.Title>
-					<Card.Description>
-						{item.description}
-					</Card.Description>
-				</Card.Header>
-			</Card.Root>
+			<MenuItem name={item.name} price={item.price} />
 		{/each}
 	</div>
 {/if}
