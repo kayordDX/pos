@@ -13,8 +13,8 @@
 		"api": "curl http://localhost:5117/swagger/v1/swagger.json > swagger.json && orval && ./orval.bash && npx openapi-typescript http://localhost:5117/swagger/v1/swagger.json -o ./src/lib/api/generated/client/schema.d.ts"
 	},
 	"devDependencies": {
-		"@auth/core": "^0.25.1",
-		"@auth/sveltekit": "^0.11.1",
+		"@auth/core": "^0.26.3",
+		"@auth/sveltekit": "^0.12.3",
 		"@kayord/tw-plugin": "^1.0.1",
 		"@kayord/ui": "^0.4.5",
 		"@sveltejs/adapter-node": "^4.0.1",
@@ -30,24 +30,25 @@
 		"eslint-plugin-svelte": "^2.35.1",
 		"openapi-fetch": "^0.8.2",
 		"orval": "^6.24.0",
-		"postcss": "^8.4.33",
-		"postcss-load-config": "^5.0.2",
+		"postcss": "^8.4.35",
+		"postcss-load-config": "^5.0.3",
 		"prettier": "^3.2.5",
 		"prettier-plugin-svelte": "^3.1.2",
 		"qs": "^6.11.2",
 		"svelte": "^4.2.10",
-		"svelte-check": "^3.6.3",
+		"svelte-check": "^3.6.4",
+		"svelte-persisted-store": "^0.9.1",
 		"sveltekit-flash-message": "^2.4.1",
 		"sveltekit-superforms": "^1.13.4",
 		"tailwindcss": "^3.4.1",
 		"tslib": "^2.4.1",
 		"typescript": "^5.3.3",
-		"vite": "^5.0.12",
+		"vite": "^5.1.1",
 		"zod": "^3.22.4"
 	},
 	"type": "module",
 	"dependencies": {
 		"jwt-decode": "^4.0.0",
-		"lucide-svelte": "^0.322.0"
+		"lucide-svelte": "^0.323.0"
 	}
 }

@@ -1,5 +1,5 @@
 {
-  "x-generator": "NSwag v14.0.0.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "x-generator": "NSwag v14.0.2.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "Kayord.Pos",
@@ -1470,10 +1470,10 @@
         "tags": [
           "Menu"
         ],
-        "operationId": "MenuGetSectionsGetOutletMenus",
+        "operationId": "MenuGetSectionsGetMenusSections",
         "parameters": [
           {
-            "name": "outletId",
+            "name": "menuId",
             "in": "query",
             "required": true,
             "schema": {
@@ -1489,14 +1489,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "search",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            }
           }
         ],
         "responses": {
@@ -1505,7 +1497,10 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response5"
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuSection"
+                  }
                 }
               }
             }
@@ -1549,6 +1544,67 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/Menu"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menu/items": {
+      "get": {
+        "tags": [
+          "Menu"
+        ],
+        "operationId": "MenuGetItemsGetMenuItems",
+        "parameters": [
+          {
+            "name": "menuId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sectionId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/MenuItemDTO"
                   }
                 }
               }
@@ -1621,7 +1677,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request31"
+                "$ref": "#/components/schemas/Request32"
               }
             }
           },
@@ -1727,7 +1783,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request33"
+                "$ref": "#/components/schemas/Request34"
               }
             }
           },
@@ -1770,7 +1826,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request34"
+                "$ref": "#/components/schemas/Request35"
               }
             }
           },
@@ -1852,7 +1908,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request36"
+                "$ref": "#/components/schemas/Request37"
               }
             }
           },
@@ -1904,12 +1960,12 @@
           "content": {
             "*/*": {
               "schema": {
-                "$ref": "#/components/schemas/Request37"
+                "$ref": "#/components/schemas/Request38"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request37"
+                "$ref": "#/components/schemas/Request38"
               }
             }
           },
@@ -1961,7 +2017,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request38"
+                "$ref": "#/components/schemas/Request39"
               }
             }
           },
@@ -2588,13 +2644,6 @@
             "type": "integer",
             "format": "int32"
           },
-          "options": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/Option"
-            }
-          },
           "tags": {
             "type": "array",
             "nullable": true,
@@ -2611,6 +2660,13 @@
           },
           "division": {
             "$ref": "#/components/schemas/Division"
+          },
+          "menuItemOptionGroups": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/MenuItemOptionGroup"
+            }
           }
         }
       },
@@ -2717,23 +2773,6 @@
           }
         }
       },
-      "Option": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "optionId"
-        ],
-        "properties": {
-          "optionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
       "Tag": {
         "type": "object",
         "additionalProperties": false,
@@ -2781,6 +2820,104 @@
           1,
           2
         ]
+      },
+      "MenuItemOptionGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "optionGroupId",
+          "menuItem",
+          "optionGroup"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/MenuItem"
+          },
+          "optionGroup": {
+            "$ref": "#/components/schemas/OptionGroup"
+          }
+        }
+      },
+      "OptionGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "optionGroupId",
+          "name",
+          "minSelections",
+          "maxSelections",
+          "options"
+        ],
+        "properties": {
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "minSelections": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxSelections": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Option"
+            }
+          },
+          "menuItemOptionGroups": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/MenuItemOptionGroup"
+            }
+          }
+        }
+      },
+      "Option": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "optionId",
+          "name",
+          "price",
+          "optionGroupId",
+          "optionGroup"
+        ],
+        "properties": {
+          "optionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroup": {
+            "$ref": "#/components/schemas/OptionGroup"
+          }
+        }
       },
       "Request8": {
         "type": "object",
@@ -3384,28 +3521,6 @@
           }
         }
       },
-      "Response5": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "sections",
-          "items"
-        ],
-        "properties": {
-          "sections": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MenuSection"
-            }
-          },
-          "items": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/MenuItem"
-            }
-          }
-        }
-      },
       "Request27": {
         "type": "object",
         "additionalProperties": false
@@ -3413,6 +3528,60 @@
       "Request28": {
         "type": "object",
         "additionalProperties": false
+      },
+      "MenuItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "menuSectionId",
+          "name",
+          "description",
+          "price",
+          "position",
+          "division"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Tag"
+            }
+          },
+          "extras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/Extra"
+            }
+          },
+          "division": {
+            "$ref": "#/components/schemas/Division"
+          }
+        }
       },
       "Request29": {
         "type": "object",
@@ -3423,6 +3592,10 @@
         "additionalProperties": false
       },
       "Request31": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request32": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3443,7 +3616,7 @@
           }
         }
       },
-      "Request32": {
+      "Request33": {
         "type": "object",
         "additionalProperties": false
       },
@@ -3487,19 +3660,6 @@
           }
         }
       },
-      "Request33": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "outletId"
-        ],
-        "properties": {
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
       "Request34": {
         "type": "object",
         "additionalProperties": false,
@@ -3515,9 +3675,22 @@
       },
       "Request35": {
         "type": "object",
-        "additionalProperties": false
+        "additionalProperties": false,
+        "required": [
+          "outletId"
+        ],
+        "properties": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "Request36": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "Request37": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3538,7 +3711,7 @@
           }
         }
       },
-      "Request37": {
+      "Request38": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3553,7 +3726,7 @@
           }
         }
       },
-      "Request38": {
+      "Request39": {
         "type": "object",
         "additionalProperties": false,
         "required": [

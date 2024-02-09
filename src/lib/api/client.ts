@@ -6,11 +6,10 @@ export const client = (token?: string) => {
 	let headers: HeadersOptions = {};
 	if (token) {
 		headers = {
-			// "content-type": "application-json",
+			"Content-Type": null,
 			Authorization: `Bearer ${token}`,
 		};
 	}
-
 	return createClient<paths>({
 		baseUrl: PUBLIC_API_URL,
 		headers,

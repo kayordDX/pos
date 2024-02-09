@@ -82,7 +82,7 @@ async function refreshAccessToken(token: JWT) {
 }
 
 const authentication: Handle = async ({ event, resolve }) => {
-	const authHandle = SvelteKitAuth({
+	const { handle } = SvelteKitAuth({
 		providers: [
 			Google({
 				clientId: GOOGLE_ID,
@@ -157,8 +157,8 @@ const authentication: Handle = async ({ event, resolve }) => {
 				return session;
 			},
 		},
-	})({ event, resolve });
-	return authHandle;
+	});
+	return handle({ event, resolve });
 };
 
 export const handle: Handle = sequence(authentication, authorization, filterFetch);

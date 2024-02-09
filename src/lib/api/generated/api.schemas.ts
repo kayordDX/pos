@@ -14,14 +14,19 @@ export type MenuListParams = {
 	outletId: number;
 };
 
+export type MenuGetItemsGetMenuItemsParams = {
+	menuId: number;
+	sectionId: number;
+	search?: string | null;
+};
+
 export type MenuGetOutletMenuGetOutletMenusParams = {
 	outletId: number;
 };
 
-export type MenuGetSectionsGetOutletMenusParams = {
-	outletId: number;
+export type MenuGetSectionsGetMenusSectionsParams = {
+	menuId: number;
 	sectionId: number;
-	search?: string | null;
 };
 
 export type SectionListParams = {
@@ -45,28 +50,28 @@ export type UserGetRolesParams = {
 	userId: string | null;
 };
 
-export interface Request38 {
+export interface Request39 {
 	name: string;
+}
+
+export interface Request38 {
+	id: number;
 }
 
 export interface Request37 {
 	id: number;
-}
-
-export interface Request36 {
-	id: number;
 	name: string;
 }
 
-export interface Request35 {
+export interface Request36 {
 	[key: string]: any;
 }
 
-export interface Request34 {
+export interface Request35 {
 	outletId: number;
 }
 
-export interface Request33 {
+export interface Request34 {
 	outletId: number;
 }
 
@@ -80,14 +85,18 @@ export interface Clock {
 	userId: string;
 }
 
-export interface Request32 {
+export interface Request33 {
 	[key: string]: any;
 }
 
-export interface Request31 {
+export interface Request32 {
 	division: Division;
 	name: string;
 	outletId: number;
+}
+
+export interface Request31 {
+	[key: string]: any;
 }
 
 export interface Request30 {
@@ -98,17 +107,24 @@ export interface Request29 {
 	[key: string]: any;
 }
 
+export interface MenuItemDTO {
+	description: string;
+	division: Division;
+	extras?: Extra[] | null;
+	menuItemId: number;
+	menuSectionId: number;
+	name: string;
+	position: number;
+	price: number;
+	tags?: Tag[] | null;
+}
+
 export interface Request28 {
 	[key: string]: any;
 }
 
 export interface Request27 {
 	[key: string]: any;
-}
-
-export interface Response5 {
-	items: MenuItem[];
-	sections: MenuSection[];
 }
 
 export interface Request26 {
@@ -285,6 +301,30 @@ export interface Request8 {
 	menuItemId: number;
 }
 
+export interface MenuItemOptionGroup {
+	menuItem: MenuItem;
+	menuItemId: number;
+	optionGroup: OptionGroup;
+	optionGroupId: number;
+}
+
+export interface OptionGroup {
+	maxSelections: number;
+	menuItemOptionGroups?: MenuItemOptionGroup[] | null;
+	minSelections: number;
+	name: string;
+	optionGroupId: number;
+	options: Option[];
+}
+
+export interface Option {
+	name: string;
+	optionGroup: OptionGroup;
+	optionGroupId: number;
+	optionId: number;
+	price: number;
+}
+
 export type Division = (typeof Division)[keyof typeof Division];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -302,11 +342,6 @@ export interface Extra {
 export interface Tag {
 	name: string;
 	tagId: number;
-}
-
-export interface Option {
-	name?: string | null;
-	optionId: number;
 }
 
 export interface NpgsqlTsVectorLexeme {
@@ -329,10 +364,10 @@ export interface MenuItem {
 	division: Division;
 	extras?: Extra[] | null;
 	menuItemId: number;
+	menuItemOptionGroups?: MenuItemOptionGroup[] | null;
 	menuSection: MenuSection;
 	menuSectionId: number;
 	name: string;
-	options?: Option[] | null;
 	position: number;
 	price: number;
 	searchVector: NpgsqlTsVectorLexeme[];

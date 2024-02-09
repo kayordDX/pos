@@ -83,10 +83,13 @@ export interface paths {
     put: operations["MenuUpdate"];
   };
   "/menu/sections": {
-    get: operations["MenuGetSectionsGetOutletMenus"];
+    get: operations["MenuGetSectionsGetMenusSections"];
   };
   "/menu/outletMenus": {
     get: operations["MenuGetOutletMenuGetOutletMenus"];
+  };
+  "/menu/items": {
+    get: operations["MenuGetItemsGetMenuItems"];
   };
   "/menu": {
     get: operations["MenuList"];
@@ -279,10 +282,10 @@ export interface components {
       searchVector: components["schemas"]["NpgsqlTsVector_Lexeme"][];
       /** Format: int32 */
       position: number;
-      options?: components["schemas"]["Option"][] | null;
       tags?: components["schemas"]["Tag"][] | null;
       extras?: components["schemas"]["Extra"][] | null;
       division: components["schemas"]["Division"];
+      menuItemOptionGroups?: components["schemas"]["MenuItemOptionGroup"][] | null;
     };
     MenuSection: {
       /** Format: int32 */
@@ -311,11 +314,6 @@ export interface components {
       /** Format: int32 */
       count: number;
     };
-    Option: {
-      /** Format: int32 */
-      optionId: number;
-      name?: string | null;
-    };
     Tag: {
       /** Format: int32 */
       tagId: number;
@@ -328,6 +326,35 @@ export interface components {
     };
     /** @enum {integer} */
     Division: 0 | 1 | 2;
+    MenuItemOptionGroup: {
+      /** Format: int32 */
+      menuItemId: number;
+      /** Format: int32 */
+      optionGroupId: number;
+      menuItem: components["schemas"]["MenuItem"];
+      optionGroup: components["schemas"]["OptionGroup"];
+    };
+    OptionGroup: {
+      /** Format: int32 */
+      optionGroupId: number;
+      name: string;
+      /** Format: int32 */
+      minSelections: number;
+      /** Format: int32 */
+      maxSelections: number;
+      options: components["schemas"]["Option"][];
+      menuItemOptionGroups?: components["schemas"]["MenuItemOptionGroup"][] | null;
+    };
+    Option: {
+      /** Format: int32 */
+      optionId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      optionGroupId: number;
+      optionGroup: components["schemas"]["OptionGroup"];
+    };
     Request8: {
       /** Format: int32 */
       menuItemId: number;
@@ -499,21 +526,33 @@ export interface components {
       id: number;
       name: string;
     };
-    Response5: {
-      sections: components["schemas"]["MenuSection"][];
-      items: components["schemas"]["MenuItem"][];
-    };
     Request27: Record<string, never>;
     Request28: Record<string, never>;
+    MenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      /** Format: int32 */
+      menuSectionId: number;
+      name: string;
+      description: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      position: number;
+      tags?: components["schemas"]["Tag"][] | null;
+      extras?: components["schemas"]["Extra"][] | null;
+      division: components["schemas"]["Division"];
+    };
     Request29: Record<string, never>;
     Request30: Record<string, never>;
-    Request31: {
+    Request31: Record<string, never>;
+    Request32: {
       /** Format: int32 */
       outletId: number;
       name: string;
       division: components["schemas"]["Division"];
     };
-    Request32: Record<string, never>;
+    Request33: Record<string, never>;
     Clock: {
       /** Format: int32 */
       id: number;
@@ -527,25 +566,25 @@ export interface components {
       outletId: number;
       outlet: components["schemas"]["Outlet"];
     };
-    Request33: {
-      /** Format: int32 */
-      outletId: number;
-    };
     Request34: {
       /** Format: int32 */
       outletId: number;
     };
-    Request35: Record<string, never>;
-    Request36: {
+    Request35: {
+      /** Format: int32 */
+      outletId: number;
+    };
+    Request36: Record<string, never>;
+    Request37: {
       /** Format: int32 */
       id: number;
       name: string;
     };
-    Request37: {
+    Request38: {
       /** Format: int32 */
       id: number;
     };
-    Request38: {
+    Request39: {
       name: string;
     };
   };
@@ -1292,19 +1331,18 @@ export interface operations {
       };
     };
   };
-  MenuGetSectionsGetOutletMenus: {
+  MenuGetSectionsGetMenusSections: {
     parameters: {
       query: {
-        outletId: number;
+        menuId: number;
         sectionId: number;
-        search?: string | null;
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response5"];
+          "application/json": components["schemas"]["MenuSection"][];
         };
       };
       /** @description Server Error */
@@ -1326,6 +1364,29 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["Menu"][];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  MenuGetItemsGetMenuItems: {
+    parameters: {
+      query: {
+        menuId: number;
+        sectionId: number;
+        search?: string | null;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["MenuItemDTO"][];
         };
       };
       /** @description Server Error */
@@ -1360,7 +1421,7 @@ export interface operations {
   MenuCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request31"];
+        "application/json": components["schemas"]["Request32"];
       };
     };
     responses: {
@@ -1409,7 +1470,7 @@ export interface operations {
   ClockClockOut: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request33"];
+        "application/json": components["schemas"]["Request34"];
       };
     };
     responses: {
@@ -1430,7 +1491,7 @@ export interface operations {
   ClockClockIn: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request34"];
+        "application/json": components["schemas"]["Request35"];
       };
     };
     responses: {
@@ -1471,7 +1532,7 @@ export interface operations {
   BusinessEdit: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request36"];
+        "application/json": components["schemas"]["Request37"];
       };
     };
     responses: {
@@ -1499,7 +1560,7 @@ export interface operations {
   BusinessCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request38"];
+        "application/json": components["schemas"]["Request39"];
       };
     };
     responses: {
@@ -1526,8 +1587,8 @@ export interface operations {
   BusinessDelete: {
     requestBody: {
       content: {
-        "*/*": components["schemas"]["Request37"];
-        "application/json": components["schemas"]["Request37"];
+        "*/*": components["schemas"]["Request38"];
+        "application/json": components["schemas"]["Request38"];
       };
     };
     responses: {

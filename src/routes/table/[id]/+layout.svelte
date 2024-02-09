@@ -14,7 +14,7 @@
 		value={$page.route.id?.includes("menu") ? "menu" : "bill"}
 		onValueChange={(s) => {
 			if (s == "menu") {
-				goto(`/table/${data.bookingId}/menu/0`);
+				goto(`/table/${data.bookingId}/menu`);
 			} else if (s == "bill") {
 				goto(`/table/${data.bookingId}`);
 			} else {
