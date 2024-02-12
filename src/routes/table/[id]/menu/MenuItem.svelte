@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { Button, Card, Drawer, Skeleton, ToggleGroup } from "@kayord/ui";
-	import { BoldIcon, CornerDownRight, ItalicIcon } from "lucide-svelte";
+	import type { DTOMenuItemDTO } from "$lib/api";
+	import { Button, Card, Drawer, Label, Skeleton, Textarea, ToggleGroup } from "@kayord/ui";
+	import { BoldIcon, ItalicIcon } from "lucide-svelte";
 
-	export let name: string;
-	export let price: number;
+	export let menuItem: DTOMenuItemDTO;
 </script>
 
 <Drawer.Root>
@@ -11,16 +11,16 @@
 		<div class="w-full relative max-w-lg text-left">
 			<Card.Root class="w-full relative max-w-lg p-4">
 				<div class="w-5 h-5 bg-gray-500 absolute top-2 right-2 rounded-full"></div>
-				<div class="font-bold">{name}</div>
-				<div class="text-sm text-muted-foreground">R {price.toFixed(2)}</div>
+				<div class="font-bold">{menuItem.name}</div>
+				<div class="text-sm text-muted-foreground">R {menuItem.price.toFixed(2)}</div>
 			</Card.Root>
 		</div>
 	</Drawer.Trigger>
 	<Drawer.Content class="fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full">
 		<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4">
 			<Drawer.Header>
-				<Drawer.Title>Add item to basket</Drawer.Title>
-				<Drawer.Description>The very interesting sub title</Drawer.Description>
+				<Drawer.Title>{menuItem.name}</Drawer.Title>
+				<Drawer.Description>{menuItem.description}</Drawer.Description>
 			</Drawer.Header>
 			<div class="flex flex-col gap-2">
 				{#each { length: 15 } as _, i}
@@ -37,6 +37,9 @@
 						<BoldIcon class="h-4 w-4" />
 					</ToggleGroup.Item>
 				</ToggleGroup.Root>
+				{JSON.stringify(menuItem)}
+				<Label>Special instructions</Label>
+				<Textarea />
 			</div>
 			<Drawer.Footer>
 				<Button>Add</Button>

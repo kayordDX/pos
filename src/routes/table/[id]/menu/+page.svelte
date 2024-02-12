@@ -85,7 +85,7 @@
 	<div class="flex justify-center w-full">
 		<div class="flex justify-center gap-2 my-8 flex-wrap p-2 w-full">
 			{#each $itemsQuery.data ?? [] as item}
-				<MenuItem name={item.name} price={item.price} />
+				<MenuItem menuItem={item} />
 			{/each}
 		</div>
 	</div>
