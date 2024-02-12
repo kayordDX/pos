@@ -15,19 +15,19 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
-	Clock,
+	ClockClockInRequest,
+	ClockClockOutRequest,
 	ClockListParams,
+	EntitiesClock,
+	EntitiesUser,
 	ErrorResponse,
 	InternalErrorResponse,
-	Request34,
-	Request35,
-	User,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useClockListHook = () => {
-	const clockList = useCustomClient<User[]>();
+	const clockList = useCustomClient<EntitiesUser[]>();
 
 	return (params: ClockListParams) => {
 		return clockList({ url: `/clock/list`, method: "GET", params });
@@ -93,14 +93,14 @@ export const createClockList = <
 };
 
 export const useClockClockOutHook = () => {
-	const clockClockOut = useCustomClient<Clock>();
+	const clockClockOut = useCustomClient<EntitiesClock>();
 
-	return (request34: BodyType<Request34>) => {
+	return (clockClockOutRequest: BodyType<ClockClockOutRequest>) => {
 		return clockClockOut({
 			url: `/clock/out`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request34,
+			data: clockClockOutRequest,
 		});
 	};
 };
@@ -112,13 +112,13 @@ export const useClockClockOutMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>,
 		TError,
-		{ data: BodyType<Request34> },
+		{ data: BodyType<ClockClockOutRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>,
 	TError,
-	{ data: BodyType<Request34> },
+	{ data: BodyType<ClockClockOutRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -127,7 +127,7 @@ export const useClockClockOutMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>,
-		{ data: BodyType<Request34> }
+		{ data: BodyType<ClockClockOutRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -140,7 +140,7 @@ export const useClockClockOutMutationOptions = <
 export type ClockClockOutMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>
 >;
-export type ClockClockOutMutationBody = BodyType<Request34>;
+export type ClockClockOutMutationBody = BodyType<ClockClockOutRequest>;
 export type ClockClockOutMutationError = ErrorType<InternalErrorResponse>;
 
 export const createClockClockOut = <
@@ -150,7 +150,7 @@ export const createClockClockOut = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>,
 		TError,
-		{ data: BodyType<Request34> },
+		{ data: BodyType<ClockClockOutRequest> },
 		TContext
 	>;
 }) => {
@@ -159,14 +159,14 @@ export const createClockClockOut = <
 	return createMutation(mutationOptions);
 };
 export const useClockClockInHook = () => {
-	const clockClockIn = useCustomClient<Clock>();
+	const clockClockIn = useCustomClient<EntitiesClock>();
 
-	return (request35: BodyType<Request35>) => {
+	return (clockClockInRequest: BodyType<ClockClockInRequest>) => {
 		return clockClockIn({
 			url: `/clock/in`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request35,
+			data: clockClockInRequest,
 		});
 	};
 };
@@ -178,13 +178,13 @@ export const useClockClockInMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useClockClockInHook>>>,
 		TError,
-		{ data: BodyType<Request35> },
+		{ data: BodyType<ClockClockInRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useClockClockInHook>>>,
 	TError,
-	{ data: BodyType<Request35> },
+	{ data: BodyType<ClockClockInRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -193,7 +193,7 @@ export const useClockClockInMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useClockClockInHook>>>,
-		{ data: BodyType<Request35> }
+		{ data: BodyType<ClockClockInRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -206,7 +206,7 @@ export const useClockClockInMutationOptions = <
 export type ClockClockInMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useClockClockInHook>>>
 >;
-export type ClockClockInMutationBody = BodyType<Request35>;
+export type ClockClockInMutationBody = BodyType<ClockClockInRequest>;
 export type ClockClockInMutationError = ErrorType<InternalErrorResponse>;
 
 export const createClockClockIn = <
@@ -216,7 +216,7 @@ export const createClockClockIn = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useClockClockInHook>>>,
 		TError,
-		{ data: BodyType<Request35> },
+		{ data: BodyType<ClockClockInRequest> },
 		TContext
 	>;
 }) => {

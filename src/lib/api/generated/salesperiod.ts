@@ -15,17 +15,17 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	EntitiesSalesPeriod,
 	ErrorResponse,
 	InternalErrorResponse,
-	Request21,
-	Request22,
-	SalesPeriod,
+	SalesPeriodCloseRequest,
+	SalesPeriodCreateRequest,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useSalesPeriodGetHook = () => {
-	const salesPeriodGet = useCustomClient<SalesPeriod>();
+	const salesPeriodGet = useCustomClient<EntitiesSalesPeriod>();
 
 	return (outletId: number) => {
 		return salesPeriodGet({ url: `/salesPeriod/${outletId}`, method: "GET" });
@@ -100,14 +100,14 @@ export const createSalesPeriodGet = <
 };
 
 export const useSalesPeriodCreateHook = () => {
-	const salesPeriodCreate = useCustomClient<SalesPeriod>();
+	const salesPeriodCreate = useCustomClient<EntitiesSalesPeriod>();
 
-	return (request21: BodyType<Request21>) => {
+	return (salesPeriodCreateRequest: BodyType<SalesPeriodCreateRequest>) => {
 		return salesPeriodCreate({
 			url: `/salesPeriod`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request21,
+			data: salesPeriodCreateRequest,
 		});
 	};
 };
@@ -119,13 +119,13 @@ export const useSalesPeriodCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>,
 		TError,
-		{ data: BodyType<Request21> },
+		{ data: BodyType<SalesPeriodCreateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>,
 	TError,
-	{ data: BodyType<Request21> },
+	{ data: BodyType<SalesPeriodCreateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -134,7 +134,7 @@ export const useSalesPeriodCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>,
-		{ data: BodyType<Request21> }
+		{ data: BodyType<SalesPeriodCreateRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -147,7 +147,7 @@ export const useSalesPeriodCreateMutationOptions = <
 export type SalesPeriodCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>
 >;
-export type SalesPeriodCreateMutationBody = BodyType<Request21>;
+export type SalesPeriodCreateMutationBody = BodyType<SalesPeriodCreateRequest>;
 export type SalesPeriodCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createSalesPeriodCreate = <
@@ -157,7 +157,7 @@ export const createSalesPeriodCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateHook>>>,
 		TError,
-		{ data: BodyType<Request21> },
+		{ data: BodyType<SalesPeriodCreateRequest> },
 		TContext
 	>;
 }) => {
@@ -166,14 +166,14 @@ export const createSalesPeriodCreate = <
 	return createMutation(mutationOptions);
 };
 export const useSalesPeriodCloseHook = () => {
-	const salesPeriodClose = useCustomClient<SalesPeriod>();
+	const salesPeriodClose = useCustomClient<EntitiesSalesPeriod>();
 
-	return (request22: BodyType<Request22>) => {
+	return (salesPeriodCloseRequest: BodyType<SalesPeriodCloseRequest>) => {
 		return salesPeriodClose({
 			url: `/salesPeriod/close`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request22,
+			data: salesPeriodCloseRequest,
 		});
 	};
 };
@@ -185,13 +185,13 @@ export const useSalesPeriodCloseMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>,
 		TError,
-		{ data: BodyType<Request22> },
+		{ data: BodyType<SalesPeriodCloseRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>,
 	TError,
-	{ data: BodyType<Request22> },
+	{ data: BodyType<SalesPeriodCloseRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -200,7 +200,7 @@ export const useSalesPeriodCloseMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>,
-		{ data: BodyType<Request22> }
+		{ data: BodyType<SalesPeriodCloseRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -213,7 +213,7 @@ export const useSalesPeriodCloseMutationOptions = <
 export type SalesPeriodCloseMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>
 >;
-export type SalesPeriodCloseMutationBody = BodyType<Request22>;
+export type SalesPeriodCloseMutationBody = BodyType<SalesPeriodCloseRequest>;
 export type SalesPeriodCloseMutationError = ErrorType<InternalErrorResponse>;
 
 export const createSalesPeriodClose = <
@@ -223,7 +223,7 @@ export const createSalesPeriodClose = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCloseHook>>>,
 		TError,
-		{ data: BodyType<Request22> },
+		{ data: BodyType<SalesPeriodCloseRequest> },
 		TContext
 	>;
 }) => {

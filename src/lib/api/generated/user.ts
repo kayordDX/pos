@@ -15,26 +15,26 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	EntitiesUserOutlet,
 	InternalErrorResponse,
-	Request,
-	Request3,
-	Response,
-	Response2,
+	UserAssignOutletRequest,
 	UserGetRolesParams,
-	UserOutlet,
+	UserGetStatusResponse,
+	UserValidateRequest,
+	UserValidateResponse,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useUserValidateHook = () => {
-	const userValidate = useCustomClient<Response>();
+	const userValidate = useCustomClient<UserValidateResponse>();
 
-	return (request: BodyType<Request>) => {
+	return (userValidateRequest: BodyType<UserValidateRequest>) => {
 		return userValidate({
 			url: `/user/validate`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request,
+			data: userValidateRequest,
 		});
 	};
 };
@@ -46,13 +46,13 @@ export const useUserValidateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useUserValidateHook>>>,
 		TError,
-		{ data: BodyType<Request> },
+		{ data: BodyType<UserValidateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useUserValidateHook>>>,
 	TError,
-	{ data: BodyType<Request> },
+	{ data: BodyType<UserValidateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -61,7 +61,7 @@ export const useUserValidateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useUserValidateHook>>>,
-		{ data: BodyType<Request> }
+		{ data: BodyType<UserValidateRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -74,7 +74,7 @@ export const useUserValidateMutationOptions = <
 export type UserValidateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useUserValidateHook>>>
 >;
-export type UserValidateMutationBody = BodyType<Request>;
+export type UserValidateMutationBody = BodyType<UserValidateRequest>;
 export type UserValidateMutationError = ErrorType<InternalErrorResponse>;
 
 export const createUserValidate = <
@@ -84,7 +84,7 @@ export const createUserValidate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useUserValidateHook>>>,
 		TError,
-		{ data: BodyType<Request> },
+		{ data: BodyType<UserValidateRequest> },
 		TContext
 	>;
 }) => {
@@ -93,7 +93,7 @@ export const createUserValidate = <
 	return createMutation(mutationOptions);
 };
 export const useUserGetStatusHook = () => {
-	const userGetStatus = useCustomClient<Response2>();
+	const userGetStatus = useCustomClient<UserGetStatusResponse>();
 
 	return () => {
 		return userGetStatus({ url: `/user/getStatus`, method: "GET" });
@@ -219,14 +219,14 @@ export const createUserGetRoles = <
 };
 
 export const useUserAssignOutletHook = () => {
-	const userAssignOutlet = useCustomClient<UserOutlet>();
+	const userAssignOutlet = useCustomClient<EntitiesUserOutlet>();
 
-	return (request3: BodyType<Request3>) => {
+	return (userAssignOutletRequest: BodyType<UserAssignOutletRequest>) => {
 		return userAssignOutlet({
 			url: `/user/assignOutlet`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request3,
+			data: userAssignOutletRequest,
 		});
 	};
 };
@@ -238,13 +238,13 @@ export const useUserAssignOutletMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useUserAssignOutletHook>>>,
 		TError,
-		{ data: BodyType<Request3> },
+		{ data: BodyType<UserAssignOutletRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useUserAssignOutletHook>>>,
 	TError,
-	{ data: BodyType<Request3> },
+	{ data: BodyType<UserAssignOutletRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -253,7 +253,7 @@ export const useUserAssignOutletMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useUserAssignOutletHook>>>,
-		{ data: BodyType<Request3> }
+		{ data: BodyType<UserAssignOutletRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -266,7 +266,7 @@ export const useUserAssignOutletMutationOptions = <
 export type UserAssignOutletMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useUserAssignOutletHook>>>
 >;
-export type UserAssignOutletMutationBody = BodyType<Request3>;
+export type UserAssignOutletMutationBody = BodyType<UserAssignOutletRequest>;
 export type UserAssignOutletMutationError = ErrorType<void | InternalErrorResponse>;
 
 export const createUserAssignOutlet = <
@@ -276,7 +276,7 @@ export const createUserAssignOutlet = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useUserAssignOutletHook>>>,
 		TError,
-		{ data: BodyType<Request3> },
+		{ data: BodyType<UserAssignOutletRequest> },
 		TContext
 	>;
 }) => {

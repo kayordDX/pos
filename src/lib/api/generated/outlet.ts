@@ -15,24 +15,24 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	EntitiesOutlet,
 	ErrorResponse,
 	InternalErrorResponse,
-	Outlet,
-	Request23,
-	Request25,
+	OutletCreateRequest,
+	OutletUpdateRequest,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useOutletUpdateHook = () => {
-	const outletUpdate = useCustomClient<Outlet>();
+	const outletUpdate = useCustomClient<EntitiesOutlet>();
 
-	return (id: number, request23: BodyType<Request23>) => {
+	return (id: number, outletUpdateRequest: BodyType<OutletUpdateRequest>) => {
 		return outletUpdate({
 			url: `/outlet/${id}`,
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			data: request23,
+			data: outletUpdateRequest,
 		});
 	};
 };
@@ -44,13 +44,13 @@ export const useOutletUpdateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>,
 		TError,
-		{ id: number; data: BodyType<Request23> },
+		{ id: number; data: BodyType<OutletUpdateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>,
 	TError,
-	{ id: number; data: BodyType<Request23> },
+	{ id: number; data: BodyType<OutletUpdateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -59,7 +59,7 @@ export const useOutletUpdateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>,
-		{ id: number; data: BodyType<Request23> }
+		{ id: number; data: BodyType<OutletUpdateRequest> }
 	> = (props) => {
 		const { id, data } = props ?? {};
 
@@ -72,7 +72,7 @@ export const useOutletUpdateMutationOptions = <
 export type OutletUpdateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>
 >;
-export type OutletUpdateMutationBody = BodyType<Request23>;
+export type OutletUpdateMutationBody = BodyType<OutletUpdateRequest>;
 export type OutletUpdateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createOutletUpdate = <
@@ -82,7 +82,7 @@ export const createOutletUpdate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>,
 		TError,
-		{ id: number; data: BodyType<Request23> },
+		{ id: number; data: BodyType<OutletUpdateRequest> },
 		TContext
 	>;
 }) => {
@@ -91,7 +91,7 @@ export const createOutletUpdate = <
 	return createMutation(mutationOptions);
 };
 export const useOutletGetHook = () => {
-	const outletGet = useCustomClient<Outlet>();
+	const outletGet = useCustomClient<EntitiesOutlet>();
 
 	return (id: number) => {
 		return outletGet({ url: `/outlet/${id}`, method: "GET" });
@@ -157,7 +157,7 @@ export const createOutletGet = <
 };
 
 export const useOutletListHook = () => {
-	const outletList = useCustomClient<Outlet[]>();
+	const outletList = useCustomClient<EntitiesOutlet[]>();
 
 	return () => {
 		return outletList({ url: `/outlet`, method: "GET" });
@@ -217,14 +217,14 @@ export const createOutletList = <
 };
 
 export const useOutletCreateHook = () => {
-	const outletCreate = useCustomClient<Outlet>();
+	const outletCreate = useCustomClient<EntitiesOutlet>();
 
-	return (request25: BodyType<Request25>) => {
+	return (outletCreateRequest: BodyType<OutletCreateRequest>) => {
 		return outletCreate({
 			url: `/outlet`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request25,
+			data: outletCreateRequest,
 		});
 	};
 };
@@ -236,13 +236,13 @@ export const useOutletCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>,
 		TError,
-		{ data: BodyType<Request25> },
+		{ data: BodyType<OutletCreateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>,
 	TError,
-	{ data: BodyType<Request25> },
+	{ data: BodyType<OutletCreateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -251,7 +251,7 @@ export const useOutletCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>,
-		{ data: BodyType<Request25> }
+		{ data: BodyType<OutletCreateRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -264,7 +264,7 @@ export const useOutletCreateMutationOptions = <
 export type OutletCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>
 >;
-export type OutletCreateMutationBody = BodyType<Request25>;
+export type OutletCreateMutationBody = BodyType<OutletCreateRequest>;
 export type OutletCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createOutletCreate = <
@@ -274,7 +274,7 @@ export const createOutletCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>,
 		TError,
-		{ data: BodyType<Request25> },
+		{ data: BodyType<OutletCreateRequest> },
 		TContext
 	>;
 }) => {

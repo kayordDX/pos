@@ -14,12 +14,17 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { ErrorResponse, InternalErrorResponse, Request10, TableCashUp } from "./api.schemas";
+import type {
+	EntitiesTableCashUp,
+	ErrorResponse,
+	InternalErrorResponse,
+	TableCashUpCreateRequest,
+} from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useTableCashUpViewTableCashUpsHook = () => {
-	const tableCashUpViewTableCashUps = useCustomClient<TableCashUp[]>();
+	const tableCashUpViewTableCashUps = useCustomClient<EntitiesTableCashUp[]>();
 
 	return (tableBookingId: number) => {
 		return tableCashUpViewTableCashUps({
@@ -97,14 +102,14 @@ export const createTableCashUpViewTableCashUps = <
 };
 
 export const useTableCashUpCreateHook = () => {
-	const tableCashUpCreate = useCustomClient<TableCashUp>();
+	const tableCashUpCreate = useCustomClient<EntitiesTableCashUp>();
 
-	return (request10: BodyType<Request10>) => {
+	return (tableCashUpCreateRequest: BodyType<TableCashUpCreateRequest>) => {
 		return tableCashUpCreate({
 			url: `/tableCashUp`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request10,
+			data: tableCashUpCreateRequest,
 		});
 	};
 };
@@ -116,13 +121,13 @@ export const useTableCashUpCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableCashUpCreateHook>>>,
 		TError,
-		{ data: BodyType<Request10> },
+		{ data: BodyType<TableCashUpCreateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableCashUpCreateHook>>>,
 	TError,
-	{ data: BodyType<Request10> },
+	{ data: BodyType<TableCashUpCreateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -131,7 +136,7 @@ export const useTableCashUpCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableCashUpCreateHook>>>,
-		{ data: BodyType<Request10> }
+		{ data: BodyType<TableCashUpCreateRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -144,7 +149,7 @@ export const useTableCashUpCreateMutationOptions = <
 export type TableCashUpCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableCashUpCreateHook>>>
 >;
-export type TableCashUpCreateMutationBody = BodyType<Request10>;
+export type TableCashUpCreateMutationBody = BodyType<TableCashUpCreateRequest>;
 export type TableCashUpCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableCashUpCreate = <
@@ -154,7 +159,7 @@ export const createTableCashUpCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableCashUpCreateHook>>>,
 		TError,
-		{ data: BodyType<Request10> },
+		{ data: BodyType<TableCashUpCreateRequest> },
 		TContext
 	>;
 }) => {

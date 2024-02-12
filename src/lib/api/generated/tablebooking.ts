@@ -7,19 +7,24 @@
  */
 import { createMutation } from "@tanstack/svelte-query";
 import type { CreateMutationOptions, MutationFunction } from "@tanstack/svelte-query";
-import type { ErrorResponse, InternalErrorResponse, Request11, TableBooking } from "./api.schemas";
+import type {
+	EntitiesTableBooking,
+	ErrorResponse,
+	InternalErrorResponse,
+	TableBookingCreateRequest,
+} from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useTableBookingCreateHook = () => {
-	const tableBookingCreate = useCustomClient<TableBooking>();
+	const tableBookingCreate = useCustomClient<EntitiesTableBooking>();
 
-	return (request11: BodyType<Request11>) => {
+	return (tableBookingCreateRequest: BodyType<TableBookingCreateRequest>) => {
 		return tableBookingCreate({
 			url: `/tableBooking`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request11,
+			data: tableBookingCreateRequest,
 		});
 	};
 };
@@ -31,13 +36,13 @@ export const useTableBookingCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableBookingCreateHook>>>,
 		TError,
-		{ data: BodyType<Request11> },
+		{ data: BodyType<TableBookingCreateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableBookingCreateHook>>>,
 	TError,
-	{ data: BodyType<Request11> },
+	{ data: BodyType<TableBookingCreateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -46,7 +51,7 @@ export const useTableBookingCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableBookingCreateHook>>>,
-		{ data: BodyType<Request11> }
+		{ data: BodyType<TableBookingCreateRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -59,7 +64,7 @@ export const useTableBookingCreateMutationOptions = <
 export type TableBookingCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableBookingCreateHook>>>
 >;
-export type TableBookingCreateMutationBody = BodyType<Request11>;
+export type TableBookingCreateMutationBody = BodyType<TableBookingCreateRequest>;
 export type TableBookingCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableBookingCreate = <
@@ -69,7 +74,7 @@ export const createTableBookingCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableBookingCreateHook>>>,
 		TError,
-		{ data: BodyType<Request11> },
+		{ data: BodyType<TableBookingCreateRequest> },
 		TContext
 	>;
 }) => {

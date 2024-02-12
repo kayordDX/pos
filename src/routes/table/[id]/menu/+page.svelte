@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { Badge, Button, Input, Loader, Select } from "@kayord/ui";
+	import { Button, Input, Loader, Select } from "@kayord/ui";
 	import type { PageData } from "./$types";
-	import { ArrowLeft, SearchIcon } from "lucide-svelte";
+	import { SearchIcon } from "lucide-svelte";
 	import {
 		createMenuGetSectionsGetMenusSections,
 		createMenuGetItemsGetMenuItems,
@@ -15,6 +15,7 @@
 	import { page } from "$app/stores";
 	import Menus from "./Menus.svelte";
 	import { selection } from "$lib/stores/selection";
+	import Categories from "./Categories.svelte";
 
 	export let data: PageData;
 
@@ -51,11 +52,6 @@
 
 	let sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
 	$: sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
-
-	const setSection = (sectionId: number) => {
-		sectionParams.sectionId = sectionId;
-		itemParams.sectionId = sectionId;
-	};
 </script>
 
 <div class="flex justify-center flex-col mb-8 mt-4 items-center">
@@ -72,6 +68,12 @@
 	</div>
 
 	<Menus menus={data.menu ?? []} />
+	<div class="flex justify-center gap-2 my-8 flex-wrap items-center">
+		{#if $sectionsQuery.isPending}
+			<Loader />
+		{/if}
+		<Categories sections={$sectionsQuery.data} bind:itemParams bind:sectionParams />
+	</div>
 
 	{#if $itemsQuery.error}
 		<Error message={getError($itemsQuery.error).message} />
@@ -86,28 +88,5 @@
 				<MenuItem name={item.name} price={item.price} />
 			{/each}
 		</div>
-	</div>
-
-	<div class="flex justify-center gap-2 my-8 flex-wrap items-center">
-		{#if $sectionsQuery.isPending}
-			<Loader />
-		{/if}
-		{#if $sectionsQuery.data}
-			{#if sectionParams.sectionId > 0}
-				<button
-					on:click={() => {
-						setSection(0);
-					}}
-					class="flex items-center"
-				>
-					<Badge variant="secondary" class="h-6"><ArrowLeft class="h-4 w-4" /></Badge>
-				</button>
-			{/if}
-			{#each $sectionsQuery.data ?? [] as section}
-				<button on:click={() => setSection(section.menuSectionId)}>
-					<Badge class="h-6">{section.name}</Badge>
-				</button>
-			{/each}
-		{/if}
 	</div>
 </div>

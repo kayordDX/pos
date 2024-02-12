@@ -50,346 +50,368 @@ export type UserGetRolesParams = {
 	userId: string | null;
 };
 
-export interface Request39 {
+export interface BusinessCreateRequest {
 	name: string;
 }
 
-export interface Request38 {
+export interface BusinessDeleteRequest {
 	id: number;
 }
 
-export interface Request37 {
+export interface BusinessEditRequest {
 	id: number;
 	name: string;
 }
 
-export interface Request36 {
+export interface BusinessGetRequest {
 	[key: string]: any;
 }
 
-export interface Request35 {
+export interface ClockClockInRequest {
 	outletId: number;
 }
 
-export interface Request34 {
+export interface ClockClockOutRequest {
 	outletId: number;
 }
 
-export interface Clock {
+export interface EntitiesClock {
 	endDate?: string | null;
 	id: number;
-	outlet: Outlet;
+	outlet: EntitiesOutlet;
 	outletId: number;
 	startDate: string;
-	user: User;
+	user: EntitiesUser;
 	userId: string;
 }
 
-export interface Request33 {
+export interface ClockListRequest {
 	[key: string]: any;
 }
 
-export interface Request32 {
-	division: Division;
+export interface MenuCreateRequest {
+	division: CommonEnumsDivision;
 	name: string;
 	outletId: number;
 }
 
-export interface Request31 {
+export interface MenuGetRequest {
 	[key: string]: any;
 }
 
-export interface Request30 {
+export interface MenuListRequest {
 	[key: string]: any;
 }
 
-export interface Request29 {
+export interface MenuGetItemsRequest {
 	[key: string]: any;
 }
 
-export interface MenuItemDTO {
+export interface DTOMenuItemDTO {
 	description: string;
-	division: Division;
-	extras?: Extra[] | null;
+	division: CommonEnumsDivision;
+	extras?: EntitiesExtra[] | null;
 	menuItemId: number;
 	menuSectionId: number;
 	name: string;
 	position: number;
 	price: number;
-	tags?: Tag[] | null;
+	tags?: EntitiesTag[] | null;
 }
 
-export interface Request28 {
+export interface MenuGetOutletMenuRequest {
 	[key: string]: any;
 }
 
-export interface Request27 {
+export interface MenuGetSectionsRequest {
 	[key: string]: any;
 }
 
-export interface Request26 {
+export interface DTOMenuSectionParentDTO {
+	menuId: number;
+	menuSectionId: number;
+	name?: string | null;
+	parentId?: number | null;
+}
+
+export type DTOMenuSectionDTOParent = DTOMenuSectionParentDTO | null;
+
+export interface DTOMenuSectionDTO {
+	menuId: number;
+	menuSectionId: number;
+	name?: string | null;
+	parent?: DTOMenuSectionDTOParent;
+	parentId?: number | null;
+}
+
+export interface MenuGetSectionsResponse {
+	parents?: DTOMenuSectionDTO[] | null;
+	sections?: DTOMenuSectionDTO[] | null;
+}
+
+export interface MenuUpdateRequest {
 	id: number;
 	name: string;
 }
 
-export interface Request25 {
+export interface OutletCreateRequest {
 	businessId: number;
 	name: string;
 }
 
-export interface Request24 {
+export interface OutletGetRequest {
 	[key: string]: any;
 }
 
-export interface Request23 {
+export interface OutletUpdateRequest {
 	businessId: number;
 	name: string;
 }
 
-export interface Request22 {
+export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
 
-export interface Request21 {
+export interface SalesPeriodCreateRequest {
 	name: string;
 	outletId: number;
 }
 
-export interface Request20 {
+export interface SalesPeriodGetRequest {
 	[key: string]: any;
 }
 
-export interface Request19 {
+export interface SectionCreateRequest {
 	name: string;
 	outletId: number;
 }
 
-export interface Request18 {
+export interface SectionGetRequest {
 	[key: string]: any;
 }
 
-export interface Request17 {
+export interface SectionListRequest {
 	[key: string]: any;
 }
 
-export interface Request16 {
+export interface SectionUpdateRequest {
 	id: number;
 	name: string;
 }
 
-export interface Request15 {
+export interface TableCreateRequest {
 	capacity: number;
 	name: string;
 	sectionId: number;
 }
 
-export interface Request14 {
+export interface TableGetAvailableRequest {
 	[key: string]: any;
 }
 
-export interface SectionDto2 {
+export interface TableGetAvailableSectionDto {
 	id: number;
 	name: string;
 }
 
-export interface Response4 {
+export interface TableGetAvailableResponse {
 	capacity: number;
 	name: string;
-	section: SectionDto2;
+	section: TableGetAvailableSectionDto;
 	sectionId: number;
 	tableId: number;
 }
 
-export interface Request13 {
+export interface TableGetMyBookedRequest {
 	[key: string]: any;
 }
 
-export interface SectionDto {
+export interface TableGetMyBookedSectionDto {
 	id: number;
 	name: string;
 }
 
-export interface TableDto {
+export interface TableGetMyBookedTableDto {
 	name: string;
-	section: SectionDto;
+	section: TableGetMyBookedSectionDto;
 	tableId: number;
 }
 
-export interface Response3 {
+export interface TableGetMyBookedResponse {
 	bookingDate: string;
 	bookingName: string;
 	id: number;
 	salesPeriodId: number;
 	staffId: number;
-	table: TableDto;
+	table: TableGetMyBookedTableDto;
 	tableId: number;
 }
 
-export interface Request12 {
+export interface TableUpdateRequest {
 	capacity: number;
 	name: string;
 	sectionId: number;
 }
 
-export interface Request11 {
+export interface TableBookingCreateRequest {
 	bookingName: string;
 	salesPeriodId: number;
 	tableId: number;
 }
 
-export interface Request10 {
+export interface TableCashUpCreateRequest {
 	outletId: number;
 	salesAmount: number;
 	tableBookingId: number;
 	totalAmount: number;
 }
 
-export interface Request9 {
+export interface TableCashUpViewTableCashUpsRequest {
 	[key: string]: any;
 }
 
-export type UserRoleRole = Role | null;
+export type EntitiesUserRoleRole = EntitiesRole | null;
 
-export interface User {
+export interface EntitiesUser {
 	email: string;
 	image: string;
 	isActive: boolean;
 	name: string;
 	userId: string;
-	userRole?: UserRole[] | null;
+	userRole?: EntitiesUserRole[] | null;
 }
 
-export interface UserRole {
-	role?: UserRoleRole;
+export interface EntitiesUserRole {
+	role?: EntitiesUserRoleRole;
 	roleId: number;
-	user: User;
+	user: EntitiesUser;
 	userId: string;
 	userRoleId: number;
 }
 
-export interface Role {
+export interface EntitiesRole {
 	description: string;
 	name: string;
 	roleId: number;
-	userRole?: UserRole[] | null;
+	userRole?: EntitiesUserRole[] | null;
 }
 
-export interface TableBooking {
+export interface EntitiesTableBooking {
 	bookingDate: string;
 	bookingName: string;
 	id: number;
-	salesPeriod: SalesPeriod;
+	salesPeriod: EntitiesSalesPeriod;
 	salesPeriodId: number;
-	table: Table;
+	table: EntitiesTable;
 	tableId: number;
-	user: User;
+	user: EntitiesUser;
 	userId: string;
 }
 
-export interface TableCashUp {
+export interface EntitiesTableCashUp {
 	cashUpDate: string;
 	id: number;
-	outlet: Outlet;
+	outlet: EntitiesOutlet;
 	outletId: number;
 	salesAmount: number;
-	tableBooking: TableBooking;
+	tableBooking: EntitiesTableBooking;
 	tableBookingId: number;
 	totalAmount: number;
 }
 
-export interface Request8 {
+export interface OrderAddItemRequest {
 	menuItemId: number;
 }
 
-export interface MenuItemOptionGroup {
-	menuItem: MenuItem;
+export interface EntitiesMenuItemOptionGroup {
+	menuItem: EntitiesMenuItem;
 	menuItemId: number;
-	optionGroup: OptionGroup;
+	optionGroup: EntitiesOptionGroup;
 	optionGroupId: number;
 }
 
-export interface OptionGroup {
+export interface EntitiesOptionGroup {
 	maxSelections: number;
-	menuItemOptionGroups?: MenuItemOptionGroup[] | null;
+	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
 	minSelections: number;
 	name: string;
 	optionGroupId: number;
-	options: Option[];
+	options: EntitiesOption[];
 }
 
-export interface Option {
+export interface EntitiesOption {
 	name: string;
-	optionGroup: OptionGroup;
+	optionGroup: EntitiesOptionGroup;
 	optionGroupId: number;
 	optionId: number;
 	price: number;
 }
 
-export type Division = (typeof Division)[keyof typeof Division];
+export type CommonEnumsDivision = (typeof CommonEnumsDivision)[keyof typeof CommonEnumsDivision];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
-export const Division = {
+export const CommonEnumsDivision = {
 	Bar: 0,
 	Kitchen: 1,
 	Barista: 2,
 } as const;
 
-export interface Extra {
+export interface EntitiesExtra {
 	extraId: number;
 	name: string;
 }
 
-export interface Tag {
+export interface EntitiesTag {
 	name: string;
 	tagId: number;
 }
 
-export interface NpgsqlTsVectorLexeme {
+export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	count: number;
 	text: string;
 }
 
-export interface Menu {
+export interface EntitiesMenu {
 	id: number;
-	menuSections?: MenuSection[] | null;
+	menuSections?: EntitiesMenuSection[] | null;
 	name: string;
-	outlet: Outlet;
+	outlet: EntitiesOutlet;
 	outletId: number;
 }
 
-export type MenuSectionParent = MenuSection | null;
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
-export interface MenuItem {
+export interface EntitiesMenuItem {
 	description: string;
-	division: Division;
-	extras?: Extra[] | null;
+	division: CommonEnumsDivision;
+	extras?: EntitiesExtra[] | null;
 	menuItemId: number;
-	menuItemOptionGroups?: MenuItemOptionGroup[] | null;
-	menuSection: MenuSection;
+	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
+	menuSection: EntitiesMenuSection;
 	menuSectionId: number;
 	name: string;
 	position: number;
 	price: number;
-	searchVector: NpgsqlTsVectorLexeme[];
-	tags?: Tag[] | null;
+	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
+	tags?: EntitiesTag[] | null;
 }
 
-export interface MenuSection {
-	menu: Menu;
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
 	menuId: number;
-	menuItems?: MenuItem[] | null;
+	menuItems?: EntitiesMenuItem[] | null;
 	menuSectionId: number;
 	name?: string | null;
-	parent?: MenuSectionParent;
+	parent?: EntitiesMenuSectionParent;
 	parentId?: number | null;
-	subMenuSections?: MenuSection[] | null;
+	subMenuSections?: EntitiesMenuSection[] | null;
 }
 
-export interface Request7 {
+export interface OrderViewOrdersRequest {
 	[key: string]: any;
 }
 
-export interface Request6 {
+export interface TableOrderCreateRequest {
 	tableBookingId: number;
 }
 
@@ -401,36 +423,36 @@ export interface ErrorResponse {
 	statusCode: number;
 }
 
-export interface TableOrder {
-	customer: Customer;
+export interface EntitiesTableOrder {
+	customer: EntitiesCustomer;
 	customerId: number;
 	orderDate: string;
 	tableBookingId: number;
 	tableOrderId: number;
 }
 
-export interface Request5 {
+export interface RoleAddUserInRoleRequest {
 	roleId: number;
 	userId: string;
 }
 
-export interface Request4 {
+export interface RoleCreateRequest {
 	description: string;
 	name: string;
 }
 
-export interface Request3 {
+export interface UserAssignOutletRequest {
 	outletId: number;
 }
 
-export interface UserOutlet {
+export interface EntitiesUserOutlet {
 	id: number;
 	isCurrent: boolean;
 	outletId: number;
 	userId: string;
 }
 
-export interface Request2 {
+export interface UserGetRolesRequest {
 	[key: string]: any;
 }
 
@@ -442,8 +464,8 @@ export const Order = {
 	After: 1,
 } as const;
 
-export interface OrderItem {
-	menuItem: MenuItem;
+export interface EntitiesOrderItem {
+	menuItem: EntitiesMenuItem;
 	menuItemId: number;
 	order: Order;
 	orderId: number;
@@ -451,60 +473,60 @@ export interface OrderItem {
 	quantity: number;
 }
 
-export interface Customer {
+export interface EntitiesCustomer {
 	customerId: number;
 	name: string;
 	orders: Order[];
 }
 
-export interface Outlet {
-	business: Business;
+export interface EntitiesOutlet {
+	business: EntitiesBusiness;
 	businessId: number;
 	id: number;
 	name: string;
-	sections?: Section[] | null;
+	sections?: EntitiesSection[] | null;
 }
 
-export interface Section {
+export interface EntitiesSection {
 	id: number;
 	name: string;
-	outlet: Outlet;
+	outlet: EntitiesOutlet;
 	outletId: number;
-	tables?: Table[] | null;
+	tables?: EntitiesTable[] | null;
 }
 
-export interface Table {
+export interface EntitiesTable {
 	capacity: number;
-	customers: Customer[];
+	customers: EntitiesCustomer[];
 	name: string;
-	section: Section;
+	section: EntitiesSection;
 	sectionId: number;
 	tableId: number;
 }
 
-export interface Business {
+export interface EntitiesBusiness {
 	id: number;
 	name: string;
-	outlets?: Outlet[] | null;
+	outlets?: EntitiesOutlet[] | null;
 }
 
-export interface SalesPeriod {
+export interface EntitiesSalesPeriod {
 	endDate?: string | null;
 	id: number;
 	name?: string | null;
-	outlet: Outlet;
+	outlet: EntitiesOutlet;
 	outletId: number;
 	startDate?: string | null;
 }
 
-export interface Response2 {
+export interface UserGetStatusResponse {
 	clockedIn: boolean;
 	outletId: number;
-	salesPeriod: SalesPeriod;
+	salesPeriod: EntitiesSalesPeriod;
 	salesPeriodId: number;
 }
 
-export interface Request {
+export interface UserValidateRequest {
 	email?: string | null;
 	firstName?: string | null;
 	image?: string | null;
@@ -520,7 +542,7 @@ export interface InternalErrorResponse {
 	status: string;
 }
 
-export interface Response {
+export interface UserValidateResponse {
 	userId: string;
 	userRoles?: string[] | null;
 }

@@ -119,7 +119,7 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    Response: {
+    UserValidateResponse: {
       userId: string;
       userRoles?: string[] | null;
     };
@@ -136,7 +136,7 @@ export interface components {
       /** @default See application log for stack trace. */
       note: string;
     };
-    Request: {
+    UserValidateRequest: {
       userId?: string | null;
       email?: string | null;
       image?: string | null;
@@ -144,15 +144,15 @@ export interface components {
       lastName?: string | null;
       name?: string | null;
     };
-    Response2: {
+    UserGetStatusResponse: {
       /** Format: int32 */
       outletId: number;
       clockedIn: boolean;
       /** Format: int32 */
       salesPeriodId: number;
-      salesPeriod: components["schemas"]["SalesPeriod"];
+      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
     };
-    SalesPeriod: {
+    EntitiesSalesPeriod: {
       /** Format: int32 */
       id: number;
       name?: string | null;
@@ -160,35 +160,35 @@ export interface components {
       startDate?: string | null;
       /** Format: date-time */
       endDate?: string | null;
-      outlet: components["schemas"]["Outlet"];
+      outlet: components["schemas"]["EntitiesOutlet"];
       /** Format: int32 */
       outletId: number;
     };
-    Outlet: {
+    EntitiesOutlet: {
       /** Format: int32 */
       id: number;
       name: string;
       /** Format: int32 */
       businessId: number;
-      business: components["schemas"]["Business"];
-      sections?: components["schemas"]["Section"][] | null;
+      business: components["schemas"]["EntitiesBusiness"];
+      sections?: components["schemas"]["EntitiesSection"][] | null;
     };
-    Business: {
+    EntitiesBusiness: {
       /** Format: int32 */
       id: number;
       name: string;
-      outlets?: components["schemas"]["Outlet"][] | null;
+      outlets?: components["schemas"]["EntitiesOutlet"][] | null;
     };
-    Section: {
+    EntitiesSection: {
       /** Format: int32 */
       id: number;
       name: string;
       /** Format: int32 */
       outletId: number;
-      outlet: components["schemas"]["Outlet"];
-      tables?: components["schemas"]["Table"][] | null;
+      outlet: components["schemas"]["EntitiesOutlet"];
+      tables?: components["schemas"]["EntitiesTable"][] | null;
     };
-    Table: {
+    EntitiesTable: {
       /** Format: int32 */
       tableId: number;
       name: string;
@@ -196,10 +196,10 @@ export interface components {
       capacity: number;
       /** Format: int32 */
       sectionId: number;
-      section: components["schemas"]["Section"];
-      customers: components["schemas"]["Customer"][];
+      section: components["schemas"]["EntitiesSection"];
+      customers: components["schemas"]["EntitiesCustomer"][];
     };
-    Customer: {
+    EntitiesCustomer: {
       /** Format: int32 */
       customerId: number;
       name: string;
@@ -207,8 +207,8 @@ export interface components {
     };
     /** @enum {integer} */
     Order: 0 | 1;
-    Request2: Record<string, never>;
-    UserOutlet: {
+    UserGetRolesRequest: Record<string, never>;
+    EntitiesUserOutlet: {
       /** Format: int32 */
       id: number;
       /** Format: int32 */
@@ -216,27 +216,27 @@ export interface components {
       userId: string;
       isCurrent: boolean;
     };
-    Request3: {
+    UserAssignOutletRequest: {
       /** Format: int32 */
       outletId: number;
     };
-    Request4: {
+    RoleCreateRequest: {
       name: string;
       description: string;
     };
-    Request5: {
+    RoleAddUserInRoleRequest: {
       userId: string;
       /** Format: int32 */
       roleId: number;
     };
-    TableOrder: {
+    EntitiesTableOrder: {
       /** Format: int32 */
       tableOrderId: number;
       /** Format: date-time */
       orderDate: string;
       /** Format: int32 */
       customerId: number;
-      customer: components["schemas"]["Customer"];
+      customer: components["schemas"]["EntitiesCustomer"];
       /** Format: int32 */
       tableBookingId: number;
     };
@@ -252,12 +252,12 @@ export interface components {
         [key: string]: string[];
       };
     };
-    Request6: {
+    TableOrderCreateRequest: {
       /** Format: int32 */
       tableBookingId: number;
     };
-    Request7: Record<string, never>;
-    OrderItem: {
+    OrderViewOrdersRequest: Record<string, never>;
+    EntitiesOrderItem: {
       /** Format: int32 */
       orderItemId: number;
       /** Format: int32 */
@@ -267,74 +267,74 @@ export interface components {
       /** Format: int32 */
       orderId: number;
       order: components["schemas"]["Order"];
-      menuItem: components["schemas"]["MenuItem"];
+      menuItem: components["schemas"]["EntitiesMenuItem"];
     };
-    MenuItem: {
+    EntitiesMenuItem: {
       /** Format: int32 */
       menuItemId: number;
-      menuSection: components["schemas"]["MenuSection"];
+      menuSection: components["schemas"]["EntitiesMenuSection"];
       /** Format: int32 */
       menuSectionId: number;
       name: string;
       description: string;
       /** Format: decimal */
       price: number;
-      searchVector: components["schemas"]["NpgsqlTsVector_Lexeme"][];
+      searchVector: components["schemas"]["NpgsqlTypesNpgsqlTsVector_Lexeme"][];
       /** Format: int32 */
       position: number;
-      tags?: components["schemas"]["Tag"][] | null;
-      extras?: components["schemas"]["Extra"][] | null;
-      division: components["schemas"]["Division"];
-      menuItemOptionGroups?: components["schemas"]["MenuItemOptionGroup"][] | null;
+      tags?: components["schemas"]["EntitiesTag"][] | null;
+      extras?: components["schemas"]["EntitiesExtra"][] | null;
+      division: components["schemas"]["CommonEnumsDivision"];
+      menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
     };
-    MenuSection: {
+    EntitiesMenuSection: {
       /** Format: int32 */
       menuSectionId: number;
       name?: string | null;
-      menu: components["schemas"]["Menu"];
+      menu: components["schemas"]["EntitiesMenu"];
       /** Format: int32 */
       menuId: number;
-      parent?: components["schemas"]["MenuSection"] | null;
+      parent?: components["schemas"]["EntitiesMenuSection"] | null;
       /** Format: int32 */
       parentId?: number | null;
-      subMenuSections?: components["schemas"]["MenuSection"][] | null;
-      menuItems?: components["schemas"]["MenuItem"][] | null;
+      subMenuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
+      menuItems?: components["schemas"]["EntitiesMenuItem"][] | null;
     };
-    Menu: {
+    EntitiesMenu: {
       /** Format: int32 */
       id: number;
       name: string;
       /** Format: int32 */
       outletId: number;
-      outlet: components["schemas"]["Outlet"];
-      menuSections?: components["schemas"]["MenuSection"][] | null;
+      outlet: components["schemas"]["EntitiesOutlet"];
+      menuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
     };
-    NpgsqlTsVector_Lexeme: {
+    NpgsqlTypesNpgsqlTsVector_Lexeme: {
       text: string;
       /** Format: int32 */
       count: number;
     };
-    Tag: {
+    EntitiesTag: {
       /** Format: int32 */
       tagId: number;
       name: string;
     };
-    Extra: {
+    EntitiesExtra: {
       /** Format: int32 */
       extraId: number;
       name: string;
     };
     /** @enum {integer} */
-    Division: 0 | 1 | 2;
-    MenuItemOptionGroup: {
+    CommonEnumsDivision: 0 | 1 | 2;
+    EntitiesMenuItemOptionGroup: {
       /** Format: int32 */
       menuItemId: number;
       /** Format: int32 */
       optionGroupId: number;
-      menuItem: components["schemas"]["MenuItem"];
-      optionGroup: components["schemas"]["OptionGroup"];
+      menuItem: components["schemas"]["EntitiesMenuItem"];
+      optionGroup: components["schemas"]["EntitiesOptionGroup"];
     };
-    OptionGroup: {
+    EntitiesOptionGroup: {
       /** Format: int32 */
       optionGroupId: number;
       name: string;
@@ -342,10 +342,10 @@ export interface components {
       minSelections: number;
       /** Format: int32 */
       maxSelections: number;
-      options: components["schemas"]["Option"][];
-      menuItemOptionGroups?: components["schemas"]["MenuItemOptionGroup"][] | null;
+      options: components["schemas"]["EntitiesOption"][];
+      menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
     };
-    Option: {
+    EntitiesOption: {
       /** Format: int32 */
       optionId: number;
       name: string;
@@ -353,18 +353,18 @@ export interface components {
       price: number;
       /** Format: int32 */
       optionGroupId: number;
-      optionGroup: components["schemas"]["OptionGroup"];
+      optionGroup: components["schemas"]["EntitiesOptionGroup"];
     };
-    Request8: {
+    OrderAddItemRequest: {
       /** Format: int32 */
       menuItemId: number;
     };
-    TableCashUp: {
+    EntitiesTableCashUp: {
       /** Format: int32 */
       id: number;
       /** Format: int32 */
       tableBookingId: number;
-      tableBooking: components["schemas"]["TableBooking"];
+      tableBooking: components["schemas"]["EntitiesTableBooking"];
       /** Format: decimal */
       salesAmount: number;
       /** Format: decimal */
@@ -373,49 +373,49 @@ export interface components {
       cashUpDate: string;
       /** Format: int32 */
       outletId: number;
-      outlet: components["schemas"]["Outlet"];
+      outlet: components["schemas"]["EntitiesOutlet"];
     };
-    TableBooking: {
+    EntitiesTableBooking: {
       /** Format: int32 */
       id: number;
       /** Format: int32 */
       tableId: number;
-      table: components["schemas"]["Table"];
+      table: components["schemas"]["EntitiesTable"];
       bookingName: string;
       /** Format: date-time */
       bookingDate: string;
       /** Format: int32 */
       salesPeriodId: number;
-      salesPeriod: components["schemas"]["SalesPeriod"];
+      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
       userId: string;
-      user: components["schemas"]["User"];
+      user: components["schemas"]["EntitiesUser"];
     };
-    User: {
+    EntitiesUser: {
       userId: string;
       email: string;
       image: string;
       name: string;
       isActive: boolean;
-      userRole?: components["schemas"]["UserRole"][] | null;
+      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
     };
-    UserRole: {
+    EntitiesUserRole: {
       /** Format: int32 */
       userRoleId: number;
       userId: string;
       /** Format: int32 */
       roleId: number;
-      user: components["schemas"]["User"];
-      role?: components["schemas"]["Role"] | null;
+      user: components["schemas"]["EntitiesUser"];
+      role?: components["schemas"]["EntitiesRole"] | null;
     };
-    Role: {
+    EntitiesRole: {
       /** Format: int32 */
       roleId: number;
       name: string;
       description: string;
-      userRole?: components["schemas"]["UserRole"][] | null;
+      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
     };
-    Request9: Record<string, never>;
-    Request10: {
+    TableCashUpViewTableCashUpsRequest: Record<string, never>;
+    TableCashUpCreateRequest: {
       /** Format: int32 */
       tableBookingId: number;
       /** Format: decimal */
@@ -425,21 +425,21 @@ export interface components {
       /** Format: int32 */
       outletId: number;
     };
-    Request11: {
+    TableBookingCreateRequest: {
       /** Format: int32 */
       tableId: number;
       bookingName: string;
       /** Format: int32 */
       salesPeriodId: number;
     };
-    Request12: {
+    TableUpdateRequest: {
       name: string;
       /** Format: int32 */
       sectionId: number;
       /** Format: int32 */
       capacity: number;
     };
-    Response3: {
+    TableGetMyBookedResponse: {
       /** Format: int32 */
       id: number;
       /** Format: int32 */
@@ -451,21 +451,21 @@ export interface components {
       salesPeriodId: number;
       /** Format: int32 */
       staffId: number;
-      table: components["schemas"]["TableDto"];
+      table: components["schemas"]["TableGetMyBookedTableDto"];
     };
-    TableDto: {
+    TableGetMyBookedTableDto: {
       /** Format: int32 */
       tableId: number;
       name: string;
-      section: components["schemas"]["SectionDto"];
+      section: components["schemas"]["TableGetMyBookedSectionDto"];
     };
-    SectionDto: {
+    TableGetMyBookedSectionDto: {
       /** Format: int32 */
       id: number;
       name: string;
     };
-    Request13: Record<string, never>;
-    Response4: {
+    TableGetMyBookedRequest: Record<string, never>;
+    TableGetAvailableResponse: {
       /** Format: int32 */
       tableId: number;
       name: string;
@@ -473,62 +473,85 @@ export interface components {
       capacity: number;
       /** Format: int32 */
       sectionId: number;
-      section: components["schemas"]["SectionDto2"];
+      section: components["schemas"]["TableGetAvailableSectionDto"];
     };
-    SectionDto2: {
+    TableGetAvailableSectionDto: {
       /** Format: int32 */
       id: number;
       name: string;
     };
-    Request14: Record<string, never>;
-    Request15: {
+    TableGetAvailableRequest: Record<string, never>;
+    TableCreateRequest: {
       name: string;
       /** Format: int32 */
       sectionId: number;
       /** Format: int32 */
       capacity: number;
     };
-    Request16: {
+    SectionUpdateRequest: {
       /** Format: int32 */
       id: number;
       name: string;
     };
-    Request17: Record<string, never>;
-    Request18: Record<string, never>;
-    Request19: {
+    SectionListRequest: Record<string, never>;
+    SectionGetRequest: Record<string, never>;
+    SectionCreateRequest: {
       name: string;
       /** Format: int32 */
       outletId: number;
     };
-    Request20: Record<string, never>;
-    Request21: {
+    SalesPeriodGetRequest: Record<string, never>;
+    SalesPeriodCreateRequest: {
       name: string;
       /** Format: int32 */
       outletId: number;
     };
-    Request22: {
+    SalesPeriodCloseRequest: {
       /** Format: int32 */
       salesPeriodId: number;
     };
-    Request23: {
+    OutletUpdateRequest: {
       name: string;
       /** Format: int32 */
       businessId: number;
     };
-    Request24: Record<string, never>;
-    Request25: {
+    OutletGetRequest: Record<string, never>;
+    OutletCreateRequest: {
       name: string;
       /** Format: int32 */
       businessId: number;
     };
-    Request26: {
+    MenuUpdateRequest: {
       /** Format: int32 */
       id: number;
       name: string;
     };
-    Request27: Record<string, never>;
-    Request28: Record<string, never>;
-    MenuItemDTO: {
+    MenuGetSectionsResponse: {
+      sections?: components["schemas"]["DTOMenuSectionDTO"][] | null;
+      parents?: components["schemas"]["DTOMenuSectionDTO"][] | null;
+    };
+    DTOMenuSectionDTO: {
+      /** Format: int32 */
+      menuSectionId: number;
+      name?: string | null;
+      /** Format: int32 */
+      menuId: number;
+      /** Format: int32 */
+      parentId?: number | null;
+      parent?: components["schemas"]["DTOMenuSectionParentDTO"] | null;
+    };
+    DTOMenuSectionParentDTO: {
+      /** Format: int32 */
+      menuSectionId: number;
+      name?: string | null;
+      /** Format: int32 */
+      menuId: number;
+      /** Format: int32 */
+      parentId?: number | null;
+    };
+    MenuGetSectionsRequest: Record<string, never>;
+    MenuGetOutletMenuRequest: Record<string, never>;
+    DTOMenuItemDTO: {
       /** Format: int32 */
       menuItemId: number;
       /** Format: int32 */
@@ -539,52 +562,52 @@ export interface components {
       price: number;
       /** Format: int32 */
       position: number;
-      tags?: components["schemas"]["Tag"][] | null;
-      extras?: components["schemas"]["Extra"][] | null;
-      division: components["schemas"]["Division"];
+      tags?: components["schemas"]["EntitiesTag"][] | null;
+      extras?: components["schemas"]["EntitiesExtra"][] | null;
+      division: components["schemas"]["CommonEnumsDivision"];
     };
-    Request29: Record<string, never>;
-    Request30: Record<string, never>;
-    Request31: Record<string, never>;
-    Request32: {
+    MenuGetItemsRequest: Record<string, never>;
+    MenuListRequest: Record<string, never>;
+    MenuGetRequest: Record<string, never>;
+    MenuCreateRequest: {
       /** Format: int32 */
       outletId: number;
       name: string;
-      division: components["schemas"]["Division"];
+      division: components["schemas"]["CommonEnumsDivision"];
     };
-    Request33: Record<string, never>;
-    Clock: {
+    ClockListRequest: Record<string, never>;
+    EntitiesClock: {
       /** Format: int32 */
       id: number;
       userId: string;
-      user: components["schemas"]["User"];
+      user: components["schemas"]["EntitiesUser"];
       /** Format: date-time */
       startDate: string;
       /** Format: date-time */
       endDate?: string | null;
       /** Format: int32 */
       outletId: number;
-      outlet: components["schemas"]["Outlet"];
+      outlet: components["schemas"]["EntitiesOutlet"];
     };
-    Request34: {
+    ClockClockOutRequest: {
       /** Format: int32 */
       outletId: number;
     };
-    Request35: {
+    ClockClockInRequest: {
       /** Format: int32 */
       outletId: number;
     };
-    Request36: Record<string, never>;
-    Request37: {
+    BusinessGetRequest: Record<string, never>;
+    BusinessEditRequest: {
       /** Format: int32 */
       id: number;
       name: string;
     };
-    Request38: {
+    BusinessDeleteRequest: {
       /** Format: int32 */
       id: number;
     };
-    Request39: {
+    BusinessCreateRequest: {
       name: string;
     };
   };
@@ -604,14 +627,14 @@ export interface operations {
   UserValidate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request"];
+        "application/json": components["schemas"]["UserValidateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response"];
+          "application/json": components["schemas"]["UserValidateResponse"];
         };
       };
       /** @description Server Error */
@@ -627,7 +650,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response2"];
+          "application/json": components["schemas"]["UserGetStatusResponse"];
         };
       };
       /** @description Server Error */
@@ -662,14 +685,14 @@ export interface operations {
   UserAssignOutlet: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request3"];
+        "application/json": components["schemas"]["UserAssignOutletRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["UserOutlet"];
+          "application/json": components["schemas"]["EntitiesUserOutlet"];
         };
       };
       /** @description Unauthorized */
@@ -687,7 +710,7 @@ export interface operations {
   RoleCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request4"];
+        "application/json": components["schemas"]["RoleCreateRequest"];
       };
     };
     responses: {
@@ -709,7 +732,7 @@ export interface operations {
   RoleAddUserInRole: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request5"];
+        "application/json": components["schemas"]["RoleAddUserInRoleRequest"];
       };
     };
     responses: {
@@ -731,14 +754,14 @@ export interface operations {
   TableOrderCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request6"];
+        "application/json": components["schemas"]["TableOrderCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableOrder"];
+          "application/json": components["schemas"]["EntitiesTableOrder"];
         };
       };
       /** @description Bad Request */
@@ -768,7 +791,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableOrder"][];
+          "application/json": components["schemas"]["EntitiesTableOrder"][];
         };
       };
       /** @description Server Error */
@@ -787,14 +810,14 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request8"];
+        "application/json": components["schemas"]["OrderAddItemRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["OrderItem"];
+          "application/json": components["schemas"]["EntitiesOrderItem"];
         };
       };
       /** @description Bad Request */
@@ -821,7 +844,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableCashUp"][];
+          "application/json": components["schemas"]["EntitiesTableCashUp"][];
         };
       };
       /** @description Server Error */
@@ -835,14 +858,14 @@ export interface operations {
   TableCashUpCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request10"];
+        "application/json": components["schemas"]["TableCashUpCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableCashUp"];
+          "application/json": components["schemas"]["EntitiesTableCashUp"];
         };
       };
       /** @description Bad Request */
@@ -862,14 +885,14 @@ export interface operations {
   TableBookingCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request11"];
+        "application/json": components["schemas"]["TableBookingCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableBooking"];
+          "application/json": components["schemas"]["EntitiesTableBooking"];
         };
       };
       /** @description Bad Request */
@@ -894,14 +917,14 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request12"];
+        "application/json": components["schemas"]["TableUpdateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Table"];
+          "application/json": components["schemas"]["EntitiesTable"];
         };
       };
       /** @description Bad Request */
@@ -929,7 +952,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response3"][];
+          "application/json": components["schemas"]["TableGetMyBookedResponse"][];
         };
       };
       /** @description Bad Request */
@@ -956,7 +979,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Response4"][];
+          "application/json": components["schemas"]["TableGetAvailableResponse"][];
         };
       };
       /** @description Bad Request */
@@ -976,14 +999,14 @@ export interface operations {
   TableCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request15"];
+        "application/json": components["schemas"]["TableCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Table"];
+          "application/json": components["schemas"]["EntitiesTable"];
         };
       };
       /** @description Bad Request */
@@ -1010,7 +1033,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Section"];
+          "application/json": components["schemas"]["EntitiesSection"];
         };
       };
       /** @description Bad Request */
@@ -1035,14 +1058,14 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request16"];
+        "application/json": components["schemas"]["SectionUpdateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Section"];
+          "application/json": components["schemas"]["EntitiesSection"];
         };
       };
       /** @description Bad Request */
@@ -1069,7 +1092,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Section"][];
+          "application/json": components["schemas"]["EntitiesSection"][];
         };
       };
       /** @description Bad Request */
@@ -1089,14 +1112,14 @@ export interface operations {
   SectionCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request19"];
+        "application/json": components["schemas"]["SectionCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Section"];
+          "application/json": components["schemas"]["EntitiesSection"];
         };
       };
       /** @description Bad Request */
@@ -1123,7 +1146,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["SalesPeriod"];
+          "application/json": components["schemas"]["EntitiesSalesPeriod"];
         };
       };
       /** @description Server Error */
@@ -1137,14 +1160,14 @@ export interface operations {
   SalesPeriodCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request21"];
+        "application/json": components["schemas"]["SalesPeriodCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["SalesPeriod"];
+          "application/json": components["schemas"]["EntitiesSalesPeriod"];
         };
       };
       /** @description Bad Request */
@@ -1164,14 +1187,14 @@ export interface operations {
   SalesPeriodClose: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request22"];
+        "application/json": components["schemas"]["SalesPeriodCloseRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["SalesPeriod"];
+          "application/json": components["schemas"]["EntitiesSalesPeriod"];
         };
       };
       /** @description Server Error */
@@ -1192,7 +1215,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Outlet"];
+          "application/json": components["schemas"]["EntitiesOutlet"];
         };
       };
       /** @description Server Error */
@@ -1211,14 +1234,14 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request23"];
+        "application/json": components["schemas"]["OutletUpdateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Outlet"];
+          "application/json": components["schemas"]["EntitiesOutlet"];
         };
       };
       /** @description Bad Request */
@@ -1240,7 +1263,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Outlet"][];
+          "application/json": components["schemas"]["EntitiesOutlet"][];
         };
       };
       /** @description Server Error */
@@ -1254,14 +1277,14 @@ export interface operations {
   OutletCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request25"];
+        "application/json": components["schemas"]["OutletCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Outlet"];
+          "application/json": components["schemas"]["EntitiesOutlet"];
         };
       };
       /** @description Bad Request */
@@ -1288,7 +1311,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Menu"];
+          "application/json": components["schemas"]["EntitiesMenu"];
         };
       };
       /** @description Server Error */
@@ -1307,14 +1330,14 @@ export interface operations {
     };
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request26"];
+        "application/json": components["schemas"]["MenuUpdateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Menu"];
+          "application/json": components["schemas"]["EntitiesMenu"];
         };
       };
       /** @description Bad Request */
@@ -1342,7 +1365,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["MenuSection"][];
+          "application/json": components["schemas"]["MenuGetSectionsResponse"];
         };
       };
       /** @description Server Error */
@@ -1363,7 +1386,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Menu"][];
+          "application/json": components["schemas"]["EntitiesMenu"][];
         };
       };
       /** @description Server Error */
@@ -1386,7 +1409,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["MenuItemDTO"][];
+          "application/json": components["schemas"]["DTOMenuItemDTO"][];
         };
       };
       /** @description Server Error */
@@ -1407,7 +1430,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Menu"][];
+          "application/json": components["schemas"]["EntitiesMenu"][];
         };
       };
       /** @description Server Error */
@@ -1421,14 +1444,14 @@ export interface operations {
   MenuCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request32"];
+        "application/json": components["schemas"]["MenuCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Menu"];
+          "application/json": components["schemas"]["EntitiesMenu"];
         };
       };
       /** @description Server Error */
@@ -1450,7 +1473,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["User"][];
+          "application/json": components["schemas"]["EntitiesUser"][];
         };
       };
       /** @description Bad Request */
@@ -1470,14 +1493,14 @@ export interface operations {
   ClockClockOut: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request34"];
+        "application/json": components["schemas"]["ClockClockOutRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Clock"];
+          "application/json": components["schemas"]["EntitiesClock"];
         };
       };
       /** @description Server Error */
@@ -1491,14 +1514,14 @@ export interface operations {
   ClockClockIn: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request35"];
+        "application/json": components["schemas"]["ClockClockInRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Clock"];
+          "application/json": components["schemas"]["EntitiesClock"];
         };
       };
       /** @description Server Error */
@@ -1514,7 +1537,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Business"][];
+          "application/json": components["schemas"]["EntitiesBusiness"][];
         };
       };
       /** @description Unauthorized */
@@ -1532,7 +1555,7 @@ export interface operations {
   BusinessEdit: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request37"];
+        "application/json": components["schemas"]["BusinessEditRequest"];
       };
     };
     responses: {
@@ -1560,14 +1583,14 @@ export interface operations {
   BusinessCreate: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["Request39"];
+        "application/json": components["schemas"]["BusinessCreateRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Business"];
+          "application/json": components["schemas"]["EntitiesBusiness"];
         };
       };
       /** @description Bad Request */
@@ -1587,8 +1610,8 @@ export interface operations {
   BusinessDelete: {
     requestBody: {
       content: {
-        "*/*": components["schemas"]["Request38"];
-        "application/json": components["schemas"]["Request38"];
+        "*/*": components["schemas"]["BusinessDeleteRequest"];
+        "application/json": components["schemas"]["BusinessDeleteRequest"];
       };
     };
     responses: {
@@ -1623,7 +1646,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["Business"];
+          "application/json": components["schemas"]["EntitiesBusiness"];
         };
       };
       /** @description Server Error */

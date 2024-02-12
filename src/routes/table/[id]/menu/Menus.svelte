@@ -1,8 +1,8 @@
 <script lang="ts">
-	import type { Menu } from "$lib/api";
-	import { Badge } from "@kayord/ui";
+	import type { EntitiesMenu } from "$lib/api";
+	import { Badge, ToggleGroup } from "@kayord/ui";
 
-	export let menus: Menu[];
+	export let menus: EntitiesMenu[];
 
 	import { selection } from "$lib/stores/selection";
 

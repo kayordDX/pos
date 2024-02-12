@@ -15,26 +15,26 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	EntitiesOrderItem,
+	EntitiesTableOrder,
 	ErrorResponse,
 	InternalErrorResponse,
-	OrderItem,
+	OrderAddItemRequest,
 	OrderViewOrdersParams,
-	Request6,
-	Request8,
-	TableOrder,
+	TableOrderCreateRequest,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useTableOrderCreateHook = () => {
-	const tableOrderCreate = useCustomClient<TableOrder>();
+	const tableOrderCreate = useCustomClient<EntitiesTableOrder>();
 
-	return (request6: BodyType<Request6>) => {
+	return (tableOrderCreateRequest: BodyType<TableOrderCreateRequest>) => {
 		return tableOrderCreate({
 			url: `/order`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request6,
+			data: tableOrderCreateRequest,
 		});
 	};
 };
@@ -46,13 +46,13 @@ export const useTableOrderCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>,
 		TError,
-		{ data: BodyType<Request6> },
+		{ data: BodyType<TableOrderCreateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>,
 	TError,
-	{ data: BodyType<Request6> },
+	{ data: BodyType<TableOrderCreateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -61,7 +61,7 @@ export const useTableOrderCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>,
-		{ data: BodyType<Request6> }
+		{ data: BodyType<TableOrderCreateRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -74,7 +74,7 @@ export const useTableOrderCreateMutationOptions = <
 export type TableOrderCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>
 >;
-export type TableOrderCreateMutationBody = BodyType<Request6>;
+export type TableOrderCreateMutationBody = BodyType<TableOrderCreateRequest>;
 export type TableOrderCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableOrderCreate = <
@@ -84,7 +84,7 @@ export const createTableOrderCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableOrderCreateHook>>>,
 		TError,
-		{ data: BodyType<Request6> },
+		{ data: BodyType<TableOrderCreateRequest> },
 		TContext
 	>;
 }) => {
@@ -93,7 +93,7 @@ export const createTableOrderCreate = <
 	return createMutation(mutationOptions);
 };
 export const useOrderViewOrdersHook = () => {
-	const orderViewOrders = useCustomClient<TableOrder[]>();
+	const orderViewOrders = useCustomClient<EntitiesTableOrder[]>();
 
 	return (tableId: string | null, params: OrderViewOrdersParams) => {
 		return orderViewOrders({ url: `/order/table/${tableId}`, method: "GET", params });
@@ -173,14 +173,14 @@ export const createOrderViewOrders = <
 };
 
 export const useOrderAddItemHook = () => {
-	const orderAddItem = useCustomClient<OrderItem>();
+	const orderAddItem = useCustomClient<EntitiesOrderItem>();
 
-	return (orderId: number, request8: BodyType<Request8>) => {
+	return (orderId: number, orderAddItemRequest: BodyType<OrderAddItemRequest>) => {
 		return orderAddItem({
 			url: `/order/${orderId}/addItem`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request8,
+			data: orderAddItemRequest,
 		});
 	};
 };
@@ -192,13 +192,13 @@ export const useOrderAddItemMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
 		TError,
-		{ orderId: number; data: BodyType<Request8> },
+		{ orderId: number; data: BodyType<OrderAddItemRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
 	TError,
-	{ orderId: number; data: BodyType<Request8> },
+	{ orderId: number; data: BodyType<OrderAddItemRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -207,7 +207,7 @@ export const useOrderAddItemMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
-		{ orderId: number; data: BodyType<Request8> }
+		{ orderId: number; data: BodyType<OrderAddItemRequest> }
 	> = (props) => {
 		const { orderId, data } = props ?? {};
 
@@ -220,7 +220,7 @@ export const useOrderAddItemMutationOptions = <
 export type OrderAddItemMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>
 >;
-export type OrderAddItemMutationBody = BodyType<Request8>;
+export type OrderAddItemMutationBody = BodyType<OrderAddItemRequest>;
 export type OrderAddItemMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createOrderAddItem = <
@@ -230,7 +230,7 @@ export const createOrderAddItem = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
 		TError,
-		{ orderId: number; data: BodyType<Request8> },
+		{ orderId: number; data: BodyType<OrderAddItemRequest> },
 		TContext
 	>;
 }) => {

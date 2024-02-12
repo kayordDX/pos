@@ -15,25 +15,25 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	EntitiesSection,
 	ErrorResponse,
 	InternalErrorResponse,
-	Request16,
-	Request19,
-	Section,
+	SectionCreateRequest,
 	SectionListParams,
+	SectionUpdateRequest,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useSectionUpdateHook = () => {
-	const sectionUpdate = useCustomClient<Section>();
+	const sectionUpdate = useCustomClient<EntitiesSection>();
 
-	return (sectionId: string | null, request16: BodyType<Request16>) => {
+	return (sectionId: string | null, sectionUpdateRequest: BodyType<SectionUpdateRequest>) => {
 		return sectionUpdate({
 			url: `/section/${sectionId}`,
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			data: request16,
+			data: sectionUpdateRequest,
 		});
 	};
 };
@@ -45,13 +45,13 @@ export const useSectionUpdateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSectionUpdateHook>>>,
 		TError,
-		{ sectionId: string | null; data: BodyType<Request16> },
+		{ sectionId: string | null; data: BodyType<SectionUpdateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useSectionUpdateHook>>>,
 	TError,
-	{ sectionId: string | null; data: BodyType<Request16> },
+	{ sectionId: string | null; data: BodyType<SectionUpdateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -60,7 +60,7 @@ export const useSectionUpdateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useSectionUpdateHook>>>,
-		{ sectionId: string | null; data: BodyType<Request16> }
+		{ sectionId: string | null; data: BodyType<SectionUpdateRequest> }
 	> = (props) => {
 		const { sectionId, data } = props ?? {};
 
@@ -73,7 +73,7 @@ export const useSectionUpdateMutationOptions = <
 export type SectionUpdateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useSectionUpdateHook>>>
 >;
-export type SectionUpdateMutationBody = BodyType<Request16>;
+export type SectionUpdateMutationBody = BodyType<SectionUpdateRequest>;
 export type SectionUpdateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createSectionUpdate = <
@@ -83,7 +83,7 @@ export const createSectionUpdate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSectionUpdateHook>>>,
 		TError,
-		{ sectionId: string | null; data: BodyType<Request16> },
+		{ sectionId: string | null; data: BodyType<SectionUpdateRequest> },
 		TContext
 	>;
 }) => {
@@ -92,7 +92,7 @@ export const createSectionUpdate = <
 	return createMutation(mutationOptions);
 };
 export const useSectionGetHook = () => {
-	const sectionGet = useCustomClient<Section>();
+	const sectionGet = useCustomClient<EntitiesSection>();
 
 	return (sectionId: number) => {
 		return sectionGet({ url: `/section/${sectionId}`, method: "GET" });
@@ -158,7 +158,7 @@ export const createSectionGet = <
 };
 
 export const useSectionListHook = () => {
-	const sectionList = useCustomClient<Section[]>();
+	const sectionList = useCustomClient<EntitiesSection[]>();
 
 	return (params: SectionListParams) => {
 		return sectionList({ url: `/section`, method: "GET", params });
@@ -224,14 +224,14 @@ export const createSectionList = <
 };
 
 export const useSectionCreateHook = () => {
-	const sectionCreate = useCustomClient<Section>();
+	const sectionCreate = useCustomClient<EntitiesSection>();
 
-	return (request19: BodyType<Request19>) => {
+	return (sectionCreateRequest: BodyType<SectionCreateRequest>) => {
 		return sectionCreate({
 			url: `/section`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request19,
+			data: sectionCreateRequest,
 		});
 	};
 };
@@ -243,13 +243,13 @@ export const useSectionCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSectionCreateHook>>>,
 		TError,
-		{ data: BodyType<Request19> },
+		{ data: BodyType<SectionCreateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useSectionCreateHook>>>,
 	TError,
-	{ data: BodyType<Request19> },
+	{ data: BodyType<SectionCreateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -258,7 +258,7 @@ export const useSectionCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useSectionCreateHook>>>,
-		{ data: BodyType<Request19> }
+		{ data: BodyType<SectionCreateRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -271,7 +271,7 @@ export const useSectionCreateMutationOptions = <
 export type SectionCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useSectionCreateHook>>>
 >;
-export type SectionCreateMutationBody = BodyType<Request19>;
+export type SectionCreateMutationBody = BodyType<SectionCreateRequest>;
 export type SectionCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createSectionCreate = <
@@ -281,7 +281,7 @@ export const createSectionCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSectionCreateHook>>>,
 		TError,
-		{ data: BodyType<Request19> },
+		{ data: BodyType<SectionCreateRequest> },
 		TContext
 	>;
 }) => {

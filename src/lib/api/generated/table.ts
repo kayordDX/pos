@@ -15,28 +15,28 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	EntitiesTable,
 	ErrorResponse,
 	InternalErrorResponse,
-	Request12,
-	Request15,
-	Response3,
-	Response4,
-	Table,
+	TableCreateRequest,
 	TableGetAvailableParams,
+	TableGetAvailableResponse,
 	TableGetMyBookedParams,
+	TableGetMyBookedResponse,
+	TableUpdateRequest,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useTableUpdateHook = () => {
-	const tableUpdate = useCustomClient<Table>();
+	const tableUpdate = useCustomClient<EntitiesTable>();
 
-	return (tableId: number, request12: BodyType<Request12>) => {
+	return (tableId: number, tableUpdateRequest: BodyType<TableUpdateRequest>) => {
 		return tableUpdate({
 			url: `/table/${tableId}`,
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			data: request12,
+			data: tableUpdateRequest,
 		});
 	};
 };
@@ -48,13 +48,13 @@ export const useTableUpdateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
 		TError,
-		{ tableId: number; data: BodyType<Request12> },
+		{ tableId: number; data: BodyType<TableUpdateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
 	TError,
-	{ tableId: number; data: BodyType<Request12> },
+	{ tableId: number; data: BodyType<TableUpdateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -63,7 +63,7 @@ export const useTableUpdateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
-		{ tableId: number; data: BodyType<Request12> }
+		{ tableId: number; data: BodyType<TableUpdateRequest> }
 	> = (props) => {
 		const { tableId, data } = props ?? {};
 
@@ -76,7 +76,7 @@ export const useTableUpdateMutationOptions = <
 export type TableUpdateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>
 >;
-export type TableUpdateMutationBody = BodyType<Request12>;
+export type TableUpdateMutationBody = BodyType<TableUpdateRequest>;
 export type TableUpdateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableUpdate = <
@@ -86,7 +86,7 @@ export const createTableUpdate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableUpdateHook>>>,
 		TError,
-		{ tableId: number; data: BodyType<Request12> },
+		{ tableId: number; data: BodyType<TableUpdateRequest> },
 		TContext
 	>;
 }) => {
@@ -95,7 +95,7 @@ export const createTableUpdate = <
 	return createMutation(mutationOptions);
 };
 export const useTableGetMyBookedHook = () => {
-	const tableGetMyBooked = useCustomClient<Response3[]>();
+	const tableGetMyBooked = useCustomClient<TableGetMyBookedResponse[]>();
 
 	return (params: TableGetMyBookedParams) => {
 		return tableGetMyBooked({ url: `/table/booked`, method: "GET", params });
@@ -170,7 +170,7 @@ export const createTableGetMyBooked = <
 };
 
 export const useTableGetAvailableHook = () => {
-	const tableGetAvailable = useCustomClient<Response4[]>();
+	const tableGetAvailable = useCustomClient<TableGetAvailableResponse[]>();
 
 	return (params: TableGetAvailableParams) => {
 		return tableGetAvailable({ url: `/table/available`, method: "GET", params });
@@ -245,14 +245,14 @@ export const createTableGetAvailable = <
 };
 
 export const useTableCreateHook = () => {
-	const tableCreate = useCustomClient<Table>();
+	const tableCreate = useCustomClient<EntitiesTable>();
 
-	return (request15: BodyType<Request15>) => {
+	return (tableCreateRequest: BodyType<TableCreateRequest>) => {
 		return tableCreate({
 			url: `/table`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request15,
+			data: tableCreateRequest,
 		});
 	};
 };
@@ -264,13 +264,13 @@ export const useTableCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
 		TError,
-		{ data: BodyType<Request15> },
+		{ data: BodyType<TableCreateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
 	TError,
-	{ data: BodyType<Request15> },
+	{ data: BodyType<TableCreateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -279,7 +279,7 @@ export const useTableCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
-		{ data: BodyType<Request15> }
+		{ data: BodyType<TableCreateRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -292,7 +292,7 @@ export const useTableCreateMutationOptions = <
 export type TableCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>
 >;
-export type TableCreateMutationBody = BodyType<Request15>;
+export type TableCreateMutationBody = BodyType<TableCreateRequest>;
 export type TableCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createTableCreate = <
@@ -302,7 +302,7 @@ export const createTableCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useTableCreateHook>>>,
 		TError,
-		{ data: BodyType<Request15> },
+		{ data: BodyType<TableCreateRequest> },
 		TContext
 	>;
 }) => {

@@ -23,7 +23,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request"
+                "$ref": "#/components/schemas/UserValidateRequest"
               }
             }
           },
@@ -36,7 +36,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response"
+                  "$ref": "#/components/schemas/UserValidateResponse"
                 }
               }
             }
@@ -66,7 +66,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Response2"
+                  "$ref": "#/components/schemas/UserGetStatusResponse"
                 }
               }
             }
@@ -140,7 +140,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request3"
+                "$ref": "#/components/schemas/UserAssignOutletRequest"
               }
             }
           },
@@ -153,7 +153,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/UserOutlet"
+                  "$ref": "#/components/schemas/EntitiesUserOutlet"
                 }
               }
             }
@@ -191,7 +191,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request4"
+                "$ref": "#/components/schemas/RoleCreateRequest"
               }
             }
           },
@@ -235,7 +235,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request5"
+                "$ref": "#/components/schemas/RoleAddUserInRoleRequest"
               }
             }
           },
@@ -279,7 +279,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request6"
+                "$ref": "#/components/schemas/TableOrderCreateRequest"
               }
             }
           },
@@ -292,7 +292,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TableOrder"
+                  "$ref": "#/components/schemas/EntitiesTableOrder"
                 }
               }
             }
@@ -354,7 +354,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TableOrder"
+                    "$ref": "#/components/schemas/EntitiesTableOrder"
                   }
                 }
               }
@@ -396,7 +396,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request8"
+                "$ref": "#/components/schemas/OrderAddItemRequest"
               }
             }
           },
@@ -409,7 +409,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/OrderItem"
+                  "$ref": "#/components/schemas/EntitiesOrderItem"
                 }
               }
             }
@@ -462,7 +462,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TableCashUp"
+                    "$ref": "#/components/schemas/EntitiesTableCashUp"
                   }
                 }
               }
@@ -493,7 +493,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request10"
+                "$ref": "#/components/schemas/TableCashUpCreateRequest"
               }
             }
           },
@@ -506,7 +506,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TableCashUp"
+                  "$ref": "#/components/schemas/EntitiesTableCashUp"
                 }
               }
             }
@@ -546,7 +546,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request11"
+                "$ref": "#/components/schemas/TableBookingCreateRequest"
               }
             }
           },
@@ -559,7 +559,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TableBooking"
+                  "$ref": "#/components/schemas/EntitiesTableBooking"
                 }
               }
             }
@@ -610,7 +610,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request12"
+                "$ref": "#/components/schemas/TableUpdateRequest"
               }
             }
           },
@@ -623,7 +623,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Table"
+                  "$ref": "#/components/schemas/EntitiesTable"
                 }
               }
             }
@@ -684,7 +684,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Response3"
+                    "$ref": "#/components/schemas/TableGetMyBookedResponse"
                   }
                 }
               }
@@ -738,7 +738,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Response4"
+                    "$ref": "#/components/schemas/TableGetAvailableResponse"
                   }
                 }
               }
@@ -779,7 +779,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request15"
+                "$ref": "#/components/schemas/TableCreateRequest"
               }
             }
           },
@@ -792,7 +792,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Table"
+                  "$ref": "#/components/schemas/EntitiesTable"
                 }
               }
             }
@@ -843,7 +843,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request16"
+                "$ref": "#/components/schemas/SectionUpdateRequest"
               }
             }
           },
@@ -856,7 +856,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Section"
+                  "$ref": "#/components/schemas/EntitiesSection"
                 }
               }
             }
@@ -905,7 +905,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Section"
+                  "$ref": "#/components/schemas/EntitiesSection"
                 }
               }
             }
@@ -958,7 +958,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Section"
+                    "$ref": "#/components/schemas/EntitiesSection"
                   }
                 }
               }
@@ -997,7 +997,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request19"
+                "$ref": "#/components/schemas/SectionCreateRequest"
               }
             }
           },
@@ -1010,7 +1010,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Section"
+                  "$ref": "#/components/schemas/EntitiesSection"
                 }
               }
             }
@@ -1061,7 +1061,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SalesPeriod"
+                  "$ref": "#/components/schemas/EntitiesSalesPeriod"
                 }
               }
             }
@@ -1091,7 +1091,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request21"
+                "$ref": "#/components/schemas/SalesPeriodCreateRequest"
               }
             }
           },
@@ -1104,7 +1104,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SalesPeriod"
+                  "$ref": "#/components/schemas/EntitiesSalesPeriod"
                 }
               }
             }
@@ -1144,7 +1144,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request22"
+                "$ref": "#/components/schemas/SalesPeriodCloseRequest"
               }
             }
           },
@@ -1157,7 +1157,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/SalesPeriod"
+                  "$ref": "#/components/schemas/EntitiesSalesPeriod"
                 }
               }
             }
@@ -1198,7 +1198,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request23"
+                "$ref": "#/components/schemas/OutletUpdateRequest"
               }
             }
           },
@@ -1211,7 +1211,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Outlet"
+                  "$ref": "#/components/schemas/EntitiesOutlet"
                 }
               }
             }
@@ -1260,7 +1260,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Outlet"
+                  "$ref": "#/components/schemas/EntitiesOutlet"
                 }
               }
             }
@@ -1292,7 +1292,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Outlet"
+                    "$ref": "#/components/schemas/EntitiesOutlet"
                   }
                 }
               }
@@ -1321,7 +1321,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request25"
+                "$ref": "#/components/schemas/OutletCreateRequest"
               }
             }
           },
@@ -1334,7 +1334,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Outlet"
+                  "$ref": "#/components/schemas/EntitiesOutlet"
                 }
               }
             }
@@ -1385,7 +1385,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request26"
+                "$ref": "#/components/schemas/MenuUpdateRequest"
               }
             }
           },
@@ -1398,7 +1398,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Menu"
+                  "$ref": "#/components/schemas/EntitiesMenu"
                 }
               }
             }
@@ -1447,7 +1447,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Menu"
+                  "$ref": "#/components/schemas/EntitiesMenu"
                 }
               }
             }
@@ -1497,10 +1497,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/MenuSection"
-                  }
+                  "$ref": "#/components/schemas/MenuGetSectionsResponse"
                 }
               }
             }
@@ -1543,7 +1540,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Menu"
+                    "$ref": "#/components/schemas/EntitiesMenu"
                   }
                 }
               }
@@ -1604,7 +1601,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/MenuItemDTO"
+                    "$ref": "#/components/schemas/DTOMenuItemDTO"
                   }
                 }
               }
@@ -1648,7 +1645,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Menu"
+                    "$ref": "#/components/schemas/EntitiesMenu"
                   }
                 }
               }
@@ -1677,7 +1674,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request32"
+                "$ref": "#/components/schemas/MenuCreateRequest"
               }
             }
           },
@@ -1690,7 +1687,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Menu"
+                  "$ref": "#/components/schemas/EntitiesMenu"
                 }
               }
             }
@@ -1742,7 +1739,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/User"
+                    "$ref": "#/components/schemas/EntitiesUser"
                   }
                 }
               }
@@ -1783,7 +1780,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request34"
+                "$ref": "#/components/schemas/ClockClockOutRequest"
               }
             }
           },
@@ -1796,7 +1793,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Clock"
+                  "$ref": "#/components/schemas/EntitiesClock"
                 }
               }
             }
@@ -1826,7 +1823,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request35"
+                "$ref": "#/components/schemas/ClockClockInRequest"
               }
             }
           },
@@ -1839,7 +1836,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Clock"
+                  "$ref": "#/components/schemas/EntitiesClock"
                 }
               }
             }
@@ -1871,7 +1868,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Business"
+                    "$ref": "#/components/schemas/EntitiesBusiness"
                   }
                 }
               }
@@ -1908,7 +1905,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request37"
+                "$ref": "#/components/schemas/BusinessEditRequest"
               }
             }
           },
@@ -1960,12 +1957,12 @@
           "content": {
             "*/*": {
               "schema": {
-                "$ref": "#/components/schemas/Request38"
+                "$ref": "#/components/schemas/BusinessDeleteRequest"
               }
             },
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request38"
+                "$ref": "#/components/schemas/BusinessDeleteRequest"
               }
             }
           },
@@ -2017,7 +2014,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Request39"
+                "$ref": "#/components/schemas/BusinessCreateRequest"
               }
             }
           },
@@ -2030,7 +2027,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Business"
+                  "$ref": "#/components/schemas/EntitiesBusiness"
                 }
               }
             }
@@ -2081,7 +2078,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Business"
+                  "$ref": "#/components/schemas/EntitiesBusiness"
                 }
               }
             }
@@ -2102,7 +2099,7 @@
   },
   "components": {
     "schemas": {
-      "Response": {
+      "UserValidateResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2150,7 +2147,7 @@
           }
         }
       },
-      "Request": {
+      "UserValidateRequest": {
         "type": "object",
         "additionalProperties": false,
         "properties": {
@@ -2180,7 +2177,7 @@
           }
         }
       },
-      "Response2": {
+      "UserGetStatusResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2202,11 +2199,11 @@
             "format": "int32"
           },
           "salesPeriod": {
-            "$ref": "#/components/schemas/SalesPeriod"
+            "$ref": "#/components/schemas/EntitiesSalesPeriod"
           }
         }
       },
-      "SalesPeriod": {
+      "EntitiesSalesPeriod": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2234,7 +2231,7 @@
             "nullable": true
           },
           "outlet": {
-            "$ref": "#/components/schemas/Outlet"
+            "$ref": "#/components/schemas/EntitiesOutlet"
           },
           "outletId": {
             "type": "integer",
@@ -2242,7 +2239,7 @@
           }
         }
       },
-      "Outlet": {
+      "EntitiesOutlet": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2264,18 +2261,18 @@
             "format": "int32"
           },
           "business": {
-            "$ref": "#/components/schemas/Business"
+            "$ref": "#/components/schemas/EntitiesBusiness"
           },
           "sections": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/Section"
+              "$ref": "#/components/schemas/EntitiesSection"
             }
           }
         }
       },
-      "Business": {
+      "EntitiesBusiness": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2294,12 +2291,12 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/Outlet"
+              "$ref": "#/components/schemas/EntitiesOutlet"
             }
           }
         }
       },
-      "Section": {
+      "EntitiesSection": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2321,18 +2318,18 @@
             "format": "int32"
           },
           "outlet": {
-            "$ref": "#/components/schemas/Outlet"
+            "$ref": "#/components/schemas/EntitiesOutlet"
           },
           "tables": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/Table"
+              "$ref": "#/components/schemas/EntitiesTable"
             }
           }
         }
       },
-      "Table": {
+      "EntitiesTable": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2360,17 +2357,17 @@
             "format": "int32"
           },
           "section": {
-            "$ref": "#/components/schemas/Section"
+            "$ref": "#/components/schemas/EntitiesSection"
           },
           "customers": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Customer"
+              "$ref": "#/components/schemas/EntitiesCustomer"
             }
           }
         }
       },
-      "Customer": {
+      "EntitiesCustomer": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2406,11 +2403,11 @@
           1
         ]
       },
-      "Request2": {
+      "UserGetRolesRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "UserOutlet": {
+      "EntitiesUserOutlet": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2436,7 +2433,7 @@
           }
         }
       },
-      "Request3": {
+      "UserAssignOutletRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2449,7 +2446,7 @@
           }
         }
       },
-      "Request4": {
+      "RoleCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2465,7 +2462,7 @@
           }
         }
       },
-      "Request5": {
+      "RoleAddUserInRoleRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2482,7 +2479,7 @@
           }
         }
       },
-      "TableOrder": {
+      "EntitiesTableOrder": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2506,7 +2503,7 @@
             "format": "int32"
           },
           "customer": {
-            "$ref": "#/components/schemas/Customer"
+            "$ref": "#/components/schemas/EntitiesCustomer"
           },
           "tableBookingId": {
             "type": "integer",
@@ -2543,7 +2540,7 @@
           }
         }
       },
-      "Request6": {
+      "TableOrderCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2558,11 +2555,11 @@
           }
         }
       },
-      "Request7": {
+      "OrderViewOrdersRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "OrderItem": {
+      "EntitiesOrderItem": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2594,11 +2591,11 @@
             "$ref": "#/components/schemas/Order"
           },
           "menuItem": {
-            "$ref": "#/components/schemas/MenuItem"
+            "$ref": "#/components/schemas/EntitiesMenuItem"
           }
         }
       },
-      "MenuItem": {
+      "EntitiesMenuItem": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2618,7 +2615,7 @@
             "format": "int32"
           },
           "menuSection": {
-            "$ref": "#/components/schemas/MenuSection"
+            "$ref": "#/components/schemas/EntitiesMenuSection"
           },
           "menuSectionId": {
             "type": "integer",
@@ -2637,7 +2634,7 @@
           "searchVector": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/NpgsqlTsVector_Lexeme"
+              "$ref": "#/components/schemas/NpgsqlTypesNpgsqlTsVector_Lexeme"
             }
           },
           "position": {
@@ -2648,29 +2645,29 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/Tag"
+              "$ref": "#/components/schemas/EntitiesTag"
             }
           },
           "extras": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/Extra"
+              "$ref": "#/components/schemas/EntitiesExtra"
             }
           },
           "division": {
-            "$ref": "#/components/schemas/Division"
+            "$ref": "#/components/schemas/CommonEnumsDivision"
           },
           "menuItemOptionGroups": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/MenuItemOptionGroup"
+              "$ref": "#/components/schemas/EntitiesMenuItemOptionGroup"
             }
           }
         }
       },
-      "MenuSection": {
+      "EntitiesMenuSection": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2688,7 +2685,7 @@
             "nullable": true
           },
           "menu": {
-            "$ref": "#/components/schemas/Menu"
+            "$ref": "#/components/schemas/EntitiesMenu"
           },
           "menuId": {
             "type": "integer",
@@ -2698,7 +2695,7 @@
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/MenuSection"
+                "$ref": "#/components/schemas/EntitiesMenuSection"
               }
             ]
           },
@@ -2711,19 +2708,19 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/MenuSection"
+              "$ref": "#/components/schemas/EntitiesMenuSection"
             }
           },
           "menuItems": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/MenuItem"
+              "$ref": "#/components/schemas/EntitiesMenuItem"
             }
           }
         }
       },
-      "Menu": {
+      "EntitiesMenu": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2745,18 +2742,18 @@
             "format": "int32"
           },
           "outlet": {
-            "$ref": "#/components/schemas/Outlet"
+            "$ref": "#/components/schemas/EntitiesOutlet"
           },
           "menuSections": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/MenuSection"
+              "$ref": "#/components/schemas/EntitiesMenuSection"
             }
           }
         }
       },
-      "NpgsqlTsVector_Lexeme": {
+      "NpgsqlTypesNpgsqlTsVector_Lexeme": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2773,7 +2770,7 @@
           }
         }
       },
-      "Tag": {
+      "EntitiesTag": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2790,7 +2787,7 @@
           }
         }
       },
-      "Extra": {
+      "EntitiesExtra": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2807,7 +2804,7 @@
           }
         }
       },
-      "Division": {
+      "CommonEnumsDivision": {
         "type": "integer",
         "description": "",
         "x-enumNames": [
@@ -2821,7 +2818,7 @@
           2
         ]
       },
-      "MenuItemOptionGroup": {
+      "EntitiesMenuItemOptionGroup": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2840,14 +2837,14 @@
             "format": "int32"
           },
           "menuItem": {
-            "$ref": "#/components/schemas/MenuItem"
+            "$ref": "#/components/schemas/EntitiesMenuItem"
           },
           "optionGroup": {
-            "$ref": "#/components/schemas/OptionGroup"
+            "$ref": "#/components/schemas/EntitiesOptionGroup"
           }
         }
       },
-      "OptionGroup": {
+      "EntitiesOptionGroup": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2876,19 +2873,19 @@
           "options": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/Option"
+              "$ref": "#/components/schemas/EntitiesOption"
             }
           },
           "menuItemOptionGroups": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/MenuItemOptionGroup"
+              "$ref": "#/components/schemas/EntitiesMenuItemOptionGroup"
             }
           }
         }
       },
-      "Option": {
+      "EntitiesOption": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2915,11 +2912,11 @@
             "format": "int32"
           },
           "optionGroup": {
-            "$ref": "#/components/schemas/OptionGroup"
+            "$ref": "#/components/schemas/EntitiesOptionGroup"
           }
         }
       },
-      "Request8": {
+      "OrderAddItemRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2934,7 +2931,7 @@
           }
         }
       },
-      "TableCashUp": {
+      "EntitiesTableCashUp": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -2957,7 +2954,7 @@
             "format": "int32"
           },
           "tableBooking": {
-            "$ref": "#/components/schemas/TableBooking"
+            "$ref": "#/components/schemas/EntitiesTableBooking"
           },
           "salesAmount": {
             "type": "number",
@@ -2976,11 +2973,11 @@
             "format": "int32"
           },
           "outlet": {
-            "$ref": "#/components/schemas/Outlet"
+            "$ref": "#/components/schemas/EntitiesOutlet"
           }
         }
       },
-      "TableBooking": {
+      "EntitiesTableBooking": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3004,7 +3001,7 @@
             "format": "int32"
           },
           "table": {
-            "$ref": "#/components/schemas/Table"
+            "$ref": "#/components/schemas/EntitiesTable"
           },
           "bookingName": {
             "type": "string"
@@ -3018,17 +3015,17 @@
             "format": "int32"
           },
           "salesPeriod": {
-            "$ref": "#/components/schemas/SalesPeriod"
+            "$ref": "#/components/schemas/EntitiesSalesPeriod"
           },
           "userId": {
             "type": "string"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "$ref": "#/components/schemas/EntitiesUser"
           }
         }
       },
-      "User": {
+      "EntitiesUser": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3058,12 +3055,12 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/UserRole"
+              "$ref": "#/components/schemas/EntitiesUserRole"
             }
           }
         }
       },
-      "UserRole": {
+      "EntitiesUserRole": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3085,19 +3082,19 @@
             "format": "int32"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "$ref": "#/components/schemas/EntitiesUser"
           },
           "role": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/Role"
+                "$ref": "#/components/schemas/EntitiesRole"
               }
             ]
           }
         }
       },
-      "Role": {
+      "EntitiesRole": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3120,16 +3117,16 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/UserRole"
+              "$ref": "#/components/schemas/EntitiesUserRole"
             }
           }
         }
       },
-      "Request9": {
+      "TableCashUpViewTableCashUpsRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request10": {
+      "TableCashUpCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3163,7 +3160,7 @@
           }
         }
       },
-      "Request11": {
+      "TableBookingCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3191,7 +3188,7 @@
           }
         }
       },
-      "Request12": {
+      "TableUpdateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3215,7 +3212,7 @@
           }
         }
       },
-      "Response3": {
+      "TableGetMyBookedResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3252,11 +3249,11 @@
             "format": "int32"
           },
           "table": {
-            "$ref": "#/components/schemas/TableDto"
+            "$ref": "#/components/schemas/TableGetMyBookedTableDto"
           }
         }
       },
-      "TableDto": {
+      "TableGetMyBookedTableDto": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3273,11 +3270,11 @@
             "type": "string"
           },
           "section": {
-            "$ref": "#/components/schemas/SectionDto"
+            "$ref": "#/components/schemas/TableGetMyBookedSectionDto"
           }
         }
       },
-      "SectionDto": {
+      "TableGetMyBookedSectionDto": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3294,11 +3291,11 @@
           }
         }
       },
-      "Request13": {
+      "TableGetMyBookedRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Response4": {
+      "TableGetAvailableResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3325,11 +3322,11 @@
             "format": "int32"
           },
           "section": {
-            "$ref": "#/components/schemas/SectionDto2"
+            "$ref": "#/components/schemas/TableGetAvailableSectionDto"
           }
         }
       },
-      "SectionDto2": {
+      "TableGetAvailableSectionDto": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3346,11 +3343,11 @@
           }
         }
       },
-      "Request14": {
+      "TableGetAvailableRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request15": {
+      "TableCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3374,7 +3371,7 @@
           }
         }
       },
-      "Request16": {
+      "SectionUpdateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3395,15 +3392,15 @@
           }
         }
       },
-      "Request17": {
+      "SectionListRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request18": {
+      "SectionGetRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request19": {
+      "SectionCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3422,11 +3419,11 @@
           }
         }
       },
-      "Request20": {
+      "SalesPeriodGetRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request21": {
+      "SalesPeriodCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3445,7 +3442,7 @@
           }
         }
       },
-      "Request22": {
+      "SalesPeriodCloseRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3458,7 +3455,7 @@
           }
         }
       },
-      "Request23": {
+      "OutletUpdateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3477,11 +3474,11 @@
           }
         }
       },
-      "Request24": {
+      "OutletGetRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request25": {
+      "OutletCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3500,7 +3497,7 @@
           }
         }
       },
-      "Request26": {
+      "MenuUpdateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3521,15 +3518,97 @@
           }
         }
       },
-      "Request27": {
+      "MenuGetSectionsResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "sections": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOMenuSectionDTO"
+            }
+          },
+          "parents": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOMenuSectionDTO"
+            }
+          }
+        }
+      },
+      "DTOMenuSectionDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuSectionId",
+          "menuId"
+        ],
+        "properties": {
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "menuId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "parent": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DTOMenuSectionParentDTO"
+              }
+            ]
+          }
+        }
+      },
+      "DTOMenuSectionParentDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuSectionId",
+          "menuId"
+        ],
+        "properties": {
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "menuId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
+      "MenuGetSectionsRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request28": {
+      "MenuGetOutletMenuRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "MenuItemDTO": {
+      "DTOMenuItemDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3568,34 +3647,34 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/Tag"
+              "$ref": "#/components/schemas/EntitiesTag"
             }
           },
           "extras": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/Extra"
+              "$ref": "#/components/schemas/EntitiesExtra"
             }
           },
           "division": {
-            "$ref": "#/components/schemas/Division"
+            "$ref": "#/components/schemas/CommonEnumsDivision"
           }
         }
       },
-      "Request29": {
+      "MenuGetItemsRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request30": {
+      "MenuListRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request31": {
+      "MenuGetRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request32": {
+      "MenuCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3612,15 +3691,15 @@
             "type": "string"
           },
           "division": {
-            "$ref": "#/components/schemas/Division"
+            "$ref": "#/components/schemas/CommonEnumsDivision"
           }
         }
       },
-      "Request33": {
+      "ClockListRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Clock": {
+      "EntitiesClock": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3640,7 +3719,7 @@
             "type": "string"
           },
           "user": {
-            "$ref": "#/components/schemas/User"
+            "$ref": "#/components/schemas/EntitiesUser"
           },
           "startDate": {
             "type": "string",
@@ -3656,11 +3735,11 @@
             "format": "int32"
           },
           "outlet": {
-            "$ref": "#/components/schemas/Outlet"
+            "$ref": "#/components/schemas/EntitiesOutlet"
           }
         }
       },
-      "Request34": {
+      "ClockClockOutRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3673,7 +3752,7 @@
           }
         }
       },
-      "Request35": {
+      "ClockClockInRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3686,11 +3765,11 @@
           }
         }
       },
-      "Request36": {
+      "BusinessGetRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "Request37": {
+      "BusinessEditRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3711,7 +3790,7 @@
           }
         }
       },
-      "Request38": {
+      "BusinessDeleteRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -3726,7 +3805,7 @@
           }
         }
       },
-      "Request39": {
+      "BusinessCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [

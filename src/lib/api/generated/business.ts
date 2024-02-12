@@ -15,18 +15,18 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
-	Business,
+	BusinessCreateRequest,
+	BusinessDeleteRequest,
+	BusinessEditRequest,
+	EntitiesBusiness,
 	ErrorResponse,
 	InternalErrorResponse,
-	Request37,
-	Request38,
-	Request39,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const useBusinessGetAllHook = () => {
-	const businessGetAll = useCustomClient<Business[]>();
+	const businessGetAll = useCustomClient<EntitiesBusiness[]>();
 
 	return () => {
 		return businessGetAll({ url: `/business`, method: "GET" });
@@ -89,12 +89,12 @@ export const createBusinessGetAll = <
 export const useBusinessEditHook = () => {
 	const businessEdit = useCustomClient<unknown>();
 
-	return (request37: BodyType<Request37>) => {
+	return (businessEditRequest: BodyType<BusinessEditRequest>) => {
 		return businessEdit({
 			url: `/business`,
 			method: "PUT",
 			headers: { "Content-Type": "application/json" },
-			data: request37,
+			data: businessEditRequest,
 		});
 	};
 };
@@ -106,13 +106,13 @@ export const useBusinessEditMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useBusinessEditHook>>>,
 		TError,
-		{ data: BodyType<Request37> },
+		{ data: BodyType<BusinessEditRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useBusinessEditHook>>>,
 	TError,
-	{ data: BodyType<Request37> },
+	{ data: BodyType<BusinessEditRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -121,7 +121,7 @@ export const useBusinessEditMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useBusinessEditHook>>>,
-		{ data: BodyType<Request37> }
+		{ data: BodyType<BusinessEditRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -134,7 +134,7 @@ export const useBusinessEditMutationOptions = <
 export type BusinessEditMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useBusinessEditHook>>>
 >;
-export type BusinessEditMutationBody = BodyType<Request37>;
+export type BusinessEditMutationBody = BodyType<BusinessEditRequest>;
 export type BusinessEditMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createBusinessEdit = <
@@ -144,7 +144,7 @@ export const createBusinessEdit = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useBusinessEditHook>>>,
 		TError,
-		{ data: BodyType<Request37> },
+		{ data: BodyType<BusinessEditRequest> },
 		TContext
 	>;
 }) => {
@@ -155,12 +155,12 @@ export const createBusinessEdit = <
 export const useBusinessDeleteHook = () => {
 	const businessDelete = useCustomClient<unknown>();
 
-	return (request38: BodyType<Request38>) => {
+	return (businessDeleteRequest: BodyType<BusinessDeleteRequest>) => {
 		return businessDelete({
 			url: `/business`,
 			method: "DELETE",
 			headers: { "Content-Type": "*/*" },
-			data: request38,
+			data: businessDeleteRequest,
 		});
 	};
 };
@@ -172,13 +172,13 @@ export const useBusinessDeleteMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useBusinessDeleteHook>>>,
 		TError,
-		{ data: BodyType<Request38> },
+		{ data: BodyType<BusinessDeleteRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useBusinessDeleteHook>>>,
 	TError,
-	{ data: BodyType<Request38> },
+	{ data: BodyType<BusinessDeleteRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -187,7 +187,7 @@ export const useBusinessDeleteMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useBusinessDeleteHook>>>,
-		{ data: BodyType<Request38> }
+		{ data: BodyType<BusinessDeleteRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -200,7 +200,7 @@ export const useBusinessDeleteMutationOptions = <
 export type BusinessDeleteMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useBusinessDeleteHook>>>
 >;
-export type BusinessDeleteMutationBody = BodyType<Request38>;
+export type BusinessDeleteMutationBody = BodyType<BusinessDeleteRequest>;
 export type BusinessDeleteMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createBusinessDelete = <
@@ -210,7 +210,7 @@ export const createBusinessDelete = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useBusinessDeleteHook>>>,
 		TError,
-		{ data: BodyType<Request38> },
+		{ data: BodyType<BusinessDeleteRequest> },
 		TContext
 	>;
 }) => {
@@ -219,14 +219,14 @@ export const createBusinessDelete = <
 	return createMutation(mutationOptions);
 };
 export const useBusinessCreateHook = () => {
-	const businessCreate = useCustomClient<Business>();
+	const businessCreate = useCustomClient<EntitiesBusiness>();
 
-	return (request39: BodyType<Request39>) => {
+	return (businessCreateRequest: BodyType<BusinessCreateRequest>) => {
 		return businessCreate({
 			url: `/business`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: request39,
+			data: businessCreateRequest,
 		});
 	};
 };
@@ -238,13 +238,13 @@ export const useBusinessCreateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useBusinessCreateHook>>>,
 		TError,
-		{ data: BodyType<Request39> },
+		{ data: BodyType<BusinessCreateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useBusinessCreateHook>>>,
 	TError,
-	{ data: BodyType<Request39> },
+	{ data: BodyType<BusinessCreateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -253,7 +253,7 @@ export const useBusinessCreateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useBusinessCreateHook>>>,
-		{ data: BodyType<Request39> }
+		{ data: BodyType<BusinessCreateRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -266,7 +266,7 @@ export const useBusinessCreateMutationOptions = <
 export type BusinessCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useBusinessCreateHook>>>
 >;
-export type BusinessCreateMutationBody = BodyType<Request39>;
+export type BusinessCreateMutationBody = BodyType<BusinessCreateRequest>;
 export type BusinessCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
 
 export const createBusinessCreate = <
@@ -276,7 +276,7 @@ export const createBusinessCreate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useBusinessCreateHook>>>,
 		TError,
-		{ data: BodyType<Request39> },
+		{ data: BodyType<BusinessCreateRequest> },
 		TContext
 	>;
 }) => {
@@ -285,7 +285,7 @@ export const createBusinessCreate = <
 	return createMutation(mutationOptions);
 };
 export const useBusinessGetHook = () => {
-	const businessGet = useCustomClient<Business>();
+	const businessGet = useCustomClient<EntitiesBusiness>();
 
 	return (id: number) => {
 		return businessGet({ url: `/business/${id}`, method: "GET" });
