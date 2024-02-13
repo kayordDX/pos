@@ -4,8 +4,10 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
+	import { basket } from "$lib/stores/basket";
 
 	export let data: LayoutData;
+	$: basketCount = $basket ? $basket.length : 0;
 </script>
 
 <slot />
@@ -16,7 +18,7 @@
 			if (s == "menu") {
 				goto(`/table/${data.bookingId}/menu`);
 			} else if (s == "bill") {
-				goto(`/table/${data.bookingId}`);
+				goto(`/table/${data.bookingId}/bill`);
 			} else if (s == "basket") {
 				goto(`/table/${data.bookingId}/basket`);
 			} else {
@@ -30,7 +32,9 @@
 			<Tabs.Trigger value="bill"><ReceiptTextIcon class="w-4 h-4 mr-2" /> Bill</Tabs.Trigger>
 			<Tabs.Trigger value="basket">
 				<ShoppingBasketIcon class="w-4 h-4 mr-2" /> Basket
-				<Badge class="ml-2">0</Badge>
+				{#if basketCount > 0}
+					<Badge class="ml-2">{basketCount}</Badge>
+				{/if}
 			</Tabs.Trigger>
 		</Tabs.List>
 	</Tabs.Root>

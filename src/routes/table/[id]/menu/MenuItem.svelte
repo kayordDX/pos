@@ -2,15 +2,23 @@
 	import type { DTOMenuItemDTO } from "$lib/api";
 	import { Button, Card, Drawer, Label, Skeleton, Textarea, ToggleGroup } from "@kayord/ui";
 	import { BoldIcon, ItalicIcon } from "lucide-svelte";
+	import { add } from "$lib/stores/basket";
 
 	export let menuItem: DTOMenuItemDTO;
+
+	let open = false;
+
+	const addToBasket = () => {
+		add(1, menuItem.name, menuItem.price);
+		open = false;
+	};
 </script>
 
-<Drawer.Root>
+<Drawer.Root bind:open>
 	<Drawer.Trigger class="w-full max-w-lg">
 		<div class="w-full relative max-w-lg text-left">
 			<Card.Root class="w-full relative max-w-lg p-4">
-				<div class="w-5 h-5 bg-gray-500 absolute top-2 right-2 rounded-full"></div>
+				<div class="w-3 h-3 bg-green-500 absolute top-2 right-2 rounded-full"></div>
 				<div class="font-bold">{menuItem.name}</div>
 				<div class="text-sm text-muted-foreground">R {menuItem.price.toFixed(2)}</div>
 			</Card.Root>
@@ -42,7 +50,8 @@
 				<Textarea />
 			</div>
 			<Drawer.Footer>
-				<Button>Add</Button>
+				<Button on:click={addToBasket}>Add</Button>
+				<Drawer.Close>Cancel</Drawer.Close>
 			</Drawer.Footer>
 		</div>
 	</Drawer.Content>

@@ -16,6 +16,7 @@
 	import Menus from "./Menus.svelte";
 	import { selection } from "$lib/stores/selection";
 	import Categories from "./Categories.svelte";
+	import autoAnimate from "@formkit/auto-animate";
 
 	export let data: PageData;
 
@@ -83,8 +84,8 @@
 	{/if}
 
 	<div class="flex justify-center w-full">
-		<div class="flex justify-center gap-2 my-8 flex-wrap p-2 w-full">
-			{#each $itemsQuery.data ?? [] as item}
+		<div class="flex justify-center gap-2 my-8 flex-wrap p-2 w-full" use:autoAnimate>
+			{#each $itemsQuery.data ?? [] as item, i (item.menuItemId)}
 				<MenuItem menuItem={item} />
 			{/each}
 		</div>
