@@ -3,6 +3,12 @@
 	import BasketItem from "./BasketItem.svelte";
 	import { basket, clear } from "$lib/stores/basket";
 	import autoAnimate from "@formkit/auto-animate";
+	import EmptyBasket from "./EmptyBasket.svelte";
+	import { ChefHatIcon } from "lucide-svelte";
+
+	$: isBasketEmpty = !$basket || $basket.length == 0;
+
+	const sendAllToKitchen = () => {};
 </script>
 
 <div class="m-4">
@@ -13,8 +19,11 @@
 			{/each}
 		{/if}
 	</div>
-	<div class="flex justify-end mt-4 gap-2">
-		<Button variant="destructive" on:click={clear}>Empty Basket</Button>
-		<Button>Send All to Kitchen</Button>
-	</div>
+	{#if isBasketEmpty}
+		<EmptyBasket />
+	{:else}
+		<div class="flex justify-end mt-4 gap-2 w-full">
+			<Button class="w-full">Send All to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" /></Button>
+		</div>
+	{/if}
 </div>

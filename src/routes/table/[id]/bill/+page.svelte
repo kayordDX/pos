@@ -6,9 +6,9 @@
 	export let data: PageData;
 </script>
 
-<div class="m-8">
-	<h1 class="mt-8">Items</h1>
-	<p class="text-muted-foreground">Current bill for table {data.bookingId}</p>
+<div class="m-4">
+	<h1 class="mt-4">Items</h1>
+	<p class="text-muted-foreground">Current bill #{data.bookingId}</p>
 	<Separator />
 	<div class="my-5">
 		<p>Add Items to Order to get started</p>
@@ -21,9 +21,6 @@
 	</div>
 
 	<div class="mt-10">
-		<Button href="/waiter" variant="outline">Dashboard</Button>
-		<Button>Send to Kitchen</Button>
-		<Button href={`/table/${data.bookingId}/menu/0`}>Add Item</Button>
-		<Button href={`/table/${data.bookingId}/pay`}>Pay Bill</Button>
+		<Button class="w-full" href={`/table/${data.bookingId}/pay`}>Pay Bill</Button>
 	</div>
 </div>

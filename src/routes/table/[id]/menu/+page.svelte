@@ -56,7 +56,7 @@
 </script>
 
 <div class="flex justify-center flex-col mb-8 mt-4 items-center">
-	<div class="flex w-full justify-center gap-2">
+	<div class="flex w-full justify-center gap-2 px-2">
 		<div class="relative flex items-center max-w-2xl w-full">
 			<Input on:input={(value) => setSearchString(value)} value={search} class="pr-8" />
 			{#if $itemsQuery.isFetching}
@@ -69,7 +69,7 @@
 	</div>
 
 	<Menus menus={data.menu ?? []} />
-	<div class="flex justify-center gap-2 my-8 flex-wrap items-center">
+	<div class="flex justify-center gap-2 my-2 flex-wrap items-center">
 		{#if $sectionsQuery.isPending}
 			<Loader />
 		{/if}
@@ -84,7 +84,7 @@
 	{/if}
 
 	<div class="flex justify-center w-full">
-		<div class="flex justify-center gap-2 my-8 flex-wrap p-2 w-full" use:autoAnimate>
+		<div class="flex justify-center gap-2 my-2 flex-wrap p-2 w-full" use:autoAnimate>
 			{#each $itemsQuery.data ?? [] as item, i (item.menuItemId)}
 				<MenuItem menuItem={item} />
 			{/each}

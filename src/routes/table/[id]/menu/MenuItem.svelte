@@ -18,7 +18,7 @@
 	<Drawer.Trigger class="w-full max-w-lg">
 		<div class="w-full relative max-w-lg text-left">
 			<Card.Root class="w-full relative max-w-lg p-4">
-				<div class="w-3 h-3 bg-green-500 absolute top-2 right-2 rounded-full"></div>
+				<!-- <div class="w-3 h-3 bg-green-500 absolute top-2 right-2 rounded-full"></div> -->
 				<div class="font-bold">{menuItem.name}</div>
 				<div class="text-sm text-muted-foreground">R {menuItem.price.toFixed(2)}</div>
 			</Card.Root>
