@@ -373,30 +373,19 @@
         }
       }
     },
-    "/order/{orderId}/addItem": {
+    "/order/addItems": {
       "post": {
         "tags": [
           "Order"
         ],
-        "operationId": "OrderAddItem",
-        "parameters": [
-          {
-            "name": "orderId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
+        "operationId": "OrderAddItems",
         "requestBody": {
           "x-name": "Request",
           "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/OrderAddItemRequest"
+                "$ref": "#/components/schemas/OrderAddItemsRequest"
               }
             }
           },
@@ -414,15 +403,8 @@
               }
             }
           },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
+          "401": {
+            "description": "Unauthorized"
           },
           "500": {
             "description": "Server Error",
@@ -434,7 +416,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/tableCashUp/tableBooking/{tableBookingId}": {
@@ -1175,6 +1162,131 @@
         }
       }
     },
+    "/pay/status/{reference}": {
+      "get": {
+        "tags": [
+          "Pay"
+        ],
+        "operationId": "PayStatus",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pay/status/sse/{reference}": {
+      "get": {
+        "tags": [
+          "Pay"
+        ],
+        "operationId": "PayStatusSSE",
+        "parameters": [
+          {
+            "name": "reference",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pay/getLink": {
+      "get": {
+        "tags": [
+          "Pay"
+        ],
+        "operationId": "PayGetLink",
+        "parameters": [
+          {
+            "name": "amount",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "decimal"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonWrapperResultOfResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/outlet/{id}": {
       "put": {
         "tags": [
@@ -1601,8 +1713,49 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/DTOMenuItemDTO"
+                    "$ref": "#/components/schemas/DTOMenuItemDTOBasic"
                   }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/menu/item": {
+      "get": {
+        "tags": [
+          "Menu"
+        ],
+        "operationId": "MenuGetItemGetMenuItems",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOMenuItemDTO"
                 }
               }
             }
@@ -2508,66 +2661,29 @@
           "tableBookingId": {
             "type": "integer",
             "format": "int32"
-          }
-        }
-      },
-      "ErrorResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "statusCode",
-          "message",
-          "errors"
-        ],
-        "properties": {
-          "statusCode": {
+          },
+          "orderItemId": {
             "type": "integer",
             "format": "int32",
-            "default": 400
+            "nullable": true
           },
-          "message": {
-            "type": "string",
-            "default": "One or more errors occurred!"
-          },
-          "errors": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
+          "orderItem": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesOrderItem"
               }
-            }
+            ]
           }
         }
-      },
-      "TableOrderCreateRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "tableBookingId"
-        ],
-        "properties": {
-          "tableBookingId": {
-            "type": "integer",
-            "format": "int32",
-            "minimum": 0.0,
-            "exclusiveMinimum": true
-          }
-        }
-      },
-      "OrderViewOrdersRequest": {
-        "type": "object",
-        "additionalProperties": false
       },
       "EntitiesOrderItem": {
         "type": "object",
         "additionalProperties": false,
         "required": [
           "orderItemId",
+          "tableBookingId",
           "menuItemId",
-          "quantity",
-          "orderId",
-          "order",
           "menuItem"
         ],
         "properties": {
@@ -2575,23 +2691,30 @@
             "type": "integer",
             "format": "int32"
           },
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "menuItemId": {
             "type": "integer",
             "format": "int32"
           },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "order": {
-            "$ref": "#/components/schemas/Order"
-          },
           "menuItem": {
             "$ref": "#/components/schemas/EntitiesMenuItem"
+          },
+          "options": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOption"
+            }
+          },
+          "extras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesExtra"
+            }
           }
         }
       },
@@ -2792,7 +2915,9 @@
         "additionalProperties": false,
         "required": [
           "extraId",
-          "name"
+          "name",
+          "positionId",
+          "price"
         ],
         "properties": {
           "extraId": {
@@ -2801,6 +2926,14 @@
           },
           "name": {
             "type": "string"
+          },
+          "positionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -2916,18 +3049,105 @@
           }
         }
       },
-      "OrderAddItemRequest": {
+      "ErrorResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "menuItemId"
+          "statusCode",
+          "message",
+          "errors"
         ],
         "properties": {
-          "menuItemId": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32",
+            "default": 400
+          },
+          "message": {
+            "type": "string",
+            "default": "One or more errors occurred!"
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "TableOrderCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId"
+        ],
+        "properties": {
+          "tableBookingId": {
             "type": "integer",
             "format": "int32",
             "minimum": 0.0,
             "exclusiveMinimum": true
+          }
+        }
+      },
+      "OrderViewOrdersRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "OrderAddItemsRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orders",
+          "tableBookingId"
+        ],
+        "properties": {
+          "orders": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderAddItemsOrder"
+            }
+          },
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "OrderAddItemsOrder": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderId",
+          "menuItemId"
+        ],
+        "properties": {
+          "orderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionIds": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "extraIds": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         }
       },
@@ -3455,6 +3675,75 @@
           }
         }
       },
+      "PayStatusRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PayStatusSSERequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CommonWrapperResultOfResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommonWrapperResult"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/PayGetLinkResponse"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "PayGetLinkResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "url",
+          "reference"
+        ],
+        "properties": {
+          "url": {
+            "type": "string"
+          },
+          "reference": {
+            "type": "string"
+          }
+        }
+      },
+      "CommonWrapperResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "success",
+          "error",
+          "failure"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "string"
+          },
+          "failure": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PayGetLinkRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "OutletUpdateRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -3608,6 +3897,53 @@
         "type": "object",
         "additionalProperties": false
       },
+      "DTOMenuItemDTOBasic": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "menuSectionId",
+          "name",
+          "description",
+          "price",
+          "position"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesTag"
+            }
+          }
+        }
+      },
+      "MenuGetItemsRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "DTOMenuItemDTO": {
         "type": "object",
         "additionalProperties": false,
@@ -3618,7 +3954,8 @@
           "description",
           "price",
           "position",
-          "division"
+          "division",
+          "menuItemOptionGroups"
         ],
         "properties": {
           "menuItemId": {
@@ -3659,10 +3996,99 @@
           },
           "division": {
             "$ref": "#/components/schemas/CommonEnumsDivision"
+          },
+          "menuItemOptionGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DTOMenuItemOptionGroupDTO"
+            }
           }
         }
       },
-      "MenuGetItemsRequest": {
+      "DTOMenuItemOptionGroupDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "optionGroupId",
+          "optionGroup"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroup": {
+            "$ref": "#/components/schemas/DTOOptionGroupDTO"
+          }
+        }
+      },
+      "DTOOptionGroupDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "optionGroupId",
+          "name",
+          "minSelections",
+          "maxSelections",
+          "options"
+        ],
+        "properties": {
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "minSelections": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxSelections": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DTOOptionDTO"
+            }
+          }
+        }
+      },
+      "DTOOptionDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "optionId",
+          "name",
+          "price",
+          "optionGroupId"
+        ],
+        "properties": {
+          "optionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "MenuGetItemRequest": {
         "type": "object",
         "additionalProperties": false
       },

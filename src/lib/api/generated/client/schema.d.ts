@@ -29,8 +29,8 @@ export interface paths {
   "/order/table/{tableId}": {
     get: operations["OrderViewOrders"];
   };
-  "/order/{orderId}/addItem": {
-    post: operations["OrderAddItem"];
+  "/order/addItems": {
+    post: operations["OrderAddItems"];
   };
   "/tableCashUp/tableBooking/{tableBookingId}": {
     get: operations["TableCashUpViewTableCashUps"];
@@ -70,6 +70,15 @@ export interface paths {
   "/salesPeriod/close": {
     post: operations["SalesPeriodClose"];
   };
+  "/pay/status/{reference}": {
+    get: operations["PayStatus"];
+  };
+  "/pay/status/sse/{reference}": {
+    get: operations["PayStatusSSE"];
+  };
+  "/pay/getLink": {
+    get: operations["PayGetLink"];
+  };
   "/outlet/{id}": {
     get: operations["OutletGet"];
     put: operations["OutletUpdate"];
@@ -90,6 +99,9 @@ export interface paths {
   };
   "/menu/items": {
     get: operations["MenuGetItemsGetMenuItems"];
+  };
+  "/menu/item": {
+    get: operations["MenuGetItemGetMenuItems"];
   };
   "/menu": {
     get: operations["MenuList"];
@@ -239,35 +251,20 @@ export interface components {
       customer: components["schemas"]["EntitiesCustomer"];
       /** Format: int32 */
       tableBookingId: number;
-    };
-    ErrorResponse: {
-      /**
-       * Format: int32
-       * @default 400
-       */
-      statusCode: number;
-      /** @default One or more errors occurred! */
-      message: string;
-      errors: {
-        [key: string]: string[];
-      };
-    };
-    TableOrderCreateRequest: {
       /** Format: int32 */
-      tableBookingId: number;
+      orderItemId?: number | null;
+      orderItem?: components["schemas"]["EntitiesOrderItem"] | null;
     };
-    OrderViewOrdersRequest: Record<string, never>;
     EntitiesOrderItem: {
       /** Format: int32 */
       orderItemId: number;
       /** Format: int32 */
+      tableBookingId: number;
+      /** Format: int32 */
       menuItemId: number;
-      /** Format: int32 */
-      quantity: number;
-      /** Format: int32 */
-      orderId: number;
-      order: components["schemas"]["Order"];
       menuItem: components["schemas"]["EntitiesMenuItem"];
+      options?: components["schemas"]["EntitiesOption"][] | null;
+      extras?: components["schemas"]["EntitiesExtra"][] | null;
     };
     EntitiesMenuItem: {
       /** Format: int32 */
@@ -323,6 +320,10 @@ export interface components {
       /** Format: int32 */
       extraId: number;
       name: string;
+      /** Format: int32 */
+      positionId: number;
+      /** Format: decimal */
+      price: number;
     };
     /** @enum {integer} */
     CommonEnumsDivision: 0 | 1 | 2;
@@ -355,9 +356,35 @@ export interface components {
       optionGroupId: number;
       optionGroup: components["schemas"]["EntitiesOptionGroup"];
     };
-    OrderAddItemRequest: {
+    ErrorResponse: {
+      /**
+       * Format: int32
+       * @default 400
+       */
+      statusCode: number;
+      /** @default One or more errors occurred! */
+      message: string;
+      errors: {
+        [key: string]: string[];
+      };
+    };
+    TableOrderCreateRequest: {
+      /** Format: int32 */
+      tableBookingId: number;
+    };
+    OrderViewOrdersRequest: Record<string, never>;
+    OrderAddItemsRequest: {
+      orders: components["schemas"]["OrderAddItemsOrder"][];
+      /** Format: int32 */
+      tableBookingId: number;
+    };
+    OrderAddItemsOrder: {
+      /** Format: int32 */
+      orderId: number;
       /** Format: int32 */
       menuItemId: number;
+      optionIds?: number[] | null;
+      extraIds?: number[] | null;
     };
     EntitiesTableCashUp: {
       /** Format: int32 */
@@ -510,6 +537,21 @@ export interface components {
       /** Format: int32 */
       salesPeriodId: number;
     };
+    PayStatusRequest: Record<string, never>;
+    PayStatusSSERequest: Record<string, never>;
+    CommonWrapperResultOfResponse: components["schemas"]["CommonWrapperResult"] & ({
+      value?: components["schemas"]["PayGetLinkResponse"] | null;
+    });
+    PayGetLinkResponse: {
+      url: string;
+      reference: string;
+    };
+    CommonWrapperResult: {
+      success: boolean;
+      error: string;
+      failure: boolean;
+    };
+    PayGetLinkRequest: Record<string, never>;
     OutletUpdateRequest: {
       name: string;
       /** Format: int32 */
@@ -551,6 +593,20 @@ export interface components {
     };
     MenuGetSectionsRequest: Record<string, never>;
     MenuGetOutletMenuRequest: Record<string, never>;
+    DTOMenuItemDTOBasic: {
+      /** Format: int32 */
+      menuItemId: number;
+      /** Format: int32 */
+      menuSectionId: number;
+      name: string;
+      description: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      position: number;
+      tags?: components["schemas"]["EntitiesTag"][] | null;
+    };
+    MenuGetItemsRequest: Record<string, never>;
     DTOMenuItemDTO: {
       /** Format: int32 */
       menuItemId: number;
@@ -565,8 +621,35 @@ export interface components {
       tags?: components["schemas"]["EntitiesTag"][] | null;
       extras?: components["schemas"]["EntitiesExtra"][] | null;
       division: components["schemas"]["CommonEnumsDivision"];
+      menuItemOptionGroups: components["schemas"]["DTOMenuItemOptionGroupDTO"][];
     };
-    MenuGetItemsRequest: Record<string, never>;
+    DTOMenuItemOptionGroupDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      /** Format: int32 */
+      optionGroupId: number;
+      optionGroup: components["schemas"]["DTOOptionGroupDTO"];
+    };
+    DTOOptionGroupDTO: {
+      /** Format: int32 */
+      optionGroupId: number;
+      name: string;
+      /** Format: int32 */
+      minSelections: number;
+      /** Format: int32 */
+      maxSelections: number;
+      options: components["schemas"]["DTOOptionDTO"][];
+    };
+    DTOOptionDTO: {
+      /** Format: int32 */
+      optionId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      optionGroupId: number;
+    };
+    MenuGetItemRequest: Record<string, never>;
     MenuListRequest: Record<string, never>;
     MenuGetRequest: Record<string, never>;
     MenuCreateRequest: {
@@ -802,15 +885,10 @@ export interface operations {
       };
     };
   };
-  OrderAddItem: {
-    parameters: {
-      path: {
-        orderId: number;
-      };
-    };
+  OrderAddItems: {
     requestBody: {
       content: {
-        "application/json": components["schemas"]["OrderAddItemRequest"];
+        "application/json": components["schemas"]["OrderAddItemsRequest"];
       };
     };
     responses: {
@@ -820,11 +898,9 @@ export interface operations {
           "application/json": components["schemas"]["EntitiesOrderItem"];
         };
       };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -1205,6 +1281,71 @@ export interface operations {
       };
     };
   };
+  PayStatus: {
+    parameters: {
+      path: {
+        reference: string | null;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "text/plain": unknown;
+          "application/json": unknown;
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  PayStatusSSE: {
+    parameters: {
+      path: {
+        reference: string | null;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "text/plain": unknown;
+          "application/json": unknown;
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  PayGetLink: {
+    parameters: {
+      query: {
+        amount: number;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["CommonWrapperResultOfResponse"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   OutletGet: {
     parameters: {
       path: {
@@ -1409,7 +1550,28 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["DTOMenuItemDTO"][];
+          "application/json": components["schemas"]["DTOMenuItemDTOBasic"][];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  MenuGetItemGetMenuItems: {
+    parameters: {
+      query: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["DTOMenuItemDTO"];
         };
       };
       /** @description Server Error */

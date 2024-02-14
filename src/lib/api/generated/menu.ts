@@ -16,10 +16,12 @@ import type {
 } from "@tanstack/svelte-query";
 import type {
 	DTOMenuItemDTO,
+	DTOMenuItemDTOBasic,
 	EntitiesMenu,
 	ErrorResponse,
 	InternalErrorResponse,
 	MenuCreateRequest,
+	MenuGetItemGetMenuItemsParams,
 	MenuGetItemsGetMenuItemsParams,
 	MenuGetOutletMenuGetOutletMenusParams,
 	MenuGetSectionsGetMenusSectionsParams,
@@ -317,7 +319,7 @@ export const createMenuGetOutletMenuGetOutletMenus = <
 };
 
 export const useMenuGetItemsGetMenuItemsHook = () => {
-	const menuGetItemsGetMenuItems = useCustomClient<DTOMenuItemDTO[]>();
+	const menuGetItemsGetMenuItems = useCustomClient<DTOMenuItemDTOBasic[]>();
 
 	return (params: MenuGetItemsGetMenuItemsParams) => {
 		return menuGetItemsGetMenuItems({ url: `/menu/items`, method: "GET", params });
@@ -381,6 +383,81 @@ export const createMenuGetItemsGetMenuItems = <
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
 	const queryOptions = useMenuGetItemsGetMenuItemsQueryOptions(params, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
+
+export const useMenuGetItemGetMenuItemsHook = () => {
+	const menuGetItemGetMenuItems = useCustomClient<DTOMenuItemDTO>();
+
+	return (params: MenuGetItemGetMenuItemsParams) => {
+		return menuGetItemGetMenuItems({ url: `/menu/item`, method: "GET", params });
+	};
+};
+
+export const getMenuGetItemGetMenuItemsQueryKey = (params: MenuGetItemGetMenuItemsParams) => {
+	return [`/menu/item`, ...(params ? [params] : [])] as const;
+};
+
+export const useMenuGetItemGetMenuItemsQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: MenuGetItemGetMenuItemsParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getMenuGetItemGetMenuItemsQueryKey(params);
+
+	const menuGetItemGetMenuItems = useMenuGetItemGetMenuItemsHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>
+	> = () => menuGetItemGetMenuItems(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type MenuGetItemGetMenuItemsQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>
+>;
+export type MenuGetItemGetMenuItemsQueryError = ErrorType<InternalErrorResponse>;
+
+export const createMenuGetItemGetMenuItems = <
+	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: MenuGetItemGetMenuItemsParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useMenuGetItemGetMenuItemsQueryOptions(params, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;

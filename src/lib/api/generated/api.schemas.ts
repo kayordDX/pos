@@ -14,6 +14,10 @@ export type MenuListParams = {
 	outletId: number;
 };
 
+export type MenuGetItemGetMenuItemsParams = {
+	id: number;
+};
+
 export type MenuGetItemsGetMenuItemsParams = {
 	menuId: number;
 	sectionId: number;
@@ -27,6 +31,10 @@ export type MenuGetOutletMenuGetOutletMenusParams = {
 export type MenuGetSectionsGetMenusSectionsParams = {
 	menuId: number;
 	sectionId: number;
+};
+
+export type PayGetLinkParams = {
+	amount: number;
 };
 
 export type SectionListParams = {
@@ -103,14 +111,50 @@ export interface MenuListRequest {
 	[key: string]: any;
 }
 
-export interface MenuGetItemsRequest {
+export interface MenuGetItemRequest {
 	[key: string]: any;
+}
+
+export interface DTOOptionDTO {
+	name: string;
+	optionGroupId: number;
+	optionId: number;
+	price: number;
+}
+
+export interface DTOOptionGroupDTO {
+	maxSelections: number;
+	minSelections: number;
+	name: string;
+	optionGroupId: number;
+	options: DTOOptionDTO[];
+}
+
+export interface DTOMenuItemOptionGroupDTO {
+	menuItemId: number;
+	optionGroup: DTOOptionGroupDTO;
+	optionGroupId: number;
 }
 
 export interface DTOMenuItemDTO {
 	description: string;
 	division: CommonEnumsDivision;
 	extras?: EntitiesExtra[] | null;
+	menuItemId: number;
+	menuItemOptionGroups: DTOMenuItemOptionGroupDTO[];
+	menuSectionId: number;
+	name: string;
+	position: number;
+	price: number;
+	tags?: EntitiesTag[] | null;
+}
+
+export interface MenuGetItemsRequest {
+	[key: string]: any;
+}
+
+export interface DTOMenuItemDTOBasic {
+	description: string;
 	menuItemId: number;
 	menuSectionId: number;
 	name: string;
@@ -166,6 +210,38 @@ export interface OutletGetRequest {
 export interface OutletUpdateRequest {
 	businessId: number;
 	name: string;
+}
+
+export interface PayGetLinkRequest {
+	[key: string]: any;
+}
+
+export interface CommonWrapperResult {
+	error: string;
+	failure: boolean;
+	success: boolean;
+}
+
+export interface PayGetLinkResponse {
+	reference: string;
+	url: string;
+}
+
+export type CommonWrapperResultOfResponseAllOfValue = PayGetLinkResponse | null;
+
+export type CommonWrapperResultOfResponseAllOf = {
+	value?: CommonWrapperResultOfResponseAllOfValue;
+};
+
+export type CommonWrapperResultOfResponse = CommonWrapperResult &
+	CommonWrapperResultOfResponseAllOf;
+
+export interface PayStatusSSERequest {
+	[key: string]: any;
+}
+
+export interface PayStatusRequest {
+	[key: string]: any;
 }
 
 export interface SalesPeriodCloseRequest {
@@ -319,8 +395,32 @@ export interface EntitiesTableCashUp {
 	totalAmount: number;
 }
 
-export interface OrderAddItemRequest {
+export interface OrderAddItemsOrder {
+	extraIds?: number[] | null;
 	menuItemId: number;
+	optionIds?: number[] | null;
+	orderId: number;
+}
+
+export interface OrderAddItemsRequest {
+	orders: OrderAddItemsOrder[];
+	tableBookingId: number;
+}
+
+export interface OrderViewOrdersRequest {
+	[key: string]: any;
+}
+
+export interface TableOrderCreateRequest {
+	tableBookingId: number;
+}
+
+export type ErrorResponseErrors = { [key: string]: string[] };
+
+export interface ErrorResponse {
+	errors: ErrorResponseErrors;
+	message: string;
+	statusCode: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -359,6 +459,8 @@ export const CommonEnumsDivision = {
 export interface EntitiesExtra {
 	extraId: number;
 	name: string;
+	positionId: number;
+	price: number;
 }
 
 export interface EntitiesTag {
@@ -369,14 +471,6 @@ export interface EntitiesTag {
 export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	count: number;
 	text: string;
-}
-
-export interface EntitiesMenu {
-	id: number;
-	menuSections?: EntitiesMenuSection[] | null;
-	name: string;
-	outlet: EntitiesOutlet;
-	outletId: number;
 }
 
 export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
@@ -407,26 +501,31 @@ export interface EntitiesMenuSection {
 	subMenuSections?: EntitiesMenuSection[] | null;
 }
 
-export interface OrderViewOrdersRequest {
-	[key: string]: any;
+export interface EntitiesMenu {
+	id: number;
+	menuSections?: EntitiesMenuSection[] | null;
+	name: string;
+	outlet: EntitiesOutlet;
+	outletId: number;
 }
 
-export interface TableOrderCreateRequest {
+export interface EntitiesOrderItem {
+	extras?: EntitiesExtra[] | null;
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+	options?: EntitiesOption[] | null;
+	orderItemId: number;
 	tableBookingId: number;
 }
 
-export type ErrorResponseErrors = { [key: string]: string[] };
-
-export interface ErrorResponse {
-	errors: ErrorResponseErrors;
-	message: string;
-	statusCode: number;
-}
+export type EntitiesTableOrderOrderItem = EntitiesOrderItem | null;
 
 export interface EntitiesTableOrder {
 	customer: EntitiesCustomer;
 	customerId: number;
 	orderDate: string;
+	orderItem?: EntitiesTableOrderOrderItem;
+	orderItemId?: number | null;
 	tableBookingId: number;
 	tableOrderId: number;
 }
@@ -463,15 +562,6 @@ export const Order = {
 	Before: 0,
 	After: 1,
 } as const;
-
-export interface EntitiesOrderItem {
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-	order: Order;
-	orderId: number;
-	orderItemId: number;
-	quantity: number;
-}
 
 export interface EntitiesCustomer {
 	customerId: number;

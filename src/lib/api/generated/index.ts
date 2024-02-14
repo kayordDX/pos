@@ -8,6 +8,7 @@ export * from "./tablebooking";
 export * from "./table";
 export * from "./section";
 export * from "./salesperiod";
+export * from "./pay";
 export * from "./outlet";
 export * from "./menu";
 export * from "./clock";

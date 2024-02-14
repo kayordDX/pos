@@ -19,7 +19,7 @@ import type {
 	EntitiesTableOrder,
 	ErrorResponse,
 	InternalErrorResponse,
-	OrderAddItemRequest,
+	OrderAddItemsRequest,
 	OrderViewOrdersParams,
 	TableOrderCreateRequest,
 } from "./api.schemas";
@@ -172,69 +172,69 @@ export const createOrderViewOrders = <
 	return query;
 };
 
-export const useOrderAddItemHook = () => {
-	const orderAddItem = useCustomClient<EntitiesOrderItem>();
+export const useOrderAddItemsHook = () => {
+	const orderAddItems = useCustomClient<EntitiesOrderItem>();
 
-	return (orderId: number, orderAddItemRequest: BodyType<OrderAddItemRequest>) => {
-		return orderAddItem({
-			url: `/order/${orderId}/addItem`,
+	return (orderAddItemsRequest: BodyType<OrderAddItemsRequest>) => {
+		return orderAddItems({
+			url: `/order/addItems`,
 			method: "POST",
 			headers: { "Content-Type": "application/json" },
-			data: orderAddItemRequest,
+			data: orderAddItemsRequest,
 		});
 	};
 };
 
-export const useOrderAddItemMutationOptions = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+export const useOrderAddItemsMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
+		Awaited<ReturnType<ReturnType<typeof useOrderAddItemsHook>>>,
 		TError,
-		{ orderId: number; data: BodyType<OrderAddItemRequest> },
+		{ data: BodyType<OrderAddItemsRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
-	Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
+	Awaited<ReturnType<ReturnType<typeof useOrderAddItemsHook>>>,
 	TError,
-	{ orderId: number; data: BodyType<OrderAddItemRequest> },
+	{ data: BodyType<OrderAddItemsRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
 
-	const orderAddItem = useOrderAddItemHook();
+	const orderAddItems = useOrderAddItemsHook();
 
 	const mutationFn: MutationFunction<
-		Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
-		{ orderId: number; data: BodyType<OrderAddItemRequest> }
+		Awaited<ReturnType<ReturnType<typeof useOrderAddItemsHook>>>,
+		{ data: BodyType<OrderAddItemsRequest> }
 	> = (props) => {
-		const { orderId, data } = props ?? {};
+		const { data } = props ?? {};
 
-		return orderAddItem(orderId, data);
+		return orderAddItems(data);
 	};
 
 	return { mutationFn, ...mutationOptions };
 };
 
-export type OrderAddItemMutationResult = NonNullable<
-	Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>
+export type OrderAddItemsMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useOrderAddItemsHook>>>
 >;
-export type OrderAddItemMutationBody = BodyType<OrderAddItemRequest>;
-export type OrderAddItemMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type OrderAddItemsMutationBody = BodyType<OrderAddItemsRequest>;
+export type OrderAddItemsMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createOrderAddItem = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+export const createOrderAddItems = <
+	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<ReturnType<typeof useOrderAddItemHook>>>,
+		Awaited<ReturnType<ReturnType<typeof useOrderAddItemsHook>>>,
 		TError,
-		{ orderId: number; data: BodyType<OrderAddItemRequest> },
+		{ data: BodyType<OrderAddItemsRequest> },
 		TContext
 	>;
 }) => {
-	const mutationOptions = useOrderAddItemMutationOptions(options);
+	const mutationOptions = useOrderAddItemsMutationOptions(options);
 
 	return createMutation(mutationOptions);
 };
