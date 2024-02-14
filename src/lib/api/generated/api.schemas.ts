@@ -236,10 +236,6 @@ export type CommonWrapperResultOfResponseAllOf = {
 export type CommonWrapperResultOfResponse = CommonWrapperResult &
 	CommonWrapperResultOfResponseAllOf;
 
-export interface PayStatusSSERequest {
-	[key: string]: any;
-}
-
 export interface PayStatusRequest {
 	[key: string]: any;
 }

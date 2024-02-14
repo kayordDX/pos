@@ -1,47 +1,44 @@
 <script lang="ts">
-	import { PUBLIC_API_URL } from "$env/static/public";
-	import { Button } from "@kayord/ui";
-	import { onMount } from "svelte";
-	import { createPayGetLink } from "$lib/api";
-
-	let guid: string = "";
-
-	let sse: EventSource;
-
-	const closeConnection = () => {
-		sse.close();
-	};
+	import { Button, Card } from "@kayord/ui";
+	import { createPayGetLink, createPayStatus } from "$lib/api";
+	import { goto } from "$app/navigation";
 
 	const getLink = createPayGetLink({ amount: 12 }, { query: { enabled: false } });
+
+	let url: string | undefined = undefined;
+	let reference: string | undefined = undefined;
+
+	$: if ($getLink.data?.success) {
+		url = $getLink.data.value?.url;
+		reference = $getLink.data.value?.reference;
+		if (url) goto(url);
+	}
+
+	$: payStatus = createPayStatus(reference ?? "", {
+		query: { refetchInterval: 3000, enabled: reference != undefined },
+	});
 
 	const generateLink = () => {
 		$getLink.refetch();
 	};
-
-	const startListener = () => {
-		sse.addEventListener("status", (e) => {
-			const json = JSON.parse(e.data);
-			console.log(json);
-			guid = json.guid;
-		});
-	};
-
-	onMount(() => {
-		sse = new EventSource(
-			`${PUBLIC_API_URL}/pay/status/sse/${"80392a34-623d-4ee4-9b1e-140f03293a92"}`
-		);
-		return () => {
-			if (sse.readyState === 1) {
-				sse.close();
-			}
-		};
-	});
 </script>
 
-<div>{guid}</div>
+{#if $getLink.isPending}
+	Loading....
+{/if}
+<div>
+	{url}
+</div>
+<div>{reference}</div>
 
-{JSON.stringify($getLink)}
+{#if $getLink.error}
+	{JSON.stringify($payStatus.error)}
+{/if}
 
-<Button on:click={generateLink}>Generate</Button>
-<Button on:click={startListener}>Start</Button>
-<Button on:click={closeConnection}>Stop</Button>
+{#if !$getLink.data}
+	<Button on:click={generateLink}>Generate</Button>
+{/if}
+
+<Card.Root class="p-8">
+	{JSON.stringify($payStatus.data)}
+</Card.Root>

@@ -22,13 +22,14 @@
 	<Tabs.Root
 		value={getValue()}
 		onValueChange={(s) => {
+			console.log("change", s);
 			if (s == "menu") {
 				goto(`/table/${data.bookingId}/menu`);
 			} else if (s == "bill") {
 				goto(`/table/${data.bookingId}/bill`);
 			} else if (s == "basket") {
 				goto(`/table/${data.bookingId}/basket`);
-			} else {
+			} else if (s == "tables") {
 				goto("/waiter");
 			}
 		}}

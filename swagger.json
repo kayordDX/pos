@@ -1204,48 +1204,6 @@
         }
       }
     },
-    "/pay/status/sse/{reference}": {
-      "get": {
-        "tags": [
-          "Pay"
-        ],
-        "operationId": "PayStatusSSE",
-        "parameters": [
-          {
-            "name": "reference",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "nullable": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {}
-              },
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/pay/getLink": {
       "get": {
         "tags": [
@@ -3676,10 +3634,6 @@
         }
       },
       "PayStatusRequest": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "PayStatusSSERequest": {
         "type": "object",
         "additionalProperties": false
       },

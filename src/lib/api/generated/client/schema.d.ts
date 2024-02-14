@@ -73,9 +73,6 @@ export interface paths {
   "/pay/status/{reference}": {
     get: operations["PayStatus"];
   };
-  "/pay/status/sse/{reference}": {
-    get: operations["PayStatusSSE"];
-  };
   "/pay/getLink": {
     get: operations["PayGetLink"];
   };
@@ -538,7 +535,6 @@ export interface components {
       salesPeriodId: number;
     };
     PayStatusRequest: Record<string, never>;
-    PayStatusSSERequest: Record<string, never>;
     CommonWrapperResultOfResponse: components["schemas"]["CommonWrapperResult"] & ({
       value?: components["schemas"]["PayGetLinkResponse"] | null;
     });
@@ -1282,28 +1278,6 @@ export interface operations {
     };
   };
   PayStatus: {
-    parameters: {
-      path: {
-        reference: string | null;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "text/plain": unknown;
-          "application/json": unknown;
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  PayStatusSSE: {
     parameters: {
       path: {
         reference: string | null;
