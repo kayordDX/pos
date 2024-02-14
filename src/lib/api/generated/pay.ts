@@ -14,6 +14,7 @@ import type {
 } from "@tanstack/svelte-query";
 import type {
 	CommonWrapperResultOfResponse,
+	CommonWrapperResultOfStatusResultDto,
 	InternalErrorResponse,
 	PayGetLinkParams,
 } from "./api.schemas";
@@ -21,7 +22,7 @@ import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType } from "../mutator/useCustomClient";
 
 export const usePayStatusHook = () => {
-	const payStatus = useCustomClient<unknown>();
+	const payStatus = useCustomClient<CommonWrapperResultOfStatusResultDto>();
 
 	return (reference: string | null) => {
 		return payStatus({ url: `/pay/status/${reference}`, method: "GET" });

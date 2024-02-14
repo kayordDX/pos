@@ -9,7 +9,7 @@
 	export let data: LayoutData;
 	$: basketCount = $basket ? $basket.length : 0;
 
-	const getValue = () => {
+	$: getValue = () => {
 		if ($page.route.id?.includes("menu")) return "menu";
 		if ($page.route.id?.includes("bill")) return "bill";
 		if ($page.route.id?.includes("basket")) return "basket";
@@ -22,13 +22,12 @@
 	<Tabs.Root
 		value={getValue()}
 		onValueChange={(s) => {
-			console.log("change", s);
 			if (s == "menu") {
-				goto(`/table/${data.bookingId}/menu`);
+				goto(`/table/${data.bookingId}/main/menu`);
 			} else if (s == "bill") {
-				goto(`/table/${data.bookingId}/bill`);
+				goto(`/table/${data.bookingId}/main/bill`);
 			} else if (s == "basket") {
-				goto(`/table/${data.bookingId}/basket`);
+				goto(`/table/${data.bookingId}/main/basket`);
 			} else if (s == "tables") {
 				goto("/waiter");
 			}

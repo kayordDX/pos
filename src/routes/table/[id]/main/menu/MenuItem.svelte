@@ -29,29 +29,14 @@
 			<Drawer.Header>
 				<Drawer.Title>{menuItem.name}</Drawer.Title>
 				<Drawer.Description>{menuItem.description}</Drawer.Description>
+				<div class="font-bold">R {menuItem.price.toFixed(2)}</div>
 			</Drawer.Header>
-			<div class="flex flex-col gap-2">
-				{#each { length: 15 } as _, i}
-					<Skeleton class="h-6" />
-				{/each}
-				<ToggleGroup.Root type="single" value="bold">
-					<ToggleGroup.Item value="bold" aria-label="Toggle bold">
-						<div class="p-2">Monkeys</div>
-					</ToggleGroup.Item>
-					<ToggleGroup.Item value="italic" aria-label="Toggle italic">
-						<ItalicIcon class="h-4 w-4" />
-					</ToggleGroup.Item>
-					<ToggleGroup.Item value="strikethrough" aria-label="Toggle strikethrough">
-						<BoldIcon class="h-4 w-4" />
-					</ToggleGroup.Item>
-				</ToggleGroup.Root>
-				{JSON.stringify(menuItem)}
+			<div class="flex flex-col gap-2 p-4">
 				<Label>Special instructions</Label>
 				<Textarea />
 			</div>
 			<Drawer.Footer>
 				<Button on:click={addToBasket}>Add</Button>
-				<Drawer.Close>Cancel</Drawer.Close>
 			</Drawer.Footer>
 		</div>
 	</Drawer.Content>

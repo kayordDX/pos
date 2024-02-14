@@ -1183,11 +1183,10 @@
           "200": {
             "description": "Success",
             "content": {
-              "text/plain": {
-                "schema": {}
-              },
               "application/json": {
-                "schema": {}
+                "schema": {
+                  "$ref": "#/components/schemas/CommonWrapperResultOfStatusResultDto"
+                }
               }
             }
           },
@@ -3633,6 +3632,72 @@
           }
         }
       },
+      "CommonWrapperResultOfStatusResultDto": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommonWrapperResult"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "value": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/PayDtoStatusResultDto"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      },
+      "PayDtoStatusResultDto": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "qrCodeState",
+          "amount",
+          "paymentReference",
+          "currencyCode"
+        ],
+        "properties": {
+          "qrCodeState": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "paymentReference": {
+            "type": "string"
+          },
+          "currencyCode": {
+            "type": "string"
+          }
+        }
+      },
+      "CommonWrapperResult": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "success",
+          "error",
+          "failure"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "error": {
+            "type": "string"
+          },
+          "failure": {
+            "type": "boolean"
+          }
+        }
+      },
       "PayStatusRequest": {
         "type": "object",
         "additionalProperties": false
@@ -3671,26 +3736,6 @@
           },
           "reference": {
             "type": "string"
-          }
-        }
-      },
-      "CommonWrapperResult": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "success",
-          "error",
-          "failure"
-        ],
-        "properties": {
-          "success": {
-            "type": "boolean"
-          },
-          "error": {
-            "type": "string"
-          },
-          "failure": {
-            "type": "boolean"
           }
         }
       },

@@ -534,6 +534,21 @@ export interface components {
       /** Format: int32 */
       salesPeriodId: number;
     };
+    CommonWrapperResultOfStatusResultDto: components["schemas"]["CommonWrapperResult"] & ({
+      value?: components["schemas"]["PayDtoStatusResultDto"] | null;
+    });
+    PayDtoStatusResultDto: {
+      qrCodeState: string;
+      /** Format: decimal */
+      amount: number;
+      paymentReference: string;
+      currencyCode: string;
+    };
+    CommonWrapperResult: {
+      success: boolean;
+      error: string;
+      failure: boolean;
+    };
     PayStatusRequest: Record<string, never>;
     CommonWrapperResultOfResponse: components["schemas"]["CommonWrapperResult"] & ({
       value?: components["schemas"]["PayGetLinkResponse"] | null;
@@ -541,11 +556,6 @@ export interface components {
     PayGetLinkResponse: {
       url: string;
       reference: string;
-    };
-    CommonWrapperResult: {
-      success: boolean;
-      error: string;
-      failure: boolean;
     };
     PayGetLinkRequest: Record<string, never>;
     OutletUpdateRequest: {
@@ -1287,8 +1297,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "text/plain": unknown;
-          "application/json": unknown;
+          "application/json": components["schemas"]["CommonWrapperResultOfStatusResultDto"];
         };
       };
       /** @description Server Error */

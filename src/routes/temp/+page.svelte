@@ -5,13 +5,16 @@
 
 	const getLink = createPayGetLink({ amount: 12 }, { query: { enabled: false } });
 
+	let a: HTMLAnchorElement;
+
 	let url: string | undefined = undefined;
 	let reference: string | undefined = undefined;
 
 	$: if ($getLink.data?.success) {
 		url = $getLink.data.value?.url;
 		reference = $getLink.data.value?.reference;
-		if (url) goto(url);
+		a.href = url ?? "";
+		a.click();
 	}
 
 	$: payStatus = createPayStatus(reference ?? "", {
@@ -42,3 +45,5 @@
 <Card.Root class="p-8">
 	{JSON.stringify($payStatus.data)}
 </Card.Root>
+
+<a href="/" bind:this={a}>test</a>

@@ -216,12 +216,6 @@ export interface PayGetLinkRequest {
 	[key: string]: any;
 }
 
-export interface CommonWrapperResult {
-	error: string;
-	failure: boolean;
-	success: boolean;
-}
-
 export interface PayGetLinkResponse {
 	reference: string;
 	url: string;
@@ -233,12 +227,34 @@ export type CommonWrapperResultOfResponseAllOf = {
 	value?: CommonWrapperResultOfResponseAllOfValue;
 };
 
-export type CommonWrapperResultOfResponse = CommonWrapperResult &
-	CommonWrapperResultOfResponseAllOf;
-
 export interface PayStatusRequest {
 	[key: string]: any;
 }
+
+export interface CommonWrapperResult {
+	error: string;
+	failure: boolean;
+	success: boolean;
+}
+
+export type CommonWrapperResultOfResponse = CommonWrapperResult &
+	CommonWrapperResultOfResponseAllOf;
+
+export interface PayDtoStatusResultDto {
+	amount: number;
+	currencyCode: string;
+	paymentReference: string;
+	qrCodeState: string;
+}
+
+export type CommonWrapperResultOfStatusResultDtoAllOfValue = PayDtoStatusResultDto | null;
+
+export type CommonWrapperResultOfStatusResultDtoAllOf = {
+	value?: CommonWrapperResultOfStatusResultDtoAllOfValue;
+};
+
+export type CommonWrapperResultOfStatusResultDto = CommonWrapperResult &
+	CommonWrapperResultOfStatusResultDtoAllOf;
 
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
