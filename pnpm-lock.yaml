@@ -38,8 +38,8 @@ devDependencies:
     specifier: ^3.0.2
     version: 3.0.2(svelte@4.2.10)(vite@5.1.1)
   '@tanstack/svelte-query':
-    specifier: ^5.20.2
-    version: 5.20.2(svelte@4.2.10)
+    specifier: ^5.20.5
+    version: 5.20.5(svelte@4.2.10)
   '@types/qs':
     specifier: ^6.9.11
     version: 6.9.11
@@ -83,8 +83,8 @@ devDependencies:
     specifier: ^3.2.5
     version: 3.2.5
   prettier-plugin-svelte:
-    specifier: ^3.1.2
-    version: 3.1.2(prettier@3.2.5)(svelte@4.2.10)
+    specifier: ^3.2.1
+    version: 3.2.1(prettier@3.2.5)(svelte@4.2.10)
   qs:
     specifier: ^6.11.2
     version: 6.11.2
@@ -1266,16 +1266,16 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /@tanstack/query-core@5.20.2:
-    resolution: {integrity: sha512-sAILwNiyA1I52e6imOsmNDUA/PuOayOzqz5jcLiIB5wBXqVk+HIiriWouPcAkjS8RqARfHUehuoPwcZ7Uzh0GQ==}
+  /@tanstack/query-core@5.20.5:
+    resolution: {integrity: sha512-T1W28gGgWn0A++tH3lxj3ZuUVZZorsiKcv+R50RwmPYz62YoDEkG4/aXHZELGkRp4DfrW07dyq2K5dvJ4Wl1aA==}
     dev: true
 
-  /@tanstack/svelte-query@5.20.2(svelte@4.2.10):
-    resolution: {integrity: sha512-7RxxtnOEZsuX/XVMcx3PsnETedPkh4AKqv7ywl1IzYqMAJoqoUgh69v0Z5tHvgjtg+sgKYd6R37yzzKNzWbUXA==}
+  /@tanstack/svelte-query@5.20.5(svelte@4.2.10):
+    resolution: {integrity: sha512-Ji9rE4ovy1m9i1chb/06JdEksNM+KzQlRfbdKvaaNTSpa6vp/Bj5PO9P7dq7EmVDsuFZgixUmF7VPzNvMQ8vNw==}
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
     dependencies:
-      '@tanstack/query-core': 5.20.2
+      '@tanstack/query-core': 5.20.5
       svelte: 4.2.10
     dev: true
 
@@ -3657,8 +3657,8 @@ packages:
     engines: {node: '>= 0.8.0'}
     dev: true
 
-  /prettier-plugin-svelte@3.1.2(prettier@3.2.5)(svelte@4.2.10):
-    resolution: {integrity: sha512-7xfMZtwgAWHMT0iZc8jN4o65zgbAQ3+O32V6W7pXrqNvKnHnkoyQCGCbKeUyXKZLbYE0YhFRnamfxfkEGxm8qA==}
+  /prettier-plugin-svelte@3.2.1(prettier@3.2.5)(svelte@4.2.10):
+    resolution: {integrity: sha512-ENAPbIxASf2R79IZwgkG5sBdeNA9kLRlXVvKKmTXh79zWTy0KKoT86XO2pHrTitUPINd+iXWy12MRmgzKGVckA==}
     peerDependencies:
       prettier: ^3.0.0
       svelte: ^3.2.0 || ^4.0.0-next.0 || ^5.0.0-next.0

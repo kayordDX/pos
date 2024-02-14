@@ -40,7 +40,7 @@ const authorization: Handle = async ({ event, resolve }) => {
 	const session = await event.locals.auth();
 	if (!event.url.pathname.startsWith("/login")) {
 		if (!session) {
-			throw redirect(303, "/login");
+			// throw redirect(303, "/login");
 		}
 	} else {
 		if (session) {
