@@ -1,6 +1,6 @@
 import createClient, { type HeadersOptions } from "openapi-fetch";
 import type { paths } from "./generated/client/schema";
-import { PUBLIC_API_URL } from "$env/static/public";
+import { env } from "$env/dynamic/public";
 
 export const client = (token?: string) => {
 	let headers: HeadersOptions = {};
@@ -11,7 +11,7 @@ export const client = (token?: string) => {
 		};
 	}
 	return createClient<paths>({
-		baseUrl: PUBLIC_API_URL,
+		baseUrl: env.PUBLIC_API_URL,
 		headers,
 	});
 };

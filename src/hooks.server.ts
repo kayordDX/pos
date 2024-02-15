@@ -1,6 +1,6 @@
 import { SvelteKitAuth, type User } from "@auth/sveltekit";
 import Google from "@auth/core/providers/google";
-import { GOOGLE_ID, GOOGLE_SECRET } from "$env/static/private";
+import { env } from "$env/dynamic/private";
 import { redirect, type Handle } from "@sveltejs/kit";
 import { sequence } from "@sveltejs/kit/hooks";
 import { jwtDecode } from "jwt-decode";
@@ -52,7 +52,7 @@ const authorization: Handle = async ({ event, resolve }) => {
 
 async function refreshAccessToken(token: JWT) {
 	try {
-		const url = `https://oauth2.googleapis.com/token?client_id=${GOOGLE_ID}&client_secret=${GOOGLE_SECRET}&grant_type=refresh_token&refresh_token=${token.refreshToken}`;
+		const url = `https://oauth2.googleapis.com/token?client_id=${env.GOOGLE_ID}&client_secret=${env.GOOGLE_SECRET}&grant_type=refresh_token&refresh_token=${token.refreshToken}`;
 		const response = await fetch(url, {
 			headers: {
 				"Content-Type": "application/x-www-form-urlencoded",
@@ -85,8 +85,8 @@ const authentication: Handle = async ({ event, resolve }) => {
 	const { handle } = SvelteKitAuth({
 		providers: [
 			Google({
-				clientId: GOOGLE_ID,
-				clientSecret: GOOGLE_SECRET,
+				clientId: env.GOOGLE_ID,
+				clientSecret: env.GOOGLE_SECRET,
 				authorization: {
 					params: {
 						prompt: "consent",

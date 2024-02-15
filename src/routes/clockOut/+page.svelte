@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Badge, Button, Card } from "@kayord/ui";
-	import { PUBLIC_API_URL } from "$env/static/public";
+	import { Button, Card } from "@kayord/ui";
 	import type { PageData } from "./$types";
 	export let data: PageData;
 	import { getFlash } from "sveltekit-flash-message";
