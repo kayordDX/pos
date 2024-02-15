@@ -1,9 +1,9 @@
 import type { PageServerLoad, Actions } from "./$types";
 import { superValidate } from "sveltekit-superforms/server";
 import { outletSchema } from "./schema";
-import { fail, redirect } from "@sveltejs/kit";
+import { fail } from "@sveltejs/kit";
+import { redirect, setFlash } from "sveltekit-flash-message/server";
 import { client } from "$lib/api";
-import { toast } from "@kayord/ui";
 import { getError } from "$lib/types";
 
 export const load: PageServerLoad = async ({ fetch, parent }) => {
@@ -11,6 +11,7 @@ export const load: PageServerLoad = async ({ fetch, parent }) => {
 	const outlet = { outletId: data.status?.outletId ?? 0 };
 	const result = await client(data.session?.token).GET("/outlet", { fetch });
 	const form = await superValidate(outlet, outletSchema);
+
 	return {
 		form,
 		outlets: {
@@ -40,9 +41,9 @@ export const actions: Actions = {
 				},
 			});
 		} catch (err) {
-			toast.error(getError(err).message);
+			setFlash({ type: "error", message: getError(err).message }, event);
 		}
-		toast.info("Successfully updated outlet");
+		setFlash({ type: "success", message: "Successfully updated outlet" }, event);
 		redirect(302, "/");
 	},
 };
