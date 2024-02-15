@@ -49,7 +49,7 @@
 		{/each}
 		{#each sections?.sections ?? [] as section, i}
 			<button on:click={() => setSection(section.menuSectionId)}>
-				<Badge class="h-6">{section.name}</Badge>
+				<Badge class="h-6 flex whitespace-nowrap">{section.name}</Badge>
 			</button>
 		{/each}
 	{/if}
