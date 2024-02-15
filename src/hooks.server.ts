@@ -112,6 +112,9 @@ const authentication: Handle = async ({ event, resolve }) => {
 							userId: profile.sub ?? "",
 						},
 						fetch: event.fetch,
+						headers: {
+							"content-type": "application/json",
+						},
 					});
 
 					console.log("body", {
