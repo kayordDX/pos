@@ -35,6 +35,9 @@ export const actions: Actions = {
 		try {
 			await client(session?.token).POST("/user/assignOutlet", {
 				body: { outletId: form.data.outletId },
+				headers: {
+					"content-type": "application/json",
+				},
 			});
 		} catch (err) {
 			toast.error(getError(err).message);

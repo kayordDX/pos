@@ -7,20 +7,35 @@
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
+	import { onMount } from "svelte";
 	export let data: PageData;
 
-	let total = 0;
-	// KJ Temp
-	$: {
+	$: total = () => {
+		let totalResult = 0;
 		if ($basket) {
 			$basket.map((item) => {
-				total += item.price;
+				totalResult += item.price;
 			});
 		}
-	}
+		return totalResult;
+	};
+	// KJ Temp
+	// $: {
+	// 	if ($basket) {
+	// 		$basket.map((item) => {
+	// 			total += item.price;
+	// 		});
+	// 	}
+	// }
+
+	// onMount(() => {
+	// 	$basket.map((item) => {
+	// 		total += item.price;
+	// 	});
+	// });
 	// KJ Temp
 
-	const getLink = createPayGetLink({ amount: total }, { query: { enabled: false } });
+	$: getLink = createPayGetLink({ amount: total() }, { query: { enabled: false } });
 	let a: HTMLAnchorElement;
 
 	let url: string | undefined = undefined;
@@ -62,7 +77,7 @@
 
 <Card.Root class="m-8">
 	<Card.Header>
-		<Card.Title>R {total.toFixed(2)}</Card.Title>
+		<Card.Title>R {total().toFixed(2)}</Card.Title>
 		<Card.Description>Amount</Card.Description>
 		{#if reference}
 			<Card.Description>{reference}</Card.Description>
