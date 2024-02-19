@@ -1,11 +1,11 @@
 <script lang="ts">
-	import type { DTOMenuItemDTO, OrderAddItemsOrder } from "$lib/api";
+	import type { DTOMenuItemDTOBasic, OrderAddItemsOrder } from "$lib/api";
 	import { Button, Card, Drawer, Label, Skeleton, Textarea, ToggleGroup } from "@kayord/ui";
 	import { BoldIcon, ItalicIcon } from "lucide-svelte";
 	// import { add } from "$lib/stores/basket";
 	import { createOrderAddItems } from "$lib/api";
 
-	export let menuItem: DTOMenuItemDTO;
+	export let menuItem: DTOMenuItemDTOBasic;
 	export let tableBookingId: number;
 
 	let open = false;
