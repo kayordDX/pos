@@ -7,7 +7,7 @@
 	export let data: PageData;
 
 	const closeSalesPeriod = async () => {
-		await client(data?.session?.token).POST("/salesPeriod/close", {
+		await client.POST("/salesPeriod/close", {
 			body: {
 				salesPeriodId: data.status?.salesPeriodId ?? 0,
 			},

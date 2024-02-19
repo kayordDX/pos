@@ -1,49 +1,16 @@
 <script lang="ts">
 	import { Button, Card } from "@kayord/ui";
-	import { createPayGetLink, createPayStatus } from "$lib/api";
-	import { goto } from "$app/navigation";
+	import { client } from "$lib/api/client";
+	import type { PageData } from "./$types";
+	export let data: PageData;
 
-	const getLink = createPayGetLink({ amount: 12 }, { query: { enabled: false } });
-
-	let a: HTMLAnchorElement;
-
-	let url: string | undefined = undefined;
-	let reference: string | undefined = undefined;
-
-	$: if ($getLink.data?.success) {
-		url = $getLink.data.value?.url;
-		reference = $getLink.data.value?.reference;
-		a.href = url ?? "";
-		a.click();
-	}
-
-	$: payStatus = createPayStatus(reference ?? "", {
-		query: { refetchInterval: 3000, enabled: reference != undefined },
-	});
-
-	const generateLink = () => {
-		$getLink.refetch();
+	const getData = async () => {
+		const what = await client.GET("/business");
 	};
+
+	getData();
 </script>
 
-{#if $getLink.isPending}
-	Loading....
-{/if}
-<div>
-	{url}
-</div>
-<div>{reference}</div>
-
-{#if $getLink.error}
-	{JSON.stringify($payStatus.error)}
-{/if}
-
-{#if !$getLink.data}
-	<Button on:click={generateLink}>Generate</Button>
-{/if}
-
-<Card.Root class="p-8">
-	{JSON.stringify($payStatus.data)}
+<Card.Root class="m-8 p-4">
+	{JSON.stringify(data.data)}
 </Card.Root>
-
-<a href="/" bind:this={a}>test</a>

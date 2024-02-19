@@ -7,17 +7,18 @@ import { jwtDecode } from "jwt-decode";
 import type { JWT } from "@auth/core/jwt";
 import type { AdapterUser } from "@auth/core/adapters";
 import { client } from "$lib/api";
+import { env as pub_env } from "$env/dynamic/public";
 
-// export async function handleFetch({ request, fetch, event }) {
-// 	if (request.url.startsWith(PUBLIC_API_URL)) {
-// 		const session = await event.locals.auth();
-// 		request = new Request(request);
-// 		if (session?.token) {
-// 			request.headers.append("Authorization", `Bearer ${session.token}`);
-// 		}
-// 	}
-// 	return fetch(request);
-// }
+export async function handleFetch({ request, fetch, event }) {
+	if (request.url.startsWith(pub_env.PUBLIC_API_URL)) {
+		const session = await event.locals.auth();
+		request = new Request(request);
+		if (session?.token) {
+			request.headers.append("Authorization", `Bearer ${session.token}`);
+		}
+	}
+	return fetch(request);
+}
 
 const filterFetch: Handle = async ({ event, resolve }) => {
 	return resolve(event, {
@@ -99,10 +100,7 @@ const authentication: Handle = async ({ event, resolve }) => {
 		callbacks: {
 			async jwt({ token, account, user, profile }) {
 				if (account && user && profile) {
-					const t = account?.id_token ?? "";
-					const decoded = jwtDecode(t);
-
-					const roleRequest = await client(t).POST("/user/validate", {
+					const roleRequest = await client.POST("/user/validate", {
 						body: {
 							email: profile.email ?? "",
 							firstName: profile.given_name ?? "",
@@ -128,6 +126,8 @@ const authentication: Handle = async ({ event, resolve }) => {
 					console.log("roleRequest", roleRequest);
 					console.log("roleRequest", roleRequest.data);
 
+					const t = account?.id_token ?? "";
+					const decoded = jwtDecode(t);
 					return {
 						token: account?.id_token,
 						tokenExpires: (decoded.exp ?? 0) * 1000,

@@ -3,7 +3,7 @@ import type { PageLoad } from "./$types";
 
 export const load = (async ({ params, parent, fetch }) => {
 	const data = await parent();
-	const results = await client(data.session?.token).GET("/menu", {
+	const results = await client.GET("/menu", {
 		params: { query: { outletId: data.status?.outletId ?? 0 } },
 		fetch,
 	});
