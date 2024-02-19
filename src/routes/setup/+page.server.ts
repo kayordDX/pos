@@ -33,14 +33,18 @@ export const actions: Actions = {
 		}
 
 		try {
-			await client.POST("/user/assignOutlet", {
+			const { response } = await client.POST("/user/assignOutlet", {
 				body: { outletId: form.data.outletId },
 				fetch: event.fetch,
 			});
+			if (response.ok) {
+				setFlash({ type: "success", message: "Successfully updated outlet" }, event);
+				redirect(302, "/");
+			} else {
+				setFlash({ type: "error", message: "Could not set outlet" }, event);
+			}
 		} catch (err) {
 			setFlash({ type: "error", message: getError(err).message }, event);
 		}
-		setFlash({ type: "success", message: "Successfully updated outlet" }, event);
-		redirect(302, "/");
 	},
 };
