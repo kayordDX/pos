@@ -23,11 +23,20 @@ export interface paths {
   "/role/addUserInRole": {
     post: operations["RoleAddUserInRole"];
   };
+  "/order/updateOrderItem": {
+    post: operations["TableOrderUpdateOrderItem"];
+  };
+  "/order/sendKitchen": {
+    post: operations["TableOrderSendToKitchen"];
+  };
+  "/order/removeItem": {
+    post: operations["TableOrderRemoveItem"];
+  };
   "/order/getBill": {
     get: operations["TableOrderGetBill"];
   };
-  "/order/removeItem": {
-    delete: operations["OrderRemoveItem"];
+  "/order/getBasket": {
+    get: operations["TableOrderGetBasket"];
   };
   "/order/clearBasket": {
     delete: operations["OrderClearBasket"];
@@ -244,6 +253,30 @@ export interface components {
       /** Format: int32 */
       roleId: number;
     };
+    TableOrderUpdateOrderItemResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderUpdateOrderItemRequest: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      orderItemStatusId: number;
+      isComplete: boolean;
+    };
+    TableOrderSendToKitchenResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderSendToKitchenRequest: {
+      /** Format: int32 */
+      tableBookingId: number;
+    };
+    TableOrderRemoveItemResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderRemoveItemRequest: {
+      /** Format: int32 */
+      orderItemId: number;
+    };
     TableOrderGetBillResponse: {
       orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
       /** Format: decimal */
@@ -306,6 +339,32 @@ export interface components {
       price: number;
     };
     TableOrderGetBillRequest: Record<string, never>;
+    TableOrderGetBasketResponse: {
+      orderItems: components["schemas"]["TableOrderGetBasketBillOrderItemDTO"][];
+      /** Format: decimal */
+      total: number;
+    };
+    TableOrderGetBasketBillOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      tableBooking: components["schemas"]["DTOTableBookingDTO"];
+      /** Format: int32 */
+      menuItemId: number;
+      menuItem: components["schemas"]["TableOrderGetBasketBillMenuItemDTO"];
+      options?: components["schemas"]["DTOOptionDTO"][] | null;
+      extras?: components["schemas"]["DTOExtraDTO"][] | null;
+      note?: string | null;
+    };
+    TableOrderGetBasketBillMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+    };
+    TableOrderGetBasketRequest: Record<string, never>;
     EntitiesOrderItem: {
       /** Format: int32 */
       orderItemId: number;
@@ -480,10 +539,6 @@ export interface components {
       /** Format: int32 */
       optionId: number;
       option: components["schemas"]["EntitiesOption"];
-    };
-    OrderRemoveItemRequest: {
-      /** Format: int32 */
-      orderItemId: number;
     };
     OrderClearBasketRequest: {
       /** Format: int32 */
@@ -954,6 +1009,81 @@ export interface operations {
       };
     };
   };
+  TableOrderUpdateOrderItem: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["TableOrderUpdateOrderItemRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableOrderUpdateOrderItemResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  TableOrderSendToKitchen: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["TableOrderSendToKitchenRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableOrderSendToKitchenResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  TableOrderRemoveItem: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["TableOrderRemoveItemRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableOrderRemoveItemResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   TableOrderGetBill: {
     parameters: {
       query: {
@@ -975,23 +1105,18 @@ export interface operations {
       };
     };
   };
-  OrderRemoveItem: {
-    requestBody: {
-      content: {
-        "*/*": components["schemas"]["OrderRemoveItemRequest"];
-        "application/json": components["schemas"]["OrderRemoveItemRequest"];
+  TableOrderGetBasket: {
+    parameters: {
+      query: {
+        tableBookingId: number;
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["EntitiesOrderItem"];
+          "application/json": components["schemas"]["TableOrderGetBasketResponse"];
         };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
       };
       /** @description Server Error */
       500: {

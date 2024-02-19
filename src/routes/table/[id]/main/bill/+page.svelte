@@ -41,7 +41,3 @@
 		<Button class="w-full" href={`/table/${data.bookingId}/main/pay`}>Pay Bill</Button>
 	</div>
 </div>
-
-<Card.Root class="m-6 p-4">
-	{JSON.stringify($query.data)}
-</Card.Root>

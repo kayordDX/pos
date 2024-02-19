@@ -59,6 +59,10 @@ export type TableGetMyBookedParams = {
 	myBooking: boolean;
 };
 
+export type TableOrderGetBasketParams = {
+	tableBookingId: number;
+};
+
 export type TableOrderGetBillParams = {
 	tableBookingId: number;
 };
@@ -249,6 +253,9 @@ export type CommonWrapperResultOfResponseAllOf = {
 	value?: CommonWrapperResultOfResponseAllOfValue;
 };
 
+export type CommonWrapperResultOfResponse = CommonWrapperResult &
+	CommonWrapperResultOfResponseAllOf;
+
 export interface PayStatusRequest {
 	[key: string]: any;
 }
@@ -258,9 +265,6 @@ export interface CommonWrapperResult {
 	failure: boolean;
 	success: boolean;
 }
-
-export type CommonWrapperResultOfResponse = CommonWrapperResult &
-	CommonWrapperResultOfResponseAllOf;
 
 export interface PayDtoStatusResultDto {
 	amount: number;
@@ -426,10 +430,6 @@ export interface OrderClearBasketRequest {
 	tableBookingId: number;
 }
 
-export interface OrderRemoveItemRequest {
-	orderItemId: number;
-}
-
 export interface EntitiesMenuItemOptionGroup {
 	menuItem: EntitiesMenuItem;
 	menuItemId: number;
@@ -494,19 +494,6 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
-
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	name?: string | null;
-	parent?: EntitiesMenuSectionParent;
-	parentId?: number | null;
-	subMenuSections?: EntitiesMenuSection[] | null;
-}
-
 export interface EntitiesMenu {
 	id: number;
 	menuSections?: EntitiesMenuSection[] | null;
@@ -514,6 +501,8 @@ export interface EntitiesMenu {
 	outlet: EntitiesOutlet;
 	outletId: number;
 }
+
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
 export type EntitiesMenuItemDivision = EntitiesDivision | null;
 
@@ -533,11 +522,15 @@ export interface EntitiesMenuItem {
 	tags?: EntitiesTag[] | null;
 }
 
-export interface EntitiesRole {
-	description: string;
-	name: string;
-	roleId: number;
-	userRole?: EntitiesUserRole[] | null;
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	name?: string | null;
+	parent?: EntitiesMenuSectionParent;
+	parentId?: number | null;
+	subMenuSections?: EntitiesMenuSection[] | null;
 }
 
 export type EntitiesUserRoleRole = EntitiesRole | null;
@@ -557,6 +550,13 @@ export interface EntitiesUserRole {
 	user: EntitiesUser;
 	userId: string;
 	userRoleId: number;
+}
+
+export interface EntitiesRole {
+	description: string;
+	name: string;
+	roleId: number;
+	userRole?: EntitiesUserRole[] | null;
 }
 
 export interface EntitiesTableBooking {
@@ -585,6 +585,21 @@ export interface EntitiesOrderItem {
 	tableBookingId: number;
 }
 
+export interface TableOrderGetBasketRequest {
+	[key: string]: any;
+}
+
+export interface TableOrderGetBasketBillMenuItemDTO {
+	menuItemId: number;
+	name: string;
+	price: number;
+}
+
+export interface TableOrderGetBasketResponse {
+	orderItems: TableOrderGetBasketBillOrderItemDTO[];
+	total: number;
+}
+
 export interface TableOrderGetBillRequest {
 	[key: string]: any;
 }
@@ -601,6 +616,17 @@ export interface DTOOptionDTO {
 	optionGroupId: number;
 	optionId: number;
 	price: number;
+}
+
+export interface TableOrderGetBasketBillOrderItemDTO {
+	extras?: DTOExtraDTO[] | null;
+	menuItem: TableOrderGetBasketBillMenuItemDTO;
+	menuItemId: number;
+	note?: string | null;
+	options?: DTOOptionDTO[] | null;
+	orderItemId: number;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
 }
 
 export interface TableOrderGetBillBillMenuItemDTO {
@@ -640,6 +666,32 @@ export interface TableOrderGetBillBillOrderItemDTO {
 export interface TableOrderGetBillResponse {
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
 	total: number;
+}
+
+export interface TableOrderRemoveItemRequest {
+	orderItemId: number;
+}
+
+export interface TableOrderRemoveItemResponse {
+	isSuccess: boolean;
+}
+
+export interface TableOrderSendToKitchenRequest {
+	tableBookingId: number;
+}
+
+export interface TableOrderSendToKitchenResponse {
+	isSuccess: boolean;
+}
+
+export interface TableOrderUpdateOrderItemRequest {
+	isComplete: boolean;
+	orderItemId: number;
+	orderItemStatusId: number;
+}
+
+export interface TableOrderUpdateOrderItemResponse {
+	isSuccess: boolean;
 }
 
 export interface RoleAddUserInRoleRequest {

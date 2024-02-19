@@ -19,13 +19,218 @@ import type {
 	InternalErrorResponse,
 	OrderAddItemsRequest,
 	OrderClearBasketRequest,
-	OrderRemoveItemRequest,
+	TableOrderGetBasketParams,
+	TableOrderGetBasketResponse,
 	TableOrderGetBillParams,
 	TableOrderGetBillResponse,
+	TableOrderRemoveItemRequest,
+	TableOrderRemoveItemResponse,
+	TableOrderSendToKitchenRequest,
+	TableOrderSendToKitchenResponse,
+	TableOrderUpdateOrderItemRequest,
+	TableOrderUpdateOrderItemResponse,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
+export const useTableOrderUpdateOrderItemHook = () => {
+	const tableOrderUpdateOrderItem = useCustomClient<TableOrderUpdateOrderItemResponse>();
+
+	return (tableOrderUpdateOrderItemRequest: BodyType<TableOrderUpdateOrderItemRequest>) => {
+		return tableOrderUpdateOrderItem({
+			url: `/order/updateOrderItem`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: tableOrderUpdateOrderItemRequest,
+		});
+	};
+};
+
+export const useTableOrderUpdateOrderItemMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateOrderItemHook>>>,
+		TError,
+		{ data: BodyType<TableOrderUpdateOrderItemRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateOrderItemHook>>>,
+	TError,
+	{ data: BodyType<TableOrderUpdateOrderItemRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const tableOrderUpdateOrderItem = useTableOrderUpdateOrderItemHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateOrderItemHook>>>,
+		{ data: BodyType<TableOrderUpdateOrderItemRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderUpdateOrderItem(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderUpdateOrderItemMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateOrderItemHook>>>
+>;
+export type TableOrderUpdateOrderItemMutationBody = BodyType<TableOrderUpdateOrderItemRequest>;
+export type TableOrderUpdateOrderItemMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createTableOrderUpdateOrderItem = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateOrderItemHook>>>,
+		TError,
+		{ data: BodyType<TableOrderUpdateOrderItemRequest> },
+		TContext
+	>;
+}) => {
+	const mutationOptions = useTableOrderUpdateOrderItemMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const useTableOrderSendToKitchenHook = () => {
+	const tableOrderSendToKitchen = useCustomClient<TableOrderSendToKitchenResponse>();
+
+	return (tableOrderSendToKitchenRequest: BodyType<TableOrderSendToKitchenRequest>) => {
+		return tableOrderSendToKitchen({
+			url: `/order/sendKitchen`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: tableOrderSendToKitchenRequest,
+		});
+	};
+};
+
+export const useTableOrderSendToKitchenMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderSendToKitchenHook>>>,
+		TError,
+		{ data: BodyType<TableOrderSendToKitchenRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderSendToKitchenHook>>>,
+	TError,
+	{ data: BodyType<TableOrderSendToKitchenRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const tableOrderSendToKitchen = useTableOrderSendToKitchenHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderSendToKitchenHook>>>,
+		{ data: BodyType<TableOrderSendToKitchenRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderSendToKitchen(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderSendToKitchenMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderSendToKitchenHook>>>
+>;
+export type TableOrderSendToKitchenMutationBody = BodyType<TableOrderSendToKitchenRequest>;
+export type TableOrderSendToKitchenMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createTableOrderSendToKitchen = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderSendToKitchenHook>>>,
+		TError,
+		{ data: BodyType<TableOrderSendToKitchenRequest> },
+		TContext
+	>;
+}) => {
+	const mutationOptions = useTableOrderSendToKitchenMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const useTableOrderRemoveItemHook = () => {
+	const tableOrderRemoveItem = useCustomClient<TableOrderRemoveItemResponse>();
+
+	return (tableOrderRemoveItemRequest: BodyType<TableOrderRemoveItemRequest>) => {
+		return tableOrderRemoveItem({
+			url: `/order/removeItem`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: tableOrderRemoveItemRequest,
+		});
+	};
+};
+
+export const useTableOrderRemoveItemMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderRemoveItemHook>>>,
+		TError,
+		{ data: BodyType<TableOrderRemoveItemRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderRemoveItemHook>>>,
+	TError,
+	{ data: BodyType<TableOrderRemoveItemRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const tableOrderRemoveItem = useTableOrderRemoveItemHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderRemoveItemHook>>>,
+		{ data: BodyType<TableOrderRemoveItemRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderRemoveItem(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderRemoveItemMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderRemoveItemHook>>>
+>;
+export type TableOrderRemoveItemMutationBody = BodyType<TableOrderRemoveItemRequest>;
+export type TableOrderRemoveItemMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createTableOrderRemoveItem = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderRemoveItemHook>>>,
+		TError,
+		{ data: BodyType<TableOrderRemoveItemRequest> },
+		TContext
+	>;
+}) => {
+	const mutationOptions = useTableOrderRemoveItemMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const useTableOrderGetBillHook = () => {
 	const tableOrderGetBill = useCustomClient<TableOrderGetBillResponse>();
 
@@ -101,72 +306,81 @@ export const createTableOrderGetBill = <
 	return query;
 };
 
-export const useOrderRemoveItemHook = () => {
-	const orderRemoveItem = useCustomClient<EntitiesOrderItem>();
+export const useTableOrderGetBasketHook = () => {
+	const tableOrderGetBasket = useCustomClient<TableOrderGetBasketResponse>();
 
-	return (orderRemoveItemRequest: BodyType<OrderRemoveItemRequest>) => {
-		return orderRemoveItem({
-			url: `/order/removeItem`,
-			method: "DELETE",
-			headers: { "Content-Type": "*/*" },
-			data: orderRemoveItemRequest,
-		});
+	return (params: TableOrderGetBasketParams) => {
+		return tableOrderGetBasket({ url: `/order/getBasket`, method: "GET", params });
 	};
 };
 
-export const useOrderRemoveItemMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<ReturnType<typeof useOrderRemoveItemHook>>>,
+export const getTableOrderGetBasketQueryKey = (params: TableOrderGetBasketParams) => {
+	return [`/order/getBasket`, ...(params ? [params] : [])] as const;
+};
+
+export const useTableOrderGetBasketQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderGetBasketHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: TableOrderGetBasketParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useTableOrderGetBasketHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTableOrderGetBasketQueryKey(params);
+
+	const tableOrderGetBasket = useTableOrderGetBasketHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderGetBasketHook>>>
+	> = () => tableOrderGetBasket(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderGetBasketHook>>>,
 		TError,
-		{ data: BodyType<OrderRemoveItemRequest> },
-		TContext
-	>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<ReturnType<typeof useOrderRemoveItemHook>>>,
-	TError,
-	{ data: BodyType<OrderRemoveItemRequest> },
-	TContext
-> => {
-	const { mutation: mutationOptions } = options ?? {};
-
-	const orderRemoveItem = useOrderRemoveItemHook();
-
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<ReturnType<typeof useOrderRemoveItemHook>>>,
-		{ data: BodyType<OrderRemoveItemRequest> }
-	> = (props) => {
-		const { data } = props ?? {};
-
-		return orderRemoveItem(data);
-	};
-
-	return { mutationFn, ...mutationOptions };
+		TData
+	> & { queryKey: QueryKey };
 };
 
-export type OrderRemoveItemMutationResult = NonNullable<
-	Awaited<ReturnType<ReturnType<typeof useOrderRemoveItemHook>>>
+export type TableOrderGetBasketQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderGetBasketHook>>>
 >;
-export type OrderRemoveItemMutationBody = BodyType<OrderRemoveItemRequest>;
-export type OrderRemoveItemMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderGetBasketQueryError = ErrorType<InternalErrorResponse>;
 
-export const createOrderRemoveItem = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<ReturnType<typeof useOrderRemoveItemHook>>>,
-		TError,
-		{ data: BodyType<OrderRemoveItemRequest> },
-		TContext
-	>;
-}) => {
-	const mutationOptions = useOrderRemoveItemMutationOptions(options);
+export const createTableOrderGetBasket = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderGetBasketHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: TableOrderGetBasketParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useTableOrderGetBasketHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useTableOrderGetBasketQueryOptions(params, options);
 
-	return createMutation(mutationOptions);
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
 };
+
 export const useOrderClearBasketHook = () => {
 	const orderClearBasket = useCustomClient<EntitiesOrderItem>();
 

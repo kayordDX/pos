@@ -4,26 +4,25 @@
 	import autoAnimate from "@formkit/auto-animate";
 	import EmptyBasket from "./EmptyBasket.svelte";
 	import { ChefHatIcon } from "lucide-svelte";
-	import { createOrderAddItems, type OrderAddItemsOrder } from "$lib/api";
+	import { createTableOrderGetBasket, createTableOrderSendToKitchen } from "$lib/api";
 	import { goto } from "$app/navigation";
 
 	import type { PageData } from "./$types";
 	export let data: PageData;
 
+	const query = createTableOrderGetBasket({ tableBookingId: Number(data.bookingId) });
+
 	// $: isBasketEmpty = !$basket || $basket.length == 0;
 
-	const mutation = createOrderAddItems();
+	const refetch = async () => {
+		await $query.refetch();
+	};
+
+	const mutation = createTableOrderSendToKitchen();
 
 	const sendAllToKitchen = async () => {
-		const list: Array<OrderAddItemsOrder> = [
-			{
-				menuItemId: 1,
-				orderId: 1,
-			},
-		];
 		await $mutation.mutateAsync({
 			data: {
-				orders: list,
 				tableBookingId: Number(data.bookingId),
 			},
 		});
@@ -34,10 +33,17 @@
 
 <div class="m-4">
 	<div class="flex flex-col gap-2" use:autoAnimate>
+		{#each $query.data?.orderItems ?? [] as item, i (item.menuItemId)}
+			<BasketItem
+				id={item.orderItemId}
+				name={item.menuItem.name}
+				price={item.menuItem.price}
+				{refetch}
+			/>
+		{/each}
+
 		<!-- {#if $basket}
-			{#each $basket as item, i (item.id)}
-				<BasketItem id={item.id} name={item.name} price={item.price} />
-			{/each}
+
 		{/if} -->
 	</div>
 	<!-- {#if isBasketEmpty}

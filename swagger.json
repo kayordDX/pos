@@ -267,6 +267,159 @@
         }
       }
     },
+    "/order/updateOrderItem": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "operationId": "TableOrderUpdateOrderItem",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableOrderUpdateOrderItemRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderUpdateOrderItemResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/order/sendKitchen": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "operationId": "TableOrderSendToKitchen",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableOrderSendToKitchenRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderSendToKitchenResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/order/removeItem": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "operationId": "TableOrderRemoveItem",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableOrderRemoveItemRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderRemoveItemResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/order/getBill": {
       "get": {
         "tags": [
@@ -308,43 +461,33 @@
         }
       }
     },
-    "/order/removeItem": {
-      "delete": {
+    "/order/getBasket": {
+      "get": {
         "tags": [
           "Order"
         ],
-        "operationId": "OrderRemoveItem",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "*/*": {
-              "schema": {
-                "$ref": "#/components/schemas/OrderRemoveItemRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/OrderRemoveItemRequest"
-              }
+        "operationId": "TableOrderGetBasket",
+        "parameters": [
+          {
+            "name": "tableBookingId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
-          },
-          "required": true,
-          "x-position": 1
-        },
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/EntitiesOrderItem"
+                  "$ref": "#/components/schemas/TableOrderGetBasketResponse"
                 }
               }
             }
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "500": {
             "description": "Server Error",
@@ -356,12 +499,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWTBearerAuth": []
-          }
-        ]
+        }
       }
     },
     "/order/clearBasket": {
@@ -2686,6 +2824,90 @@
           }
         }
       },
+      "TableOrderUpdateOrderItemResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "isSuccess"
+        ],
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TableOrderUpdateOrderItemRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId",
+          "orderItemStatusId",
+          "isComplete"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isComplete": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TableOrderSendToKitchenResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "isSuccess"
+        ],
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TableOrderSendToKitchenRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TableOrderRemoveItemResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "isSuccess"
+        ],
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TableOrderRemoveItemRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "TableOrderGetBillResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -2895,6 +3117,101 @@
         }
       },
       "TableOrderGetBillRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "TableOrderGetBasketResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItems",
+          "total"
+        ],
+        "properties": {
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TableOrderGetBasketBillOrderItemDTO"
+            }
+          },
+          "total": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "TableOrderGetBasketBillOrderItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId",
+          "tableBookingId",
+          "tableBooking",
+          "menuItemId",
+          "menuItem"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBooking": {
+            "$ref": "#/components/schemas/DTOTableBookingDTO"
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/TableOrderGetBasketBillMenuItemDTO"
+          },
+          "options": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOOptionDTO"
+            }
+          },
+          "extras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOExtraDTO"
+            }
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TableOrderGetBasketBillMenuItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "name",
+          "price"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "TableOrderGetBasketRequest": {
         "type": "object",
         "additionalProperties": false
       },
@@ -3523,19 +3840,6 @@
           },
           "option": {
             "$ref": "#/components/schemas/EntitiesOption"
-          }
-        }
-      },
-      "OrderRemoveItemRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItemId"
-        ],
-        "properties": {
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
           }
         }
       },
