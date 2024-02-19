@@ -35,9 +35,7 @@ export const actions: Actions = {
 		try {
 			await client.POST("/user/assignOutlet", {
 				body: { outletId: form.data.outletId },
-				headers: {
-					"content-type": "application/json",
-				},
+				fetch: event.fetch,
 			});
 		} catch (err) {
 			setFlash({ type: "error", message: getError(err).message }, event);
