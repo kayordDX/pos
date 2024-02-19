@@ -4,7 +4,10 @@
 	import { createPayGetLink, createPayStatus } from "$lib/api";
 	export let data: PageData;
 
-	const getLink = createPayGetLink({ amount: 2 }, { query: { enabled: false } });
+	const getLink = createPayGetLink(
+		{ amount: 2, tableBookingId: Number(1) },
+		{ query: { enabled: false } }
+	);
 
 	const getStatus = createPayStatus("0a2653a4-b373-492c-8753-3ab9dff42326", {
 		query: { enabled: false },

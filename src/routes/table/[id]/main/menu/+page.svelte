@@ -86,7 +86,7 @@
 	<div class="flex justify-center w-full">
 		<div class="flex justify-center gap-2 my-2 flex-wrap p-2 w-full" use:autoAnimate>
 			{#each $itemsQuery.data ?? [] as item, i (item.menuItemId)}
-				<MenuItem menuItem={item} />
+				<MenuItem menuItem={item} tableBookingId={Number(data.bookingId)} />
 			{/each}
 		</div>
 	</div>

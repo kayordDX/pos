@@ -4,10 +4,10 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
-	import { basket } from "$lib/stores/basket";
+	// import { basket } from "$lib/stores/basket";
 
 	export let data: LayoutData;
-	$: basketCount = $basket ? $basket.length : 0;
+	$: basketCount = 0;
 
 	$: getValue = () => {
 		if ($page.route.id?.includes("menu")) return "menu";

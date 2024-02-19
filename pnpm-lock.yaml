@@ -55,9 +55,6 @@ devDependencies:
   autoprefixer:
     specifier: ^10.4.17
     version: 10.4.17(postcss@8.4.35)
-  dexie:
-    specifier: 4.0.1-beta.10
-    version: 4.0.1-beta.10
   eslint:
     specifier: ^8.56.0
     version: 8.56.0
@@ -2052,10 +2049,6 @@ packages:
 
   /devalue@4.3.2:
     resolution: {integrity: sha512-KqFl6pOgOW+Y6wJgu80rHpo2/3H07vr8ntR9rkkFIRETewbf5GaYYcakYfiKz89K+sLsuPkQIZaXDMjUObZwWg==}
-    dev: true
-
-  /dexie@4.0.1-beta.10:
-    resolution: {integrity: sha512-nwKaWUcavJlqbs/4PFFrGBenPjywDmZSce+LSip7lgStsOkJxyBHeUYPNot2HuSD6Zq8514USGAIwaUzbwTq8w==}
     dev: true
 
   /didyoumean@1.2.2:

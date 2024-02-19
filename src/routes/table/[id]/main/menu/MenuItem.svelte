@@ -1,15 +1,25 @@
 <script lang="ts">
-	import type { DTOMenuItemDTO } from "$lib/api";
+	import type { DTOMenuItemDTO, OrderAddItemsOrder } from "$lib/api";
 	import { Button, Card, Drawer, Label, Skeleton, Textarea, ToggleGroup } from "@kayord/ui";
 	import { BoldIcon, ItalicIcon } from "lucide-svelte";
-	import { add } from "$lib/stores/basket";
+	// import { add } from "$lib/stores/basket";
+	import { createOrderAddItems } from "$lib/api";
 
 	export let menuItem: DTOMenuItemDTO;
+	export let tableBookingId: number;
 
 	let open = false;
+	let note = "";
 
-	const addToBasket = () => {
-		add(1, menuItem.name, menuItem.price);
+	const mutation = createOrderAddItems();
+
+	const addToBasket = async () => {
+		$mutation.mutateAsync({
+			data: {
+				orders: [{ menuItemId: menuItem.menuItemId, extraIds: [], optionIds: [], note: note }],
+				tableBookingId: tableBookingId,
+			},
+		});
 		open = false;
 	};
 </script>
@@ -33,7 +43,7 @@
 			</Drawer.Header>
 			<div class="flex flex-col gap-2 p-4">
 				<Label>Special instructions</Label>
-				<Textarea />
+				<Textarea bind:value={note} />
 			</div>
 			<Drawer.Footer>
 				<Button on:click={addToBasket}>Add</Button>

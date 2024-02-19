@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Card, Loader } from "@kayord/ui";
 	import type { PageData } from "./$types";
-	import { basket } from "$lib/stores/basket";
+	// import { basket } from "$lib/stores/basket";
 	import { createTableCashUpCreate, createPayGetLink, createPayStatus } from "$lib/api";
 	import { Nfc } from "lucide-svelte";
 	import { goto } from "$app/navigation";
@@ -12,11 +12,11 @@
 
 	$: total = () => {
 		let totalResult = 0;
-		if ($basket) {
-			$basket.map((item) => {
-				totalResult += item.price;
-			});
-		}
+		// if ($basket) {
+		// 	$basket.map((item) => {
+		// 		totalResult += item.price;
+		// 	});
+		// }
 		return totalResult;
 	};
 	// KJ Temp
@@ -35,7 +35,10 @@
 	// });
 	// KJ Temp
 
-	$: getLink = createPayGetLink({ amount: total() }, { query: { enabled: false } });
+	$: getLink = createPayGetLink(
+		{ amount: total(), tableBookingId: Number(data.bookingId) },
+		{ query: { enabled: false } }
+	);
 	let a: HTMLAnchorElement;
 
 	let url: string | undefined = undefined;

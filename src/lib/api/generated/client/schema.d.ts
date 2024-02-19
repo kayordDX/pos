@@ -23,11 +23,14 @@ export interface paths {
   "/role/addUserInRole": {
     post: operations["RoleAddUserInRole"];
   };
-  "/order": {
-    post: operations["TableOrderCreate"];
+  "/order/getBill": {
+    get: operations["TableOrderGetBill"];
   };
-  "/order/table/{tableId}": {
-    get: operations["OrderViewOrders"];
+  "/order/removeItem": {
+    delete: operations["OrderRemoveItem"];
+  };
+  "/order/clearBasket": {
+    delete: operations["OrderClearBasket"];
   };
   "/order/addItems": {
     post: operations["OrderAddItems"];
@@ -103,6 +106,9 @@ export interface paths {
   "/menu": {
     get: operations["MenuList"];
     post: operations["MenuCreate"];
+  };
+  "/dashboard/getOrders": {
+    get: operations["DashboardGetOrders"];
   };
   "/clock/list": {
     get: operations["ClockList"];
@@ -238,30 +244,125 @@ export interface components {
       /** Format: int32 */
       roleId: number;
     };
-    EntitiesTableOrder: {
+    TableOrderGetBillResponse: {
+      orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
+      /** Format: decimal */
+      total: number;
+    };
+    TableOrderGetBillBillOrderItemDTO: {
       /** Format: int32 */
-      tableOrderId: number;
-      /** Format: date-time */
-      orderDate: string;
-      /** Format: int32 */
-      customerId: number;
-      customer: components["schemas"]["EntitiesCustomer"];
+      orderItemId: number;
       /** Format: int32 */
       tableBookingId: number;
+      tableBooking: components["schemas"]["DTOTableBookingDTO"];
       /** Format: int32 */
-      orderItemId?: number | null;
-      orderItem?: components["schemas"]["EntitiesOrderItem"] | null;
+      menuItemId: number;
+      menuItem: components["schemas"]["TableOrderGetBillBillMenuItemDTO"];
+      options?: components["schemas"]["DTOOptionDTO"][] | null;
+      extras?: components["schemas"]["DTOExtraDTO"][] | null;
+      note?: string | null;
     };
+    DTOTableBookingDTO: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      userId: string;
+      user: components["schemas"]["DTOUserDTO"];
+    };
+    DTOUserDTO: {
+      userId: string;
+      email: string;
+      image: string;
+      name: string;
+      isActive: boolean;
+    };
+    TableOrderGetBillBillMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+    };
+    DTOOptionDTO: {
+      /** Format: int32 */
+      optionId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      optionGroupId: number;
+    };
+    DTOExtraDTO: {
+      /** Format: int32 */
+      extraId: number;
+      name: string;
+      /** Format: int32 */
+      positionId: number;
+      /** Format: decimal */
+      price: number;
+    };
+    TableOrderGetBillRequest: Record<string, never>;
     EntitiesOrderItem: {
       /** Format: int32 */
       orderItemId: number;
       /** Format: int32 */
       tableBookingId: number;
+      tableBooking: components["schemas"]["EntitiesTableBooking"];
       /** Format: int32 */
       menuItemId: number;
       menuItem: components["schemas"]["EntitiesMenuItem"];
-      options?: components["schemas"]["EntitiesOption"][] | null;
-      extras?: components["schemas"]["EntitiesExtra"][] | null;
+      /** Format: date-time */
+      orderReceived: string;
+      /** Format: date-time */
+      orderCompleted?: string | null;
+      /** Format: int32 */
+      orderItemStatusId: number;
+      orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
+      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
+      note?: string | null;
+    };
+    EntitiesTableBooking: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      table: components["schemas"]["EntitiesTable"];
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      /** Format: int32 */
+      salesPeriodId: number;
+      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
+      userId: string;
+      user: components["schemas"]["EntitiesUser"];
+    };
+    EntitiesUser: {
+      userId: string;
+      email: string;
+      image: string;
+      name: string;
+      isActive: boolean;
+      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
+    };
+    EntitiesUserRole: {
+      /** Format: int32 */
+      userRoleId: number;
+      userId: string;
+      /** Format: int32 */
+      roleId: number;
+      user: components["schemas"]["EntitiesUser"];
+      role?: components["schemas"]["EntitiesRole"] | null;
+    };
+    EntitiesRole: {
+      /** Format: int32 */
+      roleId: number;
+      name: string;
+      description: string;
+      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
     };
     EntitiesMenuItem: {
       /** Format: int32 */
@@ -278,7 +379,9 @@ export interface components {
       position: number;
       tags?: components["schemas"]["EntitiesTag"][] | null;
       extras?: components["schemas"]["EntitiesExtra"][] | null;
-      division: components["schemas"]["CommonEnumsDivision"];
+      /** Format: int32 */
+      divisionId?: number | null;
+      division?: components["schemas"]["EntitiesDivision"] | null;
       menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
     };
     EntitiesMenuSection: {
@@ -321,9 +424,23 @@ export interface components {
       positionId: number;
       /** Format: decimal */
       price: number;
+      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
     };
-    /** @enum {integer} */
-    CommonEnumsDivision: 0 | 1 | 2;
+    EntitiesOrderItemExtra: {
+      /** Format: int32 */
+      orderItemExtraId: number;
+      /** Format: int32 */
+      orderItemId: number;
+      orderItem: components["schemas"]["EntitiesOrderItem"];
+      /** Format: int32 */
+      extraId: number;
+      extra: components["schemas"]["EntitiesExtra"];
+    };
+    EntitiesDivision: {
+      /** Format: int32 */
+      divisionId: number;
+      divisionName: string;
+    };
     EntitiesMenuItemOptionGroup: {
       /** Format: int32 */
       menuItemId: number;
@@ -352,24 +469,26 @@ export interface components {
       /** Format: int32 */
       optionGroupId: number;
       optionGroup: components["schemas"]["EntitiesOptionGroup"];
+      orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
     };
-    ErrorResponse: {
-      /**
-       * Format: int32
-       * @default 400
-       */
-      statusCode: number;
-      /** @default One or more errors occurred! */
-      message: string;
-      errors: {
-        [key: string]: string[];
-      };
+    EntitiesOrderItemOption: {
+      /** Format: int32 */
+      orderItemOptionId: number;
+      /** Format: int32 */
+      orderItemId: number;
+      orderItem: components["schemas"]["EntitiesOrderItem"];
+      /** Format: int32 */
+      optionId: number;
+      option: components["schemas"]["EntitiesOption"];
     };
-    TableOrderCreateRequest: {
+    OrderRemoveItemRequest: {
+      /** Format: int32 */
+      orderItemId: number;
+    };
+    OrderClearBasketRequest: {
       /** Format: int32 */
       tableBookingId: number;
     };
-    OrderViewOrdersRequest: Record<string, never>;
     OrderAddItemsRequest: {
       orders: components["schemas"]["OrderAddItemsOrder"][];
       /** Format: int32 */
@@ -377,11 +496,10 @@ export interface components {
     };
     OrderAddItemsOrder: {
       /** Format: int32 */
-      orderId: number;
-      /** Format: int32 */
       menuItemId: number;
       optionIds?: number[] | null;
       extraIds?: number[] | null;
+      note: string;
     };
     EntitiesTableCashUp: {
       /** Format: int32 */
@@ -399,46 +517,19 @@ export interface components {
       outletId: number;
       outlet: components["schemas"]["EntitiesOutlet"];
     };
-    EntitiesTableBooking: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["EntitiesTable"];
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: int32 */
-      salesPeriodId: number;
-      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
-      userId: string;
-      user: components["schemas"]["EntitiesUser"];
-    };
-    EntitiesUser: {
-      userId: string;
-      email: string;
-      image: string;
-      name: string;
-      isActive: boolean;
-      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
-    };
-    EntitiesUserRole: {
-      /** Format: int32 */
-      userRoleId: number;
-      userId: string;
-      /** Format: int32 */
-      roleId: number;
-      user: components["schemas"]["EntitiesUser"];
-      role?: components["schemas"]["EntitiesRole"] | null;
-    };
-    EntitiesRole: {
-      /** Format: int32 */
-      roleId: number;
-      name: string;
-      description: string;
-      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
-    };
     TableCashUpViewTableCashUpsRequest: Record<string, never>;
+    ErrorResponse: {
+      /**
+       * Format: int32
+       * @default 400
+       */
+      statusCode: number;
+      /** @default One or more errors occurred! */
+      message: string;
+      errors: {
+        [key: string]: string[];
+      };
+    };
     TableCashUpCreateRequest: {
       /** Format: int32 */
       tableBookingId: number;
@@ -539,8 +630,22 @@ export interface components {
     });
     PayDtoStatusResultDto: {
       qrCodeState: string;
+      transactionId: string;
+      merchantTransactionReference: string;
+      userId: string;
+      status: string;
+      disposition: string;
       /** Format: decimal */
       amount: number;
+      currency: string;
+      type: string;
+      /** Format: int32 */
+      responseCode: number;
+      authorisationCode: string;
+      /** Format: date-time */
+      createdAt: string;
+      /** Format: date-time */
+      updatedAt: string;
       paymentReference: string;
       currencyCode: string;
     };
@@ -626,7 +731,8 @@ export interface components {
       position: number;
       tags?: components["schemas"]["EntitiesTag"][] | null;
       extras?: components["schemas"]["EntitiesExtra"][] | null;
-      division: components["schemas"]["CommonEnumsDivision"];
+      /** Format: int32 */
+      divisionId: number;
       menuItemOptionGroups: components["schemas"]["DTOMenuItemOptionGroupDTO"][];
     };
     DTOMenuItemOptionGroupDTO: {
@@ -646,15 +752,6 @@ export interface components {
       maxSelections: number;
       options: components["schemas"]["DTOOptionDTO"][];
     };
-    DTOOptionDTO: {
-      /** Format: int32 */
-      optionId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      optionGroupId: number;
-    };
     MenuGetItemRequest: Record<string, never>;
     MenuListRequest: Record<string, never>;
     MenuGetRequest: Record<string, never>;
@@ -662,7 +759,24 @@ export interface components {
       /** Format: int32 */
       outletId: number;
       name: string;
-      division: components["schemas"]["CommonEnumsDivision"];
+    };
+    DTOOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      tableBooking: components["schemas"]["DTOTableBookingDTO"];
+      /** Format: int32 */
+      menuItemId: number;
+      /** Format: date-time */
+      orderReceived: string;
+      /** Format: date-time */
+      orderCompleted?: string | null;
+      /** Format: int32 */
+      orderItemStatusId: number;
+      options?: components["schemas"]["DTOOptionDTO"][] | null;
+      extras?: components["schemas"]["DTOExtraDTO"][] | null;
+      note?: string | null;
     };
     ClockListRequest: Record<string, never>;
     EntitiesClock: {
@@ -840,23 +954,17 @@ export interface operations {
       };
     };
   };
-  TableOrderCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableOrderCreateRequest"];
+  TableOrderGetBill: {
+    parameters: {
+      query: {
+        tableBookingId: number;
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["EntitiesTableOrder"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
+          "application/json": components["schemas"]["TableOrderGetBillResponse"];
         };
       };
       /** @description Server Error */
@@ -867,21 +975,49 @@ export interface operations {
       };
     };
   };
-  OrderViewOrders: {
-    parameters: {
-      query: {
-        tableBookingId: number;
-      };
-      path: {
-        tableId: string | null;
+  OrderRemoveItem: {
+    requestBody: {
+      content: {
+        "*/*": components["schemas"]["OrderRemoveItemRequest"];
+        "application/json": components["schemas"]["OrderRemoveItemRequest"];
       };
     };
     responses: {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["EntitiesTableOrder"][];
+          "application/json": components["schemas"]["EntitiesOrderItem"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  OrderClearBasket: {
+    requestBody: {
+      content: {
+        "*/*": components["schemas"]["OrderClearBasketRequest"];
+        "application/json": components["schemas"]["OrderClearBasketRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["EntitiesOrderItem"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -1300,6 +1436,10 @@ export interface operations {
           "application/json": components["schemas"]["CommonWrapperResultOfStatusResultDto"];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -1312,6 +1452,7 @@ export interface operations {
     parameters: {
       query: {
         amount: number;
+        tableBookingId: number;
       };
     };
     responses: {
@@ -1597,6 +1738,22 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["EntitiesMenu"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  DashboardGetOrders: {
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["DTOOrderItemDTO"][];
         };
       };
       /** @description Server Error */
