@@ -12,29 +12,29 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { InternalErrorResponse, KitchenGetOrdersResponse } from "./api.schemas";
+import type { InternalErrorResponse, TableOrderKitchenResponse } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType } from "../mutator/useCustomClient";
 
-export const useKitchenGetOrdersHook = () => {
-	const kitchenGetOrders = useCustomClient<KitchenGetOrdersResponse[]>();
+export const useTableOrderKitchenHook = () => {
+	const tableOrderKitchen = useCustomClient<TableOrderKitchenResponse[]>();
 
 	return () => {
-		return kitchenGetOrders({ url: `/kitchen/getOrders`, method: "GET" });
+		return tableOrderKitchen({ url: `/kitchen/getOrders`, method: "GET" });
 	};
 };
 
-export const getKitchenGetOrdersQueryKey = () => {
+export const getTableOrderKitchenQueryKey = () => {
 	return [`/kitchen/getOrders`] as const;
 };
 
-export const useKitchenGetOrdersQueryOptions = <
-	TData = Awaited<ReturnType<ReturnType<typeof useKitchenGetOrdersHook>>>,
+export const useTableOrderKitchenQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(options?: {
 	query?: Partial<
 		CreateQueryOptions<
-			Awaited<ReturnType<ReturnType<typeof useKitchenGetOrdersHook>>>,
+			Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>,
 			TError,
 			TData
 		>
@@ -42,39 +42,39 @@ export const useKitchenGetOrdersQueryOptions = <
 }) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getKitchenGetOrdersQueryKey();
+	const queryKey = queryOptions?.queryKey ?? getTableOrderKitchenQueryKey();
 
-	const kitchenGetOrders = useKitchenGetOrdersHook();
+	const tableOrderKitchen = useTableOrderKitchenHook();
 
 	const queryFn: QueryFunction<
-		Awaited<ReturnType<ReturnType<typeof useKitchenGetOrdersHook>>>
-	> = () => kitchenGetOrders();
+		Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>
+	> = () => tableOrderKitchen();
 
 	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<ReturnType<typeof useKitchenGetOrdersHook>>>,
+		Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>,
 		TError,
 		TData
 	> & { queryKey: QueryKey };
 };
 
-export type KitchenGetOrdersQueryResult = NonNullable<
-	Awaited<ReturnType<ReturnType<typeof useKitchenGetOrdersHook>>>
+export type TableOrderKitchenQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>
 >;
-export type KitchenGetOrdersQueryError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderKitchenQueryError = ErrorType<void | InternalErrorResponse>;
 
-export const createKitchenGetOrders = <
-	TData = Awaited<ReturnType<ReturnType<typeof useKitchenGetOrdersHook>>>,
+export const createTableOrderKitchen = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(options?: {
 	query?: Partial<
 		CreateQueryOptions<
-			Awaited<ReturnType<ReturnType<typeof useKitchenGetOrdersHook>>>,
+			Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>,
 			TError,
 			TData
 		>
 	>;
 }): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
-	const queryOptions = useKitchenGetOrdersQueryOptions(options);
+	const queryOptions = useTableOrderKitchenQueryOptions(options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;

@@ -23,9 +23,6 @@ export interface paths {
   "/role/addUserInRole": {
     post: operations["RoleAddUserInRole"];
   };
-  "/kitchen/getOrders": {
-    get: operations["KitchenGetOrders"];
-  };
   "/order/updateOrderItem": {
     post: operations["TableOrderUpdateOrderItem"];
   };
@@ -34,6 +31,9 @@ export interface paths {
   };
   "/order/removeItem": {
     post: operations["TableOrderRemoveItem"];
+  };
+  "/kitchen/getOrders": {
+    get: operations["TableOrderKitchen"];
   };
   "/order/getBill": {
     get: operations["TableOrderGetBill"];
@@ -253,68 +253,6 @@ export interface components {
       /** Format: int32 */
       roleId: number;
     };
-    KitchenGetOrdersResponse: {
-      /** Format: int32 */
-      tableBookingId: number;
-      tableName: string;
-      orderItems: components["schemas"]["KitchenGetOrdersBillOrderItemDTO"][];
-    };
-    KitchenGetOrdersBillOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      /** Format: int32 */
-      tableId: number;
-      table?: components["schemas"]["KitchenGetOrdersTableDTO"] | null;
-      tableBooking: components["schemas"]["KitchenGetOrdersTableBookingDTO"];
-      /** Format: int32 */
-      menuItemId: number;
-      menuItem: components["schemas"]["KitchenGetOrdersBillMenuItemDTO"];
-      options?: components["schemas"]["DTOOptionDTO"][] | null;
-      extras?: components["schemas"]["DTOExtraDTO"][] | null;
-      /** Format: int32 */
-      divisionId: number;
-      note?: string | null;
-    };
-    KitchenGetOrdersTableDTO: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-    };
-    KitchenGetOrdersTableBookingDTO: {
-      /** Format: int32 */
-      tableBookingId: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["KitchenGetOrdersTableDTO"];
-      tableOrders?: components["schemas"]["KitchenGetOrdersBillOrderItemDTO"][] | null;
-    };
-    KitchenGetOrdersBillMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-    };
-    DTOOptionDTO: {
-      /** Format: int32 */
-      optionId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      optionGroupId: number;
-    };
-    DTOExtraDTO: {
-      /** Format: int32 */
-      extraId: number;
-      name: string;
-      /** Format: int32 */
-      positionId: number;
-      /** Format: decimal */
-      price: number;
-    };
     TableOrderUpdateOrderItemResponse: {
       isSuccess: boolean;
     };
@@ -338,6 +276,72 @@ export interface components {
     TableOrderRemoveItemRequest: {
       /** Format: int32 */
       orderItemId: number;
+    };
+    TableOrderKitchenResponse: {
+      /** Format: int32 */
+      tableBookingId: number;
+      tableName: string;
+      orderItems: components["schemas"]["TableOrderKitchenBillOrderItemDTO"][];
+    };
+    TableOrderKitchenBillOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      /** Format: int32 */
+      tableId: number;
+      table?: components["schemas"]["TableOrderKitchenTableDTO"] | null;
+      tableBooking: components["schemas"]["TableOrderKitchenTableBookingDTO"];
+      /** Format: int32 */
+      menuItemId: number;
+      menuItem: components["schemas"]["TableOrderKitchenBillMenuItemDTO"];
+      options?: components["schemas"]["DTOOptionDTO"][] | null;
+      extras?: components["schemas"]["DTOExtraDTO"][] | null;
+      /** Format: int32 */
+      divisionId: number;
+      note?: string | null;
+    };
+    TableOrderKitchenTableDTO: {
+      /** Format: int32 */
+      tableId: number;
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+      section?: components["schemas"]["TableOrderKitchenSectionDTO"] | null;
+    };
+    TableOrderKitchenSectionDTO: {
+      name: string;
+    };
+    TableOrderKitchenTableBookingDTO: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      table: components["schemas"]["TableOrderKitchenTableDTO"];
+      tableOrders?: components["schemas"]["TableOrderKitchenBillOrderItemDTO"][] | null;
+    };
+    TableOrderKitchenBillMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+    };
+    DTOOptionDTO: {
+      /** Format: int32 */
+      optionId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      optionGroupId: number;
+    };
+    DTOExtraDTO: {
+      /** Format: int32 */
+      extraId: number;
+      name: string;
+      /** Format: int32 */
+      positionId: number;
+      /** Format: decimal */
+      price: number;
     };
     TableOrderGetBillResponse: {
       orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
@@ -1035,26 +1039,6 @@ export interface operations {
       };
     };
   };
-  KitchenGetOrders: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["KitchenGetOrdersResponse"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
   TableOrderUpdateOrderItem: {
     requestBody: {
       content: {
@@ -1116,6 +1100,26 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["TableOrderRemoveItemResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  TableOrderKitchen: {
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableOrderKitchenResponse"][];
         };
       };
       /** @description Unauthorized */

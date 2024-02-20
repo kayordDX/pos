@@ -417,6 +417,14 @@ export interface OrderClearBasketRequest {
 	tableBookingId: number;
 }
 
+export interface EntitiesOrderItemOption {
+	option: EntitiesOption;
+	optionId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemId: number;
+	orderItemOptionId: number;
+}
+
 export interface EntitiesMenuItemOptionGroup {
 	menuItem: EntitiesMenuItem;
 	menuItemId: number;
@@ -440,14 +448,6 @@ export interface EntitiesOption {
 	optionId: number;
 	orderItemOptions?: EntitiesOrderItemOption[] | null;
 	price: number;
-}
-
-export interface EntitiesOrderItemOption {
-	option: EntitiesOption;
-	optionId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemId: number;
-	orderItemOptionId: number;
 }
 
 export interface EntitiesDivision {
@@ -630,32 +630,6 @@ export interface TableOrderGetBillResponse {
 	total: number;
 }
 
-export interface TableOrderRemoveItemRequest {
-	orderItemId: number;
-}
-
-export interface TableOrderRemoveItemResponse {
-	isSuccess: boolean;
-}
-
-export interface TableOrderSendToKitchenRequest {
-	tableBookingId: number;
-}
-
-export interface TableOrderSendToKitchenResponse {
-	isSuccess: boolean;
-}
-
-export interface TableOrderUpdateOrderItemRequest {
-	isComplete: boolean;
-	orderItemId: number;
-	orderItemStatusId: number;
-}
-
-export interface TableOrderUpdateOrderItemResponse {
-	isSuccess: boolean;
-}
-
 export interface DTOExtraDTO {
 	extraId: number;
 	name: string;
@@ -681,44 +655,77 @@ export interface TableOrderGetBillBillOrderItemDTO {
 	tableBookingId: number;
 }
 
-export interface KitchenGetOrdersBillMenuItemDTO {
+export interface TableOrderKitchenBillMenuItemDTO {
 	menuItemId: number;
 	name: string;
 }
 
-export interface KitchenGetOrdersTableDTO {
+export interface TableOrderKitchenTableBookingDTO {
+	id: number;
+	table: TableOrderKitchenTableDTO;
+	tableId: number;
+	tableOrders?: TableOrderKitchenBillOrderItemDTO[] | null;
+}
+
+export interface TableOrderKitchenSectionDTO {
+	name: string;
+}
+
+export type TableOrderKitchenTableDTOSection = TableOrderKitchenSectionDTO | null;
+
+export interface TableOrderKitchenTableDTO {
 	name: string;
 	outletId: number;
+	section?: TableOrderKitchenTableDTOSection;
 	tableId: number;
 }
 
-export type KitchenGetOrdersBillOrderItemDTOTable = KitchenGetOrdersTableDTO | null;
+export type TableOrderKitchenBillOrderItemDTOTable = TableOrderKitchenTableDTO | null;
 
-export interface KitchenGetOrdersBillOrderItemDTO {
+export interface TableOrderKitchenBillOrderItemDTO {
 	divisionId: number;
 	extras?: DTOExtraDTO[] | null;
-	menuItem: KitchenGetOrdersBillMenuItemDTO;
+	menuItem: TableOrderKitchenBillMenuItemDTO;
 	menuItemId: number;
 	note?: string | null;
 	options?: DTOOptionDTO[] | null;
 	orderItemId: number;
-	table?: KitchenGetOrdersBillOrderItemDTOTable;
-	tableBooking: KitchenGetOrdersTableBookingDTO;
+	table?: TableOrderKitchenBillOrderItemDTOTable;
+	tableBooking: TableOrderKitchenTableBookingDTO;
 	tableBookingId: number;
 	tableId: number;
 }
 
-export interface KitchenGetOrdersTableBookingDTO {
-	table: KitchenGetOrdersTableDTO;
-	tableBookingId: number;
-	tableId: number;
-	tableOrders?: KitchenGetOrdersBillOrderItemDTO[] | null;
-}
-
-export interface KitchenGetOrdersResponse {
-	orderItems: KitchenGetOrdersBillOrderItemDTO[];
+export interface TableOrderKitchenResponse {
+	orderItems: TableOrderKitchenBillOrderItemDTO[];
 	tableBookingId: number;
 	tableName: string;
+}
+
+export interface TableOrderRemoveItemRequest {
+	orderItemId: number;
+}
+
+export interface TableOrderRemoveItemResponse {
+	isSuccess: boolean;
+}
+
+export interface TableOrderSendToKitchenRequest {
+	tableBookingId: number;
+}
+
+export interface TableOrderSendToKitchenResponse {
+	isSuccess: boolean;
+}
+
+export interface TableOrderUpdateOrderItemRequest {
+	isComplete: boolean;
+	orderItemId: number;
+	orderItemStatusId: number;
+}
+
+export interface TableOrderUpdateOrderItemResponse {
+	isSuccess: boolean;
 }
 
 export interface RoleAddUserInRoleRequest {

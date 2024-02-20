@@ -5,11 +5,11 @@
 	import { BellElectricIcon } from "lucide-svelte";
 	let open = false;
 
-	import { createKitchenGetOrders } from "$lib/api";
+	import { createTableOrderKitchen } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { stringify } from "qs";
 	import { getInitials } from "$lib/util";
-	const query = createKitchenGetOrders();
+	const query = createTableOrderKitchen();
 
 	console.log($query.data);
 </script>
