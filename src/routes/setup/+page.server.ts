@@ -1,5 +1,6 @@
 import type { PageServerLoad, Actions } from "./$types";
 import { superValidate } from "sveltekit-superforms/server";
+import { zod } from "sveltekit-superforms/adapters";
 import { outletSchema } from "./schema";
 import { fail } from "@sveltejs/kit";
 import { redirect, setFlash } from "sveltekit-flash-message/server";
@@ -10,7 +11,7 @@ export const load: PageServerLoad = async ({ fetch, parent }) => {
 	const data = await parent();
 	const outlet = { outletId: data.status?.outletId ?? 0 };
 	const result = await client.GET("/outlet", { fetch });
-	const form = await superValidate(outlet, outletSchema);
+	const form = await superValidate(outlet, zod(outletSchema));
 
 	return {
 		form,
@@ -24,7 +25,7 @@ export const load: PageServerLoad = async ({ fetch, parent }) => {
 
 export const actions: Actions = {
 	default: async (event) => {
-		const form = await superValidate(event, outletSchema);
+		const form = await superValidate(event, zod(outletSchema));
 
 		if (!form.valid) {
 			return fail(400, {

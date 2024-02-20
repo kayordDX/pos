@@ -79,19 +79,6 @@ export interface UserToken {
 
 export type { OutletSchema, Outlet };
 
-export interface ClockUser {
-	id: number;
-	name: string;
-	staffType: StaffType;
-	outletId: number;
-}
-
-export enum StaffType {
-	Manager = 1,
-	Waiter,
-	Chef,
-}
-
 export type ApiError = ErrorResponse | InternalErrorResponse | Error | unknown | void;
 
 export const getError = (inputError: ApiError): ErrorGeneric => {

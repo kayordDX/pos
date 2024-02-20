@@ -22,8 +22,7 @@
 					<Drawer.Description>1 Waffles</Drawer.Description>
 				</Drawer.Header>
 				<Drawer.Footer>
-					<Button>Ready</Button>
-					<Drawer.Close>Cancel</Drawer.Close>
+					<Drawer.Close><Button class="w-full">Ready</Button></Drawer.Close>
 				</Drawer.Footer>
 			</Drawer.Content>
 		</Drawer.Root>

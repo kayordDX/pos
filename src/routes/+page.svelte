@@ -11,6 +11,6 @@
 		<Button href="/manager">Manager</Button>
 	</div>
 	<div class="flex flex-col">
-		<Button href="/chef">Chef</Button>
+		<Button href="/kitchen">Kitchen</Button>
 	</div>
 </div>

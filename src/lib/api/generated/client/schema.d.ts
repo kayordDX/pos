@@ -23,6 +23,9 @@ export interface paths {
   "/role/addUserInRole": {
     post: operations["RoleAddUserInRole"];
   };
+  "/kitchen/getOrders": {
+    get: operations["KitchenGetOrders"];
+  };
   "/order/updateOrderItem": {
     post: operations["TableOrderUpdateOrderItem"];
   };
@@ -115,9 +118,6 @@ export interface paths {
   "/menu": {
     get: operations["MenuList"];
     post: operations["MenuCreate"];
-  };
-  "/dashboard/getOrders": {
-    get: operations["DashboardGetOrders"];
   };
   "/clock/list": {
     get: operations["ClockList"];
@@ -253,6 +253,68 @@ export interface components {
       /** Format: int32 */
       roleId: number;
     };
+    KitchenGetOrdersResponse: {
+      /** Format: int32 */
+      tableBookingId: number;
+      tableName: string;
+      orderItems: components["schemas"]["KitchenGetOrdersBillOrderItemDTO"][];
+    };
+    KitchenGetOrdersBillOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      /** Format: int32 */
+      tableId: number;
+      table?: components["schemas"]["KitchenGetOrdersTableDTO"] | null;
+      tableBooking: components["schemas"]["KitchenGetOrdersTableBookingDTO"];
+      /** Format: int32 */
+      menuItemId: number;
+      menuItem: components["schemas"]["KitchenGetOrdersBillMenuItemDTO"];
+      options?: components["schemas"]["DTOOptionDTO"][] | null;
+      extras?: components["schemas"]["DTOExtraDTO"][] | null;
+      /** Format: int32 */
+      divisionId: number;
+      note?: string | null;
+    };
+    KitchenGetOrdersTableDTO: {
+      /** Format: int32 */
+      tableId: number;
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+    };
+    KitchenGetOrdersTableBookingDTO: {
+      /** Format: int32 */
+      tableBookingId: number;
+      /** Format: int32 */
+      tableId: number;
+      table: components["schemas"]["KitchenGetOrdersTableDTO"];
+      tableOrders?: components["schemas"]["KitchenGetOrdersBillOrderItemDTO"][] | null;
+    };
+    KitchenGetOrdersBillMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+    };
+    DTOOptionDTO: {
+      /** Format: int32 */
+      optionId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      optionGroupId: number;
+    };
+    DTOExtraDTO: {
+      /** Format: int32 */
+      extraId: number;
+      name: string;
+      /** Format: int32 */
+      positionId: number;
+      /** Format: decimal */
+      price: number;
+    };
     TableOrderUpdateOrderItemResponse: {
       isSuccess: boolean;
     };
@@ -317,24 +379,6 @@ export interface components {
       /** Format: int32 */
       menuItemId: number;
       name: string;
-      /** Format: decimal */
-      price: number;
-    };
-    DTOOptionDTO: {
-      /** Format: int32 */
-      optionId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      optionGroupId: number;
-    };
-    DTOExtraDTO: {
-      /** Format: int32 */
-      extraId: number;
-      name: string;
-      /** Format: int32 */
-      positionId: number;
       /** Format: decimal */
       price: number;
     };
@@ -815,24 +859,6 @@ export interface components {
       outletId: number;
       name: string;
     };
-    DTOOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["DTOTableBookingDTO"];
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: date-time */
-      orderReceived: string;
-      /** Format: date-time */
-      orderCompleted?: string | null;
-      /** Format: int32 */
-      orderItemStatusId: number;
-      options?: components["schemas"]["DTOOptionDTO"][] | null;
-      extras?: components["schemas"]["DTOExtraDTO"][] | null;
-      note?: string | null;
-    };
     ClockListRequest: Record<string, never>;
     EntitiesClock: {
       /** Format: int32 */
@@ -1000,6 +1026,26 @@ export interface operations {
           "text/plain": unknown;
           "application/json": unknown;
         };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  KitchenGetOrders: {
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["KitchenGetOrdersResponse"][];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -1863,22 +1909,6 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["EntitiesMenu"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  DashboardGetOrders: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["DTOOrderItemDTO"][];
         };
       };
       /** @description Server Error */

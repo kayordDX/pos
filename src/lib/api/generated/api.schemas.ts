@@ -118,19 +118,6 @@ export interface ClockListRequest {
 	[key: string]: any;
 }
 
-export interface DTOOrderItemDTO {
-	extras?: DTOExtraDTO[] | null;
-	menuItemId: number;
-	note?: string | null;
-	options?: DTOOptionDTO[] | null;
-	orderCompleted?: string | null;
-	orderItemId: number;
-	orderItemStatusId: number;
-	orderReceived: string;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
-}
-
 export interface MenuCreateRequest {
 	name: string;
 	outletId: number;
@@ -494,6 +481,19 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
+
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	name?: string | null;
+	parent?: EntitiesMenuSectionParent;
+	parentId?: number | null;
+	subMenuSections?: EntitiesMenuSection[] | null;
+}
+
 export interface EntitiesMenu {
 	id: number;
 	menuSections?: EntitiesMenuSection[] | null;
@@ -501,8 +501,6 @@ export interface EntitiesMenu {
 	outlet: EntitiesOutlet;
 	outletId: number;
 }
-
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
 export type EntitiesMenuItemDivision = EntitiesDivision | null;
 
@@ -520,17 +518,6 @@ export interface EntitiesMenuItem {
 	price: number;
 	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
 	tags?: EntitiesTag[] | null;
-}
-
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	name?: string | null;
-	parent?: EntitiesMenuSectionParent;
-	parentId?: number | null;
-	subMenuSections?: EntitiesMenuSection[] | null;
 }
 
 export type EntitiesUserRoleRole = EntitiesRole | null;
@@ -595,29 +582,6 @@ export interface TableOrderGetBasketBillMenuItemDTO {
 	price: number;
 }
 
-export interface TableOrderGetBasketResponse {
-	orderItems: TableOrderGetBasketBillOrderItemDTO[];
-	total: number;
-}
-
-export interface TableOrderGetBillRequest {
-	[key: string]: any;
-}
-
-export interface DTOExtraDTO {
-	extraId: number;
-	name: string;
-	positionId: number;
-	price: number;
-}
-
-export interface DTOOptionDTO {
-	name: string;
-	optionGroupId: number;
-	optionId: number;
-	price: number;
-}
-
 export interface TableOrderGetBasketBillOrderItemDTO {
 	extras?: DTOExtraDTO[] | null;
 	menuItem: TableOrderGetBasketBillMenuItemDTO;
@@ -627,6 +591,15 @@ export interface TableOrderGetBasketBillOrderItemDTO {
 	orderItemId: number;
 	tableBooking: DTOTableBookingDTO;
 	tableBookingId: number;
+}
+
+export interface TableOrderGetBasketResponse {
+	orderItems: TableOrderGetBasketBillOrderItemDTO[];
+	total: number;
+}
+
+export interface TableOrderGetBillRequest {
+	[key: string]: any;
 }
 
 export interface TableOrderGetBillBillMenuItemDTO {
@@ -650,17 +623,6 @@ export interface DTOTableBookingDTO {
 	tableId: number;
 	user: DTOUserDTO;
 	userId: string;
-}
-
-export interface TableOrderGetBillBillOrderItemDTO {
-	extras?: DTOExtraDTO[] | null;
-	menuItem: TableOrderGetBillBillMenuItemDTO;
-	menuItemId: number;
-	note?: string | null;
-	options?: DTOOptionDTO[] | null;
-	orderItemId: number;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
 }
 
 export interface TableOrderGetBillResponse {
@@ -692,6 +654,71 @@ export interface TableOrderUpdateOrderItemRequest {
 
 export interface TableOrderUpdateOrderItemResponse {
 	isSuccess: boolean;
+}
+
+export interface DTOExtraDTO {
+	extraId: number;
+	name: string;
+	positionId: number;
+	price: number;
+}
+
+export interface DTOOptionDTO {
+	name: string;
+	optionGroupId: number;
+	optionId: number;
+	price: number;
+}
+
+export interface TableOrderGetBillBillOrderItemDTO {
+	extras?: DTOExtraDTO[] | null;
+	menuItem: TableOrderGetBillBillMenuItemDTO;
+	menuItemId: number;
+	note?: string | null;
+	options?: DTOOptionDTO[] | null;
+	orderItemId: number;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
+}
+
+export interface KitchenGetOrdersBillMenuItemDTO {
+	menuItemId: number;
+	name: string;
+}
+
+export interface KitchenGetOrdersTableDTO {
+	name: string;
+	outletId: number;
+	tableId: number;
+}
+
+export type KitchenGetOrdersBillOrderItemDTOTable = KitchenGetOrdersTableDTO | null;
+
+export interface KitchenGetOrdersBillOrderItemDTO {
+	divisionId: number;
+	extras?: DTOExtraDTO[] | null;
+	menuItem: KitchenGetOrdersBillMenuItemDTO;
+	menuItemId: number;
+	note?: string | null;
+	options?: DTOOptionDTO[] | null;
+	orderItemId: number;
+	table?: KitchenGetOrdersBillOrderItemDTOTable;
+	tableBooking: KitchenGetOrdersTableBookingDTO;
+	tableBookingId: number;
+	tableId: number;
+}
+
+export interface KitchenGetOrdersTableBookingDTO {
+	table: KitchenGetOrdersTableDTO;
+	tableBookingId: number;
+	tableId: number;
+	tableOrders?: KitchenGetOrdersBillOrderItemDTO[] | null;
+}
+
+export interface KitchenGetOrdersResponse {
+	orderItems: KitchenGetOrdersBillOrderItemDTO[];
+	tableBookingId: number;
+	tableName: string;
 }
 
 export interface RoleAddUserInRoleRequest {

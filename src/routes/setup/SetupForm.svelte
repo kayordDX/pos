@@ -1,41 +1,49 @@
 <script lang="ts">
-	import { Button, Form, Loader } from "@kayord/ui";
+	import { Button, Form, Loader, Select } from "@kayord/ui";
 	import { outletSchema, type OutletSchema } from "./schema";
-	import type { SuperValidated } from "sveltekit-superforms";
+	import { superForm, type SuperValidated } from "sveltekit-superforms/client";
 	import type { PageData } from "./$types";
 	export let data: PageData;
-	// import { createOutletList } from "$lib/api";
 	import Error from "$lib/components/Error.svelte";
+	import { zod } from "sveltekit-superforms/adapters";
+	import SuperDebug from "sveltekit-superforms";
 
-	// const query = createOutletList();
-
-	export let form: SuperValidated<OutletSchema>;
+	const form = superForm(data.form, {
+		validators: zod(outletSchema),
+	});
+	const { form: formData, enhance } = form;
 </script>
 
-<Form.Root method="POST" {form} schema={outletSchema} let:config>
+<form method="POST" use:enhance>
 	{#if data.outlets.error}
 		<Error message={data.outlets?.error.reason} />
 	{:else}
-		<Form.Field {config} name="outletId" let:attrs>
-			<Form.Item>
-				{@const { value } = attrs.input}
+		<Form.Field {form} name="outletId">
+			<Form.Control let:attrs>
 				<Form.Label>Outlet</Form.Label>
-				<Form.Select
-					selected={{ value, label: data.outlets.data?.find((i) => i.id === value)?.name }}
+				<Select.Root
+					selected={{
+						value: $formData.outletId,
+						label: data.outlets.data?.find((i) => i.id === $formData.outletId)?.name,
+					}}
 				>
-					<Form.SelectTrigger placeholder="Select outlet to link to device" />
-					<Form.SelectContent>
+					<Select.Trigger {...attrs}>
+						<Select.Value placeholder="Select outlet to link to device" />
+					</Select.Trigger>
+					<Select.Content>
 						{#each data.outlets.data ?? [] as outlet}
-							<Form.SelectItem value={outlet.id}>{outlet.name}</Form.SelectItem>
+							<Select.Item value={outlet.id}>{outlet.name}</Select.Item>
 						{/each}
-					</Form.SelectContent>
-				</Form.Select>
-				<Form.Description>The current outlet this device is linked to.</Form.Description>
-				<Form.Validation />
-			</Form.Item>
+					</Select.Content>
+				</Select.Root>
+				<input hidden bind:value={$formData.outletId} name={attrs.name} />
+			</Form.Control>
+			<Form.Description>The current outlet this device is linked to.</Form.Description>
+			<Form.FieldErrors />
 		</Form.Field>
 	{/if}
 
 	<Form.Button type="submit">Submit</Form.Button>
 	<Button variant="link" href="/">Cancel</Button>
-</Form.Root>
+	<SuperDebug data={$formData} />
+</form>
