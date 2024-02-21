@@ -39,20 +39,24 @@ const filterFetch: Handle = async ({ event, resolve }) => {
 
 const authorization: Handle = async ({ event, resolve }) => {
 	const session = await event.locals.auth();
-	if (!event.url.pathname.startsWith("/login")) {
-		if (!session) {
-			// throw redirect(303, "/login");
+	if (event.url.pathname != "/") {
+		if (!event.url.pathname.startsWith("/login")) {
+			if (!session) {
+				throw redirect(303, "/login");
+			}
 		}
-	} else {
-		if (session) {
-			throw redirect(303, "/");
-		}
+		// else {
+		// 	if (session) {
+		// 		throw redirect(303, "/");
+		// 	}
+		// }
 	}
 	return resolve(event);
 };
 
 async function refreshAccessToken(token: JWT) {
 	try {
+		console.log("refreshing access token");
 		const url = `https://oauth2.googleapis.com/token?client_id=${env.GOOGLE_ID}&client_secret=${env.GOOGLE_SECRET}&grant_type=refresh_token&refresh_token=${token.refreshToken}`;
 		const response = await fetch(url, {
 			headers: {
@@ -112,17 +116,6 @@ const authentication: Handle = async ({ event, resolve }) => {
 						fetch: event.fetch,
 					});
 
-					console.log("body", {
-						email: profile.email ?? "",
-						firstName: profile.given_name ?? "",
-						image: profile.picture,
-						lastName: profile.family_name ?? "",
-						name: profile.name ?? "",
-						userId: profile.sub ?? "",
-					});
-					console.log("roleRequest", roleRequest);
-					console.log("roleRequest", roleRequest.data);
-
 					const t = account?.id_token ?? "";
 					const decoded = jwtDecode(t);
 					return {
@@ -135,8 +128,10 @@ const authentication: Handle = async ({ event, resolve }) => {
 				}
 				token.token ??= account?.id_token;
 
+				const expiresSoon = new Date();
+				expiresSoon.setMinutes(expiresSoon.getMinutes() + 5);
 				// Return previous token if the access token has not expired yet
-				if (Date.now() < (token.tokenExpires as number)) {
+				if (expiresSoon.valueOf() < (token.tokenExpires as number)) {
 					return token;
 				}
 				// Access token has expired, try to update it

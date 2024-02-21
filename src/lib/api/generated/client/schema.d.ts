@@ -277,29 +277,17 @@ export interface components {
       /** Format: int32 */
       orderItemId: number;
     };
-    TableOrderKitchenResponse: {
+    TableOrderKitchenTableBookingDTO: {
       /** Format: int32 */
-      tableBookingId: number;
-      tableName: string;
-      orderItems: components["schemas"]["TableOrderKitchenBillOrderItemDTO"][];
-    };
-    TableOrderKitchenBillOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
+      id: number;
       /** Format: int32 */
       tableId: number;
-      table?: components["schemas"]["TableOrderKitchenTableDTO"] | null;
-      tableBooking: components["schemas"]["TableOrderKitchenTableBookingDTO"];
-      /** Format: int32 */
-      menuItemId: number;
-      menuItem: components["schemas"]["TableOrderKitchenBillMenuItemDTO"];
-      options?: components["schemas"]["DTOOptionDTO"][] | null;
-      extras?: components["schemas"]["DTOExtraDTO"][] | null;
-      /** Format: int32 */
-      divisionId: number;
-      note?: string | null;
+      table: components["schemas"]["TableOrderKitchenTableDTO"];
+      orderItems?: components["schemas"]["TableOrderKitchenOrderItemDTO"][] | null;
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      user: components["schemas"]["DTOUserDTO"];
     };
     TableOrderKitchenTableDTO: {
       /** Format: int32 */
@@ -312,18 +300,36 @@ export interface components {
     TableOrderKitchenSectionDTO: {
       name: string;
     };
-    TableOrderKitchenTableBookingDTO: {
+    TableOrderKitchenOrderItemDTO: {
       /** Format: int32 */
-      id: number;
+      orderItemId: number;
       /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["TableOrderKitchenTableDTO"];
-      tableOrders?: components["schemas"]["TableOrderKitchenBillOrderItemDTO"][] | null;
+      tableBookingId: number;
+      menuItem: components["schemas"]["TableOrderKitchenMenuItemDTO"];
+      options?: components["schemas"]["DTOOptionDTO"][] | null;
+      extras?: components["schemas"]["DTOExtraDTO"][] | null;
+      /** Format: int32 */
+      divisionId: number;
+      note?: string | null;
+      /** Format: date-time */
+      orderReceived: string;
+      orderReceivedFormatted: string;
+      /** Format: int32 */
+      orderItemStatusId: number;
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
     };
-    TableOrderKitchenBillMenuItemDTO: {
+    TableOrderKitchenMenuItemDTO: {
       /** Format: int32 */
       menuItemId: number;
       name: string;
+      description: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      position: number;
+      /** Format: int32 */
+      divisionId?: number | null;
     };
     DTOOptionDTO: {
       /** Format: int32 */
@@ -342,6 +348,31 @@ export interface components {
       positionId: number;
       /** Format: decimal */
       price: number;
+    };
+    DTOOrderItemOptionDTO: {
+      /** Format: int32 */
+      orderItemOptionId: number;
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      optionId: number;
+      option: components["schemas"]["DTOOptionDTO"];
+    };
+    DTOOrderItemExtraDTO: {
+      /** Format: int32 */
+      orderItemExtraId: number;
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      extraId: number;
+      extra: components["schemas"]["DTOExtraDTO"];
+    };
+    DTOUserDTO: {
+      userId: string;
+      email: string;
+      image: string;
+      name: string;
+      isActive: boolean;
     };
     TableOrderGetBillResponse: {
       orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
@@ -371,13 +402,6 @@ export interface components {
       bookingDate: string;
       userId: string;
       user: components["schemas"]["DTOUserDTO"];
-    };
-    DTOUserDTO: {
-      userId: string;
-      email: string;
-      image: string;
-      name: string;
-      isActive: boolean;
     };
     TableOrderGetBillBillMenuItemDTO: {
       /** Format: int32 */
@@ -446,6 +470,7 @@ export interface components {
       salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
       userId: string;
       user: components["schemas"]["EntitiesUser"];
+      orderItems?: components["schemas"]["EntitiesOrderItem"][] | null;
     };
     EntitiesUser: {
       userId: string;
@@ -1119,7 +1144,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableOrderKitchenResponse"][];
+          "application/json": components["schemas"]["TableOrderKitchenTableBookingDTO"][];
         };
       };
       /** @description Unauthorized */

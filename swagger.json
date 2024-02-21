@@ -434,7 +434,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TableOrderKitchenResponse"
+                    "$ref": "#/components/schemas/TableOrderKitchenTableBookingDTO"
                   }
                 }
               }
@@ -2916,48 +2916,19 @@
           }
         }
       },
-      "TableOrderKitchenResponse": {
+      "TableOrderKitchenTableBookingDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "tableBookingId",
-          "tableName",
-          "orderItems"
-        ],
-        "properties": {
-          "tableBookingId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableName": {
-            "type": "string"
-          },
-          "orderItems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TableOrderKitchenBillOrderItemDTO"
-            }
-          }
-        }
-      },
-      "TableOrderKitchenBillOrderItemDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItemId",
-          "tableBookingId",
+          "id",
           "tableId",
-          "tableBooking",
-          "menuItemId",
-          "menuItem",
-          "divisionId"
+          "table",
+          "bookingName",
+          "bookingDate",
+          "user"
         ],
         "properties": {
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableBookingId": {
+          "id": {
             "type": "integer",
             "format": "int32"
           },
@@ -2966,44 +2937,24 @@
             "format": "int32"
           },
           "table": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/TableOrderKitchenTableDTO"
-              }
-            ]
+            "$ref": "#/components/schemas/TableOrderKitchenTableDTO"
           },
-          "tableBooking": {
-            "$ref": "#/components/schemas/TableOrderKitchenTableBookingDTO"
-          },
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "menuItem": {
-            "$ref": "#/components/schemas/TableOrderKitchenBillMenuItemDTO"
-          },
-          "options": {
+          "orderItems": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/DTOOptionDTO"
+              "$ref": "#/components/schemas/TableOrderKitchenOrderItemDTO"
             }
           },
-          "extras": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/DTOExtraDTO"
-            }
+          "bookingName": {
+            "type": "string"
           },
-          "divisionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "note": {
+          "bookingDate": {
             "type": "string",
-            "nullable": true
+            "format": "date-time"
+          },
+          "user": {
+            "$ref": "#/components/schemas/DTOUserDTO"
           }
         }
       },
@@ -3049,41 +3000,88 @@
           }
         }
       },
-      "TableOrderKitchenTableBookingDTO": {
+      "TableOrderKitchenOrderItemDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "id",
-          "tableId",
-          "table"
+          "orderItemId",
+          "tableBookingId",
+          "menuItem",
+          "divisionId",
+          "orderReceived",
+          "orderReceivedFormatted",
+          "orderItemStatusId"
         ],
         "properties": {
-          "id": {
+          "orderItemId": {
             "type": "integer",
             "format": "int32"
           },
-          "tableId": {
+          "tableBookingId": {
             "type": "integer",
             "format": "int32"
           },
-          "table": {
-            "$ref": "#/components/schemas/TableOrderKitchenTableDTO"
+          "menuItem": {
+            "$ref": "#/components/schemas/TableOrderKitchenMenuItemDTO"
           },
-          "tableOrders": {
+          "options": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/TableOrderKitchenBillOrderItemDTO"
+              "$ref": "#/components/schemas/DTOOptionDTO"
+            }
+          },
+          "extras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOExtraDTO"
+            }
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderReceived": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderReceivedFormatted": {
+            "type": "string"
+          },
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemOptions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOOrderItemOptionDTO"
+            }
+          },
+          "orderItemExtras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
             }
           }
         }
       },
-      "TableOrderKitchenBillMenuItemDTO": {
+      "TableOrderKitchenMenuItemDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
           "menuItemId",
-          "name"
+          "name",
+          "description",
+          "price",
+          "position"
         ],
         "properties": {
           "menuItemId": {
@@ -3092,6 +3090,22 @@
           },
           "name": {
             "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         }
       },
@@ -3146,6 +3160,88 @@
           "price": {
             "type": "number",
             "format": "decimal"
+          }
+        }
+      },
+      "DTOOrderItemOptionDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemOptionId",
+          "orderItemId",
+          "optionId",
+          "option"
+        ],
+        "properties": {
+          "orderItemOptionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "option": {
+            "$ref": "#/components/schemas/DTOOptionDTO"
+          }
+        }
+      },
+      "DTOOrderItemExtraDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemExtraId",
+          "orderItemId",
+          "extraId",
+          "extra"
+        ],
+        "properties": {
+          "orderItemExtraId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extraId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extra": {
+            "$ref": "#/components/schemas/DTOExtraDTO"
+          }
+        }
+      },
+      "DTOUserDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "email",
+          "image",
+          "name",
+          "isActive"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
           }
         }
       },
@@ -3250,34 +3346,6 @@
           },
           "user": {
             "$ref": "#/components/schemas/DTOUserDTO"
-          }
-        }
-      },
-      "DTOUserDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "userId",
-          "email",
-          "image",
-          "name",
-          "isActive"
-        ],
-        "properties": {
-          "userId": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "image": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "isActive": {
-            "type": "boolean"
           }
         }
       },
@@ -3511,6 +3579,13 @@
           },
           "user": {
             "$ref": "#/components/schemas/EntitiesUser"
+          },
+          "orderItems": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItem"
+            }
           }
         }
       },

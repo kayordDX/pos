@@ -546,18 +546,6 @@ export interface EntitiesRole {
 	userRole?: EntitiesUserRole[] | null;
 }
 
-export interface EntitiesTableBooking {
-	bookingDate: string;
-	bookingName: string;
-	id: number;
-	salesPeriod: EntitiesSalesPeriod;
-	salesPeriodId: number;
-	table: EntitiesTable;
-	tableId: number;
-	user: EntitiesUser;
-	userId: string;
-}
-
 export interface EntitiesOrderItem {
 	menuItem: EntitiesMenuItem;
 	menuItemId: number;
@@ -570,6 +558,19 @@ export interface EntitiesOrderItem {
 	orderReceived: string;
 	tableBooking: EntitiesTableBooking;
 	tableBookingId: number;
+}
+
+export interface EntitiesTableBooking {
+	bookingDate: string;
+	bookingName: string;
+	id: number;
+	orderItems?: EntitiesOrderItem[] | null;
+	salesPeriod: EntitiesSalesPeriod;
+	salesPeriodId: number;
+	table: EntitiesTable;
+	tableId: number;
+	user: EntitiesUser;
+	userId: string;
 }
 
 export interface TableOrderGetBasketRequest {
@@ -608,6 +609,11 @@ export interface TableOrderGetBillBillMenuItemDTO {
 	price: number;
 }
 
+export interface TableOrderGetBillResponse {
+	orderItems: TableOrderGetBillBillOrderItemDTO[];
+	total: number;
+}
+
 export interface DTOUserDTO {
 	email: string;
 	image: string;
@@ -625,16 +631,18 @@ export interface DTOTableBookingDTO {
 	userId: string;
 }
 
-export interface TableOrderGetBillResponse {
-	orderItems: TableOrderGetBillBillOrderItemDTO[];
-	total: number;
-}
-
 export interface DTOExtraDTO {
 	extraId: number;
 	name: string;
 	positionId: number;
 	price: number;
+}
+
+export interface DTOOrderItemExtraDTO {
+	extra: DTOExtraDTO;
+	extraId: number;
+	orderItemExtraId: number;
+	orderItemId: number;
 }
 
 export interface DTOOptionDTO {
@@ -655,16 +663,35 @@ export interface TableOrderGetBillBillOrderItemDTO {
 	tableBookingId: number;
 }
 
-export interface TableOrderKitchenBillMenuItemDTO {
-	menuItemId: number;
-	name: string;
+export interface DTOOrderItemOptionDTO {
+	option: DTOOptionDTO;
+	optionId: number;
+	orderItemId: number;
+	orderItemOptionId: number;
 }
 
-export interface TableOrderKitchenTableBookingDTO {
-	id: number;
-	table: TableOrderKitchenTableDTO;
-	tableId: number;
-	tableOrders?: TableOrderKitchenBillOrderItemDTO[] | null;
+export interface TableOrderKitchenMenuItemDTO {
+	description: string;
+	divisionId?: number | null;
+	menuItemId: number;
+	name: string;
+	position: number;
+	price: number;
+}
+
+export interface TableOrderKitchenOrderItemDTO {
+	divisionId: number;
+	extras?: DTOExtraDTO[] | null;
+	menuItem: TableOrderKitchenMenuItemDTO;
+	note?: string | null;
+	options?: DTOOptionDTO[] | null;
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	orderItemStatusId: number;
+	orderReceived: string;
+	orderReceivedFormatted: string;
+	tableBookingId: number;
 }
 
 export interface TableOrderKitchenSectionDTO {
@@ -680,26 +707,14 @@ export interface TableOrderKitchenTableDTO {
 	tableId: number;
 }
 
-export type TableOrderKitchenBillOrderItemDTOTable = TableOrderKitchenTableDTO | null;
-
-export interface TableOrderKitchenBillOrderItemDTO {
-	divisionId: number;
-	extras?: DTOExtraDTO[] | null;
-	menuItem: TableOrderKitchenBillMenuItemDTO;
-	menuItemId: number;
-	note?: string | null;
-	options?: DTOOptionDTO[] | null;
-	orderItemId: number;
-	table?: TableOrderKitchenBillOrderItemDTOTable;
-	tableBooking: TableOrderKitchenTableBookingDTO;
-	tableBookingId: number;
+export interface TableOrderKitchenTableBookingDTO {
+	bookingDate: string;
+	bookingName: string;
+	id: number;
+	orderItems?: TableOrderKitchenOrderItemDTO[] | null;
+	table: TableOrderKitchenTableDTO;
 	tableId: number;
-}
-
-export interface TableOrderKitchenResponse {
-	orderItems: TableOrderKitchenBillOrderItemDTO[];
-	tableBookingId: number;
-	tableName: string;
+	user: DTOUserDTO;
 }
 
 export interface TableOrderRemoveItemRequest {

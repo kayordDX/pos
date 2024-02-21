@@ -15,6 +15,10 @@ type CustomClient<T> = (data: {
 	signal?: AbortSignal;
 }) => Promise<T>;
 
+const callAPIToRefreshToken = async () => {
+	await fetch("/api");
+};
+
 export const useCustomClient = <T>(): CustomClient<T> => {
 	const userData = get(session);
 
@@ -55,6 +59,12 @@ export const useCustomClient = <T>(): CustomClient<T> => {
 			return response.json();
 		} else {
 			if (response.status == 401) {
+				// Check if this failed because of token
+				if (userData) {
+					if (Date.now() < userData.tokenExpires) {
+						callAPIToRefreshToken();
+					}
+				}
 				throw new Error("Unauthorized", { cause: "401" });
 			}
 			if (response.status == 403) {
