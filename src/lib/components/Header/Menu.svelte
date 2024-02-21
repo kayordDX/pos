@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { Avatar, DropdownMenu } from "@kayord/ui";
-	import { LogOutIcon } from "lucide-svelte";
+	import { LogOutIcon, MoonIcon, SunIcon } from "lucide-svelte";
 	import { signOut } from "@auth/sveltekit/client";
 	import { getInitials } from "$lib/util";
 	import type { Session } from "@auth/sveltekit";
+	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
 
 	export let session: Session | null | undefined;
 
@@ -26,6 +27,14 @@
 		<DropdownMenu.Separator />
 		<DropdownMenu.Group>
 			<DropdownMenu.Item href="/setup">Setup Device</DropdownMenu.Item>
+			<DropdownMenu.Item on:click={toggleMode}>
+				{#if $mode == "light"}
+					<SunIcon class="mr-2 h-4 w-4" />
+				{:else}
+					<MoonIcon class="mr-2 h-4 w-4" />
+				{/if}
+				Toggle Theme
+			</DropdownMenu.Item>
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Item on:click={logout}>

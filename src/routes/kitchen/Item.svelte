@@ -1,8 +1,12 @@
 <script lang="ts">
 	import type { TableOrderKitchenOrderItemDTO } from "$lib/api";
-	import { Badge, Button, Card, Drawer, Popover, Tooltip } from "@kayord/ui";
+	import { Badge, Button, Card, Drawer } from "@kayord/ui";
 	import { ConciergeBellIcon } from "lucide-svelte";
+	import { createTableOrderUpdateOrderItem } from "$lib/api";
+	export let refetch: () => void;
 	let open = false;
+
+	const mutation = createTableOrderUpdateOrderItem();
 
 	export let item: TableOrderKitchenOrderItemDTO;
 
@@ -19,6 +23,13 @@
 			return "background-color: rgb(245 158 11);";
 		}
 		return "background-color: rgb(34 197 94);";
+	};
+
+	const setStatus = async (statusId: number, orderItemId: number, isComplete: boolean = false) => {
+		await $mutation.mutateAsync({
+			data: { isComplete: isComplete, orderItemId, orderItemStatusId: statusId },
+		});
+		refetch();
 	};
 </script>
 
@@ -41,7 +52,16 @@
 						<Drawer.Description>{item.menuItem.name}</Drawer.Description>
 					</Drawer.Header>
 					<Drawer.Footer>
-						<Drawer.Close><Button class="w-full">Ready</Button></Drawer.Close>
+						<Drawer.Close>
+							<Button on:click={() => setStatus(5, item.orderItemId)} class="w-full">Ready</Button>
+						</Drawer.Close>
+						<Drawer.Close>
+							<Button
+								variant="destructive"
+								on:click={() => setStatus(4, item.orderItemId)}
+								class="w-full">Cancel Order</Button
+							>
+						</Drawer.Close>
 					</Drawer.Footer>
 				</Drawer.Content>
 			</Drawer.Root>

@@ -73,7 +73,7 @@
 				</div>
 				<div class="flex flex-col gap-2 mt-2">
 					{#each tableOrder.orderItems ?? [] as item}
-						<Item {item} />
+						<Item {item} refetch={$query.refetch} />
 					{/each}
 				</div>
 			</Card.Root>

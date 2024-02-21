@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { ThemeSwitch } from "@kayord/ui";
 	import Menu from "./Menu.svelte";
 	import { goto } from "$app/navigation";
 	import type { Session } from "@auth/sveltekit";
+	import Notifications from "./Notifications.svelte";
 
 	export let session: Session | null | undefined;
 </script>
@@ -13,8 +13,7 @@
 	</button>
 	<span></span>
 	<div class="flex gap-2">
-		<ThemeSwitch class="text-secondary-foreground" />
-
+		<Notifications />
 		{#if session}
 			<Menu {session} />
 		{/if}
