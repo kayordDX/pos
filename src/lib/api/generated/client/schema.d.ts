@@ -14,6 +14,9 @@ export interface paths {
   "/user/getRoles": {
     get: operations["UserGetRoles"];
   };
+  "/user/getNotifications": {
+    get: operations["UserGetNotifications"];
+  };
   "/user/assignOutlet": {
     post: operations["UserAssignOutlet"];
   };
@@ -22,6 +25,9 @@ export interface paths {
   };
   "/role/addUserInRole": {
     post: operations["RoleAddUserInRole"];
+  };
+  "/order/updateTableOrder": {
+    post: operations["TableOrderUpdateTableOrder"];
   };
   "/order/updateOrderItem": {
     post: operations["TableOrderUpdateOrderItem"];
@@ -232,6 +238,20 @@ export interface components {
     /** @enum {integer} */
     Order: 0 | 1;
     UserGetRolesRequest: Record<string, never>;
+    UserGetNotificationsUserNotificationDTO: {
+      /** Format: int32 */
+      id: number;
+      userId: string;
+      notification: string;
+      jsonContent?: string | null;
+      /** Format: date-time */
+      dateSent: string;
+      dateSentFormatted: string;
+      /** Format: date-time */
+      dateRead?: string | null;
+      /** Format: date-time */
+      dateExpires?: string | null;
+    };
     EntitiesUserOutlet: {
       /** Format: int32 */
       id: number;
@@ -253,6 +273,15 @@ export interface components {
       /** Format: int32 */
       roleId: number;
     };
+    TableOrderUpdateTableOrderResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderUpdateTableOrderRequest: {
+      /** Format: int32 */
+      tableBookingId: number;
+      /** Format: int32 */
+      orderItemStatusId: number;
+    };
     TableOrderUpdateOrderItemResponse: {
       isSuccess: boolean;
     };
@@ -261,7 +290,6 @@ export interface components {
       orderItemId: number;
       /** Format: int32 */
       orderItemStatusId: number;
-      isComplete: boolean;
     };
     TableOrderSendToKitchenResponse: {
       isSuccess: boolean;
@@ -1004,6 +1032,26 @@ export interface operations {
       };
     };
   };
+  UserGetNotifications: {
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["UserGetNotificationsUserNotificationDTO"][];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   UserAssignOutlet: {
     requestBody: {
       content: {
@@ -1064,6 +1112,31 @@ export interface operations {
           "text/plain": unknown;
           "application/json": unknown;
         };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  TableOrderUpdateTableOrder: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["TableOrderUpdateTableOrderRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableOrderUpdateTableOrderResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {

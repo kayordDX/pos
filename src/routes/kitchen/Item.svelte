@@ -25,9 +25,9 @@
 		return "background-color: rgb(34 197 94);";
 	};
 
-	const setStatus = async (statusId: number, orderItemId: number, isComplete: boolean = false) => {
+	const setStatus = async (statusId: number, orderItemId: number) => {
 		await $mutation.mutateAsync({
-			data: { isComplete: isComplete, orderItemId, orderItemStatusId: statusId },
+			data: { orderItemId, orderItemStatusId: statusId },
 		});
 		refetch();
 	};

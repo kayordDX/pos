@@ -128,6 +128,47 @@
         }
       }
     },
+    "/user/getNotifications": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserGetNotifications",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserGetNotificationsUserNotificationDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/user/assignOutlet": {
       "post": {
         "tags": [
@@ -265,6 +306,57 @@
             }
           }
         }
+      }
+    },
+    "/order/updateTableOrder": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "operationId": "TableOrderUpdateTableOrder",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableOrderUpdateTableOrderRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderUpdateTableOrderResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/order/updateOrderItem": {
@@ -2757,6 +2849,50 @@
         "type": "object",
         "additionalProperties": false
       },
+      "UserGetNotificationsUserNotificationDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "userId",
+          "notification",
+          "dateSent",
+          "dateSentFormatted"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "notification": {
+            "type": "string"
+          },
+          "jsonContent": {
+            "type": "string",
+            "nullable": true
+          },
+          "dateSent": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "dateSentFormatted": {
+            "type": "string"
+          },
+          "dateRead": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dateExpires": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
       "EntitiesUserOutlet": {
         "type": "object",
         "additionalProperties": false,
@@ -2829,6 +2965,36 @@
           }
         }
       },
+      "TableOrderUpdateTableOrderResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "isSuccess"
+        ],
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TableOrderUpdateTableOrderRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId",
+          "orderItemStatusId"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "TableOrderUpdateOrderItemResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -2846,8 +3012,7 @@
         "additionalProperties": false,
         "required": [
           "orderItemId",
-          "orderItemStatusId",
-          "isComplete"
+          "orderItemStatusId"
         ],
         "properties": {
           "orderItemId": {
@@ -2857,9 +3022,6 @@
           "orderItemStatusId": {
             "type": "integer",
             "format": "int32"
-          },
-          "isComplete": {
-            "type": "boolean"
           }
         }
       },

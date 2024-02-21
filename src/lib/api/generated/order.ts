@@ -29,10 +29,78 @@ import type {
 	TableOrderSendToKitchenResponse,
 	TableOrderUpdateOrderItemRequest,
 	TableOrderUpdateOrderItemResponse,
+	TableOrderUpdateTableOrderRequest,
+	TableOrderUpdateTableOrderResponse,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
+export const useTableOrderUpdateTableOrderHook = () => {
+	const tableOrderUpdateTableOrder = useCustomClient<TableOrderUpdateTableOrderResponse>();
+
+	return (tableOrderUpdateTableOrderRequest: BodyType<TableOrderUpdateTableOrderRequest>) => {
+		return tableOrderUpdateTableOrder({
+			url: `/order/updateTableOrder`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: tableOrderUpdateTableOrderRequest,
+		});
+	};
+};
+
+export const useTableOrderUpdateTableOrderMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateTableOrderHook>>>,
+		TError,
+		{ data: BodyType<TableOrderUpdateTableOrderRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateTableOrderHook>>>,
+	TError,
+	{ data: BodyType<TableOrderUpdateTableOrderRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const tableOrderUpdateTableOrder = useTableOrderUpdateTableOrderHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateTableOrderHook>>>,
+		{ data: BodyType<TableOrderUpdateTableOrderRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderUpdateTableOrder(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderUpdateTableOrderMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateTableOrderHook>>>
+>;
+export type TableOrderUpdateTableOrderMutationBody = BodyType<TableOrderUpdateTableOrderRequest>;
+export type TableOrderUpdateTableOrderMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createTableOrderUpdateTableOrder = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateTableOrderHook>>>,
+		TError,
+		{ data: BodyType<TableOrderUpdateTableOrderRequest> },
+		TContext
+	>;
+}) => {
+	const mutationOptions = useTableOrderUpdateTableOrderMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const useTableOrderUpdateOrderItemHook = () => {
 	const tableOrderUpdateOrderItem = useCustomClient<TableOrderUpdateOrderItemResponse>();
 

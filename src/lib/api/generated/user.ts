@@ -18,6 +18,7 @@ import type {
 	EntitiesUserOutlet,
 	InternalErrorResponse,
 	UserAssignOutletRequest,
+	UserGetNotificationsUserNotificationDTO,
 	UserGetRolesParams,
 	UserGetStatusResponse,
 	UserValidateRequest,
@@ -208,6 +209,75 @@ export const createUserGetRoles = <
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
 	const queryOptions = useUserGetRolesQueryOptions(params, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
+
+export const useUserGetNotificationsHook = () => {
+	const userGetNotifications = useCustomClient<UserGetNotificationsUserNotificationDTO[]>();
+
+	return () => {
+		return userGetNotifications({ url: `/user/getNotifications`, method: "GET" });
+	};
+};
+
+export const getUserGetNotificationsQueryKey = () => {
+	return [`/user/getNotifications`] as const;
+};
+
+export const useUserGetNotificationsQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useUserGetNotificationsHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<
+			Awaited<ReturnType<ReturnType<typeof useUserGetNotificationsHook>>>,
+			TError,
+			TData
+		>
+	>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getUserGetNotificationsQueryKey();
+
+	const userGetNotifications = useUserGetNotificationsHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useUserGetNotificationsHook>>>
+	> = () => userGetNotifications();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useUserGetNotificationsHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type UserGetNotificationsQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useUserGetNotificationsHook>>>
+>;
+export type UserGetNotificationsQueryError = ErrorType<void | InternalErrorResponse>;
+
+export const createUserGetNotifications = <
+	TData = Awaited<ReturnType<ReturnType<typeof useUserGetNotificationsHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<
+			Awaited<ReturnType<ReturnType<typeof useUserGetNotificationsHook>>>,
+			TError,
+			TData
+		>
+	>;
+}): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useUserGetNotificationsQueryOptions(options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;

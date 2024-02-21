@@ -481,19 +481,6 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
-
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	name?: string | null;
-	parent?: EntitiesMenuSectionParent;
-	parentId?: number | null;
-	subMenuSections?: EntitiesMenuSection[] | null;
-}
-
 export interface EntitiesMenu {
 	id: number;
 	menuSections?: EntitiesMenuSection[] | null;
@@ -501,6 +488,8 @@ export interface EntitiesMenu {
 	outlet: EntitiesOutlet;
 	outletId: number;
 }
+
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
 export type EntitiesMenuItemDivision = EntitiesDivision | null;
 
@@ -520,6 +509,24 @@ export interface EntitiesMenuItem {
 	tags?: EntitiesTag[] | null;
 }
 
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	name?: string | null;
+	parent?: EntitiesMenuSectionParent;
+	parentId?: number | null;
+	subMenuSections?: EntitiesMenuSection[] | null;
+}
+
+export interface EntitiesRole {
+	description: string;
+	name: string;
+	roleId: number;
+	userRole?: EntitiesUserRole[] | null;
+}
+
 export type EntitiesUserRoleRole = EntitiesRole | null;
 
 export interface EntitiesUser {
@@ -537,13 +544,6 @@ export interface EntitiesUserRole {
 	user: EntitiesUser;
 	userId: string;
 	userRoleId: number;
-}
-
-export interface EntitiesRole {
-	description: string;
-	name: string;
-	roleId: number;
-	userRole?: EntitiesUserRole[] | null;
 }
 
 export interface EntitiesOrderItem {
@@ -609,6 +609,26 @@ export interface TableOrderGetBillBillMenuItemDTO {
 	price: number;
 }
 
+export interface DTOTableBookingDTO {
+	bookingDate: string;
+	bookingName: string;
+	id: number;
+	tableId: number;
+	user: DTOUserDTO;
+	userId: string;
+}
+
+export interface TableOrderGetBillBillOrderItemDTO {
+	extras?: DTOExtraDTO[] | null;
+	menuItem: TableOrderGetBillBillMenuItemDTO;
+	menuItemId: number;
+	note?: string | null;
+	options?: DTOOptionDTO[] | null;
+	orderItemId: number;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
+}
+
 export interface TableOrderGetBillResponse {
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
 	total: number;
@@ -619,15 +639,6 @@ export interface DTOUserDTO {
 	image: string;
 	isActive: boolean;
 	name: string;
-	userId: string;
-}
-
-export interface DTOTableBookingDTO {
-	bookingDate: string;
-	bookingName: string;
-	id: number;
-	tableId: number;
-	user: DTOUserDTO;
 	userId: string;
 }
 
@@ -650,17 +661,6 @@ export interface DTOOptionDTO {
 	optionGroupId: number;
 	optionId: number;
 	price: number;
-}
-
-export interface TableOrderGetBillBillOrderItemDTO {
-	extras?: DTOExtraDTO[] | null;
-	menuItem: TableOrderGetBillBillMenuItemDTO;
-	menuItemId: number;
-	note?: string | null;
-	options?: DTOOptionDTO[] | null;
-	orderItemId: number;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
 }
 
 export interface DTOOrderItemOptionDTO {
@@ -741,12 +741,20 @@ export interface TableOrderSendToKitchenResponse {
 }
 
 export interface TableOrderUpdateOrderItemRequest {
-	isComplete: boolean;
 	orderItemId: number;
 	orderItemStatusId: number;
 }
 
 export interface TableOrderUpdateOrderItemResponse {
+	isSuccess: boolean;
+}
+
+export interface TableOrderUpdateTableOrderRequest {
+	orderItemStatusId: number;
+	tableBookingId: number;
+}
+
+export interface TableOrderUpdateTableOrderResponse {
 	isSuccess: boolean;
 }
 
@@ -768,6 +776,17 @@ export interface EntitiesUserOutlet {
 	id: number;
 	isCurrent: boolean;
 	outletId: number;
+	userId: string;
+}
+
+export interface UserGetNotificationsUserNotificationDTO {
+	dateExpires?: string | null;
+	dateRead?: string | null;
+	dateSent: string;
+	dateSentFormatted: string;
+	id: number;
+	jsonContent?: string | null;
+	notification: string;
 	userId: string;
 }
 
