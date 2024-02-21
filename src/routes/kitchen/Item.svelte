@@ -38,7 +38,7 @@
 			<Drawer.Content>
 				<Drawer.Header>
 					<Drawer.Title>Item Actions</Drawer.Title>
-					<Drawer.Description>1 Waffles</Drawer.Description>
+					<Drawer.Description>{item.menuItem.name}</Drawer.Description>
 				</Drawer.Header>
 				<Drawer.Footer>
 					<Drawer.Close><Button class="w-full">Ready</Button></Drawer.Close>

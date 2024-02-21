@@ -717,6 +717,13 @@ export interface TableOrderKitchenTableBookingDTO {
 	user: DTOUserDTO;
 }
 
+export interface TableOrderKitchenResponse {
+	lastRefresh: string;
+	pendingItems: number;
+	pendingTables: number;
+	tables?: TableOrderKitchenTableBookingDTO[] | null;
+}
+
 export interface TableOrderRemoveItemRequest {
 	orderItemId: number;
 }

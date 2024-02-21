@@ -432,10 +432,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TableOrderKitchenTableBookingDTO"
-                  }
+                  "$ref": "#/components/schemas/TableOrderKitchenResponse"
                 }
               }
             }
@@ -2911,6 +2908,36 @@
         ],
         "properties": {
           "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TableOrderKitchenResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "lastRefresh",
+          "pendingTables",
+          "pendingItems"
+        ],
+        "properties": {
+          "tables": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/TableOrderKitchenTableBookingDTO"
+            }
+          },
+          "lastRefresh": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pendingTables": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pendingItems": {
             "type": "integer",
             "format": "int32"
           }

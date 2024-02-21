@@ -2,14 +2,17 @@
 	import { Avatar, Badge, Button, Card, Drawer, Loader } from "@kayord/ui";
 	import Error from "$lib/components/Error.svelte";
 	import Item from "./Item.svelte";
-	import { BellElectricIcon } from "lucide-svelte";
+	import { BellElectricIcon, UtensilsIcon } from "lucide-svelte";
 	let open = false;
 
 	import { createTableOrderKitchen } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { stringify } from "qs";
 	import { getInitials } from "$lib/util";
 	const query = createTableOrderKitchen({ query: { refetchInterval: 20000 } });
+
+	const getTime = (date: string) => {
+		return new Date(date).toLocaleTimeString();
+	};
 </script>
 
 {#if $query.isPending}
@@ -19,10 +22,18 @@
 	<Error message={getError($query.error).message} />
 {/if}
 {#if $query.data}
-	<Badge class="mb-2">{$query.data.length} pending table(s)</Badge>
+	<div class="flex justify-between mb-2">
+		<div>
+			<Badge>{$query.data.pendingTables} pending table(s)</Badge>
+			<Badge>{$query.data.pendingItems} pending items(s)</Badge>
+		</div>
+		<button on:click={() => $query.refetch()}>
+			<Badge variant="secondary">Refreshed: {getTime($query.data.lastRefresh)}</Badge>
+		</button>
+	</div>
 
 	<div class="flex flex-col gap-2">
-		{#each $query.data as tableOrder}
+		{#each $query.data.tables ?? [] as tableOrder}
 			<Card.Root class="p-4">
 				<div class="flex justify-between items-center">
 					<div class="flex items-center gap-2">
@@ -31,7 +42,10 @@
 							<Avatar.Fallback>{getInitials(tableOrder.user.name)}</Avatar.Fallback>
 						</Avatar.Root>
 						<div>
-							<div class="text-lg font-bold">Indoor, Table, {tableOrder.bookingName}</div>
+							<div class="text-lg font-bold">
+								{tableOrder.table.name} - {tableOrder.table.section?.name}
+								<span class="text-muted-foreground text-sm">({tableOrder.bookingName})</span>
+							</div>
 							<div># {tableOrder.id}</div>
 						</div>
 					</div>
@@ -43,11 +57,11 @@
 							<Drawer.Content>
 								<Drawer.Header>
 									<Drawer.Title># {tableOrder.id}</Drawer.Title>
-									<Drawer.Description>Actions</Drawer.Description>
+									<Drawer.Description>Table Actions</Drawer.Description>
 								</Drawer.Header>
 								<Drawer.Footer>
 									<Drawer.Close>
-										<Button class="w-full" on:click={() => (open = false)}>Ready</Button>
+										<Button class="w-full" on:click={() => (open = false)}>Ready All</Button>
 									</Drawer.Close>
 									<Drawer.Close>
 										<Button class="w-full" variant="destructive">Call Waiter</Button>
@@ -64,9 +78,5 @@
 				</div>
 			</Card.Root>
 		{/each}
-	</div>
-
-	<div class="text-clip font-mono mt-8">
-		{JSON.stringify($query.data)}
 	</div>
 {/if}

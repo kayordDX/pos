@@ -12,12 +12,12 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { InternalErrorResponse, TableOrderKitchenTableBookingDTO } from "./api.schemas";
+import type { InternalErrorResponse, TableOrderKitchenResponse } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType } from "../mutator/useCustomClient";
 
 export const useTableOrderKitchenHook = () => {
-	const tableOrderKitchen = useCustomClient<TableOrderKitchenTableBookingDTO[]>();
+	const tableOrderKitchen = useCustomClient<TableOrderKitchenResponse>();
 
 	return () => {
 		return tableOrderKitchen({ url: `/kitchen/getOrders`, method: "GET" });

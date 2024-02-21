@@ -3,6 +3,7 @@ import { isAPIError, isValidationError } from "$lib/types";
 import { env } from "$env/dynamic/public";
 import { session } from "$lib/stores/session";
 import qs from "qs";
+import type { Session } from "@auth/core/types";
 
 type CustomClient<T> = (data: {
 	url: string;
@@ -16,12 +17,14 @@ type CustomClient<T> = (data: {
 }) => Promise<T>;
 
 const callAPIToRefreshToken = async () => {
-	await fetch("/api");
+	const response = await fetch("/auth/session");
+	if (response.ok) {
+		const result = (await response.json()) as Session;
+		session.set(result);
+	}
 };
 
 export const useCustomClient = <T>(): CustomClient<T> => {
-	const userData = get(session);
-
 	return async ({ url, method, params, headers, data }) => {
 		let fullUrl = `${env.PUBLIC_API_URL}${url}`;
 		if (params !== undefined) {
@@ -32,16 +35,16 @@ export const useCustomClient = <T>(): CustomClient<T> => {
 		}
 
 		if (headers == undefined) {
-			if (userData != undefined) {
+			if (get(session) != undefined) {
 				headers = {
-					Authorization: `Bearer ${userData?.token}`,
+					Authorization: `Bearer ${get(session)?.token}`,
 				};
 			}
 		}
 
 		if (headers) {
 			if (headers.Authorization == undefined) {
-				headers.Authorization = `Bearer ${userData?.token}`;
+				headers.Authorization = `Bearer ${get(session)?.token}`;
 			}
 		}
 
@@ -60,8 +63,9 @@ export const useCustomClient = <T>(): CustomClient<T> => {
 		} else {
 			if (response.status == 401) {
 				// Check if this failed because of token
-				if (userData) {
-					if (Date.now() < userData.tokenExpires) {
+				const userSession = get(session);
+				if (userSession) {
+					if (Date.now() < userSession.tokenExpires) {
 						callAPIToRefreshToken();
 					}
 				}

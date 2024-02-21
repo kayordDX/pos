@@ -277,6 +277,15 @@ export interface components {
       /** Format: int32 */
       orderItemId: number;
     };
+    TableOrderKitchenResponse: {
+      tables?: components["schemas"]["TableOrderKitchenTableBookingDTO"][] | null;
+      /** Format: date-time */
+      lastRefresh: string;
+      /** Format: int32 */
+      pendingTables: number;
+      /** Format: int32 */
+      pendingItems: number;
+    };
     TableOrderKitchenTableBookingDTO: {
       /** Format: int32 */
       id: number;
@@ -1144,7 +1153,7 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableOrderKitchenTableBookingDTO"][];
+          "application/json": components["schemas"]["TableOrderKitchenResponse"];
         };
       };
       /** @description Unauthorized */
