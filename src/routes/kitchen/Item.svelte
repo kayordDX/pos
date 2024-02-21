@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TableOrderKitchenOrderItemDTO } from "$lib/api";
-	import { Badge, Button, Card, Drawer } from "@kayord/ui";
+	import { Badge, Button, Card, Drawer, Popover, Tooltip } from "@kayord/ui";
 	import { ConciergeBellIcon } from "lucide-svelte";
 	let open = false;
 
@@ -23,27 +23,28 @@
 </script>
 
 <Card.Root class="p-2 relative">
-	<div class="h-4 w-4 absolute right-2 top-3 rounded-full" style={getStatus()}></div>
 	<div class="flex justify-between items-center">
 		<div>
 			<div>{item.menuItem.name}</div>
 			<div class="text-muted-foreground">TODO: Sub Option</div>
 			<div class="text-muted-foreground">TODO: Sub Option</div>
-			<Badge variant="secondary">{item.orderReceivedFormatted}</Badge>
 		</div>
-		<Drawer.Root bind:open>
-			<Drawer.Trigger>
-				<Button class="mr-6"><ConciergeBellIcon class="h-4 w-4 mr-2" />Action</Button>
-			</Drawer.Trigger>
-			<Drawer.Content>
-				<Drawer.Header>
-					<Drawer.Title>Item Actions</Drawer.Title>
-					<Drawer.Description>{item.menuItem.name}</Drawer.Description>
-				</Drawer.Header>
-				<Drawer.Footer>
-					<Drawer.Close><Button class="w-full">Ready</Button></Drawer.Close>
-				</Drawer.Footer>
-			</Drawer.Content>
-		</Drawer.Root>
+		<div class="flex items-center gap-2">
+			<Badge style={getStatus()}>{item.orderReceivedFormatted}</Badge>
+			<Drawer.Root bind:open>
+				<Drawer.Trigger>
+					<Button><ConciergeBellIcon class="h-4 w-4 mr-2" />Action</Button>
+				</Drawer.Trigger>
+				<Drawer.Content>
+					<Drawer.Header>
+						<Drawer.Title>Item Actions</Drawer.Title>
+						<Drawer.Description>{item.menuItem.name}</Drawer.Description>
+					</Drawer.Header>
+					<Drawer.Footer>
+						<Drawer.Close><Button class="w-full">Ready</Button></Drawer.Close>
+					</Drawer.Footer>
+				</Drawer.Content>
+			</Drawer.Root>
+		</div>
 	</div>
 </Card.Root>
