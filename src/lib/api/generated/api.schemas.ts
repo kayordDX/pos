@@ -135,6 +135,18 @@ export interface MenuGetItemRequest {
 	[key: string]: any;
 }
 
+export interface DTOExtraGroupDTO {
+	extraGroupId: number;
+	extras: DTOExtraDTO[];
+	name: string;
+}
+
+export interface DTOMenuItemExtraGroupDTO {
+	extraGroup: DTOExtraGroupDTO;
+	extraGroupId: number;
+	menuItemId: number;
+}
+
 export interface DTOOptionGroupDTO {
 	maxSelections: number;
 	minSelections: number;
@@ -152,7 +164,7 @@ export interface DTOMenuItemOptionGroupDTO {
 export interface DTOMenuItemDTO {
 	description: string;
 	divisionId: number;
-	extras?: EntitiesExtra[] | null;
+	menuItemExtraGroups: DTOMenuItemExtraGroupDTO[];
 	menuItemId: number;
 	menuItemOptionGroups: DTOMenuItemOptionGroupDTO[];
 	menuSectionId: number;
@@ -427,12 +439,22 @@ export interface OrderClearBasketRequest {
 	tableBookingId: number;
 }
 
-export interface EntitiesOrderItemOption {
-	option: EntitiesOption;
-	optionId: number;
+export interface EntitiesExtra {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	extraId: number;
+	name: string;
+	orderItemExtras?: EntitiesOrderItemExtra[] | null;
+	positionId: number;
+	price: number;
+}
+
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
 	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
 	orderItemId: number;
-	orderItemOptionId: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -457,28 +479,21 @@ export interface EntitiesOption {
 	optionGroupId: number;
 	optionId: number;
 	orderItemOptions?: EntitiesOrderItemOption[] | null;
+	positionId: number;
 	price: number;
+}
+
+export interface EntitiesOrderItemOption {
+	option: EntitiesOption;
+	optionId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemId: number;
+	orderItemOptionId: number;
 }
 
 export interface EntitiesDivision {
 	divisionId: number;
 	divisionName: string;
-}
-
-export interface EntitiesExtra {
-	extraId: number;
-	name: string;
-	orderItemExtras?: EntitiesOrderItemExtra[] | null;
-	positionId: number;
-	price: number;
-}
-
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
 }
 
 export interface EntitiesTag {
@@ -501,6 +516,7 @@ export interface EntitiesMenuSection {
 	name?: string | null;
 	parent?: EntitiesMenuSectionParent;
 	parentId?: number | null;
+	positionId?: number | null;
 	subMenuSections?: EntitiesMenuSection[] | null;
 }
 
@@ -518,7 +534,7 @@ export interface EntitiesMenuItem {
 	description: string;
 	division?: EntitiesMenuItemDivision;
 	divisionId?: number | null;
-	extras?: EntitiesExtra[] | null;
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
 	menuItemId: number;
 	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
 	menuSection: EntitiesMenuSection;
@@ -528,6 +544,20 @@ export interface EntitiesMenuItem {
 	price: number;
 	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
 	tags?: EntitiesTag[] | null;
+}
+
+export interface EntitiesMenuItemExtraGroup {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	extras: EntitiesExtra[];
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	name: string;
 }
 
 export type EntitiesUserRoleRole = EntitiesRole | null;

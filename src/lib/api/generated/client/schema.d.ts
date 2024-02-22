@@ -541,11 +541,11 @@ export interface components {
       /** Format: int32 */
       position: number;
       tags?: components["schemas"]["EntitiesTag"][] | null;
-      extras?: components["schemas"]["EntitiesExtra"][] | null;
       /** Format: int32 */
       divisionId?: number | null;
       division?: components["schemas"]["EntitiesDivision"] | null;
       menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
+      menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
     };
     EntitiesMenuSection: {
       /** Format: int32 */
@@ -557,6 +557,8 @@ export interface components {
       parent?: components["schemas"]["EntitiesMenuSection"] | null;
       /** Format: int32 */
       parentId?: number | null;
+      /** Format: int32 */
+      positionId?: number | null;
       subMenuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
       menuItems?: components["schemas"]["EntitiesMenuItem"][] | null;
     };
@@ -578,26 +580,6 @@ export interface components {
       /** Format: int32 */
       tagId: number;
       name: string;
-    };
-    EntitiesExtra: {
-      /** Format: int32 */
-      extraId: number;
-      name: string;
-      /** Format: int32 */
-      positionId: number;
-      /** Format: decimal */
-      price: number;
-      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
-    };
-    EntitiesOrderItemExtra: {
-      /** Format: int32 */
-      orderItemExtraId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      orderItem: components["schemas"]["EntitiesOrderItem"];
-      /** Format: int32 */
-      extraId: number;
-      extra: components["schemas"]["EntitiesExtra"];
     };
     EntitiesDivision: {
       /** Format: int32 */
@@ -630,6 +612,8 @@ export interface components {
       /** Format: decimal */
       price: number;
       /** Format: int32 */
+      positionId: number;
+      /** Format: int32 */
       optionGroupId: number;
       optionGroup: components["schemas"]["EntitiesOptionGroup"];
       orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
@@ -643,6 +627,44 @@ export interface components {
       /** Format: int32 */
       optionId: number;
       option: components["schemas"]["EntitiesOption"];
+    };
+    EntitiesMenuItemExtraGroup: {
+      /** Format: int32 */
+      menuItemId: number;
+      /** Format: int32 */
+      extraGroupId: number;
+      menuItem: components["schemas"]["EntitiesMenuItem"];
+      extraGroup: components["schemas"]["EntitiesExtraGroup"];
+    };
+    EntitiesExtraGroup: {
+      /** Format: int32 */
+      extraGroupId: number;
+      name: string;
+      extras: components["schemas"]["EntitiesExtra"][];
+      menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
+    };
+    EntitiesExtra: {
+      /** Format: int32 */
+      extraId: number;
+      name: string;
+      /** Format: int32 */
+      positionId: number;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      extraGroupId: number;
+      extraGroup: components["schemas"]["EntitiesExtraGroup"];
+      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
+    };
+    EntitiesOrderItemExtra: {
+      /** Format: int32 */
+      orderItemExtraId: number;
+      /** Format: int32 */
+      orderItemId: number;
+      orderItem: components["schemas"]["EntitiesOrderItem"];
+      /** Format: int32 */
+      extraId: number;
+      extra: components["schemas"]["EntitiesExtra"];
     };
     OrderClearBasketRequest: {
       /** Format: int32 */
@@ -898,10 +920,10 @@ export interface components {
       /** Format: int32 */
       position: number;
       tags?: components["schemas"]["EntitiesTag"][] | null;
-      extras?: components["schemas"]["EntitiesExtra"][] | null;
       /** Format: int32 */
       divisionId: number;
       menuItemOptionGroups: components["schemas"]["DTOMenuItemOptionGroupDTO"][];
+      menuItemExtraGroups: components["schemas"]["DTOMenuItemExtraGroupDTO"][];
     };
     DTOMenuItemOptionGroupDTO: {
       /** Format: int32 */
@@ -919,6 +941,19 @@ export interface components {
       /** Format: int32 */
       maxSelections: number;
       options: components["schemas"]["DTOOptionDTO"][];
+    };
+    DTOMenuItemExtraGroupDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      /** Format: int32 */
+      extraGroupId: number;
+      extraGroup: components["schemas"]["DTOExtraGroupDTO"];
+    };
+    DTOExtraGroupDTO: {
+      /** Format: int32 */
+      extraGroupId: number;
+      name: string;
+      extras: components["schemas"]["DTOExtraDTO"][];
     };
     MenuGetItemRequest: Record<string, never>;
     MenuListRequest: Record<string, never>;
