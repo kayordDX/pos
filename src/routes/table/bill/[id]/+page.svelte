@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Separator, Button, Card, Loader } from "@kayord/ui";
-	import type { PageData } from "./$types";
+	import type { PageData } from "../$types";
 	import { createTableOrderGetBill } from "$lib/api";
 	import Item from "./Item.svelte";
 
@@ -38,6 +38,6 @@
 	</div>
 
 	<div class="mt-10">
-		<Button class="w-full" href={`/table/${data.bookingId}/main/pay`}>Pay Bill</Button>
+		<Button class="w-full" href={`/table/pay/${data.bookingId}`}>Pay Bill</Button>
 	</div>
 </div>

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge, Tabs } from "@kayord/ui";
-	import type { LayoutData } from "./$types";
+	import type { LayoutData } from "./[id]/$types";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
@@ -23,11 +23,11 @@
 		value={getValue()}
 		onValueChange={(s) => {
 			if (s == "menu") {
-				goto(`/table/${data.bookingId}/main/menu`);
+				goto(`/table/menu/${data.bookingId}`);
 			} else if (s == "bill") {
-				goto(`/table/${data.bookingId}/main/bill`);
+				goto(`/table/bill/${data.bookingId}`);
 			} else if (s == "basket") {
-				goto(`/table/${data.bookingId}/main/basket`);
+				goto(`/table/basket/${data.bookingId}`);
 			} else if (s == "tables") {
 				goto("/waiter");
 			}

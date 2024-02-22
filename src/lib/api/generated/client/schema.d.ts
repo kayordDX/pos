@@ -20,12 +20,6 @@ export interface paths {
   "/user/assignOutlet": {
     post: operations["UserAssignOutlet"];
   };
-  "/role/createRole": {
-    post: operations["RoleCreate"];
-  };
-  "/role/addUserInRole": {
-    post: operations["RoleAddUserInRole"];
-  };
   "/order/updateTableOrder": {
     post: operations["TableOrderUpdateTableOrder"];
   };
@@ -90,6 +84,15 @@ export interface paths {
   };
   "/salesPeriod/close": {
     post: operations["SalesPeriodClose"];
+  };
+  "/role/createRole": {
+    post: operations["RoleCreate"];
+  };
+  "/role/addUserInRole": {
+    post: operations["RoleAddUserInRole"];
+  };
+  "/role": {
+    get: operations["RoleGetAll"];
   };
   "/pay/status/{reference}": {
     get: operations["PayStatus"];
@@ -263,15 +266,6 @@ export interface components {
     UserAssignOutletRequest: {
       /** Format: int32 */
       outletId: number;
-    };
-    RoleCreateRequest: {
-      name: string;
-      description: string;
-    };
-    RoleAddUserInRoleRequest: {
-      userId: string;
-      /** Format: int32 */
-      roleId: number;
     };
     TableOrderUpdateTableOrderResponse: {
       isSuccess: boolean;
@@ -790,6 +784,15 @@ export interface components {
       /** Format: int32 */
       salesPeriodId: number;
     };
+    RoleCreateRequest: {
+      name: string;
+      description: string;
+    };
+    RoleAddUserInRoleRequest: {
+      userId: string;
+      /** Format: int32 */
+      roleId: number;
+    };
     CommonWrapperResultOfStatusResultDto: components["schemas"]["CommonWrapperResult"] & ({
       value?: components["schemas"]["PayDtoStatusResultDto"] | null;
     });
@@ -1068,50 +1071,6 @@ export interface operations {
       /** @description Unauthorized */
       401: {
         content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  RoleCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RoleCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "text/plain": unknown;
-          "application/json": unknown;
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  RoleAddUserInRole: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RoleAddUserInRoleRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "text/plain": unknown;
-          "application/json": unknown;
-        };
       };
       /** @description Server Error */
       500: {
@@ -1696,6 +1655,70 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["EntitiesSalesPeriod"];
         };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  RoleCreate: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["RoleCreateRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "text/plain": unknown;
+          "application/json": unknown;
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  RoleAddUserInRole: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["RoleAddUserInRoleRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "text/plain": unknown;
+          "application/json": unknown;
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  RoleGetAll: {
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["EntitiesRole"][];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {

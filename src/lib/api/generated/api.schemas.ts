@@ -46,6 +46,14 @@ export type PayGetLinkParams = {
 	tableBookingId: number;
 };
 
+export type RoleAddUserInRole200Two = {};
+
+export type RoleAddUserInRole200One = {};
+
+export type RoleCreate200Two = {};
+
+export type RoleCreate200One = {};
+
 export type SectionListParams = {
 	outletId: number;
 };
@@ -66,14 +74,6 @@ export type TableOrderGetBasketParams = {
 export type TableOrderGetBillParams = {
 	tableBookingId: number;
 };
-
-export type RoleAddUserInRole200Two = {};
-
-export type RoleAddUserInRole200One = {};
-
-export type RoleCreate200Two = {};
-
-export type RoleCreate200One = {};
 
 export type UserGetRolesParams = {
 	userId: string | null;
@@ -280,6 +280,16 @@ export type CommonWrapperResultOfStatusResultDtoAllOf = {
 export type CommonWrapperResultOfStatusResultDto = CommonWrapperResult &
 	CommonWrapperResultOfStatusResultDtoAllOf;
 
+export interface RoleAddUserInRoleRequest {
+	roleId: number;
+	userId: string;
+}
+
+export interface RoleCreateRequest {
+	description: string;
+	name: string;
+}
+
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -481,6 +491,19 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
+
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	name?: string | null;
+	parent?: EntitiesMenuSectionParent;
+	parentId?: number | null;
+	subMenuSections?: EntitiesMenuSection[] | null;
+}
+
 export interface EntitiesMenu {
 	id: number;
 	menuSections?: EntitiesMenuSection[] | null;
@@ -488,8 +511,6 @@ export interface EntitiesMenu {
 	outlet: EntitiesOutlet;
 	outletId: number;
 }
-
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
 export type EntitiesMenuItemDivision = EntitiesDivision | null;
 
@@ -509,24 +530,6 @@ export interface EntitiesMenuItem {
 	tags?: EntitiesTag[] | null;
 }
 
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	name?: string | null;
-	parent?: EntitiesMenuSectionParent;
-	parentId?: number | null;
-	subMenuSections?: EntitiesMenuSection[] | null;
-}
-
-export interface EntitiesRole {
-	description: string;
-	name: string;
-	roleId: number;
-	userRole?: EntitiesUserRole[] | null;
-}
-
 export type EntitiesUserRoleRole = EntitiesRole | null;
 
 export interface EntitiesUser {
@@ -544,6 +547,13 @@ export interface EntitiesUserRole {
 	user: EntitiesUser;
 	userId: string;
 	userRoleId: number;
+}
+
+export interface EntitiesRole {
+	description: string;
+	name: string;
+	roleId: number;
+	userRole?: EntitiesUserRole[] | null;
 }
 
 export interface EntitiesOrderItem {
@@ -609,26 +619,6 @@ export interface TableOrderGetBillBillMenuItemDTO {
 	price: number;
 }
 
-export interface DTOTableBookingDTO {
-	bookingDate: string;
-	bookingName: string;
-	id: number;
-	tableId: number;
-	user: DTOUserDTO;
-	userId: string;
-}
-
-export interface TableOrderGetBillBillOrderItemDTO {
-	extras?: DTOExtraDTO[] | null;
-	menuItem: TableOrderGetBillBillMenuItemDTO;
-	menuItemId: number;
-	note?: string | null;
-	options?: DTOOptionDTO[] | null;
-	orderItemId: number;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
-}
-
 export interface TableOrderGetBillResponse {
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
 	total: number;
@@ -639,6 +629,15 @@ export interface DTOUserDTO {
 	image: string;
 	isActive: boolean;
 	name: string;
+	userId: string;
+}
+
+export interface DTOTableBookingDTO {
+	bookingDate: string;
+	bookingName: string;
+	id: number;
+	tableId: number;
+	user: DTOUserDTO;
 	userId: string;
 }
 
@@ -661,6 +660,17 @@ export interface DTOOptionDTO {
 	optionGroupId: number;
 	optionId: number;
 	price: number;
+}
+
+export interface TableOrderGetBillBillOrderItemDTO {
+	extras?: DTOExtraDTO[] | null;
+	menuItem: TableOrderGetBillBillMenuItemDTO;
+	menuItemId: number;
+	note?: string | null;
+	options?: DTOOptionDTO[] | null;
+	orderItemId: number;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
 }
 
 export interface DTOOrderItemOptionDTO {
@@ -756,16 +766,6 @@ export interface TableOrderUpdateTableOrderRequest {
 
 export interface TableOrderUpdateTableOrderResponse {
 	isSuccess: boolean;
-}
-
-export interface RoleAddUserInRoleRequest {
-	roleId: number;
-	userId: string;
-}
-
-export interface RoleCreateRequest {
-	description: string;
-	name: string;
 }
 
 export interface UserAssignOutletRequest {

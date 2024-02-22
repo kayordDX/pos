@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Separator } from "@kayord/ui";
-	import type { PageData } from "./$types";
+	import type { PageData } from "../$types";
 	// import Item from "../Item.svelte";
 
 	export let data: PageData;

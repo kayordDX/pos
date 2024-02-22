@@ -21,7 +21,6 @@
 		await $updateOrderItem.mutateAsync({
 			data: {
 				orderItemId: id,
-				isComplete: false,
 				orderItemStatusId: 2,
 			},
 		});

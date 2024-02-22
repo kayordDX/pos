@@ -12,8 +12,6 @@
 
 	const query = createTableOrderGetBasket({ tableBookingId: Number(data.bookingId) });
 
-	// $: isBasketEmpty = !$basket || $basket.length == 0;
-
 	const refetch = async () => {
 		await $query.refetch();
 	};
@@ -26,7 +24,6 @@
 				tableBookingId: Number(data.bookingId),
 			},
 		});
-		// await clear();
 		goto("bill");
 	};
 </script>
@@ -41,18 +38,14 @@
 				{refetch}
 			/>
 		{/each}
-
-		<!-- {#if $basket}
-
-		{/if} -->
 	</div>
-	<!-- {#if isBasketEmpty}
+	{#if ($query.data?.orderItems.length ?? 0) <= 0}
 		<EmptyBasket />
-	{:else} -->
-	<div class="flex justify-end mt-4 gap-2 w-full">
-		<Button on:click={sendAllToKitchen} class="w-full"
-			>Send All to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" /></Button
-		>
-	</div>
-	<!-- {/if} -->
+	{:else}
+		<div class="flex justify-end mt-4 gap-2 w-full">
+			<Button on:click={sendAllToKitchen} class="w-full"
+				>Send All to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" /></Button
+			>
+		</div>
+	{/if}
 </div>

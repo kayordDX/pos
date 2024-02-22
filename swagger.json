@@ -220,94 +220,6 @@
         ]
       }
     },
-    "/role/createRole": {
-      "post": {
-        "tags": [
-          "Role"
-        ],
-        "operationId": "RoleCreate",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RoleCreateRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {}
-              },
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/role/addUserInRole": {
-      "post": {
-        "tags": [
-          "Role"
-        ],
-        "operationId": "RoleAddUserInRole",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RoleAddUserInRoleRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {}
-              },
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/order/updateTableOrder": {
       "post": {
         "tags": [
@@ -1475,6 +1387,135 @@
             }
           }
         }
+      }
+    },
+    "/role/createRole": {
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "operationId": "RoleCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/role/addUserInRole": {
+      "post": {
+        "tags": [
+          "Role"
+        ],
+        "operationId": "RoleAddUserInRole",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RoleAddUserInRoleRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/role": {
+      "get": {
+        "tags": [
+          "Role"
+        ],
+        "operationId": "RoleGetAll",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntitiesRole"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/pay/status/{reference}": {
@@ -2927,39 +2968,6 @@
         ],
         "properties": {
           "outletId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "RoleCreateRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "name",
-          "description"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          }
-        }
-      },
-      "RoleAddUserInRoleRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "userId",
-          "roleId"
-        ],
-        "properties": {
-          "userId": {
-            "type": "string"
-          },
-          "roleId": {
             "type": "integer",
             "format": "int32"
           }
@@ -4763,6 +4771,39 @@
         ],
         "properties": {
           "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "RoleCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "description"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          }
+        }
+      },
+      "RoleAddUserInRoleRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "roleId"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "roleId": {
             "type": "integer",
             "format": "int32"
           }

@@ -5,9 +5,17 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
-import { createMutation } from "@tanstack/svelte-query";
-import type { CreateMutationOptions, MutationFunction } from "@tanstack/svelte-query";
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
+	CreateMutationOptions,
+	CreateQueryOptions,
+	CreateQueryResult,
+	MutationFunction,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
+import type {
+	EntitiesRole,
 	InternalErrorResponse,
 	RoleAddUserInRole200One,
 	RoleAddUserInRole200Two,
@@ -150,4 +158,63 @@ export const createRoleAddUserInRole = <
 	const mutationOptions = useRoleAddUserInRoleMutationOptions(options);
 
 	return createMutation(mutationOptions);
+};
+export const useRoleGetAllHook = () => {
+	const roleGetAll = useCustomClient<EntitiesRole[]>();
+
+	return () => {
+		return roleGetAll({ url: `/role`, method: "GET" });
+	};
+};
+
+export const getRoleGetAllQueryKey = () => {
+	return [`/role`] as const;
+};
+
+export const useRoleGetAllQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useRoleGetAllHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof useRoleGetAllHook>>>, TError, TData>
+	>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getRoleGetAllQueryKey();
+
+	const roleGetAll = useRoleGetAllHook();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<ReturnType<typeof useRoleGetAllHook>>>> = () =>
+		roleGetAll();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useRoleGetAllHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type RoleGetAllQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useRoleGetAllHook>>>
+>;
+export type RoleGetAllQueryError = ErrorType<void | InternalErrorResponse>;
+
+export const createRoleGetAll = <
+	TData = Awaited<ReturnType<ReturnType<typeof useRoleGetAllHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof useRoleGetAllHook>>>, TError, TData>
+	>;
+}): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useRoleGetAllQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
 };

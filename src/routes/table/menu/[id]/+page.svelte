@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Input, Loader, Select } from "@kayord/ui";
-	import type { PageData } from "./$types";
+	import type { PageData } from "../$types";
 	import { SearchIcon } from "lucide-svelte";
 	import {
 		createMenuGetSectionsGetMenusSections,

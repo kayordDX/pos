@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card, Loader } from "@kayord/ui";
-	import type { PageData } from "./$types";
+	import type { PageData } from "../$types";
 	// import { basket } from "$lib/stores/basket";
 	import { createTableCashUpCreate, createPayGetLink, createPayStatus } from "$lib/api";
 	import { Nfc } from "lucide-svelte";
@@ -101,9 +101,7 @@
 		{#if $mutation.error}
 			<Error message={getError($mutation.error).message} />
 		{/if}
-		<Button class="w-full" href={`/table/${data.bookingId}/main/menu`} variant="outline"
-			>Cancel</Button
-		>
+		<Button class="w-full" href={`/table/menu/${data.bookingId}`} variant="outline">Cancel</Button>
 		{#if $getLink.isLoading}
 			<Loader />
 		{:else}
