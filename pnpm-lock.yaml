@@ -29,8 +29,8 @@ devDependencies:
     specifier: ^1.0.1
     version: 1.0.1
   '@kayord/ui':
-    specifier: ^0.5.0
-    version: 0.5.0(@sveltejs/kit@2.5.1)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.1)(svelte@4.2.11)(tailwindcss@3.4.1)
+    specifier: ^0.5.1
+    version: 0.5.1(@sveltejs/kit@2.5.1)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.1)(svelte@4.2.11)(tailwindcss@3.4.1)
   '@sveltejs/adapter-node':
     specifier: ^4.0.1
     version: 4.0.1(@sveltejs/kit@2.5.1)
@@ -908,18 +908,18 @@ packages:
       - ts-node
     dev: true
 
-  /@kayord/ui@0.5.0(@sveltejs/kit@2.5.1)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.1)(svelte@4.2.11)(tailwindcss@3.4.1):
-    resolution: {integrity: sha512-xdaqNKdAeXfHsw7mVrCcjejcp1+68DoZRgA0YKQdpiZKygqFmsLo0ycTq+oRGBnJxAPfOjvWukKGjoU+0foVQg==}
+  /@kayord/ui@0.5.1(@sveltejs/kit@2.5.1)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.1)(svelte@4.2.11)(tailwindcss@3.4.1):
+    resolution: {integrity: sha512-DOG5cdlQQuJCZzzJ5p9TlTRcBHeig0ChLHZXvtWPDhjXZL69zxH+903hbHQ9/GP0aUwXIW9cmB9LBjlwF2dMhw==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
       '@internationalized/date': 3.5.2
-      bits-ui: 0.18.1(svelte@4.2.11)
+      bits-ui: 0.18.2(svelte@4.2.11)
       clsx: 2.1.0
       cmdk-sv: 0.0.13(svelte@4.2.11)
       embla-carousel-svelte: 8.0.0-rc23(svelte@4.2.11)
       formsnap: 0.5.0(svelte@4.2.11)(sveltekit-superforms@2.5.0)
-      lucide-svelte: 0.334.0(svelte@4.2.11)
+      lucide-svelte: 0.336.0(svelte@4.2.11)
       mode-watcher: 0.2.1(svelte@4.2.11)
       svelte: 4.2.11
       svelte-headless-table: 0.18.2(svelte@4.2.11)
@@ -965,8 +965,8 @@ packages:
       svelte: 4.2.11
     dev: true
 
-  /@melt-ui/svelte@0.71.2(svelte@4.2.11):
-    resolution: {integrity: sha512-GDUErhAphEoEOLpcBjQ84BgzRR6M3344fQE4QYFffwT7aedWak7CvNsECgeig1Y5xvfDmeEaFnGlOQXIBucJYw==}
+  /@melt-ui/svelte@0.74.2(svelte@4.2.11):
+    resolution: {integrity: sha512-bIfZakPK4h6mOeoeqFnpksUGxkGp5JO2xtfhv/eXjG2rTogsSeVZRPe8eTtE7HoCbokP1+mVM9LqWxipsYTjUA==}
     peerDependencies:
       svelte: '>=3 <5'
     dependencies:
@@ -2153,13 +2153,13 @@ packages:
       svelte: 4.2.11
     dev: true
 
-  /bits-ui@0.18.1(svelte@4.2.11):
-    resolution: {integrity: sha512-6junivBQ3EIHeF9j8wDa5pgzegtOwaI61ny4X8F7h2SIJi4RJWwZknkT7O5qPLeGoIYNeYV7N6EOBrr1w9/Mxg==}
+  /bits-ui@0.18.2(svelte@4.2.11):
+    resolution: {integrity: sha512-N58gPRPmkWUjRZzxH69hPEPNYjGa+wvYGqdBSYhGp0DzfAkqNeXLN7YN3qqpJxF+DFFBz5kLia6LzNLX5djuPA==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
       '@internationalized/date': 3.5.2
-      '@melt-ui/svelte': 0.71.2(svelte@4.2.11)
+      '@melt-ui/svelte': 0.74.2(svelte@4.2.11)
       nanoid: 5.0.6
       svelte: 4.2.11
     dev: true
@@ -3670,21 +3670,12 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /lucide-svelte@0.334.0(svelte@4.2.11):
-    resolution: {integrity: sha512-wY5pI3uhT3PrmMLSL37Pv5xb4jXyZez3TEHFyd/5Rlyw3lZrLcdM4iVVLuwzQg7XmJco/S8LJNVaAuJ0iX7WqA==}
-    peerDependencies:
-      svelte: ^3 || ^4 || ^5.0.0-next.42
-    dependencies:
-      svelte: 4.2.11
-    dev: true
-
   /lucide-svelte@0.336.0(svelte@4.2.11):
     resolution: {integrity: sha512-43wL/CZV/vUDenXlBAkowKOKjG23OElOPtk+92nccKsAYmZ7+hHpC7LlbYptmLd/I0+ZCquD8UodsPx6aDJ6eg==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
     dependencies:
       svelte: 4.2.11
-    dev: false
 
   /magic-string@0.30.5:
     resolution: {integrity: sha512-7xlpfBaQaP/T6Vh8MO/EqXSW5En6INHEvEXQiuff7Gku0PWjU3uf6w/j9o7O+SpB5fOAkrI5HeoNgwjEO0pFsA==}

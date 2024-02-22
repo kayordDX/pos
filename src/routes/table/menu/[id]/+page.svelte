@@ -71,7 +71,9 @@
 	<Menus menus={data.menu ?? []} />
 	<div class="flex gap-2 my-2 flex-wrap items-center w-full overflow-x-scroll p-2">
 		{#if $sectionsQuery.isPending}
-			<Loader />
+			<div class="w-full">
+				<Loader />
+			</div>
 		{/if}
 		<Categories sections={$sectionsQuery.data} bind:itemParams bind:sectionParams />
 	</div>

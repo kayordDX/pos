@@ -1,20 +1,51 @@
 <script lang="ts">
-	import { createOrderAddItems, type DTOMenuItemDTO, type DTOMenuItemDTOBasic } from "$lib/api";
-	import { Button, Checkbox, Drawer, Form, Separator, Textarea } from "@kayord/ui";
+	import {
+		createOrderAddItems,
+		type DTOMenuItemDTO,
+		type DTOMenuItemDTOBasic,
+		type DTOOptionDTO,
+	} from "$lib/api";
+	import { Button, Checkbox, Drawer, Form, Textarea } from "@kayord/ui";
 	import { zod } from "sveltekit-superforms/adapters";
-	import { defaults, message, superForm } from "sveltekit-superforms/client";
+	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { Field, Control, FieldErrors, Fieldset, Legend, Label } from "@kayord/ui/formsnap";
-	import SuperDebug from "sveltekit-superforms";
 
 	export let data: DTOMenuItemDTO;
 	export let menuItem: DTOMenuItemDTOBasic;
 	export let tableBookingId: number;
 	export let open = false;
 
+	const getSelectedCountInOptionGroup = (options: Array<DTOOptionDTO>) => {
+		return options.filter((x) => $formData.options.includes(x.optionId)).length;
+	};
+
 	const schema = z.object({
 		note: z.string(),
 		extras: z.array(z.number()),
+		options: z.array(z.number()).superRefine((val, ctx) => {
+			data.menuItemOptionGroups.map((o) => {
+				const maxSelections = o.optionGroup.maxSelections;
+				const minSelections = o.optionGroup.minSelections;
+				const count = getSelectedCountInOptionGroup(o.optionGroup.options);
+				if (count > maxSelections) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: `${o.optionGroup.name} has maxSelection as ${maxSelections} but has ${count}`,
+						fatal: true,
+					});
+					return;
+				}
+				if (count < minSelections) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: `${o.optionGroup.name} has minSelections as ${maxSelections} but has ${count}`,
+						fatal: true,
+					});
+					return;
+				}
+			});
+		}),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -23,7 +54,14 @@
 	const onSubmit = async (data: FormSchema) => {
 		$mutation.mutateAsync({
 			data: {
-				orders: [{ menuItemId: menuItem.menuItemId, extraIds: [], optionIds: [], note: data.note }],
+				orders: [
+					{
+						menuItemId: menuItem.menuItemId,
+						extraIds: data.extras,
+						optionIds: data.options,
+						note: data.note,
+					},
+				],
 				tableBookingId: tableBookingId,
 			},
 		});
@@ -40,12 +78,20 @@
 		},
 	});
 
-	function addItem(id: number) {
+	function addExtra(id: number) {
 		$formData.extras = [...$formData.extras, id];
 	}
 
-	function removeItem(id: number) {
+	function removeExtra(id: number) {
 		$formData.extras = $formData.extras.filter((i) => i !== id);
+	}
+
+	function addOption(id: number) {
+		$formData.options = [...$formData.options, id];
+	}
+
+	function removeOption(id: number) {
+		$formData.options = $formData.options.filter((i) => i !== id);
 	}
 
 	const { form: formData, enhance } = form;
@@ -57,54 +103,84 @@
 		<Drawer.Description>{menuItem.description}</Drawer.Description>
 		<div class="font-bold">R {menuItem.price.toFixed(2)}</div>
 	</Drawer.Header>
-	<div class="flex flex-col gap-2 p-4">
+	<div class="flex flex-col gap-5 p-4 pt-0">
+		<div>
+			{#if data.menuItemOptionGroups.length > 0}
+				<h3 class="font-bold">Options</h3>
+			{/if}
+			<Fieldset {form} name="options" class="mt-2">
+				{#each data.menuItemOptionGroups as optionGroup}
+					<Legend>
+						{optionGroup.optionGroup.name} - {optionGroup.optionGroup.minSelections}/{optionGroup
+							.optionGroup.maxSelections}
+					</Legend>
+
+					{#each optionGroup.optionGroup.options as option}
+						{@const checked = $formData.options.includes(option.optionId)}
+						<div class="p-1 flex items-center gap-2">
+							<Control let:attrs>
+								<Checkbox
+									class="rounded-[4px] w-4 h-4"
+									{...attrs}
+									{checked}
+									onCheckedChange={(v) => {
+										if (v) {
+											addOption(option.optionId);
+										} else {
+											removeOption(option.optionId);
+										}
+									}}
+								/>
+								<input hidden type="checkbox" name={attrs.name} value={option.optionId} {checked} />
+								<Label>{option.name} - R{option.price.toFixed(2)}</Label>
+							</Control>
+						</div>
+					{/each}
+				{/each}
+				<FieldErrors class="text-destructive" />
+			</Fieldset>
+		</div>
+		<div>
+			{#if data.menuItemExtraGroups.length > 0}
+				<h3 class="font-bold">Extras</h3>
+			{/if}
+			{#each data.menuItemExtraGroups as extraGroup}
+				<Fieldset {form} name="extras" class="mt-2">
+					<Legend>{extraGroup.extraGroup.name}</Legend>
+					{#each extraGroup.extraGroup.extras as extra}
+						{@const checked = $formData.extras.includes(extra.extraId)}
+						<div class="p-1 flex items-center gap-2">
+							<Control let:attrs>
+								<Checkbox
+									class="rounded-[4px]"
+									{...attrs}
+									{checked}
+									onCheckedChange={(v) => {
+										if (v) {
+											addExtra(extra.extraId);
+										} else {
+											removeExtra(extra.extraId);
+										}
+									}}
+								/>
+								<input hidden type="checkbox" name={attrs.name} value={extra.extraId} {checked} />
+								<Label>{extra.name} - R{extra.price.toFixed(2)}</Label>
+							</Control>
+						</div>
+					{/each}
+					<FieldErrors />
+				</Fieldset>
+			{/each}
+		</div>
 		<Field {form} name="note">
 			<Control let:attrs>
 				<Form.Label>Special instructions</Form.Label>
-				<Textarea {...attrs} bind:value={$formData.note} />
+				<Textarea {...attrs} bind:value={$formData.note} tabindex={-1} />
 			</Control>
 			<FieldErrors />
 		</Field>
 	</div>
-	{#each data.menuItemOptionGroups as optionGroup}
-		{optionGroup.optionGroup.name} - {optionGroup.optionGroup.minSelections}/{optionGroup
-			.optionGroup.maxSelections}
-		{#each optionGroup.optionGroup.options as option}
-			<div>Option: {option.optionGroupId} {option.name} {option.price}</div>
-		{/each}
-	{/each}
-	<Separator />
-	{#each data.menuItemExtraGroups as extraGroup}
-		<Fieldset {form} name="extras">
-			<Legend>{extraGroup.extraGroup.name}</Legend>
-			{#each extraGroup.extraGroup.extras as extra}
-				{@const checked = $formData.extras.includes(extra.extraId)}
-				<div class="p-1">
-					<Control let:attrs>
-						<Checkbox
-							class="rounded-[4px]"
-							{...attrs}
-							{checked}
-							onCheckedChange={(v) => {
-								if (v) {
-									addItem(extra.extraId);
-								} else {
-									removeItem(extra.extraId);
-								}
-							}}
-						/>
-						<input hidden type="checkbox" name={attrs.name} value={extra.extraId} {checked} />
-						<Label>{extra.name} - R{extra.price.toFixed(2)}</Label>
-					</Control>
-				</div>
-			{/each}
-			<FieldErrors />
-		</Fieldset>
-	{/each}
-	<Separator />
-
 	<Drawer.Footer>
 		<Button type="submit">Add</Button>
 	</Drawer.Footer>
-	<SuperDebug data={$formData} />
 </form>
