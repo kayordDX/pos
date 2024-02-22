@@ -13,7 +13,7 @@
 		if ($page.route.id?.includes("menu")) return "menu";
 		if ($page.route.id?.includes("bill")) return "bill";
 		if ($page.route.id?.includes("basket")) return "basket";
-		return "bill";
+		return "";
 	};
 </script>
 
@@ -25,6 +25,7 @@
 			if (s == "menu") {
 				goto(`/table/menu/${data.bookingId}`);
 			} else if (s == "bill") {
+				console.log("it matched the bill");
 				goto(`/table/bill/${data.bookingId}`);
 			} else if (s == "basket") {
 				goto(`/table/basket/${data.bookingId}`);

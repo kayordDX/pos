@@ -6,6 +6,7 @@
 	} from "$lib/api";
 	import { Badge } from "@kayord/ui";
 	import { ChevronRightIcon, HomeIcon, MoreHorizontalIcon } from "lucide-svelte";
+	import { useConveyer } from "@egjs/svelte-conveyer";
 
 	export let sections: MenuGetSectionsResponse | undefined;
 	export let sectionParams: MenuGetSectionsGetMenusSectionsParams;
@@ -14,9 +15,11 @@
 		sectionParams.sectionId = sectionId;
 		itemParams.sectionId = sectionId;
 	};
+
+	const { ref } = useConveyer({ useSideWheel: true, preventClickOnDrag: true });
 </script>
 
-<div class="flex gap-1 items-center">
+<div class="overflow-hidden overscroll-none select-none m-auto flex flex-nowrap gap-2" use:ref>
 	{#if sections != null}
 		{#if sectionParams.sectionId > 0}
 			<button

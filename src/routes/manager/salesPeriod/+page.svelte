@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Card, Input, Label } from "@kayord/ui";
 	import { Button } from "@kayord/ui";
-	import { createSalesPeriodCreate, createSalesPeriodGet } from "$lib/api";
+	import { createSalesPeriodCreate } from "$lib/api";
 	import { page } from "$app/stores";
 	import { getFlash } from "sveltekit-flash-message/client";
 	import { goto, invalidateAll } from "$app/navigation";

@@ -3,6 +3,8 @@
 	import type { PageData } from "../$types";
 	import { createTableOrderGetBill } from "$lib/api";
 	import Item from "./Item.svelte";
+	import Error from "$lib/components/Error.svelte";
+	import { getError } from "$lib/types";
 
 	export let data: PageData;
 
@@ -10,7 +12,7 @@
 </script>
 
 {#if $query.error}
-	It errorsed
+	<Error message={getError($query.error).message} />
 {/if}
 
 {#if $query.isPending}

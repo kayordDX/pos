@@ -44,12 +44,11 @@ const authorization: Handle = async ({ event, resolve }) => {
 			if (!session) {
 				throw redirect(303, "/login");
 			}
+		} else {
+			if (session) {
+				throw redirect(303, "/");
+			}
 		}
-		// else {
-		// 	if (session) {
-		// 		throw redirect(303, "/");
-		// 	}
-		// }
 	}
 	return resolve(event);
 };
