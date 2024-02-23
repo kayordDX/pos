@@ -65,7 +65,7 @@
 				<SearchIcon class="absolute right-2 h-4 w-4" />
 			{/if}
 		</div>
-		<Button><FilterIcon class="w-5 h-5" /> Filter</Button>
+		<!-- <Button><FilterIcon class="w-5 h-5" /> Filter</Button> -->
 	</div>
 
 	<Menus menus={data.menu ?? []} />

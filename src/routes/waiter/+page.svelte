@@ -50,7 +50,7 @@
 					</Card.Root>
 				</a>
 			{/each}
-			<Button href="/table/book"><NotebookIcon class="h-5 w-5 mr-2" /> Book a Table</Button>
+			<Button href="/tables/book"><NotebookIcon class="h-5 w-5 mr-2" /> Book a Table</Button>
 		</div>
 
 		<h1 class="mt-8">My Orders</h1>
