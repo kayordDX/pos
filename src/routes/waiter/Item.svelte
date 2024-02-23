@@ -1,13 +1,6 @@
 <script lang="ts">
 	import type { TableOrderKitchenOrderItemDTO } from "$lib/api";
-	import { Badge, Button, Card, Drawer } from "@kayord/ui";
-	import { ConciergeBellIcon } from "lucide-svelte";
-	import { createTableOrderUpdateOrderItem } from "$lib/api";
-	export let refetch: () => void;
-	let open = false;
-
-	const mutation = createTableOrderUpdateOrderItem();
-
+	import { Badge, Card } from "@kayord/ui";
 	export let item: TableOrderKitchenOrderItemDTO;
 
 	const getStatus = () => {
@@ -23,13 +16,6 @@
 			return "background-color: rgb(245 158 11);";
 		}
 		return "background-color: rgb(34 197 94);";
-	};
-
-	const setStatus = async (statusId: number, orderItemId: number) => {
-		await $mutation.mutateAsync({
-			data: { orderItemId, orderItemStatusId: statusId },
-		});
-		refetch();
 	};
 </script>
 
@@ -73,30 +59,9 @@
 			{/if}
 		</div>
 		<div class="flex items-center gap-2">
-			<Badge class="truncate animate-pulse" style={getStatus()}>{item.orderUpdatedFormatted}</Badge>
-			<Drawer.Root bind:open>
-				<Drawer.Trigger>
-					<Button><ConciergeBellIcon class="h-4 w-4 mr-2" />Action</Button>
-				</Drawer.Trigger>
-				<Drawer.Content>
-					<Drawer.Header>
-						<Drawer.Title>Item Actions</Drawer.Title>
-						<Drawer.Description>{item.menuItem.name}</Drawer.Description>
-					</Drawer.Header>
-					<Drawer.Footer>
-						<Drawer.Close>
-							<Button on:click={() => setStatus(5, item.orderItemId)} class="w-full">Ready</Button>
-						</Drawer.Close>
-						<Drawer.Close>
-							<Button
-								variant="destructive"
-								on:click={() => setStatus(4, item.orderItemId)}
-								class="w-full">Cancel Order</Button
-							>
-						</Drawer.Close>
-					</Drawer.Footer>
-				</Drawer.Content>
-			</Drawer.Root>
+			<Badge>{item.orderItemStatus?.status}</Badge>
+			<Badge class="truncate animate-pulse" style={getStatus()}>{item.orderReceivedFormatted}</Badge
+			>
 		</div>
 	</div>
 </Card.Root>

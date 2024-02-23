@@ -24,17 +24,20 @@
 				tableBookingId: Number(data.bookingId),
 			},
 		});
-		goto("bill");
+		goto(`/table/bill/${data.bookingId}`);
 	};
 </script>
 
 <div class="m-4">
 	<div class="flex flex-col gap-2" use:autoAnimate>
-		{#each $query.data?.orderItems ?? [] as item, i (item.menuItemId)}
+		{#each $query.data?.orderItems ?? [] as item, i (item.orderItemId)}
 			<BasketItem
 				id={item.orderItemId}
 				name={item.menuItem.name}
 				price={item.menuItem.price}
+				note={item.note}
+				options={item.orderItemOptions ?? []}
+				extras={item.orderItemExtras ?? []}
 				{refetch}
 			/>
 		{/each}
@@ -43,9 +46,9 @@
 		<EmptyBasket />
 	{:else}
 		<div class="flex justify-end mt-4 gap-2 w-full">
-			<Button on:click={sendAllToKitchen} class="w-full"
-				>Send All to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" /></Button
-			>
+			<Button on:click={sendAllToKitchen} class="w-full">
+				Send All to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" />
+			</Button>
 		</div>
 	{/if}
 </div>

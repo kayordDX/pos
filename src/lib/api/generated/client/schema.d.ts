@@ -85,6 +85,9 @@ export interface paths {
   "/salesPeriod/close": {
     post: operations["SalesPeriodClose"];
   };
+  "/salesperiod/cashup": {
+    get: operations["SalesPeriodCashUp"];
+  };
   "/role/createRole": {
     post: operations["RoleCreate"];
   };
@@ -337,16 +340,18 @@ export interface components {
       /** Format: int32 */
       tableBookingId: number;
       menuItem: components["schemas"]["TableOrderKitchenMenuItemDTO"];
-      options?: components["schemas"]["DTOOptionDTO"][] | null;
-      extras?: components["schemas"]["DTOExtraDTO"][] | null;
       /** Format: int32 */
       divisionId: number;
       note?: string | null;
       /** Format: date-time */
       orderReceived: string;
+      /** Format: date-time */
+      orderUpdated: string;
       orderReceivedFormatted: string;
+      orderUpdatedFormatted: string;
       /** Format: int32 */
       orderItemStatusId: number;
+      orderItemStatus?: components["schemas"]["TableOrderKitchenOrderItemStatusDTO"] | null;
       orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
       orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
     };
@@ -362,23 +367,10 @@ export interface components {
       /** Format: int32 */
       divisionId?: number | null;
     };
-    DTOOptionDTO: {
+    TableOrderKitchenOrderItemStatusDTO: {
       /** Format: int32 */
-      optionId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      optionGroupId: number;
-    };
-    DTOExtraDTO: {
-      /** Format: int32 */
-      extraId: number;
-      name: string;
-      /** Format: int32 */
-      positionId: number;
-      /** Format: decimal */
-      price: number;
+      orderItemStatusId: number;
+      status: string;
     };
     DTOOrderItemOptionDTO: {
       /** Format: int32 */
@@ -389,6 +381,21 @@ export interface components {
       optionId: number;
       option: components["schemas"]["DTOOptionDTO"];
     };
+    DTOOptionDTO: {
+      /** Format: int32 */
+      optionId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      optionGroupId: number;
+      optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
+    };
+    DTOOptionGroupBasicDTO: {
+      /** Format: int32 */
+      optionGroupId: number;
+      name: string;
+    };
     DTOOrderItemExtraDTO: {
       /** Format: int32 */
       orderItemExtraId: number;
@@ -397,6 +404,23 @@ export interface components {
       /** Format: int32 */
       extraId: number;
       extra: components["schemas"]["DTOExtraDTO"];
+    };
+    DTOExtraDTO: {
+      /** Format: int32 */
+      extraId: number;
+      name: string;
+      /** Format: int32 */
+      positionId: number;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      extraGroupId: number;
+      extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
+    };
+    DTOExtraGroupBasicDTO: {
+      /** Format: int32 */
+      extraGroupId: number;
+      name: string;
     };
     DTOUserDTO: {
       userId: string;
@@ -409,6 +433,11 @@ export interface components {
       orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
       /** Format: decimal */
       total: number;
+      paymentsReceived: components["schemas"]["EntitiesPayment"][];
+      /** Format: decimal */
+      balance: number;
+      /** Format: decimal */
+      tipAmount: number;
     };
     TableOrderGetBillBillOrderItemDTO: {
       /** Format: int32 */
@@ -419,8 +448,8 @@ export interface components {
       /** Format: int32 */
       menuItemId: number;
       menuItem: components["schemas"]["TableOrderGetBillBillMenuItemDTO"];
-      options?: components["schemas"]["DTOOptionDTO"][] | null;
-      extras?: components["schemas"]["DTOExtraDTO"][] | null;
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
       note?: string | null;
     };
     DTOTableBookingDTO: {
@@ -441,6 +470,18 @@ export interface components {
       /** Format: decimal */
       price: number;
     };
+    EntitiesPayment: {
+      /** Format: int32 */
+      id: number;
+      paymentReference: string;
+      /** Format: int32 */
+      tableBookingId: number;
+      /** Format: decimal */
+      amount: number;
+      userId: string;
+      /** Format: date-time */
+      dateReceived: string;
+    };
     TableOrderGetBillRequest: Record<string, never>;
     TableOrderGetBasketResponse: {
       orderItems: components["schemas"]["TableOrderGetBasketBillOrderItemDTO"][];
@@ -456,8 +497,8 @@ export interface components {
       /** Format: int32 */
       menuItemId: number;
       menuItem: components["schemas"]["TableOrderGetBasketBillMenuItemDTO"];
-      options?: components["schemas"]["DTOOptionDTO"][] | null;
-      extras?: components["schemas"]["DTOExtraDTO"][] | null;
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
       note?: string | null;
     };
     TableOrderGetBasketBillMenuItemDTO: {
@@ -479,6 +520,8 @@ export interface components {
       menuItem: components["schemas"]["EntitiesMenuItem"];
       /** Format: date-time */
       orderReceived: string;
+      /** Format: date-time */
+      orderUpdated: string;
       /** Format: date-time */
       orderCompleted?: string | null;
       /** Format: int32 */
@@ -517,6 +560,8 @@ export interface components {
       userId: string;
       /** Format: int32 */
       roleId: number;
+      isFrontLine: boolean;
+      isBackOffice: boolean;
       user: components["schemas"]["EntitiesUser"];
       role?: components["schemas"]["EntitiesRole"] | null;
     };
@@ -806,6 +851,62 @@ export interface components {
       /** Format: int32 */
       salesPeriodId: number;
     };
+    SalesPeriodCashUpCashUp: {
+      userCashUps: components["schemas"]["SalesPeriodCashUpUserCashUp"][];
+      /** Format: decimal */
+      cashUpTotal: number;
+      /** Format: int32 */
+      tableCount: number;
+      /** Format: decimal */
+      cashUpBalance: number;
+      /** Format: decimal */
+      cashUpTotalPayments: number;
+      /** Format: int32 */
+      salesPeriodId: number;
+      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
+    };
+    SalesPeriodCashUpUserCashUp: {
+      tableCashUps: components["schemas"]["SalesPeriodCashUpTableCashUp"][];
+      userId: string;
+      /** Format: decimal */
+      userTotal: number;
+      /** Format: decimal */
+      userBalance: number;
+      /** Format: decimal */
+      userPaymentTotal: number;
+    };
+    SalesPeriodCashUpTableCashUp: {
+      orderItems: components["schemas"]["SalesPeriodCashUpBillOrderItemDTO"][];
+      /** Format: decimal */
+      total: number;
+      paymentsReceived: components["schemas"]["EntitiesPayment"][];
+      /** Format: decimal */
+      tablePaymentTotal: number;
+      /** Format: decimal */
+      balance: number;
+      userId: string;
+    };
+    SalesPeriodCashUpBillOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      tableBooking: components["schemas"]["DTOTableBookingDTO"];
+      /** Format: int32 */
+      menuItemId: number;
+      menuItem: components["schemas"]["SalesPeriodCashUpBillMenuItemDTO"];
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+      note?: string | null;
+    };
+    SalesPeriodCashUpBillMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+    };
+    SalesPeriodCashUpRequest: Record<string, never>;
     RoleCreateRequest: {
       name: string;
       description: string;
@@ -1689,6 +1790,27 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["EntitiesSalesPeriod"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  SalesPeriodCashUp: {
+    parameters: {
+      query: {
+        salesPeriodId: number;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["SalesPeriodCashUpCashUp"];
         };
       };
       /** @description Server Error */

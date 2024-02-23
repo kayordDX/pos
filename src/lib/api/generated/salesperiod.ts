@@ -18,6 +18,8 @@ import type {
 	EntitiesSalesPeriod,
 	ErrorResponse,
 	InternalErrorResponse,
+	SalesPeriodCashUpCashUp,
+	SalesPeriodCashUpParams,
 	SalesPeriodCloseRequest,
 	SalesPeriodCreateRequest,
 } from "./api.schemas";
@@ -230,4 +232,78 @@ export const createSalesPeriodClose = <
 	const mutationOptions = useSalesPeriodCloseMutationOptions(options);
 
 	return createMutation(mutationOptions);
+};
+export const useSalesPeriodCashUpHook = () => {
+	const salesPeriodCashUp = useCustomClient<SalesPeriodCashUpCashUp>();
+
+	return (params: SalesPeriodCashUpParams) => {
+		return salesPeriodCashUp({ url: `/salesperiod/cashup`, method: "GET", params });
+	};
+};
+
+export const getSalesPeriodCashUpQueryKey = (params: SalesPeriodCashUpParams) => {
+	return [`/salesperiod/cashup`, ...(params ? [params] : [])] as const;
+};
+
+export const useSalesPeriodCashUpQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: SalesPeriodCashUpParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getSalesPeriodCashUpQueryKey(params);
+
+	const salesPeriodCashUp = useSalesPeriodCashUpHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>
+	> = () => salesPeriodCashUp(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type SalesPeriodCashUpQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>
+>;
+export type SalesPeriodCashUpQueryError = ErrorType<InternalErrorResponse>;
+
+export const createSalesPeriodCashUp = <
+	TData = Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: SalesPeriodCashUpParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useSalesPeriodCashUpQueryOptions(params, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
 };

@@ -1389,6 +1389,47 @@
         }
       }
     },
+    "/salesperiod/cashup": {
+      "get": {
+        "tags": [
+          "Salesperiod"
+        ],
+        "operationId": "SalesPeriodCashUp",
+        "parameters": [
+          {
+            "name": "salesPeriodId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SalesPeriodCashUpCashUp"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/role/createRole": {
       "post": {
         "tags": [
@@ -3206,7 +3247,9 @@
           "menuItem",
           "divisionId",
           "orderReceived",
+          "orderUpdated",
           "orderReceivedFormatted",
+          "orderUpdatedFormatted",
           "orderItemStatusId"
         ],
         "properties": {
@@ -3221,20 +3264,6 @@
           "menuItem": {
             "$ref": "#/components/schemas/TableOrderKitchenMenuItemDTO"
           },
-          "options": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/DTOOptionDTO"
-            }
-          },
-          "extras": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/DTOExtraDTO"
-            }
-          },
           "divisionId": {
             "type": "integer",
             "format": "int32"
@@ -3247,12 +3276,27 @@
             "type": "string",
             "format": "date-time"
           },
+          "orderUpdated": {
+            "type": "string",
+            "format": "date-time"
+          },
           "orderReceivedFormatted": {
+            "type": "string"
+          },
+          "orderUpdatedFormatted": {
             "type": "string"
           },
           "orderItemStatusId": {
             "type": "integer",
             "format": "int32"
+          },
+          "orderItemStatus": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TableOrderKitchenOrderItemStatusDTO"
+              }
+            ]
           },
           "orderItemOptions": {
             "type": "array",
@@ -3306,57 +3350,20 @@
           }
         }
       },
-      "DTOOptionDTO": {
+      "TableOrderKitchenOrderItemStatusDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "optionId",
-          "name",
-          "price",
-          "optionGroupId"
+          "orderItemStatusId",
+          "status"
         ],
         "properties": {
-          "optionId": {
+          "orderItemStatusId": {
             "type": "integer",
             "format": "int32"
           },
-          "name": {
+          "status": {
             "type": "string"
-          },
-          "price": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "optionGroupId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "DTOExtraDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "extraId",
-          "name",
-          "positionId",
-          "price"
-        ],
-        "properties": {
-          "extraId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "positionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "price": {
-            "type": "number",
-            "format": "decimal"
           }
         }
       },
@@ -3387,6 +3394,54 @@
           }
         }
       },
+      "DTOOptionDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "optionId",
+          "name",
+          "price",
+          "optionGroupId",
+          "optionGroup"
+        ],
+        "properties": {
+          "optionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroup": {
+            "$ref": "#/components/schemas/DTOOptionGroupBasicDTO"
+          }
+        }
+      },
+      "DTOOptionGroupBasicDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "optionGroupId",
+          "name"
+        ],
+        "properties": {
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
       "DTOOrderItemExtraDTO": {
         "type": "object",
         "additionalProperties": false,
@@ -3411,6 +3466,59 @@
           },
           "extra": {
             "$ref": "#/components/schemas/DTOExtraDTO"
+          }
+        }
+      },
+      "DTOExtraDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "extraId",
+          "name",
+          "positionId",
+          "price",
+          "extraGroupId",
+          "extraGroup"
+        ],
+        "properties": {
+          "extraId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "positionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extraGroup": {
+            "$ref": "#/components/schemas/DTOExtraGroupBasicDTO"
+          }
+        }
+      },
+      "DTOExtraGroupBasicDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "extraGroupId",
+          "name"
+        ],
+        "properties": {
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
           }
         }
       },
@@ -3447,7 +3555,10 @@
         "additionalProperties": false,
         "required": [
           "orderItems",
-          "total"
+          "total",
+          "paymentsReceived",
+          "balance",
+          "tipAmount"
         ],
         "properties": {
           "orderItems": {
@@ -3457,6 +3568,20 @@
             }
           },
           "total": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "paymentsReceived": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntitiesPayment"
+            }
+          },
+          "balance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "tipAmount": {
             "type": "number",
             "format": "decimal"
           }
@@ -3491,18 +3616,18 @@
           "menuItem": {
             "$ref": "#/components/schemas/TableOrderGetBillBillMenuItemDTO"
           },
-          "options": {
+          "orderItemOptions": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/DTOOptionDTO"
+              "$ref": "#/components/schemas/DTOOrderItemOptionDTO"
             }
           },
-          "extras": {
+          "orderItemExtras": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/DTOExtraDTO"
+              "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
             }
           },
           "note": {
@@ -3568,6 +3693,42 @@
           }
         }
       },
+      "EntitiesPayment": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "paymentReference",
+          "tableBookingId",
+          "amount",
+          "userId",
+          "dateReceived"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentReference": {
+            "type": "string"
+          },
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "dateReceived": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "TableOrderGetBillRequest": {
         "type": "object",
         "additionalProperties": false
@@ -3621,18 +3782,18 @@
           "menuItem": {
             "$ref": "#/components/schemas/TableOrderGetBasketBillMenuItemDTO"
           },
-          "options": {
+          "orderItemOptions": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/DTOOptionDTO"
+              "$ref": "#/components/schemas/DTOOrderItemOptionDTO"
             }
           },
-          "extras": {
+          "orderItemExtras": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/DTOExtraDTO"
+              "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
             }
           },
           "note": {
@@ -3677,6 +3838,7 @@
           "menuItemId",
           "menuItem",
           "orderReceived",
+          "orderUpdated",
           "orderItemStatusId"
         ],
         "properties": {
@@ -3699,6 +3861,10 @@
             "$ref": "#/components/schemas/EntitiesMenuItem"
           },
           "orderReceived": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderUpdated": {
             "type": "string",
             "format": "date-time"
           },
@@ -3828,6 +3994,8 @@
           "userRoleId",
           "userId",
           "roleId",
+          "isFrontLine",
+          "isBackOffice",
           "user"
         ],
         "properties": {
@@ -3841,6 +4009,12 @@
           "roleId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isFrontLine": {
+            "type": "boolean"
+          },
+          "isBackOffice": {
+            "type": "boolean"
           },
           "user": {
             "$ref": "#/components/schemas/EntitiesUser"
@@ -4851,6 +5025,200 @@
             "format": "int32"
           }
         }
+      },
+      "SalesPeriodCashUpCashUp": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userCashUps",
+          "cashUpTotal",
+          "tableCount",
+          "cashUpBalance",
+          "cashUpTotalPayments",
+          "salesPeriodId",
+          "salesPeriod"
+        ],
+        "properties": {
+          "userCashUps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesPeriodCashUpUserCashUp"
+            }
+          },
+          "cashUpTotal": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "tableCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cashUpBalance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "cashUpTotalPayments": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "salesPeriod": {
+            "$ref": "#/components/schemas/EntitiesSalesPeriod"
+          }
+        }
+      },
+      "SalesPeriodCashUpUserCashUp": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableCashUps",
+          "userId",
+          "userTotal",
+          "userBalance",
+          "userPaymentTotal"
+        ],
+        "properties": {
+          "tableCashUps": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesPeriodCashUpTableCashUp"
+            }
+          },
+          "userId": {
+            "type": "string"
+          },
+          "userTotal": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "userBalance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "userPaymentTotal": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "SalesPeriodCashUpTableCashUp": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItems",
+          "total",
+          "paymentsReceived",
+          "tablePaymentTotal",
+          "balance",
+          "userId"
+        ],
+        "properties": {
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SalesPeriodCashUpBillOrderItemDTO"
+            }
+          },
+          "total": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "paymentsReceived": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntitiesPayment"
+            }
+          },
+          "tablePaymentTotal": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "balance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "SalesPeriodCashUpBillOrderItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId",
+          "tableBookingId",
+          "tableBooking",
+          "menuItemId",
+          "menuItem"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBooking": {
+            "$ref": "#/components/schemas/DTOTableBookingDTO"
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/SalesPeriodCashUpBillMenuItemDTO"
+          },
+          "orderItemOptions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOOrderItemOptionDTO"
+            }
+          },
+          "orderItemExtras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
+            }
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SalesPeriodCashUpBillMenuItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "name",
+          "price"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "SalesPeriodCashUpRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "RoleCreateRequest": {
         "type": "object",

@@ -6,6 +6,7 @@
 	import { getError } from "$lib/types";
 	import { NotebookIcon, Rows4Icon, CalendarOffIcon } from "lucide-svelte";
 	import { createTableGetMyBooked } from "$lib/api";
+	import Orders from "./Orders.svelte";
 
 	const query = createTableGetMyBooked({ myBooking: true, outletId: data.status?.outletId ?? 0 });
 </script>
@@ -37,10 +38,10 @@
 			<Error message={getError($query.error).message} />
 		{/if}
 
-		<div class="flex flex-wrap gap-4 mt-4">
+		<div class="flex flex-col flex-wrap gap-2 mt-4 items-start">
 			{#each $query.data ?? [] as myTable}
-				<a href={`/table/menu/${myTable.id}`}>
-					<Card.Root class="p-5 w-48">
+				<a href={`/table/menu/${myTable.id}`} class="w-full">
+					<Card.Root class="p-5 w-full">
 						<div class="flex justify-between">
 							<h3>{myTable?.table?.name}</h3>
 							<Badge>{myTable?.table?.section?.name}</Badge>
@@ -49,11 +50,12 @@
 					</Card.Root>
 				</a>
 			{/each}
+			<Button href="/table/book"><NotebookIcon class="h-5 w-5 mr-2" /> Book a Table</Button>
 		</div>
 
-		<h1 class="mt-8">Table Booking</h1>
-		<p class="text-muted-foreground mb-4">Book a new table</p>
-		<Button href="/table/book"><NotebookIcon class="h-5 w-5 mr-2" /> Book a Table</Button>
+		<h1 class="mt-8">My Orders</h1>
+		<p class="text-muted-foreground mb-4">Active Orders</p>
+		<Orders />
 
 		<h1 class="mt-8">Other Tables</h1>
 		<p class="text-muted-foreground mb-4">Tables managed by other users</p>
