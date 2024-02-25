@@ -1,13 +1,11 @@
 <script lang="ts">
 	import { Button, Card, Loader } from "@kayord/ui";
 	import type { PageData } from "../$types";
-	// import { basket } from "$lib/stores/basket";
 	import { createTableCashUpCreate, createPayGetLink, createPayStatus } from "$lib/api";
 	import { Nfc } from "lucide-svelte";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import { onMount } from "svelte";
 	export let data: PageData;
 
 	$: total = () => {
