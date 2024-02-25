@@ -23,11 +23,11 @@
 	<Tabs.Root
 		value={getValue()}
 		onValueChange={(s) => {
+			console.log("navigating", s);
 			if (browser) {
 				if (s == "menu") {
 					goto(`/table/menu/${data.bookingId}`);
 				} else if (s == "bill") {
-					console.log("it matched the bill");
 					goto(`/table/bill/${data.bookingId}`);
 				} else if (s == "basket") {
 					goto(`/table/basket/${data.bookingId}`);

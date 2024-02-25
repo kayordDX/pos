@@ -56,6 +56,9 @@ export interface paths {
   "/tableBooking": {
     post: operations["TableBookingCreate"];
   };
+  "/tableBooking/close": {
+    post: operations["TableBookingClose"];
+  };
   "/table/{tableId}": {
     put: operations["TableUpdate"];
   };
@@ -321,6 +324,8 @@ export interface components {
       bookingName: string;
       /** Format: date-time */
       bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
       user: components["schemas"]["DTOUserDTO"];
     };
     TableOrderKitchenTableDTO: {
@@ -351,7 +356,7 @@ export interface components {
       orderUpdatedFormatted: string;
       /** Format: int32 */
       orderItemStatusId: number;
-      orderItemStatus?: components["schemas"]["TableOrderKitchenOrderItemStatusDTO"] | null;
+      orderItemStatus: components["schemas"]["TableOrderKitchenOrderItemStatusDTO"];
       orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
       orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
     };
@@ -460,6 +465,8 @@ export interface components {
       bookingName: string;
       /** Format: date-time */
       bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
       userId: string;
       user: components["schemas"]["DTOUserDTO"];
     };
@@ -526,6 +533,7 @@ export interface components {
       orderCompleted?: string | null;
       /** Format: int32 */
       orderItemStatusId: number;
+      orderItemStatus: components["schemas"]["EntitiesOrderItemStatus"];
       orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
       orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
       note?: string | null;
@@ -539,6 +547,8 @@ export interface components {
       bookingName: string;
       /** Format: date-time */
       bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
       /** Format: int32 */
       salesPeriodId: number;
       salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
@@ -711,6 +721,16 @@ export interface components {
       extraId: number;
       extra: components["schemas"]["EntitiesExtra"];
     };
+    EntitiesOrderItemStatus: {
+      /** Format: int32 */
+      orderItemStatusId: number;
+      status: string;
+      isFrontLine: boolean;
+      isBackOffice: boolean;
+      isComplete: boolean;
+      isCancelled: boolean;
+      notify: boolean;
+    };
     OrderClearBasketRequest: {
       /** Format: int32 */
       tableBookingId: number;
@@ -772,6 +792,10 @@ export interface components {
       bookingName: string;
       /** Format: int32 */
       salesPeriodId: number;
+    };
+    TableBookingCloseRequest: {
+      /** Format: int32 */
+      tableBookingId: number;
     };
     TableUpdateRequest: {
       name: string;
@@ -1494,6 +1518,27 @@ export interface operations {
       400: {
         content: {
           "application/problem+json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  TableBookingClose: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["TableBookingCloseRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["EntitiesTableBooking"];
         };
       };
       /** @description Server Error */

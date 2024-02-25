@@ -801,6 +801,49 @@
         }
       }
     },
+    "/tableBooking/close": {
+      "post": {
+        "tags": [
+          "Tablebooking"
+        ],
+        "operationId": "TableBookingClose",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableBookingCloseRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesTableBooking"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/table/{tableId}": {
       "put": {
         "tags": [
@@ -3191,6 +3234,11 @@
             "type": "string",
             "format": "date-time"
           },
+          "closeDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "user": {
             "$ref": "#/components/schemas/DTOUserDTO"
           }
@@ -3250,7 +3298,8 @@
           "orderUpdated",
           "orderReceivedFormatted",
           "orderUpdatedFormatted",
-          "orderItemStatusId"
+          "orderItemStatusId",
+          "orderItemStatus"
         ],
         "properties": {
           "orderItemId": {
@@ -3291,12 +3340,7 @@
             "format": "int32"
           },
           "orderItemStatus": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/TableOrderKitchenOrderItemStatusDTO"
-              }
-            ]
+            "$ref": "#/components/schemas/TableOrderKitchenOrderItemStatusDTO"
           },
           "orderItemOptions": {
             "type": "array",
@@ -3663,6 +3707,11 @@
             "type": "string",
             "format": "date-time"
           },
+          "closeDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
           "userId": {
             "type": "string"
           },
@@ -3839,7 +3888,8 @@
           "menuItem",
           "orderReceived",
           "orderUpdated",
-          "orderItemStatusId"
+          "orderItemStatusId",
+          "orderItemStatus"
         ],
         "properties": {
           "orderItemId": {
@@ -3876,6 +3926,9 @@
           "orderItemStatusId": {
             "type": "integer",
             "format": "int32"
+          },
+          "orderItemStatus": {
+            "$ref": "#/components/schemas/EntitiesOrderItemStatus"
           },
           "orderItemOptions": {
             "type": "array",
@@ -3929,6 +3982,11 @@
           "bookingDate": {
             "type": "string",
             "format": "date-time"
+          },
+          "closeDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "salesPeriodId": {
             "type": "integer",
@@ -4552,6 +4610,43 @@
           }
         }
       },
+      "EntitiesOrderItemStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemStatusId",
+          "status",
+          "isFrontLine",
+          "isBackOffice",
+          "isComplete",
+          "isCancelled",
+          "notify"
+        ],
+        "properties": {
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string"
+          },
+          "isFrontLine": {
+            "type": "boolean"
+          },
+          "isBackOffice": {
+            "type": "boolean"
+          },
+          "isComplete": {
+            "type": "boolean"
+          },
+          "isCancelled": {
+            "type": "boolean"
+          },
+          "notify": {
+            "type": "boolean"
+          }
+        }
+      },
       "OrderClearBasketRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -4756,6 +4851,19 @@
             "format": "int32",
             "minimum": 0.0,
             "exclusiveMinimum": true
+          }
+        }
+      },
+      "TableBookingCloseRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

@@ -2,9 +2,22 @@
 	import type { TableOrderGetBillResponse } from "$lib/api";
 	import { Button, Separator } from "@kayord/ui";
 	import Item from "./Item.svelte";
+	import { createTableBookingClose } from "$lib/api";
+	import { goto } from "$app/navigation";
+	import Error from "$lib/components/Error.svelte";
+	import { getError } from "$lib/types";
 
 	export let data: TableOrderGetBillResponse;
 	export let bookingId: number;
+
+	const closeTableMut = createTableBookingClose();
+
+	const closeTable = async () => {
+		const result = await $closeTableMut.mutateAsync({ data: { tableBookingId: bookingId } });
+		if (result.id) {
+			goto("/waiter");
+		}
+	};
 </script>
 
 <div class="m-4">
@@ -35,17 +48,33 @@
 			</div>
 		</div>
 	{/each}
-	<Separator class="mt-4" />
-	<div class="flex justify-between">
-		<h3>Balance</h3>
-		<h3>R{data?.balance.toFixed(2)}</h3>
-	</div>
-	<div class="flex justify-between">
-		<h3>Tip</h3>
-		<h3>R{data?.tipAmount.toFixed(2)}</h3>
-	</div>
+	{#if data.paymentsReceived.length > 0}
+		<Separator class="mt-4" />
+		<div class="flex justify-between">
+			<h3>Balance</h3>
+			<h3>R{data?.balance.toFixed(2)}</h3>
+		</div>
+		<div class="flex justify-between">
+			<h3>Tip</h3>
+			<h3>R{data?.tipAmount.toFixed(2)}</h3>
+		</div>
+	{/if}
+	<div class="mt-10 flex flex-col gap-2">
+		<Button
+			class="w-full"
+			href={`/table/pay/${bookingId}?total=${data.total}&balance=${data?.balance}`}>Pay Bill</Button
+		>
+		{#if data?.balance == 0}
+			<Button
+				class="w-full"
+				disabled={$closeTableMut.isPending}
+				variant="destructive"
+				on:click={closeTable}>Close Table</Button
+			>
+		{/if}
 
-	<div class="mt-10">
-		<Button class="w-full" href={`/table/pay/${bookingId}`}>Pay Bill</Button>
+		{#if $closeTableMut.error}
+			<Error message={getError($closeTableMut.error).message} />
+		{/if}
 	</div>
 </div>

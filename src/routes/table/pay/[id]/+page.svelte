@@ -1,19 +1,18 @@
 <script lang="ts">
 	import { Badge, Button, Card, Form, Input, Loader } from "@kayord/ui";
 	import type { PageData } from "../$types";
-	import { createTableCashUpCreate, createPayGetLink, createPayStatus } from "$lib/api";
-	import { CheckIcon, Nfc } from "lucide-svelte";
-	import Error from "$lib/components/Error.svelte";
-	import { getError } from "$lib/types";
+	import { createPayGetLink, createPayStatus } from "$lib/api";
+	import { Nfc } from "lucide-svelte";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
+	import { page } from "$app/stores";
 	export let data: PageData;
 
 	let a: HTMLAnchorElement;
 
-	let url: string | undefined = undefined;
-	let reference: string | undefined = undefined;
+	let url: string | undefined = "https://halompos.page.link/X7k53oFqFtMP18qY8";
+	let reference: string | undefined = "9619f004-6962-4bff-994a-a0dbea331fe2";
 
 	$: getLink = createPayGetLink(
 		{ amount: $formData.amount, tableBookingId: Number(data.bookingId) },
@@ -33,22 +32,17 @@
 		$getLink.refetch();
 	};
 
+	let isPaymentDone = false;
 	$: payStatus = createPayStatus(reference ?? "", {
-		query: { refetchInterval: 3000, enabled: reference != undefined },
+		query: { refetchInterval: 5000, enabled: reference != undefined && !isPaymentDone },
 	});
 
-	const mutation = createTableCashUpCreate();
+	if (isPaymentDone) {
+		console.log("payment completed", $payStatus?.data);
+		// goto(`/table/pay/${data.bookingId}/done?amount=${$payStatus?.data?.value?.amount}`);
+	}
 
-	const tableCashUp = async () => {
-		const result = await $mutation.mutateAsync({
-			data: {
-				outletId: data.status?.outletId ?? 0,
-				salesAmount: 100,
-				totalAmount: 120,
-				tableBookingId: Number(data.bookingId),
-			},
-		});
-	};
+	// isPaymentDone = $payStatus?.data?.value?.responseCode == 0;
 
 	const schema = z.object({
 		amount: z.coerce.number().min(1, { message: "You need an amount of bigger than 1" }),
@@ -70,6 +64,9 @@
 	});
 
 	const { form: formData, enhance } = form;
+
+	const total = Number($page.url.searchParams.get("total") ?? "0").toFixed(2);
+	const balance = Number($page.url.searchParams.get("balance") ?? "0").toFixed(2);
 </script>
 
 <a class="hidden" href="/" bind:this={a}>Halo</a>
@@ -78,8 +75,8 @@
 	<Card.Root class="m-8">
 		<Card.Header>
 			<div class="flex items-center gap-2 justify-end">
-				<Card.Description>Total: <Badge>R 1.00</Badge></Card.Description>
-				<Card.Description>Balance: <Badge>R 1.00</Badge></Card.Description>
+				<Card.Description>Total: <Badge>R {total}</Badge></Card.Description>
+				<Card.Description>Balance: <Badge>R {balance}</Badge></Card.Description>
 			</div>
 			<Form.Field {form} name="amount">
 				<Form.Control let:attrs>
@@ -96,19 +93,14 @@
 				<Nfc class="mt-10 h-20 w-20" />
 			</div>
 			{#if $payStatus.data}
-				{#if $payStatus.data.value?.responseCode == 0}
-					<CheckIcon />
-				{/if}
-				<div class="p-4">
+				<div class="p-4 text-center">
 					{$payStatus.data.value?.qrCodeState}
 				</div>
+				<pre>{JSON.stringify($payStatus.data.value)}</pre>
 			{/if}
 		</Card.Content>
 		<Card.Footer class="flex flex-col gap-2">
-			{#if $mutation.error}
-				<Error message={getError($mutation.error).message} />
-			{/if}
-			<Button class="w-full" href={`/table/menu/${data.bookingId}`} variant="outline">Cancel</Button
+			<Button class="w-full" href={`/table/bill/${data.bookingId}`} variant="outline">Cancel</Button
 			>
 			{#if $getLink.isLoading}
 				<Loader />
@@ -118,3 +110,5 @@
 		</Card.Footer>
 	</Card.Root>
 </form>
+
+<Button href={url}>{url}</Button>

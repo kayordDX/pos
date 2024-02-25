@@ -11,6 +11,7 @@ import type {
 	EntitiesTableBooking,
 	ErrorResponse,
 	InternalErrorResponse,
+	TableBookingCloseRequest,
 	TableBookingCreateRequest,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
@@ -79,6 +80,72 @@ export const createTableBookingCreate = <
 	>;
 }) => {
 	const mutationOptions = useTableBookingCreateMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const useTableBookingCloseHook = () => {
+	const tableBookingClose = useCustomClient<EntitiesTableBooking>();
+
+	return (tableBookingCloseRequest: BodyType<TableBookingCloseRequest>) => {
+		return tableBookingClose({
+			url: `/tableBooking/close`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: tableBookingCloseRequest,
+		});
+	};
+};
+
+export const useTableBookingCloseMutationOptions = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingCloseHook>>>,
+		TError,
+		{ data: BodyType<TableBookingCloseRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof useTableBookingCloseHook>>>,
+	TError,
+	{ data: BodyType<TableBookingCloseRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const tableBookingClose = useTableBookingCloseHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingCloseHook>>>,
+		{ data: BodyType<TableBookingCloseRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableBookingClose(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableBookingCloseMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableBookingCloseHook>>>
+>;
+export type TableBookingCloseMutationBody = BodyType<TableBookingCloseRequest>;
+export type TableBookingCloseMutationError = ErrorType<InternalErrorResponse>;
+
+export const createTableBookingClose = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingCloseHook>>>,
+		TError,
+		{ data: BodyType<TableBookingCloseRequest> },
+		TContext
+	>;
+}) => {
+	const mutationOptions = useTableBookingCloseMutationOptions(options);
 
 	return createMutation(mutationOptions);
 };
