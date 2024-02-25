@@ -26,6 +26,9 @@
 						value: $formData.outletId,
 						label: data.outlets.data?.find((i) => i.id === $formData.outletId)?.name,
 					}}
+					onSelectedChange={(v) => {
+						v && ($formData.outletId = v.value);
+					}}
 				>
 					<Select.Trigger {...attrs}>
 						<Select.Value placeholder="Select outlet to link to device" />
@@ -45,5 +48,4 @@
 
 	<Form.Button type="submit">Submit</Form.Button>
 	<Button variant="link" href="/">Cancel</Button>
-	<SuperDebug data={$formData} />
 </form>

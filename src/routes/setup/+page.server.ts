@@ -26,12 +26,13 @@ export const load: PageServerLoad = async ({ fetch, parent }) => {
 export const actions: Actions = {
 	default: async (event) => {
 		const form = await superValidate(event, zod(outletSchema));
-
 		if (!form.valid) {
 			return fail(400, {
 				form,
 			});
 		}
+
+		let success = false;
 
 		try {
 			const { response } = await client.POST("/user/assignOutlet", {
@@ -39,13 +40,18 @@ export const actions: Actions = {
 				fetch: event.fetch,
 			});
 			if (response.ok) {
+				success = true;
 				setFlash({ type: "success", message: "Successfully updated outlet" }, event);
-				redirect(302, "/");
 			} else {
 				setFlash({ type: "error", message: "Could not set outlet" }, event);
 			}
 		} catch (err) {
+			console.log(err);
 			setFlash({ type: "error", message: getError(err).message }, event);
+		}
+
+		if (success) {
+			redirect(302, "/");
 		}
 	},
 };
