@@ -69,7 +69,7 @@
 	</div>
 
 	<Menus menus={data.menu ?? []} />
-	<div class="flex gap-2 my-2 flex-wrap items-center w-full overflow-x-scroll p-2">
+	<div class="flex gap-2 my-2 flex-wrap items-center w-full p-2">
 		{#if $sectionsQuery.isPending}
 			<div class="w-full">
 				<Loader />
