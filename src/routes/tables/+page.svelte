@@ -23,7 +23,7 @@
 		{#if $query.data.length > 0}
 			<div class="flex flex-wrap gap-4 mt-4">
 				{#each $query.data as otherTable}
-					<a href={`/table/${otherTable.id}`}>
+					<a href={`/table/menu/${otherTable.id}`}>
 						<Card.Root class="p-5 w-48">
 							<div class="flex justify-between">
 								<h3>{otherTable.table.name}</h3>

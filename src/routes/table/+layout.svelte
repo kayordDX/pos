@@ -4,6 +4,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
+	import { browser } from "$app/environment";
 	// import { basket } from "$lib/stores/basket";
 
 	export let data: LayoutData;
@@ -22,15 +23,17 @@
 	<Tabs.Root
 		value={getValue()}
 		onValueChange={(s) => {
-			if (s == "menu") {
-				goto(`/table/menu/${data.bookingId}`);
-			} else if (s == "bill") {
-				console.log("it matched the bill");
-				goto(`/table/bill/${data.bookingId}`);
-			} else if (s == "basket") {
-				goto(`/table/basket/${data.bookingId}`);
-			} else if (s == "tables") {
-				goto("/waiter");
+			if (browser) {
+				if (s == "menu") {
+					goto(`/table/menu/${data.bookingId}`);
+				} else if (s == "bill") {
+					console.log("it matched the bill");
+					goto(`/table/bill/${data.bookingId}`);
+				} else if (s == "basket") {
+					goto(`/table/basket/${data.bookingId}`);
+				} else if (s == "tables") {
+					goto("/waiter");
+				}
 			}
 		}}
 	>
