@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Avatar, DropdownMenu } from "@kayord/ui";
-	import { LogOutIcon, MoonIcon, SunIcon } from "lucide-svelte";
+	import { LogOutIcon, MoonIcon, SunIcon, WrenchIcon } from "lucide-svelte";
 	import { signOut } from "@auth/sveltekit/client";
 	import { getInitials } from "$lib/util";
 	import type { Session } from "@auth/sveltekit";
@@ -26,7 +26,9 @@
 		<DropdownMenu.Label>{session?.user?.name ?? "My Account"}</DropdownMenu.Label>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Group>
-			<DropdownMenu.Item href="/setup">Setup Device</DropdownMenu.Item>
+			<DropdownMenu.Item href="/setup"
+				><WrenchIcon class="mr-2 h-4 w-4" />Setup Device</DropdownMenu.Item
+			>
 			<DropdownMenu.Item on:click={toggleMode}>
 				{#if $mode == "light"}
 					<SunIcon class="mr-2 h-4 w-4" />
