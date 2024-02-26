@@ -52,7 +52,7 @@
 	const mutation = createOrderAddItems();
 
 	const onSubmit = async (data: FormSchema) => {
-		$mutation.mutateAsync({
+		await $mutation.mutateAsync({
 			data: {
 				orders: [
 					{

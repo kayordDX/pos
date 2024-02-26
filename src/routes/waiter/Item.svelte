@@ -24,7 +24,7 @@
 	const mutation = createTableOrderUpdateOrderItem();
 
 	const completeItem = async (id: number, statusId: number) => {
-		$mutation.mutateAsync({ data: { orderItemId: id, orderItemStatusId: statusId } });
+		await $mutation.mutateAsync({ data: { orderItemId: id, orderItemStatusId: statusId } });
 		refetch();
 	};
 </script>

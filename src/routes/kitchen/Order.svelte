@@ -16,7 +16,7 @@
 
 	const mutation = createTableOrderUpdateTableOrder();
 	const readyAll = async (id: number, statusId: number) => {
-		$mutation.mutateAsync({ data: { orderItemStatusId: statusId, tableBookingId: id } });
+		await $mutation.mutateAsync({ data: { orderItemStatusId: statusId, tableBookingId: id } });
 		$query.refetch();
 	};
 </script>
@@ -34,7 +34,9 @@
 			<Badge>{$query.data.pendingItems} pending items(s)</Badge>
 		</div>
 		<button on:click={() => $query.refetch()}>
-			<Badge variant="secondary">Refreshed: {getTime($query.data.lastRefresh)}</Badge>
+			<Badge variant="secondary" class="truncate"
+				>Refreshed: {getTime($query.data.lastRefresh)}</Badge
+			>
 		</button>
 	</div>
 
