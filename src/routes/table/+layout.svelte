@@ -1,52 +1,46 @@
 <script lang="ts">
-	import { Badge, Tabs } from "@kayord/ui";
-	import type { LayoutData } from "./[id]/$types";
-	import { goto } from "$app/navigation";
+	import type { LayoutData } from "./$types";
 	import { page } from "$app/stores";
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
-	import { browser } from "$app/environment";
-	// import { basket } from "$lib/stores/basket";
 
 	export let data: LayoutData;
-	$: basketCount = 0;
 
-	$: getValue = () => {
-		if ($page.route.id?.includes("menu")) return "menu";
-		if ($page.route.id?.includes("bill")) return "bill";
-		if ($page.route.id?.includes("basket")) return "basket";
-		return "";
-	};
+	$: menuActive = $page.route.id?.includes("menu") ?? false;
+	$: billActive = $page.route.id?.includes("bill") ?? false;
+	$: basketActive = $page.route.id?.includes("basket") ?? false;
 </script>
 
 <slot />
 <div class="w-full flex mb-2 items-center justify-center fixed bottom-0">
-	<Tabs.Root
-		value={getValue()}
-		onValueChange={(s) => {
-			console.log("navigating", s);
-			if (browser) {
-				if (s == "menu") {
-					goto(`/table/menu/${data.bookingId}`);
-				} else if (s == "bill") {
-					goto(`/table/bill/${data.bookingId}`);
-				} else if (s == "basket") {
-					goto(`/table/basket/${data.bookingId}`);
-				} else if (s == "tables") {
-					goto("/waiter");
-				}
-			}
-		}}
-	>
-		<Tabs.List>
-			<Tabs.Trigger value="tables"><HomeIcon class="w-4 h-4" /></Tabs.Trigger>
-			<Tabs.Trigger value="menu"><MenuIcon class="w-4 h-4 mr-2" /> Menu</Tabs.Trigger>
-			<Tabs.Trigger value="basket">
-				<ShoppingBasketIcon class="w-4 h-4 mr-2" /> Basket
-				{#if basketCount > 0}
-					<Badge class="ml-2">{basketCount}</Badge>
-				{/if}
-			</Tabs.Trigger>
-			<Tabs.Trigger value="bill"><ReceiptTextIcon class="w-4 h-4 mr-2" /> Bill</Tabs.Trigger>
-		</Tabs.List>
-	</Tabs.Root>
+	<div class="bg-secondary flex items-center p-1 gap-2 rounded-sm px-2">
+		<a class="flex items-center text-muted-foreground" href={`/waiter`}
+			><HomeIcon class="w-4 h-4" />
+		</a>
+		<a
+			class="flex items-center text-muted-foreground rounded-sm p-1 px-2"
+			class:bg-black={menuActive}
+			class:!text-foreground={menuActive}
+			href={`/table/menu/${data.bookingId}`}
+		>
+			<MenuIcon class="w-4 h-4 mr-2" /> <span class="text-sm">Menu</span>
+		</a>
+		<a
+			class="flex items-center text-muted-foreground rounded-sm p-1 px-2"
+			class:bg-black={basketActive}
+			class:!text-foreground={basketActive}
+			href={`/table/basket/${data.bookingId}`}
+		>
+			<ShoppingBasketIcon class="w-4 h-4 mr-2" />
+			<span class="text-sm">Basket</span>
+		</a>
+		<a
+			class="flex items-center text-muted-foreground rounded-sm p-1 px-2"
+			class:bg-black={billActive}
+			class:!text-foreground={billActive}
+			href={`/table/bill/${data.bookingId}`}
+		>
+			<ReceiptTextIcon class="w-4 h-4 mr-2" />
+			<span class="text-sm">Bill</span>
+		</a>
+	</div>
 </div>
