@@ -7,7 +7,7 @@
 <div>
 	{#each data as item}
 		<div class="flex justify-between">
-			<div>{item.menuItem.name}</div>
+			<div class="line-clamp-1">{item.menuItem.name}</div>
 			<div>{item.menuItem.price.toFixed(2)}</div>
 		</div>
 		<div class="ml-4 line-clamp-1">

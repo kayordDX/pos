@@ -20,7 +20,7 @@
 	};
 </script>
 
-<div class="m-2 mb-8">
+<div class="m-2 mb-12">
 	<h1 class="mt-4">Items</h1>
 	<p class="text-muted-foreground">Current bill #{bookingId}</p>
 	<Separator />

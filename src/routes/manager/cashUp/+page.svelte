@@ -14,13 +14,13 @@
 	});
 </script>
 
-<div class="m-8">
+<div class="m-2">
 	{#if $cashUpQuery.isPending}
 		<Loader />
 	{/if}
 	{#if $cashUpQuery.error}
 		{#if getError($cashUpQuery.error).message == "Forbidden"}
-			<Error message="Not all tables has been cashed up" />
+			<Error message="Not all tables have been cashed up" />
 		{:else if getError($cashUpQuery.error).message == "Unauthorized"}
 			<Error message="Could not find sales period" />
 		{:else}
@@ -31,26 +31,26 @@
 	{#if $cashUpQuery.data}
 		{@const d = $cashUpQuery.data}
 		<div class="flex flex-col gap-4">
-			<div class="flex flex-row gap-4">
-				<Card.Root class="w-full max-w-lg">
+			<div class="flex flex-row gap-4 flex-wrap items-center justify-center">
+				<Card.Root class="min-w-52">
 					<Card.Header>
 						<Card.Title>R{d.cashUpTotal.toFixed(2)}</Card.Title>
 						<Card.Description>Cash Up Total</Card.Description>
 					</Card.Header>
 				</Card.Root>
-				<Card.Root class="w-full max-w-lg">
+				<Card.Root class="min-w-52">
 					<Card.Header>
 						<Card.Title>{d.tableCount}</Card.Title>
 						<Card.Description>Table Count</Card.Description>
 					</Card.Header>
 				</Card.Root>
-				<Card.Root class="w-full max-w-lg">
+				<Card.Root class="min-w-52">
 					<Card.Header>
 						<Card.Title>R{d.cashUpBalance.toFixed(2)}</Card.Title>
 						<Card.Description>Cash Up Balance</Card.Description>
 					</Card.Header>
 				</Card.Root>
-				<Card.Root class="w-full max-w-lg">
+				<Card.Root class="min-w-52">
 					<Card.Header>
 						<Card.Title>R{d.cashUpTotalPayments.toFixed(2)}</Card.Title>
 						<Card.Description>Cash Up Total Payments</Card.Description>
@@ -118,7 +118,7 @@
 											</div>
 										{/each}
 										<div class="flex justify-between font-bold">
-											<div>Total Payed</div>
+											<div>Total Paid</div>
 											<div>{table.tablePaymentTotal.toFixed(2)}</div>
 										</div>
 										{#if table.paymentsReceived.length > 0}

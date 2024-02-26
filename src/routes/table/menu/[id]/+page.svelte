@@ -55,7 +55,7 @@
 	$: sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
 </script>
 
-<div class="flex justify-center flex-col mb-8 mt-2 items-center">
+<div class="flex justify-center flex-col mb-12 mt-2 items-center">
 	<div class="flex w-full justify-center gap-2 px-2">
 		<div class="relative flex items-center max-w-2xl w-full">
 			<Input on:input={(value) => setSearchString(value)} value={search} class="pr-8" />

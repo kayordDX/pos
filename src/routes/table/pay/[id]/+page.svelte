@@ -75,7 +75,7 @@
 	<PaymentDone />
 {:else}
 	<form method="POST" use:enhance>
-		<Card.Root class="m-8">
+		<Card.Root class="m-4 mb-12">
 			<Card.Header>
 				<div class="flex items-center gap-2 justify-end">
 					<Card.Description>Total: <Badge>R {total}</Badge></Card.Description>
