@@ -1,0 +1,354 @@
+{
+	"userCashUps": [
+		{
+			"tableCashUps": [
+				{
+					"orderItems": [
+						{
+							"orderItemId": 1,
+							"tableBookingId": 1,
+							"tableBooking": {
+								"id": 1,
+								"tableId": 1,
+								"bookingName": "Seeded Booking",
+								"bookingDate": "2024-02-26T20:00:10.10643Z",
+								"closeDate": "2024-02-26T20:26:13.081294Z",
+								"userId": "103301258912011927884",
+								"user": {
+									"userId": "103301258912011927884",
+									"email": "stonk08@gmail.com",
+									"image": "a",
+									"name": "Steff Bosch",
+									"isActive": true
+								}
+							},
+							"menuItemId": 1,
+							"menuItem": { "menuItemId": 1, "name": "Coffee", "price": 21.8 },
+							"orderItemOptions": [
+								{
+									"orderItemOptionId": 1,
+									"orderItemId": 1,
+									"optionId": 1,
+									"option": {
+										"optionId": 1,
+										"name": "Avo",
+										"price": 5,
+										"optionGroupId": 1,
+										"optionGroup": { "optionGroupId": 1, "name": "Pizza Extras" }
+									}
+								}
+							],
+							"orderItemExtras": [],
+							"note": null
+						},
+						{
+							"orderItemId": 2,
+							"tableBookingId": 1,
+							"tableBooking": {
+								"id": 1,
+								"tableId": 1,
+								"bookingName": "Seeded Booking",
+								"bookingDate": "2024-02-26T20:00:10.10643Z",
+								"closeDate": "2024-02-26T20:26:13.081294Z",
+								"userId": "103301258912011927884",
+								"user": {
+									"userId": "103301258912011927884",
+									"email": "stonk08@gmail.com",
+									"image": "a",
+									"name": "Steff Bosch",
+									"isActive": true
+								}
+							},
+							"menuItemId": 2,
+							"menuItem": { "menuItemId": 2, "name": "Cappucino", "price": 28.9 },
+							"orderItemOptions": [
+								{
+									"orderItemOptionId": 2,
+									"orderItemId": 2,
+									"optionId": 2,
+									"option": {
+										"optionId": 2,
+										"name": "Double Cheese",
+										"price": 5,
+										"optionGroupId": 1,
+										"optionGroup": { "optionGroupId": 1, "name": "Pizza Extras" }
+									}
+								}
+							],
+							"orderItemExtras": [
+								{
+									"orderItemExtraId": 2,
+									"orderItemId": 2,
+									"extraId": 2,
+									"extra": {
+										"extraId": 2,
+										"name": "Bacon",
+										"positionId": 0,
+										"price": 25.8,
+										"extraGroupId": 1,
+										"extraGroup": { "extraGroupId": 1, "name": "Pizza Extras" }
+									}
+								}
+							],
+							"note": null
+						},
+						{
+							"orderItemId": 4,
+							"tableBookingId": 1,
+							"tableBooking": {
+								"id": 1,
+								"tableId": 1,
+								"bookingName": "Seeded Booking",
+								"bookingDate": "2024-02-26T20:00:10.10643Z",
+								"closeDate": "2024-02-26T20:26:13.081294Z",
+								"userId": "103301258912011927884",
+								"user": {
+									"userId": "103301258912011927884",
+									"email": "stonk08@gmail.com",
+									"image": "a",
+									"name": "Steff Bosch",
+									"isActive": true
+								}
+							},
+							"menuItemId": 2,
+							"menuItem": { "menuItemId": 2, "name": "Cappucino", "price": 28.9 },
+							"orderItemOptions": [],
+							"orderItemExtras": [],
+							"note": null
+						},
+						{
+							"orderItemId": 6,
+							"tableBookingId": 1,
+							"tableBooking": {
+								"id": 1,
+								"tableId": 1,
+								"bookingName": "Seeded Booking",
+								"bookingDate": "2024-02-26T20:00:10.10643Z",
+								"closeDate": "2024-02-26T20:26:13.081294Z",
+								"userId": "103301258912011927884",
+								"user": {
+									"userId": "103301258912011927884",
+									"email": "stonk08@gmail.com",
+									"image": "a",
+									"name": "Steff Bosch",
+									"isActive": true
+								}
+							},
+							"menuItemId": 2,
+							"menuItem": { "menuItemId": 2, "name": "Cappucino", "price": 28.9 },
+							"orderItemOptions": [],
+							"orderItemExtras": [],
+							"note": null
+						},
+						{
+							"orderItemId": 7,
+							"tableBookingId": 1,
+							"tableBooking": {
+								"id": 1,
+								"tableId": 1,
+								"bookingName": "Seeded Booking",
+								"bookingDate": "2024-02-26T20:00:10.10643Z",
+								"closeDate": "2024-02-26T20:26:13.081294Z",
+								"userId": "103301258912011927884",
+								"user": {
+									"userId": "103301258912011927884",
+									"email": "stonk08@gmail.com",
+									"image": "a",
+									"name": "Steff Bosch",
+									"isActive": true
+								}
+							},
+							"menuItemId": 4,
+							"menuItem": {
+								"menuItemId": 4,
+								"name": "Spier - Chardonnay Pinot Noir ",
+								"price": 18.8
+							},
+							"orderItemOptions": [],
+							"orderItemExtras": [],
+							"note": "test"
+						},
+						{
+							"orderItemId": 8,
+							"tableBookingId": 1,
+							"tableBooking": {
+								"id": 1,
+								"tableId": 1,
+								"bookingName": "Seeded Booking",
+								"bookingDate": "2024-02-26T20:00:10.10643Z",
+								"closeDate": "2024-02-26T20:26:13.081294Z",
+								"userId": "103301258912011927884",
+								"user": {
+									"userId": "103301258912011927884",
+									"email": "stonk08@gmail.com",
+									"image": "a",
+									"name": "Steff Bosch",
+									"isActive": true
+								}
+							},
+							"menuItemId": 1,
+							"menuItem": { "menuItemId": 1, "name": "Coffee", "price": 21.8 },
+							"orderItemOptions": [],
+							"orderItemExtras": [],
+							"note": "Another Note"
+						}
+					],
+					"total": 184.9,
+					"paymentsReceived": [
+						{
+							"id": 1,
+							"paymentReference": "",
+							"tableBookingId": 1,
+							"amount": 200,
+							"userId": "103301258912011927884",
+							"dateReceived": "2024-02-26T20:00:10.226177Z"
+						},
+						{
+							"id": 2,
+							"paymentReference": "",
+							"tableBookingId": 1,
+							"amount": 200,
+							"userId": "103301258912011927884",
+							"dateReceived": "2024-02-26T20:00:10.240862Z"
+						},
+						{
+							"id": 3,
+							"paymentReference": "",
+							"tableBookingId": 1,
+							"amount": 200,
+							"userId": "103301258912011927884",
+							"dateReceived": "2024-02-26T20:00:10.240993Z"
+						}
+					],
+					"tablePaymentTotal": 600,
+					"balance": 184.9,
+					"userId": "103301258912011927884"
+				},
+				{
+					"orderItems": [
+						{
+							"orderItemId": 3,
+							"tableBookingId": 2,
+							"tableBooking": {
+								"id": 2,
+								"tableId": 2,
+								"bookingName": "Seeded Booking 2",
+								"bookingDate": "2024-02-26T20:00:10.130367Z",
+								"closeDate": "2024-02-26T20:26:16.522598Z",
+								"userId": "103301258912011927884",
+								"user": {
+									"userId": "103301258912011927884",
+									"email": "stonk08@gmail.com",
+									"image": "a",
+									"name": "Steff Bosch",
+									"isActive": true
+								}
+							},
+							"menuItemId": 2,
+							"menuItem": { "menuItemId": 2, "name": "Cappucino", "price": 28.9 },
+							"orderItemOptions": [
+								{
+									"orderItemOptionId": 3,
+									"orderItemId": 3,
+									"optionId": 2,
+									"option": {
+										"optionId": 2,
+										"name": "Double Cheese",
+										"price": 5,
+										"optionGroupId": 1,
+										"optionGroup": { "optionGroupId": 1, "name": "Pizza Extras" }
+									}
+								}
+							],
+							"orderItemExtras": [
+								{
+									"orderItemExtraId": 1,
+									"orderItemId": 3,
+									"extraId": 2,
+									"extra": {
+										"extraId": 2,
+										"name": "Bacon",
+										"positionId": 0,
+										"price": 25.8,
+										"extraGroupId": 1,
+										"extraGroup": { "extraGroupId": 1, "name": "Pizza Extras" }
+									}
+								}
+							],
+							"note": null
+						},
+						{
+							"orderItemId": 5,
+							"tableBookingId": 2,
+							"tableBooking": {
+								"id": 2,
+								"tableId": 2,
+								"bookingName": "Seeded Booking 2",
+								"bookingDate": "2024-02-26T20:00:10.130367Z",
+								"closeDate": "2024-02-26T20:26:16.522598Z",
+								"userId": "103301258912011927884",
+								"user": {
+									"userId": "103301258912011927884",
+									"email": "stonk08@gmail.com",
+									"image": "a",
+									"name": "Steff Bosch",
+									"isActive": true
+								}
+							},
+							"menuItemId": 2,
+							"menuItem": { "menuItemId": 2, "name": "Cappucino", "price": 28.9 },
+							"orderItemOptions": [],
+							"orderItemExtras": [],
+							"note": null
+						}
+					],
+					"total": 88.6,
+					"paymentsReceived": [
+						{
+							"id": 4,
+							"paymentReference": "",
+							"tableBookingId": 2,
+							"amount": 200,
+							"userId": "103301258912011927884",
+							"dateReceived": "2024-02-26T20:00:10.241075Z"
+						},
+						{
+							"id": 5,
+							"paymentReference": "",
+							"tableBookingId": 2,
+							"amount": 200,
+							"userId": "103301258912011927884",
+							"dateReceived": "2024-02-26T20:00:10.24116Z"
+						}
+					],
+					"tablePaymentTotal": 400,
+					"balance": 88.6,
+					"userId": "103301258912011927884"
+				},
+				{
+					"orderItems": [],
+					"total": 0,
+					"paymentsReceived": [],
+					"tablePaymentTotal": 0,
+					"balance": 0,
+					"userId": "103301258912011927884"
+				}
+			],
+			"userId": "103301258912011927884",
+			"userTotal": 273.5,
+			"userBalance": 273.5,
+			"userPaymentTotal": 1000,
+			"tableTurnaroundTime": "00:00:00"
+		}
+	],
+	"id": 0,
+	"cashUpTotal": 273.5,
+	"tableCount": 3,
+	"cashUpBalance": 273.5,
+	"cashUpTotalPayments": 1000,
+	"salesPeriodId": 1,
+	"salesPeriod": null,
+	"userId": "",
+	"signOffUserId": "",
+	"signOffDate": null
+}

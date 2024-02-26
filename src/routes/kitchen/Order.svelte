@@ -2,7 +2,7 @@
 	import { Avatar, Badge, Button, Card, Drawer, Loader } from "@kayord/ui";
 	import Error from "$lib/components/Error.svelte";
 	import Item from "./Item.svelte";
-	import { BellElectricIcon, UtensilsIcon } from "lucide-svelte";
+	import { BellElectricIcon } from "lucide-svelte";
 	import { createTableOrderUpdateTableOrder } from "$lib/api";
 
 	import { createTableOrderKitchen } from "$lib/api";

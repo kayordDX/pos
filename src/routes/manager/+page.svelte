@@ -2,18 +2,7 @@
 	import { Button, Card } from "@kayord/ui";
 	import { stringToFDate } from "$lib/util";
 	import type { PageData } from "./$types";
-	import { client } from "$lib/api";
-	import { goto } from "$app/navigation";
 	export let data: PageData;
-
-	const closeSalesPeriod = async () => {
-		await client.POST("/salesPeriod/close", {
-			body: {
-				salesPeriodId: data.status?.salesPeriodId ?? 0,
-			},
-		});
-		goto("/manager", { invalidateAll: true });
-	};
 </script>
 
 <div class="m-8">
@@ -24,7 +13,7 @@
 				<Card.Description>{stringToFDate(data.status?.salesPeriod.startDate)}</Card.Description>
 			</Card.Header>
 			<Card.Footer>
-				<Button on:click={closeSalesPeriod}>Cash Up</Button>
+				<Button href="manager/cashUp">Cash Up</Button>
 			</Card.Footer>
 		</Card.Root>
 	{:else}

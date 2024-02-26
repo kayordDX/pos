@@ -47,12 +47,6 @@ export interface paths {
   "/order/addItems": {
     post: operations["OrderAddItems"];
   };
-  "/tableCashUp/tableBooking/{tableBookingId}": {
-    get: operations["TableCashUpViewTableCashUps"];
-  };
-  "/tableCashUp": {
-    post: operations["TableCashUpCreate"];
-  };
   "/tableBooking": {
     post: operations["TableBookingCreate"];
   };
@@ -81,6 +75,9 @@ export interface paths {
   };
   "/salesPeriod/{outletId}": {
     get: operations["SalesPeriodGet"];
+  };
+  "/salesperiod/createCashup": {
+    get: operations["SalesPeriodCreateCashUp"];
   };
   "/salesPeriod": {
     post: operations["SalesPeriodCreate"];
@@ -729,6 +726,7 @@ export interface components {
       isBackOffice: boolean;
       isComplete: boolean;
       isCancelled: boolean;
+      isBillable: boolean;
       notify: boolean;
     };
     OrderClearBasketRequest: {
@@ -747,23 +745,6 @@ export interface components {
       extraIds?: number[] | null;
       note: string;
     };
-    EntitiesTableCashUp: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["EntitiesTableBooking"];
-      /** Format: decimal */
-      salesAmount: number;
-      /** Format: decimal */
-      totalAmount: number;
-      /** Format: date-time */
-      cashUpDate: string;
-      /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["EntitiesOutlet"];
-    };
-    TableCashUpViewTableCashUpsRequest: Record<string, never>;
     ErrorResponse: {
       /**
        * Format: int32
@@ -775,16 +756,6 @@ export interface components {
       errors: {
         [key: string]: string[];
       };
-    };
-    TableCashUpCreateRequest: {
-      /** Format: int32 */
-      tableBookingId: number;
-      /** Format: decimal */
-      salesAmount: number;
-      /** Format: decimal */
-      totalAmount: number;
-      /** Format: int32 */
-      outletId: number;
     };
     TableBookingCreateRequest: {
       /** Format: int32 */
@@ -866,17 +837,9 @@ export interface components {
       outletId: number;
     };
     SalesPeriodGetRequest: Record<string, never>;
-    SalesPeriodCreateRequest: {
-      name: string;
+    EntitiesCashUp: {
       /** Format: int32 */
-      outletId: number;
-    };
-    SalesPeriodCloseRequest: {
-      /** Format: int32 */
-      salesPeriodId: number;
-    };
-    SalesPeriodCashUpCashUp: {
-      userCashUps: components["schemas"]["SalesPeriodCashUpUserCashUp"][];
+      id: number;
       /** Format: decimal */
       cashUpTotal: number;
       /** Format: int32 */
@@ -888,16 +851,36 @@ export interface components {
       /** Format: int32 */
       salesPeriodId: number;
       salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
+      userId: string;
+      signOffUserId: string;
+      /** Format: date-time */
+      signOffDate?: string | null;
+    };
+    SalesPeriodCreateCashUpRequest: Record<string, never>;
+    SalesPeriodCreateRequest: {
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+    };
+    SalesPeriodCloseRequest: {
+      /** Format: int32 */
+      salesPeriodId: number;
+    };
+    SalesPeriodCashUpCashUp: components["schemas"]["EntitiesCashUp"] & {
+      userCashUps: components["schemas"]["SalesPeriodCashUpUserCashUp"][];
     };
     SalesPeriodCashUpUserCashUp: {
       tableCashUps: components["schemas"]["SalesPeriodCashUpTableCashUp"][];
       userId: string;
+      user: components["schemas"]["DTOUserDTO"];
       /** Format: decimal */
       userTotal: number;
       /** Format: decimal */
       userBalance: number;
       /** Format: decimal */
       userPaymentTotal: number;
+      /** Format: time */
+      tableTurnaroundTime: string;
     };
     SalesPeriodCashUpTableCashUp: {
       orderItems: components["schemas"]["SalesPeriodCashUpBillOrderItemDTO"][];
@@ -909,6 +892,7 @@ export interface components {
       /** Format: decimal */
       balance: number;
       userId: string;
+      user: components["schemas"]["DTOUserDTO"];
     };
     SalesPeriodCashUpBillOrderItemDTO: {
       /** Format: int32 */
@@ -1348,10 +1332,6 @@ export interface operations {
           "application/json": components["schemas"]["TableOrderKitchenResponse"];
         };
       };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
       /** @description Server Error */
       500: {
         content: {
@@ -1444,54 +1424,6 @@ export interface operations {
       /** @description Unauthorized */
       401: {
         content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableCashUpViewTableCashUps: {
-    parameters: {
-      path: {
-        tableBookingId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesTableCashUp"][];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableCashUpCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableCashUpCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesTableCashUp"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
       };
       /** @description Server Error */
       500: {
@@ -1797,6 +1729,38 @@ export interface operations {
       };
     };
   };
+  SalesPeriodCreateCashUp: {
+    parameters: {
+      query: {
+        cashUpTotal: number;
+        tableCount: number;
+        cashUpBalance: number;
+        cashUpTotalPayments: number;
+        salesPeriodId: number;
+        userId: string | null;
+        signOffUserId: string | null;
+        signOffDate?: string | null;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["EntitiesCashUp"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   SalesPeriodCreate: {
     requestBody: {
       content: {
@@ -1849,6 +1813,7 @@ export interface operations {
     parameters: {
       query: {
         salesPeriodId: number;
+        userId: string | null;
       };
     };
     responses: {
@@ -1857,6 +1822,10 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["SalesPeriodCashUpCashUp"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {

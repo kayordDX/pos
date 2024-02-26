@@ -56,6 +56,18 @@ export type RoleCreate200One = {};
 
 export type SalesPeriodCashUpParams = {
 	salesPeriodId: number;
+	userId: string | null;
+};
+
+export type SalesPeriodCreateCashUpParams = {
+	cashUpTotal: number;
+	tableCount: number;
+	cashUpBalance: number;
+	cashUpTotalPayments: number;
+	salesPeriodId: number;
+	userId: string | null;
+	signOffUserId: string | null;
+	signOffDate?: string | null;
 };
 
 export type SectionListParams = {
@@ -333,26 +345,25 @@ export interface SalesPeriodCashUpTableCashUp {
 	paymentsReceived: EntitiesPayment[];
 	tablePaymentTotal: number;
 	total: number;
+	user: DTOUserDTO;
 	userId: string;
 }
 
 export interface SalesPeriodCashUpUserCashUp {
 	tableCashUps: SalesPeriodCashUpTableCashUp[];
+	tableTurnaroundTime: string;
+	user: DTOUserDTO;
 	userBalance: number;
 	userId: string;
 	userPaymentTotal: number;
 	userTotal: number;
 }
 
-export interface SalesPeriodCashUpCashUp {
-	cashUpBalance: number;
-	cashUpTotal: number;
-	cashUpTotalPayments: number;
-	salesPeriod: EntitiesSalesPeriod;
-	salesPeriodId: number;
-	tableCount: number;
+export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
-}
+};
+
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
@@ -361,6 +372,23 @@ export interface SalesPeriodCloseRequest {
 export interface SalesPeriodCreateRequest {
 	name: string;
 	outletId: number;
+}
+
+export interface SalesPeriodCreateCashUpRequest {
+	[key: string]: any;
+}
+
+export interface EntitiesCashUp {
+	cashUpBalance: number;
+	cashUpTotal: number;
+	cashUpTotalPayments: number;
+	id: number;
+	salesPeriod: EntitiesSalesPeriod;
+	salesPeriodId: number;
+	signOffDate?: string | null;
+	signOffUserId: string;
+	tableCount: number;
+	userId: string;
 }
 
 export interface SalesPeriodGetRequest {
@@ -449,34 +477,12 @@ export interface TableBookingCreateRequest {
 	tableId: number;
 }
 
-export interface TableCashUpCreateRequest {
-	outletId: number;
-	salesAmount: number;
-	tableBookingId: number;
-	totalAmount: number;
-}
-
 export type ErrorResponseErrors = { [key: string]: string[] };
 
 export interface ErrorResponse {
 	errors: ErrorResponseErrors;
 	message: string;
 	statusCode: number;
-}
-
-export interface TableCashUpViewTableCashUpsRequest {
-	[key: string]: any;
-}
-
-export interface EntitiesTableCashUp {
-	cashUpDate: string;
-	id: number;
-	outlet: EntitiesOutlet;
-	outletId: number;
-	salesAmount: number;
-	tableBooking: EntitiesTableBooking;
-	tableBookingId: number;
-	totalAmount: number;
 }
 
 export interface OrderAddItemsOrder {
@@ -497,6 +503,7 @@ export interface OrderClearBasketRequest {
 
 export interface EntitiesOrderItemStatus {
 	isBackOffice: boolean;
+	isBillable: boolean;
 	isCancelled: boolean;
 	isComplete: boolean;
 	isFrontLine: boolean;

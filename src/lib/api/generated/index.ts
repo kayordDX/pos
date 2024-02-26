@@ -3,7 +3,6 @@ export * from "./user";
 export * from "./api.schemas";
 export * from "./order";
 export * from "./kitchen";
-export * from "./tablecashup";
 export * from "./tablebooking";
 export * from "./table";
 export * from "./section";
