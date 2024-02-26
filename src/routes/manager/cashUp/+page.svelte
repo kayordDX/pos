@@ -3,7 +3,7 @@
 	export let data: PageData;
 	import Error from "$lib/components/Error.svelte";
 	import { createSalesPeriodCashUp } from "$lib/api";
-	import { Accordion, Avatar, Card, Loader } from "@kayord/ui";
+	import { Avatar, Card, Loader, Separator } from "@kayord/ui";
 	import { getError } from "$lib/types";
 	import Item from "../../table/bill/[id]/Item.svelte";
 	import { getInitials } from "$lib/util";
@@ -30,11 +30,11 @@
 
 	{#if $cashUpQuery.data}
 		{@const d = $cashUpQuery.data}
-		<div class="flex flex-col gap-2">
-			<div class="flex flex-row gap-2">
+		<div class="flex flex-col gap-4">
+			<div class="flex flex-row gap-4">
 				<Card.Root class="w-full max-w-lg">
 					<Card.Header>
-						<Card.Title>{d.cashUpTotal}</Card.Title>
+						<Card.Title>R{d.cashUpTotal.toFixed(2)}</Card.Title>
 						<Card.Description>Cash Up Total</Card.Description>
 					</Card.Header>
 				</Card.Root>
@@ -46,47 +46,96 @@
 				</Card.Root>
 				<Card.Root class="w-full max-w-lg">
 					<Card.Header>
-						<Card.Title>{d.cashUpBalance}</Card.Title>
+						<Card.Title>R{d.cashUpBalance.toFixed(2)}</Card.Title>
 						<Card.Description>Cash Up Balance</Card.Description>
 					</Card.Header>
 				</Card.Root>
 				<Card.Root class="w-full max-w-lg">
 					<Card.Header>
-						<Card.Title>{d.cashUpTotalPayments}</Card.Title>
+						<Card.Title>R{d.cashUpTotalPayments.toFixed(2)}</Card.Title>
 						<Card.Description>Cash Up Total Payments</Card.Description>
 					</Card.Header>
 				</Card.Root>
 			</div>
 			{#each d.userCashUps as cash}
-				<Accordion.Root>
-					<Accordion.Item value="item-1">
-						<Accordion.Trigger>Is it accessible?</Accordion.Trigger>
-						<Accordion.Content>Yes. It adheres to the WAI-ARIA design pattern.</Accordion.Content>
-					</Accordion.Item>
-				</Accordion.Root>
+				<Card.Root>
+					<Card.Header>
+						<div class="flex items-center gap-2">
+							<Avatar.Root>
+								<Avatar.Image src={cash.user?.image} alt="profile" />
+								<Avatar.Fallback class="bg-primary text-primary-foreground">
+									{getInitials(cash.user?.name ?? "")}
+								</Avatar.Fallback>
+							</Avatar.Root>
+							<div class="flex flex-col">
+								<div>Test</div>
+								<div>Test</div>
+							</div>
+						</div>
+					</Card.Header>
+					<Card.Content>
+						<div class="mb-4">
+							<div class="flex justify-between">
+								<h1>User Total</h1>
+								<h2>R{cash.userTotal.toFixed(2)}</h2>
+							</div>
+							<div class="flex justify-between">
+								<h1>User Payment Total</h1>
+								<h2>R{cash.userPaymentTotal.toFixed(2)}</h2>
+							</div>
+							<div class="flex justify-between">
+								<h1>User Balance</h1>
+								<h2>R{cash.userBalance.toFixed(2)}</h2>
+							</div>
+						</div>
 
-				<Avatar.Root>
-					<Avatar.Image src={""} alt="profile" />
-					<Avatar.Fallback class="bg-primary text-primary-foreground">
-						{getInitials("Kay Jay")}
-					</Avatar.Fallback>
-				</Avatar.Root>
-				<div>
-					{cash.userId}
-					{cash.user?.name}
-				</div>
-				{cash.userPaymentTotal}
-				{cash.userTotal}
-				{cash.userBalance}
+						<div class="flex flex-col gap-2">
+							{#each cash.tableCashUps as table}
+								<Card.Root>
+									<Card.Content>
+										<div class="flex justify-between">
+											<h3>Table Payment</h3>
+											<h3>R{table.tablePaymentTotal.toFixed(2)}</h3>
+										</div>
+										<div class="flex justify-between">
+											<h3>Total</h3>
+											<h3>R{table.total.toFixed(2)}</h3>
+										</div>
+										<Item data={table.orderItems} />
 
-				{#each cash.tableCashUps as table}
-					{table.balance}
-					{table.paymentsReceived}
-					{table.tablePaymentTotal}
-					{table.total}
-					{table.userId}
-					<Item data={table.orderItems} />
-				{/each}
+										<Separator class="mt-4" />
+
+										<div class="flex justify-between">
+											<h3>Total</h3>
+											<h2>R{table.total.toFixed(2)}</h2>
+										</div>
+										<Separator class="mt-4" />
+
+										{#each table.paymentsReceived as payment}
+											<div class="flex justify-between">
+												<div>Payment</div>
+												<div>
+													{payment.amount.toFixed(2)}
+												</div>
+											</div>
+										{/each}
+										<div class="flex justify-between font-bold">
+											<div>Total Payed</div>
+											<div>{table.tablePaymentTotal.toFixed(2)}</div>
+										</div>
+										{#if table.paymentsReceived.length > 0}
+											<Separator class="mt-4" />
+											<div class="flex justify-between">
+												<h3>Balance</h3>
+												<h3>R{table?.balance.toFixed(2)}</h3>
+											</div>
+										{/if}
+									</Card.Content>
+								</Card.Root>
+							{/each}
+						</div>
+					</Card.Content>
+				</Card.Root>
 			{/each}
 		</div>
 	{/if}

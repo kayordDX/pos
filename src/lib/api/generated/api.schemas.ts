@@ -337,7 +337,10 @@ export interface SalesPeriodCashUpBillOrderItemDTO {
 	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
 	tableBooking: DTOTableBookingDTO;
 	tableBookingId: number;
+	userId: string;
 }
+
+export type SalesPeriodCashUpTableCashUpUser = DTOUserDTO | null;
 
 export interface SalesPeriodCashUpTableCashUp {
 	balance: number;
@@ -345,8 +348,8 @@ export interface SalesPeriodCashUpTableCashUp {
 	paymentsReceived: EntitiesPayment[];
 	tablePaymentTotal: number;
 	total: number;
-	user: DTOUserDTO;
-	userId: string;
+	user?: SalesPeriodCashUpTableCashUpUser;
+	userId?: string | null;
 }
 
 export interface SalesPeriodCashUpUserCashUp {
@@ -512,28 +515,6 @@ export interface EntitiesOrderItemStatus {
 	status: string;
 }
 
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
-}
-
-export interface EntitiesMenuItemExtraGroup {
-	extraGroup: EntitiesExtraGroup;
-	extraGroupId: number;
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-}
-
-export interface EntitiesExtraGroup {
-	extraGroupId: number;
-	extras: EntitiesExtra[];
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	name: string;
-}
-
 export interface EntitiesExtra {
 	extraGroup: EntitiesExtraGroup;
 	extraGroupId: number;
@@ -542,6 +523,14 @@ export interface EntitiesExtra {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	positionId: number;
 	price: number;
+}
+
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -631,6 +620,20 @@ export interface EntitiesMenuItem {
 	price: number;
 	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
 	tags?: EntitiesTag[] | null;
+}
+
+export interface EntitiesMenuItemExtraGroup {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	extras: EntitiesExtra[];
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	name: string;
 }
 
 export type EntitiesUserRoleRole = EntitiesRole | null;

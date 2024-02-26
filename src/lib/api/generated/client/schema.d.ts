@@ -891,8 +891,8 @@ export interface components {
       tablePaymentTotal: number;
       /** Format: decimal */
       balance: number;
-      userId: string;
-      user: components["schemas"]["DTOUserDTO"];
+      userId?: string | null;
+      user?: components["schemas"]["DTOUserDTO"] | null;
     };
     SalesPeriodCashUpBillOrderItemDTO: {
       /** Format: int32 */
@@ -905,6 +905,7 @@ export interface components {
       menuItem: components["schemas"]["SalesPeriodCashUpBillMenuItemDTO"];
       orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
       orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+      userId: string;
       note?: string | null;
     };
     SalesPeriodCashUpBillMenuItemDTO: {

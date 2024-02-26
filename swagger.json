@@ -5210,9 +5210,7 @@
           "total",
           "paymentsReceived",
           "tablePaymentTotal",
-          "balance",
-          "userId",
-          "user"
+          "balance"
         ],
         "properties": {
           "orderItems": {
@@ -5240,10 +5238,16 @@
             "format": "decimal"
           },
           "userId": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
           },
           "user": {
-            "$ref": "#/components/schemas/DTOUserDTO"
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DTOUserDTO"
+              }
+            ]
           }
         }
       },
@@ -5255,7 +5259,8 @@
           "tableBookingId",
           "tableBooking",
           "menuItemId",
-          "menuItem"
+          "menuItem",
+          "userId"
         ],
         "properties": {
           "orderItemId": {
@@ -5289,6 +5294,9 @@
             "items": {
               "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
             }
+          },
+          "userId": {
+            "type": "string"
           },
           "note": {
             "type": "string",
