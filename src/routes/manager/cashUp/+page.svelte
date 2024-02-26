@@ -60,32 +60,30 @@
 			{#each d.userCashUps as cash}
 				<Card.Root>
 					<Card.Header>
-						<div class="flex items-center gap-2">
-							<Avatar.Root>
-								<Avatar.Image src={cash.user?.image} alt="profile" />
-								<Avatar.Fallback class="bg-primary text-primary-foreground">
-									{getInitials(cash.user?.name ?? "")}
-								</Avatar.Fallback>
-							</Avatar.Root>
-							<div class="flex flex-col">
-								<div>Test</div>
-								<div>Test</div>
-							</div>
-						</div>
+						<Avatar.Root>
+							<Avatar.Image src={cash.user?.image} alt="profile" />
+							<Avatar.Fallback class="bg-primary text-primary-foreground">
+								{getInitials(cash.user?.name ?? "")}
+							</Avatar.Fallback>
+						</Avatar.Root>
 					</Card.Header>
 					<Card.Content>
 						<div class="mb-4">
 							<div class="flex justify-between">
-								<h1>User Total</h1>
-								<h2>R{cash.userTotal.toFixed(2)}</h2>
+								<h3>User Total</h3>
+								<h3>R{cash.userTotal.toFixed(2)}</h3>
 							</div>
 							<div class="flex justify-between">
-								<h1>User Payment Total</h1>
-								<h2>R{cash.userPaymentTotal.toFixed(2)}</h2>
+								<h3>User Payment Total</h3>
+								<h3>R{cash.userPaymentTotal.toFixed(2)}</h3>
 							</div>
 							<div class="flex justify-between">
-								<h1>User Balance</h1>
-								<h2>R{cash.userBalance.toFixed(2)}</h2>
+								<h3>User Balance</h3>
+								<h3>R{cash.userBalance.toFixed(2)}</h3>
+							</div>
+							<div class="flex justify-between">
+								<h3>User Tips</h3>
+								<h3>R{cash.userTipTotal.toFixed(2)}</h3>
 							</div>
 						</div>
 
