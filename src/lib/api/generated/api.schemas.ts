@@ -359,6 +359,7 @@ export interface SalesPeriodCashUpUserCashUp {
 	userBalance: number;
 	userId: string;
 	userPaymentTotal: number;
+	userTipTotal: number;
 	userTotal: number;
 }
 

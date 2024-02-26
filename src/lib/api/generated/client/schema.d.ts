@@ -879,6 +879,8 @@ export interface components {
       userBalance: number;
       /** Format: decimal */
       userPaymentTotal: number;
+      /** Format: decimal */
+      userTipTotal: number;
       /** Format: time */
       tableTurnaroundTime: string;
     };

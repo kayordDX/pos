@@ -5169,6 +5169,7 @@
           "userTotal",
           "userBalance",
           "userPaymentTotal",
+          "userTipTotal",
           "tableTurnaroundTime"
         ],
         "properties": {
@@ -5193,6 +5194,10 @@
             "format": "decimal"
           },
           "userPaymentTotal": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "userTipTotal": {
             "type": "number",
             "format": "decimal"
           },
