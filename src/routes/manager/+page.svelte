@@ -5,7 +5,7 @@
 	export let data: PageData;
 </script>
 
-<div class="m-8">
+<div class="m-2">
 	{#if data.status?.salesPeriod != undefined}
 		<Card.Root>
 			<Card.Header>

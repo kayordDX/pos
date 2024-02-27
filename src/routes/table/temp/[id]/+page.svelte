@@ -6,7 +6,7 @@
 	export let data: PageData;
 </script>
 
-<div class="m-8">
+<div class="m-2">
 	<h1 class="mt-8">Items</h1>
 	<p class="text-muted-foreground">Current bill for table {data.bookingId}</p>
 	<Separator />

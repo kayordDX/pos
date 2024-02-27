@@ -6,7 +6,7 @@
 	const id = $page.params.id;
 </script>
 
-<Card.Root class="m-8">
+<Card.Root class="m-2">
 	<Card.Header class="flex flex-row items-center gap-2">
 		<Avatar.Root class="animate-pulse">
 			<Avatar.Fallback><ShieldCheckIcon class="text-green-500" /></Avatar.Fallback>
