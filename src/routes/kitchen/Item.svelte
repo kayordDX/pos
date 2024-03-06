@@ -76,7 +76,7 @@
 			<Badge class="truncate animate-pulse" style={getStatus()}>{item.orderUpdatedFormatted}</Badge>
 			<Drawer.Root bind:open>
 				<Drawer.Trigger>
-					<Button><ConciergeBellIcon class="h-4 w-4 mr-2" />Action</Button>
+					<Button variant="secondary"><ConciergeBellIcon class="h-4 w-4" /></Button>
 				</Drawer.Trigger>
 				<Drawer.Content>
 					<Drawer.Header>

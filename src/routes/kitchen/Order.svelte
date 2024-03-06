@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Avatar, Badge, Button, Card, Drawer, Loader, Popover } from "@kayord/ui";
+	import { Avatar, Badge, Button, Card, Drawer, Loader, Popover, ScrollArea } from "@kayord/ui";
 	import Error from "$lib/components/Error.svelte";
 	import Item from "./Item.svelte";
 	import { BellElectricIcon } from "lucide-svelte";
@@ -34,15 +34,15 @@
 			<Badge>{$query.data.pendingItems} pending items(s)</Badge>
 		</div>
 		<button on:click={() => $query.refetch()}>
-			<Badge variant="secondary" class="truncate"
-				>Refreshed: {getTime($query.data.lastRefresh)}</Badge
-			>
+			<Badge variant="secondary" class="truncate">
+				Refreshed: {getTime($query.data.lastRefresh)}
+			</Badge>
 		</button>
 	</div>
 
-	<div class="flex flex-col gap-2">
+	<div class="flex flex-wrap gap-2 items-baseline">
 		{#each $query.data.tables ?? [] as tableOrder}
-			<Card.Root class="p-4">
+			<Card.Root class="p-2">
 				<div class="flex justify-between items-center">
 					<div class="flex items-center gap-2">
 						<Popover.Root>
@@ -54,18 +54,18 @@
 							</Popover.Trigger>
 							<Popover.Content>{tableOrder.user.name}</Popover.Content>
 						</Popover.Root>
-						<div>
-							<div class="text-lg font-bold">
+						<div class="max-w-64 line-clamp-2">
+							<div># {tableOrder.id}</div>
+							<div class="text-sm font-bold">
 								{tableOrder.table.name} - {tableOrder.table.section?.name}
 								<span class="text-muted-foreground text-sm">({tableOrder.bookingName})</span>
 							</div>
-							<div># {tableOrder.id}</div>
 						</div>
 					</div>
-					<div class="float-right">
+					<div class="float-right ml-2">
 						<Drawer.Root>
 							<Drawer.Trigger>
-								<Button><BellElectricIcon class="mr-2 h-4 w-4" />Order Actions</Button>
+								<Button><BellElectricIcon class="mr-2 h-4 w-4" />Actions</Button>
 							</Drawer.Trigger>
 							<Drawer.Content>
 								<Drawer.Header>

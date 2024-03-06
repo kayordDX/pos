@@ -70,8 +70,8 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<div class="flex flex-col gap-1">
-				<Badge class="truncate">{item.orderItemStatus?.status}</Badge>
-				<Badge class="truncate animate-pulse" style={getStatus()}
+				<Badge class="truncate self-end">{item.orderItemStatus?.status}</Badge>
+				<Badge class="truncate animate-pulse self-end" style={getStatus()}
 					>{item.orderReceivedFormatted}</Badge
 				>
 			</div>
