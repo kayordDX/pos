@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Avatar, Badge, Button, Card, Drawer, Loader } from "@kayord/ui";
+	import { Avatar, Badge, Button, Card, Drawer, Loader, Popover } from "@kayord/ui";
 	import Error from "$lib/components/Error.svelte";
 	import Item from "./Item.svelte";
 	import { BellElectricIcon, UtensilsIcon } from "lucide-svelte";
@@ -37,10 +37,15 @@
 			<Card.Root class="p-4">
 				<div class="flex justify-between items-center">
 					<div class="flex items-center gap-2">
-						<Avatar.Root>
-							<Avatar.Image src={tableOrder.user.image} alt={tableOrder.user.name} />
-							<Avatar.Fallback>{getInitials(tableOrder.user.name)}</Avatar.Fallback>
-						</Avatar.Root>
+						<Popover.Root>
+							<Popover.Trigger>
+								<Avatar.Root>
+									<Avatar.Image src={tableOrder.user.image} alt={tableOrder.user.name} />
+									<Avatar.Fallback>{getInitials(tableOrder.user.name)}</Avatar.Fallback>
+								</Avatar.Root>
+							</Popover.Trigger>
+							<Popover.Content>{tableOrder.user.name}</Popover.Content>
+						</Popover.Root>
 						<div>
 							<div class="text-lg font-bold">
 								{tableOrder.table.name} - {tableOrder.table.section?.name}
