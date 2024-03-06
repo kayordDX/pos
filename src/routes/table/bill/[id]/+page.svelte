@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Loader } from "@kayord/ui";
-	import type { PageData } from "../$types";
+	import type { PageData } from "./$types";
 	import { createTableOrderGetBill } from "$lib/api";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";

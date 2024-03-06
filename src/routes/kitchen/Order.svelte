@@ -2,8 +2,8 @@
 	import { Avatar, Badge, Button, Card, Drawer, Loader, Popover } from "@kayord/ui";
 	import Error from "$lib/components/Error.svelte";
 	import Item from "./Item.svelte";
-	import { BellElectricIcon, UtensilsIcon } from "lucide-svelte";
-	let open = false;
+	import { BellElectricIcon } from "lucide-svelte";
+	import { createTableOrderUpdateTableOrder } from "$lib/api";
 
 	import { createTableOrderKitchen } from "$lib/api";
 	import { getError } from "$lib/types";
@@ -12,6 +12,12 @@
 
 	const getTime = (date: string) => {
 		return new Date(date).toLocaleTimeString();
+	};
+
+	const mutation = createTableOrderUpdateTableOrder();
+	const readyAll = async (id: number, statusId: number) => {
+		await $mutation.mutateAsync({ data: { orderItemStatusId: statusId, tableBookingId: id } });
+		$query.refetch();
 	};
 </script>
 
@@ -28,7 +34,9 @@
 			<Badge>{$query.data.pendingItems} pending items(s)</Badge>
 		</div>
 		<button on:click={() => $query.refetch()}>
-			<Badge variant="secondary">Refreshed: {getTime($query.data.lastRefresh)}</Badge>
+			<Badge variant="secondary" class="truncate"
+				>Refreshed: {getTime($query.data.lastRefresh)}</Badge
+			>
 		</button>
 	</div>
 
@@ -66,10 +74,9 @@
 								</Drawer.Header>
 								<Drawer.Footer>
 									<Drawer.Close>
-										<Button class="w-full" on:click={() => (open = false)}>Ready All</Button>
-									</Drawer.Close>
-									<Drawer.Close>
-										<Button class="w-full" variant="destructive">Call Waiter</Button>
+										<Button class="w-full" on:click={() => readyAll(tableOrder.id, 5)}>
+											Ready All</Button
+										>
 									</Drawer.Close>
 								</Drawer.Footer>
 							</Drawer.Content>

@@ -28,7 +28,7 @@
 	};
 </script>
 
-<div class="m-4">
+<div class="m-2 mb-12">
 	<div class="flex flex-col gap-2" use:autoAnimate>
 		{#each $query.data?.orderItems ?? [] as item, i (item.orderItemId)}
 			<BasketItem

@@ -11,7 +11,7 @@
 	const query = createTableGetMyBooked({ myBooking: true, outletId: data.status?.outletId ?? 0 });
 </script>
 
-<div class="m-8">
+<div class="m-2">
 	{#if !data.status?.salesPeriod}
 		<Card.Root>
 			<Card.Header class="flex flex-row items-center gap-4">

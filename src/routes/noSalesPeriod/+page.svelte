@@ -3,7 +3,7 @@
 	import { CalendarOffIcon, CalendarCheck2Icon } from "lucide-svelte";
 </script>
 
-<div class="m-8">
+<div class="m-2">
 	<Card.Root>
 		<Card.Header class="flex flex-row items-center gap-4">
 			<CalendarOffIcon />

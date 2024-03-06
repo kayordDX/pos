@@ -1,7 +1,10 @@
 <script lang="ts">
 	import type { TableOrderKitchenOrderItemDTO } from "$lib/api";
-	import { Badge, Card } from "@kayord/ui";
+	import { Badge, Button, Card } from "@kayord/ui";
 	export let item: TableOrderKitchenOrderItemDTO;
+	import { createTableOrderUpdateOrderItem } from "$lib/api";
+
+	export let refetch: () => void;
 
 	const getStatus = () => {
 		const theDate = new Date(item.orderReceived);
@@ -16,6 +19,13 @@
 			return "background-color: rgb(245 158 11);";
 		}
 		return "background-color: rgb(34 197 94);";
+	};
+
+	const mutation = createTableOrderUpdateOrderItem();
+
+	const completeItem = async (id: number, statusId: number) => {
+		await $mutation.mutateAsync({ data: { orderItemId: id, orderItemStatusId: statusId } });
+		refetch();
 	};
 </script>
 
@@ -59,9 +69,13 @@
 			{/if}
 		</div>
 		<div class="flex items-center gap-2">
-			<Badge>{item.orderItemStatus?.status}</Badge>
-			<Badge class="truncate animate-pulse" style={getStatus()}>{item.orderReceivedFormatted}</Badge
-			>
+			<div class="flex flex-col gap-1">
+				<Badge class="truncate">{item.orderItemStatus?.status}</Badge>
+				<Badge class="truncate animate-pulse" style={getStatus()}
+					>{item.orderReceivedFormatted}</Badge
+				>
+			</div>
+			<Button on:click={() => completeItem(item.orderItemId, 6)}>Done</Button>
 		</div>
 	</div>
 </Card.Root>

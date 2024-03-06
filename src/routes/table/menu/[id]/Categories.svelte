@@ -19,7 +19,7 @@
 	const { ref } = useConveyer({ useSideWheel: true, preventClickOnDrag: true });
 </script>
 
-<div class="overflow-hidden overscroll-none select-none m-auto flex flex-nowrap gap-2" use:ref>
+<div class="overflow-auto overscroll-none select-none m-auto flex flex-nowrap gap-2" use:ref>
 	{#if sections != null}
 		{#if sectionParams.sectionId > 0}
 			<button

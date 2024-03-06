@@ -441,9 +441,6 @@
               }
             }
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -454,12 +451,7 @@
               }
             }
           }
-        },
-        "security": [
-          {
-            "JWTBearerAuth": []
-          }
-        ]
+        }
       }
     },
     "/order/getBill": {
@@ -649,103 +641,6 @@
             "JWTBearerAuth": []
           }
         ]
-      }
-    },
-    "/tableCashUp/tableBooking/{tableBookingId}": {
-      "get": {
-        "tags": [
-          "Tablecashup"
-        ],
-        "operationId": "TableCashUpViewTableCashUps",
-        "parameters": [
-          {
-            "name": "tableBookingId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/EntitiesTableCashUp"
-                  }
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/tableCashUp": {
-      "post": {
-        "tags": [
-          "Tablecashup"
-        ],
-        "operationId": "TableCashUpCreate",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TableCashUpCreateRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntitiesTableCashUp"
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        }
       }
     },
     "/tableBooking": {
@@ -1336,6 +1231,118 @@
         }
       }
     },
+    "/salesperiod/createCashup": {
+      "get": {
+        "tags": [
+          "Salesperiod"
+        ],
+        "operationId": "SalesPeriodCreateCashUp",
+        "parameters": [
+          {
+            "name": "cashUpTotal",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "decimal"
+            }
+          },
+          {
+            "name": "tableCount",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "cashUpBalance",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "decimal"
+            }
+          },
+          {
+            "name": "cashUpTotalPayments",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number",
+              "format": "decimal"
+            }
+          },
+          {
+            "name": "salesPeriodId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "signOffUserId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "signOffDate",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesCashUp"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/salesPeriod": {
       "post": {
         "tags": [
@@ -1447,6 +1454,15 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "userId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -1460,6 +1476,9 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -1470,7 +1489,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/role/createRole": {
@@ -4620,6 +4644,7 @@
           "isBackOffice",
           "isComplete",
           "isCancelled",
+          "isBillable",
           "notify"
         ],
         "properties": {
@@ -4640,6 +4665,9 @@
             "type": "boolean"
           },
           "isCancelled": {
+            "type": "boolean"
+          },
+          "isBillable": {
             "type": "boolean"
           },
           "notify": {
@@ -4713,56 +4741,6 @@
           }
         }
       },
-      "EntitiesTableCashUp": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "tableBookingId",
-          "tableBooking",
-          "salesAmount",
-          "totalAmount",
-          "cashUpDate",
-          "outletId",
-          "outlet"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableBookingId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableBooking": {
-            "$ref": "#/components/schemas/EntitiesTableBooking"
-          },
-          "salesAmount": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "totalAmount": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "cashUpDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "outlet": {
-            "$ref": "#/components/schemas/EntitiesOutlet"
-          }
-        }
-      },
-      "TableCashUpViewTableCashUpsRequest": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "ErrorResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -4789,40 +4767,6 @@
                 "type": "string"
               }
             }
-          }
-        }
-      },
-      "TableCashUpCreateRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "tableBookingId",
-          "salesAmount",
-          "totalAmount",
-          "outletId"
-        ],
-        "properties": {
-          "tableBookingId": {
-            "type": "integer",
-            "format": "int32",
-            "minimum": 0.0,
-            "exclusiveMinimum": true
-          },
-          "salesAmount": {
-            "type": "number",
-            "format": "decimal",
-            "minimum": 0.0,
-            "exclusiveMinimum": true
-          },
-          "totalAmount": {
-            "type": "number",
-            "format": "decimal",
-            "minimum": 0.0,
-            "exclusiveMinimum": true
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
           }
         }
       },
@@ -5102,6 +5046,65 @@
         "type": "object",
         "additionalProperties": false
       },
+      "EntitiesCashUp": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "cashUpTotal",
+          "tableCount",
+          "cashUpBalance",
+          "cashUpTotalPayments",
+          "salesPeriodId",
+          "salesPeriod",
+          "userId",
+          "signOffUserId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cashUpTotal": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "tableCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cashUpBalance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "cashUpTotalPayments": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "salesPeriod": {
+            "$ref": "#/components/schemas/EntitiesSalesPeriod"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "signOffUserId": {
+            "type": "string"
+          },
+          "signOffDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        }
+      },
+      "SalesPeriodCreateCashUpRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "SalesPeriodCreateRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -5135,48 +5138,26 @@
         }
       },
       "SalesPeriodCashUpCashUp": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "userCashUps",
-          "cashUpTotal",
-          "tableCount",
-          "cashUpBalance",
-          "cashUpTotalPayments",
-          "salesPeriodId",
-          "salesPeriod"
-        ],
-        "properties": {
-          "userCashUps": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/SalesPeriodCashUpUserCashUp"
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntitiesCashUp"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "userCashUps"
+            ],
+            "properties": {
+              "userCashUps": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/SalesPeriodCashUpUserCashUp"
+                }
+              }
             }
-          },
-          "cashUpTotal": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "tableCount": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "cashUpBalance": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "cashUpTotalPayments": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "salesPeriodId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "salesPeriod": {
-            "$ref": "#/components/schemas/EntitiesSalesPeriod"
           }
-        }
+        ]
       },
       "SalesPeriodCashUpUserCashUp": {
         "type": "object",
@@ -5184,9 +5165,12 @@
         "required": [
           "tableCashUps",
           "userId",
+          "user",
           "userTotal",
           "userBalance",
-          "userPaymentTotal"
+          "userPaymentTotal",
+          "userTipTotal",
+          "tableTurnaroundTime"
         ],
         "properties": {
           "tableCashUps": {
@@ -5197,6 +5181,9 @@
           },
           "userId": {
             "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/DTOUserDTO"
           },
           "userTotal": {
             "type": "number",
@@ -5209,6 +5196,14 @@
           "userPaymentTotal": {
             "type": "number",
             "format": "decimal"
+          },
+          "userTipTotal": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "tableTurnaroundTime": {
+            "type": "string",
+            "format": "time"
           }
         }
       },
@@ -5220,8 +5215,7 @@
           "total",
           "paymentsReceived",
           "tablePaymentTotal",
-          "balance",
-          "userId"
+          "balance"
         ],
         "properties": {
           "orderItems": {
@@ -5249,7 +5243,16 @@
             "format": "decimal"
           },
           "userId": {
-            "type": "string"
+            "type": "string",
+            "nullable": true
+          },
+          "user": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DTOUserDTO"
+              }
+            ]
           }
         }
       },
@@ -5261,7 +5264,8 @@
           "tableBookingId",
           "tableBooking",
           "menuItemId",
-          "menuItem"
+          "menuItem",
+          "userId"
         ],
         "properties": {
           "orderItemId": {
@@ -5295,6 +5299,9 @@
             "items": {
               "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
             }
+          },
+          "userId": {
+            "type": "string"
           },
           "note": {
             "type": "string",

@@ -2,6 +2,6 @@
 	import Order from "./Order.svelte";
 </script>
 
-<div class="m-4">
+<div class="m-2">
 	<Order />
 </div>

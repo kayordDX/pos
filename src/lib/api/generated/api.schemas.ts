@@ -56,6 +56,18 @@ export type RoleCreate200One = {};
 
 export type SalesPeriodCashUpParams = {
 	salesPeriodId: number;
+	userId: string | null;
+};
+
+export type SalesPeriodCreateCashUpParams = {
+	cashUpTotal: number;
+	tableCount: number;
+	cashUpBalance: number;
+	cashUpTotalPayments: number;
+	salesPeriodId: number;
+	userId: string | null;
+	signOffUserId: string | null;
+	signOffDate?: string | null;
 };
 
 export type SectionListParams = {
@@ -325,7 +337,10 @@ export interface SalesPeriodCashUpBillOrderItemDTO {
 	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
 	tableBooking: DTOTableBookingDTO;
 	tableBookingId: number;
+	userId: string;
 }
+
+export type SalesPeriodCashUpTableCashUpUser = DTOUserDTO | null;
 
 export interface SalesPeriodCashUpTableCashUp {
 	balance: number;
@@ -333,26 +348,26 @@ export interface SalesPeriodCashUpTableCashUp {
 	paymentsReceived: EntitiesPayment[];
 	tablePaymentTotal: number;
 	total: number;
-	userId: string;
+	user?: SalesPeriodCashUpTableCashUpUser;
+	userId?: string | null;
 }
 
 export interface SalesPeriodCashUpUserCashUp {
 	tableCashUps: SalesPeriodCashUpTableCashUp[];
+	tableTurnaroundTime: string;
+	user: DTOUserDTO;
 	userBalance: number;
 	userId: string;
 	userPaymentTotal: number;
+	userTipTotal: number;
 	userTotal: number;
 }
 
-export interface SalesPeriodCashUpCashUp {
-	cashUpBalance: number;
-	cashUpTotal: number;
-	cashUpTotalPayments: number;
-	salesPeriod: EntitiesSalesPeriod;
-	salesPeriodId: number;
-	tableCount: number;
+export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
-}
+};
+
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
@@ -361,6 +376,23 @@ export interface SalesPeriodCloseRequest {
 export interface SalesPeriodCreateRequest {
 	name: string;
 	outletId: number;
+}
+
+export interface SalesPeriodCreateCashUpRequest {
+	[key: string]: any;
+}
+
+export interface EntitiesCashUp {
+	cashUpBalance: number;
+	cashUpTotal: number;
+	cashUpTotalPayments: number;
+	id: number;
+	salesPeriod: EntitiesSalesPeriod;
+	salesPeriodId: number;
+	signOffDate?: string | null;
+	signOffUserId: string;
+	tableCount: number;
+	userId: string;
 }
 
 export interface SalesPeriodGetRequest {
@@ -449,34 +481,12 @@ export interface TableBookingCreateRequest {
 	tableId: number;
 }
 
-export interface TableCashUpCreateRequest {
-	outletId: number;
-	salesAmount: number;
-	tableBookingId: number;
-	totalAmount: number;
-}
-
 export type ErrorResponseErrors = { [key: string]: string[] };
 
 export interface ErrorResponse {
 	errors: ErrorResponseErrors;
 	message: string;
 	statusCode: number;
-}
-
-export interface TableCashUpViewTableCashUpsRequest {
-	[key: string]: any;
-}
-
-export interface EntitiesTableCashUp {
-	cashUpDate: string;
-	id: number;
-	outlet: EntitiesOutlet;
-	outletId: number;
-	salesAmount: number;
-	tableBooking: EntitiesTableBooking;
-	tableBookingId: number;
-	totalAmount: number;
 }
 
 export interface OrderAddItemsOrder {
@@ -497,34 +507,13 @@ export interface OrderClearBasketRequest {
 
 export interface EntitiesOrderItemStatus {
 	isBackOffice: boolean;
+	isBillable: boolean;
 	isCancelled: boolean;
 	isComplete: boolean;
 	isFrontLine: boolean;
 	notify: boolean;
 	orderItemStatusId: number;
 	status: string;
-}
-
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
-}
-
-export interface EntitiesMenuItemExtraGroup {
-	extraGroup: EntitiesExtraGroup;
-	extraGroupId: number;
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-}
-
-export interface EntitiesExtraGroup {
-	extraGroupId: number;
-	extras: EntitiesExtra[];
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	name: string;
 }
 
 export interface EntitiesExtra {
@@ -535,6 +524,14 @@ export interface EntitiesExtra {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	positionId: number;
 	price: number;
+}
+
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -624,6 +621,20 @@ export interface EntitiesMenuItem {
 	price: number;
 	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
 	tags?: EntitiesTag[] | null;
+}
+
+export interface EntitiesMenuItemExtraGroup {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	extras: EntitiesExtra[];
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	name: string;
 }
 
 export type EntitiesUserRoleRole = EntitiesRole | null;

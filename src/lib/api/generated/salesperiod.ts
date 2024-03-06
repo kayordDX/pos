@@ -15,12 +15,14 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	EntitiesCashUp,
 	EntitiesSalesPeriod,
 	ErrorResponse,
 	InternalErrorResponse,
 	SalesPeriodCashUpCashUp,
 	SalesPeriodCashUpParams,
 	SalesPeriodCloseRequest,
+	SalesPeriodCreateCashUpParams,
 	SalesPeriodCreateRequest,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
@@ -91,6 +93,81 @@ export const createSalesPeriodGet = <
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
 	const queryOptions = useSalesPeriodGetQueryOptions(outletId, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
+
+export const useSalesPeriodCreateCashUpHook = () => {
+	const salesPeriodCreateCashUp = useCustomClient<EntitiesCashUp>();
+
+	return (params: SalesPeriodCreateCashUpParams) => {
+		return salesPeriodCreateCashUp({ url: `/salesperiod/createCashup`, method: "GET", params });
+	};
+};
+
+export const getSalesPeriodCreateCashUpQueryKey = (params: SalesPeriodCreateCashUpParams) => {
+	return [`/salesperiod/createCashup`, ...(params ? [params] : [])] as const;
+};
+
+export const useSalesPeriodCreateCashUpQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateCashUpHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: SalesPeriodCreateCashUpParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateCashUpHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getSalesPeriodCreateCashUpQueryKey(params);
+
+	const salesPeriodCreateCashUp = useSalesPeriodCreateCashUpHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateCashUpHook>>>
+	> = () => salesPeriodCreateCashUp(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateCashUpHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type SalesPeriodCreateCashUpQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateCashUpHook>>>
+>;
+export type SalesPeriodCreateCashUpQueryError = ErrorType<void | InternalErrorResponse>;
+
+export const createSalesPeriodCreateCashUp = <
+	TData = Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateCashUpHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: SalesPeriodCreateCashUpParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useSalesPeriodCreateCashUpHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useSalesPeriodCreateCashUpQueryOptions(params, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;
@@ -247,7 +324,7 @@ export const getSalesPeriodCashUpQueryKey = (params: SalesPeriodCashUpParams) =>
 
 export const useSalesPeriodCashUpQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: SalesPeriodCashUpParams,
 	options?: {
@@ -280,11 +357,11 @@ export const useSalesPeriodCashUpQueryOptions = <
 export type SalesPeriodCashUpQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>
 >;
-export type SalesPeriodCashUpQueryError = ErrorType<InternalErrorResponse>;
+export type SalesPeriodCashUpQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createSalesPeriodCashUp = <
 	TData = Awaited<ReturnType<ReturnType<typeof useSalesPeriodCashUpHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: SalesPeriodCashUpParams,
 	options?: {
