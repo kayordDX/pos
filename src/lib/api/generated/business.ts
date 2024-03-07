@@ -104,7 +104,7 @@ export const useBusinessEditHook = () => {
 };
 
 export const useBusinessEditMutationOptions = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -139,10 +139,10 @@ export type BusinessEditMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useBusinessEditHook>>>
 >;
 export type BusinessEditMutationBody = BodyType<BusinessEditRequest>;
-export type BusinessEditMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type BusinessEditMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export const createBusinessEdit = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -170,7 +170,7 @@ export const useBusinessDeleteHook = () => {
 };
 
 export const useBusinessDeleteMutationOptions = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -205,10 +205,10 @@ export type BusinessDeleteMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useBusinessDeleteHook>>>
 >;
 export type BusinessDeleteMutationBody = BodyType<BusinessDeleteRequest>;
-export type BusinessDeleteMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type BusinessDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export const createBusinessDelete = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -236,7 +236,7 @@ export const useBusinessCreateHook = () => {
 };
 
 export const useBusinessCreateMutationOptions = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -271,10 +271,10 @@ export type BusinessCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useBusinessCreateHook>>>
 >;
 export type BusinessCreateMutationBody = BodyType<BusinessCreateRequest>;
-export type BusinessCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type BusinessCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export const createBusinessCreate = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -302,7 +302,7 @@ export const getBusinessGetQueryKey = (id: number) => {
 
 export const useBusinessGetQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useBusinessGetHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	id: number,
 	options?: {
@@ -330,11 +330,11 @@ export const useBusinessGetQueryOptions = <
 export type BusinessGetQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useBusinessGetHook>>>
 >;
-export type BusinessGetQueryError = ErrorType<InternalErrorResponse>;
+export type BusinessGetQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createBusinessGet = <
 	TData = Awaited<ReturnType<ReturnType<typeof useBusinessGetHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	id: number,
 	options?: {

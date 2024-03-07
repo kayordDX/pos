@@ -1,14 +1,16 @@
 <script lang="ts">
 	import { Badge, Button, Card, Form, Input, Loader } from "@kayord/ui";
 	import type { PageData } from "./$types";
-	import { createPayGetLink, createPayStatus } from "$lib/api";
-	import { CheckIcon, Nfc } from "lucide-svelte";
+	import { CreditCardIcon, NfcIcon } from "lucide-svelte";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { page } from "$app/stores";
-	import { goto } from "$app/navigation";
 	import PaymentDone from "./PaymentDone.svelte";
+	import { env } from "$env/dynamic/public";
+	import { onMount } from "svelte";
+	import { createPayManualPayment } from "$lib/api";
+	import { goto } from "$app/navigation";
 	export let data: PageData;
 
 	let a: HTMLAnchorElement;
@@ -16,40 +18,89 @@
 	let url: string | undefined;
 	let reference: string | undefined;
 
-	$: getLink = createPayGetLink(
-		{ amount: $formData.amount, tableBookingId: Number(data.bookingId) },
-		{ query: { enabled: false } }
-	);
+	let linkLoading = false;
 
-	$: if ($getLink.data?.success) {
-		url = $getLink.data.value?.url;
-		reference = $getLink.data.value?.reference;
-		if (a) {
-			a.href = url ?? "";
-			a.click();
-		}
-	}
+	let sse: EventSource;
 
-	const generateLink = () => {
-		$getLink.refetch();
-	};
+	// const pay = (amount: Number) => {
+	// 	linkLoading = true;
+	// 	sse = new EventSource(
+	// 		`${env.PUBLIC_API_URL}/pay/haloPay/${data.bookingId}/${amount}/${data.userId}`
+	// 	);
+
+	// 	sse.addEventListener("pay", (e) => {
+	// 		console.log(e.data);
+	// 		const response = JSON.parse(e.data);
+	// 		if (response.type == "link") {
+	// 			console.log("it is fucking here", response);
+	// 			url = response.url;
+	// 			reference = response.reference;
+	// 			linkLoading = false;
+	// 			if (a) {
+	// 				a.href = url ?? "";
+	// 				// a.click();
+	// 			}
+	// 		}
+	// 		if (response.type == "status") {
+	// 			console.log("status", response);
+	// 		}
+	// 	});
+
+	// 	sse.onmessage = (e) => {
+	// 		console.log("something happend");
+	// 		const response = JSON.parse(e.data);
+	// 		if (!response.length) return;
+
+	// 		console.log(response);
+	// 	};
+
+	// 	sse.onerror = (err) => {
+	// 		console.error("EventSource failed:", err);
+	// 		sse.close();
+	// 	};
+
+	// 	return () => {
+	// 		console.log("unmount");
+	// 		if (sse.readyState === 1) {
+	// 			sse.close();
+	// 		}
+	// 	};
+	// };
+
+	// onMount(() => {
+	// 	return () => {
+	// 		console.log("unm");
+	// 		if (sse.readyState === 1) {
+	// 			sse.close();
+	// 		}
+	// 	};
+	// });
 
 	let isPaymentDone = false;
-	$: payStatus = createPayStatus(reference ?? "", {
-		query: { refetchInterval: 5000, enabled: reference != undefined && !isPaymentDone },
-	});
+	// $: payStatus = createPayStatus(reference ?? "", {
+	// 	query: { refetchInterval: 5000, enabled: reference != undefined && !isPaymentDone },
+	// });
 
-	$: isPaymentDone =
-		$payStatus?.data?.value?.responseCode == 0 &&
-		$payStatus?.data?.value?.authorisationCode.length > 0 &&
-		$payStatus?.data?.value?.transactionId.length > 0;
+	// $: isPaymentDone =
+	// 	$payStatus?.data?.value?.responseCode == 0 &&
+	// 	$payStatus?.data?.value?.authorisationCode.length > 0 &&
+	// 	$payStatus?.data?.value?.transactionId.length > 0;
 
 	const schema = z.object({
 		amount: z.coerce.number().min(1, { message: "You need an amount of bigger than 1" }),
+		isManual: z.boolean(),
 	});
 	type FormSchema = z.infer<typeof schema>;
-	const onSubmit = async (data: FormSchema) => {
-		generateLink();
+	const onSubmitHalo = async (data: FormSchema) => {
+		// pay(data.amount);
+	};
+
+	const mutation = createPayManualPayment();
+	const onSubmitManual = async (manualData: FormSchema) => {
+		await $mutation.mutateAsync({
+			data: { amount: manualData.amount, tableBookingId: Number(data.bookingId) },
+		});
+		goto(`/table/bill/${data.bookingId}`);
 	};
 
 	const form = superForm(defaults(zod(schema)), {
@@ -58,12 +109,26 @@
 		resetForm: false,
 		onUpdate({ form }) {
 			if (form.valid) {
-				onSubmit(form.data);
+				if (form.data.isManual) {
+					onSubmitManual(form.data);
+				} else {
+					onSubmitHalo(form.data);
+				}
 			}
 		},
 	});
 
 	const { form: formData, enhance } = form;
+
+	const haloPay = async () => {
+		$formData.isManual = false;
+		form.submit();
+	};
+
+	const manualPay = async () => {
+		$formData.isManual = true;
+		form.submit();
+	};
 
 	const total = Number($page.url.searchParams.get("total") ?? "0").toFixed(2);
 	const balance = Number($page.url.searchParams.get("balance") ?? "0").toFixed(2);
@@ -91,20 +156,33 @@
 				</Form.Field>
 			</Card.Header>
 			<Card.Content>
-				<div class="text-center flex items-center justify-center flex-col">
-					<div>Please tap your card on the back of the phone</div>
-					<Nfc class="mt-10 h-20 w-20" />
+				<div class="columns-2">
+					<button class="w-full" on:click={haloPay} type="button">
+						<Card.Root
+							class="flex flex-col items-center gap-2 p-4 bg-primary border-2 hover:border-secondary-foreground"
+						>
+							{#if linkLoading}
+								<Loader />
+							{:else}
+								<NfcIcon class="w-10 h-10 text-primary-foreground" />
+								<div class="text-primary-foreground">Pay with Phone</div>
+							{/if}
+						</Card.Root>
+					</button>
+					<button class="w-full" on:click={manualPay} type="button">
+						<Card.Root
+							class="flex flex-col items-center gap-2 p-4 bg-secondary border-2 hover:border-secondary-foreground"
+						>
+							<CreditCardIcon class="w-10 h-10 text-muted-foreground" />
+							<div class="text-muted-foreground">Manual Payment</div>
+						</Card.Root>
+					</button>
 				</div>
 			</Card.Content>
 			<Card.Footer class="flex flex-col gap-2">
 				<Button class="w-full" href={`/table/bill/${data.bookingId}`} variant="outline"
 					>Cancel</Button
 				>
-				{#if $getLink.isLoading}
-					<Loader />
-				{:else}
-					<Button class="w-full" type="submit" variant="default">Pay</Button>
-				{/if}
 			</Card.Footer>
 		</Card.Root>
 	</form>

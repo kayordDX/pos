@@ -28,7 +28,7 @@ import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 export const useSectionUpdateHook = () => {
 	const sectionUpdate = useCustomClient<EntitiesSection>();
 
-	return (sectionId: string | null, sectionUpdateRequest: BodyType<SectionUpdateRequest>) => {
+	return (sectionId: string, sectionUpdateRequest: BodyType<SectionUpdateRequest>) => {
 		return sectionUpdate({
 			url: `/section/${sectionId}`,
 			method: "PUT",
@@ -45,13 +45,13 @@ export const useSectionUpdateMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSectionUpdateHook>>>,
 		TError,
-		{ sectionId: string | null; data: BodyType<SectionUpdateRequest> },
+		{ sectionId: string; data: BodyType<SectionUpdateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useSectionUpdateHook>>>,
 	TError,
-	{ sectionId: string | null; data: BodyType<SectionUpdateRequest> },
+	{ sectionId: string; data: BodyType<SectionUpdateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -60,7 +60,7 @@ export const useSectionUpdateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useSectionUpdateHook>>>,
-		{ sectionId: string | null; data: BodyType<SectionUpdateRequest> }
+		{ sectionId: string; data: BodyType<SectionUpdateRequest> }
 	> = (props) => {
 		const { sectionId, data } = props ?? {};
 
@@ -83,7 +83,7 @@ export const createSectionUpdate = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useSectionUpdateHook>>>,
 		TError,
-		{ sectionId: string | null; data: BodyType<SectionUpdateRequest> },
+		{ sectionId: string; data: BodyType<SectionUpdateRequest> },
 		TContext
 	>;
 }) => {

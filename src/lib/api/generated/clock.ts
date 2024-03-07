@@ -40,7 +40,7 @@ export const getClockListQueryKey = (params: ClockListParams) => {
 
 export const useClockListQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useClockListHook>>>,
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 >(
 	params: ClockListParams,
 	options?: {
@@ -68,11 +68,11 @@ export const useClockListQueryOptions = <
 export type ClockListQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useClockListHook>>>
 >;
-export type ClockListQueryError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type ClockListQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export const createClockList = <
 	TData = Awaited<ReturnType<ReturnType<typeof useClockListHook>>>,
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 >(
 	params: ClockListParams,
 	options?: {
@@ -106,7 +106,7 @@ export const useClockClockOutHook = () => {
 };
 
 export const useClockClockOutMutationOptions = <
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -141,10 +141,10 @@ export type ClockClockOutMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useClockClockOutHook>>>
 >;
 export type ClockClockOutMutationBody = BodyType<ClockClockOutRequest>;
-export type ClockClockOutMutationError = ErrorType<InternalErrorResponse>;
+export type ClockClockOutMutationError = ErrorType<void | InternalErrorResponse>;
 
 export const createClockClockOut = <
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -172,7 +172,7 @@ export const useClockClockInHook = () => {
 };
 
 export const useClockClockInMutationOptions = <
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -207,10 +207,10 @@ export type ClockClockInMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useClockClockInHook>>>
 >;
 export type ClockClockInMutationBody = BodyType<ClockClockInRequest>;
-export type ClockClockInMutationError = ErrorType<InternalErrorResponse>;
+export type ClockClockInMutationError = ErrorType<void | InternalErrorResponse>;
 
 export const createClockClockIn = <
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<

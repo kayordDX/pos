@@ -1,24 +1,37 @@
 <script lang="ts">
-	import { Button, Card } from "@kayord/ui";
-	import type { PageData } from "./$types";
-	import { createPayGetLink, createPayStatus } from "$lib/api";
-	export let data: PageData;
+	import { env } from "$env/dynamic/public";
+	import { Button } from "@kayord/ui";
+	import * as signalR from "@microsoft/signalr";
+	import { onMount } from "svelte";
 
-	const getLink = createPayGetLink(
-		{ amount: 2, tableBookingId: Number(1) },
-		{ query: { enabled: false } }
-	);
+	import { client } from "$lib/api";
 
-	const getStatus = createPayStatus("0a2653a4-b373-492c-8753-3ab9dff42326", {
-		query: { enabled: false },
+	let connection: signalR.HubConnection;
+
+	onMount(() => {
+		connection = new signalR.HubConnectionBuilder().withUrl(`${env.PUBLIC_API_URL}/chat`).build();
+
+		connection.on("messageReceived", (username: string, message: string) => {
+			console.log("messageReceived", username, message);
+		});
+
+		connection.on("ReceiveMessage", (message: string) => {
+			console.log("received", message);
+		});
+
+		connection.start().catch((err) => console.error(err));
 	});
+
+	function send() {
+		connection.send("ReceiveMessage", "content").then(() => console.log("finished sending"));
+	}
+
+	const getLink = async () => {
+		const data = await client.GET("/pay/getLink", {
+			params: { query: { amount: 100, tableBookingId: 1 } },
+		});
+	};
 </script>
 
-<Card.Root class="m-8 p-4">
-	<Button on:click={() => $getLink.refetch()}>Get Link</Button>
-	<div>{$getLink.data?.value?.reference}</div>
-	<div>{$getLink.data?.value?.url}</div>
-	129ea456-7837-4824-9284-0fce33c1d0c3
-	<Button href="https://halompos.page.link/FXVzsvSi9cz3WyaF7">Pay</Button>
-	<Button on:click={() => $getStatus.refetch()}>Get Status</Button>
-</Card.Root>
+<Button on:click={getLink}>Get Link</Button>
+<Button on:click={send}>Test</Button>

@@ -100,6 +100,12 @@ export interface paths {
   "/pay/status/{reference}": {
     get: operations["PayStatus"];
   };
+  "/pay/manual": {
+    post: operations["PayManualPayment"];
+  };
+  "/pay/haloPay/{tableBookingId}/{amount}/{userId}": {
+    get: operations["PayHaloPay"];
+  };
   "/pay/getLink": {
     get: operations["PayGetLink"];
   };
@@ -130,6 +136,9 @@ export interface paths {
   "/menu": {
     get: operations["MenuList"];
     post: operations["MenuCreate"];
+  };
+  "/manager/viewOrders": {
+    get: operations["ManagerOrderView"];
   };
   "/clock/list": {
     get: operations["ClockList"];
@@ -483,8 +492,16 @@ export interface components {
       /** Format: decimal */
       amount: number;
       userId: string;
+      /** Format: int32 */
+      paymentTypeId?: number | null;
+      paymentType: components["schemas"]["EntitiesPaymentType"];
       /** Format: date-time */
       dateReceived: string;
+    };
+    EntitiesPaymentType: {
+      /** Format: int32 */
+      paymentTypeId: number;
+      paymentTypeName: string;
     };
     TableOrderGetBillRequest: Record<string, never>;
     TableOrderGetBasketResponse: {
@@ -577,6 +594,8 @@ export interface components {
       roleId: number;
       name: string;
       description: string;
+      /** Format: int32 */
+      outletId?: number | null;
       userRole?: components["schemas"]["EntitiesUserRole"][] | null;
     };
     EntitiesMenuItem: {
@@ -957,6 +976,12 @@ export interface components {
       failure: boolean;
     };
     PayStatusRequest: Record<string, never>;
+    PayManualPaymentRequest: {
+      /** Format: int32 */
+      tableBookingId: number;
+      /** Format: decimal */
+      amount: number;
+    };
     CommonWrapperResultOfResponse: components["schemas"]["CommonWrapperResult"] & ({
       value?: components["schemas"]["PayGetLinkResponse"] | null;
     });
@@ -964,6 +989,7 @@ export interface components {
       url: string;
       reference: string;
     };
+    PayHaloPayRequest: Record<string, never>;
     PayGetLinkRequest: Record<string, never>;
     OutletUpdateRequest: {
       name: string;
@@ -1075,6 +1101,82 @@ export interface components {
       outletId: number;
       name: string;
     };
+    ManagerOrderViewResponse: {
+      /** Format: int32 */
+      divisionId: number;
+      division: components["schemas"]["EntitiesDivision"];
+      tables?: components["schemas"]["ManagerOrderViewTableBookingDTO"][] | null;
+      /** Format: date-time */
+      lastRefresh: string;
+      /** Format: int32 */
+      pendingTables: number;
+      /** Format: int32 */
+      pendingItems: number;
+    };
+    ManagerOrderViewTableBookingDTO: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      table: components["schemas"]["ManagerOrderViewTableDTO"];
+      orderItems?: components["schemas"]["ManagerOrderViewOrderItemDTO"][] | null;
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
+      user: components["schemas"]["DTOUserDTO"];
+    };
+    ManagerOrderViewTableDTO: {
+      /** Format: int32 */
+      tableId: number;
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+      section?: components["schemas"]["ManagerOrderViewSectionDTO"] | null;
+    };
+    ManagerOrderViewSectionDTO: {
+      name: string;
+    };
+    ManagerOrderViewOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      menuItem: components["schemas"]["ManagerOrderViewMenuItemDTO"];
+      /** Format: int32 */
+      divisionId: number;
+      note?: string | null;
+      /** Format: date-time */
+      orderReceived: string;
+      /** Format: date-time */
+      orderUpdated: string;
+      orderReceivedFormatted: string;
+      orderUpdatedFormatted: string;
+      /** Format: int32 */
+      orderItemStatusId: number;
+      orderItemStatus: components["schemas"]["ManagerOrderViewOrderItemStatusDTO"];
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+    };
+    ManagerOrderViewMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+      description: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      position: number;
+      /** Format: int32 */
+      divisionId?: number | null;
+    };
+    ManagerOrderViewOrderItemStatusDTO: {
+      /** Format: int32 */
+      orderItemStatusId: number;
+      status: string;
+    };
+    ManagerOrderViewRequest: Record<string, never>;
     ClockListRequest: Record<string, never>;
     EntitiesClock: {
       /** Format: int32 */
@@ -1164,7 +1266,7 @@ export interface operations {
   UserGetRoles: {
     parameters: {
       query: {
-        userId: string | null;
+        userId: string;
       };
     };
     responses: {
@@ -1239,10 +1341,6 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["TableOrderUpdateTableOrderResponse"];
         };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
       };
       /** @description Server Error */
       500: {
@@ -1628,7 +1726,7 @@ export interface operations {
   SectionUpdate: {
     parameters: {
       path: {
-        sectionId: string | null;
+        sectionId: string;
       };
     };
     requestBody: {
@@ -1740,8 +1838,8 @@ export interface operations {
         cashUpBalance: number;
         cashUpTotalPayments: number;
         salesPeriodId: number;
-        userId: string | null;
-        signOffUserId: string | null;
+        userId: string;
+        signOffUserId: string;
         signOffDate?: string | null;
       };
     };
@@ -1816,7 +1914,7 @@ export interface operations {
     parameters: {
       query: {
         salesPeriodId: number;
-        userId: string | null;
+        userId: string;
       };
     };
     responses: {
@@ -1905,7 +2003,7 @@ export interface operations {
   PayStatus: {
     parameters: {
       path: {
-        reference: string | null;
+        reference: string;
       };
     };
     responses: {
@@ -1918,6 +2016,50 @@ export interface operations {
       /** @description Unauthorized */
       401: {
         content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  PayManualPayment: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["PayManualPaymentRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["EntitiesPayment"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  PayHaloPay: {
+    parameters: {
+      path: {
+        tableBookingId: number;
+        amount: number;
+        userId: string;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["CommonWrapperResultOfResponse"];
+        };
       };
       /** @description Server Error */
       500: {
@@ -1962,6 +2104,10 @@ export interface operations {
           "application/json": components["schemas"]["EntitiesOutlet"];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -1994,6 +2140,10 @@ export interface operations {
           "application/problem+json": components["schemas"]["ErrorResponse"];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2009,6 +2159,10 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["EntitiesOutlet"][];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -2037,6 +2191,10 @@ export interface operations {
           "application/problem+json": components["schemas"]["ErrorResponse"];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2058,6 +2216,10 @@ export interface operations {
           "application/json": components["schemas"]["EntitiesMenu"];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2069,7 +2231,7 @@ export interface operations {
   MenuUpdate: {
     parameters: {
       path: {
-        menuId: string | null;
+        menuId: string;
       };
     };
     requestBody: {
@@ -2089,6 +2251,10 @@ export interface operations {
         content: {
           "application/problem+json": components["schemas"]["ErrorResponse"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -2133,6 +2299,10 @@ export interface operations {
           "application/json": components["schemas"]["EntitiesMenu"][];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2156,6 +2326,10 @@ export interface operations {
           "application/json": components["schemas"]["DTOMenuItemDTOBasic"][];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2176,6 +2350,10 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["DTOMenuItemDTO"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -2198,6 +2376,10 @@ export interface operations {
           "application/json": components["schemas"]["EntitiesMenu"][];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2218,6 +2400,40 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["EntitiesMenu"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  ManagerOrderView: {
+    parameters: {
+      query: {
+        /**
+         * @example [
+         *   0
+         * ]
+         */
+        divisionIds: number[];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["ManagerOrderViewResponse"][];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -2247,6 +2463,10 @@ export interface operations {
           "application/problem+json": components["schemas"]["ErrorResponse"];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2268,6 +2488,10 @@ export interface operations {
           "application/json": components["schemas"]["EntitiesClock"];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2288,6 +2512,10 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["EntitiesClock"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -2337,6 +2565,10 @@ export interface operations {
           "application/problem+json": components["schemas"]["ErrorResponse"];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2363,6 +2595,10 @@ export interface operations {
         content: {
           "application/problem+json": components["schemas"]["ErrorResponse"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -2393,6 +2629,10 @@ export interface operations {
           "application/problem+json": components["schemas"]["ErrorResponse"];
         };
       };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
       /** @description Server Error */
       500: {
         content: {
@@ -2413,6 +2653,10 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["EntitiesBusiness"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {

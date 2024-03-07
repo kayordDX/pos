@@ -11,5 +11,6 @@ export * from "./role";
 export * from "./pay";
 export * from "./outlet";
 export * from "./menu";
+export * from "./manager";
 export * from "./clock";
 export * from "./business";

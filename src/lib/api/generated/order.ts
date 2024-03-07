@@ -49,7 +49,7 @@ export const useTableOrderUpdateTableOrderHook = () => {
 };
 
 export const useTableOrderUpdateTableOrderMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
+	TError = ErrorType<InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -84,10 +84,10 @@ export type TableOrderUpdateTableOrderMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateTableOrderHook>>>
 >;
 export type TableOrderUpdateTableOrderMutationBody = BodyType<TableOrderUpdateTableOrderRequest>;
-export type TableOrderUpdateTableOrderMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderUpdateTableOrderMutationError = ErrorType<InternalErrorResponse>;
 
 export const createTableOrderUpdateTableOrder = <
-	TError = ErrorType<void | InternalErrorResponse>,
+	TError = ErrorType<InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<

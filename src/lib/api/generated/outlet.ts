@@ -38,7 +38,7 @@ export const useOutletUpdateHook = () => {
 };
 
 export const useOutletUpdateMutationOptions = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -73,10 +73,10 @@ export type OutletUpdateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOutletUpdateHook>>>
 >;
 export type OutletUpdateMutationBody = BodyType<OutletUpdateRequest>;
-export type OutletUpdateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type OutletUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export const createOutletUpdate = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -104,7 +104,7 @@ export const getOutletGetQueryKey = (id: number) => {
 
 export const useOutletGetQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useOutletGetHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	id: number,
 	options?: {
@@ -132,11 +132,11 @@ export const useOutletGetQueryOptions = <
 export type OutletGetQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOutletGetHook>>>
 >;
-export type OutletGetQueryError = ErrorType<InternalErrorResponse>;
+export type OutletGetQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createOutletGet = <
 	TData = Awaited<ReturnType<ReturnType<typeof useOutletGetHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	id: number,
 	options?: {
@@ -170,7 +170,7 @@ export const getOutletListQueryKey = () => {
 
 export const useOutletListQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useOutletListHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(options?: {
 	query?: Partial<
 		CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof useOutletListHook>>>, TError, TData>
@@ -195,11 +195,11 @@ export const useOutletListQueryOptions = <
 export type OutletListQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOutletListHook>>>
 >;
-export type OutletListQueryError = ErrorType<InternalErrorResponse>;
+export type OutletListQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createOutletList = <
 	TData = Awaited<ReturnType<ReturnType<typeof useOutletListHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(options?: {
 	query?: Partial<
 		CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof useOutletListHook>>>, TError, TData>
@@ -230,7 +230,7 @@ export const useOutletCreateHook = () => {
 };
 
 export const useOutletCreateMutationOptions = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -265,10 +265,10 @@ export type OutletCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useOutletCreateHook>>>
 >;
 export type OutletCreateMutationBody = BodyType<OutletCreateRequest>;
-export type OutletCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type OutletCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export const createOutletCreate = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<

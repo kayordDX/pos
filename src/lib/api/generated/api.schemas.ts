@@ -18,6 +18,10 @@ export type ClockListParams = {
 	statusId: number;
 };
 
+export type ManagerOrderViewParams = {
+	divisionIds: number[];
+};
+
 export type MenuListParams = {
 	outletId: number;
 };
@@ -56,7 +60,7 @@ export type RoleCreate200One = {};
 
 export type SalesPeriodCashUpParams = {
 	salesPeriodId: number;
-	userId: string | null;
+	userId: string;
 };
 
 export type SalesPeriodCreateCashUpParams = {
@@ -65,8 +69,8 @@ export type SalesPeriodCreateCashUpParams = {
 	cashUpBalance: number;
 	cashUpTotalPayments: number;
 	salesPeriodId: number;
-	userId: string | null;
-	signOffUserId: string | null;
+	userId: string;
+	signOffUserId: string;
 	signOffDate?: string | null;
 };
 
@@ -92,7 +96,7 @@ export type TableOrderGetBillParams = {
 };
 
 export type UserGetRolesParams = {
-	userId: string | null;
+	userId: string;
 };
 
 export interface BusinessCreateRequest {
@@ -132,6 +136,73 @@ export interface EntitiesClock {
 
 export interface ClockListRequest {
 	[key: string]: any;
+}
+
+export interface ManagerOrderViewRequest {
+	[key: string]: any;
+}
+
+export interface ManagerOrderViewOrderItemStatusDTO {
+	orderItemStatusId: number;
+	status: string;
+}
+
+export interface ManagerOrderViewMenuItemDTO {
+	description: string;
+	divisionId?: number | null;
+	menuItemId: number;
+	name: string;
+	position: number;
+	price: number;
+}
+
+export interface ManagerOrderViewOrderItemDTO {
+	divisionId: number;
+	menuItem: ManagerOrderViewMenuItemDTO;
+	note?: string | null;
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	orderItemStatus: ManagerOrderViewOrderItemStatusDTO;
+	orderItemStatusId: number;
+	orderReceived: string;
+	orderReceivedFormatted: string;
+	orderUpdated: string;
+	orderUpdatedFormatted: string;
+	tableBookingId: number;
+}
+
+export interface ManagerOrderViewSectionDTO {
+	name: string;
+}
+
+export type ManagerOrderViewTableDTOSection = ManagerOrderViewSectionDTO | null;
+
+export interface ManagerOrderViewTableDTO {
+	name: string;
+	outletId: number;
+	section?: ManagerOrderViewTableDTOSection;
+	tableId: number;
+}
+
+export interface ManagerOrderViewTableBookingDTO {
+	bookingDate: string;
+	bookingName: string;
+	closeDate?: string | null;
+	id: number;
+	orderItems?: ManagerOrderViewOrderItemDTO[] | null;
+	table: ManagerOrderViewTableDTO;
+	tableId: number;
+	user: DTOUserDTO;
+}
+
+export interface ManagerOrderViewResponse {
+	division: EntitiesDivision;
+	divisionId: number;
+	lastRefresh: string;
+	pendingItems: number;
+	pendingTables: number;
+	tables?: ManagerOrderViewTableBookingDTO[] | null;
 }
 
 export interface MenuCreateRequest {
@@ -257,6 +328,10 @@ export interface PayGetLinkRequest {
 	[key: string]: any;
 }
 
+export interface PayHaloPayRequest {
+	[key: string]: any;
+}
+
 export interface PayGetLinkResponse {
 	reference: string;
 	url: string;
@@ -268,6 +343,14 @@ export type CommonWrapperResultOfResponseAllOf = {
 	value?: CommonWrapperResultOfResponseAllOfValue;
 };
 
+export type CommonWrapperResultOfResponse = CommonWrapperResult &
+	CommonWrapperResultOfResponseAllOf;
+
+export interface PayManualPaymentRequest {
+	amount: number;
+	tableBookingId: number;
+}
+
 export interface PayStatusRequest {
 	[key: string]: any;
 }
@@ -277,9 +360,6 @@ export interface CommonWrapperResult {
 	failure: boolean;
 	success: boolean;
 }
-
-export type CommonWrapperResultOfResponse = CommonWrapperResult &
-	CommonWrapperResultOfResponseAllOf;
 
 export interface PayDtoStatusResultDto {
 	amount: number;
@@ -516,6 +596,28 @@ export interface EntitiesOrderItemStatus {
 	status: string;
 }
 
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
+}
+
+export interface EntitiesMenuItemExtraGroup {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	extras: EntitiesExtra[];
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	name: string;
+}
+
 export interface EntitiesExtra {
 	extraGroup: EntitiesExtraGroup;
 	extraGroupId: number;
@@ -524,14 +626,6 @@ export interface EntitiesExtra {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	positionId: number;
 	price: number;
-}
-
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -623,20 +717,6 @@ export interface EntitiesMenuItem {
 	tags?: EntitiesTag[] | null;
 }
 
-export interface EntitiesMenuItemExtraGroup {
-	extraGroup: EntitiesExtraGroup;
-	extraGroupId: number;
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-}
-
-export interface EntitiesExtraGroup {
-	extraGroupId: number;
-	extras: EntitiesExtra[];
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	name: string;
-}
-
 export type EntitiesUserRoleRole = EntitiesRole | null;
 
 export interface EntitiesUser {
@@ -661,6 +741,7 @@ export interface EntitiesUserRole {
 export interface EntitiesRole {
 	description: string;
 	name: string;
+	outletId?: number | null;
 	roleId: number;
 	userRole?: EntitiesUserRole[] | null;
 }
@@ -725,11 +806,18 @@ export interface TableOrderGetBillRequest {
 	[key: string]: any;
 }
 
+export interface EntitiesPaymentType {
+	paymentTypeId: number;
+	paymentTypeName: string;
+}
+
 export interface EntitiesPayment {
 	amount: number;
 	dateReceived: string;
 	id: number;
 	paymentReference: string;
+	paymentType: EntitiesPaymentType;
+	paymentTypeId?: number | null;
 	tableBookingId: number;
 	userId: string;
 }

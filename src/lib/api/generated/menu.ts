@@ -35,7 +35,7 @@ import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 export const useMenuUpdateHook = () => {
 	const menuUpdate = useCustomClient<EntitiesMenu>();
 
-	return (menuId: string | null, menuUpdateRequest: BodyType<MenuUpdateRequest>) => {
+	return (menuId: string, menuUpdateRequest: BodyType<MenuUpdateRequest>) => {
 		return menuUpdate({
 			url: `/menu/${menuId}`,
 			method: "PUT",
@@ -46,19 +46,19 @@ export const useMenuUpdateHook = () => {
 };
 
 export const useMenuUpdateMutationOptions = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>,
 		TError,
-		{ menuId: string | null; data: BodyType<MenuUpdateRequest> },
+		{ menuId: string; data: BodyType<MenuUpdateRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>,
 	TError,
-	{ menuId: string | null; data: BodyType<MenuUpdateRequest> },
+	{ menuId: string; data: BodyType<MenuUpdateRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
@@ -67,7 +67,7 @@ export const useMenuUpdateMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>,
-		{ menuId: string | null; data: BodyType<MenuUpdateRequest> }
+		{ menuId: string; data: BodyType<MenuUpdateRequest> }
 	> = (props) => {
 		const { menuId, data } = props ?? {};
 
@@ -81,16 +81,16 @@ export type MenuUpdateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>
 >;
 export type MenuUpdateMutationBody = BodyType<MenuUpdateRequest>;
-export type MenuUpdateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type MenuUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export const createMenuUpdate = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<ReturnType<typeof useMenuUpdateHook>>>,
 		TError,
-		{ menuId: string | null; data: BodyType<MenuUpdateRequest> },
+		{ menuId: string; data: BodyType<MenuUpdateRequest> },
 		TContext
 	>;
 }) => {
@@ -112,7 +112,7 @@ export const getMenuGetQueryKey = (menuId: number) => {
 
 export const useMenuGetQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	menuId: number,
 	options?: {
@@ -140,11 +140,11 @@ export const useMenuGetQueryOptions = <
 export type MenuGetQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuGetHook>>>
 >;
-export type MenuGetQueryError = ErrorType<InternalErrorResponse>;
+export type MenuGetQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createMenuGet = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	menuId: number,
 	options?: {
@@ -257,7 +257,7 @@ export const getMenuGetOutletMenuGetOutletMenusQueryKey = (
 
 export const useMenuGetOutletMenuGetOutletMenusQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetOutletMenuGetOutletMenusHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: MenuGetOutletMenuGetOutletMenusParams,
 	options?: {
@@ -290,11 +290,11 @@ export const useMenuGetOutletMenuGetOutletMenusQueryOptions = <
 export type MenuGetOutletMenuGetOutletMenusQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuGetOutletMenuGetOutletMenusHook>>>
 >;
-export type MenuGetOutletMenuGetOutletMenusQueryError = ErrorType<InternalErrorResponse>;
+export type MenuGetOutletMenuGetOutletMenusQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createMenuGetOutletMenuGetOutletMenus = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetOutletMenuGetOutletMenusHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: MenuGetOutletMenuGetOutletMenusParams,
 	options?: {
@@ -332,7 +332,7 @@ export const getMenuGetItemsGetMenuItemsQueryKey = (params: MenuGetItemsGetMenuI
 
 export const useMenuGetItemsGetMenuItemsQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetItemsGetMenuItemsHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: MenuGetItemsGetMenuItemsParams,
 	options?: {
@@ -365,11 +365,11 @@ export const useMenuGetItemsGetMenuItemsQueryOptions = <
 export type MenuGetItemsGetMenuItemsQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuGetItemsGetMenuItemsHook>>>
 >;
-export type MenuGetItemsGetMenuItemsQueryError = ErrorType<InternalErrorResponse>;
+export type MenuGetItemsGetMenuItemsQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createMenuGetItemsGetMenuItems = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetItemsGetMenuItemsHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: MenuGetItemsGetMenuItemsParams,
 	options?: {
@@ -407,7 +407,7 @@ export const getMenuGetItemGetMenuItemsQueryKey = (params: MenuGetItemGetMenuIte
 
 export const useMenuGetItemGetMenuItemsQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: MenuGetItemGetMenuItemsParams,
 	options?: {
@@ -440,11 +440,11 @@ export const useMenuGetItemGetMenuItemsQueryOptions = <
 export type MenuGetItemGetMenuItemsQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>
 >;
-export type MenuGetItemGetMenuItemsQueryError = ErrorType<InternalErrorResponse>;
+export type MenuGetItemGetMenuItemsQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createMenuGetItemGetMenuItems = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuGetItemGetMenuItemsHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: MenuGetItemGetMenuItemsParams,
 	options?: {
@@ -482,7 +482,7 @@ export const getMenuListQueryKey = (params: MenuListParams) => {
 
 export const useMenuListQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuListHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: MenuListParams,
 	options?: {
@@ -510,11 +510,11 @@ export const useMenuListQueryOptions = <
 export type MenuListQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuListHook>>>
 >;
-export type MenuListQueryError = ErrorType<InternalErrorResponse>;
+export type MenuListQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createMenuList = <
 	TData = Awaited<ReturnType<ReturnType<typeof useMenuListHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: MenuListParams,
 	options?: {
@@ -548,7 +548,7 @@ export const useMenuCreateHook = () => {
 };
 
 export const useMenuCreateMutationOptions = <
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -583,10 +583,10 @@ export type MenuCreateMutationResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useMenuCreateHook>>>
 >;
 export type MenuCreateMutationBody = BodyType<MenuCreateRequest>;
-export type MenuCreateMutationError = ErrorType<InternalErrorResponse>;
+export type MenuCreateMutationError = ErrorType<void | InternalErrorResponse>;
 
 export const createMenuCreate = <
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<

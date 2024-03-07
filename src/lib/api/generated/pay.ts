@@ -5,31 +5,35 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
-import { createQuery } from "@tanstack/svelte-query";
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
+	CreateMutationOptions,
 	CreateQueryOptions,
 	CreateQueryResult,
+	MutationFunction,
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
 	CommonWrapperResultOfResponse,
 	CommonWrapperResultOfStatusResultDto,
+	EntitiesPayment,
 	InternalErrorResponse,
 	PayGetLinkParams,
+	PayManualPaymentRequest,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
-import type { ErrorType } from "../mutator/useCustomClient";
+import type { ErrorType, BodyType } from "../mutator/useCustomClient";
 
 export const usePayStatusHook = () => {
 	const payStatus = useCustomClient<CommonWrapperResultOfStatusResultDto>();
 
-	return (reference: string | null) => {
+	return (reference: string) => {
 		return payStatus({ url: `/pay/status/${reference}`, method: "GET" });
 	};
 };
 
-export const getPayStatusQueryKey = (reference: string | null) => {
+export const getPayStatusQueryKey = (reference: string) => {
 	return [`/pay/status/${reference}`] as const;
 };
 
@@ -37,7 +41,7 @@ export const usePayStatusQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof usePayStatusHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	reference: string | null,
+	reference: string,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof usePayStatusHook>>>, TError, TData>
@@ -69,7 +73,7 @@ export const createPayStatus = <
 	TData = Awaited<ReturnType<ReturnType<typeof usePayStatusHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	reference: string | null,
+	reference: string,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof usePayStatusHook>>>, TError, TData>
@@ -77,6 +81,147 @@ export const createPayStatus = <
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
 	const queryOptions = usePayStatusQueryOptions(reference, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
+
+export const usePayManualPaymentHook = () => {
+	const payManualPayment = useCustomClient<EntitiesPayment>();
+
+	return (payManualPaymentRequest: BodyType<PayManualPaymentRequest>) => {
+		return payManualPayment({
+			url: `/pay/manual`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: payManualPaymentRequest,
+		});
+	};
+};
+
+export const usePayManualPaymentMutationOptions = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof usePayManualPaymentHook>>>,
+		TError,
+		{ data: BodyType<PayManualPaymentRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof usePayManualPaymentHook>>>,
+	TError,
+	{ data: BodyType<PayManualPaymentRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const payManualPayment = usePayManualPaymentHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof usePayManualPaymentHook>>>,
+		{ data: BodyType<PayManualPaymentRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return payManualPayment(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type PayManualPaymentMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof usePayManualPaymentHook>>>
+>;
+export type PayManualPaymentMutationBody = BodyType<PayManualPaymentRequest>;
+export type PayManualPaymentMutationError = ErrorType<InternalErrorResponse>;
+
+export const createPayManualPayment = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof usePayManualPaymentHook>>>,
+		TError,
+		{ data: BodyType<PayManualPaymentRequest> },
+		TContext
+	>;
+}) => {
+	const mutationOptions = usePayManualPaymentMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const usePayHaloPayHook = () => {
+	const payHaloPay = useCustomClient<CommonWrapperResultOfResponse>();
+
+	return (tableBookingId: number, amount: number, userId: string) => {
+		return payHaloPay({ url: `/pay/haloPay/${tableBookingId}/${amount}/${userId}`, method: "GET" });
+	};
+};
+
+export const getPayHaloPayQueryKey = (tableBookingId: number, amount: number, userId: string) => {
+	return [`/pay/haloPay/${tableBookingId}/${amount}/${userId}`] as const;
+};
+
+export const usePayHaloPayQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof usePayHaloPayHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	tableBookingId: number,
+	amount: number,
+	userId: string,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof usePayHaloPayHook>>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getPayHaloPayQueryKey(tableBookingId, amount, userId);
+
+	const payHaloPay = usePayHaloPayHook();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<ReturnType<typeof usePayHaloPayHook>>>> = () =>
+		payHaloPay(tableBookingId, amount, userId);
+
+	return {
+		queryKey,
+		queryFn,
+		enabled: !!(tableBookingId && amount && userId),
+		...queryOptions,
+	} as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof usePayHaloPayHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type PayHaloPayQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof usePayHaloPayHook>>>
+>;
+export type PayHaloPayQueryError = ErrorType<InternalErrorResponse>;
+
+export const createPayHaloPay = <
+	TData = Awaited<ReturnType<ReturnType<typeof usePayHaloPayHook>>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	tableBookingId: number,
+	amount: number,
+	userId: string,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<ReturnType<typeof usePayHaloPayHook>>>, TError, TData>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = usePayHaloPayQueryOptions(tableBookingId, amount, userId, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;
