@@ -1,29 +1,28 @@
 <script lang="ts">
-	import { env } from "$env/dynamic/public";
 	import { Button } from "@kayord/ui";
-	import * as signalR from "@microsoft/signalr";
 	import { onMount } from "svelte";
 
 	import { client } from "$lib/api";
-
-	let connection: signalR.HubConnection;
+	import { hub } from "$lib/stores/hub";
 
 	onMount(() => {
-		connection = new signalR.HubConnectionBuilder().withUrl(`${env.PUBLIC_API_URL}/chat`).build();
+		if (!$hub) {
+			return;
+		}
 
-		connection.on("messageReceived", (username: string, message: string) => {
-			console.log("messageReceived", username, message);
+		$hub.on("PayMessage", (message: string) => {
+			console.log("PayMessage", message);
 		});
 
-		connection.on("ReceiveMessage", (message: string) => {
+		$hub.on("ReceiveMessage", (message: string) => {
 			console.log("received", message);
 		});
 
-		connection.start().catch((err) => console.error(err));
+		// $hub.start().catch((err) => console.error(err));
 	});
 
 	function send() {
-		connection.send("ReceiveMessage", "content").then(() => console.log("finished sending"));
+		$hub?.send("ReceiveMessage", "content").then(() => console.log("finished sending"));
 	}
 
 	const getLink = async () => {
