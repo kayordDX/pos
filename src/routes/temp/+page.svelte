@@ -18,7 +18,9 @@
 			console.log("received", message);
 		});
 
-		// $hub.start().catch((err) => console.error(err));
+		$hub.on("Notification", (message: string) => {
+			console.log("received", message);
+		});
 	});
 
 	function send() {
