@@ -117,6 +117,12 @@ export interface paths {
     get: operations["OutletList"];
     post: operations["OutletCreate"];
   };
+  "/notification/user": {
+    post: operations["NotificationUser"];
+  };
+  "/notification/test": {
+    post: operations["NotificationTest"];
+  };
   "/menu/{menuId}": {
     get: operations["MenuGet"];
     put: operations["MenuUpdate"];
@@ -182,12 +188,10 @@ export interface components {
       note: string;
     };
     UserValidateRequest: {
-      userId?: string | null;
-      email?: string | null;
+      userId: string;
+      email: string;
       image?: string | null;
-      firstName?: string | null;
-      lastName?: string | null;
-      name?: string | null;
+      name: string;
     };
     UserGetStatusResponse: {
       /** Format: int32 */
@@ -1001,6 +1005,13 @@ export interface components {
       name: string;
       /** Format: int32 */
       businessId: number;
+    };
+    NotificationUserRequest: {
+      message: string;
+      userId: string;
+    };
+    NotificationTestRequest: {
+      message: string;
     };
     MenuUpdateRequest: {
       /** Format: int32 */
@@ -2194,6 +2205,48 @@ export interface operations {
       /** @description Unauthorized */
       401: {
         content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  NotificationUser: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NotificationUserRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": boolean;
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  NotificationTest: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NotificationTestRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": boolean;
+        };
       };
       /** @description Server Error */
       500: {

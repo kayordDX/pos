@@ -10,6 +10,7 @@ export * from "./salesperiod";
 export * from "./role";
 export * from "./pay";
 export * from "./outlet";
+export * from "./notification";
 export * from "./menu";
 export * from "./manager";
 export * from "./clock";

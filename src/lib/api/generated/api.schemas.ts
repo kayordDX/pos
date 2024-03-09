@@ -310,6 +310,15 @@ export interface MenuUpdateRequest {
 	name: string;
 }
 
+export interface NotificationTestRequest {
+	message: string;
+}
+
+export interface NotificationUserRequest {
+	message: string;
+	userId: string;
+}
+
 export interface OutletCreateRequest {
 	businessId: number;
 	name: string;
@@ -1089,12 +1098,10 @@ export interface UserGetStatusResponse {
 }
 
 export interface UserValidateRequest {
-	email?: string | null;
-	firstName?: string | null;
+	email: string;
 	image?: string | null;
-	lastName?: string | null;
-	name?: string | null;
-	userId?: string | null;
+	name: string;
+	userId: string;
 }
 
 export interface InternalErrorResponse {
