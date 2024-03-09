@@ -10,7 +10,7 @@
 
 	const cashUpQuery = createSalesPeriodCashUp({
 		salesPeriodId: data.status?.salesPeriodId ?? 0,
-		userId: null,
+		userId: "",
 	});
 </script>
 

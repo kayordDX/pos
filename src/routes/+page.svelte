@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from "@kayord/ui";
-	import type { PageData } from "./$types";
+	import { status } from "$lib/stores/status";
 </script>
 
 <div class="m-8 flex gap-4">
@@ -14,3 +14,5 @@
 		<Button href="/kitchen">Kitchen</Button>
 	</div>
 </div>
+
+{JSON.stringify($status)};

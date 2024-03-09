@@ -1,7 +1,5 @@
 <script lang="ts">
-	import type { PageData } from "./$types";
-
-	export let data: PageData;
+	import { session } from "$lib/firebase";
 </script>
 
-{JSON.stringify(data.session?.token)}
+{JSON.stringify($session?.getIdToken())}

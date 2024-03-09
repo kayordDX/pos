@@ -3,12 +3,12 @@ import type { paths } from "./generated/client/schema";
 import { env } from "$env/dynamic/public";
 import { browser } from "$app/environment";
 import { get } from "svelte/store";
-import { session } from "$lib/stores/session";
+import { session } from "$lib/firebase";
 
 const myMiddleware: Middleware = {
 	async onRequest(req) {
 		if (browser) {
-			const token = get(session)?.token ?? "";
+			const token = (await get(session)?.getIdToken()) ?? "";
 			req.headers.set("Authorization", `Bearer ${token}`);
 		}
 		if (req.method != "GET") {

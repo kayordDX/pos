@@ -8,9 +8,29 @@
 	import { Toaster, toast } from "@kayord/ui";
 	import { browser } from "$app/environment";
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
+	import AuthCheck from "$lib/components/Check/AuthCheck.svelte";
+	import { client } from "$lib/api";
+	import { status } from "$lib/stores/status";
+	import { session } from "$lib/firebase";
+	import * as signalR from "@microsoft/signalr";
+	import { env } from "$env/dynamic/public";
+	import { hub } from "$lib/stores/hub";
 
-	import type { PageData } from "./$types";
-	export let data: PageData;
+	const initHub = async () => {
+		const token = await $session?.getIdToken();
+		const connection = new signalR.HubConnectionBuilder()
+			.withUrl(`${env.PUBLIC_API_URL}/hub`, {
+				accessTokenFactory: () => token ?? "",
+			})
+			.withAutomaticReconnect()
+			.build();
+
+		connection.start().catch((err) => console.error(err));
+		hub.set(connection);
+	};
+
+	$: $session && status.getStatus();
+	$: $session && initHub();
 
 	const flash = getFlash(page);
 	flash.subscribe(($flash) => {
@@ -36,11 +56,11 @@
 	});
 </script>
 
-<Toaster />
-<ModeWatcher />
-<QueryClientProvider client={queryClient}>
-	{#if !($page.route?.id ?? "").startsWith("/login")}
-		<Header session={data.session} />
-	{/if}
-	<slot />
-</QueryClientProvider>
+<AuthCheck>
+	<Toaster />
+	<ModeWatcher />
+	<QueryClientProvider client={queryClient}>
+		<Header />
+		<slot />
+	</QueryClientProvider>
+</AuthCheck>

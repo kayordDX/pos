@@ -1,0 +1,42 @@
+import type { LayoutLoad } from "./$types";
+import { browser } from "$app/environment";
+// import { session } from "$lib/stores/session";
+import * as signalR from "@microsoft/signalr";
+import { env } from "$env/dynamic/public";
+import { hub } from "$lib/stores/hub";
+import { session } from "$lib/firebase";
+import { get } from "svelte/store";
+import { client } from "$lib/api";
+import { status } from "$lib/stores/status";
+
+export const load = (async ({ fetch }) => {
+	if (browser) {
+		// const { data } = await client.GET("/user/getStatus", { fetch });
+		// console.log("it came like the", data);
+		// if (data) {
+		// 	status.set({
+		// 		clockedIn: data.clockedIn,
+		// 		outletId: data.outletId,
+		// 		salesPeriodId: data.salesPeriodId,
+		// 	});
+		// }
+
+		const token = await get(session)?.getIdToken();
+
+		console.log(token, "token");
+
+		const connection = new signalR.HubConnectionBuilder()
+			.withUrl(`${env.PUBLIC_API_URL}/hub`, {
+				accessTokenFactory: () => token ?? "",
+			})
+			.withAutomaticReconnect()
+			.build();
+
+		connection.start().catch((err) => console.error(err));
+		hub.set(connection);
+	}
+
+	return {
+		...status,
+	};
+}) satisfies LayoutLoad;

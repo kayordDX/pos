@@ -1,9 +1,8 @@
 import { get } from "svelte/store";
 import { isAPIError, isValidationError } from "$lib/types";
 import { env } from "$env/dynamic/public";
-import { session } from "$lib/stores/session";
+import { session } from "$lib/firebase";
 import qs from "qs";
-import type { Session } from "@auth/core/types";
 
 type CustomClient<T> = (data: {
 	url: string;
@@ -16,14 +15,6 @@ type CustomClient<T> = (data: {
 	signal?: AbortSignal;
 }) => Promise<T>;
 
-const callAPIToRefreshToken = async () => {
-	const response = await fetch("/auth/session");
-	if (response.ok) {
-		const result = (await response.json()) as Session;
-		session.set(result);
-	}
-};
-
 export const useCustomClient = <T>(): CustomClient<T> => {
 	return async ({ url, method, params, headers, data }) => {
 		let fullUrl = `${env.PUBLIC_API_URL}${url}`;
@@ -34,17 +25,18 @@ export const useCustomClient = <T>(): CustomClient<T> => {
 			}
 		}
 
+		const token = (await get(session)?.getIdToken()) ?? "";
 		if (headers == undefined) {
 			if (get(session) != undefined) {
 				headers = {
-					Authorization: `Bearer ${get(session)?.token}`,
+					Authorization: `Bearer ${token}`,
 				};
 			}
 		}
 
 		if (headers) {
 			if (headers.Authorization == undefined) {
-				headers.Authorization = `Bearer ${get(session)?.token}`;
+				headers.Authorization = `Bearer ${token}`;
 			}
 		}
 
@@ -62,13 +54,7 @@ export const useCustomClient = <T>(): CustomClient<T> => {
 			return response.json();
 		} else {
 			if (response.status == 401) {
-				// Check if this failed because of token
-				const userSession = get(session);
-				if (userSession) {
-					if (Date.now() < userSession.tokenExpires) {
-						callAPIToRefreshToken();
-					}
-				}
+				// TODO: Possibly refresh token from lib/firebase
 				throw new Error("Unauthorized", { cause: "401" });
 			}
 			if (response.status == 403) {

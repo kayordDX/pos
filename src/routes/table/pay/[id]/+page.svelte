@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Badge, Button, Card, Form, Input, Loader } from "@kayord/ui";
-	import type { PageData } from "./$types";
 	import { CreditCardIcon, NfcIcon } from "lucide-svelte";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod } from "sveltekit-superforms/adapters";
@@ -11,7 +10,6 @@
 	import { onMount } from "svelte";
 	import { createPayManualPayment } from "$lib/api";
 	import { goto } from "$app/navigation";
-	export let data: PageData;
 
 	let a: HTMLAnchorElement;
 
@@ -98,9 +96,9 @@
 	const mutation = createPayManualPayment();
 	const onSubmitManual = async (manualData: FormSchema) => {
 		await $mutation.mutateAsync({
-			data: { amount: manualData.amount, tableBookingId: Number(data.bookingId) },
+			data: { amount: manualData.amount, tableBookingId: Number($page.params.bookingId) },
 		});
-		goto(`/table/bill/${data.bookingId}`);
+		goto(`/table/bill/${$page.params.bookingId}`);
 	};
 
 	const form = superForm(defaults(zod(schema)), {
@@ -180,7 +178,7 @@
 				</div>
 			</Card.Content>
 			<Card.Footer class="flex flex-col gap-2">
-				<Button class="w-full" href={`/table/bill/${data.bookingId}`} variant="outline"
+				<Button class="w-full" href={`/table/bill/${$page.params.bookingId}`} variant="outline"
 					>Cancel</Button
 				>
 			</Card.Footer>
