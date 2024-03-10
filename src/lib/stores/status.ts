@@ -1,7 +1,9 @@
 import { client, type UserGetStatusResponse } from "$lib/api";
 import { writable } from "svelte/store";
 
-type Status = UserGetStatusResponse;
+interface Status extends UserGetStatusResponse {
+	isNotReady?: boolean;
+}
 
 const createStatus = (status: Status) => {
 	const getStatus = async () => {
@@ -21,4 +23,5 @@ export const status = createStatus({
 	salesPeriodId: 0,
 	salesPeriod: undefined,
 	roles: [],
+	isNotReady: true,
 });

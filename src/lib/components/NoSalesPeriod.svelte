@@ -1,6 +1,18 @@
 <script lang="ts">
-	import { Button, Card } from "@kayord/ui";
+	import { Button, Card, toast } from "@kayord/ui";
 	import { CalendarOffIcon, CalendarCheck2Icon } from "lucide-svelte";
+	import { status } from "$lib/stores/status";
+
+	let isChecking = false;
+
+	const checkStatus = async () => {
+		isChecking = true;
+		await status.getStatus();
+		isChecking = false;
+		if ($status.salesPeriodId == 0) {
+			toast.error("No active sales period");
+		}
+	};
 </script>
 
 <div class="m-2">
@@ -13,7 +25,9 @@
 			</div>
 		</Card.Header>
 		<Card.Footer>
-			<Button href="/"><CalendarCheck2Icon class="h-5 w-5 mr-2" />Check</Button>
+			<Button on:click={checkStatus} disabled={isChecking}>
+				<CalendarCheck2Icon class="h-5 w-5 mr-2" />Check
+			</Button>
 		</Card.Footer>
 	</Card.Root>
 </div>

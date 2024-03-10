@@ -16,6 +16,7 @@
 	import { hub } from "$lib/stores/hub";
 	import { onMount } from "svelte";
 	import { type HubNotification } from "$lib/types";
+	import OutletCheck from "$lib/components/Check/OutletCheck.svelte";
 
 	const initHub = async () => {
 		const token = await $session?.getIdToken();
@@ -64,6 +65,8 @@
 	<ModeWatcher />
 	<QueryClientProvider client={queryClient}>
 		<Header />
-		<slot />
+		<OutletCheck>
+			<slot />
+		</OutletCheck>
 	</QueryClientProvider>
 </AuthCheck>
