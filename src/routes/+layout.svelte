@@ -23,6 +23,7 @@
 			.withUrl(`${env.PUBLIC_API_URL}/hub`, {
 				accessTokenFactory: () => token ?? "",
 			})
+			.configureLogging(signalR.LogLevel.Error)
 			.withAutomaticReconnect()
 			.build();
 
