@@ -54,7 +54,7 @@ export const signInGoogle = async () => {
 
 	await client.POST("/user/validate", {
 		body: {
-			email: result.user.photoURL ?? "",
+			email: result.user.email ?? "",
 			image: result.user.photoURL,
 			name: result.user.displayName ?? "",
 			userId: result.user.uid,

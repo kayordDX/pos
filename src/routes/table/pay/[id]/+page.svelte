@@ -96,9 +96,9 @@
 	const mutation = createPayManualPayment();
 	const onSubmitManual = async (manualData: FormSchema) => {
 		await $mutation.mutateAsync({
-			data: { amount: manualData.amount, tableBookingId: Number($page.params.bookingId) },
+			data: { amount: manualData.amount, tableBookingId: Number($page.params.id) },
 		});
-		goto(`/table/bill/${$page.params.bookingId}`);
+		goto(`/table/bill/${$page.params.id}`);
 	};
 
 	const form = superForm(defaults(zod(schema)), {
@@ -178,7 +178,7 @@
 				</div>
 			</Card.Content>
 			<Card.Footer class="flex flex-col gap-2">
-				<Button class="w-full" href={`/table/bill/${$page.params.bookingId}`} variant="outline"
+				<Button class="w-full" href={`/table/bill/${$page.params.id}`} variant="outline"
 					>Cancel</Button
 				>
 			</Card.Footer>

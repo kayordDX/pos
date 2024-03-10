@@ -1,9 +1,6 @@
 <script lang="ts">
-	import type { LayoutData } from "./$types";
 	import { page } from "$app/stores";
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
-
-	export let data: LayoutData;
 
 	$: menuActive = $page.route.id?.includes("menu") ?? false;
 	$: billActive = $page.route.id?.includes("bill") ?? false;
@@ -20,7 +17,7 @@
 			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
 			class:bg-black={menuActive}
 			class:!text-foreground={menuActive}
-			href={`/table/menu/${data.bookingId}`}
+			href={`/table/menu/${$page.params.id}`}
 		>
 			<MenuIcon class="w-4 h-4 mr-2" /> <span class="text-sm">Menu</span>
 		</a>
@@ -28,7 +25,7 @@
 			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
 			class:bg-black={basketActive}
 			class:!text-foreground={basketActive}
-			href={`/table/basket/${data.bookingId}`}
+			href={`/table/basket/${$page.params.id}`}
 		>
 			<ShoppingBasketIcon class="w-4 h-4 mr-2" />
 			<span class="text-sm">Basket</span>
@@ -37,7 +34,7 @@
 			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
 			class:bg-black={billActive}
 			class:!text-foreground={billActive}
-			href={`/table/bill/${data.bookingId}`}
+			href={`/table/bill/${$page.params.id}`}
 		>
 			<ReceiptTextIcon class="w-4 h-4 mr-2" />
 			<span class="text-sm">Bill</span>

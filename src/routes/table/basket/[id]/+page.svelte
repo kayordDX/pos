@@ -6,11 +6,9 @@
 	import { ChefHatIcon } from "lucide-svelte";
 	import { createTableOrderGetBasket, createTableOrderSendToKitchen } from "$lib/api";
 	import { goto } from "$app/navigation";
+	import { page } from "$app/stores";
 
-	import type { PageData } from "./$types";
-	export let data: PageData;
-
-	const query = createTableOrderGetBasket({ tableBookingId: Number(data.bookingId) });
+	const query = createTableOrderGetBasket({ tableBookingId: Number($page.params.id) });
 
 	const refetch = async () => {
 		await $query.refetch();
@@ -21,10 +19,10 @@
 	const sendAllToKitchen = async () => {
 		await $mutation.mutateAsync({
 			data: {
-				tableBookingId: Number(data.bookingId),
+				tableBookingId: Number($page.params.id),
 			},
 		});
-		goto(`/table/bill/${data.bookingId}`);
+		goto(`/table/bill/${$page.params.id}`);
 	};
 </script>
 

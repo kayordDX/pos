@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { Loader } from "@kayord/ui";
-	import type { PageData } from "./$types";
 	import { createTableOrderGetBill } from "$lib/api";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import Bill from "./Bill.svelte";
+	import { page } from "$app/stores";
 
-	export let data: PageData;
-
-	const query = createTableOrderGetBill({ tableBookingId: Number(data.bookingId) });
+	const query = createTableOrderGetBill({ tableBookingId: Number($page.params.id) });
 </script>
 
 {#if $query.error}
@@ -20,5 +18,5 @@
 {/if}
 
 {#if $query.data}
-	<Bill data={$query.data} bookingId={Number(data.bookingId)} />
+	<Bill data={$query.data} bookingId={Number($page.params.id)} />
 {/if}

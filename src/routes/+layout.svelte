@@ -3,7 +3,6 @@
 	import { Header } from "$lib/components/Header";
 	import "../app.pcss";
 	import { page } from "$app/stores";
-	import { getFlash } from "sveltekit-flash-message";
 	import { HeadlessToast } from "$lib/components/HeadlessToast";
 	import { Toaster, toast } from "@kayord/ui";
 	import { browser } from "$app/environment";
@@ -15,6 +14,8 @@
 	import * as signalR from "@microsoft/signalr";
 	import { env } from "$env/dynamic/public";
 	import { hub } from "$lib/stores/hub";
+	import { onMount } from "svelte";
+	import { type HubNotification } from "$lib/types";
 
 	const initHub = async () => {
 		const token = await $session?.getIdToken();
@@ -32,19 +33,20 @@
 	$: $session && status.getStatus();
 	$: $session && initHub();
 
-	const flash = getFlash(page);
-	flash.subscribe(($flash) => {
-		if (!$flash) return;
-		if ($flash.type === "success") {
-			toast.success($flash.message);
-		} else if ($flash.type === "error") {
-			toast.error($flash.message);
-		} else {
-			toast.custom(HeadlessToast, {
-				componentProps: { message: $flash.message, type: $flash.type },
-			});
+	onMount(() => {
+		if (!$hub) {
+			return;
 		}
-		flash.set(undefined);
+
+		$hub.on("ReceiveMessage", (message: string) => {
+			console.log("received", message);
+		});
+
+		$hub.on("Notification", (notification: HubNotification) => {
+			toast.custom(HeadlessToast, {
+				componentProps: { message: notification.notification, type: "success" },
+			});
+		});
 	});
 
 	const queryClient = new QueryClient({

@@ -72,6 +72,11 @@ export interface User {
 	roles: Array<string>;
 }
 
+export interface HubNotification {
+	notification: string;
+	dateSent: string;
+}
+
 export interface UserToken {
 	token: string;
 }

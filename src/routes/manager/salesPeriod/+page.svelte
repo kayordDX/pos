@@ -1,15 +1,12 @@
 <script lang="ts">
-	import { Card, Input, Label } from "@kayord/ui";
+	import { Card, Input, Label, toast } from "@kayord/ui";
 	import { Button } from "@kayord/ui";
 	import { createSalesPeriodCreate } from "$lib/api";
-	import { page } from "$app/stores";
-	import { getFlash } from "sveltekit-flash-message/client";
 	import { goto } from "$app/navigation";
 	import { status } from "$lib/stores/status";
 
 	let name: string;
 
-	const flash = getFlash(page);
 	const mutation = createSalesPeriodCreate();
 
 	const openSalesPeriod = async () => {
@@ -17,10 +14,10 @@
 			await $mutation.mutateAsync({
 				data: { outletId: $status?.outletId ?? 0, name: name },
 			});
+			toast.success("Successfully opened sales period");
 			await goto("/", { invalidateAll: true });
-			$flash = { type: "success", message: "Successfully opened sales period" };
 		} catch (err) {
-			$flash = { type: "error", message: "Error opening sales period" };
+			toast.error("Error opening sales period");
 		}
 	};
 </script>
