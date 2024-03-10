@@ -1,9 +1,9 @@
 <script lang="ts">
 	import Error from "$lib/components/Error.svelte";
 	import { createSalesPeriodCashUp } from "$lib/api";
-	import { Avatar, Card, Loader, Separator } from "@kayord/ui";
+	import { Avatar, Card, Loader, Separator, Table } from "@kayord/ui";
 	import { getError } from "$lib/types";
-	import Item from "../../table/bill/[id]/Item.svelte";
+	import Item from "../../(salesPeriod)/(clockedIn)/table/bill/[id]/Item.svelte";
 	import { getInitials } from "$lib/util";
 	import { status } from "$lib/stores/status";
 
@@ -58,33 +58,38 @@
 			</div>
 			{#each d.userCashUps as cash}
 				<Card.Root>
-					<Card.Header>
-						<Avatar.Root>
-							<Avatar.Image src={cash.user?.image} alt="profile" />
-							<Avatar.Fallback class="bg-primary text-primary-foreground">
-								{getInitials(cash.user?.name ?? "")}
-							</Avatar.Fallback>
-						</Avatar.Root>
+					<Card.Header class="pb-2">
+						<div class="flex items-center gap-2">
+							<Avatar.Root>
+								<Avatar.Image src={cash.user?.image} alt="profile" />
+								<Avatar.Fallback class="bg-primary text-primary-foreground">
+									{getInitials(cash.user?.name ?? "")}
+								</Avatar.Fallback>
+							</Avatar.Root>
+							<h3>{cash.user?.name}</h3>
+						</div>
 					</Card.Header>
 					<Card.Content>
-						<div class="mb-4">
-							<div class="flex justify-between">
-								<h3>User Total</h3>
-								<h3>R{cash.userTotal.toFixed(2)}</h3>
-							</div>
-							<div class="flex justify-between">
-								<h3>User Payment Total</h3>
-								<h3>R{cash.userPaymentTotal.toFixed(2)}</h3>
-							</div>
-							<div class="flex justify-between">
-								<h3>User Balance</h3>
-								<h3>R{cash.userBalance.toFixed(2)}</h3>
-							</div>
-							<div class="flex justify-between">
-								<h3>User Tips</h3>
-								<h3>R{cash.userTipTotal.toFixed(2)}</h3>
-							</div>
-						</div>
+						<Table.Root class="mb-2">
+							<Table.Body>
+								<Table.Row>
+									<Table.Cell>User Total</Table.Cell>
+									<Table.Cell class="float-right">R{cash.userTotal.toFixed(2)}</Table.Cell>
+								</Table.Row>
+								<Table.Row>
+									<Table.Cell>User Payment Total</Table.Cell>
+									<Table.Cell class="float-right">R{cash.userPaymentTotal.toFixed(2)}</Table.Cell>
+								</Table.Row>
+								<Table.Row>
+									<Table.Cell>User Balance</Table.Cell>
+									<Table.Cell class="float-right">R{cash.userBalance.toFixed(2)}</Table.Cell>
+								</Table.Row>
+								<Table.Row>
+									<Table.Cell>User Tips</Table.Cell>
+									<Table.Cell class="float-right">R{cash.userTipTotal.toFixed(2)}</Table.Cell>
+								</Table.Row>
+							</Table.Body>
+						</Table.Root>
 
 						<div class="flex flex-col gap-2">
 							{#each cash.tableCashUps as table}

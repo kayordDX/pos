@@ -22,8 +22,8 @@
 			<div class="flex flex-wrap gap-4 mt-4">
 				{#each $query.data as otherTable}
 					<a href={`/table/menu/${otherTable.id}`}>
-						<Card.Root class="p-5 w-48">
-							<div class="flex justify-between">
+						<Card.Root class="p-5">
+							<div class="flex justify-between gap-2 line-clamp-1 items-center">
 								<h3>{otherTable.table.name}</h3>
 								<p>{otherTable.table.section.name}</p>
 							</div>

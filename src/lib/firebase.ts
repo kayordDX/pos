@@ -22,32 +22,6 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 
-// const userStore = () => {
-// 	let unsubscribe: () => void;
-
-// 	if (!auth || !globalThis.window) {
-// 		console.warn("Auth is not initialized or not in browser");
-// 		const { subscribe } = writable<User | null>(null);
-// 		return {
-// 			subscribe,
-// 		};
-// 	}
-
-// 	const { subscribe } = writable(auth?.currentUser ?? null, (set) => {
-// 		unsubscribe = onIdTokenChanged(auth, (user) => {
-// 			set(user);
-// 		});
-
-// 		return () => unsubscribe();
-// 	});
-
-// 	return {
-// 		subscribe,
-// 	};
-// };
-
-// export const user = userStore();
-
 export const signInGoogle = async () => {
 	const provider = new GoogleAuthProvider();
 	const result = await signInWithPopup(auth, provider);
