@@ -199,7 +199,8 @@ export interface components {
       clockedIn: boolean;
       /** Format: int32 */
       salesPeriodId: number;
-      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
+      salesPeriod?: components["schemas"]["EntitiesSalesPeriod"] | null;
+      roles: string[];
     };
     EntitiesSalesPeriod: {
       /** Format: int32 */
@@ -1443,6 +1444,10 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["TableOrderKitchenResponse"];
         };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {

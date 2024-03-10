@@ -1,21 +1,13 @@
-import { client } from "$lib/api";
+import { client, type UserGetStatusResponse } from "$lib/api";
 import { writable } from "svelte/store";
 
-interface Status {
-	clockedIn: boolean;
-	outletId: number;
-	salesPeriodId: number;
-}
+type Status = UserGetStatusResponse;
 
 const createStatus = (status: Status) => {
 	const getStatus = async () => {
 		const { data } = await client.GET("/user/getStatus", { fetch });
 		if (data) {
-			set({
-				clockedIn: data.clockedIn,
-				outletId: data.outletId,
-				salesPeriodId: data.salesPeriodId,
-			});
+			set(data);
 		}
 	};
 
@@ -23,4 +15,10 @@ const createStatus = (status: Status) => {
 	return { subscribe, update, set, getStatus };
 };
 
-export const status = createStatus({ clockedIn: false, outletId: 0, salesPeriodId: 0 });
+export const status = createStatus({
+	clockedIn: false,
+	outletId: 0,
+	salesPeriodId: 0,
+	salesPeriod: undefined,
+	roles: [],
+});

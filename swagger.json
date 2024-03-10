@@ -432,6 +432,9 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -442,7 +445,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/order/getBill": {
@@ -3145,7 +3153,7 @@
           "outletId",
           "clockedIn",
           "salesPeriodId",
-          "salesPeriod"
+          "roles"
         ],
         "properties": {
           "outletId": {
@@ -3160,7 +3168,18 @@
             "format": "int32"
           },
           "salesPeriod": {
-            "$ref": "#/components/schemas/EntitiesSalesPeriod"
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesSalesPeriod"
+              }
+            ]
+          },
+          "roles": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },

@@ -1,18 +1,17 @@
 <script lang="ts">
 	import { Card, Button, Badge, Loader } from "@kayord/ui";
-	import type { PageData } from "./$types";
-	export let data: PageData;
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { NotebookIcon, Rows4Icon, CalendarOffIcon } from "lucide-svelte";
 	import { createTableGetMyBooked } from "$lib/api";
 	import Orders from "./Orders.svelte";
+	import { status } from "$lib/stores/status";
 
-	const query = createTableGetMyBooked({ myBooking: true, outletId: data.status?.outletId ?? 0 });
+	const query = createTableGetMyBooked({ myBooking: true, outletId: $status?.outletId ?? 0 });
 </script>
 
 <div class="m-2">
-	{#if !data.status?.salesPeriod}
+	{#if !$status?.salesPeriod}
 		<Card.Root>
 			<Card.Header class="flex flex-row items-center gap-4">
 				<CalendarOffIcon />
@@ -26,7 +25,7 @@
 		</Card.Root>
 	{/if}
 
-	{#if data.status?.salesPeriod}
+	{#if $status?.salesPeriod}
 		<h1>My Tables</h1>
 		<p class="text-muted-foreground">List of my current tables</p>
 

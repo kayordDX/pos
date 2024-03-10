@@ -1,15 +1,13 @@
 <script lang="ts">
-	import type { PageData } from "./$types";
 	import Error from "$lib/components/Error.svelte";
-
-	export let data: PageData;
 
 	import { createTableGetMyBooked } from "$lib/api";
 
 	import { Card, Loader } from "@kayord/ui";
 	import { getError } from "$lib/types";
+	import { status } from "$lib/stores/status";
 
-	const query = createTableGetMyBooked({ myBooking: false, outletId: data.status?.outletId ?? 0 });
+	const query = createTableGetMyBooked({ myBooking: false, outletId: $status?.outletId ?? 0 });
 </script>
 
 <div class="m-8">

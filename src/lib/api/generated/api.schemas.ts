@@ -471,19 +471,6 @@ export interface SalesPeriodCreateCashUpRequest {
 	[key: string]: any;
 }
 
-export interface EntitiesCashUp {
-	cashUpBalance: number;
-	cashUpTotal: number;
-	cashUpTotalPayments: number;
-	id: number;
-	salesPeriod: EntitiesSalesPeriod;
-	salesPeriodId: number;
-	signOffDate?: string | null;
-	signOffUserId: string;
-	tableCount: number;
-	userId: string;
-}
-
 export interface SalesPeriodGetRequest {
 	[key: string]: any;
 }
@@ -837,6 +824,17 @@ export interface TableOrderGetBillBillMenuItemDTO {
 	price: number;
 }
 
+export interface TableOrderGetBillBillOrderItemDTO {
+	menuItem: TableOrderGetBillBillMenuItemDTO;
+	menuItemId: number;
+	note?: string | null;
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
+}
+
 export interface TableOrderGetBillResponse {
 	balance: number;
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
@@ -902,17 +900,6 @@ export interface DTOOrderItemOptionDTO {
 	optionId: number;
 	orderItemId: number;
 	orderItemOptionId: number;
-}
-
-export interface TableOrderGetBillBillOrderItemDTO {
-	menuItem: TableOrderGetBillBillMenuItemDTO;
-	menuItemId: number;
-	note?: string | null;
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
 }
 
 export interface TableOrderKitchenOrderItemStatusDTO {
@@ -1090,10 +1077,26 @@ export interface EntitiesSalesPeriod {
 	startDate?: string | null;
 }
 
+export interface EntitiesCashUp {
+	cashUpBalance: number;
+	cashUpTotal: number;
+	cashUpTotalPayments: number;
+	id: number;
+	salesPeriod: EntitiesSalesPeriod;
+	salesPeriodId: number;
+	signOffDate?: string | null;
+	signOffUserId: string;
+	tableCount: number;
+	userId: string;
+}
+
+export type UserGetStatusResponseSalesPeriod = EntitiesSalesPeriod | null;
+
 export interface UserGetStatusResponse {
 	clockedIn: boolean;
 	outletId: number;
-	salesPeriod: EntitiesSalesPeriod;
+	roles: string[];
+	salesPeriod?: UserGetStatusResponseSalesPeriod;
 	salesPeriodId: number;
 }
 

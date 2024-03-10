@@ -1,15 +1,14 @@
 <script lang="ts">
-	import type { PageData } from "./$types";
-	export let data: PageData;
 	import Error from "$lib/components/Error.svelte";
 	import { createSalesPeriodCashUp } from "$lib/api";
 	import { Avatar, Card, Loader, Separator } from "@kayord/ui";
 	import { getError } from "$lib/types";
 	import Item from "../../table/bill/[id]/Item.svelte";
 	import { getInitials } from "$lib/util";
+	import { status } from "$lib/stores/status";
 
 	const cashUpQuery = createSalesPeriodCashUp({
-		salesPeriodId: data.status?.salesPeriodId ?? 0,
+		salesPeriodId: $status?.salesPeriodId ?? 0,
 		userId: "",
 	});
 </script>

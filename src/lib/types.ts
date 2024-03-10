@@ -1,4 +1,3 @@
-import type { OutletSchema, Outlet } from "../routes/setup/schema";
 import type { ErrorResponse, InternalErrorResponse } from "$lib/api";
 
 export interface APIError {
@@ -76,8 +75,6 @@ export interface User {
 export interface UserToken {
 	token: string;
 }
-
-export type { OutletSchema, Outlet };
 
 export type ApiError = ErrorResponse | InternalErrorResponse | Error | unknown | void;
 

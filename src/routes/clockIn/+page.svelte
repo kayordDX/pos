@@ -2,17 +2,17 @@
 	import { ClockIcon } from "lucide-svelte";
 	import { Button, Card, toast } from "@kayord/ui";
 	import type { PageData } from "./$types";
-	export let data: PageData;
 	import { createClockClockIn } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import { getError } from "$lib/types";
+	import { status } from "$lib/stores/status";
 
 	const mutation = createClockClockIn();
 
 	const clockIn = async () => {
 		try {
 			await $mutation.mutateAsync({
-				data: { outletId: data.status?.outletId ?? 0 },
+				data: { outletId: $status?.outletId ?? 0 },
 			});
 			toast.info("Successfully Clocked in User");
 			goto("/");

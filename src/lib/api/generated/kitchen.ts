@@ -30,7 +30,7 @@ export const getTableOrderKitchenQueryKey = () => {
 
 export const useTableOrderKitchenQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(options?: {
 	query?: Partial<
 		CreateQueryOptions<
@@ -60,11 +60,11 @@ export const useTableOrderKitchenQueryOptions = <
 export type TableOrderKitchenQueryResult = NonNullable<
 	Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>
 >;
-export type TableOrderKitchenQueryError = ErrorType<InternalErrorResponse>;
+export type TableOrderKitchenQueryError = ErrorType<void | InternalErrorResponse>;
 
 export const createTableOrderKitchen = <
 	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(options?: {
 	query?: Partial<
 		CreateQueryOptions<

@@ -1,6 +1,5 @@
 <script lang="ts">
-	import { Button, Input, Loader, Select } from "@kayord/ui";
-	import type { PageData } from "./$types";
+	import { Input, Loader } from "@kayord/ui";
 	import { SearchIcon } from "lucide-svelte";
 	import {
 		createMenuGetSectionsGetMenusSections,
@@ -10,15 +9,16 @@
 	} from "$lib/api";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import { FilterIcon } from "lucide-svelte";
 	import MenuItem from "./MenuItem.svelte";
 	import { page } from "$app/stores";
 	import Menus from "./Menus.svelte";
 	import { selection } from "$lib/stores/selection";
 	import Categories from "./Categories.svelte";
 	import autoAnimate from "@formkit/auto-animate";
+	import { createMenuList } from "$lib/api";
+	import { status } from "$lib/stores/status";
 
-	export let data: PageData;
+	const query = createMenuList({ outletId: $status?.outletId });
 
 	let itemParams: MenuGetItemsGetMenuItemsParams = {
 		menuId: $selection.menuId,
@@ -68,7 +68,7 @@
 		<!-- <Button><FilterIcon class="w-5 h-5" /> Filter</Button> -->
 	</div>
 
-	<Menus menus={data.menu ?? []} />
+	<Menus menus={$query.data ?? []} />
 	<div class="flex gap-2 my-2 flex-wrap items-center w-full p-2">
 		{#if $sectionsQuery.isPending}
 			<div class="w-full">
@@ -88,7 +88,7 @@
 	<div class="flex justify-center w-full">
 		<div class="flex justify-center gap-2 my-2 flex-wrap p-2 w-full" use:autoAnimate>
 			{#each $itemsQuery.data ?? [] as item, i (item.menuItemId)}
-				<MenuItem menuItem={item} tableBookingId={Number(data.bookingId)} />
+				<MenuItem menuItem={item} tableBookingId={Number($page.params.bookingId)} />
 			{/each}
 		</div>
 	</div>
