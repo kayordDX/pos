@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card } from "@kayord/ui";
-	import { CalendarOffIcon } from "lucide-svelte";
+	import { UserCheck2Icon } from "lucide-svelte";
 </script>
 
 <div class="m-2">
@@ -19,5 +19,10 @@
 				</div>
 			</div>
 		</Card.Content>
+		<Card.Footer>
+			<nav data-sveltekit-reload>
+				<Button href="/"><UserCheck2Icon class="h-4 w-4 mr-2" /> Check Access</Button>
+			</nav>
+		</Card.Footer>
 	</Card.Root>
 </div>
