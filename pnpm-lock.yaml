@@ -15,8 +15,8 @@ devDependencies:
     specifier: ^1.0.1
     version: 1.0.1
   '@kayord/ui':
-    specifier: ^0.7.2
-    version: 0.7.2(@sveltejs/kit@2.5.3)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.1)(svelte@4.2.12)(tailwindcss@3.4.1)
+    specifier: ^0.7.3
+    version: 0.7.3(@sveltejs/kit@2.5.3)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.1)(svelte@4.2.12)(tailwindcss@3.4.1)
   '@microsoft/signalr':
     specifier: ^8.0.0
     version: 8.0.0
@@ -30,8 +30,8 @@ devDependencies:
     specifier: ^3.0.2
     version: 3.0.2(svelte@4.2.12)(vite@5.1.5)
   '@tanstack/svelte-query':
-    specifier: ^5.25.0
-    version: 5.25.0(svelte@4.2.12)
+    specifier: ^5.26.3
+    version: 5.26.3(svelte@4.2.12)
   '@types/qs':
     specifier: ^6.9.12
     version: 6.9.12
@@ -57,8 +57,8 @@ devDependencies:
     specifier: ^10.8.1
     version: 10.8.1
   lucide-svelte:
-    specifier: ^0.354.0
-    version: 0.354.0(svelte@4.2.12)
+    specifier: ^0.356.0
+    version: 0.356.0(svelte@4.2.12)
   openapi-fetch:
     specifier: ^0.9.3
     version: 0.9.3
@@ -1344,18 +1344,18 @@ packages:
       - ts-node
     dev: true
 
-  /@kayord/ui@0.7.2(@sveltejs/kit@2.5.3)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.1)(svelte@4.2.12)(tailwindcss@3.4.1):
-    resolution: {integrity: sha512-sRHT0q702yuRgGyEo7f6vZY4JHUZ51cPnArMLbJ8pLs3SgDIBfLxqUsEC3bS8iQuwtLfFJiCkuJD6OyzLxchsA==}
+  /@kayord/ui@0.7.3(@sveltejs/kit@2.5.3)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.1)(svelte@4.2.12)(tailwindcss@3.4.1):
+    resolution: {integrity: sha512-JDbuk3h8JOlKci49zyV+QsJ9NKGqGCCt8KuS1ktLJP6ct8S5UAVNSJFIY1Azj1zJkZlhUaWHfN9nRvnKdOjFYQ==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
       '@internationalized/date': 3.5.2
-      bits-ui: 0.19.5(svelte@4.2.12)
+      bits-ui: 0.19.6(svelte@4.2.12)
       clsx: 2.1.0
       cmdk-sv: 0.0.15(svelte@4.2.12)
       embla-carousel-svelte: 8.0.0(svelte@4.2.12)
       formsnap: 0.5.1(svelte@4.2.12)(sveltekit-superforms@2.8.1)
-      lucide-svelte: 0.354.0(svelte@4.2.12)
+      lucide-svelte: 0.356.0(svelte@4.2.12)
       mode-watcher: 0.2.2(svelte@4.2.12)
       paneforge: 0.0.2(svelte@4.2.12)
       svelte: 4.2.12
@@ -1402,8 +1402,8 @@ packages:
       svelte: 4.2.12
     dev: true
 
-  /@melt-ui/svelte@0.75.3(svelte@4.2.12):
-    resolution: {integrity: sha512-EA2IKn7w9qtzO/M7VEENpphQ9A4az+QDMQbA8SJLuKyu+S8NWliln5y9vvmnx9dZF8GtKtUKuxpwRNyPg5LAOg==}
+  /@melt-ui/svelte@0.76.0(svelte@4.2.12):
+    resolution: {integrity: sha512-X1ktxKujjLjOBt8LBvfckHGDMrkHWceRt1jdsUTf0EH76ikNPP1ofSoiV0IhlduDoCBV+2YchJ8kXCDfDXfC9Q==}
     peerDependencies:
       svelte: '>=3 <5'
     dependencies:
@@ -2036,16 +2036,16 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /@tanstack/query-core@5.25.0:
-    resolution: {integrity: sha512-vlobHP64HTuSE68lWF1mEhwSRC5Q7gaT+a/m9S+ItuN+ruSOxe1rFnR9j0ACWQ314BPhBEVKfBQ6mHL0OWfdbQ==}
+  /@tanstack/query-core@5.26.3:
+    resolution: {integrity: sha512-kKv7VHIleC7cwpMS3M63mWUFFbdiRo7JZMVUyZ4z/79RZoAi7/vGTVkCrnNqyKl+zwBRkumYL+eiYtyShGZd0A==}
     dev: true
 
-  /@tanstack/svelte-query@5.25.0(svelte@4.2.12):
-    resolution: {integrity: sha512-R02jzxjGmclRoCnMHvQhSQYHsIZcSlbN4ZlRQ5hJ/W/AeKd/Wb+XfmQ0e2UANGwbJBbh8S9hD2ZPgNrPqUPZ5Q==}
+  /@tanstack/svelte-query@5.26.3(svelte@4.2.12):
+    resolution: {integrity: sha512-/nTD/ef5zwfEZdAx1URe7pmERuxv3WAfM1yPPJ1gRA1c7h/s273xHQldAD7SjWRHVYed9T2a+Bn4gzj96paSrw==}
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
     dependencies:
-      '@tanstack/query-core': 5.25.0
+      '@tanstack/query-core': 5.26.3
       svelte: 4.2.12
     dev: true
 
@@ -2467,13 +2467,13 @@ packages:
       svelte: 4.2.12
     dev: true
 
-  /bits-ui@0.19.5(svelte@4.2.12):
-    resolution: {integrity: sha512-jrt0pGZdixtl27VrfzLj5yJxha29CK+6nClZZSoJCL5DlXFT1sluF9NnOSMP48D3kczR5YjpArvCe0BEnGq4jA==}
+  /bits-ui@0.19.6(svelte@4.2.12):
+    resolution: {integrity: sha512-ZKWHa1Vt8YW7DdooeNleVdtOtk9hxXZIo8El0myqn7r8S8OkJaSPXhQn/jp4/Q6BphYxZ2Tatqb/WLphmrSfUg==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
       '@internationalized/date': 3.5.2
-      '@melt-ui/svelte': 0.75.3(svelte@4.2.12)
+      '@melt-ui/svelte': 0.76.0(svelte@4.2.12)
       nanoid: 5.0.6
       svelte: 4.2.12
     dev: true
@@ -3971,8 +3971,8 @@ packages:
       yallist: 4.0.0
     dev: true
 
-  /lucide-svelte@0.354.0(svelte@4.2.12):
-    resolution: {integrity: sha512-70SspM/VC9E9OLJj1Jg6IhF40vf22aanW9vhUvtBwORogK4TP2oTd27YkY/3zOgi/Y5OAEOU4ZYtLxsAiOHPjQ==}
+  /lucide-svelte@0.356.0(svelte@4.2.12):
+    resolution: {integrity: sha512-aUr+L9uJkRvT15egByH4KLPoIXh47fG7Dm03b4G1Dk2nfTDuuLebloUaBKUzFsBUcVrBKBje+L5/Xnz3OoUyCg==}
     peerDependencies:
       svelte: ^3 || ^4 || ^5.0.0-next.42
     dependencies:
@@ -5037,8 +5037,8 @@ packages:
       ts-interface-checker: 0.1.13
     dev: true
 
-  /superstruct@1.0.3:
-    resolution: {integrity: sha512-8iTn3oSS8nRGn+C2pgXSKPI3jmpm6FExNazNpjvqS6ZUJQCej3PUXEKM8NjHBOs54ExM+LPW/FBRhymrdcCiSg==}
+  /superstruct@1.0.4:
+    resolution: {integrity: sha512-7JpaAoX2NGyoFlI9NBh66BQXGONc+uE+MRS5i2iOBKuS4e+ccgMDjATgZldkah+33DakBxDHiss9kvUcGAO8UQ==}
     engines: {node: '>=14.0.0'}
     requiresBuild: true
     dev: true
@@ -5257,7 +5257,7 @@ packages:
       '@vinejs/vine': 1.7.1
       arktype: 1.0.29-alpha
       joi: 17.12.2
-      superstruct: 1.0.3
+      superstruct: 1.0.4
       valibot: 0.29.0
       yup: 1.4.0
       zod: 3.22.4
