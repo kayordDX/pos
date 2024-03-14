@@ -6,46 +6,75 @@
 	import { z } from "zod";
 	import { page } from "$app/stores";
 	import PaymentDone from "./PaymentDone.svelte";
-	import { onMount } from "svelte";
+	import { onDestroy, onMount } from "svelte";
 	import {
 		client,
 		createPayManualPayment,
 		type CommonWrapperResultOfStatusResultDto,
+		type CommonWrapperResultOfStatusResultDtoAllOfValue,
 	} from "$lib/api";
 	import { goto } from "$app/navigation";
 	import { hub } from "$lib/stores/hub";
 
 	let a: HTMLAnchorElement;
-
 	let url: string | undefined;
 	let reference: string | undefined;
 
 	let linkLoading = false;
+	let isPaymentDone = false;
+
+	const visibilityChange = async () => {
+		console.log("changed", document.visibilityState, reference);
+		if (document.visibilityState === "visible") {
+			if (reference != undefined) {
+				const linkResult = await client.GET("/pay/status/{reference}", {
+					params: { path: { reference } },
+				});
+				if (linkResult.data?.value) {
+					paymentCheck(linkResult.data?.value);
+				}
+			}
+		}
+	};
 
 	const payStatusAction = (payStatus: CommonWrapperResultOfStatusResultDto) => {
 		console.log("PayMessage", payStatus);
-		if (payStatus.value?.paymentReference === reference) {
+		if (payStatus.value) {
+			paymentCheck(payStatus.value);
+		}
+	};
+
+	const paymentCheck = (pay: CommonWrapperResultOfStatusResultDtoAllOfValue) => {
+		if (pay?.paymentReference === reference) {
 			if (
-				(payStatus.value?.transactionId.length ?? 0) > 0 &&
-				payStatus.value?.responseCode == 0 &&
-				(payStatus.value?.authorisationCode.length ?? 0) > 0
+				(pay?.transactionId.length ?? 0) > 0 &&
+				pay?.responseCode == 0 &&
+				(pay?.authorisationCode.length ?? 0) > 0
 			) {
 				isPaymentDone = true;
 			}
 		}
 	};
 
-	onMount(() => {
+	const listenHub = () => {
 		if (!$hub) {
 			return;
 		}
 		$hub.on("PayMessage", payStatusAction);
+	};
+
+	$: $hub && listenHub();
+
+	onMount(() => {
+		document.addEventListener("visibilitychange", visibilityChange);
 		return () => {
-			$hub?.off("PayMessage", payStatusAction);
+			document.removeEventListener("visibilitychange", visibilityChange);
 		};
 	});
 
-	let isPaymentDone = false;
+	onDestroy(() => {
+		$hub?.off("PayMessage", payStatusAction);
+	});
 
 	const schema = z.object({
 		amount: z.coerce.number().min(1, { message: "You need an amount of bigger than 1" }),
@@ -53,6 +82,11 @@
 	});
 	type FormSchema = z.infer<typeof schema>;
 	const onSubmitHalo = async (data: FormSchema) => {
+		url = undefined;
+		reference = undefined;
+		isPaymentDone = false;
+
+		linkLoading = true;
 		const linkResult = await client.GET("/pay/getLink", {
 			params: { query: { amount: data.amount, tableBookingId: Number($page.params.id) } },
 		});
@@ -66,6 +100,7 @@
 		} else {
 			toast.error("Could not start payment");
 		}
+		linkLoading = false;
 	};
 
 	const mutation = createPayManualPayment();
