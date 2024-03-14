@@ -1,9 +1,11 @@
-FROM node:lts-alpine AS builder
+FROM node:lts-alpine AS build
 RUN npm install -g pnpm
 WORKDIR /app
 COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --frozen-lockfile
 COPY . .
 RUN pnpm build
-EXPOSE 3000
-CMD ["node", "build"]
+
+FROM nginx:stable
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=build /app/build /usr/share/nginx/html
