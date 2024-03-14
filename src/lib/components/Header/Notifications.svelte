@@ -14,7 +14,7 @@
 			<Avatar.Fallback><MailIcon /></Avatar.Fallback>
 		</Avatar.Root>
 	</DropdownMenu.Trigger>
-	<DropdownMenu.Content class="w-full max-w-md overflow-scroll">
+	<DropdownMenu.Content class="w-full max-w-md overflow-auto max-h-[calc(100vh-56px)]">
 		<DropdownMenu.Label class="flex items-center gap-2">
 			<MailIcon class="h-4 w-4" /> Notifications
 		</DropdownMenu.Label>
