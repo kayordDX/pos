@@ -131,7 +131,7 @@
 				<div class="columns-2 flex gap-4">
 					<button class="w-full" on:click={haloPay} type="button">
 						<Card.Root
-							class="flex flex-col items-center gap-2 p-4 bg-primary border-2 hover:border-secondary-foreground"
+							class="flex flex-col items-center gap-2 p-4 bg-primary border-2 hover:border-secondary-foreground h-full justify-center"
 						>
 							{#if linkLoading}
 								<Loader />
@@ -143,7 +143,7 @@
 					</button>
 					<button class="w-full" on:click={manualPay} type="button">
 						<Card.Root
-							class="flex flex-col items-center gap-2 p-4 bg-secondary border-2 hover:border-secondary-foreground"
+							class="flex flex-col items-center gap-2 p-4 bg-secondary border-2 hover:border-secondary-foreground h-full justify-center"
 						>
 							<CreditCardIcon class="w-10 h-10 text-muted-foreground" />
 							<div class="text-muted-foreground">Manual Payment</div>
