@@ -1,15 +1,19 @@
 <script lang="ts">
-	import { Badge, Button, Card, Form, Input, Loader } from "@kayord/ui";
+	import { Badge, Button, Card, Form, Input, Loader, toast } from "@kayord/ui";
 	import { CreditCardIcon, NfcIcon } from "lucide-svelte";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { page } from "$app/stores";
 	import PaymentDone from "./PaymentDone.svelte";
-	import { env } from "$env/dynamic/public";
 	import { onMount } from "svelte";
-	import { createPayManualPayment } from "$lib/api";
+	import {
+		client,
+		createPayManualPayment,
+		type CommonWrapperResultOfStatusResultDto,
+	} from "$lib/api";
 	import { goto } from "$app/navigation";
+	import { hub } from "$lib/stores/hub";
 
 	let a: HTMLAnchorElement;
 
@@ -18,71 +22,30 @@
 
 	let linkLoading = false;
 
-	let sse: EventSource;
+	const payStatusAction = (payStatus: CommonWrapperResultOfStatusResultDto) => {
+		console.log("PayMessage", payStatus);
+		if (payStatus.value?.paymentReference === reference) {
+			if (
+				(payStatus.value?.transactionId.length ?? 0) > 0 &&
+				payStatus.value?.responseCode == 0 &&
+				(payStatus.value?.authorisationCode.length ?? 0) > 0
+			) {
+				isPaymentDone = true;
+			}
+		}
+	};
 
-	// const pay = (amount: Number) => {
-	// 	linkLoading = true;
-	// 	sse = new EventSource(
-	// 		`${env.PUBLIC_API_URL}/pay/haloPay/${data.bookingId}/${amount}/${data.userId}`
-	// 	);
-
-	// 	sse.addEventListener("pay", (e) => {
-	// 		console.log(e.data);
-	// 		const response = JSON.parse(e.data);
-	// 		if (response.type == "link") {
-	// 			console.log("it is fucking here", response);
-	// 			url = response.url;
-	// 			reference = response.reference;
-	// 			linkLoading = false;
-	// 			if (a) {
-	// 				a.href = url ?? "";
-	// 				// a.click();
-	// 			}
-	// 		}
-	// 		if (response.type == "status") {
-	// 			console.log("status", response);
-	// 		}
-	// 	});
-
-	// 	sse.onmessage = (e) => {
-	// 		console.log("something happend");
-	// 		const response = JSON.parse(e.data);
-	// 		if (!response.length) return;
-
-	// 		console.log(response);
-	// 	};
-
-	// 	sse.onerror = (err) => {
-	// 		console.error("EventSource failed:", err);
-	// 		sse.close();
-	// 	};
-
-	// 	return () => {
-	// 		console.log("unmount");
-	// 		if (sse.readyState === 1) {
-	// 			sse.close();
-	// 		}
-	// 	};
-	// };
-
-	// onMount(() => {
-	// 	return () => {
-	// 		console.log("unm");
-	// 		if (sse.readyState === 1) {
-	// 			sse.close();
-	// 		}
-	// 	};
-	// });
+	onMount(() => {
+		if (!$hub) {
+			return;
+		}
+		$hub.on("PayMessage", payStatusAction);
+		return () => {
+			$hub?.off("PayMessage", payStatusAction);
+		};
+	});
 
 	let isPaymentDone = false;
-	// $: payStatus = createPayStatus(reference ?? "", {
-	// 	query: { refetchInterval: 5000, enabled: reference != undefined && !isPaymentDone },
-	// });
-
-	// $: isPaymentDone =
-	// 	$payStatus?.data?.value?.responseCode == 0 &&
-	// 	$payStatus?.data?.value?.authorisationCode.length > 0 &&
-	// 	$payStatus?.data?.value?.transactionId.length > 0;
 
 	const schema = z.object({
 		amount: z.coerce.number().min(1, { message: "You need an amount of bigger than 1" }),
@@ -90,7 +53,19 @@
 	});
 	type FormSchema = z.infer<typeof schema>;
 	const onSubmitHalo = async (data: FormSchema) => {
-		// pay(data.amount);
+		const linkResult = await client.GET("/pay/getLink", {
+			params: { query: { amount: data.amount, tableBookingId: Number($page.params.id) } },
+		});
+		if (linkResult.data?.value) {
+			url = linkResult.data.value.url;
+			reference = linkResult.data.value.reference;
+			if (a) {
+				a.href = url ?? "";
+				a.click();
+			}
+		} else {
+			toast.error("Could not start payment");
+		}
 	};
 
 	const mutation = createPayManualPayment();
@@ -133,7 +108,6 @@
 </script>
 
 <a class="hidden" href="/" bind:this={a}>Halo</a>
-
 {#if isPaymentDone}
 	<PaymentDone />
 {:else}
@@ -154,7 +128,7 @@
 				</Form.Field>
 			</Card.Header>
 			<Card.Content>
-				<div class="columns-2">
+				<div class="columns-2 flex gap-4">
 					<button class="w-full" on:click={haloPay} type="button">
 						<Card.Root
 							class="flex flex-col items-center gap-2 p-4 bg-primary border-2 hover:border-secondary-foreground"
