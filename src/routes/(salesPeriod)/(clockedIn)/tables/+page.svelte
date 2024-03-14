@@ -3,7 +3,7 @@
 
 	import { createTableGetMyBooked } from "$lib/api";
 
-	import { Card, Loader } from "@kayord/ui";
+	import { Card, Loader, Badge } from "@kayord/ui";
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status";
 
@@ -19,13 +19,15 @@
 	{/if}
 	{#if $query.isSuccess}
 		{#if $query.data.length > 0}
-			<div class="flex flex-wrap gap-4 mt-4">
+			<h1>Other Tables</h1>
+			<p class="text-muted-foreground">Tables assigned to other waiters</p>
+			<div class="flex flex-wrap gap-4 mt-4 w-full">
 				{#each $query.data as otherTable}
-					<a href={`/table/menu/${otherTable.id}`}>
-						<Card.Root class="p-5">
+					<a href={`/table/menu/${otherTable.id}`} class="w-full">
+						<Card.Root class="p-5 w-full">
 							<div class="flex justify-between gap-2 line-clamp-1 items-center">
 								<h3>{otherTable.table.name}</h3>
-								<p>{otherTable.table.section.name}</p>
+								<Badge>{otherTable.table.section.name}</Badge>
 							</div>
 							<p class="text-xs">{otherTable.bookingName}</p>
 						</Card.Root>
