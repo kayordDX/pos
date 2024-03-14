@@ -1,6 +1,6 @@
 import createClient, { type Middleware } from "openapi-fetch";
 import type { paths } from "./generated/client/schema";
-import { env } from "$env/dynamic/public";
+import { PUBLIC_API_URL } from "$env/static/public";
 import { browser } from "$app/environment";
 import { get } from "svelte/store";
 import { session } from "$lib/firebase";
@@ -19,7 +19,7 @@ const myMiddleware: Middleware = {
 };
 
 export const client = createClient<paths>({
-	baseUrl: env.PUBLIC_API_URL,
+	baseUrl: PUBLIC_API_URL,
 	headers: {
 		"Content-Type": null,
 	},

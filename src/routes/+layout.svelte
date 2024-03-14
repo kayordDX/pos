@@ -10,7 +10,7 @@
 	import { status } from "$lib/stores/status";
 	import { session } from "$lib/firebase";
 	import * as signalR from "@microsoft/signalr";
-	import { env } from "$env/dynamic/public";
+	import { PUBLIC_API_URL } from "$env/static/public";
 	import { hub } from "$lib/stores/hub";
 	import { type HubNotification } from "$lib/types";
 	import OutletCheck from "$lib/components/Check/OutletCheck.svelte";
@@ -18,7 +18,7 @@
 	const initHub = async () => {
 		const token = await $session?.getIdToken();
 		const connection = new signalR.HubConnectionBuilder()
-			.withUrl(`${env.PUBLIC_API_URL}/hub`, {
+			.withUrl(`${PUBLIC_API_URL}/hub`, {
 				accessTokenFactory: () => token ?? "",
 				withCredentials: false,
 			})

@@ -1,6 +1,6 @@
 import { get } from "svelte/store";
 import { isAPIError, isValidationError } from "$lib/types";
-import { env } from "$env/dynamic/public";
+import { PUBLIC_API_URL } from "$env/static/public";
 import { session } from "$lib/firebase";
 import qs from "qs";
 
@@ -17,7 +17,7 @@ type CustomClient<T> = (data: {
 
 export const useCustomClient = <T>(): CustomClient<T> => {
 	return async ({ url, method, params, headers, data }) => {
-		let fullUrl = `${env.PUBLIC_API_URL}${url}`;
+		let fullUrl = `${PUBLIC_API_URL}${url}`;
 		if (params !== undefined) {
 			const urlParams = qs.stringify(params);
 			if (urlParams.length > 0) {
