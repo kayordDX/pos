@@ -23,7 +23,7 @@
 			if (response.ok) {
 				toast.info("Successfully updated outlet");
 				await status.getStatus();
-				goto("/");
+				await goto("/", { replaceState: true, invalidateAll: true });
 			} else {
 				toast.error("Could not set outlet");
 			}
