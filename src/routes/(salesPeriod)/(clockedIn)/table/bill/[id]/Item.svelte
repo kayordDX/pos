@@ -5,7 +5,7 @@
 	export let data: Array<TableOrderGetBillBillOrderItemDTO>;
 </script>
 
-<Table.Body>
+<Table.Body class="w-full">
 	{#each data as item}
 		<Table.Row>
 			<Table.Cell class="font-medium">

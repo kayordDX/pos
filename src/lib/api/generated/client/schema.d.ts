@@ -253,288 +253,15 @@ export interface components {
       /** Format: int32 */
       customerId: number;
       name: string;
-      orders: components["schemas"]["Order"][];
+      orders: components["schemas"]["EntitiesOrder"][];
     };
-    /** @enum {integer} */
-    Order: 0 | 1;
-    UserGetRolesRequest: Record<string, never>;
-    UserGetNotificationsUserNotificationDTO: {
+    EntitiesOrder: {
       /** Format: int32 */
-      id: number;
-      userId: string;
-      notification: string;
-      jsonContent?: string | null;
-      /** Format: date-time */
-      dateSent: string;
-      dateSentFormatted: string;
-      /** Format: date-time */
-      dateRead?: string | null;
-      /** Format: date-time */
-      dateExpires?: string | null;
-    };
-    EntitiesUserOutlet: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      outletId: number;
-      userId: string;
-      isCurrent: boolean;
-    };
-    UserAssignOutletRequest: {
-      /** Format: int32 */
-      outletId: number;
-    };
-    TableOrderUpdateTableOrderResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderUpdateTableOrderRequest: {
-      /** Format: int32 */
-      tableBookingId: number;
-      /** Format: int32 */
-      orderItemStatusId: number;
-    };
-    TableOrderUpdateOrderItemResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderUpdateOrderItemRequest: {
+      orderId: number;
       /** Format: int32 */
       orderItemId: number;
-      /** Format: int32 */
-      orderItemStatusId: number;
+      orderItem: components["schemas"]["EntitiesOrderItem"];
     };
-    TableOrderSendToKitchenResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderSendToKitchenRequest: {
-      /** Format: int32 */
-      tableBookingId: number;
-    };
-    TableOrderRemoveItemResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderRemoveItemRequest: {
-      /** Format: int32 */
-      orderItemId: number;
-    };
-    TableOrderKitchenResponse: {
-      tables?: components["schemas"]["TableOrderKitchenTableBookingDTO"][] | null;
-      /** Format: date-time */
-      lastRefresh: string;
-      /** Format: int32 */
-      pendingTables: number;
-      /** Format: int32 */
-      pendingItems: number;
-    };
-    TableOrderKitchenTableBookingDTO: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["TableOrderKitchenTableDTO"];
-      orderItems?: components["schemas"]["TableOrderKitchenOrderItemDTO"][] | null;
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      user: components["schemas"]["DTOUserDTO"];
-    };
-    TableOrderKitchenTableDTO: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      section?: components["schemas"]["TableOrderKitchenSectionDTO"] | null;
-    };
-    TableOrderKitchenSectionDTO: {
-      name: string;
-    };
-    TableOrderKitchenOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      menuItem: components["schemas"]["TableOrderKitchenMenuItemDTO"];
-      /** Format: int32 */
-      divisionId: number;
-      note?: string | null;
-      /** Format: date-time */
-      orderReceived: string;
-      /** Format: date-time */
-      orderUpdated: string;
-      orderReceivedFormatted: string;
-      orderUpdatedFormatted: string;
-      /** Format: int32 */
-      orderItemStatusId: number;
-      orderItemStatus: components["schemas"]["TableOrderKitchenOrderItemStatusDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-    };
-    TableOrderKitchenMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      description: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      position: number;
-      /** Format: int32 */
-      divisionId?: number | null;
-    };
-    TableOrderKitchenOrderItemStatusDTO: {
-      /** Format: int32 */
-      orderItemStatusId: number;
-      status: string;
-    };
-    DTOOrderItemOptionDTO: {
-      /** Format: int32 */
-      orderItemOptionId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      optionId: number;
-      option: components["schemas"]["DTOOptionDTO"];
-    };
-    DTOOptionDTO: {
-      /** Format: int32 */
-      optionId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      optionGroupId: number;
-      optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
-    };
-    DTOOptionGroupBasicDTO: {
-      /** Format: int32 */
-      optionGroupId: number;
-      name: string;
-    };
-    DTOOrderItemExtraDTO: {
-      /** Format: int32 */
-      orderItemExtraId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      extraId: number;
-      extra: components["schemas"]["DTOExtraDTO"];
-    };
-    DTOExtraDTO: {
-      /** Format: int32 */
-      extraId: number;
-      name: string;
-      /** Format: int32 */
-      positionId: number;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      extraGroupId: number;
-      extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
-    };
-    DTOExtraGroupBasicDTO: {
-      /** Format: int32 */
-      extraGroupId: number;
-      name: string;
-    };
-    DTOUserDTO: {
-      userId: string;
-      email: string;
-      image: string;
-      name: string;
-      isActive: boolean;
-    };
-    TableOrderGetBillResponse: {
-      orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
-      /** Format: decimal */
-      total: number;
-      paymentsReceived: components["schemas"]["EntitiesPayment"][];
-      /** Format: decimal */
-      balance: number;
-      /** Format: decimal */
-      tipAmount: number;
-    };
-    TableOrderGetBillBillOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["DTOTableBookingDTO"];
-      /** Format: int32 */
-      menuItemId: number;
-      menuItem: components["schemas"]["TableOrderGetBillBillMenuItemDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-      note?: string | null;
-    };
-    DTOTableBookingDTO: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      userId: string;
-      user: components["schemas"]["DTOUserDTO"];
-    };
-    TableOrderGetBillBillMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-    };
-    EntitiesPayment: {
-      /** Format: int32 */
-      id: number;
-      paymentReference: string;
-      /** Format: int32 */
-      tableBookingId: number;
-      /** Format: decimal */
-      amount: number;
-      userId: string;
-      /** Format: int32 */
-      paymentTypeId?: number | null;
-      paymentType: components["schemas"]["EntitiesPaymentType"];
-      /** Format: date-time */
-      dateReceived: string;
-    };
-    EntitiesPaymentType: {
-      /** Format: int32 */
-      paymentTypeId: number;
-      paymentTypeName: string;
-    };
-    TableOrderGetBillRequest: Record<string, never>;
-    TableOrderGetBasketResponse: {
-      orderItems: components["schemas"]["TableOrderGetBasketBillOrderItemDTO"][];
-      /** Format: decimal */
-      total: number;
-    };
-    TableOrderGetBasketBillOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["DTOTableBookingDTO"];
-      /** Format: int32 */
-      menuItemId: number;
-      menuItem: components["schemas"]["TableOrderGetBasketBillMenuItemDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-      note?: string | null;
-    };
-    TableOrderGetBasketBillMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-    };
-    TableOrderGetBasketRequest: Record<string, never>;
     EntitiesOrderItem: {
       /** Format: int32 */
       orderItemId: number;
@@ -589,8 +316,6 @@ export interface components {
       userId: string;
       /** Format: int32 */
       roleId: number;
-      isFrontLine: boolean;
-      isBackOffice: boolean;
       user: components["schemas"]["EntitiesUser"];
       role?: components["schemas"]["EntitiesRole"] | null;
     };
@@ -599,6 +324,8 @@ export interface components {
       roleId: number;
       name: string;
       description: string;
+      isFrontLine: boolean;
+      isBackOffice: boolean;
       /** Format: int32 */
       outletId?: number | null;
       userRole?: components["schemas"]["EntitiesUserRole"][] | null;
@@ -753,6 +480,285 @@ export interface components {
       isBillable: boolean;
       notify: boolean;
     };
+    UserGetRolesRequest: Record<string, never>;
+    UserGetNotificationsUserNotificationDTO: {
+      /** Format: int32 */
+      id: number;
+      userId: string;
+      notification: string;
+      jsonContent?: string | null;
+      /** Format: date-time */
+      dateSent: string;
+      dateSentFormatted: string;
+      /** Format: date-time */
+      dateRead?: string | null;
+      /** Format: date-time */
+      dateExpires?: string | null;
+    };
+    EntitiesUserOutlet: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      outletId: number;
+      userId: string;
+      isCurrent: boolean;
+    };
+    UserAssignOutletRequest: {
+      /** Format: int32 */
+      outletId: number;
+    };
+    TableOrderUpdateTableOrderResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderUpdateTableOrderRequest: {
+      /** Format: int32 */
+      tableBookingId: number;
+      /** Format: int32 */
+      orderItemStatusId: number;
+    };
+    TableOrderUpdateOrderItemResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderUpdateOrderItemRequest: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      orderItemStatusId: number;
+    };
+    TableOrderSendToKitchenResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderSendToKitchenRequest: {
+      /** Format: int32 */
+      tableBookingId: number;
+    };
+    TableOrderRemoveItemResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderRemoveItemRequest: {
+      /** Format: int32 */
+      orderItemId: number;
+    };
+    TableOrderKitchenResponse: {
+      tables?: components["schemas"]["TableOrderKitchenTableBookingDTO"][] | null;
+      /** Format: date-time */
+      lastRefresh: string;
+      /** Format: int32 */
+      pendingTables: number;
+      /** Format: int32 */
+      pendingItems: number;
+    };
+    TableOrderKitchenTableBookingDTO: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      table: components["schemas"]["TableOrderKitchenTableDTO"];
+      orderItems?: components["schemas"]["TableOrderKitchenOrderItemDTO"][] | null;
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
+      user: components["schemas"]["DTOUserDTO"];
+    };
+    TableOrderKitchenTableDTO: {
+      /** Format: int32 */
+      tableId: number;
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+      section?: components["schemas"]["TableOrderKitchenSectionDTO"] | null;
+    };
+    TableOrderKitchenSectionDTO: {
+      name: string;
+    };
+    TableOrderKitchenOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      menuItem: components["schemas"]["TableOrderKitchenMenuItemDTO"];
+      /** Format: int32 */
+      divisionId: number;
+      note?: string | null;
+      /** Format: date-time */
+      orderReceived: string;
+      /** Format: date-time */
+      orderUpdated: string;
+      orderReceivedFormatted: string;
+      orderUpdatedFormatted: string;
+      /** Format: int32 */
+      orderItemStatusId: number;
+      orderItemStatus: components["schemas"]["TableOrderKitchenOrderItemStatusDTO"];
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+    };
+    TableOrderKitchenMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+      description: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      position: number;
+      /** Format: int32 */
+      divisionId: number;
+    };
+    TableOrderKitchenOrderItemStatusDTO: {
+      /** Format: int32 */
+      orderItemStatusId: number;
+      status: string;
+    };
+    DTOOrderItemOptionDTO: {
+      /** Format: int32 */
+      orderItemOptionId: number;
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      optionId: number;
+      option: components["schemas"]["DTOOptionDTO"];
+    };
+    DTOOptionDTO: {
+      /** Format: int32 */
+      optionId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      optionGroupId: number;
+      optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
+    };
+    DTOOptionGroupBasicDTO: {
+      /** Format: int32 */
+      optionGroupId: number;
+      name: string;
+    };
+    DTOOrderItemExtraDTO: {
+      /** Format: int32 */
+      orderItemExtraId: number;
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      extraId: number;
+      extra: components["schemas"]["DTOExtraDTO"];
+    };
+    DTOExtraDTO: {
+      /** Format: int32 */
+      extraId: number;
+      name: string;
+      /** Format: int32 */
+      positionId: number;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      extraGroupId: number;
+      extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
+    };
+    DTOExtraGroupBasicDTO: {
+      /** Format: int32 */
+      extraGroupId: number;
+      name: string;
+    };
+    DTOUserDTO: {
+      userId: string;
+      email: string;
+      image: string;
+      name: string;
+      isActive: boolean;
+    };
+    TableOrderKitchenRequest: Record<string, never>;
+    TableOrderGetBillResponse: {
+      orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
+      /** Format: decimal */
+      total: number;
+      paymentsReceived: components["schemas"]["EntitiesPayment"][];
+      /** Format: decimal */
+      balance: number;
+      /** Format: decimal */
+      tipAmount: number;
+    };
+    TableOrderGetBillBillOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      tableBooking: components["schemas"]["DTOTableBookingDTO"];
+      /** Format: int32 */
+      menuItemId: number;
+      menuItem: components["schemas"]["TableOrderGetBillBillMenuItemDTO"];
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+      note?: string | null;
+    };
+    DTOTableBookingDTO: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
+      userId: string;
+      user: components["schemas"]["DTOUserDTO"];
+    };
+    TableOrderGetBillBillMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+    };
+    EntitiesPayment: {
+      /** Format: int32 */
+      id: number;
+      paymentReference: string;
+      /** Format: int32 */
+      tableBookingId: number;
+      /** Format: decimal */
+      amount: number;
+      userId: string;
+      /** Format: int32 */
+      paymentTypeId?: number | null;
+      paymentType: components["schemas"]["EntitiesPaymentType"];
+      /** Format: date-time */
+      dateReceived: string;
+    };
+    EntitiesPaymentType: {
+      /** Format: int32 */
+      paymentTypeId: number;
+      paymentTypeName: string;
+    };
+    TableOrderGetBillRequest: Record<string, never>;
+    TableOrderGetBasketResponse: {
+      orderItems: components["schemas"]["TableOrderGetBasketBillOrderItemDTO"][];
+      /** Format: decimal */
+      total: number;
+    };
+    TableOrderGetBasketBillOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      tableBooking: components["schemas"]["DTOTableBookingDTO"];
+      /** Format: int32 */
+      menuItemId: number;
+      menuItem: components["schemas"]["TableOrderGetBasketBillMenuItemDTO"];
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+      note?: string | null;
+    };
+    TableOrderGetBasketBillMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+    };
+    TableOrderGetBasketRequest: Record<string, never>;
     OrderClearBasketRequest: {
       /** Format: int32 */
       tableBookingId: number;
@@ -868,6 +874,8 @@ export interface components {
       cashUpTotal: number;
       /** Format: int32 */
       tableCount: number;
+      /** Format: int32 */
+      openTableCount: number;
       /** Format: decimal */
       cashUpBalance: number;
       /** Format: decimal */
@@ -1438,6 +1446,16 @@ export interface operations {
     };
   };
   TableOrderKitchen: {
+    parameters: {
+      query: {
+        /**
+         * @example [
+         *   0
+         * ]
+         */
+        divisionIds: number[];
+      };
+    };
     responses: {
       /** @description Success */
       200: {

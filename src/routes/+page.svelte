@@ -35,6 +35,11 @@
 				<Button href="/waiter">Waiter</Button>
 			</div>
 		{/if}
+		{#if $status.roles.includes("Bar")}
+			<div class="flex flex-col">
+				<Button href="/kitchen">Bar</Button>
+			</div>
+		{/if}
 		{#if $status.roles.includes("Chef")}
 			<div class="flex flex-col">
 				<Button href="/kitchen">Kitchen</Button>

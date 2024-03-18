@@ -1,16 +1,28 @@
 <script lang="ts">
 	import Error from "$lib/components/Error.svelte";
-	import { createSalesPeriodCashUp } from "$lib/api";
-	import { Avatar, Card, Loader, Separator, Table } from "@kayord/ui";
+	import { client, createSalesPeriodCashUp } from "$lib/api";
+	import { Avatar, Button, Card, Loader, Separator, Table, toast } from "@kayord/ui";
 	import { getError } from "$lib/types";
 	import Item from "../../(salesPeriod)/(clockedIn)/table/bill/[id]/Item.svelte";
 	import { getInitials } from "$lib/util";
 	import { status } from "$lib/stores/status";
+	import { goto } from "$app/navigation";
 
 	const cashUpQuery = createSalesPeriodCashUp({
 		salesPeriodId: $status?.salesPeriodId ?? 0,
 		userId: "",
 	});
+
+	const closeSalesPeriod = async () => {
+		const { response } = await client.POST("/salesPeriod/close", {
+			body: { salesPeriodId: $status?.salesPeriodId ?? 0 },
+		});
+		if (response.ok) {
+			goto("/");
+		} else {
+			toast.error("Could not close sales period");
+		}
+	};
 </script>
 
 <div class="m-2">
@@ -137,6 +149,13 @@
 							{/each}
 						</div>
 					</Card.Content>
+					{#if $cashUpQuery.data.openTableCount <= 0}
+						<Card.Footer>
+							<Button class="w-full" on:click={closeSalesPeriod}>
+								Cash up and Close Sales Period
+							</Button>
+						</Card.Footer>
+					{/if}
 				</Card.Root>
 			{/each}
 		</div>

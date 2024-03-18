@@ -11,9 +11,7 @@
 	import { getError } from "$lib/types";
 	import MenuItem from "./MenuItem.svelte";
 	import { page } from "$app/stores";
-	import Menus from "./Menus.svelte";
 	import { selection } from "$lib/stores/selection";
-	import Categories from "./Categories.svelte";
 	import autoAnimate from "@formkit/auto-animate";
 	import { createMenuList } from "$lib/api";
 	import { status } from "$lib/stores/status";
