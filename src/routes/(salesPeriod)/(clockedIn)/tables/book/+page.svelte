@@ -1,15 +1,18 @@
 <script lang="ts">
-	import { Badge, Button, Card, Dialog, Input, Label, Loader } from "@kayord/ui";
+	import { Badge, Button, Card, Drawer, Form, Input, Label, Loader } from "@kayord/ui";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { createTableBookingCreate, createTableGetAvailable } from "$lib/api";
 	import { status } from "$lib/stores/status";
+	import { z } from "zod";
+	import { defaults, superForm } from "sveltekit-superforms/client";
+	import { zod } from "sveltekit-superforms/adapters";
+	import { Control, Field, FieldErrors } from "@kayord/ui/formsnap";
 
 	const query = createTableGetAvailable({ outletId: $status?.outletId ?? 0 });
 	let dialogOpen = false;
 	let tableId: number = 0;
-	let name: string;
 
 	const selectTable = (id: number) => {
 		dialogOpen = true;
@@ -17,10 +20,15 @@
 	};
 
 	const mutate = createTableBookingCreate();
-	const makeBooking = async () => {
+
+	const schema = z.object({
+		bookingName: z.string().min(1, { message: "Booking Name is Required" }),
+	});
+	type FormSchema = z.infer<typeof schema>;
+	const onSubmit = async (data: FormSchema) => {
 		await $mutate.mutateAsync({
 			data: {
-				bookingName: name,
+				bookingName: data.bookingName,
 				salesPeriodId: $status?.salesPeriodId ?? 0,
 				tableId: tableId,
 			},
@@ -28,6 +36,17 @@
 		dialogOpen = false;
 		goto("/waiter");
 	};
+
+	const form = superForm(defaults(zod(schema)), {
+		SPA: true,
+		validators: zod(schema),
+		onUpdate({ form }) {
+			if (form.valid) {
+				onSubmit(form.data);
+			}
+		},
+	});
+	const { form: formData, enhance } = form;
 </script>
 
 <div class="m-8">
@@ -44,7 +63,7 @@
 	{#if $query.isSuccess}
 		<div class="flex flex-wrap gap-4 mt-4 w-full">
 			{#each $query.data as table}
-				<button class="text-start w-full md:w-48" on:click={() => selectTable(table.tableId)}>
+				<button class="text-start w-full md:max-w-md" on:click={() => selectTable(table.tableId)}>
 					<Card.Root class="p-5">
 						<div class="flex justify-between gap-2">
 							<h3>{table.name}</h3>
@@ -57,25 +76,32 @@
 		</div>
 	{/if}
 
-	<Dialog.Root bind:open={dialogOpen}>
-		<Dialog.Trigger />
-		<Dialog.Content>
-			<Dialog.Header>
-				<Dialog.Title>Book Table</Dialog.Title>
-				<Dialog.Description>This will book the table and assign it to you</Dialog.Description>
-			</Dialog.Header>
-			{#if $mutate.isPending}
-				<Loader />
-			{/if}
+	<Drawer.Root bind:open={dialogOpen}>
+		<Drawer.Trigger />
+		<Drawer.Content class="fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full">
+			<form use:enhance method="POST">
+				<Drawer.Header>
+					<Drawer.Title>Book Table</Drawer.Title>
+					<Drawer.Description>This will book the table and assign it to you</Drawer.Description>
+				</Drawer.Header>
+				<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
+					{#if $mutate.isPending}
+						<Loader />
+					{/if}
 
-			<div class="grid grid-cols-4 items-center gap-4">
-				<Label class="text-right">Booking Name</Label>
-				<Input id="name" bind:value={name} class="col-span-3" />
-			</div>
+					<Field {form} name="bookingName">
+						<Control let:attrs>
+							<Form.Label>Booking Name</Form.Label>
+							<Input bind:value={$formData.bookingName} />
+						</Control>
+						<FieldErrors class="text-sm text-destructive" />
+					</Field>
+				</div>
 
-			<Dialog.Footer>
-				<Button on:click={makeBooking}>Make Booking</Button>
-			</Dialog.Footer>
-		</Dialog.Content>
-	</Dialog.Root>
+				<Drawer.Footer>
+					<Button type="submit">Make Booking</Button>
+				</Drawer.Footer>
+			</form>
+		</Drawer.Content>
+	</Drawer.Root>
 </div>
