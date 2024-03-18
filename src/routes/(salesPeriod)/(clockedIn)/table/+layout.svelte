@@ -15,7 +15,7 @@
 		</a>
 		<a
 			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
-			class:bg-black={menuActive}
+			class:bg-background={menuActive}
 			class:!text-foreground={menuActive}
 			href={`/table/menu/${$page.params.id}`}
 		>
@@ -23,7 +23,7 @@
 		</a>
 		<a
 			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
-			class:bg-black={basketActive}
+			class:bg-background={basketActive}
 			class:!text-foreground={basketActive}
 			href={`/table/basket/${$page.params.id}`}
 		>
@@ -32,7 +32,7 @@
 		</a>
 		<a
 			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
-			class:bg-black={billActive}
+			class:bg-background={billActive}
 			class:!text-foreground={billActive}
 			href={`/table/bill/${$page.params.id}`}
 		>
