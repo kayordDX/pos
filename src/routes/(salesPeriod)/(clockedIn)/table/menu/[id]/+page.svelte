@@ -17,6 +17,9 @@
 	import autoAnimate from "@formkit/auto-animate";
 	import { createMenuList } from "$lib/api";
 	import { status } from "$lib/stores/status";
+	import PickMenu from "./PickMenu.svelte";
+	import PickCategory from "./PickCategory.svelte";
+	import CategoriesList from "./CategoriesList.svelte";
 
 	const query = createMenuList({ outletId: $status?.outletId });
 
@@ -65,17 +68,16 @@
 				<SearchIcon class="absolute right-2 h-4 w-4" />
 			{/if}
 		</div>
-		<!-- <Button><FilterIcon class="w-5 h-5" /> Filter</Button> -->
+		<PickMenu data={$query.data} />
+		<PickCategory sections={$sectionsQuery.data} bind:itemParams bind:sectionParams />
 	</div>
-
-	<Menus menus={$query.data ?? []} />
 	<div class="flex gap-2 my-2 flex-wrap items-center w-full p-2">
 		{#if $sectionsQuery.isPending}
 			<div class="w-full">
 				<Loader />
 			</div>
 		{/if}
-		<Categories sections={$sectionsQuery.data} bind:itemParams bind:sectionParams />
+		<CategoriesList sections={$sectionsQuery.data} bind:itemParams bind:sectionParams />
 	</div>
 
 	{#if $itemsQuery.error}
