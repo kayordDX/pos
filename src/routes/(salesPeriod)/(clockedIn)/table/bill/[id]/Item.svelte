@@ -8,7 +8,7 @@
 <Table.Body class="w-full">
 	{#each data as item}
 		<Table.Row>
-			<Table.Cell class="font-medium">
+			<Table.Cell class="font-medium w-full">
 				<div class="line-clamp-1">{item.menuItem.name}</div>
 				{#each item.orderItemOptions ?? [] as option}
 					<div class="ml-4 flex items-center gap-1">
@@ -25,7 +25,7 @@
 					</div>
 				{/each}
 			</Table.Cell>
-			<Table.Cell class="text-right"
+			<Table.Cell class="text-right w-full"
 				>{item.menuItem.price.toFixed(2)}
 				{#each item.orderItemOptions ?? [] as option}
 					<div>{option.option.price.toFixed(2)}</div>
