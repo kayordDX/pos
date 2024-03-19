@@ -107,43 +107,42 @@
 							{#each cash.tableCashUps as table}
 								<Card.Root>
 									<Card.Content>
-										<div class="flex justify-between">
-											<h3>Table Payment</h3>
-											<h3>R{table.tablePaymentTotal.toFixed(2)}</h3>
-										</div>
-										<div class="flex justify-between">
-											<h3>Total</h3>
-											<h3>R{table.total.toFixed(2)}</h3>
-										</div>
-										<Item data={table.orderItems} />
-
+										<Table.Root>
+											<Item data={table.orderItems} />
+										</Table.Root>
 										<Separator class="mt-4" />
-
-										<div class="flex justify-between">
-											<h3>Total</h3>
-											<h2>R{table.total.toFixed(2)}</h2>
-										</div>
-										<Separator class="mt-4" />
-
-										{#each table.paymentsReceived as payment}
-											<div class="flex justify-between">
-												<div>Payment</div>
-												<div>
-													{payment.amount.toFixed(2)}
-												</div>
-											</div>
-										{/each}
-										<div class="flex justify-between font-bold">
-											<div>Total Paid</div>
-											<div>{table.tablePaymentTotal.toFixed(2)}</div>
-										</div>
-										{#if table.paymentsReceived.length > 0}
-											<Separator class="mt-4" />
-											<div class="flex justify-between">
-												<h3>Balance</h3>
-												<h3>R{table?.balance.toFixed(2)}</h3>
-											</div>
-										{/if}
+										<Table.Root>
+											<Table.Body>
+												<Table.Row>
+													<Table.Cell><h3 class="font-bold">Total</h3></Table.Cell>
+													<Table.Cell class="float-right">
+														<h3 class="font-bold">R{table.total.toFixed(2)}</h3>
+													</Table.Cell>
+												</Table.Row>
+												{#each table.paymentsReceived as payment}
+													<Table.Row>
+														<Table.Cell>Payment</Table.Cell>
+														<Table.Cell class="float-right">
+															{payment.amount.toFixed(2)}
+														</Table.Cell>
+													</Table.Row>
+												{/each}
+												<Table.Row>
+													<Table.Cell><h3>Total Paid</h3></Table.Cell>
+													<Table.Cell class="float-right">
+														<h3>R{table.tablePaymentTotal.toFixed(2)}</h3>
+													</Table.Cell>
+												</Table.Row>
+												{#if table.paymentsReceived.length > 0}
+													<Table.Row>
+														<Table.Cell><h3>Balance</h3></Table.Cell>
+														<Table.Cell class="float-right">
+															<h3>R{table?.balance.toFixed(2)}</h3>
+														</Table.Cell>
+													</Table.Row>
+												{/if}
+											</Table.Body>
+										</Table.Root>
 									</Card.Content>
 								</Card.Root>
 							{/each}
