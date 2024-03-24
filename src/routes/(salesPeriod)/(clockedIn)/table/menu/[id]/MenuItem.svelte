@@ -23,6 +23,7 @@
 			<Card.Root class="w-full relative max-w-lg p-4">
 				<div class="font-bold line-clamp-1">{menuItem.name}</div>
 				<div class="text-sm text-muted-foreground">R {menuItem.price.toFixed(2)}</div>
+				<div class="text-xs text-muted-foreground">{menuItem.menuSection.name}</div>
 			</Card.Root>
 		</div>
 	</Drawer.Trigger>

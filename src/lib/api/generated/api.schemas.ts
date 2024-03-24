@@ -176,19 +176,6 @@ export interface ManagerOrderViewOrderItemDTO {
 	tableBookingId: number;
 }
 
-export interface ManagerOrderViewSectionDTO {
-	name: string;
-}
-
-export type ManagerOrderViewTableDTOSection = ManagerOrderViewSectionDTO | null;
-
-export interface ManagerOrderViewTableDTO {
-	name: string;
-	outletId: number;
-	section?: ManagerOrderViewTableDTOSection;
-	tableId: number;
-}
-
 export interface ManagerOrderViewTableBookingDTO {
 	bookingDate: string;
 	bookingName: string;
@@ -269,9 +256,15 @@ export interface MenuGetItemsRequest {
 	[key: string]: any;
 }
 
+export interface DTOMenuSectionBasicDTO {
+	menuSectionId: number;
+	name?: string | null;
+}
+
 export interface DTOMenuItemDTOBasic {
 	description: string;
 	menuItemId: number;
+	menuSection: DTOMenuSectionBasicDTO;
 	menuSectionId: number;
 	name: string;
 	position: number;
@@ -460,8 +453,6 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
-
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -488,6 +479,8 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
+
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: any;
@@ -575,12 +568,41 @@ export interface TableBookingCreateRequest {
 	tableId: number;
 }
 
+export interface TableBookingGetRequest {
+	[key: string]: any;
+}
+
 export type ErrorResponseErrors = { [key: string]: string[] };
 
 export interface ErrorResponse {
 	errors: ErrorResponseErrors;
 	message: string;
 	statusCode: number;
+}
+
+export interface ManagerOrderViewSectionDTO {
+	name: string;
+}
+
+export type ManagerOrderViewTableDTOSection = ManagerOrderViewSectionDTO | null;
+
+export interface ManagerOrderViewTableDTO {
+	name: string;
+	outletId: number;
+	section?: ManagerOrderViewTableDTOSection;
+	tableId: number;
+}
+
+export interface TableBookingGetResponse {
+	bookingDate: string;
+	bookingName: string;
+	closeDate?: string | null;
+	id: number;
+	salesPeriodId: number;
+	table: ManagerOrderViewTableDTO;
+	tableId: number;
+	user: DTOUserDTO;
+	userId: string;
 }
 
 export interface OrderAddItemsOrder {
@@ -607,17 +629,6 @@ export interface TableOrderGetBasketBillMenuItemDTO {
 	menuItemId: number;
 	name: string;
 	price: number;
-}
-
-export interface TableOrderGetBasketBillOrderItemDTO {
-	menuItem: TableOrderGetBasketBillMenuItemDTO;
-	menuItemId: number;
-	note?: string | null;
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
 }
 
 export interface TableOrderGetBasketResponse {
@@ -720,6 +731,17 @@ export interface DTOOrderItemOptionDTO {
 	optionId: number;
 	orderItemId: number;
 	orderItemOptionId: number;
+}
+
+export interface TableOrderGetBasketBillOrderItemDTO {
+	menuItem: TableOrderGetBasketBillMenuItemDTO;
+	menuItemId: number;
+	note?: string | null;
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
 }
 
 export interface TableOrderGetBillBillOrderItemDTO {

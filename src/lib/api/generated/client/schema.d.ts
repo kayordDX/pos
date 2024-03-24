@@ -47,6 +47,9 @@ export interface paths {
   "/order/addItems": {
     post: operations["OrderAddItems"];
   };
+  "/tableBooking/{id}": {
+    get: operations["TableBookingGet"];
+  };
   "/tableBooking": {
     post: operations["TableBookingCreate"];
   };
@@ -775,6 +778,33 @@ export interface components {
       extraIds?: number[] | null;
       note: string;
     };
+    TableBookingGetResponse: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      table: components["schemas"]["ManagerOrderViewTableDTO"];
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
+      /** Format: int32 */
+      salesPeriodId: number;
+      userId: string;
+      user: components["schemas"]["DTOUserDTO"];
+    };
+    ManagerOrderViewTableDTO: {
+      /** Format: int32 */
+      tableId: number;
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+      section?: components["schemas"]["ManagerOrderViewSectionDTO"] | null;
+    };
+    ManagerOrderViewSectionDTO: {
+      name: string;
+    };
     ErrorResponse: {
       /**
        * Format: int32
@@ -787,6 +817,7 @@ export interface components {
         [key: string]: string[];
       };
     };
+    TableBookingGetRequest: Record<string, never>;
     TableBookingCreateRequest: {
       /** Format: int32 */
       tableId: number;
@@ -1064,6 +1095,12 @@ export interface components {
       /** Format: int32 */
       position: number;
       tags?: components["schemas"]["EntitiesTag"][] | null;
+      menuSection: components["schemas"]["DTOMenuSectionBasicDTO"];
+    };
+    DTOMenuSectionBasicDTO: {
+      /** Format: int32 */
+      menuSectionId: number;
+      name?: string | null;
     };
     MenuGetItemsRequest: Record<string, never>;
     DTOMenuItemDTO: {
@@ -1146,17 +1183,6 @@ export interface components {
       /** Format: date-time */
       closeDate?: string | null;
       user: components["schemas"]["DTOUserDTO"];
-    };
-    ManagerOrderViewTableDTO: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      section?: components["schemas"]["ManagerOrderViewSectionDTO"] | null;
-    };
-    ManagerOrderViewSectionDTO: {
-      name: string;
     };
     ManagerOrderViewOrderItemDTO: {
       /** Format: int32 */
@@ -1559,6 +1585,33 @@ export interface operations {
       /** @description Unauthorized */
       401: {
         content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  TableBookingGet: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableBookingGetResponse"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "application/problem+json": components["schemas"]["ErrorResponse"];
+        };
       };
       /** @description Server Error */
       500: {

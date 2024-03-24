@@ -5,17 +5,100 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
-import { createMutation } from "@tanstack/svelte-query";
-import type { CreateMutationOptions, MutationFunction } from "@tanstack/svelte-query";
+import { createMutation, createQuery } from "@tanstack/svelte-query";
+import type {
+	CreateMutationOptions,
+	CreateQueryOptions,
+	CreateQueryResult,
+	MutationFunction,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 import type {
 	EntitiesTableBooking,
 	ErrorResponse,
 	InternalErrorResponse,
 	TableBookingCloseRequest,
 	TableBookingCreateRequest,
+	TableBookingGetResponse,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
+
+export const useTableBookingGetHook = () => {
+	const tableBookingGet = useCustomClient<TableBookingGetResponse>();
+
+	return (id: number) => {
+		return tableBookingGet({ url: `/tableBooking/${id}`, method: "GET" });
+	};
+};
+
+export const getTableBookingGetQueryKey = (id: number) => {
+	return [`/tableBooking/${id}`] as const;
+};
+
+export const useTableBookingGetQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableBookingGetHook>>>,
+	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useTableBookingGetHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTableBookingGetQueryKey(id);
+
+	const tableBookingGet = useTableBookingGetHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingGetHook>>>
+	> = () => tableBookingGet(id);
+
+	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingGetHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type TableBookingGetQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableBookingGetHook>>>
+>;
+export type TableBookingGetQueryError = ErrorType<ErrorResponse | InternalErrorResponse>;
+
+export const createTableBookingGet = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableBookingGetHook>>>,
+	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useTableBookingGetHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useTableBookingGetQueryOptions(id, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
 
 export const useTableBookingCreateHook = () => {
 	const tableBookingCreate = useCustomClient<EntitiesTableBooking>();

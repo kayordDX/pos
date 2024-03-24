@@ -661,6 +661,57 @@
         ]
       }
     },
+    "/tableBooking/{id}": {
+      "get": {
+        "tags": [
+          "Tablebooking"
+        ],
+        "operationId": "TableBookingGet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableBookingGetResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/tableBooking": {
       "post": {
         "tags": [
@@ -5194,6 +5245,97 @@
           }
         }
       },
+      "TableBookingGetResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tableId",
+          "table",
+          "bookingName",
+          "bookingDate",
+          "salesPeriodId",
+          "userId",
+          "user"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "table": {
+            "$ref": "#/components/schemas/ManagerOrderViewTableDTO"
+          },
+          "bookingName": {
+            "type": "string"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "closeDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/DTOUserDTO"
+          }
+        }
+      },
+      "ManagerOrderViewTableDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableId",
+          "name",
+          "outletId"
+        ],
+        "properties": {
+          "tableId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "section": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ManagerOrderViewSectionDTO"
+              }
+            ]
+          }
+        }
+      },
+      "ManagerOrderViewSectionDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
       "ErrorResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -5222,6 +5364,10 @@
             }
           }
         }
+      },
+      "TableBookingGetRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "TableBookingCreateRequest": {
         "type": "object",
@@ -6196,7 +6342,8 @@
           "name",
           "description",
           "price",
-          "position"
+          "position",
+          "menuSection"
         ],
         "properties": {
           "menuItemId": {
@@ -6227,6 +6374,26 @@
             "items": {
               "$ref": "#/components/schemas/EntitiesTag"
             }
+          },
+          "menuSection": {
+            "$ref": "#/components/schemas/DTOMenuSectionBasicDTO"
+          }
+        }
+      },
+      "DTOMenuSectionBasicDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuSectionId"
+        ],
+        "properties": {
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -6510,48 +6677,6 @@
           },
           "user": {
             "$ref": "#/components/schemas/DTOUserDTO"
-          }
-        }
-      },
-      "ManagerOrderViewTableDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "tableId",
-          "name",
-          "outletId"
-        ],
-        "properties": {
-          "tableId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "section": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/ManagerOrderViewSectionDTO"
-              }
-            ]
-          }
-        }
-      },
-      "ManagerOrderViewSectionDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
           }
         }
       },

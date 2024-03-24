@@ -1,12 +1,36 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
+	import { createTableBookingGet } from "$lib/api";
 
 	$: menuActive = $page.route.id?.includes("menu") ?? false;
 	$: billActive = $page.route.id?.includes("bill") ?? false;
 	$: basketActive = $page.route.id?.includes("basket") ?? false;
+
+	let id = Number($page.params.id ?? "0");
+
+	let query = createTableBookingGet(id, {
+		query: { enabled: id > 0 },
+	});
+
+	const loadBookingDetails = () => {
+		query = createTableBookingGet(id, {
+			query: { enabled: id > 0 },
+		});
+	};
+
+	$: id > 0 && loadBookingDetails();
 </script>
 
+<div class="flex mt-1 justify-center">
+	<div
+		class="flex items-center gap-1 bg-secondary/60 text-secondary-foreground py-1 px-4 rounded-sm"
+	>
+		<span>{$query.data?.table.name}</span>
+		<span class="text-muted-foreground text-sm">{$query.data?.table.section?.name}</span>
+		<span class="text-sm">({$query.data?.bookingName})</span>
+	</div>
+</div>
 <slot />
 <div class="w-full flex mb-2 items-center justify-center fixed bottom-0">
 	<div class="bg-secondary flex items-center py-1 gap-2 rounded-sm px-2">
