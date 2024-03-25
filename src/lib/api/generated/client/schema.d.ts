@@ -352,6 +352,9 @@ export interface components {
       division?: components["schemas"]["EntitiesDivision"] | null;
       menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
       menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
+      isAvailable: boolean;
+      /** Format: decimal */
+      stockPrice: number;
     };
     EntitiesMenuSection: {
       /** Format: int32 */
@@ -1096,6 +1099,7 @@ export interface components {
       position: number;
       tags?: components["schemas"]["EntitiesTag"][] | null;
       menuSection: components["schemas"]["DTOMenuSectionBasicDTO"];
+      isAvailable: boolean;
     };
     DTOMenuSectionBasicDTO: {
       /** Format: int32 */

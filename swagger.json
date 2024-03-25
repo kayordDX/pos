@@ -3708,7 +3708,9 @@
           "description",
           "price",
           "searchVector",
-          "position"
+          "position",
+          "isAvailable",
+          "stockPrice"
         ],
         "properties": {
           "menuItemId": {
@@ -3775,6 +3777,13 @@
             "items": {
               "$ref": "#/components/schemas/EntitiesMenuItemExtraGroup"
             }
+          },
+          "isAvailable": {
+            "type": "boolean"
+          },
+          "stockPrice": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -6334,7 +6343,8 @@
           "description",
           "price",
           "position",
-          "menuSection"
+          "menuSection",
+          "isAvailable"
         ],
         "properties": {
           "menuItemId": {
@@ -6368,6 +6378,9 @@
           },
           "menuSection": {
             "$ref": "#/components/schemas/DTOMenuSectionBasicDTO"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         }
       },

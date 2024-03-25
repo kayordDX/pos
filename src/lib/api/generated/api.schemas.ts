@@ -263,6 +263,7 @@ export interface DTOMenuSectionBasicDTO {
 
 export interface DTOMenuItemDTOBasic {
 	description: string;
+	isAvailable: boolean;
 	menuItemId: number;
 	menuSection: DTOMenuSectionBasicDTO;
 	menuSectionId: number;
@@ -977,6 +978,7 @@ export interface EntitiesMenuItem {
 	description: string;
 	division?: EntitiesMenuItemDivision;
 	divisionId?: number | null;
+	isAvailable: boolean;
 	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
 	menuItemId: number;
 	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
@@ -986,6 +988,7 @@ export interface EntitiesMenuItem {
 	position: number;
 	price: number;
 	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
+	stockPrice: number;
 	tags?: EntitiesTag[] | null;
 }
 
