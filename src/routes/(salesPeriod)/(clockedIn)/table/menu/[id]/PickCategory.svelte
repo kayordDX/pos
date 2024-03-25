@@ -4,7 +4,7 @@
 		MenuGetSectionsGetMenusSectionsParams,
 		MenuGetSectionsResponse,
 	} from "$lib/api";
-	import { Badge, Button, Card, Drawer } from "@kayord/ui";
+	import { Button, Card, Drawer } from "@kayord/ui";
 	import { FilterIcon } from "lucide-svelte";
 	import CategoriesList from "./CategoriesList.svelte";
 	import { cn } from "@kayord/ui/utils";
@@ -26,9 +26,23 @@
 		sectionParams.sectionId = sectionId;
 		itemParams.sectionId = sectionId;
 	};
+
+	const checkEmptySections = () => {
+		if ((sections?.sections?.length ?? 0) == 0) {
+			open = false;
+		}
+	};
+
+	$: sections && checkEmptySections();
+
+	const setFilterDefault = (open: boolean) => {
+		if (open) {
+			clear();
+		}
+	};
 </script>
 
-<Drawer.Root bind:open>
+<Drawer.Root bind:open onOpenChange={setFilterDefault}>
 	<Drawer.Trigger>
 		<Button size="icon" class="relative" variant="secondary">
 			<FilterIcon class="h-5 w-5" />
