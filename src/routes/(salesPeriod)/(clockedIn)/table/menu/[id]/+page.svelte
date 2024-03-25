@@ -18,6 +18,7 @@
 	import PickMenu from "./PickMenu.svelte";
 	import PickCategory from "./PickCategory.svelte";
 	import CategoriesList from "./CategoriesList.svelte";
+	import { debounce } from "$lib/util";
 
 	const query = createMenuList({ outletId: $status?.outletId });
 
@@ -48,6 +49,7 @@
 		itemParams.search = target.value;
 		// goto(`?${$page.url.searchParams.toString()}`);
 	};
+	const debouncedHandleInput = debounce(setSearchString, 500);
 
 	let itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
 	$: itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
@@ -62,25 +64,33 @@
 </script>
 
 <div class="flex justify-center flex-col mb-12 mt-2 items-center">
-	<div class="flex w-full justify-center gap-2 px-2">
-		<div class="relative flex items-center max-w-2xl w-full">
-			<Input on:input={(value) => setSearchString(value)} value={search} class="pr-8" />
-			{#if $itemsQuery.isFetching}
-				<Loader class="absolute right-1 top-0.5 size-5" />
-			{:else}
-				<SearchIcon class="absolute right-2 h-4 w-4" />
-			{/if}
-		</div>
-		<PickMenu data={$query.data} />
-		<PickCategory sections={$sectionsQuery.data} bind:itemParams bind:sectionParams />
-	</div>
-	<div class="flex gap-2 my-2 flex-wrap items-center w-full p-2">
-		{#if $sectionsQuery.isPending}
-			<div class="w-full">
-				<Loader />
+	<div class="flex flex-col w-full sticky top-0 z-50 bg-background p-1">
+		<div class="flex w-full justify-center gap-2 px-2">
+			<div class="relative flex items-center max-w-2xl w-full">
+				<Input on:input={(value) => debouncedHandleInput(value)} value={search} class="pr-8" />
+				{#if $itemsQuery.isFetching}
+					<Loader class="absolute right-1 top-0.5 size-5" />
+				{:else}
+					<SearchIcon class="absolute right-2 h-4 w-4" />
+				{/if}
 			</div>
-		{/if}
-		<CategoriesList sections={$sectionsQuery.data} bind:itemParams bind:sectionParams />
+			<PickMenu data={$query.data} />
+			<PickCategory sections={$sectionsQuery.data} bind:itemParams bind:sectionParams />
+		</div>
+
+		<div class="flex gap-2 flex-wrap items-center w-full">
+			{#if $sectionsQuery.isPending}
+				<div class="w-full">
+					<Loader />
+				</div>
+			{/if}
+			<CategoriesList
+				sections={$sectionsQuery.data}
+				bind:itemParams
+				bind:sectionParams
+				class="mt-1"
+			/>
+		</div>
 	</div>
 
 	{#if $itemsQuery.error}
