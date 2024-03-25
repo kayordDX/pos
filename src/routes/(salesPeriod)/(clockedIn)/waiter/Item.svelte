@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { TableOrderKitchenOrderItemDTO } from "$lib/api";
+	import type { TableOrderOfficeOrderItemDTO } from "$lib/api";
 	import { Badge, Button, Card } from "@kayord/ui";
-	export let item: TableOrderKitchenOrderItemDTO;
+	export let item: TableOrderOfficeOrderItemDTO;
 	import { createTableOrderUpdateOrderItem } from "$lib/api";
 
 	export let refetch: () => void;

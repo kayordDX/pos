@@ -5,13 +5,13 @@
 	import { BellElectricIcon } from "lucide-svelte";
 	import { createTableOrderUpdateTableOrder } from "$lib/api";
 	import Masonry from "svelte-bricks";
-	import { createTableOrderKitchen } from "$lib/api";
+	import { createTableOrderBackOffice } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { getInitials } from "$lib/util";
 
 	export let divisionIds: Array<number> = [];
 
-	const query = createTableOrderKitchen(
+	const query = createTableOrderBackOffice(
 		{ divisionIds: divisionIds.join(",") },
 		{ query: { refetchInterval: 20000 } }
 	);

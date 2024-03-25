@@ -32,8 +32,11 @@ export interface paths {
   "/order/removeItem": {
     post: operations["TableOrderRemoveItem"];
   };
-  "/kitchen/getOrders": {
-    get: operations["TableOrderKitchen"];
+  "/frontOffice/getOrders": {
+    get: operations["TableOrderFrontOffice"];
+  };
+  "/backOffice/getOrders": {
+    get: operations["TableOrderBackOffice"];
   };
   "/order/getBill": {
     get: operations["TableOrderGetBill"];
@@ -545,8 +548,8 @@ export interface components {
       /** Format: int32 */
       orderItemId: number;
     };
-    TableOrderKitchenResponse: {
-      tables?: components["schemas"]["TableOrderKitchenTableBookingDTO"][] | null;
+    TableOrderFrontOfficeResponse: {
+      tables?: components["schemas"]["TableOrderOfficeTableBookingDTO"][] | null;
       /** Format: date-time */
       lastRefresh: string;
       /** Format: int32 */
@@ -554,13 +557,13 @@ export interface components {
       /** Format: int32 */
       pendingItems: number;
     };
-    TableOrderKitchenTableBookingDTO: {
+    TableOrderOfficeTableBookingDTO: {
       /** Format: int32 */
       id: number;
       /** Format: int32 */
       tableId: number;
-      table: components["schemas"]["TableOrderKitchenTableDTO"];
-      orderItems?: components["schemas"]["TableOrderKitchenOrderItemDTO"][] | null;
+      table: components["schemas"]["TableOrderOfficeTableDTO"];
+      orderItems?: components["schemas"]["TableOrderOfficeOrderItemDTO"][] | null;
       bookingName: string;
       /** Format: date-time */
       bookingDate: string;
@@ -568,23 +571,23 @@ export interface components {
       closeDate?: string | null;
       user: components["schemas"]["DTOUserDTO"];
     };
-    TableOrderKitchenTableDTO: {
+    TableOrderOfficeTableDTO: {
       /** Format: int32 */
       tableId: number;
       name: string;
       /** Format: int32 */
       outletId: number;
-      section?: components["schemas"]["TableOrderKitchenSectionDTO"] | null;
+      section?: components["schemas"]["TableOrderOfficeSectionDTO"] | null;
     };
-    TableOrderKitchenSectionDTO: {
+    TableOrderOfficeSectionDTO: {
       name: string;
     };
-    TableOrderKitchenOrderItemDTO: {
+    TableOrderOfficeOrderItemDTO: {
       /** Format: int32 */
       orderItemId: number;
       /** Format: int32 */
       tableBookingId: number;
-      menuItem: components["schemas"]["TableOrderKitchenMenuItemDTO"];
+      menuItem: components["schemas"]["TableOrderOfficeMenuItemDTO"];
       /** Format: int32 */
       divisionId: number;
       note?: string | null;
@@ -596,11 +599,11 @@ export interface components {
       orderUpdatedFormatted: string;
       /** Format: int32 */
       orderItemStatusId: number;
-      orderItemStatus: components["schemas"]["TableOrderKitchenOrderItemStatusDTO"];
+      orderItemStatus: components["schemas"]["TableOrderOfficeOrderItemStatusDTO"];
       orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
       orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
     };
-    TableOrderKitchenMenuItemDTO: {
+    TableOrderOfficeMenuItemDTO: {
       /** Format: int32 */
       menuItemId: number;
       name: string;
@@ -612,7 +615,7 @@ export interface components {
       /** Format: int32 */
       divisionId: number;
     };
-    TableOrderKitchenOrderItemStatusDTO: {
+    TableOrderOfficeOrderItemStatusDTO: {
       /** Format: int32 */
       orderItemStatusId: number;
       status: string;
@@ -674,7 +677,17 @@ export interface components {
       name: string;
       isActive: boolean;
     };
-    TableOrderKitchenRequest: Record<string, never>;
+    TableOrderFrontOfficeRequest: Record<string, never>;
+    TableOrderBackOfficeResponse: {
+      tables?: components["schemas"]["TableOrderOfficeTableBookingDTO"][] | null;
+      /** Format: date-time */
+      lastRefresh: string;
+      /** Format: int32 */
+      pendingTables: number;
+      /** Format: int32 */
+      pendingItems: number;
+    };
+    TableOrderBackOfficeRequest: Record<string, never>;
     TableOrderGetBillResponse: {
       orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
       /** Format: decimal */
@@ -1475,7 +1488,7 @@ export interface operations {
       };
     };
   };
-  TableOrderKitchen: {
+  TableOrderFrontOffice: {
     parameters: {
       query?: {
         divisionIds?: string | null;
@@ -1485,7 +1498,32 @@ export interface operations {
       /** @description Success */
       200: {
         content: {
-          "application/json": components["schemas"]["TableOrderKitchenResponse"];
+          "application/json": components["schemas"]["TableOrderFrontOfficeResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  TableOrderBackOffice: {
+    parameters: {
+      query?: {
+        divisionIds?: string | null;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableOrderBackOfficeResponse"];
         };
       };
       /** @description Unauthorized */

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { TableOrderKitchenOrderItemDTO } from "$lib/api";
+	import type { TableOrderOfficeOrderItemDTO } from "$lib/api";
 	import { Badge, Button, Card, Drawer } from "@kayord/ui";
 	import { ConciergeBellIcon } from "lucide-svelte";
 	import { createTableOrderUpdateOrderItem } from "$lib/api";
@@ -8,7 +8,7 @@
 
 	const mutation = createTableOrderUpdateOrderItem();
 
-	export let item: TableOrderKitchenOrderItemDTO;
+	export let item: TableOrderOfficeOrderItemDTO;
 
 	const getStatus = () => {
 		const theDate = new Date(item.orderReceived);

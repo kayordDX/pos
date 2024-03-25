@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { createTableOrderKitchen } from "$lib/api";
+	import { createTableOrderFrontOffice } from "$lib/api";
 	import { Card, Loader } from "@kayord/ui";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import Item from "./Item.svelte";
 
-	const query = createTableOrderKitchen(
+	const query = createTableOrderFrontOffice(
 		{ divisionIds: "1" },
 		{ query: { refetchInterval: 20000 } }
 	);

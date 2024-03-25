@@ -415,12 +415,12 @@
         ]
       }
     },
-    "/kitchen/getOrders": {
+    "/frontOffice/getOrders": {
       "get": {
         "tags": [
-          "Kitchen"
+          "Frontoffice"
         ],
-        "operationId": "TableOrderKitchen",
+        "operationId": "TableOrderFrontOffice",
         "parameters": [
           {
             "name": "divisionIds",
@@ -437,7 +437,55 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TableOrderKitchenResponse"
+                  "$ref": "#/components/schemas/TableOrderFrontOfficeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/backOffice/getOrders": {
+      "get": {
+        "tags": [
+          "Backoffice"
+        ],
+        "operationId": "TableOrderBackOffice",
+        "parameters": [
+          {
+            "name": "divisionIds",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderBackOfficeResponse"
                 }
               }
             }
@@ -4439,7 +4487,7 @@
           }
         }
       },
-      "TableOrderKitchenResponse": {
+      "TableOrderFrontOfficeResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -4452,7 +4500,7 @@
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/TableOrderKitchenTableBookingDTO"
+              "$ref": "#/components/schemas/TableOrderOfficeTableBookingDTO"
             }
           },
           "lastRefresh": {
@@ -4469,7 +4517,7 @@
           }
         }
       },
-      "TableOrderKitchenTableBookingDTO": {
+      "TableOrderOfficeTableBookingDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -4490,13 +4538,13 @@
             "format": "int32"
           },
           "table": {
-            "$ref": "#/components/schemas/TableOrderKitchenTableDTO"
+            "$ref": "#/components/schemas/TableOrderOfficeTableDTO"
           },
           "orderItems": {
             "type": "array",
             "nullable": true,
             "items": {
-              "$ref": "#/components/schemas/TableOrderKitchenOrderItemDTO"
+              "$ref": "#/components/schemas/TableOrderOfficeOrderItemDTO"
             }
           },
           "bookingName": {
@@ -4516,7 +4564,7 @@
           }
         }
       },
-      "TableOrderKitchenTableDTO": {
+      "TableOrderOfficeTableDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -4540,13 +4588,13 @@
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/TableOrderKitchenSectionDTO"
+                "$ref": "#/components/schemas/TableOrderOfficeSectionDTO"
               }
             ]
           }
         }
       },
-      "TableOrderKitchenSectionDTO": {
+      "TableOrderOfficeSectionDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -4558,7 +4606,7 @@
           }
         }
       },
-      "TableOrderKitchenOrderItemDTO": {
+      "TableOrderOfficeOrderItemDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -4583,7 +4631,7 @@
             "format": "int32"
           },
           "menuItem": {
-            "$ref": "#/components/schemas/TableOrderKitchenMenuItemDTO"
+            "$ref": "#/components/schemas/TableOrderOfficeMenuItemDTO"
           },
           "divisionId": {
             "type": "integer",
@@ -4612,7 +4660,7 @@
             "format": "int32"
           },
           "orderItemStatus": {
-            "$ref": "#/components/schemas/TableOrderKitchenOrderItemStatusDTO"
+            "$ref": "#/components/schemas/TableOrderOfficeOrderItemStatusDTO"
           },
           "orderItemOptions": {
             "type": "array",
@@ -4630,7 +4678,7 @@
           }
         }
       },
-      "TableOrderKitchenMenuItemDTO": {
+      "TableOrderOfficeMenuItemDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -4666,7 +4714,7 @@
           }
         }
       },
-      "TableOrderKitchenOrderItemStatusDTO": {
+      "TableOrderOfficeOrderItemStatusDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -4866,7 +4914,41 @@
           }
         }
       },
-      "TableOrderKitchenRequest": {
+      "TableOrderFrontOfficeRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "TableOrderBackOfficeResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "lastRefresh",
+          "pendingTables",
+          "pendingItems"
+        ],
+        "properties": {
+          "tables": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/TableOrderOfficeTableBookingDTO"
+            }
+          },
+          "lastRefresh": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pendingTables": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pendingItems": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TableOrderBackOfficeRequest": {
         "type": "object",
         "additionalProperties": false
       },

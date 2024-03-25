@@ -95,7 +95,11 @@ export type TableOrderGetBillParams = {
 	tableBookingId: number;
 };
 
-export type TableOrderKitchenParams = {
+export type TableOrderBackOfficeParams = {
+	divisionIds?: string | null;
+};
+
+export type TableOrderFrontOfficeParams = {
 	divisionIds?: string | null;
 };
 
@@ -632,6 +636,17 @@ export interface TableOrderGetBasketBillMenuItemDTO {
 	price: number;
 }
 
+export interface TableOrderGetBasketBillOrderItemDTO {
+	menuItem: TableOrderGetBasketBillMenuItemDTO;
+	menuItemId: number;
+	note?: string | null;
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
+}
+
 export interface TableOrderGetBasketResponse {
 	orderItems: TableOrderGetBasketBillOrderItemDTO[];
 	total: number;
@@ -663,6 +678,27 @@ export interface TableOrderGetBillBillMenuItemDTO {
 	price: number;
 }
 
+export interface DTOTableBookingDTO {
+	bookingDate: string;
+	bookingName: string;
+	closeDate?: string | null;
+	id: number;
+	tableId: number;
+	user: DTOUserDTO;
+	userId: string;
+}
+
+export interface TableOrderGetBillBillOrderItemDTO {
+	menuItem: TableOrderGetBillBillMenuItemDTO;
+	menuItemId: number;
+	note?: string | null;
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
+}
+
 export interface TableOrderGetBillResponse {
 	balance: number;
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
@@ -671,7 +707,18 @@ export interface TableOrderGetBillResponse {
 	total: number;
 }
 
-export interface TableOrderKitchenRequest {
+export interface TableOrderBackOfficeRequest {
+	[key: string]: any;
+}
+
+export interface TableOrderBackOfficeResponse {
+	lastRefresh: string;
+	pendingItems: number;
+	pendingTables: number;
+	tables?: TableOrderOfficeTableBookingDTO[] | null;
+}
+
+export interface TableOrderFrontOfficeRequest {
 	[key: string]: any;
 }
 
@@ -680,16 +727,6 @@ export interface DTOUserDTO {
 	image: string;
 	isActive: boolean;
 	name: string;
-	userId: string;
-}
-
-export interface DTOTableBookingDTO {
-	bookingDate: string;
-	bookingName: string;
-	closeDate?: string | null;
-	id: number;
-	tableId: number;
-	user: DTOUserDTO;
 	userId: string;
 }
 
@@ -734,34 +771,12 @@ export interface DTOOrderItemOptionDTO {
 	orderItemOptionId: number;
 }
 
-export interface TableOrderGetBasketBillOrderItemDTO {
-	menuItem: TableOrderGetBasketBillMenuItemDTO;
-	menuItemId: number;
-	note?: string | null;
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
-}
-
-export interface TableOrderGetBillBillOrderItemDTO {
-	menuItem: TableOrderGetBillBillMenuItemDTO;
-	menuItemId: number;
-	note?: string | null;
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
-}
-
-export interface TableOrderKitchenOrderItemStatusDTO {
+export interface TableOrderOfficeOrderItemStatusDTO {
 	orderItemStatusId: number;
 	status: string;
 }
 
-export interface TableOrderKitchenMenuItemDTO {
+export interface TableOrderOfficeMenuItemDTO {
 	description: string;
 	divisionId: number;
 	menuItemId: number;
@@ -770,14 +785,14 @@ export interface TableOrderKitchenMenuItemDTO {
 	price: number;
 }
 
-export interface TableOrderKitchenOrderItemDTO {
+export interface TableOrderOfficeOrderItemDTO {
 	divisionId: number;
-	menuItem: TableOrderKitchenMenuItemDTO;
+	menuItem: TableOrderOfficeMenuItemDTO;
 	note?: string | null;
 	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
 	orderItemId: number;
 	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	orderItemStatus: TableOrderKitchenOrderItemStatusDTO;
+	orderItemStatus: TableOrderOfficeOrderItemStatusDTO;
 	orderItemStatusId: number;
 	orderReceived: string;
 	orderReceivedFormatted: string;
@@ -786,35 +801,35 @@ export interface TableOrderKitchenOrderItemDTO {
 	tableBookingId: number;
 }
 
-export interface TableOrderKitchenSectionDTO {
+export interface TableOrderOfficeSectionDTO {
 	name: string;
 }
 
-export type TableOrderKitchenTableDTOSection = TableOrderKitchenSectionDTO | null;
+export type TableOrderOfficeTableDTOSection = TableOrderOfficeSectionDTO | null;
 
-export interface TableOrderKitchenTableDTO {
+export interface TableOrderOfficeTableDTO {
 	name: string;
 	outletId: number;
-	section?: TableOrderKitchenTableDTOSection;
+	section?: TableOrderOfficeTableDTOSection;
 	tableId: number;
 }
 
-export interface TableOrderKitchenTableBookingDTO {
+export interface TableOrderOfficeTableBookingDTO {
 	bookingDate: string;
 	bookingName: string;
 	closeDate?: string | null;
 	id: number;
-	orderItems?: TableOrderKitchenOrderItemDTO[] | null;
-	table: TableOrderKitchenTableDTO;
+	orderItems?: TableOrderOfficeOrderItemDTO[] | null;
+	table: TableOrderOfficeTableDTO;
 	tableId: number;
 	user: DTOUserDTO;
 }
 
-export interface TableOrderKitchenResponse {
+export interface TableOrderFrontOfficeResponse {
 	lastRefresh: string;
 	pendingItems: number;
 	pendingTables: number;
-	tables?: TableOrderKitchenTableBookingDTO[] | null;
+	tables?: TableOrderOfficeTableBookingDTO[] | null;
 }
 
 export interface TableOrderRemoveItemRequest {
