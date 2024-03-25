@@ -121,7 +121,9 @@
 												</Table.Row>
 												{#each table.paymentsReceived as payment}
 													<Table.Row>
-														<Table.Cell>Payment</Table.Cell>
+														<Table.Cell
+															>{payment.paymentTypeId == 1 ? "Tap" : "Manual"} Payment</Table.Cell
+														>
 														<Table.Cell class="float-right">
 															{payment.amount.toFixed(2)}
 														</Table.Cell>
