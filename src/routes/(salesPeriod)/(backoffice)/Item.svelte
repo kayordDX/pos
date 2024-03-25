@@ -73,7 +73,13 @@
 			{/if}
 		</div>
 		<div class="flex items-center gap-2">
-			<Badge class="truncate animate-pulse" style={getStatus()}>{item.orderUpdatedFormatted}</Badge>
+			<div class="flex flex-col gap-1">
+				<Badge class="truncate self-end">{item.orderItemStatus?.status}</Badge>
+				<Badge class="truncate animate-pulse" style={getStatus()}>
+					{item.orderUpdatedFormatted}
+				</Badge>
+			</div>
+
 			<Drawer.Root bind:open>
 				<Drawer.Trigger>
 					<Button variant="secondary"><ConciergeBellIcon class="h-4 w-4" /></Button>
