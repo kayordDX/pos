@@ -27,8 +27,8 @@ devDependencies:
     specifier: ^3.0.2
     version: 3.0.2(svelte@4.2.12)(vite@5.2.6)
   '@tanstack/svelte-query':
-    specifier: ^5.28.6
-    version: 5.28.6(svelte@4.2.12)
+    specifier: ^5.28.8
+    version: 5.28.8(svelte@4.2.12)
   '@types/qs':
     specifier: ^6.9.14
     version: 6.9.14
@@ -1673,8 +1673,8 @@ packages:
     dev: true
     optional: true
 
-  /@sinclair/typebox@0.32.19:
-    resolution: {integrity: sha512-AUphm4Py6t+q5b6TU8OA9YRgeGfogsWy2oZvYLRCxt6d+mPkT0Mc4j+BusQYMGJH47DJe3/fKkLtmWPrKP1nzQ==}
+  /@sinclair/typebox@0.32.20:
+    resolution: {integrity: sha512-ziK497ILSIYMxD/thl496idIb03IZPlha04itLQu1xAFQbumWZ+Dj4PMMCkDRpAYhvVSdmRlTjGu2B2MA5RplQ==}
     requiresBuild: true
     dev: true
     optional: true
@@ -1979,16 +1979,16 @@ packages:
       tslib: 2.6.2
     dev: true
 
-  /@tanstack/query-core@5.28.6:
-    resolution: {integrity: sha512-hnhotV+DnQtvtR3jPvbQMPNMW4KEK0J4k7c609zJ8muiNknm+yoDyMHmxTWM5ZnlZpsz0zOxYFr+mzRJNHWJsA==}
+  /@tanstack/query-core@5.28.8:
+    resolution: {integrity: sha512-cx64XHeB0kvKxFt22ibvegPeOxnaWVFUbAuhXoIrb7+XePEexHWoB9Kq5n9qroNPkRwQZwgFAP9HNbQz5ohoIg==}
     dev: true
 
-  /@tanstack/svelte-query@5.28.6(svelte@4.2.12):
-    resolution: {integrity: sha512-AOYzN3UfxhBdiO8lm9zYS0uM+6ByqxraGQgkYxfmveKXvXnzfNNKg4BomIheG0g91eVi/iQUmz0e/TniAzCi3Q==}
+  /@tanstack/svelte-query@5.28.8(svelte@4.2.12):
+    resolution: {integrity: sha512-KuKWFapakF32w9D3BqKlPsG3/nZC2rBqlu1fIdLdfvSHn42aJq91hqrkH/5F8vOf6x4tXDy8MpQ9TTVvBOSPqA==}
     peerDependencies:
       svelte: ^3.54.0 || ^4.0.0 || ^5.0.0-next.0
     dependencies:
-      '@tanstack/query-core': 5.28.6
+      '@tanstack/query-core': 5.28.8
       svelte: 4.2.12
     dev: true
 
@@ -5205,7 +5205,7 @@ packages:
       ts-deepmerge: 7.0.0
     optionalDependencies:
       '@gcornut/valibot-json-schema': 0.0.26(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.2)(valibot@0.30.0)
-      '@sinclair/typebox': 0.32.19
+      '@sinclair/typebox': 0.32.20
       '@sodaru/yup-to-json-schema': 2.0.1
       '@vinejs/vine': 1.8.0
       arktype: 1.0.29-alpha

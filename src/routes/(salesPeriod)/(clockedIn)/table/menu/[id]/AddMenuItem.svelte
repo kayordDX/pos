@@ -111,8 +111,12 @@
 			<Fieldset {form} name="options" class="mt-2">
 				{#each data.menuItemOptionGroups as optionGroup}
 					<Legend>
-						{optionGroup.optionGroup.name} - {optionGroup.optionGroup.minSelections}/{optionGroup
-							.optionGroup.maxSelections}
+						{optionGroup.optionGroup.name}
+						{optionGroup.optionGroup.minSelections > 0 ? "*" : ""} -
+						<span class="text-xs text-muted-foreground">
+							min {optionGroup.optionGroup.minSelections}, max {optionGroup.optionGroup
+								.maxSelections}
+						</span>
 					</Legend>
 
 					{#each optionGroup.optionGroup.options as option}

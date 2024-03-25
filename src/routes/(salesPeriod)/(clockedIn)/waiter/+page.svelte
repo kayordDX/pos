@@ -35,7 +35,7 @@
 			>
 		</div>
 
-		<h1>My Tables</h1>
+		<h1 class="mt-8">My Tables</h1>
 		<p class="text-muted-foreground">List of my current tables</p>
 
 		{#if $query.isPending}
