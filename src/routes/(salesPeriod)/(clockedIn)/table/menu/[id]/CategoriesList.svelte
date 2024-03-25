@@ -5,6 +5,8 @@
 		MenuGetSectionsResponse,
 	} from "$lib/api";
 	import { Breadcrumb, Card } from "@kayord/ui";
+	import { cn } from "@kayord/ui/utils";
+	import type { HTMLAttributes } from "svelte/elements";
 
 	export let sections: MenuGetSectionsResponse | undefined;
 	export let sectionParams: MenuGetSectionsGetMenusSectionsParams;
@@ -13,12 +15,17 @@
 		sectionParams.sectionId = sectionId;
 		itemParams.sectionId = sectionId;
 	};
+
+	type ClassNameProp = HTMLAttributes<HTMLElement>;
+
+	export let className: ClassNameProp["class"] = undefined;
+	export { className as class };
 </script>
 
 <div class="w-full flex flex-col gap-2 items-center">
 	{#if sections != null}
 		{#if sectionParams.sectionId > 0}
-			<Breadcrumb.Root>
+			<Breadcrumb.Root class={cn(className)}>
 				<Breadcrumb.List>
 					<Breadcrumb.Item>
 						<button
