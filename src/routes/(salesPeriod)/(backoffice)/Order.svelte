@@ -8,7 +8,13 @@
 	import { createTableOrderKitchen } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { getInitials } from "$lib/util";
-	const query = createTableOrderKitchen({ query: { refetchInterval: 20000 } });
+
+	export let divisionIds: Array<number> = [];
+
+	const query = createTableOrderKitchen(
+		{ divisionIds: divisionIds.join(",") },
+		{ query: { refetchInterval: 20000 } }
+	);
 
 	const getTime = (date: string) => {
 		return new Date(date).toLocaleTimeString();

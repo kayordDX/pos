@@ -5,7 +5,10 @@
 	import { getError } from "$lib/types";
 	import Item from "./Item.svelte";
 
-	const query = createTableOrderKitchen({ query: { refetchInterval: 20000 } });
+	const query = createTableOrderKitchen(
+		{ divisionIds: "1" },
+		{ query: { refetchInterval: 20000 } }
+	);
 </script>
 
 {#if $query.isPending}

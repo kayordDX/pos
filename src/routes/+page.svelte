@@ -37,7 +37,7 @@
 		{/if}
 		{#if $status.roles.includes("Bar")}
 			<div class="flex flex-col">
-				<Button href="/kitchen">Bar</Button>
+				<Button href="/bar">Bar</Button>
 			</div>
 		{/if}
 		{#if $status.roles.includes("Chef")}

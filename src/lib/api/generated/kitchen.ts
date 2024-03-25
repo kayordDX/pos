@@ -23,12 +23,12 @@ import type { ErrorType } from "../mutator/useCustomClient";
 export const useTableOrderKitchenHook = () => {
 	const tableOrderKitchen = useCustomClient<TableOrderKitchenResponse>();
 
-	return (params: TableOrderKitchenParams) => {
+	return (params?: TableOrderKitchenParams) => {
 		return tableOrderKitchen({ url: `/kitchen/getOrders`, method: "GET", params });
 	};
 };
 
-export const getTableOrderKitchenQueryKey = (params: TableOrderKitchenParams) => {
+export const getTableOrderKitchenQueryKey = (params?: TableOrderKitchenParams) => {
 	return [`/kitchen/getOrders`, ...(params ? [params] : [])] as const;
 };
 
@@ -36,7 +36,7 @@ export const useTableOrderKitchenQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params: TableOrderKitchenParams,
+	params?: TableOrderKitchenParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<
@@ -73,7 +73,7 @@ export const createTableOrderKitchen = <
 	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderKitchenHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params: TableOrderKitchenParams,
+	params?: TableOrderKitchenParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<

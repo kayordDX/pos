@@ -425,19 +425,10 @@
           {
             "name": "divisionIds",
             "in": "query",
-            "style": "form",
-            "explode": true,
-            "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            "example": [
-              0
-            ]
+              "type": "string",
+              "nullable": true
+            }
           }
         ],
         "responses": {

@@ -96,7 +96,7 @@ export type TableOrderGetBillParams = {
 };
 
 export type TableOrderKitchenParams = {
-	divisionIds: number[];
+	divisionIds?: string | null;
 };
 
 export type UserGetRolesParams = {

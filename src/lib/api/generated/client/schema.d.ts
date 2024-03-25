@@ -1473,13 +1473,8 @@ export interface operations {
   };
   TableOrderKitchen: {
     parameters: {
-      query: {
-        /**
-         * @example [
-         *   0
-         * ]
-         */
-        divisionIds: number[];
+      query?: {
+        divisionIds?: string | null;
       };
     };
     responses: {

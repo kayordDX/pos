@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Order from "./Order.svelte";
+	import Order from "../Order.svelte";
 </script>
 
 <div class="m-2">
