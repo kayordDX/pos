@@ -2,6 +2,7 @@
 	import { page } from "$app/stores";
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
 	import { createTableBookingGet } from "$lib/api";
+	import { Header } from "$lib/components/Header";
 
 	$: menuActive = $page.route.id?.includes("menu") ?? false;
 	$: billActive = $page.route.id?.includes("bill") ?? false;
@@ -22,15 +23,19 @@
 	$: id > 0 && loadBookingDetails();
 </script>
 
-<div class="flex mt-1 justify-center">
-	<div
-		class="flex items-center gap-1 bg-secondary/60 text-secondary-foreground py-1 px-4 rounded-sm"
-	>
-		<span>{$query.data?.table.name}</span>
-		<span class="text-muted-foreground text-sm">{$query.data?.table.section?.name}</span>
-		<span class="text-sm">({$query.data?.bookingName})</span>
+<Header>
+	<div class="flex mt-1 justify-center">
+		<div
+			class="flex items-center gap-1 bg-secondary/60 text-secondary-foreground py-1 px-4 rounded-sm"
+		>
+			<span class="line-clamp-1">{$query.data?.table.name}</span>
+			<span class="text-muted-foreground text-sm line-clamp-1"
+				>{$query.data?.table.section?.name}</span
+			>
+			<span class="text-sm line-clamp-1">({$query.data?.bookingName})</span>
+		</div>
 	</div>
-</div>
+</Header>
 <slot />
 <div class="w-full flex mb-2 items-center justify-center fixed bottom-0">
 	<div class="bg-secondary flex items-center py-1 gap-2 rounded-sm px-2">

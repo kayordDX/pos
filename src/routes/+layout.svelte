@@ -14,6 +14,9 @@
 	import { hub } from "$lib/stores/hub";
 	import { type HubNotification } from "$lib/types";
 	import OutletCheck from "$lib/components/Check/OutletCheck.svelte";
+	import { page } from "$app/stores";
+
+	$: hideHeader = !$page.route.id?.startsWith("/(salesPeriod)/(clockedIn)/table");
 
 	const initHub = async () => {
 		const token = await $session?.getIdToken();
@@ -63,7 +66,9 @@
 	<Toaster />
 	<ModeWatcher />
 	<QueryClientProvider client={queryClient}>
-		<Header />
+		{#if hideHeader}
+			<Header />
+		{/if}
 		<OutletCheck>
 			<slot />
 		</OutletCheck>
