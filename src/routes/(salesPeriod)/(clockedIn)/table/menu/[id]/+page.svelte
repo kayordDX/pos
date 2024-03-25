@@ -54,6 +54,11 @@
 
 	let sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
 	$: sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
+
+	const setMenuSelection = (menuId: number) => {
+		$selection.menuId = menuId;
+	};
+	$: $query.data && ($query.data?.length ?? 0) == 1 && setMenuSelection($query.data[0]?.id ?? 0);
 </script>
 
 <div class="flex justify-center flex-col mb-12 mt-2 items-center">

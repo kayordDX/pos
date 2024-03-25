@@ -15,7 +15,7 @@
 	"devDependencies": {
 		"@formkit/auto-animate": "^0.8.1",
 		"@kayord/tw-plugin": "^1.0.1",
-		"@kayord/ui": "^0.8.2",
+		"@kayord/ui": "^0.8.3",
 		"@microsoft/signalr": "^8.0.0",
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.5.4",
