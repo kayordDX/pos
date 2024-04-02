@@ -20,10 +20,81 @@ import type {
 	InternalErrorResponse,
 	TableBookingCloseRequest,
 	TableBookingCreateRequest,
+	TableBookingEmailBillRequest,
+	TableBookingGetHistoryResponse,
 	TableBookingGetResponse,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType, BodyType } from "../mutator/useCustomClient";
+
+export const useTableBookingGetHistoryHook = () => {
+	const tableBookingGetHistory = useCustomClient<TableBookingGetHistoryResponse[]>();
+
+	return () => {
+		return tableBookingGetHistory({ url: `/tableBooking/myHistory`, method: "GET" });
+	};
+};
+
+export const getTableBookingGetHistoryQueryKey = () => {
+	return [`/tableBooking/myHistory`] as const;
+};
+
+export const useTableBookingGetHistoryQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableBookingGetHistoryHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<
+			Awaited<ReturnType<ReturnType<typeof useTableBookingGetHistoryHook>>>,
+			TError,
+			TData
+		>
+	>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTableBookingGetHistoryQueryKey();
+
+	const tableBookingGetHistory = useTableBookingGetHistoryHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingGetHistoryHook>>>
+	> = () => tableBookingGetHistory();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingGetHistoryHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type TableBookingGetHistoryQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableBookingGetHistoryHook>>>
+>;
+export type TableBookingGetHistoryQueryError = ErrorType<void | InternalErrorResponse>;
+
+export const createTableBookingGetHistory = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableBookingGetHistoryHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<
+			Awaited<ReturnType<ReturnType<typeof useTableBookingGetHistoryHook>>>,
+			TError,
+			TData
+		>
+	>;
+}): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useTableBookingGetHistoryQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
 
 export const useTableBookingGetHook = () => {
 	const tableBookingGet = useCustomClient<TableBookingGetResponse>();
@@ -100,6 +171,72 @@ export const createTableBookingGet = <
 	return query;
 };
 
+export const useTableBookingEmailBillHook = () => {
+	const tableBookingEmailBill = useCustomClient<boolean>();
+
+	return (tableBookingEmailBillRequest: BodyType<TableBookingEmailBillRequest>) => {
+		return tableBookingEmailBill({
+			url: `/tableBooking/emailBill`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: tableBookingEmailBillRequest,
+		});
+	};
+};
+
+export const useTableBookingEmailBillMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingEmailBillHook>>>,
+		TError,
+		{ data: BodyType<TableBookingEmailBillRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof useTableBookingEmailBillHook>>>,
+	TError,
+	{ data: BodyType<TableBookingEmailBillRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const tableBookingEmailBill = useTableBookingEmailBillHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingEmailBillHook>>>,
+		{ data: BodyType<TableBookingEmailBillRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableBookingEmailBill(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableBookingEmailBillMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableBookingEmailBillHook>>>
+>;
+export type TableBookingEmailBillMutationBody = BodyType<TableBookingEmailBillRequest>;
+export type TableBookingEmailBillMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createTableBookingEmailBill = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableBookingEmailBillHook>>>,
+		TError,
+		{ data: BodyType<TableBookingEmailBillRequest> },
+		TContext
+	>;
+}) => {
+	const mutationOptions = useTableBookingEmailBillMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const useTableBookingCreateHook = () => {
 	const tableBookingCreate = useCustomClient<EntitiesTableBooking>();
 

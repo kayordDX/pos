@@ -20,6 +20,9 @@ export interface paths {
   "/user/assignOutlet": {
     post: operations["UserAssignOutlet"];
   };
+  "/test": {
+    get: operations["Test"];
+  };
   "/order/updateTableOrder": {
     post: operations["TableOrderUpdateTableOrder"];
   };
@@ -50,8 +53,14 @@ export interface paths {
   "/order/addItems": {
     post: operations["OrderAddItems"];
   };
+  "/tableBooking/myHistory": {
+    get: operations["TableBookingGetHistory"];
+  };
   "/tableBooking/{id}": {
     get: operations["TableBookingGet"];
+  };
+  "/tableBooking/emailBill": {
+    post: operations["TableBookingEmailBill"];
   };
   "/tableBooking": {
     post: operations["TableBookingCreate"];
@@ -228,6 +237,8 @@ export interface components {
       businessId: number;
       business: components["schemas"]["EntitiesBusiness"];
       sections?: components["schemas"]["EntitiesSection"][] | null;
+      vatNumber: string;
+      logo?: string | null;
     };
     EntitiesBusiness: {
       /** Format: int32 */
@@ -692,11 +703,17 @@ export interface components {
       orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
       /** Format: decimal */
       total: number;
+      /** Format: decimal */
+      totalExVAT: number;
+      /** Format: decimal */
+      vat: number;
       paymentsReceived: components["schemas"]["EntitiesPayment"][];
       /** Format: decimal */
       balance: number;
       /** Format: decimal */
       tipAmount: number;
+      /** Format: date-time */
+      billDate: string;
     };
     TableOrderGetBillBillOrderItemDTO: {
       /** Format: int32 */
@@ -794,6 +811,31 @@ export interface components {
       extraIds?: number[] | null;
       note: string;
     };
+    TableBookingGetHistoryResponse: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      table: components["schemas"]["ManagerOrderViewTableDTO"];
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
+      /** Format: int32 */
+      salesPeriodId: number;
+    };
+    ManagerOrderViewTableDTO: {
+      /** Format: int32 */
+      tableId: number;
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+      section?: components["schemas"]["ManagerOrderViewSectionDTO"] | null;
+    };
+    ManagerOrderViewSectionDTO: {
+      name: string;
+    };
     TableBookingGetResponse: {
       /** Format: int32 */
       id: number;
@@ -810,17 +852,6 @@ export interface components {
       userId: string;
       user: components["schemas"]["DTOUserDTO"];
     };
-    ManagerOrderViewTableDTO: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      section?: components["schemas"]["ManagerOrderViewSectionDTO"] | null;
-    };
-    ManagerOrderViewSectionDTO: {
-      name: string;
-    };
     ErrorResponse: {
       /**
        * Format: int32
@@ -834,6 +865,12 @@ export interface components {
       };
     };
     TableBookingGetRequest: Record<string, never>;
+    TableBookingEmailBillRequest: {
+      /** Format: int32 */
+      tableBookingId: number;
+      email: string;
+      name: string;
+    };
     TableBookingCreateRequest: {
       /** Format: int32 */
       tableId: number;
@@ -1392,6 +1429,22 @@ export interface operations {
       };
     };
   };
+  Test: {
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": boolean;
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   TableOrderUpdateTableOrder: {
     requestBody: {
       content: {
@@ -1631,6 +1684,26 @@ export interface operations {
       };
     };
   };
+  TableBookingGetHistory: {
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableBookingGetHistoryResponse"][];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   TableBookingGet: {
     parameters: {
       path: {
@@ -1649,6 +1722,31 @@ export interface operations {
         content: {
           "application/problem+json": components["schemas"]["ErrorResponse"];
         };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  TableBookingEmailBill: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["TableBookingEmailBillRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": boolean;
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {

@@ -6,9 +6,12 @@
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
+	import EmailBill from "./EmailBill.svelte";
+	import { stringToFDate } from "$lib/util";
 
 	export let data: TableOrderGetBillResponse;
 	export let bookingId: number;
+	export let isReadOnly: boolean = false;
 
 	const closeTableMut = createTableBookingClose();
 
@@ -22,7 +25,10 @@
 
 <div class="m-2 mb-12">
 	<Table.Root class="caption-top">
-		<Table.Caption>Current bill #{bookingId}</Table.Caption>
+		<Table.Caption>
+			<span class="font-bold">Bill #{bookingId}</span>
+			<span class="text-xs">{stringToFDate(data.billDate)}</span>
+		</Table.Caption>
 		<Table.Header>
 			<Table.Row>
 				<Table.Head>Item</Table.Head>
@@ -34,7 +40,11 @@
 		<Table.Footer class="bg-background text-foreground">
 			<Table.Row>
 				<Table.Cell><h1>Total</h1></Table.Cell>
-				<Table.Cell class="text-right"><h2>R{data?.total.toFixed(2)}</h2></Table.Cell>
+				<Table.Cell class="text-right"><h1>R{data?.total.toFixed(2)}</h1></Table.Cell>
+			</Table.Row>
+			<Table.Row>
+				<Table.Cell><h4>Total Excluding VAT</h4></Table.Cell>
+				<Table.Cell class="text-right"><h4>R{data?.totalExVAT.toFixed(2)}</h4></Table.Cell>
 			</Table.Row>
 			{#each data.paymentsReceived as payment}
 				<Table.Row>
@@ -63,21 +73,27 @@
 	{/if}
 
 	<div class="mt-10 flex flex-col gap-2">
-		<Button
-			class="w-full"
-			href={`/table/pay/${bookingId}?total=${data.total}&balance=${data?.balance}`}>Pay Bill</Button
-		>
-		{#if data?.balance == 0}
+		{#if !isReadOnly}
 			<Button
 				class="w-full"
-				disabled={$closeTableMut.isPending}
-				variant="destructive"
-				on:click={closeTable}>Close Table</Button
+				href={`/table/pay/${bookingId}?total=${data.total}&balance=${data?.balance}`}
+				>Pay Bill</Button
 			>
-		{/if}
+			{#if data?.balance == 0}
+				<Button
+					class="w-full"
+					disabled={$closeTableMut.isPending}
+					variant="destructive"
+					on:click={closeTable}>Close Table</Button
+				>
+			{/if}
 
-		{#if $closeTableMut.error}
-			<Error message={getError($closeTableMut.error).message} />
+			{#if $closeTableMut.error}
+				<Error message={getError($closeTableMut.error).message} />
+			{/if}
+		{/if}
+		{#if data?.balance == 0}
+			<EmailBill {bookingId} />
 		{/if}
 	</div>
 </div>

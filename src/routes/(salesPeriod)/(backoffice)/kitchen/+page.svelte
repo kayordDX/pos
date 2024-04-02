@@ -3,5 +3,5 @@
 </script>
 
 <div class="m-2">
-	<Order divisionIds={[1]} />
+	<Order divisionIds={[1, 3]} />
 </div>

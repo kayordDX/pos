@@ -458,6 +458,8 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
+
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -484,8 +486,6 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
-
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: any;
@@ -573,6 +573,12 @@ export interface TableBookingCreateRequest {
 	tableId: number;
 }
 
+export interface TableBookingEmailBillRequest {
+	email: string;
+	name: string;
+	tableBookingId: number;
+}
+
 export interface TableBookingGetRequest {
 	[key: string]: any;
 }
@@ -608,6 +614,16 @@ export interface TableBookingGetResponse {
 	tableId: number;
 	user: DTOUserDTO;
 	userId: string;
+}
+
+export interface TableBookingGetHistoryResponse {
+	bookingDate: string;
+	bookingName: string;
+	closeDate?: string | null;
+	id: number;
+	salesPeriodId: number;
+	table: ManagerOrderViewTableDTO;
+	tableId: number;
 }
 
 export interface OrderAddItemsOrder {
@@ -701,10 +717,13 @@ export interface TableOrderGetBillBillOrderItemDTO {
 
 export interface TableOrderGetBillResponse {
 	balance: number;
+	billDate: string;
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
 	paymentsReceived: EntitiesPayment[];
 	tipAmount: number;
 	total: number;
+	totalExVAT: number;
+	vat: number;
 }
 
 export interface TableOrderBackOfficeRequest {
@@ -1101,8 +1120,10 @@ export interface EntitiesOutlet {
 	business: EntitiesBusiness;
 	businessId: number;
 	id: number;
+	logo?: string | null;
 	name: string;
 	sections?: EntitiesSection[] | null;
+	vatNumber: string;
 }
 
 export interface EntitiesSection {

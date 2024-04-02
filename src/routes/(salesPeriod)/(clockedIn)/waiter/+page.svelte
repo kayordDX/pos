@@ -3,6 +3,7 @@
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { NotebookIcon, Rows4Icon, CalendarOffIcon } from "lucide-svelte";
+	import HistoryIcon from "lucide-svelte/icons/history";
 	import { createTableGetMyBooked } from "$lib/api";
 	import Orders from "./Orders.svelte";
 	import { status } from "$lib/stores/status";
@@ -32,6 +33,9 @@
 			<Button href="/tables/book"><NotebookIcon class="h-5 w-5 mr-2" /> Book a Table</Button>
 			<Button variant="outline" href="/tables"
 				><Rows4Icon class="h-5 w-5 mr-2" /> Other Tables</Button
+			>
+			<Button variant="secondary" href="/waiter/history"
+				><HistoryIcon class="h-5 w-5 mr-2" /> History</Button
 			>
 		</div>
 

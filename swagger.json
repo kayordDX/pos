@@ -219,6 +219,36 @@
         ]
       }
     },
+    "/test": {
+      "get": {
+        "tags": [
+          "Test"
+        ],
+        "operationId": "Test",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/order/updateTableOrder": {
       "post": {
         "tags": [
@@ -700,6 +730,47 @@
         ]
       }
     },
+    "/tableBooking/myHistory": {
+      "get": {
+        "tags": [
+          "Tablebooking"
+        ],
+        "operationId": "TableBookingGetHistory",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TableBookingGetHistoryResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/tableBooking/{id}": {
       "get": {
         "tags": [
@@ -749,6 +820,57 @@
             }
           }
         }
+      }
+    },
+    "/tableBooking/emailBill": {
+      "post": {
+        "tags": [
+          "Tablebooking"
+        ],
+        "operationId": "TableBookingEmailBill",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableBookingEmailBillRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/tableBooking": {
@@ -3335,7 +3457,8 @@
           "id",
           "name",
           "businessId",
-          "business"
+          "business",
+          "vatNumber"
         ],
         "properties": {
           "id": {
@@ -3358,6 +3481,13 @@
             "items": {
               "$ref": "#/components/schemas/EntitiesSection"
             }
+          },
+          "vatNumber": {
+            "type": "string"
+          },
+          "logo": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -4958,9 +5088,12 @@
         "required": [
           "orderItems",
           "total",
+          "totalExVAT",
+          "vat",
           "paymentsReceived",
           "balance",
-          "tipAmount"
+          "tipAmount",
+          "billDate"
         ],
         "properties": {
           "orderItems": {
@@ -4970,6 +5103,14 @@
             }
           },
           "total": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "totalExVAT": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "vat": {
             "type": "number",
             "format": "decimal"
           },
@@ -4986,6 +5127,10 @@
           "tipAmount": {
             "type": "number",
             "format": "decimal"
+          },
+          "billDate": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -5327,6 +5472,89 @@
           }
         }
       },
+      "TableBookingGetHistoryResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tableId",
+          "table",
+          "bookingName",
+          "bookingDate",
+          "salesPeriodId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "table": {
+            "$ref": "#/components/schemas/ManagerOrderViewTableDTO"
+          },
+          "bookingName": {
+            "type": "string"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "closeDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "ManagerOrderViewTableDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableId",
+          "name",
+          "outletId"
+        ],
+        "properties": {
+          "tableId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "section": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ManagerOrderViewSectionDTO"
+              }
+            ]
+          }
+        }
+      },
+      "ManagerOrderViewSectionDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
       "TableBookingGetResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -5376,48 +5604,6 @@
           }
         }
       },
-      "ManagerOrderViewTableDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "tableId",
-          "name",
-          "outletId"
-        ],
-        "properties": {
-          "tableId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "section": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/ManagerOrderViewSectionDTO"
-              }
-            ]
-          }
-        }
-      },
-      "ManagerOrderViewSectionDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "name"
-        ],
-        "properties": {
-          "name": {
-            "type": "string"
-          }
-        }
-      },
       "ErrorResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -5450,6 +5636,27 @@
       "TableBookingGetRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "TableBookingEmailBillRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId",
+          "email",
+          "name"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
       },
       "TableBookingCreateRequest": {
         "type": "object",

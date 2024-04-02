@@ -1,6 +1,7 @@
 // @ts-nocheck
 export * from "./user";
 export * from "./api.schemas";
+export * from "./test";
 export * from "./order";
 export * from "./frontoffice";
 export * from "./backoffice";
