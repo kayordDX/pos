@@ -6,6 +6,7 @@
 	import { z } from "zod";
 	import { createTableBookingEmailBill } from "$lib/api";
 	import { page } from "$app/stores";
+	import { getError } from "$lib/types";
 
 	const mutation = createTableBookingEmailBill();
 
@@ -21,11 +22,15 @@
 	});
 	type FormSchema = z.infer<typeof schema>;
 	const onSubmit = async (data: FormSchema) => {
-		await $mutation.mutateAsync({
-			data: { email: data.email, name: data.name, tableBookingId: Number($page.params.id) },
-		});
-		dialogOpen = false;
-		toast.info(`Sending email to ${data.email}`);
+		try {
+			dialogOpen = false;
+			await $mutation.mutateAsync({
+				data: { email: data.email, name: data.name, tableBookingId: Number($page.params.id) },
+			});
+			toast.info(`Sending email to ${data.email}`);
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
 	};
 
 	const form = superForm(defaults(zod(schema)), {
