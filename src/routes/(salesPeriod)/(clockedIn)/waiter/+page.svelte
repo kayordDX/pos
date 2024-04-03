@@ -34,7 +34,7 @@
 			<Button variant="outline" href="/tables"
 				><Rows4Icon class="h-5 w-5 mr-2" /> Other Tables</Button
 			>
-			<Button variant="secondary" href="/waiter/history"
+			<Button variant="outline" href="/waiter/history"
 				><HistoryIcon class="h-5 w-5 mr-2" /> History</Button
 			>
 		</div>

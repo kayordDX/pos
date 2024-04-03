@@ -5,6 +5,6 @@
 	export let id: number;
 </script>
 
-<Button variant="secondary" href={`/waiter/history/${id}`}>
+<Button variant="outline" href={`/waiter/history/${id}`}>
 	<ViewIcon class="size-4 mr-2" />View
 </Button>
