@@ -8,7 +8,13 @@
 	import { goto } from "$app/navigation";
 	import { status } from "$lib/stores/status";
 	import { networkInformationStore } from "$lib/stores/network";
-	import { CheckCircleIcon, CircleXIcon, CrossIcon, StopCircleIcon } from "lucide-svelte";
+	import {
+		CheckCircleIcon,
+		CircleXIcon,
+		CrossIcon,
+		MessageCircleWarningIcon,
+		StopCircleIcon,
+	} from "lucide-svelte";
 	import { hub } from "$lib/stores/hub";
 
 	const query = createOutletList();
@@ -49,6 +55,14 @@
 
 	const isChrome = /chrome/i.test(navigator.userAgent);
 	const isAndroid = /android/i.test(navigator.userAgent);
+
+	function requestPermission() {
+		Notification.requestPermission().then((permission) => {
+			if (permission === "granted") {
+				console.log("Notification permission granted.");
+			}
+		});
+	}
 </script>
 
 <Card.Root class="p-5 m-5">
@@ -75,7 +89,7 @@
 				{#if $networkInformationStore.state == "subscribed"}
 					<CheckCircleIcon class="text-green-400" />
 				{:else}
-					<CircleXIcon class="text-red-400" />
+					<MessageCircleWarningIcon class="text-amber-400" />
 				{/if}
 				Network
 			</li>
@@ -119,6 +133,16 @@
 				{/await}
 
 				Service Worker
+			</li>
+			<li class="flex gap-2 items-center">
+				7.
+				{#if Notification.permission == "granted"}
+					<CheckCircleIcon class="text-green-400" />
+				{:else}
+					<CircleXIcon class="text-red-400" />
+					<Button on:click={requestPermission}>Request Access</Button>
+				{/if}
+				Notification Access
 			</li>
 		</ul>
 	</Card.Content>

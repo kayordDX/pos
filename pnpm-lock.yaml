@@ -12,8 +12,8 @@ devDependencies:
     specifier: ^1.0.2
     version: 1.0.2
   '@kayord/ui':
-    specifier: ^0.8.7
-    version: 0.8.7(@sveltejs/kit@2.5.5)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.2)(svelte@4.2.12)(tailwindcss@3.4.3)
+    specifier: ^0.8.8
+    version: 0.8.8(@sveltejs/kit@2.5.5)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.2)(svelte@4.2.12)(tailwindcss@3.4.3)
   '@microsoft/signalr':
     specifier: ^8.0.0
     version: 8.0.0
@@ -1304,8 +1304,8 @@ packages:
       - ts-node
     dev: true
 
-  /@kayord/ui@0.8.7(@sveltejs/kit@2.5.5)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.2)(svelte@4.2.12)(tailwindcss@3.4.3):
-    resolution: {integrity: sha512-kmq7hGl1p70aBFMT9XEr05aiGe5/tRn4RyKQ7ZqC0DPpvmDBRSsSwyQZQxW7QKKmK0lP+534KK3Nx841xxHOtQ==}
+  /@kayord/ui@0.8.8(@sveltejs/kit@2.5.5)(@types/json-schema@7.0.15)(esbuild-runner@2.2.2)(esbuild@0.20.2)(svelte@4.2.12)(tailwindcss@3.4.3):
+    resolution: {integrity: sha512-jpTdFwPro/jpNYCyOv1OU1k3tnyIYfkL9fI13g2NQqGaCVhj/JkWP/b8zn09GMSqRj4F+7Y8VWfut+gaW22pQA==}
     peerDependencies:
       svelte: ^4.0.0
     dependencies:
