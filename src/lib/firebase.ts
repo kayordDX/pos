@@ -7,6 +7,8 @@ import {
 	signOut,
 	type User,
 } from "firebase/auth";
+import { getMessaging } from "firebase/messaging";
+
 import { client } from "./api";
 import { writable } from "svelte/store";
 
@@ -20,6 +22,7 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+export const messaging = getMessaging(app);
 export const auth = getAuth(app);
 
 export const signInGoogle = async () => {

@@ -15,6 +15,8 @@
 	import { type HubNotification } from "$lib/types";
 	import OutletCheck from "$lib/components/Check/OutletCheck.svelte";
 	import { page } from "$app/stores";
+	import { onMount } from "svelte";
+	import { detectSWUpdate } from "$lib/sw-helpers";
 
 	$: hideHeader = !$page.route.id?.startsWith("/(salesPeriod)/(clockedIn)/table");
 
@@ -29,8 +31,12 @@
 			.configureLogging(signalR.LogLevel.None)
 			.build();
 
-		connection.start().catch((err) => console.error(err));
-		hub.set(connection);
+		connection
+			.start()
+			.then(function () {
+				hub.set(connection);
+			})
+			.catch((err) => hub.set(connection));
 	};
 
 	$: $session && status.getStatus();
@@ -59,6 +65,10 @@
 				enabled: browser,
 			},
 		},
+	});
+
+	onMount(() => {
+		detectSWUpdate();
 	});
 </script>
 

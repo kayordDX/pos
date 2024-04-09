@@ -1,27 +1,36 @@
 <script lang="ts">
 	import { Avatar, DropdownMenu } from "@kayord/ui";
-	import { LogOutIcon, MoonIcon, SunIcon, WrenchIcon } from "lucide-svelte";
+	import { LogOutIcon, MoonIcon, SunIcon, WrenchIcon, NetworkIcon } from "lucide-svelte";
 	import { getInitials } from "$lib/util";
 	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
 	import { logout, session } from "$lib/firebase";
+	import { networkInformationStore } from "$lib/stores/network";
 </script>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger>
-		<Avatar.Root>
-			<Avatar.Image src={$session?.photoURL} alt="profile" />
-			<Avatar.Fallback class="bg-primary text-primary-foreground">
-				{getInitials($session?.displayName ?? "")}
-			</Avatar.Fallback>
-		</Avatar.Root>
+		<div class="relative">
+			<Avatar.Root>
+				<Avatar.Image src={$session?.photoURL} alt="profile" />
+				<Avatar.Fallback class="bg-primary text-primary-foreground">
+					{getInitials($session?.displayName ?? "")}
+				</Avatar.Fallback>
+			</Avatar.Root>
+			<div
+				class={`size-3 rounded-md absolute top-0 right-0 ${$networkInformationStore.connectivity == "online" ? "bg-green-400" : $networkInformationStore.connectivity == "offline" ? "bg-red-400 animate-pulse" : "bg-muted-foreground"}`}
+			></div>
+		</div>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
 		<DropdownMenu.Label>{$session?.displayName ?? "My Account"}</DropdownMenu.Label>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Group>
-			<DropdownMenu.Item href="/setup"
-				><WrenchIcon class="mr-2 h-4 w-4" />Setup Device</DropdownMenu.Item
-			>
+			<DropdownMenu.Item href="/setup">
+				<WrenchIcon class="mr-2 h-4 w-4" />Setup Device
+			</DropdownMenu.Item>
+			<DropdownMenu.Item href="/network">
+				<NetworkIcon class="mr-2 h-4 w-4" />Network Information
+			</DropdownMenu.Item>
 			<DropdownMenu.Item on:click={toggleMode}>
 				{#if $mode == "light"}
 					<SunIcon class="mr-2 h-4 w-4" />
