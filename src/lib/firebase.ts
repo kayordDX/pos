@@ -7,10 +7,12 @@ import {
 	signOut,
 	type User,
 } from "firebase/auth";
-import { getMessaging } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
+import { onBackgroundMessage } from "firebase/messaging/sw";
 
 import { client } from "./api";
 import { writable } from "svelte/store";
+import { requestNotificationPermission } from "./util";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAoHwOFNJ0_ag0Ly4YZzGzdW_n5_NjC2uE",
@@ -22,7 +24,28 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
-export const messaging = getMessaging(app);
+const messaging = getMessaging();
+
+export const subscribeToPushNotifications = () => {
+	// TODO: vapidKey should be in env config
+	getToken(messaging, {
+		vapidKey:
+			"BCZD0Ws2H5KEesEczFvNJk4BvokrUSbWdLYaDzJ_IiRexmP9XPnWWNM8-uuODmsXz825QEkz47D1OZwG1SgWYYg",
+	})
+		.then((currentToken) => {
+			if (currentToken) {
+				// TODO: Save token in backend and use it to send messages
+				// Send the token to your server and update the UI if necessary
+				console.log(currentToken);
+			} else {
+				requestNotificationPermission();
+			}
+		})
+		.catch((err) => {
+			console.log("An error occurred while retrieving token. ", err);
+		});
+};
+
 export const auth = getAuth(app);
 
 export const signInGoogle = async () => {

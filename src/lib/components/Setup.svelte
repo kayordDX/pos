@@ -16,6 +16,7 @@
 		StopCircleIcon,
 	} from "lucide-svelte";
 	import { hub } from "$lib/stores/hub";
+	import { requestNotificationPermission } from "$lib/util";
 
 	const query = createOutletList();
 
@@ -55,14 +56,6 @@
 
 	const isChrome = /chrome/i.test(navigator.userAgent);
 	const isAndroid = /android/i.test(navigator.userAgent);
-
-	function requestPermission() {
-		Notification.requestPermission().then((permission) => {
-			if (permission === "granted") {
-				console.log("Notification permission granted.");
-			}
-		});
-	}
 </script>
 
 <Card.Root class="p-5 m-5">
@@ -140,7 +133,7 @@
 					<CheckCircleIcon class="text-green-400" />
 				{:else}
 					<CircleXIcon class="text-red-400" />
-					<Button on:click={requestPermission}>Request Access</Button>
+					<Button on:click={requestNotificationPermission}>Request Access</Button>
 				{/if}
 				Notification Access
 			</li>

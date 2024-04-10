@@ -38,3 +38,11 @@ export function debounce<T extends (...args: any[]) => any>(
 		if (callNow) callback.apply(this, args);
 	};
 }
+
+export const requestNotificationPermission = () => {
+	Notification.requestPermission().then((permission) => {
+		if (permission === "granted") {
+			new Notification("Your are now subscribed to notifications");
+		}
+	});
+};

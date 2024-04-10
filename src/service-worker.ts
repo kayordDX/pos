@@ -13,7 +13,9 @@ self.addEventListener("install", (event) => {
 	// Create a new cache and add all files to it
 	async function addFilesToCache() {
 		const cache = await caches.open(CACHE);
-		await cache.addAll(ASSETS);
+		await cache.addAll(ASSETS).then(() => {
+			self.skipWaiting();
+		});
 	}
 	event.waitUntil(addFilesToCache());
 });
@@ -64,10 +66,21 @@ self.addEventListener("activate", (event) => {
 // 	event.respondWith(respond());
 // });
 
-self.addEventListener("message", (event) => {
-	console.log("found event", event.data);
-	if (event.data && event.data.type === "SKIP_WAITING") {
-		console.log("waiting", event.data);
-		self.skipWaiting();
-	}
-});
+// self.addEventListener("message", (event) => {
+// 	console.log("found event", event.data);
+// 	if (event.data && event.data.type === "SKIP_WAITING") {
+// 		console.log("waiting", event.data);
+// 		self.skipWaiting();
+// 	}
+// });
+
+self.addEventListener("push", function (event: any) {
+	const payload = event.data?.text() ?? "no payload";
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	const registration = (self as any).registration as ServiceWorkerRegistration;
+	event.waitUntil(
+		registration.showNotification("Kayord", {
+			body: payload,
+		})
+	);
+} as EventListener);
