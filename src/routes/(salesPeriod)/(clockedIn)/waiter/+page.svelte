@@ -29,7 +29,7 @@
 	{#if $status?.salesPeriod}
 		<h1>Actions</h1>
 		<p class="text-muted-foreground">Book a table or view tables managed by other users</p>
-		<div class="flex items-center gap-2 my-2">
+		<div class="flex items-center gap-2 my-2 flex-wrap">
 			<Button href="/tables/book"><NotebookIcon class="h-5 w-5 mr-2" /> Book a Table</Button>
 			<Button variant="outline" href="/tables"
 				><Rows4Icon class="h-5 w-5 mr-2" /> Other Tables</Button
