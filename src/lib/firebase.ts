@@ -46,6 +46,20 @@ export const subscribeToPushNotifications = () => {
 		});
 };
 
+// onBackgroundMessage(messaging, (payload) => {
+// 	console.log("[firebase-messaging-sw.js] Received background message ", payload);
+// 	// Customize notification here
+// 	const notificationTitle = "Background Message Title";
+// 	const notificationOptions = {
+// 		body: "Background Message body.",
+// 		icon: "/firebase-logo.png",
+// 	};
+
+// 	navigator.serviceWorker.ready.then((registration) => {
+// 		registration.showNotification(notificationTitle, notificationOptions);
+// 	});
+// });
+
 export const auth = getAuth(app);
 
 export const signInGoogle = async () => {

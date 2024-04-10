@@ -10,11 +10,15 @@
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { Field, Control, FieldErrors, Fieldset, Legend, Label } from "@kayord/ui/formsnap";
+	import SpecialExtra from "./SpecialExtra.svelte";
+	import { arrayUnique } from "$lib/util";
 
 	export let data: DTOMenuItemDTO;
 	export let menuItem: DTOMenuItemDTOBasic;
 	export let tableBookingId: number;
 	export let open = false;
+
+	let currentExtras: Array<number> = [];
 
 	const getSelectedCountInOptionGroup = (options: Array<DTOOptionDTO>) => {
 		return options.filter((x) => $formData.options.includes(x.optionId)).length;
@@ -57,7 +61,7 @@
 				orders: [
 					{
 						menuItemId: menuItem.menuItemId,
-						extraIds: data.extras,
+						extraIds: arrayUnique(data.extras.concat(currentExtras)),
 						optionIds: data.options,
 						note: data.note,
 					},
@@ -176,6 +180,7 @@
 				</Fieldset>
 			{/each}
 		</div>
+		<SpecialExtra bind:currentExtras />
 		<Field {form} name="note">
 			<Control let:attrs>
 				<Form.Label>Special instructions</Form.Label>
