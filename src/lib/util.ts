@@ -42,7 +42,12 @@ export function debounce<T extends (...args: any[]) => any>(
 export const requestNotificationPermission = () => {
 	Notification.requestPermission().then((permission) => {
 		if (permission === "granted") {
-			new Notification("Your are now subscribed to notifications");
+			navigator.serviceWorker.ready.then((registration) => {
+				registration.showNotification("Your are now subscribed to notifications", {
+					body: "Buzz! Buzz!",
+					icon: "/logo.svg",
+				});
+			});
 		}
 	});
 };
