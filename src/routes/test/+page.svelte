@@ -1,19 +1,9 @@
 <script lang="ts">
 	import { Button } from "@kayord/ui";
 
-	$: console.log(document.visibilityState);
-
-	document.addEventListener("visibilitychange", () => {
-		if (document.visibilityState === "visible") {
-			console.log("visible");
-		} else {
-			console.log("not");
-		}
-	});
-
-	document.addEventListener("focus", (event) => {
-		console.log("focus", event);
-	});
+	const setNotification = () => {
+		new Notification("Test", { body: "this is more text", icon: "/logo.svg" });
+	};
 </script>
 
-<Button>Test</Button>
+<Button on:click={setNotification}>Test</Button>
