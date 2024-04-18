@@ -3,15 +3,12 @@
 	import {
 		createTableOrderRemoveItem,
 		createTableOrderUpdateOrderItem,
-		type DTOExtraDTO,
-		type DTOOptionDTO,
 		type DTOOrderItemExtraDTO,
 		type DTOOrderItemOptionDTO,
 	} from "$lib/api";
 	import { TrashIcon, ChefHatIcon } from "lucide-svelte";
 
 	export let id: number;
-	export let name: string;
 	export let price: number;
 	export let note: string | null | undefined = undefined;
 	export let options: Array<DTOOrderItemOptionDTO>;
@@ -30,7 +27,7 @@
 	const sendItemToKitchen = async () => {
 		await $updateOrderItem.mutateAsync({
 			data: {
-				orderItemId: id,
+				orderItemIds: [id],
 				orderItemStatusId: 2,
 			},
 		});
@@ -40,7 +37,7 @@
 
 <Card.Root class="p-4 flex justify-between">
 	<div class="flex flex-col gap-2 justify-center">
-		<div class="font-bold">{name}</div>
+		<slot />
 		{#if (options ?? []).length > 0}
 			<div class="text-muted-foreground mt-2">
 				Options

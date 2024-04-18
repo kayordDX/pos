@@ -3646,820 +3646,22 @@
           "orders": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/EntitiesOrder"
+              "$ref": "#/components/schemas/Order"
             }
           }
         }
       },
-      "EntitiesOrder": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderId",
-          "orderItemId",
-          "orderItem"
+      "Order": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "Before",
+          "After"
         ],
-        "properties": {
-          "orderId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderItem": {
-            "$ref": "#/components/schemas/EntitiesOrderItem"
-          }
-        }
-      },
-      "EntitiesOrderItem": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItemId",
-          "tableBookingId",
-          "tableBooking",
-          "menuItemId",
-          "menuItem",
-          "orderReceived",
-          "orderUpdated",
-          "orderItemStatusId",
-          "orderItemStatus"
-        ],
-        "properties": {
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableBookingId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableBooking": {
-            "$ref": "#/components/schemas/EntitiesTableBooking"
-          },
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "menuItem": {
-            "$ref": "#/components/schemas/EntitiesMenuItem"
-          },
-          "orderReceived": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "orderUpdated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "orderCompleted": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "orderItemStatusId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderItemStatus": {
-            "$ref": "#/components/schemas/EntitiesOrderItemStatus"
-          },
-          "orderItemOptions": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesOrderItemOption"
-            }
-          },
-          "orderItemExtras": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesOrderItemExtra"
-            }
-          },
-          "note": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "EntitiesTableBooking": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "tableId",
-          "table",
-          "bookingName",
-          "bookingDate",
-          "salesPeriodId",
-          "salesPeriod",
-          "userId",
-          "user"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "table": {
-            "$ref": "#/components/schemas/EntitiesTable"
-          },
-          "bookingName": {
-            "type": "string"
-          },
-          "bookingDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "closeDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "salesPeriodId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "salesPeriod": {
-            "$ref": "#/components/schemas/EntitiesSalesPeriod"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "user": {
-            "$ref": "#/components/schemas/EntitiesUser"
-          },
-          "orderItems": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesOrderItem"
-            }
-          }
-        }
-      },
-      "EntitiesUser": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "userId",
-          "email",
-          "image",
-          "name",
-          "isActive"
-        ],
-        "properties": {
-          "userId": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "image": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "isActive": {
-            "type": "boolean"
-          },
-          "userRole": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesUserRole"
-            }
-          }
-        }
-      },
-      "EntitiesUserRole": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "userRoleId",
-          "userId",
-          "roleId",
-          "user"
-        ],
-        "properties": {
-          "userRoleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "user": {
-            "$ref": "#/components/schemas/EntitiesUser"
-          },
-          "role": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/EntitiesRole"
-              }
-            ]
-          }
-        }
-      },
-      "EntitiesRole": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "roleId",
-          "name",
-          "description",
-          "isFrontLine",
-          "isBackOffice"
-        ],
-        "properties": {
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "isFrontLine": {
-            "type": "boolean"
-          },
-          "isBackOffice": {
-            "type": "boolean"
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "userRole": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesUserRole"
-            }
-          }
-        }
-      },
-      "EntitiesMenuItem": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "menuItemId",
-          "menuSection",
-          "menuSectionId",
-          "name",
-          "description",
-          "price",
-          "searchVector",
-          "position",
-          "isAvailable",
-          "stockPrice"
-        ],
-        "properties": {
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "menuSection": {
-            "$ref": "#/components/schemas/EntitiesMenuSection"
-          },
-          "menuSectionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "searchVector": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/NpgsqlTypesNpgsqlTsVector_Lexeme"
-            }
-          },
-          "position": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tags": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesTag"
-            }
-          },
-          "divisionId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "division": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/EntitiesDivision"
-              }
-            ]
-          },
-          "menuItemOptionGroups": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesMenuItemOptionGroup"
-            }
-          },
-          "menuItemExtraGroups": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesMenuItemExtraGroup"
-            }
-          },
-          "isAvailable": {
-            "type": "boolean"
-          },
-          "stockPrice": {
-            "type": "number",
-            "format": "decimal"
-          }
-        }
-      },
-      "EntitiesMenuSection": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "menuSectionId",
-          "menu",
-          "menuId"
-        ],
-        "properties": {
-          "menuSectionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string",
-            "nullable": true
-          },
-          "menu": {
-            "$ref": "#/components/schemas/EntitiesMenu"
-          },
-          "menuId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "parent": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/EntitiesMenuSection"
-              }
-            ]
-          },
-          "parentId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "positionId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "subMenuSections": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesMenuSection"
-            }
-          },
-          "menuItems": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesMenuItem"
-            }
-          }
-        }
-      },
-      "EntitiesMenu": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "name",
-          "outletId",
-          "outlet"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "outlet": {
-            "$ref": "#/components/schemas/EntitiesOutlet"
-          },
-          "menuSections": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesMenuSection"
-            }
-          }
-        }
-      },
-      "NpgsqlTypesNpgsqlTsVector_Lexeme": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "text",
-          "count"
-        ],
-        "properties": {
-          "text": {
-            "type": "string"
-          },
-          "count": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "EntitiesTag": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "tagId",
-          "name"
-        ],
-        "properties": {
-          "tagId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
-      "EntitiesDivision": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "divisionId",
-          "divisionName"
-        ],
-        "properties": {
-          "divisionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "divisionName": {
-            "type": "string"
-          }
-        }
-      },
-      "EntitiesMenuItemOptionGroup": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "menuItemId",
-          "optionGroupId",
-          "menuItem",
-          "optionGroup"
-        ],
-        "properties": {
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "optionGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "menuItem": {
-            "$ref": "#/components/schemas/EntitiesMenuItem"
-          },
-          "optionGroup": {
-            "$ref": "#/components/schemas/EntitiesOptionGroup"
-          }
-        }
-      },
-      "EntitiesOptionGroup": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "optionGroupId",
-          "name",
-          "minSelections",
-          "maxSelections",
-          "options"
-        ],
-        "properties": {
-          "optionGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "minSelections": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "maxSelections": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "options": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/EntitiesOption"
-            }
-          },
-          "menuItemOptionGroups": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesMenuItemOptionGroup"
-            }
-          }
-        }
-      },
-      "EntitiesOption": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "optionId",
-          "name",
-          "price",
-          "positionId",
-          "optionGroupId",
-          "optionGroup"
-        ],
-        "properties": {
-          "optionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "positionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "optionGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "optionGroup": {
-            "$ref": "#/components/schemas/EntitiesOptionGroup"
-          },
-          "orderItemOptions": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesOrderItemOption"
-            }
-          }
-        }
-      },
-      "EntitiesOrderItemOption": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItemOptionId",
-          "orderItemId",
-          "orderItem",
-          "optionId",
-          "option"
-        ],
-        "properties": {
-          "orderItemOptionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderItem": {
-            "$ref": "#/components/schemas/EntitiesOrderItem"
-          },
-          "optionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "option": {
-            "$ref": "#/components/schemas/EntitiesOption"
-          }
-        }
-      },
-      "EntitiesMenuItemExtraGroup": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "menuItemId",
-          "extraGroupId",
-          "menuItem",
-          "extraGroup"
-        ],
-        "properties": {
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "extraGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "menuItem": {
-            "$ref": "#/components/schemas/EntitiesMenuItem"
-          },
-          "extraGroup": {
-            "$ref": "#/components/schemas/EntitiesExtraGroup"
-          }
-        }
-      },
-      "EntitiesExtraGroup": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "extraGroupId",
-          "name",
-          "extras"
-        ],
-        "properties": {
-          "extraGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "extras": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/EntitiesExtra"
-            }
-          },
-          "menuItemExtraGroups": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesMenuItemExtraGroup"
-            }
-          }
-        }
-      },
-      "EntitiesExtra": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "extraId",
-          "name",
-          "positionId",
-          "price",
-          "extraGroupId",
-          "extraGroup"
-        ],
-        "properties": {
-          "extraId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "positionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "price": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "extraGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "extraGroup": {
-            "$ref": "#/components/schemas/EntitiesExtraGroup"
-          },
-          "orderItemExtras": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesOrderItemExtra"
-            }
-          }
-        }
-      },
-      "EntitiesOrderItemExtra": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItemExtraId",
-          "orderItemId",
-          "orderItem",
-          "extraId",
-          "extra"
-        ],
-        "properties": {
-          "orderItemExtraId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderItem": {
-            "$ref": "#/components/schemas/EntitiesOrderItem"
-          },
-          "extraId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "extra": {
-            "$ref": "#/components/schemas/EntitiesExtra"
-          }
-        }
-      },
-      "EntitiesOrderItemStatus": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItemStatusId",
-          "status",
-          "isFrontLine",
-          "isBackOffice",
-          "isComplete",
-          "isCancelled",
-          "isBillable",
-          "notify"
-        ],
-        "properties": {
-          "orderItemStatusId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "status": {
-            "type": "string"
-          },
-          "isFrontLine": {
-            "type": "boolean"
-          },
-          "isBackOffice": {
-            "type": "boolean"
-          },
-          "isComplete": {
-            "type": "boolean"
-          },
-          "isCancelled": {
-            "type": "boolean"
-          },
-          "isBillable": {
-            "type": "boolean"
-          },
-          "notify": {
-            "type": "boolean"
-          }
-        }
+        "enum": [
+          0,
+          1
+        ]
       },
       "UserGetRolesRequest": {
         "type": "object",
@@ -4594,13 +3796,16 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "orderItemId",
+          "orderItemIds",
           "orderItemStatusId"
         ],
         "properties": {
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
+          "orderItemIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
           },
           "orderItemStatusId": {
             "type": "integer",
@@ -5446,6 +4651,798 @@
       "TableOrderGetBasketRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "EntitiesOrderItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId",
+          "tableBookingId",
+          "tableBooking",
+          "menuItemId",
+          "menuItem",
+          "orderReceived",
+          "orderUpdated",
+          "orderItemStatusId",
+          "orderItemStatus"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBooking": {
+            "$ref": "#/components/schemas/EntitiesTableBooking"
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/EntitiesMenuItem"
+          },
+          "orderReceived": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderUpdated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderCompleted": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemStatus": {
+            "$ref": "#/components/schemas/EntitiesOrderItemStatus"
+          },
+          "orderItemOptions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItemOption"
+            }
+          },
+          "orderItemExtras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItemExtra"
+            }
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EntitiesTableBooking": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tableId",
+          "table",
+          "bookingName",
+          "bookingDate",
+          "salesPeriodId",
+          "salesPeriod",
+          "userId",
+          "user"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "table": {
+            "$ref": "#/components/schemas/EntitiesTable"
+          },
+          "bookingName": {
+            "type": "string"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "closeDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "salesPeriod": {
+            "$ref": "#/components/schemas/EntitiesSalesPeriod"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/EntitiesUser"
+          },
+          "orderItems": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItem"
+            }
+          }
+        }
+      },
+      "EntitiesUser": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "email",
+          "image",
+          "name",
+          "isActive"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "userRole": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesUserRole"
+            }
+          }
+        }
+      },
+      "EntitiesUserRole": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userRoleId",
+          "userId",
+          "roleId",
+          "user"
+        ],
+        "properties": {
+          "userRoleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "user": {
+            "$ref": "#/components/schemas/EntitiesUser"
+          },
+          "role": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesRole"
+              }
+            ]
+          }
+        }
+      },
+      "EntitiesRole": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "roleId",
+          "name",
+          "description",
+          "isFrontLine",
+          "isBackOffice"
+        ],
+        "properties": {
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isFrontLine": {
+            "type": "boolean"
+          },
+          "isBackOffice": {
+            "type": "boolean"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "userRole": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesUserRole"
+            }
+          }
+        }
+      },
+      "EntitiesMenuItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "menuSection",
+          "menuSectionId",
+          "name",
+          "description",
+          "price",
+          "searchVector",
+          "position",
+          "isAvailable",
+          "stockPrice"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuSection": {
+            "$ref": "#/components/schemas/EntitiesMenuSection"
+          },
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "searchVector": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/NpgsqlTypesNpgsqlTsVector_Lexeme"
+            }
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tags": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesTag"
+            }
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "division": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesDivision"
+              }
+            ]
+          },
+          "menuItemOptionGroups": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesMenuItemOptionGroup"
+            }
+          },
+          "menuItemExtraGroups": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesMenuItemExtraGroup"
+            }
+          },
+          "isAvailable": {
+            "type": "boolean"
+          },
+          "stockPrice": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "EntitiesMenuSection": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuSectionId",
+          "menu",
+          "menuId"
+        ],
+        "properties": {
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "menu": {
+            "$ref": "#/components/schemas/EntitiesMenu"
+          },
+          "menuId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parent": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesMenuSection"
+              }
+            ]
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "positionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "subMenuSections": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesMenuSection"
+            }
+          },
+          "menuItems": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesMenuItem"
+            }
+          }
+        }
+      },
+      "EntitiesMenu": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "outletId",
+          "outlet"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outlet": {
+            "$ref": "#/components/schemas/EntitiesOutlet"
+          },
+          "menuSections": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesMenuSection"
+            }
+          }
+        }
+      },
+      "NpgsqlTypesNpgsqlTsVector_Lexeme": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "text",
+          "count"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "count": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "EntitiesTag": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tagId",
+          "name"
+        ],
+        "properties": {
+          "tagId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "EntitiesDivision": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "divisionId",
+          "divisionName"
+        ],
+        "properties": {
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionName": {
+            "type": "string"
+          }
+        }
+      },
+      "EntitiesMenuItemOptionGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "optionGroupId",
+          "menuItem",
+          "optionGroup"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/EntitiesMenuItem"
+          },
+          "optionGroup": {
+            "$ref": "#/components/schemas/EntitiesOptionGroup"
+          }
+        }
+      },
+      "EntitiesOptionGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "optionGroupId",
+          "name",
+          "minSelections",
+          "maxSelections",
+          "options"
+        ],
+        "properties": {
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "minSelections": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxSelections": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOption"
+            }
+          },
+          "menuItemOptionGroups": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesMenuItemOptionGroup"
+            }
+          }
+        }
+      },
+      "EntitiesOption": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "optionId",
+          "name",
+          "price",
+          "positionId",
+          "optionGroupId",
+          "optionGroup"
+        ],
+        "properties": {
+          "optionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "positionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroup": {
+            "$ref": "#/components/schemas/EntitiesOptionGroup"
+          },
+          "orderItemOptions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItemOption"
+            }
+          }
+        }
+      },
+      "EntitiesOrderItemOption": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemOptionId",
+          "orderItemId",
+          "orderItem",
+          "optionId",
+          "option"
+        ],
+        "properties": {
+          "orderItemOptionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItem": {
+            "$ref": "#/components/schemas/EntitiesOrderItem"
+          },
+          "optionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "option": {
+            "$ref": "#/components/schemas/EntitiesOption"
+          }
+        }
+      },
+      "EntitiesMenuItemExtraGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "extraGroupId",
+          "menuItem",
+          "extraGroup"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/EntitiesMenuItem"
+          },
+          "extraGroup": {
+            "$ref": "#/components/schemas/EntitiesExtraGroup"
+          }
+        }
+      },
+      "EntitiesExtraGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "extraGroupId",
+          "name",
+          "extras"
+        ],
+        "properties": {
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "extras": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntitiesExtra"
+            }
+          },
+          "menuItemExtraGroups": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesMenuItemExtraGroup"
+            }
+          }
+        }
+      },
+      "EntitiesExtra": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "extraId",
+          "name",
+          "positionId",
+          "price",
+          "extraGroupId",
+          "extraGroup"
+        ],
+        "properties": {
+          "extraId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "positionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extraGroup": {
+            "$ref": "#/components/schemas/EntitiesExtraGroup"
+          },
+          "orderItemExtras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItemExtra"
+            }
+          }
+        }
+      },
+      "EntitiesOrderItemExtra": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemExtraId",
+          "orderItemId",
+          "orderItem",
+          "extraId",
+          "extra"
+        ],
+        "properties": {
+          "orderItemExtraId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItem": {
+            "$ref": "#/components/schemas/EntitiesOrderItem"
+          },
+          "extraId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extra": {
+            "$ref": "#/components/schemas/EntitiesExtra"
+          }
+        }
+      },
+      "EntitiesOrderItemStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemStatusId",
+          "status",
+          "assignGroup",
+          "isFrontLine",
+          "isBackOffice",
+          "isComplete",
+          "isCancelled",
+          "isBillable",
+          "notify"
+        ],
+        "properties": {
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string"
+          },
+          "assignGroup": {
+            "type": "boolean"
+          },
+          "isFrontLine": {
+            "type": "boolean"
+          },
+          "isBackOffice": {
+            "type": "boolean"
+          },
+          "isComplete": {
+            "type": "boolean"
+          },
+          "isCancelled": {
+            "type": "boolean"
+          },
+          "isBillable": {
+            "type": "boolean"
+          },
+          "notify": {
+            "type": "boolean"
+          }
+        }
       },
       "OrderClearBasketRequest": {
         "type": "object",

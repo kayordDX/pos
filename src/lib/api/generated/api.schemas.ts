@@ -727,6 +727,235 @@ export interface OrderClearBasketRequest {
 	tableBookingId: number;
 }
 
+export interface EntitiesOrderItemStatus {
+	assignGroup: boolean;
+	isBackOffice: boolean;
+	isBillable: boolean;
+	isCancelled: boolean;
+	isComplete: boolean;
+	isFrontLine: boolean;
+	notify: boolean;
+	orderItemStatusId: number;
+	status: string;
+}
+
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
+}
+
+export interface EntitiesMenuItemExtraGroup {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	extras: EntitiesExtra[];
+	/** @nullable */
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	name: string;
+}
+
+export interface EntitiesExtra {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	extraId: number;
+	name: string;
+	/** @nullable */
+	orderItemExtras?: EntitiesOrderItemExtra[] | null;
+	positionId: number;
+	price: number;
+}
+
+export interface EntitiesMenuItemOptionGroup {
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+	optionGroup: EntitiesOptionGroup;
+	optionGroupId: number;
+}
+
+export interface EntitiesOptionGroup {
+	maxSelections: number;
+	/** @nullable */
+	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
+	minSelections: number;
+	name: string;
+	optionGroupId: number;
+	options: EntitiesOption[];
+}
+
+export interface EntitiesOption {
+	name: string;
+	optionGroup: EntitiesOptionGroup;
+	optionGroupId: number;
+	optionId: number;
+	/** @nullable */
+	orderItemOptions?: EntitiesOrderItemOption[] | null;
+	positionId: number;
+	price: number;
+}
+
+export interface EntitiesOrderItemOption {
+	option: EntitiesOption;
+	optionId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemId: number;
+	orderItemOptionId: number;
+}
+
+export interface EntitiesDivision {
+	divisionId: number;
+	divisionName: string;
+}
+
+export interface EntitiesTag {
+	name: string;
+	tagId: number;
+}
+
+export interface NpgsqlTypesNpgsqlTsVectorLexeme {
+	count: number;
+	text: string;
+}
+
+/**
+ * @nullable
+ */
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
+
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
+	/** @nullable */
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	parent?: EntitiesMenuSectionParent;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
+}
+
+export interface EntitiesMenu {
+	id: number;
+	/** @nullable */
+	menuSections?: EntitiesMenuSection[] | null;
+	name: string;
+	outlet: EntitiesOutlet;
+	outletId: number;
+}
+
+/**
+ * @nullable
+ */
+export type EntitiesMenuItemDivision = EntitiesDivision | null;
+
+export interface EntitiesMenuItem {
+	description: string;
+	/** @nullable */
+	division?: EntitiesMenuItemDivision;
+	/** @nullable */
+	divisionId?: number | null;
+	isAvailable: boolean;
+	/** @nullable */
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	menuItemId: number;
+	/** @nullable */
+	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
+	menuSection: EntitiesMenuSection;
+	menuSectionId: number;
+	name: string;
+	position: number;
+	price: number;
+	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
+	stockPrice: number;
+	/** @nullable */
+	tags?: EntitiesTag[] | null;
+}
+
+/**
+ * @nullable
+ */
+export type EntitiesUserRoleRole = EntitiesRole | null;
+
+export interface EntitiesUser {
+	email: string;
+	image: string;
+	isActive: boolean;
+	name: string;
+	userId: string;
+	/** @nullable */
+	userRole?: EntitiesUserRole[] | null;
+}
+
+export interface EntitiesUserRole {
+	/** @nullable */
+	role?: EntitiesUserRoleRole;
+	roleId: number;
+	user: EntitiesUser;
+	userId: string;
+	userRoleId: number;
+}
+
+export interface EntitiesRole {
+	description: string;
+	isBackOffice: boolean;
+	isFrontLine: boolean;
+	name: string;
+	/** @nullable */
+	outletId?: number | null;
+	roleId: number;
+	/** @nullable */
+	userRole?: EntitiesUserRole[] | null;
+}
+
+export interface EntitiesOrderItem {
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	orderCompleted?: string | null;
+	/** @nullable */
+	orderItemExtras?: EntitiesOrderItemExtra[] | null;
+	orderItemId: number;
+	/** @nullable */
+	orderItemOptions?: EntitiesOrderItemOption[] | null;
+	orderItemStatus: EntitiesOrderItemStatus;
+	orderItemStatusId: number;
+	orderReceived: string;
+	orderUpdated: string;
+	tableBooking: EntitiesTableBooking;
+	tableBookingId: number;
+}
+
+export interface EntitiesTableBooking {
+	bookingDate: string;
+	bookingName: string;
+	/** @nullable */
+	closeDate?: string | null;
+	id: number;
+	/** @nullable */
+	orderItems?: EntitiesOrderItem[] | null;
+	salesPeriod: EntitiesSalesPeriod;
+	salesPeriodId: number;
+	table: EntitiesTable;
+	tableId: number;
+	user: EntitiesUser;
+	userId: string;
+}
+
 export interface TableOrderGetBasketRequest {
 	[key: string]: any;
 }
@@ -783,18 +1012,15 @@ export interface TableOrderGetBillBillMenuItemDTO {
 	price: number;
 }
 
-export interface TableOrderGetBillBillOrderItemDTO {
-	menuItem: TableOrderGetBillBillMenuItemDTO;
-	menuItemId: number;
+export interface DTOTableBookingDTO {
+	bookingDate: string;
+	bookingName: string;
 	/** @nullable */
-	note?: string | null;
-	/** @nullable */
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	/** @nullable */
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
+	closeDate?: string | null;
+	id: number;
+	tableId: number;
+	user: DTOUserDTO;
+	userId: string;
 }
 
 export interface TableOrderGetBillResponse {
@@ -829,17 +1055,6 @@ export interface DTOUserDTO {
 	image: string;
 	isActive: boolean;
 	name: string;
-	userId: string;
-}
-
-export interface DTOTableBookingDTO {
-	bookingDate: string;
-	bookingName: string;
-	/** @nullable */
-	closeDate?: string | null;
-	id: number;
-	tableId: number;
-	user: DTOUserDTO;
 	userId: string;
 }
 
@@ -882,6 +1097,20 @@ export interface DTOOrderItemOptionDTO {
 	optionId: number;
 	orderItemId: number;
 	orderItemOptionId: number;
+}
+
+export interface TableOrderGetBillBillOrderItemDTO {
+	menuItem: TableOrderGetBillBillMenuItemDTO;
+	menuItemId: number;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	/** @nullable */
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
 }
 
 export interface TableOrderOfficeOrderItemStatusDTO {
@@ -972,7 +1201,7 @@ export interface TableOrderSendToKitchenResponse {
 }
 
 export interface TableOrderUpdateOrderItemRequest {
-	orderItemId: number;
+	orderItemIds: number[];
 	orderItemStatusId: number;
 }
 
@@ -1018,244 +1247,18 @@ export interface UserGetRolesRequest {
 	[key: string]: any;
 }
 
-export interface EntitiesOrderItemStatus {
-	isBackOffice: boolean;
-	isBillable: boolean;
-	isCancelled: boolean;
-	isComplete: boolean;
-	isFrontLine: boolean;
-	notify: boolean;
-	orderItemStatusId: number;
-	status: string;
-}
+export type Order = (typeof Order)[keyof typeof Order];
 
-export interface EntitiesMenuItemExtraGroup {
-	extraGroup: EntitiesExtraGroup;
-	extraGroupId: number;
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-}
-
-export interface EntitiesExtraGroup {
-	extraGroupId: number;
-	extras: EntitiesExtra[];
-	/** @nullable */
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	name: string;
-}
-
-export interface EntitiesExtra {
-	extraGroup: EntitiesExtraGroup;
-	extraGroupId: number;
-	extraId: number;
-	name: string;
-	/** @nullable */
-	orderItemExtras?: EntitiesOrderItemExtra[] | null;
-	positionId: number;
-	price: number;
-}
-
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
-}
-
-export interface EntitiesOptionGroup {
-	maxSelections: number;
-	/** @nullable */
-	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
-	minSelections: number;
-	name: string;
-	optionGroupId: number;
-	options: EntitiesOption[];
-}
-
-export interface EntitiesOption {
-	name: string;
-	optionGroup: EntitiesOptionGroup;
-	optionGroupId: number;
-	optionId: number;
-	/** @nullable */
-	orderItemOptions?: EntitiesOrderItemOption[] | null;
-	positionId: number;
-	price: number;
-}
-
-export interface EntitiesOrderItemOption {
-	option: EntitiesOption;
-	optionId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemId: number;
-	orderItemOptionId: number;
-}
-
-export interface EntitiesDivision {
-	divisionId: number;
-	divisionName: string;
-}
-
-export interface EntitiesTag {
-	name: string;
-	tagId: number;
-}
-
-export interface NpgsqlTypesNpgsqlTsVectorLexeme {
-	count: number;
-	text: string;
-}
-
-export interface EntitiesMenu {
-	id: number;
-	/** @nullable */
-	menuSections?: EntitiesMenuSection[] | null;
-	name: string;
-	outlet: EntitiesOutlet;
-	outletId: number;
-}
-
-/**
- * @nullable
- */
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
-
-/**
- * @nullable
- */
-export type EntitiesMenuItemDivision = EntitiesDivision | null;
-
-export interface EntitiesMenuItem {
-	description: string;
-	/** @nullable */
-	division?: EntitiesMenuItemDivision;
-	/** @nullable */
-	divisionId?: number | null;
-	isAvailable: boolean;
-	/** @nullable */
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	menuItemId: number;
-	/** @nullable */
-	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
-	menuSection: EntitiesMenuSection;
-	menuSectionId: number;
-	name: string;
-	position: number;
-	price: number;
-	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
-	stockPrice: number;
-	/** @nullable */
-	tags?: EntitiesTag[] | null;
-}
-
-export interface EntitiesMenuItemOptionGroup {
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-	optionGroup: EntitiesOptionGroup;
-	optionGroupId: number;
-}
-
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	parent?: EntitiesMenuSectionParent;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
-}
-
-/**
- * @nullable
- */
-export type EntitiesUserRoleRole = EntitiesRole | null;
-
-export interface EntitiesUser {
-	email: string;
-	image: string;
-	isActive: boolean;
-	name: string;
-	userId: string;
-	/** @nullable */
-	userRole?: EntitiesUserRole[] | null;
-}
-
-export interface EntitiesUserRole {
-	/** @nullable */
-	role?: EntitiesUserRoleRole;
-	roleId: number;
-	user: EntitiesUser;
-	userId: string;
-	userRoleId: number;
-}
-
-export interface EntitiesRole {
-	description: string;
-	isBackOffice: boolean;
-	isFrontLine: boolean;
-	name: string;
-	/** @nullable */
-	outletId?: number | null;
-	roleId: number;
-	/** @nullable */
-	userRole?: EntitiesUserRole[] | null;
-}
-
-export interface EntitiesOrderItem {
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-	/** @nullable */
-	note?: string | null;
-	/** @nullable */
-	orderCompleted?: string | null;
-	/** @nullable */
-	orderItemExtras?: EntitiesOrderItemExtra[] | null;
-	orderItemId: number;
-	/** @nullable */
-	orderItemOptions?: EntitiesOrderItemOption[] | null;
-	orderItemStatus: EntitiesOrderItemStatus;
-	orderItemStatusId: number;
-	orderReceived: string;
-	orderUpdated: string;
-	tableBooking: EntitiesTableBooking;
-	tableBookingId: number;
-}
-
-export interface EntitiesTableBooking {
-	bookingDate: string;
-	bookingName: string;
-	/** @nullable */
-	closeDate?: string | null;
-	id: number;
-	/** @nullable */
-	orderItems?: EntitiesOrderItem[] | null;
-	salesPeriod: EntitiesSalesPeriod;
-	salesPeriodId: number;
-	table: EntitiesTable;
-	tableId: number;
-	user: EntitiesUser;
-	userId: string;
-}
-
-export interface EntitiesOrder {
-	orderId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemId: number;
-}
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const Order = {
+	Before: 0,
+	After: 1,
+} as const;
 
 export interface EntitiesCustomer {
 	customerId: number;
 	name: string;
-	orders: EntitiesOrder[];
+	orders: Order[];
 }
 
 export interface EntitiesOutlet {

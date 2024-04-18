@@ -273,236 +273,10 @@ export interface components {
       /** Format: int32 */
       customerId: number;
       name: string;
-      orders: components["schemas"]["EntitiesOrder"][];
+      orders: components["schemas"]["Order"][];
     };
-    EntitiesOrder: {
-      /** Format: int32 */
-      orderId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      orderItem: components["schemas"]["EntitiesOrderItem"];
-    };
-    EntitiesOrderItem: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["EntitiesTableBooking"];
-      /** Format: int32 */
-      menuItemId: number;
-      menuItem: components["schemas"]["EntitiesMenuItem"];
-      /** Format: date-time */
-      orderReceived: string;
-      /** Format: date-time */
-      orderUpdated: string;
-      /** Format: date-time */
-      orderCompleted?: string | null;
-      /** Format: int32 */
-      orderItemStatusId: number;
-      orderItemStatus: components["schemas"]["EntitiesOrderItemStatus"];
-      orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
-      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
-      note?: string | null;
-    };
-    EntitiesTableBooking: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["EntitiesTable"];
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      /** Format: int32 */
-      salesPeriodId: number;
-      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
-      userId: string;
-      user: components["schemas"]["EntitiesUser"];
-      orderItems?: components["schemas"]["EntitiesOrderItem"][] | null;
-    };
-    EntitiesUser: {
-      userId: string;
-      email: string;
-      image: string;
-      name: string;
-      isActive: boolean;
-      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
-    };
-    EntitiesUserRole: {
-      /** Format: int32 */
-      userRoleId: number;
-      userId: string;
-      /** Format: int32 */
-      roleId: number;
-      user: components["schemas"]["EntitiesUser"];
-      role?: components["schemas"]["EntitiesRole"] | null;
-    };
-    EntitiesRole: {
-      /** Format: int32 */
-      roleId: number;
-      name: string;
-      description: string;
-      isFrontLine: boolean;
-      isBackOffice: boolean;
-      /** Format: int32 */
-      outletId?: number | null;
-      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
-    };
-    EntitiesMenuItem: {
-      /** Format: int32 */
-      menuItemId: number;
-      menuSection: components["schemas"]["EntitiesMenuSection"];
-      /** Format: int32 */
-      menuSectionId: number;
-      name: string;
-      description: string;
-      /** Format: decimal */
-      price: number;
-      searchVector: components["schemas"]["NpgsqlTypesNpgsqlTsVector_Lexeme"][];
-      /** Format: int32 */
-      position: number;
-      tags?: components["schemas"]["EntitiesTag"][] | null;
-      /** Format: int32 */
-      divisionId?: number | null;
-      division?: components["schemas"]["EntitiesDivision"] | null;
-      menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
-      menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
-      isAvailable: boolean;
-      /** Format: decimal */
-      stockPrice: number;
-    };
-    EntitiesMenuSection: {
-      /** Format: int32 */
-      menuSectionId: number;
-      name?: string | null;
-      menu: components["schemas"]["EntitiesMenu"];
-      /** Format: int32 */
-      menuId: number;
-      parent?: components["schemas"]["EntitiesMenuSection"] | null;
-      /** Format: int32 */
-      parentId?: number | null;
-      /** Format: int32 */
-      positionId?: number | null;
-      subMenuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
-      menuItems?: components["schemas"]["EntitiesMenuItem"][] | null;
-    };
-    EntitiesMenu: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["EntitiesOutlet"];
-      menuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
-    };
-    NpgsqlTypesNpgsqlTsVector_Lexeme: {
-      text: string;
-      /** Format: int32 */
-      count: number;
-    };
-    EntitiesTag: {
-      /** Format: int32 */
-      tagId: number;
-      name: string;
-    };
-    EntitiesDivision: {
-      /** Format: int32 */
-      divisionId: number;
-      divisionName: string;
-    };
-    EntitiesMenuItemOptionGroup: {
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      optionGroupId: number;
-      menuItem: components["schemas"]["EntitiesMenuItem"];
-      optionGroup: components["schemas"]["EntitiesOptionGroup"];
-    };
-    EntitiesOptionGroup: {
-      /** Format: int32 */
-      optionGroupId: number;
-      name: string;
-      /** Format: int32 */
-      minSelections: number;
-      /** Format: int32 */
-      maxSelections: number;
-      options: components["schemas"]["EntitiesOption"][];
-      menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
-    };
-    EntitiesOption: {
-      /** Format: int32 */
-      optionId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      positionId: number;
-      /** Format: int32 */
-      optionGroupId: number;
-      optionGroup: components["schemas"]["EntitiesOptionGroup"];
-      orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
-    };
-    EntitiesOrderItemOption: {
-      /** Format: int32 */
-      orderItemOptionId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      orderItem: components["schemas"]["EntitiesOrderItem"];
-      /** Format: int32 */
-      optionId: number;
-      option: components["schemas"]["EntitiesOption"];
-    };
-    EntitiesMenuItemExtraGroup: {
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      extraGroupId: number;
-      menuItem: components["schemas"]["EntitiesMenuItem"];
-      extraGroup: components["schemas"]["EntitiesExtraGroup"];
-    };
-    EntitiesExtraGroup: {
-      /** Format: int32 */
-      extraGroupId: number;
-      name: string;
-      extras: components["schemas"]["EntitiesExtra"][];
-      menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
-    };
-    EntitiesExtra: {
-      /** Format: int32 */
-      extraId: number;
-      name: string;
-      /** Format: int32 */
-      positionId: number;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      extraGroupId: number;
-      extraGroup: components["schemas"]["EntitiesExtraGroup"];
-      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
-    };
-    EntitiesOrderItemExtra: {
-      /** Format: int32 */
-      orderItemExtraId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      orderItem: components["schemas"]["EntitiesOrderItem"];
-      /** Format: int32 */
-      extraId: number;
-      extra: components["schemas"]["EntitiesExtra"];
-    };
-    EntitiesOrderItemStatus: {
-      /** Format: int32 */
-      orderItemStatusId: number;
-      status: string;
-      isFrontLine: boolean;
-      isBackOffice: boolean;
-      isComplete: boolean;
-      isCancelled: boolean;
-      isBillable: boolean;
-      notify: boolean;
-    };
+    /** @enum {integer} */
+    Order: 0 | 1;
     UserGetRolesRequest: Record<string, never>;
     UserGetNotificationsUserNotificationDTO: {
       /** Format: int32 */
@@ -543,8 +317,7 @@ export interface components {
       isSuccess: boolean;
     };
     TableOrderUpdateOrderItemRequest: {
-      /** Format: int32 */
-      orderItemId: number;
+      orderItemIds: number[];
       /** Format: int32 */
       orderItemStatusId: number;
     };
@@ -798,6 +571,228 @@ export interface components {
       price: number;
     };
     TableOrderGetBasketRequest: Record<string, never>;
+    EntitiesOrderItem: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      tableBookingId: number;
+      tableBooking: components["schemas"]["EntitiesTableBooking"];
+      /** Format: int32 */
+      menuItemId: number;
+      menuItem: components["schemas"]["EntitiesMenuItem"];
+      /** Format: date-time */
+      orderReceived: string;
+      /** Format: date-time */
+      orderUpdated: string;
+      /** Format: date-time */
+      orderCompleted?: string | null;
+      /** Format: int32 */
+      orderItemStatusId: number;
+      orderItemStatus: components["schemas"]["EntitiesOrderItemStatus"];
+      orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
+      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
+      note?: string | null;
+    };
+    EntitiesTableBooking: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      table: components["schemas"]["EntitiesTable"];
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
+      /** Format: int32 */
+      salesPeriodId: number;
+      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
+      userId: string;
+      user: components["schemas"]["EntitiesUser"];
+      orderItems?: components["schemas"]["EntitiesOrderItem"][] | null;
+    };
+    EntitiesUser: {
+      userId: string;
+      email: string;
+      image: string;
+      name: string;
+      isActive: boolean;
+      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
+    };
+    EntitiesUserRole: {
+      /** Format: int32 */
+      userRoleId: number;
+      userId: string;
+      /** Format: int32 */
+      roleId: number;
+      user: components["schemas"]["EntitiesUser"];
+      role?: components["schemas"]["EntitiesRole"] | null;
+    };
+    EntitiesRole: {
+      /** Format: int32 */
+      roleId: number;
+      name: string;
+      description: string;
+      isFrontLine: boolean;
+      isBackOffice: boolean;
+      /** Format: int32 */
+      outletId?: number | null;
+      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
+    };
+    EntitiesMenuItem: {
+      /** Format: int32 */
+      menuItemId: number;
+      menuSection: components["schemas"]["EntitiesMenuSection"];
+      /** Format: int32 */
+      menuSectionId: number;
+      name: string;
+      description: string;
+      /** Format: decimal */
+      price: number;
+      searchVector: components["schemas"]["NpgsqlTypesNpgsqlTsVector_Lexeme"][];
+      /** Format: int32 */
+      position: number;
+      tags?: components["schemas"]["EntitiesTag"][] | null;
+      /** Format: int32 */
+      divisionId?: number | null;
+      division?: components["schemas"]["EntitiesDivision"] | null;
+      menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
+      menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
+      isAvailable: boolean;
+      /** Format: decimal */
+      stockPrice: number;
+    };
+    EntitiesMenuSection: {
+      /** Format: int32 */
+      menuSectionId: number;
+      name?: string | null;
+      menu: components["schemas"]["EntitiesMenu"];
+      /** Format: int32 */
+      menuId: number;
+      parent?: components["schemas"]["EntitiesMenuSection"] | null;
+      /** Format: int32 */
+      parentId?: number | null;
+      /** Format: int32 */
+      positionId?: number | null;
+      subMenuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
+      menuItems?: components["schemas"]["EntitiesMenuItem"][] | null;
+    };
+    EntitiesMenu: {
+      /** Format: int32 */
+      id: number;
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+      outlet: components["schemas"]["EntitiesOutlet"];
+      menuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
+    };
+    NpgsqlTypesNpgsqlTsVector_Lexeme: {
+      text: string;
+      /** Format: int32 */
+      count: number;
+    };
+    EntitiesTag: {
+      /** Format: int32 */
+      tagId: number;
+      name: string;
+    };
+    EntitiesDivision: {
+      /** Format: int32 */
+      divisionId: number;
+      divisionName: string;
+    };
+    EntitiesMenuItemOptionGroup: {
+      /** Format: int32 */
+      menuItemId: number;
+      /** Format: int32 */
+      optionGroupId: number;
+      menuItem: components["schemas"]["EntitiesMenuItem"];
+      optionGroup: components["schemas"]["EntitiesOptionGroup"];
+    };
+    EntitiesOptionGroup: {
+      /** Format: int32 */
+      optionGroupId: number;
+      name: string;
+      /** Format: int32 */
+      minSelections: number;
+      /** Format: int32 */
+      maxSelections: number;
+      options: components["schemas"]["EntitiesOption"][];
+      menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
+    };
+    EntitiesOption: {
+      /** Format: int32 */
+      optionId: number;
+      name: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      positionId: number;
+      /** Format: int32 */
+      optionGroupId: number;
+      optionGroup: components["schemas"]["EntitiesOptionGroup"];
+      orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
+    };
+    EntitiesOrderItemOption: {
+      /** Format: int32 */
+      orderItemOptionId: number;
+      /** Format: int32 */
+      orderItemId: number;
+      orderItem: components["schemas"]["EntitiesOrderItem"];
+      /** Format: int32 */
+      optionId: number;
+      option: components["schemas"]["EntitiesOption"];
+    };
+    EntitiesMenuItemExtraGroup: {
+      /** Format: int32 */
+      menuItemId: number;
+      /** Format: int32 */
+      extraGroupId: number;
+      menuItem: components["schemas"]["EntitiesMenuItem"];
+      extraGroup: components["schemas"]["EntitiesExtraGroup"];
+    };
+    EntitiesExtraGroup: {
+      /** Format: int32 */
+      extraGroupId: number;
+      name: string;
+      extras: components["schemas"]["EntitiesExtra"][];
+      menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
+    };
+    EntitiesExtra: {
+      /** Format: int32 */
+      extraId: number;
+      name: string;
+      /** Format: int32 */
+      positionId: number;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      extraGroupId: number;
+      extraGroup: components["schemas"]["EntitiesExtraGroup"];
+      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
+    };
+    EntitiesOrderItemExtra: {
+      /** Format: int32 */
+      orderItemExtraId: number;
+      /** Format: int32 */
+      orderItemId: number;
+      orderItem: components["schemas"]["EntitiesOrderItem"];
+      /** Format: int32 */
+      extraId: number;
+      extra: components["schemas"]["EntitiesExtra"];
+    };
+    EntitiesOrderItemStatus: {
+      /** Format: int32 */
+      orderItemStatusId: number;
+      status: string;
+      assignGroup: boolean;
+      isFrontLine: boolean;
+      isBackOffice: boolean;
+      isComplete: boolean;
+      isCancelled: boolean;
+      isBillable: boolean;
+      notify: boolean;
+    };
     OrderClearBasketRequest: {
       /** Format: int32 */
       tableBookingId: number;
