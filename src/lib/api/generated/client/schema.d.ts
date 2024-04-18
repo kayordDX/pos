@@ -161,6 +161,9 @@ export interface paths {
   "/manager/viewOrders": {
     get: operations["ManagerOrderView"];
   };
+  "/extra/all": {
+    get: operations["ExtraGetAll"];
+  };
   "/clock/list": {
     get: operations["ClockList"];
   };
@@ -2693,6 +2696,26 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["ManagerOrderViewResponse"][];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  ExtraGetAll: {
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["EntitiesExtra"][];
         };
       };
       /** @description Unauthorized */
