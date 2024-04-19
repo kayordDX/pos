@@ -108,10 +108,15 @@
 					<div class="text-muted-foreground">Total:</div>
 					<h2>R{$query.data?.total.toFixed(2)}</h2>
 				</div>
-				<Button type="submit" class="w-full">Checkout</Button>
-				<Button on:click={sendAllToKitchen} class="w-full">
-					Send All to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" />
-				</Button>
+				{#if $formData.orderItemIds.length > 0}
+					<Button type="submit" variant="secondary" class="w-full border-2 border-primary">
+						Send Selected to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" />
+					</Button>
+				{:else}
+					<Button on:click={sendAllToKitchen} class="w-full">
+						Send All to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" />
+					</Button>
+				{/if}
 			</div>
 		{/if}
 	</form>

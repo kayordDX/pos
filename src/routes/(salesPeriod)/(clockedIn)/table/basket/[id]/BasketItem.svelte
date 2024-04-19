@@ -6,7 +6,7 @@
 		type DTOOrderItemExtraDTO,
 		type DTOOrderItemOptionDTO,
 	} from "$lib/api";
-	import { TrashIcon, ChefHatIcon } from "lucide-svelte";
+	import { TrashIcon } from "lucide-svelte";
 
 	export let id: number;
 	export let price: number;
@@ -17,20 +17,8 @@
 
 	const removeItem = createTableOrderRemoveItem();
 
-	const updateOrderItem = createTableOrderUpdateOrderItem();
-
 	const remove = async () => {
 		await $removeItem.mutateAsync({ data: { orderItemId: id } });
-		refetch();
-	};
-
-	const sendItemToKitchen = async () => {
-		await $updateOrderItem.mutateAsync({
-			data: {
-				orderItemIds: [id],
-				orderItemStatusId: 2,
-			},
-		});
 		refetch();
 	};
 </script>
@@ -76,9 +64,6 @@
 		<div class="font-bold">R {price.toFixed(2)}</div>
 		<Button variant="destructive" on:click={remove} size="icon">
 			<TrashIcon class="h-4 w-4" />
-		</Button>
-		<Button on:click={sendItemToKitchen} size="icon">
-			<ChefHatIcon class="h-4 w-4" />
 		</Button>
 	</div>
 </Card.Root>
