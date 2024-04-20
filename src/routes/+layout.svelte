@@ -15,6 +15,9 @@
 	import { type HubNotification } from "$lib/types";
 	import OutletCheck from "$lib/components/Check/OutletCheck.svelte";
 	import { page } from "$app/stores";
+	import { onMount } from "svelte";
+	import { getMessaging } from "firebase/messaging/sw";
+	import { onMessage } from "firebase/messaging";
 
 	$: hideHeader = !$page.route.id?.startsWith("/(salesPeriod)/(clockedIn)/table");
 
@@ -66,6 +69,13 @@
 	});
 
 	subscribeToPushNotifications();
+
+	onMount(() => {
+		const messaging = getMessaging();
+		onMessage(messaging, (payload) => {
+			console.log("Message received. ", payload);
+		});
+	});
 </script>
 
 <AuthCheck>
