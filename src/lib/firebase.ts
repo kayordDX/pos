@@ -36,6 +36,7 @@ export const onMessageListener = () =>
 export const subscribeToPushNotifications = async () => {
 	// TODO: vapidKey should be in env config
 	try {
+		await navigator.serviceWorker.ready;
 		const currentToken = await getToken(messaging, {
 			vapidKey:
 				"BCZD0Ws2H5KEesEczFvNJk4BvokrUSbWdLYaDzJ_IiRexmP9XPnWWNM8-uuODmsXz825QEkz47D1OZwG1SgWYYg",
