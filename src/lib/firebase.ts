@@ -7,8 +7,7 @@ import {
 	signOut,
 	type User,
 } from "firebase/auth";
-import { getMessaging, getToken } from "firebase/messaging";
-import { onBackgroundMessage } from "firebase/messaging/sw";
+import { getMessaging, getToken, onMessage } from "firebase/messaging";
 
 import { client } from "./api";
 import { writable } from "svelte/store";
@@ -23,44 +22,37 @@ const firebaseConfig = {
 	appId: "1:249122681101:web:3b0c9caccdee78e304c044",
 };
 
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 const messaging = getMessaging();
 
-export const subscribeToPushNotifications = () => {
-	// TODO: vapidKey should be in env config
-	getToken(messaging, {
-		vapidKey:
-			"BCZD0Ws2H5KEesEczFvNJk4BvokrUSbWdLYaDzJ_IiRexmP9XPnWWNM8-uuODmsXz825QEkz47D1OZwG1SgWYYg",
-	})
-		.then((currentToken) => {
-			if (currentToken) {
-				// TODO: Save token in backend and use it to send messages
-				// Send the token to your server and update the UI if necessary
-				console.log(currentToken);
-			} else {
-				requestNotificationPermission();
-			}
-		})
-		.catch((err) => {
-			console.log("An error occurred while retrieving token. ", err);
+export const onMessageListener = () =>
+	new Promise((resolve) => {
+		onMessage(messaging, (payload) => {
+			console.log("payload", payload);
+			resolve(payload);
 		});
+	});
+
+export const subscribeToPushNotifications = async () => {
+	// TODO: vapidKey should be in env config
+	try {
+		const currentToken = await getToken(messaging, {
+			vapidKey:
+				"BCZD0Ws2H5KEesEczFvNJk4BvokrUSbWdLYaDzJ_IiRexmP9XPnWWNM8-uuODmsXz825QEkz47D1OZwG1SgWYYg",
+		});
+		if (currentToken) {
+			// TODO: Save token in backend and use it to send messages
+			// Send the token to your server and update the UI if necessary
+			console.log(currentToken);
+		} else {
+			requestNotificationPermission();
+		}
+	} catch (err) {
+		console.log("An error occurred while retrieving token. ", err);
+	}
 };
 
-// onBackgroundMessage(messaging, (payload) => {
-// 	console.log("[firebase-messaging-sw.js] Received background message ", payload);
-// 	// Customize notification here
-// 	const notificationTitle = "Background Message Title";
-// 	const notificationOptions = {
-// 		body: "Background Message body.",
-// 		icon: "/firebase-logo.png",
-// 	};
-
-// 	navigator.serviceWorker.ready.then((registration) => {
-// 		registration.showNotification(notificationTitle, notificationOptions);
-// 	});
-// });
-
-export const auth = getAuth(app);
+const auth = getAuth(app);
 
 export const signInGoogle = async () => {
 	const provider = new GoogleAuthProvider();
