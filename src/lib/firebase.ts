@@ -7,7 +7,7 @@ import {
 	signOut,
 	type User,
 } from "firebase/auth";
-import { getMessaging, getToken, onMessage } from "firebase/messaging";
+import { getMessaging, getToken } from "firebase/messaging";
 import { PUBLIC_VAPID_KEY } from "$env/static/public";
 
 import { client } from "./api";
@@ -22,26 +22,7 @@ const firebaseConfig = {
 	appId: "1:249122681101:web:3b0c9caccdee78e304c044",
 };
 
-const app = initializeApp(firebaseConfig);
-const messaging = getMessaging();
-
-export const onMessageListener = () =>
-	new Promise((resolve) => {
-		onMessage(messaging, (payload) => {
-			console.log("payload", payload);
-			resolve(payload);
-		});
-	});
-
-export const checkSubscriptionStatus = async () => {
-	if ("serviceWorker" in navigator) {
-		const registration = await navigator.serviceWorker.ready;
-		const subscription = await registration.pushManager.getSubscription();
-		console.log("Subscription", subscription);
-		return subscription !== null;
-	}
-	return false;
-};
+export const app = initializeApp(firebaseConfig);
 
 const saveTokenToDatabase = async (token: string) => {
 	await client.POST("/notification/addUser", {
@@ -52,27 +33,26 @@ const saveTokenToDatabase = async (token: string) => {
 };
 
 export const subscribeToPushNotifications = async () => {
+	const messaging = getMessaging();
 	let subscribe = false;
-	// TODO: vapidKey should be in env config
 	try {
 		await navigator.serviceWorker.ready;
 		const currentToken = await getToken(messaging, {
 			vapidKey: PUBLIC_VAPID_KEY,
 		});
 		if (currentToken) {
-			console.log(currentToken);
 			saveTokenToDatabase(currentToken);
 			subscribe = true;
 		} else {
-			console.log("Could not generate token");
+			console.error("Could not generate token");
 		}
 	} catch (err) {
-		console.log("An error occurred while retrieving token. ", err);
+		console.error("An error occurred while retrieving token. ", err);
 	}
 	return subscribe;
 };
 
-const auth = getAuth(app);
+export const auth = getAuth(app);
 
 export const signInGoogle = async () => {
 	const provider = new GoogleAuthProvider();
