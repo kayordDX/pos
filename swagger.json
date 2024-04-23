@@ -623,6 +623,54 @@
         }
       }
     },
+    "/orderGroup/getOrders": {
+      "get": {
+        "tags": [
+          "Ordergroup"
+        ],
+        "operationId": "OrderBackOffice",
+        "parameters": [
+          {
+            "name": "divisionIds",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/OrderBackOfficeResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/order/clearBasket": {
       "delete": {
         "tags": [
@@ -2313,6 +2361,49 @@
         }
       }
     },
+    "/notification/testNew": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "operationId": "NotificationTestNew",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationTestNewRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/notification/test": {
       "post": {
         "tags": [
@@ -2354,6 +2445,57 @@
             }
           }
         }
+      }
+    },
+    "/notification/addUser": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "operationId": "NotificationAddUser",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationAddUserRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/menu/{menuId}": {
@@ -4652,6 +4794,190 @@
         "type": "object",
         "additionalProperties": false
       },
+      "OrderBackOfficeResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "lastRefresh",
+          "pendingOrders",
+          "pendingItems"
+        ],
+        "properties": {
+          "orderGroups": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/OrderBackOfficeOrderGroupDTO"
+            }
+          },
+          "lastRefresh": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "pendingOrders": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pendingItems": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "OrderBackOfficeOrderGroupDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderGroupId"
+        ],
+        "properties": {
+          "orderGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItems": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/OrderBackOfficeOrderItemDTO"
+            }
+          }
+        }
+      },
+      "OrderBackOfficeOrderItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId",
+          "tableBookingId",
+          "menuItem",
+          "divisionId",
+          "orderReceived",
+          "orderUpdated",
+          "orderReceivedFormatted",
+          "orderUpdatedFormatted",
+          "orderItemStatusId",
+          "orderItemStatus"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderGroupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/OrderBackOfficeMenuItemDTO"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderReceived": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderUpdated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderReceivedFormatted": {
+            "type": "string"
+          },
+          "orderUpdatedFormatted": {
+            "type": "string"
+          },
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemStatus": {
+            "$ref": "#/components/schemas/OrderBackOfficeOrderItemStatusDTO"
+          },
+          "orderItemOptions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOOrderItemOptionDTO"
+            }
+          },
+          "orderItemExtras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
+            }
+          }
+        }
+      },
+      "OrderBackOfficeMenuItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "name",
+          "description",
+          "price",
+          "position",
+          "divisionId"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "OrderBackOfficeOrderItemStatusDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemStatusId",
+          "status"
+        ],
+        "properties": {
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "OrderBackOfficeRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "EntitiesOrderItem": {
         "type": "object",
         "additionalProperties": false,
@@ -4670,6 +4996,19 @@
           "orderItemId": {
             "type": "integer",
             "format": "int32"
+          },
+          "orderGroupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "orderGroup": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesOrderGroup"
+              }
+            ]
           },
           "tableBookingId": {
             "type": "integer",
@@ -4722,6 +5061,26 @@
           "note": {
             "type": "string",
             "nullable": true
+          }
+        }
+      },
+      "EntitiesOrderGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderGroupId"
+        ],
+        "properties": {
+          "orderGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItems": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItem"
+            }
           }
         }
       },
@@ -6537,6 +6896,26 @@
           }
         }
       },
+      "NotificationTestNewRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "title",
+          "body",
+          "token"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "body": {
+            "type": "string"
+          },
+          "token": {
+            "type": "string"
+          }
+        }
+      },
       "NotificationTestRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -6545,6 +6924,18 @@
         ],
         "properties": {
           "message": {
+            "type": "string"
+          }
+        }
+      },
+      "NotificationAddUserRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "token"
+        ],
+        "properties": {
+          "token": {
             "type": "string"
           }
         }

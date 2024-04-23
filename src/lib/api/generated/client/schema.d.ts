@@ -47,6 +47,9 @@ export interface paths {
   "/order/getBasket": {
     get: operations["TableOrderGetBasket"];
   };
+  "/orderGroup/getOrders": {
+    get: operations["OrderBackOffice"];
+  };
   "/order/clearBasket": {
     delete: operations["OrderClearBasket"];
   };
@@ -135,8 +138,14 @@ export interface paths {
   "/notification/user": {
     post: operations["NotificationUser"];
   };
+  "/notification/testNew": {
+    post: operations["NotificationTestNew"];
+  };
   "/notification/test": {
     post: operations["NotificationTest"];
+  };
+  "/notification/addUser": {
+    post: operations["NotificationAddUser"];
   };
   "/menu/{menuId}": {
     get: operations["MenuGet"];
@@ -571,9 +580,67 @@ export interface components {
       price: number;
     };
     TableOrderGetBasketRequest: Record<string, never>;
+    OrderBackOfficeResponse: {
+      orderGroups?: components["schemas"]["OrderBackOfficeOrderGroupDTO"][] | null;
+      /** Format: date-time */
+      lastRefresh: string;
+      /** Format: int32 */
+      pendingOrders: number;
+      /** Format: int32 */
+      pendingItems: number;
+    };
+    OrderBackOfficeOrderGroupDTO: {
+      /** Format: int32 */
+      orderGroupId: number;
+      orderItems?: components["schemas"]["OrderBackOfficeOrderItemDTO"][] | null;
+    };
+    OrderBackOfficeOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      orderGroupId?: number | null;
+      /** Format: int32 */
+      tableBookingId: number;
+      menuItem: components["schemas"]["OrderBackOfficeMenuItemDTO"];
+      /** Format: int32 */
+      divisionId: number;
+      note?: string | null;
+      /** Format: date-time */
+      orderReceived: string;
+      /** Format: date-time */
+      orderUpdated: string;
+      orderReceivedFormatted: string;
+      orderUpdatedFormatted: string;
+      /** Format: int32 */
+      orderItemStatusId: number;
+      orderItemStatus: components["schemas"]["OrderBackOfficeOrderItemStatusDTO"];
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+    };
+    OrderBackOfficeMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+      description: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      position: number;
+      /** Format: int32 */
+      divisionId: number;
+    };
+    OrderBackOfficeOrderItemStatusDTO: {
+      /** Format: int32 */
+      orderItemStatusId: number;
+      status: string;
+    };
+    OrderBackOfficeRequest: Record<string, never>;
     EntitiesOrderItem: {
       /** Format: int32 */
       orderItemId: number;
+      /** Format: int32 */
+      orderGroupId?: number | null;
+      orderGroup?: components["schemas"]["EntitiesOrderGroup"] | null;
       /** Format: int32 */
       tableBookingId: number;
       tableBooking: components["schemas"]["EntitiesTableBooking"];
@@ -592,6 +659,11 @@ export interface components {
       orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
       orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
       note?: string | null;
+    };
+    EntitiesOrderGroup: {
+      /** Format: int32 */
+      orderGroupId: number;
+      orderItems?: components["schemas"]["EntitiesOrderItem"][] | null;
     };
     EntitiesTableBooking: {
       /** Format: int32 */
@@ -1101,8 +1173,16 @@ export interface components {
       message: string;
       userId: string;
     };
+    NotificationTestNewRequest: {
+      title: string;
+      body: string;
+      token: string;
+    };
     NotificationTestRequest: {
       message: string;
+    };
+    NotificationAddUserRequest: {
+      token: string;
     };
     MenuUpdateRequest: {
       /** Format: int32 */
@@ -1622,6 +1702,31 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["TableOrderGetBasketResponse"];
         };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  OrderBackOffice: {
+    parameters: {
+      query?: {
+        divisionIds?: string | null;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["OrderBackOfficeResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {
@@ -2444,6 +2549,27 @@ export interface operations {
       };
     };
   };
+  NotificationTestNew: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NotificationTestNewRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": boolean;
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   NotificationTest: {
     requestBody: {
       content: {
@@ -2456,6 +2582,31 @@ export interface operations {
         content: {
           "application/json": boolean;
         };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  NotificationAddUser: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["NotificationAddUserRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": boolean;
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
       };
       /** @description Server Error */
       500: {

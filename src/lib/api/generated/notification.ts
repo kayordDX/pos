@@ -13,6 +13,8 @@ import type {
 } from "@tanstack/svelte-query";
 import type {
 	InternalErrorResponse,
+	NotificationAddUserRequest,
+	NotificationTestNewRequest,
 	NotificationTestRequest,
 	NotificationUserRequest,
 } from "./api.schemas";
@@ -90,6 +92,77 @@ export const createNotificationUser = <
 
 	return createMutation(mutationOptions);
 };
+export const useNotificationTestNewHook = () => {
+	const notificationTestNew = useCustomClient<boolean>();
+
+	return (notificationTestNewRequest: BodyType<NotificationTestNewRequest>) => {
+		return notificationTestNew({
+			url: `/notification/testNew`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: notificationTestNewRequest,
+		});
+	};
+};
+
+export const useNotificationTestNewMutationOptions = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useNotificationTestNewHook>>>,
+		TError,
+		{ data: BodyType<NotificationTestNewRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof useNotificationTestNewHook>>>,
+	TError,
+	{ data: BodyType<NotificationTestNewRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const notificationTestNew = useNotificationTestNewHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof useNotificationTestNewHook>>>,
+		{ data: BodyType<NotificationTestNewRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return notificationTestNew(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type NotificationTestNewMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useNotificationTestNewHook>>>
+>;
+export type NotificationTestNewMutationBody = BodyType<NotificationTestNewRequest>;
+export type NotificationTestNewMutationError = ErrorType<InternalErrorResponse>;
+
+export const createNotificationTestNew = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useNotificationTestNewHook>>>,
+		TError,
+		{ data: BodyType<NotificationTestNewRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<ReturnType<typeof useNotificationTestNewHook>>>,
+	TError,
+	{ data: BodyType<NotificationTestNewRequest> },
+	TContext
+> => {
+	const mutationOptions = useNotificationTestNewMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const useNotificationTestHook = () => {
 	const notificationTest = useCustomClient<boolean>();
 
@@ -158,6 +231,77 @@ export const createNotificationTest = <
 	TContext
 > => {
 	const mutationOptions = useNotificationTestMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const useNotificationAddUserHook = () => {
+	const notificationAddUser = useCustomClient<boolean>();
+
+	return (notificationAddUserRequest: BodyType<NotificationAddUserRequest>) => {
+		return notificationAddUser({
+			url: `/notification/addUser`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: notificationAddUserRequest,
+		});
+	};
+};
+
+export const useNotificationAddUserMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useNotificationAddUserHook>>>,
+		TError,
+		{ data: BodyType<NotificationAddUserRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof useNotificationAddUserHook>>>,
+	TError,
+	{ data: BodyType<NotificationAddUserRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const notificationAddUser = useNotificationAddUserHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof useNotificationAddUserHook>>>,
+		{ data: BodyType<NotificationAddUserRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return notificationAddUser(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type NotificationAddUserMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useNotificationAddUserHook>>>
+>;
+export type NotificationAddUserMutationBody = BodyType<NotificationAddUserRequest>;
+export type NotificationAddUserMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createNotificationAddUser = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useNotificationAddUserHook>>>,
+		TError,
+		{ data: BodyType<NotificationAddUserRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<ReturnType<typeof useNotificationAddUserHook>>>,
+	TError,
+	{ data: BodyType<NotificationAddUserRequest> },
+	TContext
+> => {
+	const mutationOptions = useNotificationAddUserMutationOptions(options);
 
 	return createMutation(mutationOptions);
 };

@@ -71,6 +71,10 @@ export type TableGetMyBookedParams = {
 	myBooking: boolean;
 };
 
+export type OrderBackOfficeParams = {
+	divisionIds?: string | null;
+};
+
 export type TableOrderGetBasketParams = {
 	tableBookingId: number;
 };
@@ -336,8 +340,18 @@ export interface MenuUpdateRequest {
 	name: string;
 }
 
+export interface NotificationAddUserRequest {
+	token: string;
+}
+
 export interface NotificationTestRequest {
 	message: string;
+}
+
+export interface NotificationTestNewRequest {
+	body: string;
+	title: string;
+	token: string;
 }
 
 export interface NotificationUserRequest {
@@ -504,8 +518,6 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
-
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -536,6 +548,8 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
+
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: any;
@@ -739,14 +753,6 @@ export interface EntitiesOrderItemStatus {
 	status: string;
 }
 
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
-}
-
 export interface EntitiesMenuItemExtraGroup {
 	extraGroup: EntitiesExtraGroup;
 	extraGroupId: number;
@@ -773,11 +779,12 @@ export interface EntitiesExtra {
 	price: number;
 }
 
-export interface EntitiesMenuItemOptionGroup {
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-	optionGroup: EntitiesOptionGroup;
-	optionGroupId: number;
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
 }
 
 export interface EntitiesOptionGroup {
@@ -824,29 +831,6 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
-/**
- * @nullable
- */
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
-
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	parent?: EntitiesMenuSectionParent;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
-}
-
 export interface EntitiesMenu {
 	id: number;
 	/** @nullable */
@@ -855,6 +839,11 @@ export interface EntitiesMenu {
 	outlet: EntitiesOutlet;
 	outletId: number;
 }
+
+/**
+ * @nullable
+ */
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
 /**
  * @nullable
@@ -882,6 +871,31 @@ export interface EntitiesMenuItem {
 	stockPrice: number;
 	/** @nullable */
 	tags?: EntitiesTag[] | null;
+}
+
+export interface EntitiesMenuItemOptionGroup {
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+	optionGroup: EntitiesOptionGroup;
+	optionGroupId: number;
+}
+
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
+	/** @nullable */
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	parent?: EntitiesMenuSectionParent;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
 }
 
 /**
@@ -920,6 +934,11 @@ export interface EntitiesRole {
 	userRole?: EntitiesUserRole[] | null;
 }
 
+/**
+ * @nullable
+ */
+export type EntitiesOrderItemOrderGroup = EntitiesOrderGroup | null;
+
 export interface EntitiesOrderItem {
 	menuItem: EntitiesMenuItem;
 	menuItemId: number;
@@ -927,6 +946,10 @@ export interface EntitiesOrderItem {
 	note?: string | null;
 	/** @nullable */
 	orderCompleted?: string | null;
+	/** @nullable */
+	orderGroup?: EntitiesOrderItemOrderGroup;
+	/** @nullable */
+	orderGroupId?: number | null;
 	/** @nullable */
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	orderItemId: number;
@@ -954,6 +977,65 @@ export interface EntitiesTableBooking {
 	tableId: number;
 	user: EntitiesUser;
 	userId: string;
+}
+
+export interface EntitiesOrderGroup {
+	orderGroupId: number;
+	/** @nullable */
+	orderItems?: EntitiesOrderItem[] | null;
+}
+
+export interface OrderBackOfficeRequest {
+	[key: string]: any;
+}
+
+export interface OrderBackOfficeOrderItemStatusDTO {
+	orderItemStatusId: number;
+	status: string;
+}
+
+export interface OrderBackOfficeMenuItemDTO {
+	description: string;
+	divisionId: number;
+	menuItemId: number;
+	name: string;
+	position: number;
+	price: number;
+}
+
+export interface OrderBackOfficeOrderItemDTO {
+	divisionId: number;
+	menuItem: OrderBackOfficeMenuItemDTO;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	orderGroupId?: number | null;
+	/** @nullable */
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	/** @nullable */
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	orderItemStatus: OrderBackOfficeOrderItemStatusDTO;
+	orderItemStatusId: number;
+	orderReceived: string;
+	orderReceivedFormatted: string;
+	orderUpdated: string;
+	orderUpdatedFormatted: string;
+	tableBookingId: number;
+}
+
+export interface OrderBackOfficeOrderGroupDTO {
+	orderGroupId: number;
+	/** @nullable */
+	orderItems?: OrderBackOfficeOrderItemDTO[] | null;
+}
+
+export interface OrderBackOfficeResponse {
+	lastRefresh: string;
+	/** @nullable */
+	orderGroups?: OrderBackOfficeOrderGroupDTO[] | null;
+	pendingItems: number;
+	pendingOrders: number;
 }
 
 export interface TableOrderGetBasketRequest {
