@@ -8,7 +8,7 @@
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
 	import AuthCheck from "$lib/components/Check/AuthCheck.svelte";
 	import { status } from "$lib/stores/status";
-	import { onMessageListener, session, subscribeToPushNotifications } from "$lib/firebase";
+	import { session } from "$lib/firebase";
 	import * as signalR from "@microsoft/signalr";
 	import { PUBLIC_API_URL } from "$env/static/public";
 	import { hub } from "$lib/stores/hub";
@@ -16,6 +16,7 @@
 	import OutletCheck from "$lib/components/Check/OutletCheck.svelte";
 	import { page } from "$app/stores";
 	import { onMount } from "svelte";
+	import { Notification } from "$lib/components/Notification";
 
 	$: hideHeader = !$page.route.id?.startsWith("/(salesPeriod)/(clockedIn)/table");
 
@@ -65,28 +66,12 @@
 			},
 		},
 	});
-
-	subscribeToPushNotifications();
-
-	onMount(() => {
-		onMessageListener()
-			.then((payload) => {
-				console.log(payload);
-			})
-			.catch((err) => console.log("failed: ", err));
-
-		// const messaging = getMessaging();
-		// onMessage(messaging, (payload) => {
-		// 	console.log("Message received. ", payload);
-		// 	debugger;
-		// });
-		// console.log("init", messaging);
-	});
 </script>
 
 <AuthCheck>
 	<Toaster />
 	<ModeWatcher />
+	<Notification />
 	<QueryClientProvider client={queryClient}>
 		{#if hideHeader}
 			<Header />

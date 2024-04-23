@@ -39,17 +39,15 @@ export function debounce<T extends (...args: any[]) => any>(
 	};
 }
 
-export const requestNotificationPermission = () => {
-	Notification.requestPermission().then((permission) => {
-		if (permission === "granted") {
-			navigator.serviceWorker.ready.then((registration) => {
-				registration.showNotification("Your are now subscribed to notifications", {
-					body: "Buzz! Buzz!",
-					icon: "/logo.svg",
-				});
-			});
-		}
-	});
+export const requestNotificationPermission = async () => {
+	const permission = await Notification.requestPermission();
+	if (permission === "granted") {
+		const registration = await navigator.serviceWorker.ready;
+		registration.showNotification("Your are now subscribed to notifications", {
+			body: "Buzz! Buzz!",
+			icon: "/logo.svg",
+		});
+	}
 };
 
 export const arrayUnique = <T>(array: Array<T>) => {

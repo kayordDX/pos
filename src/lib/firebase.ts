@@ -33,7 +33,20 @@ export const onMessageListener = () =>
 		});
 	});
 
+export const checkSubscriptionStatus = async () => {
+	if ("serviceWorker" in navigator) {
+		const registration = await navigator.serviceWorker.ready;
+		const subscription = await registration.pushManager.getSubscription();
+		console.log("Subscription", subscription);
+		return subscription !== null;
+	}
+	return false;
+};
+
+const saveTokenToDatabase = async (token: string) => {};
+
 export const subscribeToPushNotifications = async () => {
+	let subscribe = false;
 	// TODO: vapidKey should be in env config
 	try {
 		await navigator.serviceWorker.ready;
@@ -45,12 +58,14 @@ export const subscribeToPushNotifications = async () => {
 			// TODO: Save token in backend and use it to send messages
 			// Send the token to your server and update the UI if necessary
 			console.log(currentToken);
+			subscribe = true;
 		} else {
-			requestNotificationPermission();
+			console.log("Could not generate token");
 		}
 	} catch (err) {
 		console.log("An error occurred while retrieving token. ", err);
 	}
+	return subscribe;
 };
 
 const auth = getAuth(app);
