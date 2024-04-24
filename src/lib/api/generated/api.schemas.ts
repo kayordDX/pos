@@ -351,7 +351,7 @@ export interface NotificationTestRequest {
 export interface NotificationTestNewRequest {
 	body: string;
 	title: string;
-	token: string;
+	userId: string;
 }
 
 export interface NotificationUserRequest {
@@ -753,6 +753,14 @@ export interface EntitiesOrderItemStatus {
 	status: string;
 }
 
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
+}
+
 export interface EntitiesMenuItemExtraGroup {
 	extraGroup: EntitiesExtraGroup;
 	extraGroupId: number;
@@ -777,14 +785,6 @@ export interface EntitiesExtra {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	positionId: number;
 	price: number;
-}
-
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
 }
 
 export interface EntitiesOptionGroup {
@@ -898,6 +898,18 @@ export interface EntitiesMenuSection {
 	subMenuSections?: EntitiesMenuSection[] | null;
 }
 
+export interface EntitiesRole {
+	description: string;
+	isBackOffice: boolean;
+	isFrontLine: boolean;
+	name: string;
+	/** @nullable */
+	outletId?: number | null;
+	roleId: number;
+	/** @nullable */
+	userRole?: EntitiesUserRole[] | null;
+}
+
 /**
  * @nullable
  */
@@ -920,18 +932,6 @@ export interface EntitiesUserRole {
 	user: EntitiesUser;
 	userId: string;
 	userRoleId: number;
-}
-
-export interface EntitiesRole {
-	description: string;
-	isBackOffice: boolean;
-	isFrontLine: boolean;
-	name: string;
-	/** @nullable */
-	outletId?: number | null;
-	roleId: number;
-	/** @nullable */
-	userRole?: EntitiesUserRole[] | null;
 }
 
 /**
@@ -1308,20 +1308,6 @@ export interface EntitiesUserOutlet {
 	id: number;
 	isCurrent: boolean;
 	outletId: number;
-	userId: string;
-}
-
-export interface UserGetNotificationsUserNotificationDTO {
-	/** @nullable */
-	dateExpires?: string | null;
-	/** @nullable */
-	dateRead?: string | null;
-	dateSent: string;
-	dateSentFormatted: string;
-	id: number;
-	/** @nullable */
-	jsonContent?: string | null;
-	notification: string;
 	userId: string;
 }
 

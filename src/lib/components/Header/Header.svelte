@@ -1,7 +1,6 @@
 <script lang="ts">
 	import Menu from "./Menu.svelte";
 	import { goto } from "$app/navigation";
-	import Notifications from "./Notifications.svelte";
 	import { session } from "$lib/firebase";
 </script>
 
@@ -12,7 +11,6 @@
 	</button>
 	<span><slot /></span>
 	<div class="flex gap-2">
-		<Notifications />
 		{#if $session}
 			<Menu />
 		{/if}

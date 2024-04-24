@@ -14,9 +14,6 @@ export interface paths {
   "/user/getRoles": {
     get: operations["UserGetRoles"];
   };
-  "/user/getNotifications": {
-    get: operations["UserGetNotifications"];
-  };
   "/user/assignOutlet": {
     post: operations["UserAssignOutlet"];
   };
@@ -287,20 +284,6 @@ export interface components {
     /** @enum {integer} */
     Order: 0 | 1;
     UserGetRolesRequest: Record<string, never>;
-    UserGetNotificationsUserNotificationDTO: {
-      /** Format: int32 */
-      id: number;
-      userId: string;
-      notification: string;
-      jsonContent?: string | null;
-      /** Format: date-time */
-      dateSent: string;
-      dateSentFormatted: string;
-      /** Format: date-time */
-      dateRead?: string | null;
-      /** Format: date-time */
-      dateExpires?: string | null;
-    };
     EntitiesUserOutlet: {
       /** Format: int32 */
       id: number;
@@ -1176,7 +1159,7 @@ export interface components {
     NotificationTestNewRequest: {
       title: string;
       body: string;
-      token: string;
+      userId: string;
     };
     NotificationTestRequest: {
       message: string;
@@ -1453,26 +1436,6 @@ export interface operations {
         content: {
           "application/json": string[];
         };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  UserGetNotifications: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["UserGetNotificationsUserNotificationDTO"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
       };
       /** @description Server Error */
       500: {
