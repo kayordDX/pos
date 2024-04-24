@@ -70,11 +70,11 @@
 						</Popover.Trigger>
 						<Popover.Content>{tableOrder.user.name}</Popover.Content>
 					</Popover.Root>
-					<div class="max-w-64 line-clamp-2">
-						<div># {tableOrder.id}</div>
+					<div class="max-w-64 line-clamp-2 flex flex-col">
+						<div class="leading-none"># {tableOrder.id}</div>
 						<div class="text-sm font-bold">
 							{tableOrder.table.name} - {tableOrder.table.section?.name}
-							<span class="text-muted-foreground text-sm">({tableOrder.bookingName})</span>
+							<span class="text-muted-foreground text-xs">({tableOrder.bookingName})</span>
 						</div>
 					</div>
 				</div>
