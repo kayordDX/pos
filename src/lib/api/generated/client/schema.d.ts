@@ -479,13 +479,41 @@ export interface components {
     TableOrderOfficeOrderBasedBackOrderGroupDTO: {
       /** Format: int32 */
       orderGroupId: number;
+      tableBooking?: components["schemas"]["TableOrderOfficeOrderBasedBackTableBookingDTO"] | null;
+      /** Format: int32 */
+      tableBookingId: number;
       orderItems?: components["schemas"]["TableOrderOfficeOrderBasedBackOrderItemDTO"][] | null;
+    };
+    TableOrderOfficeOrderBasedBackTableBookingDTO: {
+      /** Format: int32 */
+      id: number;
+      /** Format: int32 */
+      tableId: number;
+      table: components["schemas"]["TableOrderOfficeOrderBasedBackTableDTO"];
+      bookingName: string;
+      /** Format: date-time */
+      bookingDate: string;
+      /** Format: date-time */
+      closeDate?: string | null;
+      user: components["schemas"]["DTOUserDTO"];
+    };
+    TableOrderOfficeOrderBasedBackTableDTO: {
+      /** Format: int32 */
+      tableId: number;
+      name: string;
+      /** Format: int32 */
+      outletId: number;
+      section?: components["schemas"]["TableOrderOfficeOrderBasedBackSectionDTO"] | null;
+    };
+    TableOrderOfficeOrderBasedBackSectionDTO: {
+      name: string;
     };
     TableOrderOfficeOrderBasedBackOrderItemDTO: {
       /** Format: int32 */
       orderItemId: number;
       /** Format: int32 */
       orderGroupId?: number | null;
+      tableBooking?: components["schemas"]["TableOrderOfficeOrderBasedBackTableBookingDTO"] | null;
       /** Format: int32 */
       tableBookingId: number;
       menuItem: components["schemas"]["TableOrderOfficeOrderBasedBackMenuItemDTO"];

@@ -16,50 +16,71 @@
 		await $mutation.mutateAsync({ data: { orderItemStatusId: statusId, tableBookingId: id } });
 		refetch();
 	};
+
+	const height = 400;
+	let clientHeight = 0;
+
+	$: showMore = clientHeight > height;
+	console.log(showMore);
 </script>
 
-<Card.Root class="p-2">
-	<div class="flex justify-between items-center">
-		<div class="flex items-center gap-2">
-			<Popover.Root>
-				<Popover.Trigger>
-					<Avatar.Root>
-						<!-- <Avatar.Image src={tableOrder.user.image} alt={tableOrder.user.name} /> -->
-						<Avatar.Fallback>{getInitials("Jaco Kok")}</Avatar.Fallback>
-					</Avatar.Root>
-				</Popover.Trigger>
-				<Popover.Content>User Name</Popover.Content>
-			</Popover.Root>
-			<div class="max-w-64 line-clamp-2 flex flex-col">
-				<div class="leading-none"># {group.orderGroupId}</div>
-				<div class="text-sm font-bold">
-					Name
-					<span class="text-muted-foreground text-xs">(text)</span>
+<div class="overflow-hidden relative" style={`max-height: ${height}px;`}>
+	<Card.Root class="p-2" style={`height: ${height}px;`}>
+		<div bind:clientHeight>
+			<div class="flex justify-between items-center">
+				<div class="flex items-center gap-2">
+					<Popover.Root>
+						<Popover.Trigger>
+							<Avatar.Root>
+								<Avatar.Image
+									src={group.tableBooking?.user.image}
+									alt={group.tableBooking?.user.name}
+								/>
+								<Avatar.Fallback>{getInitials("Jaco Kok")}</Avatar.Fallback>
+							</Avatar.Root>
+						</Popover.Trigger>
+						<Popover.Content>{group.tableBooking?.user.name}</Popover.Content>
+					</Popover.Root>
+					<div class="max-w-64 line-clamp-2 flex flex-col">
+						<div class="leading-none"># {group.orderGroupId}</div>
+						<div class="text-sm font-bold">
+							{group.tableBooking?.table.name} - {group.tableBooking?.table.section?.name}
+							<span class="text-muted-foreground text-xs">({group.tableBooking?.bookingName})</span>
+						</div>
+					</div>
+				</div>
+				<div class="float-right ml-2">
+					<Drawer.Root>
+						<Drawer.Trigger>
+							<Button><BellElectricIcon class="mr-2 h-4 w-4" />Actions</Button>
+						</Drawer.Trigger>
+						<Drawer.Content>
+							<Drawer.Header>
+								<Drawer.Title># Table</Drawer.Title>
+								<Drawer.Description>Table Actions</Drawer.Description>
+							</Drawer.Header>
+							<Drawer.Footer>
+								<Drawer.Close>
+									<Button class="w-full" on:click={() => readyAll(group.orderGroupId, 5)}
+										>Ready All</Button
+									>
+								</Drawer.Close>
+							</Drawer.Footer>
+						</Drawer.Content>
+					</Drawer.Root>
 				</div>
 			</div>
+			<div class="flex flex-col gap-2 mt-2">
+				{#each group.orderItems ?? [] as item}
+					<Item {item} {refetch} />
+				{/each}
+			</div>
 		</div>
-		<div class="float-right ml-2">
-			<Drawer.Root>
-				<Drawer.Trigger>
-					<Button><BellElectricIcon class="mr-2 h-4 w-4" />Actions</Button>
-				</Drawer.Trigger>
-				<Drawer.Content>
-					<Drawer.Header>
-						<Drawer.Title># Table</Drawer.Title>
-						<Drawer.Description>Table Actions</Drawer.Description>
-					</Drawer.Header>
-					<Drawer.Footer>
-						<Drawer.Close>
-							<!-- <Button class="w-full" on:click={() => readyAll(tableOrder.id, 5)}>Ready All</Button> -->
-						</Drawer.Close>
-					</Drawer.Footer>
-				</Drawer.Content>
-			</Drawer.Root>
+	</Card.Root>
+	{#if showMore}
+		<div class="flex justify-center">
+			<Button variant="secondary" class="absolute left-0 right-0 w-full bottom-0 h-7">Expand</Button
+			>
 		</div>
-	</div>
-	<div class="flex flex-col gap-2 mt-2">
-		{#each group.orderItems ?? [] as item}
-			<Item {item} {refetch} />
-		{/each}
-	</div>
-</Card.Root>
+	{/if}
+</div>

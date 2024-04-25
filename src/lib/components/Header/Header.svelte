@@ -2,17 +2,23 @@
 	import Menu from "./Menu.svelte";
 	import { goto } from "$app/navigation";
 	import { session } from "$lib/firebase";
+	import { header } from "$lib/stores/header";
+	import { page } from "$app/stores";
+
+	$: kitchen = $page.route.id?.includes("kitchen") ?? false;
 </script>
 
-<div class="bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary">
-	<button class="flex items-center" on:click={() => goto("/")}>
-		<img src="/logo.svg" alt="kayord-logo" class="h-10" />
-		<span class="hidden md:block">ayord.Pos</span>
-	</button>
-	<span><slot /></span>
-	<div class="flex gap-2">
-		{#if $session}
-			<Menu />
-		{/if}
+{#if $header || !kitchen}
+	<div class="bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary">
+		<button class="flex items-center" on:click={() => goto("/")}>
+			<img src="/logo.svg" alt="kayord-logo" class="h-10" />
+			<span class="hidden md:block">ayord.Pos</span>
+		</button>
+		<span><slot /></span>
+		<div class="flex gap-2">
+			{#if $session}
+				<Menu />
+			{/if}
+		</div>
 	</div>
-</div>
+{/if}

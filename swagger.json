@@ -4419,10 +4419,23 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "orderGroupId"
+          "orderGroupId",
+          "tableBookingId"
         ],
         "properties": {
           "orderGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBooking": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TableOrderOfficeOrderBasedBackTableBookingDTO"
+              }
+            ]
+          },
+          "tableBookingId": {
             "type": "integer",
             "format": "int32"
           },
@@ -4432,6 +4445,88 @@
             "items": {
               "$ref": "#/components/schemas/TableOrderOfficeOrderBasedBackOrderItemDTO"
             }
+          }
+        }
+      },
+      "TableOrderOfficeOrderBasedBackTableBookingDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "tableId",
+          "table",
+          "bookingName",
+          "bookingDate",
+          "user"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "table": {
+            "$ref": "#/components/schemas/TableOrderOfficeOrderBasedBackTableDTO"
+          },
+          "bookingName": {
+            "type": "string"
+          },
+          "bookingDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "closeDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "user": {
+            "$ref": "#/components/schemas/DTOUserDTO"
+          }
+        }
+      },
+      "TableOrderOfficeOrderBasedBackTableDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableId",
+          "name",
+          "outletId"
+        ],
+        "properties": {
+          "tableId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "section": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TableOrderOfficeOrderBasedBackSectionDTO"
+              }
+            ]
+          }
+        }
+      },
+      "TableOrderOfficeOrderBasedBackSectionDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
           }
         }
       },
@@ -4459,6 +4554,14 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "tableBooking": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TableOrderOfficeOrderBasedBackTableBookingDTO"
+              }
+            ]
           },
           "tableBookingId": {
             "type": "integer",
