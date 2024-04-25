@@ -4,6 +4,7 @@
 	import { ConciergeBellIcon } from "lucide-svelte";
 	import { createTableOrderUpdateOrderItem } from "$lib/api";
 	export let refetch: () => void;
+	export let isHistory = false;
 	let open = false;
 
 	const mutation = createTableOrderUpdateOrderItem();
@@ -90,9 +91,18 @@
 						<Drawer.Description>{item.menuItem.name}</Drawer.Description>
 					</Drawer.Header>
 					<Drawer.Footer>
-						<Drawer.Close>
-							<Button on:click={() => setStatus(5, item.orderItemId)} class="w-full">Ready</Button>
-						</Drawer.Close>
+						{#if isHistory}
+							<Drawer.Close>
+								<Button on:click={() => setStatus(7, item.orderItemId)} class="w-full"
+									>Recall Item
+								</Button>
+							</Drawer.Close>
+						{:else}
+							<Drawer.Close>
+								<Button on:click={() => setStatus(5, item.orderItemId)} class="w-full">Ready</Button
+								>
+							</Drawer.Close>
+						{/if}
 						<Drawer.Close>
 							<Button
 								variant="destructive"

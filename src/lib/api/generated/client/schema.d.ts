@@ -26,6 +26,9 @@ export interface paths {
   "/order/updateOrderItem": {
     post: operations["TableOrderUpdateOrderItem"];
   };
+  "/order/updateOrderGroup": {
+    post: operations["TableOrderUpdateGroupOrder"];
+  };
   "/order/sendKitchen": {
     post: operations["TableOrderSendToKitchen"];
   };
@@ -313,6 +316,15 @@ export interface components {
       /** Format: int32 */
       orderItemStatusId: number;
     };
+    TableOrderUpdateGroupOrderResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderUpdateGroupOrderRequest: {
+      /** Format: int32 */
+      orderGroupId: number;
+      /** Format: int32 */
+      orderItemStatusId: number;
+    };
     TableOrderSendToKitchenResponse: {
       isSuccess: boolean;
     };
@@ -479,6 +491,10 @@ export interface components {
     TableOrderOfficeOrderBasedBackOrderGroupDTO: {
       /** Format: int32 */
       orderGroupId: number;
+      /** Format: date-time */
+      lastDate: string;
+      /** Format: int32 */
+      priority: number;
       tableBooking?: components["schemas"]["TableOrderOfficeOrderBasedBackTableBookingDTO"] | null;
       /** Format: int32 */
       tableBookingId: number;
@@ -528,6 +544,8 @@ export interface components {
       orderUpdatedFormatted: string;
       /** Format: int32 */
       orderItemStatusId: number;
+      /** Format: int32 */
+      priority: number;
       orderItemStatus: components["schemas"]["TableOrderOfficeOrderBasedBackOrderItemStatusDTO"];
       orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
       orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
@@ -875,6 +893,8 @@ export interface components {
       isCancelled: boolean;
       isBillable: boolean;
       notify: boolean;
+      /** Format: int32 */
+      priority: number;
     };
     OrderClearBasketRequest: {
       /** Format: int32 */
@@ -1560,6 +1580,27 @@ export interface operations {
       };
     };
   };
+  TableOrderUpdateGroupOrder: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["TableOrderUpdateGroupOrderRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableOrderUpdateGroupOrderResponse"];
+        };
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   TableOrderSendToKitchen: {
     requestBody: {
       content: {
@@ -1662,8 +1703,9 @@ export interface operations {
   };
   TableOrderOfficeOrderBasedBack: {
     parameters: {
-      query?: {
+      query: {
         divisionIds?: string | null;
+        complete: boolean;
       };
     };
     responses: {

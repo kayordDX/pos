@@ -3,9 +3,8 @@
 	import Error from "$lib/components/Error.svelte";
 	import Item from "./Item.svelte";
 	import { BellElectricIcon } from "lucide-svelte";
-	import { createTableOrderUpdateTableOrder } from "$lib/api";
 	import Masonry from "svelte-bricks";
-	import { createTableOrderBackOffice } from "$lib/api";
+	import { createTableOrderBackOffice, createTableOrderUpdateGroupOrder } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { getInitials } from "$lib/util";
 
@@ -20,9 +19,9 @@
 		return new Date(date).toLocaleTimeString();
 	};
 
-	const mutation = createTableOrderUpdateTableOrder();
+	const mutation = createTableOrderUpdateGroupOrder();
 	const readyAll = async (id: number, statusId: number) => {
-		await $mutation.mutateAsync({ data: { orderItemStatusId: statusId, tableBookingId: id } });
+		await $mutation.mutateAsync({ data: { orderItemStatusId: statusId, orderGroupId: id } });
 		$query.refetch();
 	};
 

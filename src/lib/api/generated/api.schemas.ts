@@ -81,6 +81,7 @@ export type TableOrderGetBillParams = {
 
 export type TableOrderOfficeOrderBasedBackParams = {
 	divisionIds?: string | null;
+	complete: boolean;
 };
 
 export type TableOrderBackOfficeParams = {
@@ -750,6 +751,7 @@ export interface EntitiesOrderItemStatus {
 	isFrontLine: boolean;
 	notify: boolean;
 	orderItemStatusId: number;
+	priority: number;
 	status: string;
 }
 
@@ -1113,6 +1115,7 @@ export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
 	orderReceivedFormatted: string;
 	orderUpdated: string;
 	orderUpdatedFormatted: string;
+	priority: number;
 	/** @nullable */
 	tableBooking?: TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking;
 	tableBookingId: number;
@@ -1160,9 +1163,11 @@ export type TableOrderOfficeOrderBasedBackOrderGroupDTOTableBooking =
 	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
 
 export interface TableOrderOfficeOrderBasedBackOrderGroupDTO {
+	lastDate: string;
 	orderGroupId: number;
 	/** @nullable */
 	orderItems?: TableOrderOfficeOrderBasedBackOrderItemDTO[] | null;
+	priority: number;
 	/** @nullable */
 	tableBooking?: TableOrderOfficeOrderBasedBackOrderGroupDTOTableBooking;
 	tableBookingId: number;
@@ -1325,6 +1330,15 @@ export interface TableOrderSendToKitchenRequest {
 }
 
 export interface TableOrderSendToKitchenResponse {
+	isSuccess: boolean;
+}
+
+export interface TableOrderUpdateGroupOrderRequest {
+	orderGroupId: number;
+	orderItemStatusId: number;
+}
+
+export interface TableOrderUpdateGroupOrderResponse {
 	isSuccess: boolean;
 }
 

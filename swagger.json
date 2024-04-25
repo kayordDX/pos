@@ -302,6 +302,49 @@
         ]
       }
     },
+    "/order/updateOrderGroup": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "operationId": "TableOrderUpdateGroupOrder",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableOrderUpdateGroupOrderRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderUpdateGroupOrderResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/order/sendKitchen": {
       "post": {
         "tags": [
@@ -513,6 +556,14 @@
             "schema": {
               "type": "string",
               "nullable": true
+            }
+          },
+          {
+            "name": "complete",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
             }
           }
         ],
@@ -3870,6 +3921,36 @@
           }
         }
       },
+      "TableOrderUpdateGroupOrderResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "isSuccess"
+        ],
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TableOrderUpdateGroupOrderRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderGroupId",
+          "orderItemStatusId"
+        ],
+        "properties": {
+          "orderGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "TableOrderSendToKitchenResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -4420,10 +4501,20 @@
         "additionalProperties": false,
         "required": [
           "orderGroupId",
+          "lastDate",
+          "priority",
           "tableBookingId"
         ],
         "properties": {
           "orderGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lastDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "priority": {
             "type": "integer",
             "format": "int32"
           },
@@ -4543,6 +4634,7 @@
           "orderReceivedFormatted",
           "orderUpdatedFormatted",
           "orderItemStatusId",
+          "priority",
           "orderItemStatus"
         ],
         "properties": {
@@ -4593,6 +4685,10 @@
             "type": "string"
           },
           "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "priority": {
             "type": "integer",
             "format": "int32"
           },
@@ -5788,7 +5884,8 @@
           "isComplete",
           "isCancelled",
           "isBillable",
-          "notify"
+          "notify",
+          "priority"
         ],
         "properties": {
           "orderItemStatusId": {
@@ -5818,6 +5915,10 @@
           },
           "notify": {
             "type": "boolean"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

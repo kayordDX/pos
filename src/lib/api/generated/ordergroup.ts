@@ -23,13 +23,13 @@ import type { ErrorType } from "../mutator/useCustomClient";
 export const useTableOrderOfficeOrderBasedBackHook = () => {
 	const tableOrderOfficeOrderBasedBack = useCustomClient<TableOrderOfficeOrderBasedBackResponse>();
 
-	return (params?: TableOrderOfficeOrderBasedBackParams) => {
+	return (params: TableOrderOfficeOrderBasedBackParams) => {
 		return tableOrderOfficeOrderBasedBack({ url: `/orderGroup/getOrders`, method: "GET", params });
 	};
 };
 
 export const getTableOrderOfficeOrderBasedBackQueryKey = (
-	params?: TableOrderOfficeOrderBasedBackParams
+	params: TableOrderOfficeOrderBasedBackParams
 ) => {
 	return [`/orderGroup/getOrders`, ...(params ? [params] : [])] as const;
 };
@@ -38,7 +38,7 @@ export const useTableOrderOfficeOrderBasedBackQueryOptions = <
 	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderOfficeOrderBasedBackHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params?: TableOrderOfficeOrderBasedBackParams,
+	params: TableOrderOfficeOrderBasedBackParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<
@@ -75,7 +75,7 @@ export const createTableOrderOfficeOrderBasedBack = <
 	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderOfficeOrderBasedBackHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params?: TableOrderOfficeOrderBasedBackParams,
+	params: TableOrderOfficeOrderBasedBackParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<

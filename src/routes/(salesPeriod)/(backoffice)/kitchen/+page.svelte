@@ -8,7 +8,7 @@
 	import { header } from "$lib/stores/header";
 	import { Maximize2Icon, Minimize2Icon } from "lucide-svelte";
 
-	const query = createTableOrderOfficeOrderBasedBack({ divisionIds: "1,3" });
+	const query = createTableOrderOfficeOrderBasedBack({ divisionIds: "1,3", complete: false });
 	$: console.log($query.data);
 
 	const getTime = (date: string) => {
@@ -33,6 +33,9 @@
 			</div>
 			<div class="flex gap-1 items-center">
 				<div>
+					<a href="/history">
+						<Badge variant="secondary" class="truncate">History</Badge>
+					</a>
 					<button on:click={() => $query.refetch()}>
 						<Badge variant="secondary" class="truncate">
 							Refreshed: {getTime($query.data.lastRefresh)}

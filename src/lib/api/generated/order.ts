@@ -28,6 +28,8 @@ import type {
 	TableOrderRemoveItemResponse,
 	TableOrderSendToKitchenRequest,
 	TableOrderSendToKitchenResponse,
+	TableOrderUpdateGroupOrderRequest,
+	TableOrderUpdateGroupOrderResponse,
 	TableOrderUpdateOrderItemRequest,
 	TableOrderUpdateOrderItemResponse,
 	TableOrderUpdateTableOrderRequest,
@@ -175,6 +177,77 @@ export const createTableOrderUpdateOrderItem = <
 	TContext
 > => {
 	const mutationOptions = useTableOrderUpdateOrderItemMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const useTableOrderUpdateGroupOrderHook = () => {
+	const tableOrderUpdateGroupOrder = useCustomClient<TableOrderUpdateGroupOrderResponse>();
+
+	return (tableOrderUpdateGroupOrderRequest: BodyType<TableOrderUpdateGroupOrderRequest>) => {
+		return tableOrderUpdateGroupOrder({
+			url: `/order/updateOrderGroup`,
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			data: tableOrderUpdateGroupOrderRequest,
+		});
+	};
+};
+
+export const useTableOrderUpdateGroupOrderMutationOptions = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateGroupOrderHook>>>,
+		TError,
+		{ data: BodyType<TableOrderUpdateGroupOrderRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateGroupOrderHook>>>,
+	TError,
+	{ data: BodyType<TableOrderUpdateGroupOrderRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const tableOrderUpdateGroupOrder = useTableOrderUpdateGroupOrderHook();
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateGroupOrderHook>>>,
+		{ data: BodyType<TableOrderUpdateGroupOrderRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderUpdateGroupOrder(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderUpdateGroupOrderMutationResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateGroupOrderHook>>>
+>;
+export type TableOrderUpdateGroupOrderMutationBody = BodyType<TableOrderUpdateGroupOrderRequest>;
+export type TableOrderUpdateGroupOrderMutationError = ErrorType<InternalErrorResponse>;
+
+export const createTableOrderUpdateGroupOrder = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateGroupOrderHook>>>,
+		TError,
+		{ data: BodyType<TableOrderUpdateGroupOrderRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderUpdateGroupOrderHook>>>,
+	TError,
+	{ data: BodyType<TableOrderUpdateGroupOrderRequest> },
+	TContext
+> => {
+	const mutationOptions = useTableOrderUpdateGroupOrderMutationOptions(options);
 
 	return createMutation(mutationOptions);
 };
