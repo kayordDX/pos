@@ -4,12 +4,16 @@
 	import { session } from "$lib/firebase";
 	import { header } from "$lib/stores/header";
 	import { page } from "$app/stores";
+	import { slide } from "svelte/transition";
 
 	$: kitchen = $page.route.id?.includes("kitchen") ?? false;
 </script>
 
 {#if $header || !kitchen}
-	<div class="bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary">
+	<div
+		class="bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary"
+		transition:slide
+	>
 		<button class="flex items-center" on:click={() => goto("/")}>
 			<img src="/logo.svg" alt="kayord-logo" class="h-10" />
 			<span class="hidden md:block">ayord.Pos</span>

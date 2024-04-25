@@ -18,7 +18,7 @@
 	let [minColWidth, maxColWidth, gap] = [500, 600, 10];
 </script>
 
-<div class="m-2">
+<div class="m-1">
 	{#if $query.isPending}
 		<Loader />
 	{/if}

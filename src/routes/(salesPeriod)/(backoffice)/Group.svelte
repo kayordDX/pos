@@ -4,7 +4,7 @@
 		type TableOrderOfficeOrderBasedBackOrderGroupDTO,
 	} from "$lib/api";
 	import { getInitials } from "$lib/util";
-	import { Avatar, Button, Card, Drawer, Popover } from "@kayord/ui";
+	import { Avatar, Button, Card, Dialog, Drawer, Popover } from "@kayord/ui";
 	import { BellElectricIcon } from "lucide-svelte";
 	import Item from "./Item.svelte";
 
@@ -78,9 +78,23 @@
 		</div>
 	</Card.Root>
 	{#if showMore}
-		<div class="flex justify-center">
-			<Button variant="secondary" class="absolute left-0 right-0 w-full bottom-0 h-7">Expand</Button
-			>
-		</div>
+		<Dialog.Root>
+			<Dialog.Trigger>
+				<div class="flex justify-center">
+					<Button variant="secondary" class="absolute left-0 right-0 w-full bottom-0 h-7">
+						Expand
+					</Button>
+				</div>
+			</Dialog.Trigger>
+			<Dialog.Content class="h-screen ">
+				<Dialog.Header class="w-full">
+					<Dialog.Title>Are you sure absolutely sure?</Dialog.Title>
+					<Dialog.Description>
+						This action cannot be undone. This will permanently delete your account and remove your
+						data from our servers.
+					</Dialog.Description>
+				</Dialog.Header>
+			</Dialog.Content>
+		</Dialog.Root>
 	{/if}
 </div>

@@ -38,11 +38,11 @@
 		<div>
 			<div>{item.menuItem.name}</div>
 			{#if (item.orderItemOptions ?? []).length > 0}
-				<div class="text-muted-foreground mt-2 text-sm">
-					Options
+				<div class="text-muted-foreground mt-1 text-sm">
 					<div class="ml-4">
 						{#each item.orderItemOptions ?? [] as option}
 							<div>
+								{">"}
 								<span class="text-foreground">{option.option.optionGroup.name}:</span>
 								<span>{option.option.name}</span>
 							</div>
@@ -52,11 +52,11 @@
 			{/if}
 
 			{#if (item.orderItemExtras ?? []).length > 0}
-				<div class="text-muted-foreground mt-2 text-sm">
-					Extras
+				<div class="text-muted-foreground mt-1 text-sm">
 					<div class="ml-4">
 						{#each item.orderItemExtras ?? [] as extra}
 							<div>
+								{"+"}
 								<span class="text-foreground">{extra.extra.extraGroup.name}:</span>
 								<span> {extra.extra.name}</span>
 							</div>
