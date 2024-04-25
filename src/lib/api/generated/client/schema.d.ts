@@ -38,14 +38,14 @@ export interface paths {
   "/backOffice/getOrders": {
     get: operations["TableOrderBackOffice"];
   };
+  "/orderGroup/getOrders": {
+    get: operations["TableOrderOfficeOrderBasedBack"];
+  };
   "/order/getBill": {
     get: operations["TableOrderGetBill"];
   };
   "/order/getBasket": {
     get: operations["TableOrderGetBasket"];
-  };
-  "/orderGroup/getOrders": {
-    get: operations["OrderBackOffice"];
   };
   "/order/clearBasket": {
     delete: operations["OrderClearBasket"];
@@ -467,6 +467,61 @@ export interface components {
       pendingItems: number;
     };
     TableOrderBackOfficeRequest: Record<string, never>;
+    TableOrderOfficeOrderBasedBackResponse: {
+      orderGroups?: components["schemas"]["TableOrderOfficeOrderBasedBackOrderGroupDTO"][] | null;
+      /** Format: date-time */
+      lastRefresh: string;
+      /** Format: int32 */
+      pendingOrders: number;
+      /** Format: int32 */
+      pendingItems: number;
+    };
+    TableOrderOfficeOrderBasedBackOrderGroupDTO: {
+      /** Format: int32 */
+      orderGroupId: number;
+      orderItems?: components["schemas"]["TableOrderOfficeOrderBasedBackOrderItemDTO"][] | null;
+    };
+    TableOrderOfficeOrderBasedBackOrderItemDTO: {
+      /** Format: int32 */
+      orderItemId: number;
+      /** Format: int32 */
+      orderGroupId?: number | null;
+      /** Format: int32 */
+      tableBookingId: number;
+      menuItem: components["schemas"]["TableOrderOfficeOrderBasedBackMenuItemDTO"];
+      /** Format: int32 */
+      divisionId: number;
+      note?: string | null;
+      /** Format: date-time */
+      orderReceived: string;
+      /** Format: date-time */
+      orderUpdated: string;
+      orderReceivedFormatted: string;
+      orderUpdatedFormatted: string;
+      /** Format: int32 */
+      orderItemStatusId: number;
+      orderItemStatus: components["schemas"]["TableOrderOfficeOrderBasedBackOrderItemStatusDTO"];
+      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+    };
+    TableOrderOfficeOrderBasedBackMenuItemDTO: {
+      /** Format: int32 */
+      menuItemId: number;
+      name: string;
+      description: string;
+      /** Format: decimal */
+      price: number;
+      /** Format: int32 */
+      position: number;
+      /** Format: int32 */
+      divisionId: number;
+    };
+    TableOrderOfficeOrderBasedBackOrderItemStatusDTO: {
+      /** Format: int32 */
+      orderItemStatusId: number;
+      status: string;
+    };
+    TableOrderOfficeOrderBasedBackRequest: Record<string, never>;
     TableOrderGetBillResponse: {
       orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
       /** Format: decimal */
@@ -563,61 +618,6 @@ export interface components {
       price: number;
     };
     TableOrderGetBasketRequest: Record<string, never>;
-    OrderBackOfficeResponse: {
-      orderGroups?: components["schemas"]["OrderBackOfficeOrderGroupDTO"][] | null;
-      /** Format: date-time */
-      lastRefresh: string;
-      /** Format: int32 */
-      pendingOrders: number;
-      /** Format: int32 */
-      pendingItems: number;
-    };
-    OrderBackOfficeOrderGroupDTO: {
-      /** Format: int32 */
-      orderGroupId: number;
-      orderItems?: components["schemas"]["OrderBackOfficeOrderItemDTO"][] | null;
-    };
-    OrderBackOfficeOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      orderGroupId?: number | null;
-      /** Format: int32 */
-      tableBookingId: number;
-      menuItem: components["schemas"]["OrderBackOfficeMenuItemDTO"];
-      /** Format: int32 */
-      divisionId: number;
-      note?: string | null;
-      /** Format: date-time */
-      orderReceived: string;
-      /** Format: date-time */
-      orderUpdated: string;
-      orderReceivedFormatted: string;
-      orderUpdatedFormatted: string;
-      /** Format: int32 */
-      orderItemStatusId: number;
-      orderItemStatus: components["schemas"]["OrderBackOfficeOrderItemStatusDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-    };
-    OrderBackOfficeMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      description: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      position: number;
-      /** Format: int32 */
-      divisionId: number;
-    };
-    OrderBackOfficeOrderItemStatusDTO: {
-      /** Format: int32 */
-      orderItemStatusId: number;
-      status: string;
-    };
-    OrderBackOfficeRequest: Record<string, never>;
     EntitiesOrderItem: {
       /** Format: int32 */
       orderItemId: number;
@@ -1632,6 +1632,31 @@ export interface operations {
       };
     };
   };
+  TableOrderOfficeOrderBasedBack: {
+    parameters: {
+      query?: {
+        divisionIds?: string | null;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableOrderOfficeOrderBasedBackResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   TableOrderGetBill: {
     parameters: {
       query: {
@@ -1665,31 +1690,6 @@ export interface operations {
         content: {
           "application/json": components["schemas"]["TableOrderGetBasketResponse"];
         };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  OrderBackOffice: {
-    parameters: {
-      query?: {
-        divisionIds?: string | null;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["OrderBackOfficeResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
       };
       /** @description Server Error */
       500: {

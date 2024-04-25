@@ -71,16 +71,16 @@ export type TableGetMyBookedParams = {
 	myBooking: boolean;
 };
 
-export type OrderBackOfficeParams = {
-	divisionIds?: string | null;
-};
-
 export type TableOrderGetBasketParams = {
 	tableBookingId: number;
 };
 
 export type TableOrderGetBillParams = {
 	tableBookingId: number;
+};
+
+export type TableOrderOfficeOrderBasedBackParams = {
+	divisionIds?: string | null;
 };
 
 export type TableOrderBackOfficeParams = {
@@ -985,59 +985,6 @@ export interface EntitiesOrderGroup {
 	orderItems?: EntitiesOrderItem[] | null;
 }
 
-export interface OrderBackOfficeRequest {
-	[key: string]: any;
-}
-
-export interface OrderBackOfficeOrderItemStatusDTO {
-	orderItemStatusId: number;
-	status: string;
-}
-
-export interface OrderBackOfficeMenuItemDTO {
-	description: string;
-	divisionId: number;
-	menuItemId: number;
-	name: string;
-	position: number;
-	price: number;
-}
-
-export interface OrderBackOfficeOrderItemDTO {
-	divisionId: number;
-	menuItem: OrderBackOfficeMenuItemDTO;
-	/** @nullable */
-	note?: string | null;
-	/** @nullable */
-	orderGroupId?: number | null;
-	/** @nullable */
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	/** @nullable */
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	orderItemStatus: OrderBackOfficeOrderItemStatusDTO;
-	orderItemStatusId: number;
-	orderReceived: string;
-	orderReceivedFormatted: string;
-	orderUpdated: string;
-	orderUpdatedFormatted: string;
-	tableBookingId: number;
-}
-
-export interface OrderBackOfficeOrderGroupDTO {
-	orderGroupId: number;
-	/** @nullable */
-	orderItems?: OrderBackOfficeOrderItemDTO[] | null;
-}
-
-export interface OrderBackOfficeResponse {
-	lastRefresh: string;
-	/** @nullable */
-	orderGroups?: OrderBackOfficeOrderGroupDTO[] | null;
-	pendingItems: number;
-	pendingOrders: number;
-}
-
 export interface TableOrderGetBasketRequest {
 	[key: string]: any;
 }
@@ -1105,6 +1052,20 @@ export interface DTOTableBookingDTO {
 	userId: string;
 }
 
+export interface TableOrderGetBillBillOrderItemDTO {
+	menuItem: TableOrderGetBillBillMenuItemDTO;
+	menuItemId: number;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	/** @nullable */
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	tableBooking: DTOTableBookingDTO;
+	tableBookingId: number;
+}
+
 export interface TableOrderGetBillResponse {
 	balance: number;
 	billDate: string;
@@ -1114,6 +1075,59 @@ export interface TableOrderGetBillResponse {
 	total: number;
 	totalExVAT: number;
 	vat: number;
+}
+
+export interface TableOrderOfficeOrderBasedBackRequest {
+	[key: string]: any;
+}
+
+export interface TableOrderOfficeOrderBasedBackOrderItemStatusDTO {
+	orderItemStatusId: number;
+	status: string;
+}
+
+export interface TableOrderOfficeOrderBasedBackMenuItemDTO {
+	description: string;
+	divisionId: number;
+	menuItemId: number;
+	name: string;
+	position: number;
+	price: number;
+}
+
+export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
+	divisionId: number;
+	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	orderGroupId?: number | null;
+	/** @nullable */
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	/** @nullable */
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	orderItemStatus: TableOrderOfficeOrderBasedBackOrderItemStatusDTO;
+	orderItemStatusId: number;
+	orderReceived: string;
+	orderReceivedFormatted: string;
+	orderUpdated: string;
+	orderUpdatedFormatted: string;
+	tableBookingId: number;
+}
+
+export interface TableOrderOfficeOrderBasedBackOrderGroupDTO {
+	orderGroupId: number;
+	/** @nullable */
+	orderItems?: TableOrderOfficeOrderBasedBackOrderItemDTO[] | null;
+}
+
+export interface TableOrderOfficeOrderBasedBackResponse {
+	lastRefresh: string;
+	/** @nullable */
+	orderGroups?: TableOrderOfficeOrderBasedBackOrderGroupDTO[] | null;
+	pendingItems: number;
+	pendingOrders: number;
 }
 
 export interface TableOrderBackOfficeRequest {
@@ -1179,20 +1193,6 @@ export interface DTOOrderItemOptionDTO {
 	optionId: number;
 	orderItemId: number;
 	orderItemOptionId: number;
-}
-
-export interface TableOrderGetBillBillOrderItemDTO {
-	menuItem: TableOrderGetBillBillMenuItemDTO;
-	menuItemId: number;
-	/** @nullable */
-	note?: string | null;
-	/** @nullable */
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	/** @nullable */
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	tableBooking: DTOTableBookingDTO;
-	tableBookingId: number;
 }
 
 export interface TableOrderOfficeOrderItemStatusDTO {

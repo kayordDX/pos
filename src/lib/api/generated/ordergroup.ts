@@ -14,33 +14,35 @@ import type {
 } from "@tanstack/svelte-query";
 import type {
 	InternalErrorResponse,
-	OrderBackOfficeParams,
-	OrderBackOfficeResponse,
+	TableOrderOfficeOrderBasedBackParams,
+	TableOrderOfficeOrderBasedBackResponse,
 } from "./api.schemas";
 import { useCustomClient } from "../mutator/useCustomClient";
 import type { ErrorType } from "../mutator/useCustomClient";
 
-export const useOrderBackOfficeHook = () => {
-	const orderBackOffice = useCustomClient<OrderBackOfficeResponse>();
+export const useTableOrderOfficeOrderBasedBackHook = () => {
+	const tableOrderOfficeOrderBasedBack = useCustomClient<TableOrderOfficeOrderBasedBackResponse>();
 
-	return (params?: OrderBackOfficeParams) => {
-		return orderBackOffice({ url: `/orderGroup/getOrders`, method: "GET", params });
+	return (params?: TableOrderOfficeOrderBasedBackParams) => {
+		return tableOrderOfficeOrderBasedBack({ url: `/orderGroup/getOrders`, method: "GET", params });
 	};
 };
 
-export const getOrderBackOfficeQueryKey = (params?: OrderBackOfficeParams) => {
+export const getTableOrderOfficeOrderBasedBackQueryKey = (
+	params?: TableOrderOfficeOrderBasedBackParams
+) => {
 	return [`/orderGroup/getOrders`, ...(params ? [params] : [])] as const;
 };
 
-export const useOrderBackOfficeQueryOptions = <
-	TData = Awaited<ReturnType<ReturnType<typeof useOrderBackOfficeHook>>>,
+export const useTableOrderOfficeOrderBasedBackQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderOfficeOrderBasedBackHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params?: OrderBackOfficeParams,
+	params?: TableOrderOfficeOrderBasedBackParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<
-				Awaited<ReturnType<ReturnType<typeof useOrderBackOfficeHook>>>,
+				Awaited<ReturnType<ReturnType<typeof useTableOrderOfficeOrderBasedBackHook>>>,
 				TError,
 				TData
 			>
@@ -49,42 +51,42 @@ export const useOrderBackOfficeQueryOptions = <
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getOrderBackOfficeQueryKey(params);
+	const queryKey = queryOptions?.queryKey ?? getTableOrderOfficeOrderBasedBackQueryKey(params);
 
-	const orderBackOffice = useOrderBackOfficeHook();
+	const tableOrderOfficeOrderBasedBack = useTableOrderOfficeOrderBasedBackHook();
 
 	const queryFn: QueryFunction<
-		Awaited<ReturnType<ReturnType<typeof useOrderBackOfficeHook>>>
-	> = () => orderBackOffice(params);
+		Awaited<ReturnType<ReturnType<typeof useTableOrderOfficeOrderBasedBackHook>>>
+	> = () => tableOrderOfficeOrderBasedBack(params);
 
 	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<ReturnType<typeof useOrderBackOfficeHook>>>,
+		Awaited<ReturnType<ReturnType<typeof useTableOrderOfficeOrderBasedBackHook>>>,
 		TError,
 		TData
 	> & { queryKey: QueryKey };
 };
 
-export type OrderBackOfficeQueryResult = NonNullable<
-	Awaited<ReturnType<ReturnType<typeof useOrderBackOfficeHook>>>
+export type TableOrderOfficeOrderBasedBackQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useTableOrderOfficeOrderBasedBackHook>>>
 >;
-export type OrderBackOfficeQueryError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderOfficeOrderBasedBackQueryError = ErrorType<void | InternalErrorResponse>;
 
-export const createOrderBackOffice = <
-	TData = Awaited<ReturnType<ReturnType<typeof useOrderBackOfficeHook>>>,
+export const createTableOrderOfficeOrderBasedBack = <
+	TData = Awaited<ReturnType<ReturnType<typeof useTableOrderOfficeOrderBasedBackHook>>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params?: OrderBackOfficeParams,
+	params?: TableOrderOfficeOrderBasedBackParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<
-				Awaited<ReturnType<ReturnType<typeof useOrderBackOfficeHook>>>,
+				Awaited<ReturnType<ReturnType<typeof useTableOrderOfficeOrderBasedBackHook>>>,
 				TError,
 				TData
 			>
 		>;
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
-	const queryOptions = useOrderBackOfficeQueryOptions(params, options);
+	const queryOptions = useTableOrderOfficeOrderBasedBackQueryOptions(params, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;
