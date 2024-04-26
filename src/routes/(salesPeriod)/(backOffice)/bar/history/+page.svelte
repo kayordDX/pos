@@ -1,0 +1,5 @@
+<script lang="ts">
+	import BackOffice from "../../BackOffice.svelte";
+</script>
+
+<BackOffice type="bar" divisionIds="2,4" isHistory={true} />

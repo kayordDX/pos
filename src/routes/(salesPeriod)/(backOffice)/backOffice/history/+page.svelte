@@ -1,0 +1,5 @@
+<script lang="ts">
+	import BackOffice from "../../BackOffice.svelte";
+</script>
+
+<BackOffice type="backOffice" isHistory={true} />

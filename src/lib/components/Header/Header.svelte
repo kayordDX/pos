@@ -6,10 +6,11 @@
 	import { page } from "$app/stores";
 	import { slide } from "svelte/transition";
 
-	$: kitchen = $page.route.id?.includes("kitchen") ?? false;
+	$: hideHeaderPages =
+		($page.route.id?.includes("kitchen") ?? false) || ($page.route.id?.includes("bar") ?? false);
 </script>
 
-{#if $header || !kitchen}
+{#if $header || !hideHeaderPages}
 	<div
 		class="bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary"
 		transition:slide
