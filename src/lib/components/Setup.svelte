@@ -15,7 +15,6 @@
 		MessageCircleWarningIcon,
 		StopCircleIcon,
 	} from "lucide-svelte";
-	import { hub } from "$lib/stores/hub";
 	import { requestNotificationPermission } from "$lib/util";
 
 	const query = createOutletList();
@@ -103,15 +102,6 @@
 					<CircleXIcon class="text-red-400" />
 				{/if}
 				Android
-			</li>
-			<li class="flex gap-2 items-center">
-				5.
-				{#if $hub?.state == "Connected"}
-					<CheckCircleIcon class="text-green-400" />
-				{:else}
-					<CircleXIcon class="text-red-400" />
-				{/if}
-				SignalR
 			</li>
 			<li class="flex gap-2 items-center">
 				6.
