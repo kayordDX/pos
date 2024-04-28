@@ -17,7 +17,6 @@
 			max={1000}
 			step={10}
 			onValueChange={(v) => {
-				console.log(v);
 				$backOffice = v[0] ?? 500;
 			}}
 		/>
