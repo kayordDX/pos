@@ -1,9 +1,7 @@
 <script lang="ts">
 	import { backOffice } from "$lib/stores/backOffice";
-	import { Badge, Button, Drawer, Popover, Slider } from "@kayord/ui";
+	import { Badge, Popover, Slider } from "@kayord/ui";
 	import { Settings2Icon } from "lucide-svelte";
-
-	$: console.log($backOffice);
 </script>
 
 <Popover.Root>
