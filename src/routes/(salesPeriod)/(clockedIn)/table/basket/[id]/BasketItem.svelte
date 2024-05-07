@@ -1,14 +1,17 @@
 <script lang="ts">
-	import { Button, Card } from "@kayord/ui";
+	import { Badge, Button, Card } from "@kayord/ui";
 	import {
+		createTableOrderCopyItem,
 		createTableOrderRemoveItem,
 		createTableOrderUpdateOrderItem,
 		type DTOOrderItemExtraDTO,
 		type DTOOrderItemOptionDTO,
 	} from "$lib/api";
-	import { TrashIcon } from "lucide-svelte";
+	import { CopyIcon, TrashIcon } from "lucide-svelte";
+	import ItemCount from "./ItemCount.svelte";
 
 	export let id: number;
+	export let quantity: number;
 	export let price: number;
 	export let note: string | null | undefined = undefined;
 	export let options: Array<DTOOrderItemOptionDTO>;
@@ -16,14 +19,21 @@
 	export let refetch: () => any;
 
 	const removeItem = createTableOrderRemoveItem();
+	const copyItem = createTableOrderCopyItem();
 
 	const remove = async () => {
 		await $removeItem.mutateAsync({ data: { orderItemId: id } });
 		refetch();
 	};
+
+	const copy = async () => {
+		await $copyItem.mutateAsync({ data: { orderItemId: id } });
+		refetch();
+	};
 </script>
 
-<Card.Root class="p-4 flex justify-between">
+<Card.Root class="p-4 flex justify-between relative">
+	<ItemCount value={quantity} />
 	<div class="flex flex-col gap-2 justify-center">
 		<slot />
 		{#if (options ?? []).length > 0}
@@ -60,8 +70,11 @@
 			</div>
 		{/if}
 	</div>
-	<div class="flex items-center gap-2">
-		<div class="font-bold">R {price.toFixed(2)}</div>
+	<div class="flex items-center gap-2 mr-1">
+		<div class="font-bold mr-2">R {price.toFixed(2)}</div>
+		<Button variant="outline" on:click={copy} size="icon">
+			<CopyIcon class="h-4 w-4" />
+		</Button>
 		<Button variant="destructive" on:click={remove} size="icon">
 			<TrashIcon class="h-4 w-4" />
 		</Button>

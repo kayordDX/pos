@@ -5,13 +5,16 @@
 		type DTOMenuItemDTOBasic,
 		type DTOOptionDTO,
 	} from "$lib/api";
-	import { Button, Checkbox, Drawer, Form, Textarea } from "@kayord/ui";
+	import { Button, Checkbox, Drawer, Form, Input, Textarea } from "@kayord/ui";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { Field, Control, FieldErrors, Fieldset, Legend, Label } from "@kayord/ui/formsnap";
 	import SpecialExtra from "./SpecialExtra.svelte";
 	import { arrayUnique } from "$lib/util";
+	import Error from "$lib/components/Error.svelte";
+	import { getError } from "$lib/types";
+	import Quantity from "$lib/components/Quantity/Quantity.svelte";
 
 	export let data: DTOMenuItemDTO;
 	export let menuItem: DTOMenuItemDTOBasic;
@@ -27,6 +30,7 @@
 	const schema = z.object({
 		note: z.string(),
 		extras: z.array(z.number()),
+		quantity: z.coerce.number().min(1),
 		options: z.array(z.number()).superRefine((val, ctx) => {
 			data.menuItemOptionGroups.map((o) => {
 				const maxSelections = o.optionGroup.maxSelections;
@@ -64,6 +68,7 @@
 						extraIds: arrayUnique(data.extras.concat(currentExtras)),
 						optionIds: data.options,
 						note: data.note,
+						quantity: data.quantity,
 					},
 				],
 				tableBookingId: tableBookingId,
@@ -72,7 +77,7 @@
 		open = false;
 	};
 
-	const form = superForm(defaults(zod(schema)), {
+	const form = superForm(defaults({ quantity: 1 }, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
 		onUpdate({ form }) {
@@ -189,7 +194,16 @@
 			<FieldErrors />
 		</Field>
 	</div>
+	<Field {form} name="quantity">
+		<Control>
+			<Quantity bind:value={$formData.quantity} />
+		</Control>
+		<FieldErrors />
+	</Field>
 	<Drawer.Footer>
+		{#if $mutation.isError}
+			<Error message={getError($mutation.error).message} />
+		{/if}
 		<Button type="submit">Add</Button>
 	</Drawer.Footer>
 </form>

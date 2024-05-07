@@ -76,6 +76,7 @@
 					note={item.note}
 					options={item.orderItemOptions ?? []}
 					extras={item.orderItemExtras ?? []}
+					quantity={item.quantity}
 					{refetch}
 				>
 					<div class="p-1 flex items-center gap-2">

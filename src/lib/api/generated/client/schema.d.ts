@@ -50,6 +50,9 @@ export interface paths {
   "/order/getBasket": {
     get: operations["TableOrderGetBasket"];
   };
+  "/order/copyItem": {
+    post: operations["TableOrderCopyItem"];
+  };
   "/order/clearBasket": {
     delete: operations["OrderClearBasket"];
   };
@@ -190,6 +193,12 @@ export interface paths {
   };
   "/business/{id}": {
     get: operations["BusinessGet"];
+  };
+  "/adjustment/{outletId}": {
+    get: operations["AdjustmentGetAll"];
+  };
+  "/adjustment": {
+    post: operations["AdjustmentCreate"];
   };
 }
 
@@ -544,8 +553,6 @@ export interface components {
       orderUpdatedFormatted: string;
       /** Format: int32 */
       orderItemStatusId: number;
-      /** Format: int32 */
-      priority: number;
       orderItemStatus: components["schemas"]["TableOrderOfficeOrderBasedBackOrderItemStatusDTO"];
       orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
       orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
@@ -566,6 +573,8 @@ export interface components {
       /** Format: int32 */
       orderItemStatusId: number;
       status: string;
+      /** Format: int32 */
+      priority: number;
     };
     TableOrderOfficeOrderBasedBackRequest: Record<string, never>;
     TableOrderGetBillResponse: {
@@ -583,6 +592,7 @@ export interface components {
       tipAmount: number;
       /** Format: date-time */
       billDate: string;
+      adjustments?: components["schemas"]["EntitiesAdjustment"][] | null;
     };
     TableOrderGetBillBillOrderItemDTO: {
       /** Format: int32 */
@@ -637,6 +647,25 @@ export interface components {
       paymentTypeId: number;
       paymentTypeName: string;
     };
+    EntitiesAdjustment: {
+      /** Format: int32 */
+      adjustmentId: number;
+      adjustmentType: components["schemas"]["EntitiesAdjustmentType"];
+      /** Format: int32 */
+      adjustmentTypeId: number;
+      /** Format: date-time */
+      created: string;
+      userId: string;
+      /** Format: decimal */
+      amount: number;
+      note?: string | null;
+    };
+    EntitiesAdjustmentType: {
+      /** Format: int32 */
+      adjustmentTypeId: number;
+      name: string;
+      description?: string | null;
+    };
     TableOrderGetBillRequest: Record<string, never>;
     TableOrderGetBasketResponse: {
       orderItems: components["schemas"]["TableOrderGetBasketBillOrderItemDTO"][];
@@ -651,6 +680,8 @@ export interface components {
       tableBooking: components["schemas"]["DTOTableBookingDTO"];
       /** Format: int32 */
       menuItemId: number;
+      /** Format: int32 */
+      quantity: number;
       menuItem: components["schemas"]["TableOrderGetBasketBillMenuItemDTO"];
       orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
       orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
@@ -664,6 +695,13 @@ export interface components {
       price: number;
     };
     TableOrderGetBasketRequest: Record<string, never>;
+    TableOrderCopyItemResponse: {
+      isSuccess: boolean;
+    };
+    TableOrderCopyItemRequest: {
+      /** Format: int32 */
+      orderItemId: number;
+    };
     EntitiesOrderItem: {
       /** Format: int32 */
       orderItemId: number;
@@ -711,6 +749,7 @@ export interface components {
       userId: string;
       user: components["schemas"]["EntitiesUser"];
       orderItems?: components["schemas"]["EntitiesOrderItem"][] | null;
+      adjustments?: components["schemas"]["EntitiesAdjustment"][] | null;
     };
     EntitiesUser: {
       userId: string;
@@ -911,6 +950,8 @@ export interface components {
       optionIds?: number[] | null;
       extraIds?: number[] | null;
       note: string;
+      /** Format: int32 */
+      quantity: number;
     };
     TableBookingGetHistoryResponse: {
       /** Format: int32 */
@@ -1421,6 +1462,16 @@ export interface components {
     BusinessCreateRequest: {
       name: string;
     };
+    AdjustmentGetAllRequest: Record<string, never>;
+    AdjustmentCreateRequest: {
+      /** Format: int32 */
+      tableBookingId: number;
+      /** Format: int32 */
+      adjustmentTypeId: number;
+      /** Format: decimal */
+      amount: number;
+      note?: string | null;
+    };
   };
   responses: never;
   parameters: never;
@@ -1769,6 +1820,31 @@ export interface operations {
       };
     };
   };
+  TableOrderCopyItem: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["TableOrderCopyItemRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["TableOrderCopyItemResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
   OrderClearBasket: {
     requestBody: {
       content: {
@@ -2084,7 +2160,7 @@ export interface operations {
   SectionUpdate: {
     parameters: {
       path: {
-        sectionId: string;
+        sectionId: number;
       };
     };
     requestBody: {
@@ -2677,7 +2753,7 @@ export interface operations {
   MenuUpdate: {
     parameters: {
       path: {
-        menuId: string;
+        menuId: number;
       };
     };
     requestBody: {
@@ -3118,6 +3194,57 @@ export interface operations {
       200: {
         content: {
           "application/json": components["schemas"]["EntitiesBusiness"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  AdjustmentGetAll: {
+    parameters: {
+      path: {
+        outletId: number;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["EntitiesAdjustmentType"][];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  AdjustmentCreate: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["AdjustmentCreateRequest"];
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "text/plain": unknown;
+          "application/json": unknown;
         };
       };
       /** @description Unauthorized */

@@ -681,6 +681,57 @@
         }
       }
     },
+    "/order/copyItem": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "operationId": "TableOrderCopyItem",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableOrderCopyItemRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderCopyItemResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/order/clearBasket": {
       "delete": {
         "tags": [
@@ -1272,7 +1323,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -2520,7 +2572,8 @@
             "in": "path",
             "required": true,
             "schema": {
-              "type": "string"
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
@@ -3471,6 +3524,110 @@
                 "schema": {
                   "$ref": "#/components/schemas/EntitiesBusiness"
                 }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/adjustment/{outletId}": {
+      "get": {
+        "tags": [
+          "Adjustment"
+        ],
+        "operationId": "AdjustmentGetAll",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntitiesAdjustmentType"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/adjustment": {
+      "post": {
+        "tags": [
+          "Adjustment"
+        ],
+        "operationId": "AdjustmentCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdjustmentCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -4634,7 +4791,6 @@
           "orderReceivedFormatted",
           "orderUpdatedFormatted",
           "orderItemStatusId",
-          "priority",
           "orderItemStatus"
         ],
         "properties": {
@@ -4685,10 +4841,6 @@
             "type": "string"
           },
           "orderItemStatusId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "priority": {
             "type": "integer",
             "format": "int32"
           },
@@ -4752,7 +4904,8 @@
         "additionalProperties": false,
         "required": [
           "orderItemStatusId",
-          "status"
+          "status",
+          "priority"
         ],
         "properties": {
           "orderItemStatusId": {
@@ -4761,6 +4914,10 @@
           },
           "status": {
             "type": "string"
+          },
+          "priority": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -4817,6 +4974,13 @@
           "billDate": {
             "type": "string",
             "format": "date-time"
+          },
+          "adjustments": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesAdjustment"
+            }
           }
         }
       },
@@ -4993,6 +5157,67 @@
           }
         }
       },
+      "EntitiesAdjustment": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "adjustmentId",
+          "adjustmentType",
+          "adjustmentTypeId",
+          "created",
+          "userId",
+          "amount"
+        ],
+        "properties": {
+          "adjustmentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "adjustmentType": {
+            "$ref": "#/components/schemas/EntitiesAdjustmentType"
+          },
+          "adjustmentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EntitiesAdjustmentType": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "adjustmentTypeId",
+          "name"
+        ],
+        "properties": {
+          "adjustmentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
       "TableOrderGetBillRequest": {
         "type": "object",
         "additionalProperties": false
@@ -5025,6 +5250,7 @@
           "tableBookingId",
           "tableBooking",
           "menuItemId",
+          "quantity",
           "menuItem"
         ],
         "properties": {
@@ -5040,6 +5266,10 @@
             "$ref": "#/components/schemas/DTOTableBookingDTO"
           },
           "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
             "type": "integer",
             "format": "int32"
           },
@@ -5091,6 +5321,31 @@
       "TableOrderGetBasketRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "TableOrderCopyItemResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "isSuccess"
+        ],
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TableOrderCopyItemRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "EntitiesOrderItem": {
         "type": "object",
@@ -5254,6 +5509,13 @@
             "nullable": true,
             "items": {
               "$ref": "#/components/schemas/EntitiesOrderItem"
+            }
+          },
+          "adjustments": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesAdjustment"
             }
           }
         }
@@ -5960,7 +6222,8 @@
         "additionalProperties": false,
         "required": [
           "menuItemId",
-          "note"
+          "note",
+          "quantity"
         ],
         "properties": {
           "menuItemId": {
@@ -5985,6 +6248,10 @@
           },
           "note": {
             "type": "string"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -7771,6 +8038,37 @@
             "type": "string",
             "minLength": 1,
             "nullable": false
+          }
+        }
+      },
+      "AdjustmentGetAllRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "AdjustmentCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId",
+          "adjustmentTypeId",
+          "amount"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "adjustmentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
           }
         }
       }

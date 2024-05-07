@@ -18,5 +18,10 @@
 {/if}
 
 {#if $query.data}
-	<Bill data={$query.data} bookingId={Number($page.params.id)} isReadOnly />
+	<Bill
+		data={$query.data}
+		bookingId={Number($page.params.id)}
+		isReadOnly
+		refetch={$query.refetch}
+	/>
 {/if}
