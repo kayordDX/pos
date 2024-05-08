@@ -42,19 +42,21 @@
 			<div class="font-semibold">Order Details</div>
 			<Items data={data?.orderItems ?? []} />
 
-			<Separator class="my-2" />
-			<ul class="grid gap-3">
-				<li class="flex items-center justify-between font-semibold">
-					<span>Adjustments</span>
-					<span></span>
-				</li>
-				{#each data?.adjustments ?? [] as adjustment}
-					<li class="flex items-center justify-between">
-						<span class="text-muted-foreground">{adjustment.adjustmentType.name}</span>
-						<span>{adjustment.amount.toFixed(2)}</span>
+			{#if (data?.adjustments?.length ?? 0) > 0}
+				<Separator class="my-2" />
+				<ul class="grid gap-3">
+					<li class="flex items-center justify-between font-semibold">
+						<span>Adjustments</span>
+						<span></span>
 					</li>
-				{/each}
-			</ul>
+					{#each data?.adjustments ?? [] as adjustment}
+						<li class="flex items-center justify-between">
+							<span class="text-muted-foreground">{adjustment.adjustmentType.name}</span>
+							<span>{adjustment.amount.toFixed(2)}</span>
+						</li>
+					{/each}
+				</ul>
+			{/if}
 
 			<Separator class="my-2" />
 			<ul class="grid gap-3">
