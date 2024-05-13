@@ -93,7 +93,13 @@
 				<Field {form} name="amount">
 					<Control let:attrs>
 						<Form.Label>Amount</Form.Label>
-						<Input {...attrs} bind:value={$formData.amount} tabindex={0} type="number" />
+						<Input
+							{...attrs}
+							bind:value={$formData.amount}
+							tabindex={0}
+							type="number"
+							step="0.01"
+						/>
 					</Control>
 					<FieldErrors class="text-destructive text-sm" />
 				</Field>
