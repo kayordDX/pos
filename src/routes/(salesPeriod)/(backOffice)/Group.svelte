@@ -28,7 +28,7 @@
 <div style={`height: ${height}px`}>
 	<ScrollArea class="overflow-hidden h-full">
 		<Card.Root
-			class={`p-2 min-w-[500px] max-w-[600px] ${group.priority > 10 ? "border-4 border-destructive" : ""}`}
+			class={`p-2 ${group.priority > 10 ? "border-4 border-destructive" : ""}`}
 			style={`min-height: ${height}px`}
 		>
 			<div>
