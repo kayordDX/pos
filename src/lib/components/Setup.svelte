@@ -8,14 +8,9 @@
 	import { goto } from "$app/navigation";
 	import { status } from "$lib/stores/status";
 	import { networkInformationStore } from "$lib/stores/network";
-	import {
-		CheckCircleIcon,
-		CircleXIcon,
-		CrossIcon,
-		MessageCircleWarningIcon,
-		StopCircleIcon,
-	} from "lucide-svelte";
+	import { CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon } from "lucide-svelte";
 	import { requestNotificationPermission } from "$lib/util";
+	import { onMount } from "svelte";
 
 	const query = createOutletList();
 
@@ -55,6 +50,22 @@
 
 	const isChrome = /chrome/i.test(navigator.userAgent);
 	const isAndroid = /android/i.test(navigator.userAgent);
+
+	let hasNotifyPermission = false;
+	let serviceWorker: ServiceWorkerRegistration | undefined;
+
+	const getNotifyPermission = () => {
+		hasNotifyPermission = Notification.permission == "granted";
+	};
+
+	const getServiceWorker = async () => {
+		serviceWorker = await navigator.serviceWorker.ready;
+	};
+
+	onMount(async () => {
+		getNotifyPermission();
+		await getServiceWorker();
+	});
 </script>
 
 <Card.Root class="p-5 m-5">
@@ -85,6 +96,7 @@
 				{/if}
 				Network
 			</li>
+
 			<li class="flex gap-2 items-center">
 				3.
 				{#if isChrome}
@@ -94,6 +106,7 @@
 				{/if}
 				Browser
 			</li>
+
 			<li class="flex gap-2 items-center">
 				4.
 				{#if isAndroid}
@@ -103,23 +116,20 @@
 				{/if}
 				Android
 			</li>
+
 			<li class="flex gap-2 items-center">
 				6.
-				{#await navigator.serviceWorker.ready}
-					Loading...
-				{:then worker}
-					{#if worker.active?.state == "activated"}
-						<CheckCircleIcon class="text-green-400" />
-					{:else}
-						<CircleXIcon class="text-red-400" />
-					{/if}
-				{/await}
-
+				{#if serviceWorker?.active?.state == "activated"}
+					<CheckCircleIcon class="text-green-400" />
+				{:else}
+					<CircleXIcon class="text-red-400" />
+				{/if}
 				Service Worker
 			</li>
+
 			<li class="flex gap-2 items-center">
 				7.
-				{#if Notification.permission == "granted"}
+				{#if hasNotifyPermission}
 					<CheckCircleIcon class="text-green-400" />
 				{:else}
 					<CircleXIcon class="text-red-400" />
