@@ -15,10 +15,6 @@
 				<Button href="manager/cashUp">Cash Up</Button>
 			</Card.Footer>
 		</Card.Root>
-
-		<Card.Root class="p-2 mt-4">
-			<Button href="/backoffice">Dashboard</Button>
-		</Card.Root>
 	{:else}
 		<Button href="/manager/salesPeriod">Open Sales Period</Button>
 	{/if}

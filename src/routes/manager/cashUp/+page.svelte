@@ -18,6 +18,7 @@
 			body: { salesPeriodId: $status?.salesPeriodId ?? 0 },
 		});
 		if (response.ok) {
+			await status.getStatus();
 			goto("/");
 		} else {
 			toast.error("Could not close sales period");
@@ -68,6 +69,13 @@
 					</Card.Header>
 				</Card.Root>
 			</div>
+
+			{#if $cashUpQuery.data.openTableCount <= 0}
+				<Card.Root class="min-w-52 p-2">
+					<Button class="w-full" on:click={closeSalesPeriod}>Cash up and Close Sales Period</Button>
+				</Card.Root>
+			{/if}
+
 			{#each d.userCashUps as cash}
 				<Card.Root>
 					<Card.Header class="pb-2">
@@ -150,13 +158,6 @@
 							{/each}
 						</div>
 					</Card.Content>
-					{#if $cashUpQuery.data.openTableCount <= 0}
-						<Card.Footer>
-							<Button class="w-full" on:click={closeSalesPeriod}>
-								Cash up and Close Sales Period
-							</Button>
-						</Card.Footer>
-					{/if}
 				</Card.Root>
 			{/each}
 		</div>
