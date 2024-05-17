@@ -20,7 +20,8 @@
 	import CategoriesList from "./CategoriesList.svelte";
 	import { debounce } from "$lib/util";
 
-	const query = createMenuList({ outletId: $status?.outletId });
+	let query = createMenuList({ outletId: $status?.outletId });
+	$: query = createMenuList({ outletId: $status?.outletId });
 
 	let itemParams: MenuGetItemsGetMenuItemsParams = {
 		menuId: $selection.menuId,
@@ -45,9 +46,7 @@
 		const target = event.target as HTMLInputElement;
 		$page.url.searchParams.set("search", target.value);
 		history.replaceState(history.state, "", $page.url);
-
 		itemParams.search = target.value;
-		// goto(`?${$page.url.searchParams.toString()}`);
 	};
 	const debouncedHandleInput = debounce(setSearchString, 500);
 
@@ -59,8 +58,17 @@
 
 	const setMenuSelection = (menuId: number) => {
 		$selection.menuId = menuId;
+		sectionParams.menuId = $selection.menuId;
+		itemParams.menuId = $selection.menuId;
 	};
-	$: $query.data && ($query.data?.length ?? 0) == 1 && setMenuSelection($query.data[0]?.id ?? 0);
+
+	const checkMenuSelection = () => {
+		if ($query && $selection.menuId == 0 && $query.data && ($query.data?.length ?? 0) >= 1) {
+			setMenuSelection($query.data[0]?.id ?? 0);
+		}
+	};
+
+	$: checkMenuSelection();
 </script>
 
 <div class="flex justify-center flex-col mb-12 mt-2 items-center">
