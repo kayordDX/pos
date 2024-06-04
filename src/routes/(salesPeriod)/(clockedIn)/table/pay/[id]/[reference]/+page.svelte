@@ -27,7 +27,7 @@
 	};
 
 	const cancelPayment = () => {
-		goto(`/table/pay/${$page.params.id}`);
+		goto(`/table/bill/${$page.params.id}`);
 	};
 
 	const paymentCheck = () => {
