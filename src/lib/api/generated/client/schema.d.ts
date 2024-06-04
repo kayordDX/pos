@@ -308,6 +308,8 @@ export interface components {
       /** Format: int32 */
       outletId: number;
       outlet: components["schemas"]["EntitiesOutlet"];
+      /** Format: int32 */
+      position: number;
     };
     EntitiesPaymentType: {
       /** Format: int32 */

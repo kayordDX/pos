@@ -4043,7 +4043,8 @@
           "paymentTypeId",
           "paymentType",
           "outletId",
-          "outlet"
+          "outlet",
+          "position"
         ],
         "properties": {
           "paymentTypeId": {
@@ -4059,6 +4060,10 @@
           },
           "outlet": {
             "$ref": "#/components/schemas/EntitiesOutlet"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

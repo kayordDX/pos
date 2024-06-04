@@ -13,8 +13,8 @@ export default defineConfig({
 			clean: true,
 			override: {
 				mutator: {
-					path: "../mutator/useCustomClient.ts",
-					name: "useCustomClient",
+					path: "../mutator/customInstance.ts",
+					name: "customInstance",
 				},
 				query: {
 					signal: false,

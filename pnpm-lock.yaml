@@ -30,7 +30,7 @@ importers:
         specifier: ^3.1.1
         version: 3.1.1(svelte@4.2.17)(vite@5.2.12(@types/node@20.14.1))
       '@tanstack/svelte-query':
-        specifier: ^5.40.1
+        specifier: 5.40.1
         version: 5.40.1(svelte@4.2.17)
       '@types/qs':
         specifier: ^6.9.15
@@ -63,8 +63,8 @@ importers:
         specifier: ^0.9.7
         version: 0.9.7
       orval:
-        specifier: 6.28.2
-        version: 6.28.2(openapi-types@12.1.3)(typescript@5.4.5)
+        specifier: 6.29.1
+        version: 6.29.1(openapi-types@12.1.3)(typescript@5.4.5)
       postcss:
         specifier: ^8.4.38
         version: 8.4.38
@@ -913,29 +913,29 @@ packages:
     resolution: {integrity: sha512-oGB+UxlgWcgQkgwo8GcEGwemoTFt3FIO9ababBmaGwXIoBKZ+GTy0pP185beGg7Llih/NSHSV2XAs1lnznocSg==}
     engines: {node: '>= 8'}
 
-  '@orval/angular@6.28.2':
-    resolution: {integrity: sha512-DRgopv3I7p45pynBjM0XKv02/csqq5C6aWEtXn7M1oETAWozDhylOuRF51dyURrU96y3s860D/jfMAWQFv3A6w==}
+  '@orval/angular@6.29.1':
+    resolution: {integrity: sha512-nxoDP/m5B+Y5hilxbVHDuCb7LP9WPW250iVuxUHiQLCYFfrQiMJVizIHGZoBS1tx911qbHqFHB7XKHFsGqY1Zw==}
 
-  '@orval/axios@6.28.2':
-    resolution: {integrity: sha512-pT5w1d+bY/gRg6RIR+58gc3ZaNxfqm+NY16AWFgRLganj+KEQ1fqhpyqTjuWJNVCrQ676NpnJSyTvIRsARO91g==}
+  '@orval/axios@6.29.1':
+    resolution: {integrity: sha512-qNRfPqSUiuA7m5aUMCBI1+ANJTjHl65ivpLTstfKExf1rvFqZ7gJpGBOGTcxaZdzwBbkN7Zm2CsGBpsWYxDmDg==}
 
-  '@orval/core@6.28.2':
-    resolution: {integrity: sha512-nHsL/M9jUm0s1m6mCjN14t33ldhXp16MDiYci/ujuMbi99niF66DiGly2o7DEsbbm9pAS9QsjuISlZhPHm7j8A==}
+  '@orval/core@6.29.1':
+    resolution: {integrity: sha512-InWH4heF+2KT2e8Qxoa+w8bourNl/MIr2+camJnGbbX6RzsWmfvGCtfW2kiaYMPc4RnGwTg7Qvfqeung2Dj4GQ==}
 
-  '@orval/hono@6.28.2':
-    resolution: {integrity: sha512-/g+5p7Cxkoo9AmGFKQYXD9mYmrCRvmmmuE5F4BcoBmcfXL9ieu3AYS0EIkPhc9mmZCPbf2pr/W9X8DQwN8Ek1g==}
+  '@orval/hono@6.29.1':
+    resolution: {integrity: sha512-nA4TpWRtGBzDok+BZl6yA4PZbmrXfaasuV0AfM9vmqlpEWn+X/x3ASzOrMBK2OkXc7oDfOToaaiq7CLIfEP8+g==}
 
-  '@orval/mock@6.28.2':
-    resolution: {integrity: sha512-9KLnU4HwLHrTkJfgpqzOUsEsYKGxqHdRRMDiarR0ZSjE+Qx7unT3wGwNQeHo3C0pw1oBVDgIm4g/muUWgJ0Blw==}
+  '@orval/mock@6.29.1':
+    resolution: {integrity: sha512-l8UEtE1EOX40EHcl4qtu2IeQSRExqc63ekX84BqSWUZx0XicqZRzR348dqd3BB5qaPXKal6Y4ChX3qDeiuDJOw==}
 
-  '@orval/query@6.28.2':
-    resolution: {integrity: sha512-/0fPsqsqpGvAHCeqAbccsJxcDEqFzM0acTOBUAnDJn6uv+wTThqpk9RI9U6TE34kPftDQGBD386EIev7pcNtVw==}
+  '@orval/query@6.29.1':
+    resolution: {integrity: sha512-voJ3WO0AzQmfFxH0iQc2HsKVlzq7cy4Qik8sLT85upehpmJa/UlFjXr23FaW8SKkIG4kS2t80imCmpMfEezTbw==}
 
-  '@orval/swr@6.28.2':
-    resolution: {integrity: sha512-EcuNsu6mQx3FK5mkhU9Xy4+6RXRBsTZwqqBhNU7bP3ZbDzBWMOiwl8MEle14C7lEpoG0HK7dOHQiCuOd4vhF/A==}
+  '@orval/swr@6.29.1':
+    resolution: {integrity: sha512-/B7czuGVtWZ9GYeq2E7C8JuoOfd4wm94Qtu0E1gNTSFWgD0rLx3ZSEvR4cmt46t3tUbOw17Ra0k8lJg8T1MPAQ==}
 
-  '@orval/zod@6.28.2':
-    resolution: {integrity: sha512-V5aHwADXa/HxJEu+MmX7rImJ0Krv7ThzDDQDvoPh/F+cWunA/fpviDoRe+ydVuzsM4h7uBVmp1MHJGAYZr8v/w==}
+  '@orval/zod@6.29.1':
+    resolution: {integrity: sha512-CPrcB7HnBoEtFKLvHSHB2vB3f1NlvI/eKd3P0wE7DsCn+c7YBXpRoOPxHpxIER+Y2kFUBh3DqKDLlRtYgg4JHA==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -1426,6 +1426,10 @@ packages:
     resolution: {integrity: sha512-b8um+L1RzM3WDSzvhm6gIz1yfTbBt6YTlcEKAvsmqCZZFw46z626lVj9j1yEPW33H5H+lBQpZMP1k8l+78Ha0A==}
     engines: {node: '>=8'}
 
+  braces@3.0.3:
+    resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
+    engines: {node: '>=8'}
+
   browserslist@4.23.0:
     resolution: {integrity: sha512-QW8HiM1shhT2GuzkvklfjcKDiWFXHOeFCIA/huJPwHsslwcydgk7X+z2zXpEijP98UCY7HbubZt5J2Zgvf0CaQ==}
     engines: {node: ^6 || ^7 || ^8 || ^9 || ^10 || ^11 || ^12 || >=13.7}
@@ -1808,6 +1812,10 @@ packages:
 
   fill-range@7.0.1:
     resolution: {integrity: sha512-qOo9F+dMUmC2Lcb4BbVvnKJxTPjCm+RRpe4gDuGrzkL7mEVl/djYSu2OdQ2Pa302N4oqkSg9ir6jaLWJ2USVpQ==}
+    engines: {node: '>=8'}
+
+  fill-range@7.1.1:
+    resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
     engines: {node: '>=8'}
 
   find-up@5.0.0:
@@ -2255,6 +2263,10 @@ packages:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
     engines: {node: '>=8.6'}
 
+  micromatch@4.0.7:
+    resolution: {integrity: sha512-LPP/3KorzCwBxfeUuZmaR6bG2kdeHSbe0P2tY3FLRU4vYrjYz5hI4QZwV0njUx3jeuKe67YukQ1LSPZBKDqO/Q==}
+    engines: {node: '>=8.6'}
+
   mimic-fn@2.1.0:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
@@ -2419,8 +2431,8 @@ packages:
     resolution: {integrity: sha512-6IpQ7mKUxRcZNLIObR0hz7lxsapSSIYNZJwXPGeF0mTVqGKFIXj1DQcMoT22S3ROcLyY/rz0PWaWZ9ayWmad9g==}
     engines: {node: '>= 0.8.0'}
 
-  orval@6.28.2:
-    resolution: {integrity: sha512-Q8YipEbazvx1grzHG0smkOWDHYrD6xlktkJdOtRDmUJajLXqfGvIVK0Q4joXcfuWXaTlD6ttH/ndnSiUWZB3tg==}
+  orval@6.29.1:
+    resolution: {integrity: sha512-hYGuPNucbHZeQgSpcoujuR6GzRKbHhl59zFMt6bxZd6XkeEONhGAqOLETAFQ9og/arOlPOMvchy6COCnrEKlRQ==}
     hasBin: true
 
   p-limit@3.1.0:
@@ -3200,6 +3212,11 @@ packages:
 
   yaml@2.4.2:
     resolution: {integrity: sha512-B3VqDZ+JAg1nZpaEmWtTXUlBneoGx6CPM9b0TENK6aoSu5t73dItudwdgmi6tHlIZZId4dZ9skcAQ2UbcyAeVA==}
+    engines: {node: '>= 14'}
+    hasBin: true
+
+  yaml@2.4.3:
+    resolution: {integrity: sha512-sntgmxj8o7DE7g/Qi60cqpLBA3HG3STcDA0kO+WfB05jEKhZMbY7umNm2rBpQvsmZ16/lPXCJGW2672dgOUkrg==}
     engines: {node: '>= 14'}
     hasBin: true
 
@@ -4007,23 +4024,23 @@ snapshots:
       '@nodelib/fs.scandir': 2.1.5
       fastq: 1.17.1
 
-  '@orval/angular@6.28.2(openapi-types@12.1.3)':
+  '@orval/angular@6.29.1(openapi-types@12.1.3)':
     dependencies:
-      '@orval/core': 6.28.2(openapi-types@12.1.3)
+      '@orval/core': 6.29.1(openapi-types@12.1.3)
     transitivePeerDependencies:
       - encoding
       - openapi-types
       - supports-color
 
-  '@orval/axios@6.28.2(openapi-types@12.1.3)':
+  '@orval/axios@6.29.1(openapi-types@12.1.3)':
     dependencies:
-      '@orval/core': 6.28.2(openapi-types@12.1.3)
+      '@orval/core': 6.29.1(openapi-types@12.1.3)
     transitivePeerDependencies:
       - encoding
       - openapi-types
       - supports-color
 
-  '@orval/core@6.28.2(openapi-types@12.1.3)':
+  '@orval/core@6.29.1(openapi-types@12.1.3)':
     dependencies:
       '@apidevtools/swagger-parser': 10.1.0(openapi-types@12.1.3)
       '@ibm-cloud/openapi-ruleset': 1.17.0
@@ -4042,7 +4059,7 @@ snapshots:
       lodash.uniq: 4.5.0
       lodash.uniqby: 4.7.0
       lodash.uniqwith: 4.5.0
-      micromatch: 4.0.5
+      micromatch: 4.0.7
       openapi3-ts: 4.2.2
       swagger2openapi: 7.0.8
     transitivePeerDependencies:
@@ -4050,19 +4067,19 @@ snapshots:
       - openapi-types
       - supports-color
 
-  '@orval/hono@6.28.2(openapi-types@12.1.3)':
+  '@orval/hono@6.29.1(openapi-types@12.1.3)':
     dependencies:
-      '@orval/core': 6.28.2(openapi-types@12.1.3)
-      '@orval/zod': 6.28.2(openapi-types@12.1.3)
+      '@orval/core': 6.29.1(openapi-types@12.1.3)
+      '@orval/zod': 6.29.1(openapi-types@12.1.3)
       lodash.uniq: 4.5.0
     transitivePeerDependencies:
       - encoding
       - openapi-types
       - supports-color
 
-  '@orval/mock@6.28.2(openapi-types@12.1.3)':
+  '@orval/mock@6.29.1(openapi-types@12.1.3)':
     dependencies:
-      '@orval/core': 6.28.2(openapi-types@12.1.3)
+      '@orval/core': 6.29.1(openapi-types@12.1.3)
       lodash.get: 4.4.2
       lodash.omit: 4.5.0
       openapi3-ts: 4.2.2
@@ -4071,26 +4088,26 @@ snapshots:
       - openapi-types
       - supports-color
 
-  '@orval/query@6.28.2(openapi-types@12.1.3)':
+  '@orval/query@6.29.1(openapi-types@12.1.3)':
     dependencies:
-      '@orval/core': 6.28.2(openapi-types@12.1.3)
+      '@orval/core': 6.29.1(openapi-types@12.1.3)
       lodash.omitby: 4.6.0
     transitivePeerDependencies:
       - encoding
       - openapi-types
       - supports-color
 
-  '@orval/swr@6.28.2(openapi-types@12.1.3)':
+  '@orval/swr@6.29.1(openapi-types@12.1.3)':
     dependencies:
-      '@orval/core': 6.28.2(openapi-types@12.1.3)
+      '@orval/core': 6.29.1(openapi-types@12.1.3)
     transitivePeerDependencies:
       - encoding
       - openapi-types
       - supports-color
 
-  '@orval/zod@6.28.2(openapi-types@12.1.3)':
+  '@orval/zod@6.29.1(openapi-types@12.1.3)':
     dependencies:
-      '@orval/core': 6.28.2(openapi-types@12.1.3)
+      '@orval/core': 6.29.1(openapi-types@12.1.3)
       lodash.uniq: 4.5.0
     transitivePeerDependencies:
       - encoding
@@ -4680,6 +4697,10 @@ snapshots:
     dependencies:
       fill-range: 7.0.1
 
+  braces@3.0.3:
+    dependencies:
+      fill-range: 7.1.1
+
   browserslist@4.23.0:
     dependencies:
       caniuse-lite: 1.0.30001617
@@ -5209,6 +5230,10 @@ snapshots:
     dependencies:
       to-regex-range: 5.0.1
 
+  fill-range@7.1.1:
+    dependencies:
+      to-regex-range: 5.0.1
+
   find-up@5.0.0:
     dependencies:
       locate-path: 6.0.0
@@ -5643,6 +5668,11 @@ snapshots:
       braces: 3.0.2
       picomatch: 2.3.1
 
+  micromatch@4.0.7:
+    dependencies:
+      braces: 3.0.3
+      picomatch: 2.3.1
+
   mimic-fn@2.1.0: {}
 
   min-indent@1.0.1: {}
@@ -5790,7 +5820,7 @@ snapshots:
 
   openapi3-ts@4.2.2:
     dependencies:
-      yaml: 2.4.2
+      yaml: 2.4.3
 
   optionator@0.9.4:
     dependencies:
@@ -5801,17 +5831,17 @@ snapshots:
       type-check: 0.4.0
       word-wrap: 1.2.5
 
-  orval@6.28.2(openapi-types@12.1.3)(typescript@5.4.5):
+  orval@6.29.1(openapi-types@12.1.3)(typescript@5.4.5):
     dependencies:
       '@apidevtools/swagger-parser': 10.1.0(openapi-types@12.1.3)
-      '@orval/angular': 6.28.2(openapi-types@12.1.3)
-      '@orval/axios': 6.28.2(openapi-types@12.1.3)
-      '@orval/core': 6.28.2(openapi-types@12.1.3)
-      '@orval/hono': 6.28.2(openapi-types@12.1.3)
-      '@orval/mock': 6.28.2(openapi-types@12.1.3)
-      '@orval/query': 6.28.2(openapi-types@12.1.3)
-      '@orval/swr': 6.28.2(openapi-types@12.1.3)
-      '@orval/zod': 6.28.2(openapi-types@12.1.3)
+      '@orval/angular': 6.29.1(openapi-types@12.1.3)
+      '@orval/axios': 6.29.1(openapi-types@12.1.3)
+      '@orval/core': 6.29.1(openapi-types@12.1.3)
+      '@orval/hono': 6.29.1(openapi-types@12.1.3)
+      '@orval/mock': 6.29.1(openapi-types@12.1.3)
+      '@orval/query': 6.29.1(openapi-types@12.1.3)
+      '@orval/swr': 6.29.1(openapi-types@12.1.3)
+      '@orval/zod': 6.29.1(openapi-types@12.1.3)
       ajv: 8.16.0
       cac: 6.7.14
       chalk: 4.1.2
@@ -6634,6 +6664,8 @@ snapshots:
   yaml@1.10.2: {}
 
   yaml@2.4.2: {}
+
+  yaml@2.4.3: {}
 
   yargs-parser@21.1.1: {}
 
