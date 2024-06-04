@@ -17,6 +17,7 @@ import type {
 } from "@tanstack/svelte-query";
 import type {
 	EntitiesOutlet,
+	EntitiesPaymentType,
 	ErrorResponse,
 	InternalErrorResponse,
 	OutletCreateRequest,
@@ -152,6 +153,81 @@ export const createOutletGet = <
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
 	const queryOptions = useOutletGetQueryOptions(id, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+};
+
+export const useOutletGetPaymentTypeHook = () => {
+	const outletGetPaymentType = useCustomClient<EntitiesPaymentType[]>();
+
+	return (id: number) => {
+		return outletGetPaymentType({ url: `/outlet/paymentTypes/${id}`, method: "GET" });
+	};
+};
+
+export const getOutletGetPaymentTypeQueryKey = (id: number) => {
+	return [`/outlet/paymentTypes/${id}`] as const;
+};
+
+export const useOutletGetPaymentTypeQueryOptions = <
+	TData = Awaited<ReturnType<ReturnType<typeof useOutletGetPaymentTypeHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useOutletGetPaymentTypeHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getOutletGetPaymentTypeQueryKey(id);
+
+	const outletGetPaymentType = useOutletGetPaymentTypeHook();
+
+	const queryFn: QueryFunction<
+		Awaited<ReturnType<ReturnType<typeof useOutletGetPaymentTypeHook>>>
+	> = () => outletGetPaymentType(id);
+
+	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<ReturnType<typeof useOutletGetPaymentTypeHook>>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type OutletGetPaymentTypeQueryResult = NonNullable<
+	Awaited<ReturnType<ReturnType<typeof useOutletGetPaymentTypeHook>>>
+>;
+export type OutletGetPaymentTypeQueryError = ErrorType<void | InternalErrorResponse>;
+
+export const createOutletGetPaymentType = <
+	TData = Awaited<ReturnType<ReturnType<typeof useOutletGetPaymentTypeHook>>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<
+				Awaited<ReturnType<ReturnType<typeof useOutletGetPaymentTypeHook>>>,
+				TError,
+				TData
+			>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = useOutletGetPaymentTypeQueryOptions(id, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;

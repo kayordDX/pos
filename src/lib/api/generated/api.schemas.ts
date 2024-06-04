@@ -384,6 +384,10 @@ export interface OutletGetRequest {
 	[key: string]: any;
 }
 
+export interface OutletGetPaymentTypeRequest {
+	[key: string]: any;
+}
+
 export interface OutletUpdateRequest {
 	businessId: number;
 	/**
@@ -415,11 +419,9 @@ export type CommonWrapperResultOfResponseAllOf = {
 	value?: CommonWrapperResultOfResponseAllOfValue;
 };
 
-export type CommonWrapperResultOfResponse = CommonWrapperResult &
-	CommonWrapperResultOfResponseAllOf;
-
 export interface PayManualPaymentRequest {
 	amount: number;
+	paymentTypeId: number;
 	tableBookingId: number;
 }
 
@@ -432,6 +434,9 @@ export interface CommonWrapperResult {
 	failure: boolean;
 	success: boolean;
 }
+
+export type CommonWrapperResultOfResponse = CommonWrapperResult &
+	CommonWrapperResultOfResponseAllOf;
 
 export interface PayDtoStatusResultDto {
 	amount: number;
@@ -762,6 +767,7 @@ export interface EntitiesOrderItemStatus {
 	isCancelled: boolean;
 	isComplete: boolean;
 	isFrontLine: boolean;
+	isHistory: boolean;
 	notify: boolean;
 	orderItemStatusId: number;
 	priority: number;
@@ -875,6 +881,7 @@ export interface EntitiesMenu {
 	name: string;
 	outlet: EntitiesOutlet;
 	outletId: number;
+	position: number;
 }
 
 /**
@@ -1062,11 +1069,6 @@ export interface EntitiesAdjustment {
 	userId: string;
 }
 
-export interface EntitiesPaymentType {
-	paymentTypeId: number;
-	paymentTypeName: string;
-}
-
 export interface EntitiesPayment {
 	amount: number;
 	dateReceived: string;
@@ -1142,6 +1144,12 @@ export interface TableOrderOfficeOrderBasedBackMenuItemDTO {
 	price: number;
 }
 
+/**
+ * @nullable
+ */
+export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
+	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
+
 export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
 	divisionId: number;
 	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
@@ -1182,23 +1190,6 @@ export interface TableOrderOfficeOrderBasedBackTableDTO {
 	section?: TableOrderOfficeOrderBasedBackTableDTOSection;
 	tableId: number;
 }
-
-export interface TableOrderOfficeOrderBasedBackTableBookingDTO {
-	bookingDate: string;
-	bookingName: string;
-	/** @nullable */
-	closeDate?: string | null;
-	id: number;
-	table: TableOrderOfficeOrderBasedBackTableDTO;
-	tableId: number;
-	user: DTOUserDTO;
-}
-
-/**
- * @nullable
- */
-export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
-	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
 
 /**
  * @nullable
@@ -1247,6 +1238,17 @@ export interface DTOUserDTO {
 	isActive: boolean;
 	name: string;
 	userId: string;
+}
+
+export interface TableOrderOfficeOrderBasedBackTableBookingDTO {
+	bookingDate: string;
+	bookingName: string;
+	/** @nullable */
+	closeDate?: string | null;
+	id: number;
+	table: TableOrderOfficeOrderBasedBackTableDTO;
+	tableId: number;
+	user: DTOUserDTO;
 }
 
 export interface DTOExtraGroupBasicDTO {
@@ -1419,6 +1421,22 @@ export interface UserGetRolesRequest {
 	[key: string]: any;
 }
 
+export interface EntitiesOutletPaymentType {
+	outlet: EntitiesOutlet;
+	outletId: number;
+	paymentType: EntitiesPaymentType;
+	paymentTypeId: number;
+}
+
+export interface EntitiesPaymentType {
+	discountPercentage: number;
+	/** @nullable */
+	outletPaymentTypes?: EntitiesOutletPaymentType[] | null;
+	paymentTypeId: number;
+	paymentTypeName: string;
+	tipLevyPercentage: number;
+}
+
 export type Order = (typeof Order)[keyof typeof Order];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
@@ -1441,6 +1459,8 @@ export interface EntitiesOutlet {
 	logo?: string | null;
 	name: string;
 	/** @nullable */
+	outletPaymentTypes?: EntitiesOutletPaymentType[] | null;
+	/** @nullable */
 	sections?: EntitiesSection[] | null;
 	vatNumber: string;
 }
@@ -1458,6 +1478,7 @@ export interface EntitiesTable {
 	capacity: number;
 	customers: EntitiesCustomer[];
 	name: string;
+	position: number;
 	section: EntitiesSection;
 	sectionId: number;
 	tableId: number;

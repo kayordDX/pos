@@ -1,22 +1,36 @@
 <script lang="ts">
-	import { Badge, Button, Card, Form, Input, Loader, toast } from "@kayord/ui";
-	import { CreditCardIcon, NfcIcon } from "lucide-svelte";
+	import { Badge, Button, Card, Form, Input, Select, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { page } from "$app/stores";
-	import { client, createPayManualPayment } from "$lib/api";
+	import { client, createPayManualPayment, createOutletGetPaymentType } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import { payment } from "$lib/stores/payment";
 	import { onMount } from "svelte";
+	import { status } from "$lib/stores/status";
 
 	let url: string | undefined;
 	let reference: string | undefined;
 	let linkLoading = false;
 
+	const paymentTypeQuery = createOutletGetPaymentType($status?.outletId ?? 0);
+
+	// Set Default Value
+	$: {
+		if (
+			$formData.paymentTypeId == 0 &&
+			$paymentTypeQuery.data &&
+			$paymentTypeQuery.data.length > 0 &&
+			$paymentTypeQuery.data[0]?.paymentTypeId != undefined
+		) {
+			$formData.paymentTypeId = $paymentTypeQuery.data[0]?.paymentTypeId;
+		}
+	}
+
 	const schema = z.object({
 		amount: z.coerce.number().min(1, { message: "You need an amount of bigger than 1" }),
-		isManual: z.boolean(),
+		paymentTypeId: z.coerce.number().min(1, { message: "Payment Type is Required" }),
 	});
 
 	type FormSchema = z.infer<typeof schema>;
@@ -47,7 +61,11 @@
 	const mutation = createPayManualPayment();
 	const onSubmitManual = async (manualData: FormSchema) => {
 		await $mutation.mutateAsync({
-			data: { amount: manualData.amount, tableBookingId: Number($page.params.id) },
+			data: {
+				amount: manualData.amount,
+				tableBookingId: Number($page.params.id),
+				paymentTypeId: manualData.paymentTypeId,
+			},
 		});
 		goto(`/table/bill/${$page.params.id}`);
 	};
@@ -58,26 +76,16 @@
 		resetForm: false,
 		onUpdate({ form }) {
 			if (form.valid) {
-				if (form.data.isManual) {
-					onSubmitManual(form.data);
-				} else {
+				if (form.data.paymentTypeId <= 1) {
 					onSubmitHalo(form.data);
+				} else {
+					onSubmitManual(form.data);
 				}
 			}
 		},
 	});
 
 	const { form: formData, enhance } = form;
-
-	const haloPay = async () => {
-		$formData.isManual = false;
-		form.submit();
-	};
-
-	const manualPay = async () => {
-		$formData.isManual = true;
-		form.submit();
-	};
 
 	const total = Number($page.url.searchParams.get("total") ?? "0").toFixed(2);
 	const balance = Number($page.url.searchParams.get("balance") ?? "0").toFixed(2);
@@ -98,35 +106,41 @@
 				<Form.Description>Enter amount to pay</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
+			<Form.Field {form} name="paymentTypeId">
+				<Form.Control let:attrs>
+					<Form.Label>Payment Type</Form.Label>
+					<Select.Root
+						selected={{
+							value: $formData.paymentTypeId,
+							label: $paymentTypeQuery.data?.find(
+								(i) => i.paymentTypeId === $formData.paymentTypeId
+							)?.paymentTypeName,
+						}}
+						onSelectedChange={(v) => {
+							v && ($formData.paymentTypeId = v.value);
+						}}
+					>
+						<Select.Trigger {...attrs}>
+							<Select.Value placeholder="Select payment type" />
+						</Select.Trigger>
+						<Select.Content>
+							{#each $paymentTypeQuery.data ?? [] as paymentType}
+								<Select.Item value={paymentType.paymentTypeId}
+									>{paymentType.paymentTypeName}</Select.Item
+								>
+							{/each}
+						</Select.Content>
+					</Select.Root>
+					<input hidden bind:value={$formData.paymentTypeId} name={attrs.name} />
+				</Form.Control>
+				<Form.FieldErrors />
+			</Form.Field>
 		</Card.Header>
-		<Card.Content>
-			<div class="columns-2 flex gap-4">
-				<button class="w-full" on:click={haloPay} type="button">
-					<Card.Root
-						class="flex flex-col items-center gap-2 p-4 bg-primary border-2 hover:border-secondary-foreground h-full justify-center"
-					>
-						{#if linkLoading}
-							<Loader />
-						{:else}
-							<NfcIcon class="w-10 h-10 text-primary-foreground" />
-							<div class="text-primary-foreground">Pay with Phone</div>
-						{/if}
-					</Card.Root>
-				</button>
-				<button class="w-full" on:click={manualPay} type="button">
-					<Card.Root
-						class="flex flex-col items-center gap-2 p-4 bg-secondary border-2 hover:border-secondary-foreground h-full justify-center"
-					>
-						<CreditCardIcon class="w-10 h-10 text-muted-foreground" />
-						<div class="text-muted-foreground">Manual Payment</div>
-					</Card.Root>
-				</button>
-			</div>
-		</Card.Content>
 		<Card.Footer class="flex flex-col gap-2">
-			<Button class="w-full" href={`/table/bill/${$page.params.id}`} variant="outline"
-				>Cancel</Button
-			>
+			<Button class="w-full" type="submit">Pay</Button>
+			<Button class="w-full" href={`/table/bill/${$page.params.id}`} variant="outline">
+				Cancel
+			</Button>
 		</Card.Footer>
 	</Card.Root>
 </form>

@@ -134,6 +134,9 @@ export interface paths {
     get: operations["OutletGet"];
     put: operations["OutletUpdate"];
   };
+  "/outlet/paymentTypes/{id}": {
+    get: operations["OutletGetPaymentType"];
+  };
   "/outlet": {
     get: operations["OutletList"];
     post: operations["OutletCreate"];
@@ -260,6 +263,7 @@ export interface components {
       sections?: components["schemas"]["EntitiesSection"][] | null;
       vatNumber: string;
       logo?: string | null;
+      outletPaymentTypes?: components["schemas"]["EntitiesOutletPaymentType"][] | null;
     };
     EntitiesBusiness: {
       /** Format: int32 */
@@ -283,6 +287,8 @@ export interface components {
       /** Format: int32 */
       capacity: number;
       /** Format: int32 */
+      position: number;
+      /** Format: int32 */
       sectionId: number;
       section: components["schemas"]["EntitiesSection"];
       customers: components["schemas"]["EntitiesCustomer"][];
@@ -295,6 +301,24 @@ export interface components {
     };
     /** @enum {integer} */
     Order: 0 | 1;
+    EntitiesOutletPaymentType: {
+      /** Format: int32 */
+      paymentTypeId: number;
+      paymentType: components["schemas"]["EntitiesPaymentType"];
+      /** Format: int32 */
+      outletId: number;
+      outlet: components["schemas"]["EntitiesOutlet"];
+    };
+    EntitiesPaymentType: {
+      /** Format: int32 */
+      paymentTypeId: number;
+      paymentTypeName: string;
+      /** Format: decimal */
+      tipLevyPercentage: number;
+      /** Format: decimal */
+      discountPercentage: number;
+      outletPaymentTypes?: components["schemas"]["EntitiesOutletPaymentType"][] | null;
+    };
     UserGetRolesRequest: Record<string, never>;
     EntitiesUserOutlet: {
       /** Format: int32 */
@@ -642,11 +666,6 @@ export interface components {
       /** Format: date-time */
       dateReceived: string;
     };
-    EntitiesPaymentType: {
-      /** Format: int32 */
-      paymentTypeId: number;
-      paymentTypeName: string;
-    };
     EntitiesAdjustment: {
       /** Format: int32 */
       adjustmentId: number;
@@ -823,6 +842,8 @@ export interface components {
       name: string;
       /** Format: int32 */
       outletId: number;
+      /** Format: int32 */
+      position: number;
       outlet: components["schemas"]["EntitiesOutlet"];
       menuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
     };
@@ -931,6 +952,7 @@ export interface components {
       isComplete: boolean;
       isCancelled: boolean;
       isBillable: boolean;
+      isHistory: boolean;
       notify: boolean;
       /** Format: int32 */
       priority: number;
@@ -1217,6 +1239,8 @@ export interface components {
     PayStatusRequest: Record<string, never>;
     PayManualPaymentRequest: {
       /** Format: int32 */
+      paymentTypeId: number;
+      /** Format: int32 */
       tableBookingId: number;
       /** Format: decimal */
       amount: number;
@@ -1235,6 +1259,7 @@ export interface components {
       /** Format: int32 */
       businessId: number;
     };
+    OutletGetPaymentTypeRequest: Record<string, never>;
     OutletGetRequest: Record<string, never>;
     OutletCreateRequest: {
       name: string;
@@ -2572,6 +2597,31 @@ export interface operations {
       400: {
         content: {
           "application/problem+json": components["schemas"]["ErrorResponse"];
+        };
+      };
+      /** @description Unauthorized */
+      401: {
+        content: never;
+      };
+      /** @description Server Error */
+      500: {
+        content: {
+          "application/json": components["schemas"]["InternalErrorResponse"];
+        };
+      };
+    };
+  };
+  OutletGetPaymentType: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
+    responses: {
+      /** @description Success */
+      200: {
+        content: {
+          "application/json": components["schemas"]["EntitiesPaymentType"][];
         };
       };
       /** @description Unauthorized */
