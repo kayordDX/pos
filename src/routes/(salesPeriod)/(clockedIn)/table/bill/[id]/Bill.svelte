@@ -10,6 +10,7 @@
 	import { CreditCardIcon, NfcIcon } from "lucide-svelte";
 	import Items from "./Items.svelte";
 	import Adjustment from "./Adjustment.svelte";
+	import PaymentTypeIcon from "$lib/components/PaymentTypeIcon/PaymentTypeIcon.svelte";
 
 	export let data: TableOrderGetBillResponse;
 	export let bookingId: number;
@@ -78,12 +79,8 @@
 					{#each data.paymentsReceived as payment}
 						<div class="flex items-center justify-between">
 							<dt class="flex items-center gap-1 text-muted-foreground">
-								{#if payment.paymentTypeId == 1}
-									<NfcIcon class="h-4 w-4" />
-								{:else}
-									<CreditCardIcon class="h-4 w-4" />
-								{/if}
-								{payment.paymentTypeId == 1 ? "Tap" : "Manual"} Payment
+								<PaymentTypeIcon type={payment.paymentType.paymentTypeName} />
+								{payment.paymentType.paymentTypeName}
 							</dt>
 							<dd>{payment.amount.toFixed(2)}</dd>
 						</div>

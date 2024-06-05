@@ -7,6 +7,7 @@
 	import { getInitials } from "$lib/util";
 	import { status } from "$lib/stores/status";
 	import { goto } from "$app/navigation";
+	import { PaymentTypeIcon } from "$lib/components/PaymentTypeIcon";
 
 	const cashUpQuery = createSalesPeriodCashUp({
 		salesPeriodId: $status?.salesPeriodId ?? 0,
@@ -129,9 +130,12 @@
 												</Table.Row>
 												{#each table.paymentsReceived as payment}
 													<Table.Row>
-														<Table.Cell
-															>{payment.paymentTypeId == 1 ? "Tap" : "Manual"} Payment</Table.Cell
-														>
+														<Table.Cell>
+															<div class="flex gap-2 items-center">
+																<PaymentTypeIcon type={payment.paymentType.paymentTypeName} />
+																{payment.paymentType.paymentTypeName}
+															</div>
+														</Table.Cell>
 														<Table.Cell class="float-right">
 															{payment.amount.toFixed(2)}
 														</Table.Cell>
