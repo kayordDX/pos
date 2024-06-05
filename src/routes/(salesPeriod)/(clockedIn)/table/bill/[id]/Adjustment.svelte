@@ -16,7 +16,7 @@
 
 	const schema = z.object({
 		adjustmentTypeId: z.coerce.number().min(1, { message: "Type is Required" }),
-		amount: z.coerce.number(),
+		amount: z.coerce.number().refine((x) => x !== 0, { message: "Amount cannot be 0" }),
 		note: z.string(),
 	});
 	type FormSchema = z.infer<typeof schema>;
@@ -36,7 +36,7 @@
 		refetch();
 	};
 
-	const form = superForm(defaults({ amount: -10 }, zod(schema)), {
+	const form = superForm(defaults({ amount: 0 }, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
 		onUpdate({ form }) {
@@ -99,6 +99,7 @@
 							tabindex={0}
 							type="number"
 							step="0.01"
+							on:focus={(e) => e.currentTarget.select()}
 						/>
 					</Control>
 					<FieldErrors class="text-destructive text-sm" />

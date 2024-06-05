@@ -101,7 +101,13 @@
 			<Form.Field {form} name="amount">
 				<Form.Control let:attrs>
 					<Form.Label>Amount</Form.Label>
-					<Input {...attrs} type="number" step="0.01" bind:value={$formData.amount} />
+					<Input
+						{...attrs}
+						type="number"
+						step="0.01"
+						bind:value={$formData.amount}
+						on:focus={(e) => e.currentTarget.select()}
+					/>
 				</Form.Control>
 				<Form.Description>Enter amount to pay</Form.Description>
 				<Form.FieldErrors />
