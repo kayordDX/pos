@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { Button, Checkbox } from "@kayord/ui";
 	import BasketItem from "./BasketItem.svelte";
-	import autoAnimate from "@formkit/auto-animate";
 	import EmptyBasket from "./EmptyBasket.svelte";
 	import { ChefHatIcon } from "lucide-svelte";
 	import {
@@ -65,7 +64,7 @@
 </script>
 
 <div class="m-2 mb-12">
-	<form use:enhance use:autoAnimate>
+	<form use:enhance>
 		<Fieldset {form} name="orderItemIds" class="flex flex-col gap-2">
 			{#each $query.data?.orderItems ?? [] as item, i (item.orderItemId)}
 				{@const checked = $formData.orderItemIds.includes(item.orderItemId)}

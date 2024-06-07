@@ -1,11 +1,6 @@
 <script lang="ts">
-	import {
-		createOrderAddItems,
-		type DTOMenuItemDTO,
-		type DTOMenuItemDTOBasic,
-		type DTOOptionDTO,
-	} from "$lib/api";
-	import { Button, Checkbox, Drawer, Form, Input, Textarea } from "@kayord/ui";
+	import { createOrderAddItems, type DTOMenuItemDTO, type DTOOptionDTO } from "$lib/api";
+	import { Button, Checkbox, Drawer, Form, Textarea } from "@kayord/ui";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
@@ -17,7 +12,6 @@
 	import Quantity from "$lib/components/Quantity/Quantity.svelte";
 
 	export let data: DTOMenuItemDTO;
-	export let menuItem: DTOMenuItemDTOBasic;
 	export let tableBookingId: number;
 	export let open = false;
 
@@ -59,16 +53,16 @@
 
 	const mutation = createOrderAddItems();
 
-	const onSubmit = async (data: FormSchema) => {
+	const onSubmit = async (formData: FormSchema) => {
 		await $mutation.mutateAsync({
 			data: {
 				orders: [
 					{
-						menuItemId: menuItem.menuItemId,
-						extraIds: arrayUnique(data.extras.concat(currentExtras)),
-						optionIds: data.options,
-						note: data.note,
-						quantity: data.quantity,
+						menuItemId: data.menuItemId,
+						extraIds: arrayUnique(formData.extras.concat(currentExtras)),
+						optionIds: formData.options,
+						note: formData.note,
+						quantity: formData.quantity,
 					},
 				],
 				tableBookingId: tableBookingId,
@@ -108,9 +102,9 @@
 
 <form use:enhance method="POST">
 	<Drawer.Header>
-		<Drawer.Title>{menuItem.name}</Drawer.Title>
-		<Drawer.Description>{menuItem.description}</Drawer.Description>
-		<div class="font-bold">R {menuItem.price.toFixed(2)}</div>
+		<Drawer.Title>{data.name}</Drawer.Title>
+		<Drawer.Description>{data.description}</Drawer.Description>
+		<div class="font-bold">R {data.price.toFixed(2)}</div>
 	</Drawer.Header>
 	<div class="flex flex-col gap-5 p-4 pt-0">
 		<div>

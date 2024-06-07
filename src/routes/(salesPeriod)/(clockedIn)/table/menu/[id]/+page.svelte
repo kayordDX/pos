@@ -2,6 +2,7 @@
 	import { Input, Loader } from "@kayord/ui";
 	import { SearchIcon } from "lucide-svelte";
 	import {
+		createMenuList,
 		createMenuGetSectionsGetMenusSections,
 		createMenuGetItemsGetMenuItems,
 		type MenuGetSectionsGetMenusSectionsParams,
@@ -9,16 +10,14 @@
 	} from "$lib/api";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import MenuItem from "./MenuItem.svelte";
 	import { page } from "$app/stores";
 	import { selection } from "$lib/stores/selection";
-	import autoAnimate from "@formkit/auto-animate";
-	import { createMenuList } from "$lib/api";
 	import { status } from "$lib/stores/status";
 	import PickMenu from "./PickMenu.svelte";
 	import PickCategory from "./PickCategory.svelte";
 	import CategoriesList from "./CategoriesList.svelte";
 	import { debounce } from "$lib/util";
+	import MenuItems from "./MenuItems.svelte";
 
 	let query = createMenuList({ outletId: $status?.outletId });
 	$: query = createMenuList({ outletId: $status?.outletId });
@@ -115,10 +114,6 @@
 	{/if}
 
 	<div class="flex justify-center w-full">
-		<div class="flex justify-center gap-2 my-2 flex-wrap p-2 w-full" use:autoAnimate>
-			{#each $itemsQuery.data ?? [] as item, i (item.menuItemId)}
-				<MenuItem menuItem={item} tableBookingId={Number($page.params.id)} />
-			{/each}
-		</div>
+		<MenuItems data={$itemsQuery.data ?? []} tableBookingId={Number($page.params.id)} />
 	</div>
 </div>
