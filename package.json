@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@kayord/tw-plugin": "^1.0.2",
-		"@kayord/ui": "^0.8.16",
+		"@kayord/ui": "^0.8.17",
 		"@microsoft/signalr": "^8.0.0",
 		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.5.10",
@@ -28,15 +28,15 @@
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.39.0",
 		"firebase": "^10.12.2",
-		"lucide-svelte": "^0.383.0",
+		"lucide-svelte": "^0.390.0",
 		"openapi-fetch": "^0.9.7",
 		"orval": "6.29.1",
 		"postcss": "^8.4.38",
 		"postcss-load-config": "^5.1.0",
 		"prettier": "^3.3.1",
-		"prettier-plugin-svelte": "^3.2.3",
+		"prettier-plugin-svelte": "^3.2.4",
 		"qs": "^6.12.1",
-		"svelte": "^4.2.17",
+		"svelte": "^4.2.18",
 		"svelte-bricks": "^0.2.1",
 		"svelte-check": "^3.8.0",
 		"svelte-headless-table": "^0.18.2",
@@ -49,5 +49,5 @@
 		"zod": "^3.23.8"
 	},
 	"type": "module",
-	"packageManager": "pnpm@9.1.4+sha512.9df9cf27c91715646c7d675d1c9c8e41f6fce88246f1318c1aa6a1ed1aeb3c4f032fcdf4ba63cc69c4fe6d634279176b5358727d8f2cc1e65b65f43ce2f8bfb0"
+	"packageManager": "pnpm@9.2.0+sha512.98a80fd11c2e7096747762304106432b3ddc67dcf54b5a8c01c93f68a2cd5e05e6821849522a06fb76284d41a2660d5e334f2ee3bbf29183bf2e739b1dafa771"
 }
