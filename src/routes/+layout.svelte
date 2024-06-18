@@ -10,10 +10,17 @@
 	import { page } from "$app/stores";
 	import { Notification } from "$lib/components/Notification";
 	import { status } from "$lib/stores/status";
+	import type { Snippet } from "svelte";
 	import { session } from "$lib/firebase";
+	let { children }: { children?: Snippet } = $props();
 
-	$: hideHeader = !$page.route.id?.startsWith("/(salesPeriod)/(clockedIn)/table");
-	$: $session && status.getStatus();
+	const hideHeader = $derived(!$page.route.id?.startsWith("/(salesPeriod)/(clockedIn)/table"));
+
+	$effect(() => {
+		if ($session) {
+			status.getStatus();
+		}
+	});
 
 	const queryClient = new QueryClient({
 		defaultOptions: {
@@ -33,7 +40,9 @@
 			<Header />
 		{/if}
 		<OutletCheck>
-			<slot />
+			{#if children}
+				{@render children()}
+			{/if}
 		</OutletCheck>
 	</QueryClientProvider>
 </AuthCheck>

@@ -25,7 +25,7 @@
 	$: showMore = clientHeight > height;
 </script>
 
-<div style={`height: ${height}px`}>
+<div style={`height: ${height}px`} class="w-full">
 	<ScrollArea class="overflow-hidden h-full">
 		<Card.Root
 			class={`p-2 ${group.priority > 10 ? "border-4 border-destructive" : ""}`}
