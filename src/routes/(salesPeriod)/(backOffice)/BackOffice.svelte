@@ -4,13 +4,18 @@
 	import { Badge, Loader } from "@kayord/ui";
 	import { getError } from "$lib/types";
 	import Group from "./Group.svelte";
-	import { Masonry } from "svelte-bricks";
 	import ToggleHeader from "./ToggleHeader.svelte";
 	import Settings from "./Settings.svelte";
+	import { Masonry } from "$lib/components/Masonry";
+	import { backOffice } from "$lib/stores/backOffice";
 
-	export let isHistory = false;
-	export let type: "kitchen" | "backOffice" | "bar" = "kitchen";
-	export let divisionIds: string | undefined = undefined;
+	interface Props {
+		isHistory?: boolean;
+		type?: "kitchen" | "backOffice" | "bar";
+		divisionIds?: string;
+	}
+
+	let { isHistory = false, type = "kitchen", divisionIds }: Props = $props();
 
 	const query = createTableOrderOfficeOrderBasedBack(
 		{
@@ -28,10 +33,20 @@
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	};
 
+	const maxColHeight = $derived($backOffice ?? 500);
+
 	let [minColWidth, maxColWidth, gap] = [500, 600, 10];
+	let screenWidth = $state(0);
+	const calcCols = $derived(
+		Math.min(screenWidth, Math.floor((screenWidth + gap) / (minColWidth + gap)) || 1)
+	);
+
+	$effect(() => {
+		console.log(calcCols);
+	});
 </script>
 
-<div class="m-1">
+<div class="m-1" bind:clientWidth={screenWidth}>
 	{#if $query.isPending}
 		<Loader />
 	{/if}
@@ -57,7 +72,7 @@
 							<Badge variant="secondary" class="truncate">History</Badge>
 						</a>
 					{/if}
-					<button on:click={() => $query.refetch()}>
+					<button onclick={() => $query.refetch()}>
 						<Badge variant="secondary" class="truncate">
 							Refreshed: {getTime($query.data.lastRefresh)}
 						</Badge>
@@ -72,12 +87,13 @@
 			items={$query.data?.orderGroups ?? []}
 			{minColWidth}
 			{maxColWidth}
+			{maxColHeight}
 			{gap}
-			let:item={group}
 			idKey="orderGroupId"
-			animate
 		>
-			<Group {group} refetch={$query.refetch} {isHistory} />
+			{#snippet itemChild(item)}
+				<Group group={item} refetch={$query.refetch} {isHistory} />
+			{/snippet}
 		</Masonry>
 	{/if}
 </div>
