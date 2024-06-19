@@ -11,8 +11,9 @@
 				<Card.Title>{$status?.salesPeriod.name ?? "Sales Period"}</Card.Title>
 				<Card.Description>{stringToFDate($status?.salesPeriod.startDate)}</Card.Description>
 			</Card.Header>
-			<Card.Footer>
+			<Card.Footer class="flex items-center gap-2">
 				<Button href="manager/cashUp">Cash Up</Button>
+				<Button href="manager/cashUpOld">Cash Up Old</Button>
 			</Card.Footer>
 		</Card.Root>
 	{:else}

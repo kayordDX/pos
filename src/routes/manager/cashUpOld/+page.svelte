@@ -8,7 +8,6 @@
 	import { status } from "$lib/stores/status";
 	import { goto } from "$app/navigation";
 	import { PaymentTypeIcon } from "$lib/components/PaymentTypeIcon";
-	import { Description } from "@kayord/ui/formsnap";
 
 	const cashUpQuery = createSalesPeriodCashUp({
 		salesPeriodId: $status?.salesPeriodId ?? 0,
@@ -79,8 +78,8 @@
 			{/if}
 
 			{#each d.userCashUps as cash}
-				<Card.Root class="overflow-hidden">
-					<Card.Header class="flex flex-col items-start bg-muted/50 p-4">
+				<Card.Root>
+					<Card.Header class="pb-2">
 						<div class="flex items-center gap-2">
 							<Avatar.Root>
 								<Avatar.Image src={cash.user?.image} alt="profile" />
@@ -88,24 +87,79 @@
 									{getInitials(cash.user?.name ?? "")}
 								</Avatar.Fallback>
 							</Avatar.Root>
-							<div>
-								<Card.Title>{cash.user.name}</Card.Title>
-								<Card.Description>{cash.user.email}</Card.Description>
-							</div>
+							<h3>{cash.user?.name}</h3>
 						</div>
 					</Card.Header>
 					<Card.Content>
-						<div class="grid gap-3 mt-3">
-							<ul class="grid gap-3">
-								<li class="flex items-center justify-between">
-									<span class="text-muted-foreground">Total</span>
-									<span>R{cash.userTotal.toFixed(2)}</span>
-								</li>
-								<li class="flex items-center justify-between">
-									<span class="text-muted-foreground">User Payment Total</span>
-									<span>R{cash.userPaymentTotal.toFixed(2)}</span>
-								</li>
-							</ul>
+						<Table.Root class="mb-2">
+							<Table.Body>
+								<Table.Row>
+									<Table.Cell>User Total</Table.Cell>
+									<Table.Cell class="float-right">R{cash.userTotal.toFixed(2)}</Table.Cell>
+								</Table.Row>
+								<Table.Row>
+									<Table.Cell>User Payment Total</Table.Cell>
+									<Table.Cell class="float-right">R{cash.userPaymentTotal.toFixed(2)}</Table.Cell>
+								</Table.Row>
+								<Table.Row>
+									<Table.Cell>User Balance</Table.Cell>
+									<Table.Cell class="float-right">R{cash.userBalance.toFixed(2)}</Table.Cell>
+								</Table.Row>
+								<Table.Row>
+									<Table.Cell>User Tips</Table.Cell>
+									<Table.Cell class="float-right">R{cash.userTipTotal.toFixed(2)}</Table.Cell>
+								</Table.Row>
+							</Table.Body>
+						</Table.Root>
+
+						<div class="flex flex-col gap-2">
+							{#each cash.tableCashUps as table}
+								<Card.Root>
+									<Card.Content>
+										<Table.Root>
+											<Item data={table.orderItems} />
+										</Table.Root>
+										<Separator class="mt-4" />
+										<Table.Root>
+											<Table.Body>
+												<Table.Row>
+													<Table.Cell><h3 class="font-bold">Total</h3></Table.Cell>
+													<Table.Cell class="float-right">
+														<h3 class="font-bold">R{table.total.toFixed(2)}</h3>
+													</Table.Cell>
+												</Table.Row>
+												{#each table.paymentsReceived as payment}
+													<Table.Row>
+														<Table.Cell>
+															<div class="flex gap-2 items-center">
+																<PaymentTypeIcon type={payment.paymentType.paymentTypeName} />
+																{payment.paymentType.paymentTypeName}
+															</div>
+														</Table.Cell>
+														<Table.Cell class="float-right">
+															{payment.amount.toFixed(2)}
+														</Table.Cell>
+													</Table.Row>
+												{/each}
+												<Table.Row>
+													<Table.Cell><h3>Total Paid</h3></Table.Cell>
+													<Table.Cell class="float-right">
+														<h3>R{table.tablePaymentTotal.toFixed(2)}</h3>
+													</Table.Cell>
+												</Table.Row>
+												{#if table.paymentsReceived.length > 0}
+													<Table.Row>
+														<Table.Cell><h3>Balance</h3></Table.Cell>
+														<Table.Cell class="float-right">
+															<h3>R{table?.balance.toFixed(2)}</h3>
+														</Table.Cell>
+													</Table.Row>
+												{/if}
+											</Table.Body>
+										</Table.Root>
+									</Card.Content>
+								</Card.Root>
+							{/each}
 						</div>
 					</Card.Content>
 				</Card.Root>
