@@ -18,5 +18,6 @@ export * from "./menu";
 export * from "./manager";
 export * from "./extra";
 export * from "./clock";
+export * from "./cashup";
 export * from "./business";
 export * from "./adjustment";

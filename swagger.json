@@ -839,12 +839,31 @@
         ]
       }
     },
-    "/tableBooking/myHistory": {
+    "/tableBooking/myHistory/{salesPeriodId}/{userId}": {
       "get": {
         "tags": [
           "Tablebooking"
         ],
-        "operationId": "TableBookingGetHistory",
+        "operationId": "TableBookingHistorySalesPeriod",
+        "parameters": [
+          {
+            "name": "salesPeriodId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -853,7 +872,48 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/TableBookingGetHistoryResponse"
+                    "$ref": "#/components/schemas/TableBookingHistoryResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/tableBooking/myHistory": {
+      "get": {
+        "tags": [
+          "Tablebooking"
+        ],
+        "operationId": "TableBookingHistory",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TableBookingHistoryResponse"
                   }
                 }
               }
@@ -3326,6 +3386,124 @@
         ]
       }
     },
+    "/cashUp/user": {
+      "get": {
+        "tags": [
+          "Cashup"
+        ],
+        "operationId": "CashUpUserGet",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CashUpUserGetResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/cashUp/user/detail/{userId}/{outletId}/{salesPeriodId}": {
+      "get": {
+        "tags": [
+          "Cashup"
+        ],
+        "operationId": "CashUpUserDetail",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "outletId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "salesPeriodId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CashUpUserDetailResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/business": {
       "get": {
         "tags": [
@@ -5231,6 +5409,7 @@
           "id",
           "paymentReference",
           "tableBookingId",
+          "tableBooking",
           "amount",
           "userId",
           "paymentType",
@@ -5247,6 +5426,9 @@
           "tableBookingId": {
             "type": "integer",
             "format": "int32"
+          },
+          "tableBooking": {
+            "$ref": "#/components/schemas/EntitiesTableBooking"
           },
           "amount": {
             "type": "number",
@@ -5266,302 +5448,6 @@
           "dateReceived": {
             "type": "string",
             "format": "date-time"
-          }
-        }
-      },
-      "EntitiesAdjustment": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "adjustmentId",
-          "adjustmentType",
-          "adjustmentTypeId",
-          "created",
-          "userId",
-          "amount"
-        ],
-        "properties": {
-          "adjustmentId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "adjustmentType": {
-            "$ref": "#/components/schemas/EntitiesAdjustmentType"
-          },
-          "adjustmentTypeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "amount": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "note": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "EntitiesAdjustmentType": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "adjustmentTypeId",
-          "name"
-        ],
-        "properties": {
-          "adjustmentTypeId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "TableOrderGetBillRequest": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "TableOrderGetBasketResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItems",
-          "total"
-        ],
-        "properties": {
-          "orderItems": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/TableOrderGetBasketBillOrderItemDTO"
-            }
-          },
-          "total": {
-            "type": "number",
-            "format": "decimal"
-          }
-        }
-      },
-      "TableOrderGetBasketBillOrderItemDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItemId",
-          "tableBookingId",
-          "tableBooking",
-          "menuItemId",
-          "quantity",
-          "menuItem"
-        ],
-        "properties": {
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableBookingId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableBooking": {
-            "$ref": "#/components/schemas/DTOTableBookingDTO"
-          },
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "quantity": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "menuItem": {
-            "$ref": "#/components/schemas/TableOrderGetBasketBillMenuItemDTO"
-          },
-          "orderItemOptions": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/DTOOrderItemOptionDTO"
-            }
-          },
-          "orderItemExtras": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
-            }
-          },
-          "note": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "TableOrderGetBasketBillMenuItemDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "menuItemId",
-          "name",
-          "price"
-        ],
-        "properties": {
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "price": {
-            "type": "number",
-            "format": "decimal"
-          }
-        }
-      },
-      "TableOrderGetBasketRequest": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "TableOrderCopyItemResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "isSuccess"
-        ],
-        "properties": {
-          "isSuccess": {
-            "type": "boolean"
-          }
-        }
-      },
-      "TableOrderCopyItemRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItemId"
-        ],
-        "properties": {
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
-      "EntitiesOrderItem": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderItemId",
-          "tableBookingId",
-          "tableBooking",
-          "menuItemId",
-          "menuItem",
-          "orderReceived",
-          "orderUpdated",
-          "orderItemStatusId",
-          "orderItemStatus"
-        ],
-        "properties": {
-          "orderItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderGroupId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "orderGroup": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/EntitiesOrderGroup"
-              }
-            ]
-          },
-          "tableBookingId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "tableBooking": {
-            "$ref": "#/components/schemas/EntitiesTableBooking"
-          },
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "menuItem": {
-            "$ref": "#/components/schemas/EntitiesMenuItem"
-          },
-          "orderReceived": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "orderUpdated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "orderCompleted": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "orderItemStatusId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderItemStatus": {
-            "$ref": "#/components/schemas/EntitiesOrderItemStatus"
-          },
-          "orderItemOptions": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesOrderItemOption"
-            }
-          },
-          "orderItemExtras": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesOrderItemExtra"
-            }
-          },
-          "note": {
-            "type": "string",
-            "nullable": true
-          }
-        }
-      },
-      "EntitiesOrderGroup": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "orderGroupId"
-        ],
-        "properties": {
-          "orderGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "orderItems": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesOrderItem"
-            }
           }
         }
       },
@@ -5628,6 +5514,31 @@
             "nullable": true,
             "items": {
               "$ref": "#/components/schemas/EntitiesAdjustment"
+            }
+          },
+          "cashUpUserId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "total": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "cashUpUser": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesCashUpUser"
+              }
+            ]
+          },
+          "payments": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesPayment"
             }
           }
         }
@@ -5738,6 +5649,112 @@
             "nullable": true,
             "items": {
               "$ref": "#/components/schemas/EntitiesUserRole"
+            }
+          }
+        }
+      },
+      "EntitiesOrderItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId",
+          "tableBookingId",
+          "tableBooking",
+          "menuItemId",
+          "menuItem",
+          "orderReceived",
+          "orderUpdated",
+          "orderItemStatusId",
+          "orderItemStatus"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderGroupId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "orderGroup": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesOrderGroup"
+              }
+            ]
+          },
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBooking": {
+            "$ref": "#/components/schemas/EntitiesTableBooking"
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/EntitiesMenuItem"
+          },
+          "orderReceived": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderUpdated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderCompleted": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "orderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItemStatus": {
+            "$ref": "#/components/schemas/EntitiesOrderItemStatus"
+          },
+          "orderItemOptions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItemOption"
+            }
+          },
+          "orderItemExtras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItemExtra"
+            }
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EntitiesOrderGroup": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderGroupId"
+        ],
+        "properties": {
+          "orderGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderItems": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/EntitiesOrderItem"
             }
           }
         }
@@ -6305,6 +6322,359 @@
           }
         }
       },
+      "EntitiesAdjustment": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "adjustmentId",
+          "adjustmentType",
+          "adjustmentTypeId",
+          "created",
+          "userId",
+          "amount"
+        ],
+        "properties": {
+          "adjustmentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "adjustmentType": {
+            "$ref": "#/components/schemas/EntitiesAdjustmentType"
+          },
+          "adjustmentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EntitiesAdjustmentType": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "adjustmentTypeId",
+          "name"
+        ],
+        "properties": {
+          "adjustmentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "EntitiesCashUpUser": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "userId",
+          "outletId",
+          "openingBalance",
+          "closingBalance",
+          "cashUpUserItems"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "openingBalance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "closingBalance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "cashUpUserItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntitiesCashUpUserItem"
+            }
+          }
+        }
+      },
+      "EntitiesCashUpUserItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "userCashUpId",
+          "cashUpUser",
+          "userId",
+          "outletId",
+          "openingBalance",
+          "closingBalance",
+          "cashUpItemTypeId",
+          "cashUpItemTypes"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userCashUpId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cashUpUser": {
+            "$ref": "#/components/schemas/EntitiesCashUpUser"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "openingBalance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "closingBalance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "cashUpItemTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cashUpItemTypes": {
+            "$ref": "#/components/schemas/EntitiesCashUpUserItemType"
+          }
+        }
+      },
+      "EntitiesCashUpUserItemType": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "itemType",
+          "isAuto"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "itemType": {
+            "type": "string"
+          },
+          "isAuto": {
+            "type": "boolean"
+          },
+          "paymentTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "paymentType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesPaymentType"
+              }
+            ]
+          },
+          "cashupConfigId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cashupConfig": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesCashUpConfig"
+              }
+            ]
+          }
+        }
+      },
+      "EntitiesCashUpConfig": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "outletId",
+          "value"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "TableOrderGetBillRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "TableOrderGetBasketResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItems",
+          "total"
+        ],
+        "properties": {
+          "orderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TableOrderGetBasketBillOrderItemDTO"
+            }
+          },
+          "total": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "TableOrderGetBasketBillOrderItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId",
+          "tableBookingId",
+          "tableBooking",
+          "menuItemId",
+          "quantity",
+          "menuItem"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "tableBooking": {
+            "$ref": "#/components/schemas/DTOTableBookingDTO"
+          },
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItem": {
+            "$ref": "#/components/schemas/TableOrderGetBasketBillMenuItemDTO"
+          },
+          "orderItemOptions": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOOrderItemOptionDTO"
+            }
+          },
+          "orderItemExtras": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
+            }
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "TableOrderGetBasketBillMenuItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "name",
+          "price"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "TableOrderGetBasketRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "TableOrderCopyItemResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "isSuccess"
+        ],
+        "properties": {
+          "isSuccess": {
+            "type": "boolean"
+          }
+        }
+      },
+      "TableOrderCopyItemRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "orderItemId"
+        ],
+        "properties": {
+          "orderItemId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "OrderClearBasketRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -6376,7 +6746,7 @@
           }
         }
       },
-      "TableBookingGetHistoryResponse": {
+      "TableBookingHistoryResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -6385,7 +6755,8 @@
           "table",
           "bookingName",
           "bookingDate",
-          "salesPeriodId"
+          "salesPeriodId",
+          "total"
         ],
         "properties": {
           "id": {
@@ -6414,6 +6785,10 @@
           "salesPeriodId": {
             "type": "integer",
             "format": "int32"
+          },
+          "total": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -6458,6 +6833,10 @@
             "type": "string"
           }
         }
+      },
+      "TableBookingHistorySalesPeriodRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "TableBookingGetResponse": {
         "type": "object",
@@ -8116,6 +8495,75 @@
             "format": "int32"
           }
         }
+      },
+      "CashUpUserGetResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "user",
+          "sales"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/EntitiesUser"
+          },
+          "sales": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "CashUpUserGetRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "CashUpUserDetailResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "user",
+          "responseItems"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "user": {
+            "$ref": "#/components/schemas/EntitiesUser"
+          },
+          "responseItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CashUpUserDetailResponseItem"
+            }
+          }
+        }
+      },
+      "CashUpUserDetailResponseItem": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "cashUpUserItemType",
+          "value"
+        ],
+        "properties": {
+          "cashUpUserItemType": {
+            "$ref": "#/components/schemas/EntitiesCashUpUserItemType"
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "CashUpUserDetailRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "BusinessGetRequest": {
         "type": "object",

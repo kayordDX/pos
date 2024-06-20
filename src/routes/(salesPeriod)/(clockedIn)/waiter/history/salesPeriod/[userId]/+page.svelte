@@ -1,13 +1,18 @@
 <script lang="ts">
-	import { createTableBookingHistory } from "$lib/api";
-	import { DataTable } from "@kayord/ui";
-	import { createRender, createTable } from "svelte-headless-table";
+	import { createTableBookingHistorySalesPeriod } from "$lib/api";
+	import { DataTable, Button } from "@kayord/ui";
+	import { createRender, createTable, Render } from "svelte-headless-table";
 	import { addPagination, addResizedColumns } from "svelte-headless-table/plugins";
 	import { writable } from "svelte/store";
 	import { stringToFDate } from "$lib/util";
-	import View from "./View.svelte";
+	import View from "../../View.svelte";
+	import { page } from "$app/stores";
+	import { status } from "$lib/stores/status";
 
-	const query = createTableBookingHistory();
+	const query = createTableBookingHistorySalesPeriod(
+		$status.salesPeriodId,
+		$page.params.userId ?? ""
+	);
 
 	const data = writable($query.data ?? []);
 	$: $data = $query.data ?? [];
@@ -58,7 +63,7 @@
 
 <div class="m-4">
 	<h1>History</h1>
-	<p class="text-muted-foreground">Bill history</p>
+	<p class="text-muted-foreground">Sales period Bill history</p>
 </div>
 
 <DataTable

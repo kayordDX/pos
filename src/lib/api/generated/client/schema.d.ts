@@ -3,3312 +3,5333 @@
  * Do not make direct changes to the file.
  */
 
-
 export interface paths {
-  "/user/validate": {
-    post: operations["UserValidate"];
-  };
-  "/user/getStatus": {
-    get: operations["UserGetStatus"];
-  };
-  "/user/getRoles": {
-    get: operations["UserGetRoles"];
-  };
-  "/user/assignOutlet": {
-    post: operations["UserAssignOutlet"];
-  };
-  "/test": {
-    get: operations["Test"];
-  };
-  "/order/updateTableOrder": {
-    post: operations["TableOrderUpdateTableOrder"];
-  };
-  "/order/updateOrderItem": {
-    post: operations["TableOrderUpdateOrderItem"];
-  };
-  "/order/updateOrderGroup": {
-    post: operations["TableOrderUpdateGroupOrder"];
-  };
-  "/order/sendKitchen": {
-    post: operations["TableOrderSendToKitchen"];
-  };
-  "/order/removeItem": {
-    post: operations["TableOrderRemoveItem"];
-  };
-  "/frontOffice/getOrders": {
-    get: operations["TableOrderFrontOffice"];
-  };
-  "/backOffice/getOrders": {
-    get: operations["TableOrderBackOffice"];
-  };
-  "/orderGroup/getOrders": {
-    get: operations["TableOrderOfficeOrderBasedBack"];
-  };
-  "/order/getBill": {
-    get: operations["TableOrderGetBill"];
-  };
-  "/order/getBasket": {
-    get: operations["TableOrderGetBasket"];
-  };
-  "/order/copyItem": {
-    post: operations["TableOrderCopyItem"];
-  };
-  "/order/clearBasket": {
-    delete: operations["OrderClearBasket"];
-  };
-  "/order/addItems": {
-    post: operations["OrderAddItems"];
-  };
-  "/tableBooking/myHistory": {
-    get: operations["TableBookingGetHistory"];
-  };
-  "/tableBooking/{id}": {
-    get: operations["TableBookingGet"];
-  };
-  "/tableBooking/emailBill": {
-    post: operations["TableBookingEmailBill"];
-  };
-  "/tableBooking": {
-    post: operations["TableBookingCreate"];
-  };
-  "/tableBooking/close": {
-    post: operations["TableBookingClose"];
-  };
-  "/table/{tableId}": {
-    put: operations["TableUpdate"];
-  };
-  "/table/booked": {
-    get: operations["TableGetMyBooked"];
-  };
-  "/table/available": {
-    get: operations["TableGetAvailable"];
-  };
-  "/table": {
-    post: operations["TableCreate"];
-  };
-  "/section/{sectionId}": {
-    get: operations["SectionGet"];
-    put: operations["SectionUpdate"];
-  };
-  "/section": {
-    get: operations["SectionList"];
-    post: operations["SectionCreate"];
-  };
-  "/salesPeriod/{outletId}": {
-    get: operations["SalesPeriodGet"];
-  };
-  "/salesperiod/createCashup": {
-    get: operations["SalesPeriodCreateCashUp"];
-  };
-  "/salesPeriod": {
-    post: operations["SalesPeriodCreate"];
-  };
-  "/salesPeriod/close": {
-    post: operations["SalesPeriodClose"];
-  };
-  "/salesperiod/cashup": {
-    get: operations["SalesPeriodCashUp"];
-  };
-  "/role/createRole": {
-    post: operations["RoleCreate"];
-  };
-  "/role/addUserInRole": {
-    post: operations["RoleAddUserInRole"];
-  };
-  "/role": {
-    get: operations["RoleGetAll"];
-  };
-  "/pay/status/{reference}": {
-    get: operations["PayStatus"];
-  };
-  "/pay/manual": {
-    post: operations["PayManualPayment"];
-  };
-  "/pay/haloPay/{tableBookingId}/{amount}/{userId}": {
-    get: operations["PayHaloPay"];
-  };
-  "/pay/getLink": {
-    get: operations["PayGetLink"];
-  };
-  "/outlet/{id}": {
-    get: operations["OutletGet"];
-    put: operations["OutletUpdate"];
-  };
-  "/outlet/paymentTypes/{id}": {
-    get: operations["OutletGetPaymentType"];
-  };
-  "/outlet": {
-    get: operations["OutletList"];
-    post: operations["OutletCreate"];
-  };
-  "/notification/user": {
-    post: operations["NotificationUser"];
-  };
-  "/notification/testNew": {
-    post: operations["NotificationTestNew"];
-  };
-  "/notification/test": {
-    post: operations["NotificationTest"];
-  };
-  "/notification/addUser": {
-    post: operations["NotificationAddUser"];
-  };
-  "/menu/{menuId}": {
-    get: operations["MenuGet"];
-    put: operations["MenuUpdate"];
-  };
-  "/menu/sections": {
-    get: operations["MenuGetSectionsGetMenusSections"];
-  };
-  "/menu/outletMenus": {
-    get: operations["MenuGetOutletMenuGetOutletMenus"];
-  };
-  "/menu/items": {
-    get: operations["MenuGetItemsGetMenuItems"];
-  };
-  "/menu/item": {
-    get: operations["MenuGetItemGetMenuItems"];
-  };
-  "/menu": {
-    get: operations["MenuList"];
-    post: operations["MenuCreate"];
-  };
-  "/manager/viewOrders": {
-    get: operations["ManagerOrderView"];
-  };
-  "/extra/all": {
-    get: operations["ExtraGetAll"];
-  };
-  "/clock/list": {
-    get: operations["ClockList"];
-  };
-  "/clock/out": {
-    post: operations["ClockClockOut"];
-  };
-  "/clock/in": {
-    post: operations["ClockClockIn"];
-  };
-  "/business": {
-    get: operations["BusinessGetAll"];
-    put: operations["BusinessEdit"];
-    post: operations["BusinessCreate"];
-    delete: operations["BusinessDelete"];
-  };
-  "/business/{id}": {
-    get: operations["BusinessGet"];
-  };
-  "/adjustment/{outletId}": {
-    get: operations["AdjustmentGetAll"];
-  };
-  "/adjustment": {
-    post: operations["AdjustmentCreate"];
-  };
+    "/user/validate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UserValidate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/getStatus": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserGetStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/getRoles": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserGetRoles"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/assignOutlet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UserAssignOutlet"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["Test"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/updateTableOrder": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableOrderUpdateTableOrder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/updateOrderItem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableOrderUpdateOrderItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/updateOrderGroup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableOrderUpdateGroupOrder"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/sendKitchen": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableOrderSendToKitchen"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/removeItem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableOrderRemoveItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/frontOffice/getOrders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableOrderFrontOffice"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/backOffice/getOrders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableOrderBackOffice"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/orderGroup/getOrders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableOrderOfficeOrderBasedBack"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/getBill": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableOrderGetBill"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/getBasket": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableOrderGetBasket"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/copyItem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableOrderCopyItem"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/clearBasket": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["OrderClearBasket"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/order/addItems": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["OrderAddItems"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tableBooking/myHistory/{salesPeriodId}/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableBookingHistorySalesPeriod"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tableBooking/myHistory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableBookingHistory"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tableBooking/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableBookingGet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tableBooking/emailBill": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableBookingEmailBill"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tableBooking": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableBookingCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/tableBooking/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableBookingClose"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/table/{tableId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["TableUpdate"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/table/booked": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableGetMyBooked"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/table/available": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TableGetAvailable"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/table": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/section/{sectionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SectionGet"];
+        put: operations["SectionUpdate"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/section": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SectionList"];
+        put?: never;
+        post: operations["SectionCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/salesPeriod/{outletId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SalesPeriodGet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/salesperiod/createCashup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SalesPeriodCreateCashUp"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/salesPeriod": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["SalesPeriodCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/salesPeriod/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["SalesPeriodClose"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/salesperiod/cashup": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SalesPeriodCashUp"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/role/createRole": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RoleCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/role/addUserInRole": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RoleAddUserInRole"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/role": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RoleGetAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pay/status/{reference}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PayStatus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pay/manual": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["PayManualPayment"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pay/haloPay/{tableBookingId}/{amount}/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PayHaloPay"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pay/getLink": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PayGetLink"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/outlet/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["OutletGet"];
+        put: operations["OutletUpdate"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/outlet/paymentTypes/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["OutletGetPaymentType"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/outlet": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["OutletList"];
+        put?: never;
+        post: operations["OutletCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notification/user": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["NotificationUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notification/testNew": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["NotificationTestNew"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notification/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["NotificationTest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/notification/addUser": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["NotificationAddUser"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/menu/{menuId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["MenuGet"];
+        put: operations["MenuUpdate"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/menu/sections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["MenuGetSectionsGetMenusSections"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/menu/outletMenus": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["MenuGetOutletMenuGetOutletMenus"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/menu/items": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["MenuGetItemsGetMenuItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/menu/item": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["MenuGetItemGetMenuItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/menu": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["MenuList"];
+        put?: never;
+        post: operations["MenuCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/manager/viewOrders": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ManagerOrderView"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/extra/all": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExtraGetAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/clock/list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ClockList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/clock/out": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["ClockClockOut"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/clock/in": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["ClockClockIn"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cashUp/user": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CashUpUserGet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cashUp/user/detail/{userId}/{outletId}/{salesPeriodId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CashUpUserDetail"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/business": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BusinessGetAll"];
+        put: operations["BusinessEdit"];
+        post: operations["BusinessCreate"];
+        delete: operations["BusinessDelete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/business/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BusinessGet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/adjustment/{outletId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["AdjustmentGetAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/adjustment": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AdjustmentCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
 }
-
 export type webhooks = Record<string, never>;
-
 export interface components {
-  schemas: {
-    UserValidateResponse: {
-      userId: string;
-      userRoles?: string[] | null;
-    };
-    InternalErrorResponse: {
-      /** @default Internal Server Error! */
-      status: string;
-      /**
-       * Format: int32
-       * @default 500
-       */
-      code: number;
-      /** @default Something unexpected has happened */
-      reason: string;
-      /** @default See application log for stack trace. */
-      note: string;
-    };
-    UserValidateRequest: {
-      userId: string;
-      email: string;
-      image?: string | null;
-      name: string;
-    };
-    UserGetStatusResponse: {
-      /** Format: int32 */
-      outletId: number;
-      clockedIn: boolean;
-      /** Format: int32 */
-      salesPeriodId: number;
-      salesPeriod?: components["schemas"]["EntitiesSalesPeriod"] | null;
-      roles: string[];
-    };
-    EntitiesSalesPeriod: {
-      /** Format: int32 */
-      id: number;
-      name?: string | null;
-      /** Format: date-time */
-      startDate?: string | null;
-      /** Format: date-time */
-      endDate?: string | null;
-      outlet: components["schemas"]["EntitiesOutlet"];
-      /** Format: int32 */
-      outletId: number;
-    };
-    EntitiesOutlet: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      /** Format: int32 */
-      businessId: number;
-      business: components["schemas"]["EntitiesBusiness"];
-      sections?: components["schemas"]["EntitiesSection"][] | null;
-      vatNumber: string;
-      logo?: string | null;
-      outletPaymentTypes?: components["schemas"]["EntitiesOutletPaymentType"][] | null;
-    };
-    EntitiesBusiness: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      outlets?: components["schemas"]["EntitiesOutlet"][] | null;
-    };
-    EntitiesSection: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["EntitiesOutlet"];
-      tables?: components["schemas"]["EntitiesTable"][] | null;
-    };
-    EntitiesTable: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      capacity: number;
-      /** Format: int32 */
-      position: number;
-      /** Format: int32 */
-      sectionId: number;
-      section: components["schemas"]["EntitiesSection"];
-      customers: components["schemas"]["EntitiesCustomer"][];
-    };
-    EntitiesCustomer: {
-      /** Format: int32 */
-      customerId: number;
-      name: string;
-      orders: components["schemas"]["Order"][];
-    };
-    /** @enum {integer} */
-    Order: 0 | 1;
-    EntitiesOutletPaymentType: {
-      /** Format: int32 */
-      paymentTypeId: number;
-      paymentType: components["schemas"]["EntitiesPaymentType"];
-      /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["EntitiesOutlet"];
-      /** Format: int32 */
-      position: number;
-    };
-    EntitiesPaymentType: {
-      /** Format: int32 */
-      paymentTypeId: number;
-      paymentTypeName: string;
-      /** Format: decimal */
-      tipLevyPercentage: number;
-      /** Format: decimal */
-      discountPercentage: number;
-      outletPaymentTypes?: components["schemas"]["EntitiesOutletPaymentType"][] | null;
-    };
-    UserGetRolesRequest: Record<string, never>;
-    EntitiesUserOutlet: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      outletId: number;
-      userId: string;
-      isCurrent: boolean;
-    };
-    UserAssignOutletRequest: {
-      /** Format: int32 */
-      outletId: number;
-    };
-    TableOrderUpdateTableOrderResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderUpdateTableOrderRequest: {
-      /** Format: int32 */
-      tableBookingId: number;
-      /** Format: int32 */
-      orderItemStatusId: number;
-    };
-    TableOrderUpdateOrderItemResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderUpdateOrderItemRequest: {
-      orderItemIds: number[];
-      /** Format: int32 */
-      orderItemStatusId: number;
-    };
-    TableOrderUpdateGroupOrderResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderUpdateGroupOrderRequest: {
-      /** Format: int32 */
-      orderGroupId: number;
-      /** Format: int32 */
-      orderItemStatusId: number;
-    };
-    TableOrderSendToKitchenResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderSendToKitchenRequest: {
-      /** Format: int32 */
-      tableBookingId: number;
-    };
-    TableOrderRemoveItemResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderRemoveItemRequest: {
-      /** Format: int32 */
-      orderItemId: number;
-    };
-    TableOrderFrontOfficeResponse: {
-      tables?: components["schemas"]["TableOrderOfficeTableBookingDTO"][] | null;
-      /** Format: date-time */
-      lastRefresh: string;
-      /** Format: int32 */
-      pendingTables: number;
-      /** Format: int32 */
-      pendingItems: number;
-    };
-    TableOrderOfficeTableBookingDTO: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["TableOrderOfficeTableDTO"];
-      orderItems?: components["schemas"]["TableOrderOfficeOrderItemDTO"][] | null;
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      user: components["schemas"]["DTOUserDTO"];
-    };
-    TableOrderOfficeTableDTO: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      section?: components["schemas"]["TableOrderOfficeSectionDTO"] | null;
-    };
-    TableOrderOfficeSectionDTO: {
-      name: string;
-    };
-    TableOrderOfficeOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      menuItem: components["schemas"]["TableOrderOfficeMenuItemDTO"];
-      /** Format: int32 */
-      divisionId: number;
-      note?: string | null;
-      /** Format: date-time */
-      orderReceived: string;
-      /** Format: date-time */
-      orderUpdated: string;
-      orderReceivedFormatted: string;
-      orderUpdatedFormatted: string;
-      /** Format: int32 */
-      orderItemStatusId: number;
-      orderItemStatus: components["schemas"]["TableOrderOfficeOrderItemStatusDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-    };
-    TableOrderOfficeMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      description: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      position: number;
-      /** Format: int32 */
-      divisionId: number;
-    };
-    TableOrderOfficeOrderItemStatusDTO: {
-      /** Format: int32 */
-      orderItemStatusId: number;
-      status: string;
-    };
-    DTOOrderItemOptionDTO: {
-      /** Format: int32 */
-      orderItemOptionId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      optionId: number;
-      option: components["schemas"]["DTOOptionDTO"];
-    };
-    DTOOptionDTO: {
-      /** Format: int32 */
-      optionId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      optionGroupId: number;
-      optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
-    };
-    DTOOptionGroupBasicDTO: {
-      /** Format: int32 */
-      optionGroupId: number;
-      name: string;
-    };
-    DTOOrderItemExtraDTO: {
-      /** Format: int32 */
-      orderItemExtraId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      extraId: number;
-      extra: components["schemas"]["DTOExtraDTO"];
-    };
-    DTOExtraDTO: {
-      /** Format: int32 */
-      extraId: number;
-      name: string;
-      /** Format: int32 */
-      positionId: number;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      extraGroupId: number;
-      extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
-    };
-    DTOExtraGroupBasicDTO: {
-      /** Format: int32 */
-      extraGroupId: number;
-      name: string;
-    };
-    DTOUserDTO: {
-      userId: string;
-      email: string;
-      image: string;
-      name: string;
-      isActive: boolean;
-    };
-    TableOrderFrontOfficeRequest: Record<string, never>;
-    TableOrderBackOfficeResponse: {
-      tables?: components["schemas"]["TableOrderOfficeTableBookingDTO"][] | null;
-      /** Format: date-time */
-      lastRefresh: string;
-      /** Format: int32 */
-      pendingTables: number;
-      /** Format: int32 */
-      pendingItems: number;
-    };
-    TableOrderBackOfficeRequest: Record<string, never>;
-    TableOrderOfficeOrderBasedBackResponse: {
-      orderGroups?: components["schemas"]["TableOrderOfficeOrderBasedBackOrderGroupDTO"][] | null;
-      /** Format: date-time */
-      lastRefresh: string;
-      /** Format: int32 */
-      pendingOrders: number;
-      /** Format: int32 */
-      pendingItems: number;
-    };
-    TableOrderOfficeOrderBasedBackOrderGroupDTO: {
-      /** Format: int32 */
-      orderGroupId: number;
-      /** Format: date-time */
-      lastDate: string;
-      /** Format: int32 */
-      priority: number;
-      tableBooking?: components["schemas"]["TableOrderOfficeOrderBasedBackTableBookingDTO"] | null;
-      /** Format: int32 */
-      tableBookingId: number;
-      orderItems?: components["schemas"]["TableOrderOfficeOrderBasedBackOrderItemDTO"][] | null;
-    };
-    TableOrderOfficeOrderBasedBackTableBookingDTO: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["TableOrderOfficeOrderBasedBackTableDTO"];
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      user: components["schemas"]["DTOUserDTO"];
-    };
-    TableOrderOfficeOrderBasedBackTableDTO: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      section?: components["schemas"]["TableOrderOfficeOrderBasedBackSectionDTO"] | null;
-    };
-    TableOrderOfficeOrderBasedBackSectionDTO: {
-      name: string;
-    };
-    TableOrderOfficeOrderBasedBackOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      orderGroupId?: number | null;
-      tableBooking?: components["schemas"]["TableOrderOfficeOrderBasedBackTableBookingDTO"] | null;
-      /** Format: int32 */
-      tableBookingId: number;
-      menuItem: components["schemas"]["TableOrderOfficeOrderBasedBackMenuItemDTO"];
-      /** Format: int32 */
-      divisionId: number;
-      note?: string | null;
-      /** Format: date-time */
-      orderReceived: string;
-      /** Format: date-time */
-      orderUpdated: string;
-      orderReceivedFormatted: string;
-      orderUpdatedFormatted: string;
-      /** Format: int32 */
-      orderItemStatusId: number;
-      orderItemStatus: components["schemas"]["TableOrderOfficeOrderBasedBackOrderItemStatusDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-    };
-    TableOrderOfficeOrderBasedBackMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      description: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      position: number;
-      /** Format: int32 */
-      divisionId: number;
-    };
-    TableOrderOfficeOrderBasedBackOrderItemStatusDTO: {
-      /** Format: int32 */
-      orderItemStatusId: number;
-      status: string;
-      /** Format: int32 */
-      priority: number;
-    };
-    TableOrderOfficeOrderBasedBackRequest: Record<string, never>;
-    TableOrderGetBillResponse: {
-      orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
-      /** Format: decimal */
-      total: number;
-      /** Format: decimal */
-      totalExVAT: number;
-      /** Format: decimal */
-      vat: number;
-      paymentsReceived: components["schemas"]["EntitiesPayment"][];
-      /** Format: decimal */
-      balance: number;
-      /** Format: decimal */
-      tipAmount: number;
-      /** Format: date-time */
-      billDate: string;
-      adjustments?: components["schemas"]["EntitiesAdjustment"][] | null;
-    };
-    TableOrderGetBillBillOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["DTOTableBookingDTO"];
-      /** Format: int32 */
-      menuItemId: number;
-      menuItem: components["schemas"]["TableOrderGetBillBillMenuItemDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-      note?: string | null;
-    };
-    DTOTableBookingDTO: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      userId: string;
-      user: components["schemas"]["DTOUserDTO"];
-    };
-    TableOrderGetBillBillMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-    };
-    EntitiesPayment: {
-      /** Format: int32 */
-      id: number;
-      paymentReference: string;
-      /** Format: int32 */
-      tableBookingId: number;
-      /** Format: decimal */
-      amount: number;
-      userId: string;
-      /** Format: int32 */
-      paymentTypeId?: number | null;
-      paymentType: components["schemas"]["EntitiesPaymentType"];
-      /** Format: date-time */
-      dateReceived: string;
-    };
-    EntitiesAdjustment: {
-      /** Format: int32 */
-      adjustmentId: number;
-      adjustmentType: components["schemas"]["EntitiesAdjustmentType"];
-      /** Format: int32 */
-      adjustmentTypeId: number;
-      /** Format: date-time */
-      created: string;
-      userId: string;
-      /** Format: decimal */
-      amount: number;
-      note?: string | null;
-    };
-    EntitiesAdjustmentType: {
-      /** Format: int32 */
-      adjustmentTypeId: number;
-      name: string;
-      description?: string | null;
-    };
-    TableOrderGetBillRequest: Record<string, never>;
-    TableOrderGetBasketResponse: {
-      orderItems: components["schemas"]["TableOrderGetBasketBillOrderItemDTO"][];
-      /** Format: decimal */
-      total: number;
-    };
-    TableOrderGetBasketBillOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["DTOTableBookingDTO"];
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      quantity: number;
-      menuItem: components["schemas"]["TableOrderGetBasketBillMenuItemDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-      note?: string | null;
-    };
-    TableOrderGetBasketBillMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-    };
-    TableOrderGetBasketRequest: Record<string, never>;
-    TableOrderCopyItemResponse: {
-      isSuccess: boolean;
-    };
-    TableOrderCopyItemRequest: {
-      /** Format: int32 */
-      orderItemId: number;
-    };
-    EntitiesOrderItem: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      orderGroupId?: number | null;
-      orderGroup?: components["schemas"]["EntitiesOrderGroup"] | null;
-      /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["EntitiesTableBooking"];
-      /** Format: int32 */
-      menuItemId: number;
-      menuItem: components["schemas"]["EntitiesMenuItem"];
-      /** Format: date-time */
-      orderReceived: string;
-      /** Format: date-time */
-      orderUpdated: string;
-      /** Format: date-time */
-      orderCompleted?: string | null;
-      /** Format: int32 */
-      orderItemStatusId: number;
-      orderItemStatus: components["schemas"]["EntitiesOrderItemStatus"];
-      orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
-      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
-      note?: string | null;
-    };
-    EntitiesOrderGroup: {
-      /** Format: int32 */
-      orderGroupId: number;
-      orderItems?: components["schemas"]["EntitiesOrderItem"][] | null;
-    };
-    EntitiesTableBooking: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["EntitiesTable"];
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      /** Format: int32 */
-      salesPeriodId: number;
-      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
-      userId: string;
-      user: components["schemas"]["EntitiesUser"];
-      orderItems?: components["schemas"]["EntitiesOrderItem"][] | null;
-      adjustments?: components["schemas"]["EntitiesAdjustment"][] | null;
-    };
-    EntitiesUser: {
-      userId: string;
-      email: string;
-      image: string;
-      name: string;
-      isActive: boolean;
-      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
-    };
-    EntitiesUserRole: {
-      /** Format: int32 */
-      userRoleId: number;
-      userId: string;
-      /** Format: int32 */
-      roleId: number;
-      user: components["schemas"]["EntitiesUser"];
-      role?: components["schemas"]["EntitiesRole"] | null;
-    };
-    EntitiesRole: {
-      /** Format: int32 */
-      roleId: number;
-      name: string;
-      description: string;
-      isFrontLine: boolean;
-      isBackOffice: boolean;
-      /** Format: int32 */
-      outletId?: number | null;
-      userRole?: components["schemas"]["EntitiesUserRole"][] | null;
-    };
-    EntitiesMenuItem: {
-      /** Format: int32 */
-      menuItemId: number;
-      menuSection: components["schemas"]["EntitiesMenuSection"];
-      /** Format: int32 */
-      menuSectionId: number;
-      name: string;
-      description: string;
-      /** Format: decimal */
-      price: number;
-      searchVector: components["schemas"]["NpgsqlTypesNpgsqlTsVector_Lexeme"][];
-      /** Format: int32 */
-      position: number;
-      tags?: components["schemas"]["EntitiesTag"][] | null;
-      /** Format: int32 */
-      divisionId?: number | null;
-      division?: components["schemas"]["EntitiesDivision"] | null;
-      menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
-      menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
-      isAvailable: boolean;
-      /** Format: decimal */
-      stockPrice: number;
-    };
-    EntitiesMenuSection: {
-      /** Format: int32 */
-      menuSectionId: number;
-      name?: string | null;
-      menu: components["schemas"]["EntitiesMenu"];
-      /** Format: int32 */
-      menuId: number;
-      parent?: components["schemas"]["EntitiesMenuSection"] | null;
-      /** Format: int32 */
-      parentId?: number | null;
-      /** Format: int32 */
-      positionId?: number | null;
-      subMenuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
-      menuItems?: components["schemas"]["EntitiesMenuItem"][] | null;
-    };
-    EntitiesMenu: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      /** Format: int32 */
-      position: number;
-      outlet: components["schemas"]["EntitiesOutlet"];
-      menuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
-    };
-    NpgsqlTypesNpgsqlTsVector_Lexeme: {
-      text: string;
-      /** Format: int32 */
-      count: number;
-    };
-    EntitiesTag: {
-      /** Format: int32 */
-      tagId: number;
-      name: string;
-    };
-    EntitiesDivision: {
-      /** Format: int32 */
-      divisionId: number;
-      divisionName: string;
-    };
-    EntitiesMenuItemOptionGroup: {
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      optionGroupId: number;
-      menuItem: components["schemas"]["EntitiesMenuItem"];
-      optionGroup: components["schemas"]["EntitiesOptionGroup"];
-    };
-    EntitiesOptionGroup: {
-      /** Format: int32 */
-      optionGroupId: number;
-      name: string;
-      /** Format: int32 */
-      minSelections: number;
-      /** Format: int32 */
-      maxSelections: number;
-      options: components["schemas"]["EntitiesOption"][];
-      menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
-    };
-    EntitiesOption: {
-      /** Format: int32 */
-      optionId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      positionId: number;
-      /** Format: int32 */
-      optionGroupId: number;
-      optionGroup: components["schemas"]["EntitiesOptionGroup"];
-      orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
-    };
-    EntitiesOrderItemOption: {
-      /** Format: int32 */
-      orderItemOptionId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      orderItem: components["schemas"]["EntitiesOrderItem"];
-      /** Format: int32 */
-      optionId: number;
-      option: components["schemas"]["EntitiesOption"];
-    };
-    EntitiesMenuItemExtraGroup: {
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      extraGroupId: number;
-      menuItem: components["schemas"]["EntitiesMenuItem"];
-      extraGroup: components["schemas"]["EntitiesExtraGroup"];
-    };
-    EntitiesExtraGroup: {
-      /** Format: int32 */
-      extraGroupId: number;
-      name: string;
-      extras: components["schemas"]["EntitiesExtra"][];
-      menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
-    };
-    EntitiesExtra: {
-      /** Format: int32 */
-      extraId: number;
-      name: string;
-      /** Format: int32 */
-      positionId: number;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      extraGroupId: number;
-      extraGroup: components["schemas"]["EntitiesExtraGroup"];
-      orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
-    };
-    EntitiesOrderItemExtra: {
-      /** Format: int32 */
-      orderItemExtraId: number;
-      /** Format: int32 */
-      orderItemId: number;
-      orderItem: components["schemas"]["EntitiesOrderItem"];
-      /** Format: int32 */
-      extraId: number;
-      extra: components["schemas"]["EntitiesExtra"];
-    };
-    EntitiesOrderItemStatus: {
-      /** Format: int32 */
-      orderItemStatusId: number;
-      status: string;
-      assignGroup: boolean;
-      isFrontLine: boolean;
-      isBackOffice: boolean;
-      isComplete: boolean;
-      isCancelled: boolean;
-      isBillable: boolean;
-      isHistory: boolean;
-      notify: boolean;
-      /** Format: int32 */
-      priority: number;
-    };
-    OrderClearBasketRequest: {
-      /** Format: int32 */
-      tableBookingId: number;
-    };
-    OrderAddItemsRequest: {
-      orders: components["schemas"]["OrderAddItemsOrder"][];
-      /** Format: int32 */
-      tableBookingId: number;
-    };
-    OrderAddItemsOrder: {
-      /** Format: int32 */
-      menuItemId: number;
-      optionIds?: number[] | null;
-      extraIds?: number[] | null;
-      note: string;
-      /** Format: int32 */
-      quantity: number;
-    };
-    TableBookingGetHistoryResponse: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["ManagerOrderViewTableDTO"];
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      /** Format: int32 */
-      salesPeriodId: number;
-    };
-    ManagerOrderViewTableDTO: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-      section?: components["schemas"]["ManagerOrderViewSectionDTO"] | null;
-    };
-    ManagerOrderViewSectionDTO: {
-      name: string;
-    };
-    TableBookingGetResponse: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["ManagerOrderViewTableDTO"];
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      /** Format: int32 */
-      salesPeriodId: number;
-      userId: string;
-      user: components["schemas"]["DTOUserDTO"];
-    };
-    ErrorResponse: {
-      /**
-       * Format: int32
-       * @default 400
-       */
-      statusCode: number;
-      /** @default One or more errors occurred! */
-      message: string;
-      errors: {
-        [key: string]: string[];
-      };
-    };
-    TableBookingGetRequest: Record<string, never>;
-    TableBookingEmailBillRequest: {
-      /** Format: int32 */
-      tableBookingId: number;
-      email: string;
-      name: string;
-    };
-    TableBookingCreateRequest: {
-      /** Format: int32 */
-      tableId: number;
-      bookingName: string;
-      /** Format: int32 */
-      salesPeriodId: number;
-    };
-    TableBookingCloseRequest: {
-      /** Format: int32 */
-      tableBookingId: number;
-    };
-    TableUpdateRequest: {
-      name: string;
-      /** Format: int32 */
-      sectionId: number;
-      /** Format: int32 */
-      capacity: number;
-    };
-    TableGetMyBookedResponse: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: int32 */
-      salesPeriodId: number;
-      /** Format: int32 */
-      staffId: number;
-      table: components["schemas"]["TableGetMyBookedTableDto"];
-    };
-    TableGetMyBookedTableDto: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      section: components["schemas"]["TableGetMyBookedSectionDto"];
-    };
-    TableGetMyBookedSectionDto: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    TableGetMyBookedRequest: Record<string, never>;
-    TableGetAvailableResponse: {
-      /** Format: int32 */
-      tableId: number;
-      name: string;
-      /** Format: int32 */
-      capacity: number;
-      /** Format: int32 */
-      sectionId: number;
-      section: components["schemas"]["TableGetAvailableSectionDto"];
-    };
-    TableGetAvailableSectionDto: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    TableGetAvailableRequest: Record<string, never>;
-    TableCreateRequest: {
-      name: string;
-      /** Format: int32 */
-      sectionId: number;
-      /** Format: int32 */
-      capacity: number;
-    };
-    SectionUpdateRequest: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    SectionListRequest: Record<string, never>;
-    SectionGetRequest: Record<string, never>;
-    SectionCreateRequest: {
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-    };
-    SalesPeriodGetRequest: Record<string, never>;
-    EntitiesCashUp: {
-      /** Format: int32 */
-      id: number;
-      /** Format: decimal */
-      cashUpTotal: number;
-      /** Format: int32 */
-      tableCount: number;
-      /** Format: int32 */
-      openTableCount: number;
-      /** Format: decimal */
-      cashUpBalance: number;
-      /** Format: decimal */
-      cashUpTotalPayments: number;
-      /** Format: int32 */
-      salesPeriodId: number;
-      salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
-      userId: string;
-      signOffUserId: string;
-      /** Format: date-time */
-      signOffDate?: string | null;
-    };
-    SalesPeriodCreateCashUpRequest: Record<string, never>;
-    SalesPeriodCreateRequest: {
-      name: string;
-      /** Format: int32 */
-      outletId: number;
-    };
-    SalesPeriodCloseRequest: {
-      /** Format: int32 */
-      salesPeriodId: number;
-    };
-    SalesPeriodCashUpCashUp: components["schemas"]["EntitiesCashUp"] & {
-      userCashUps: components["schemas"]["SalesPeriodCashUpUserCashUp"][];
-    };
-    SalesPeriodCashUpUserCashUp: {
-      tableCashUps: components["schemas"]["SalesPeriodCashUpTableCashUp"][];
-      userId: string;
-      user: components["schemas"]["DTOUserDTO"];
-      /** Format: decimal */
-      userTotal: number;
-      /** Format: decimal */
-      userBalance: number;
-      /** Format: decimal */
-      userPaymentTotal: number;
-      /** Format: decimal */
-      userTipTotal: number;
-      /** Format: time */
-      tableTurnaroundTime: string;
-    };
-    SalesPeriodCashUpTableCashUp: {
-      orderItems: components["schemas"]["SalesPeriodCashUpBillOrderItemDTO"][];
-      /** Format: decimal */
-      total: number;
-      paymentsReceived: components["schemas"]["EntitiesPayment"][];
-      /** Format: decimal */
-      tablePaymentTotal: number;
-      /** Format: decimal */
-      balance: number;
-      userId?: string | null;
-      user?: components["schemas"]["DTOUserDTO"] | null;
-    };
-    SalesPeriodCashUpBillOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      tableBooking: components["schemas"]["DTOTableBookingDTO"];
-      /** Format: int32 */
-      menuItemId: number;
-      menuItem: components["schemas"]["SalesPeriodCashUpBillMenuItemDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-      userId: string;
-      note?: string | null;
-    };
-    SalesPeriodCashUpBillMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      /** Format: decimal */
-      price: number;
-    };
-    SalesPeriodCashUpRequest: Record<string, never>;
-    RoleCreateRequest: {
-      name: string;
-      description: string;
-    };
-    RoleAddUserInRoleRequest: {
-      userId: string;
-      /** Format: int32 */
-      roleId: number;
-    };
-    CommonWrapperResultOfStatusResultDto: components["schemas"]["CommonWrapperResult"] & ({
-      value?: components["schemas"]["PayDtoStatusResultDto"] | null;
-    });
-    PayDtoStatusResultDto: {
-      qrCodeState: string;
-      transactionId: string;
-      merchantTransactionReference: string;
-      userId: string;
-      status: string;
-      disposition: string;
-      /** Format: decimal */
-      amount: number;
-      currency: string;
-      type: string;
-      /** Format: int32 */
-      responseCode: number;
-      authorisationCode: string;
-      /** Format: date-time */
-      createdAt: string;
-      /** Format: date-time */
-      updatedAt: string;
-      paymentReference: string;
-      currencyCode: string;
-    };
-    CommonWrapperResult: {
-      success: boolean;
-      error: string;
-      failure: boolean;
-    };
-    PayStatusRequest: Record<string, never>;
-    PayManualPaymentRequest: {
-      /** Format: int32 */
-      paymentTypeId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      /** Format: decimal */
-      amount: number;
-    };
-    CommonWrapperResultOfResponse: components["schemas"]["CommonWrapperResult"] & ({
-      value?: components["schemas"]["PayGetLinkResponse"] | null;
-    });
-    PayGetLinkResponse: {
-      url: string;
-      reference: string;
-    };
-    PayHaloPayRequest: Record<string, never>;
-    PayGetLinkRequest: Record<string, never>;
-    OutletUpdateRequest: {
-      name: string;
-      /** Format: int32 */
-      businessId: number;
-    };
-    OutletGetPaymentTypeRequest: Record<string, never>;
-    OutletGetRequest: Record<string, never>;
-    OutletCreateRequest: {
-      name: string;
-      /** Format: int32 */
-      businessId: number;
-    };
-    NotificationUserRequest: {
-      message: string;
-      userId: string;
-    };
-    NotificationTestNewRequest: {
-      title: string;
-      body: string;
-      userId: string;
-    };
-    NotificationTestRequest: {
-      message: string;
-    };
-    NotificationAddUserRequest: {
-      token: string;
-    };
-    MenuUpdateRequest: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    MenuGetSectionsResponse: {
-      sections?: components["schemas"]["DTOMenuSectionDTO"][] | null;
-      parents?: components["schemas"]["DTOMenuSectionDTO"][] | null;
-    };
-    DTOMenuSectionDTO: {
-      /** Format: int32 */
-      menuSectionId: number;
-      name?: string | null;
-      /** Format: int32 */
-      menuId: number;
-      /** Format: int32 */
-      parentId?: number | null;
-      parent?: components["schemas"]["DTOMenuSectionParentDTO"] | null;
-    };
-    DTOMenuSectionParentDTO: {
-      /** Format: int32 */
-      menuSectionId: number;
-      name?: string | null;
-      /** Format: int32 */
-      menuId: number;
-      /** Format: int32 */
-      parentId?: number | null;
-    };
-    MenuGetSectionsRequest: Record<string, never>;
-    MenuGetOutletMenuRequest: Record<string, never>;
-    DTOMenuItemDTOBasic: {
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      menuSectionId: number;
-      name: string;
-      description: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      position: number;
-      tags?: components["schemas"]["EntitiesTag"][] | null;
-      menuSection: components["schemas"]["DTOMenuSectionBasicDTO"];
-      isAvailable: boolean;
-    };
-    DTOMenuSectionBasicDTO: {
-      /** Format: int32 */
-      menuSectionId: number;
-      name?: string | null;
-    };
-    MenuGetItemsRequest: Record<string, never>;
-    DTOMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      menuSectionId: number;
-      name: string;
-      description: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      position: number;
-      tags?: components["schemas"]["EntitiesTag"][] | null;
-      /** Format: int32 */
-      divisionId: number;
-      menuItemOptionGroups: components["schemas"]["DTOMenuItemOptionGroupDTO"][];
-      menuItemExtraGroups: components["schemas"]["DTOMenuItemExtraGroupDTO"][];
-    };
-    DTOMenuItemOptionGroupDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      optionGroupId: number;
-      optionGroup: components["schemas"]["DTOOptionGroupDTO"];
-    };
-    DTOOptionGroupDTO: {
-      /** Format: int32 */
-      optionGroupId: number;
-      name: string;
-      /** Format: int32 */
-      minSelections: number;
-      /** Format: int32 */
-      maxSelections: number;
-      options: components["schemas"]["DTOOptionDTO"][];
-    };
-    DTOMenuItemExtraGroupDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      /** Format: int32 */
-      extraGroupId: number;
-      extraGroup: components["schemas"]["DTOExtraGroupDTO"];
-    };
-    DTOExtraGroupDTO: {
-      /** Format: int32 */
-      extraGroupId: number;
-      name: string;
-      extras: components["schemas"]["DTOExtraDTO"][];
-    };
-    MenuGetItemRequest: Record<string, never>;
-    MenuListRequest: Record<string, never>;
-    MenuGetRequest: Record<string, never>;
-    MenuCreateRequest: {
-      /** Format: int32 */
-      outletId: number;
-      name: string;
-    };
-    ManagerOrderViewResponse: {
-      /** Format: int32 */
-      divisionId: number;
-      division: components["schemas"]["EntitiesDivision"];
-      tables?: components["schemas"]["ManagerOrderViewTableBookingDTO"][] | null;
-      /** Format: date-time */
-      lastRefresh: string;
-      /** Format: int32 */
-      pendingTables: number;
-      /** Format: int32 */
-      pendingItems: number;
-    };
-    ManagerOrderViewTableBookingDTO: {
-      /** Format: int32 */
-      id: number;
-      /** Format: int32 */
-      tableId: number;
-      table: components["schemas"]["ManagerOrderViewTableDTO"];
-      orderItems?: components["schemas"]["ManagerOrderViewOrderItemDTO"][] | null;
-      bookingName: string;
-      /** Format: date-time */
-      bookingDate: string;
-      /** Format: date-time */
-      closeDate?: string | null;
-      user: components["schemas"]["DTOUserDTO"];
-    };
-    ManagerOrderViewOrderItemDTO: {
-      /** Format: int32 */
-      orderItemId: number;
-      /** Format: int32 */
-      tableBookingId: number;
-      menuItem: components["schemas"]["ManagerOrderViewMenuItemDTO"];
-      /** Format: int32 */
-      divisionId: number;
-      note?: string | null;
-      /** Format: date-time */
-      orderReceived: string;
-      /** Format: date-time */
-      orderUpdated: string;
-      orderReceivedFormatted: string;
-      orderUpdatedFormatted: string;
-      /** Format: int32 */
-      orderItemStatusId: number;
-      orderItemStatus: components["schemas"]["ManagerOrderViewOrderItemStatusDTO"];
-      orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
-      orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
-    };
-    ManagerOrderViewMenuItemDTO: {
-      /** Format: int32 */
-      menuItemId: number;
-      name: string;
-      description: string;
-      /** Format: decimal */
-      price: number;
-      /** Format: int32 */
-      position: number;
-      /** Format: int32 */
-      divisionId?: number | null;
-    };
-    ManagerOrderViewOrderItemStatusDTO: {
-      /** Format: int32 */
-      orderItemStatusId: number;
-      status: string;
-    };
-    ManagerOrderViewRequest: Record<string, never>;
-    ClockListRequest: Record<string, never>;
-    EntitiesClock: {
-      /** Format: int32 */
-      id: number;
-      userId: string;
-      user: components["schemas"]["EntitiesUser"];
-      /** Format: date-time */
-      startDate: string;
-      /** Format: date-time */
-      endDate?: string | null;
-      /** Format: int32 */
-      outletId: number;
-      outlet: components["schemas"]["EntitiesOutlet"];
-    };
-    ClockClockOutRequest: {
-      /** Format: int32 */
-      outletId: number;
-    };
-    ClockClockInRequest: {
-      /** Format: int32 */
-      outletId: number;
-    };
-    BusinessGetRequest: Record<string, never>;
-    BusinessEditRequest: {
-      /** Format: int32 */
-      id: number;
-      name: string;
-    };
-    BusinessDeleteRequest: {
-      /** Format: int32 */
-      id: number;
-    };
-    BusinessCreateRequest: {
-      name: string;
-    };
-    AdjustmentGetAllRequest: Record<string, never>;
-    AdjustmentCreateRequest: {
-      /** Format: int32 */
-      tableBookingId: number;
-      /** Format: int32 */
-      adjustmentTypeId: number;
-      /** Format: decimal */
-      amount: number;
-      note?: string | null;
-    };
-  };
-  responses: never;
-  parameters: never;
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+    schemas: {
+        UserValidateResponse: {
+            userId: string;
+            userRoles?: string[] | null;
+        };
+        InternalErrorResponse: {
+            /** @default Internal Server Error! */
+            status: string;
+            /**
+             * Format: int32
+             * @default 500
+             */
+            code: number;
+            /** @default Something unexpected has happened */
+            reason: string;
+            /** @default See application log for stack trace. */
+            note: string;
+        };
+        UserValidateRequest: {
+            userId: string;
+            email: string;
+            image?: string | null;
+            name: string;
+        };
+        UserGetStatusResponse: {
+            /** Format: int32 */
+            outletId: number;
+            clockedIn: boolean;
+            /** Format: int32 */
+            salesPeriodId: number;
+            salesPeriod?: components["schemas"]["EntitiesSalesPeriod"] | null;
+            roles: string[];
+        };
+        EntitiesSalesPeriod: {
+            /** Format: int32 */
+            id: number;
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string | null;
+            /** Format: date-time */
+            endDate?: string | null;
+            outlet: components["schemas"]["EntitiesOutlet"];
+            /** Format: int32 */
+            outletId: number;
+        };
+        EntitiesOutlet: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            businessId: number;
+            business: components["schemas"]["EntitiesBusiness"];
+            sections?: components["schemas"]["EntitiesSection"][] | null;
+            vatNumber: string;
+            logo?: string | null;
+            outletPaymentTypes?: components["schemas"]["EntitiesOutletPaymentType"][] | null;
+        };
+        EntitiesBusiness: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            outlets?: components["schemas"]["EntitiesOutlet"][] | null;
+        };
+        EntitiesSection: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            outletId: number;
+            outlet: components["schemas"]["EntitiesOutlet"];
+            tables?: components["schemas"]["EntitiesTable"][] | null;
+        };
+        EntitiesTable: {
+            /** Format: int32 */
+            tableId: number;
+            name: string;
+            /** Format: int32 */
+            capacity: number;
+            /** Format: int32 */
+            position: number;
+            /** Format: int32 */
+            sectionId: number;
+            section: components["schemas"]["EntitiesSection"];
+            customers: components["schemas"]["EntitiesCustomer"][];
+        };
+        EntitiesCustomer: {
+            /** Format: int32 */
+            customerId: number;
+            name: string;
+            orders: components["schemas"]["Order"][];
+        };
+        /** @enum {integer} */
+        Order: 0 | 1;
+        EntitiesOutletPaymentType: {
+            /** Format: int32 */
+            paymentTypeId: number;
+            paymentType: components["schemas"]["EntitiesPaymentType"];
+            /** Format: int32 */
+            outletId: number;
+            outlet: components["schemas"]["EntitiesOutlet"];
+            /** Format: int32 */
+            position: number;
+        };
+        EntitiesPaymentType: {
+            /** Format: int32 */
+            paymentTypeId: number;
+            paymentTypeName: string;
+            /** Format: decimal */
+            tipLevyPercentage: number;
+            /** Format: decimal */
+            discountPercentage: number;
+            outletPaymentTypes?: components["schemas"]["EntitiesOutletPaymentType"][] | null;
+        };
+        UserGetRolesRequest: Record<string, never>;
+        EntitiesUserOutlet: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            userId: string;
+            isCurrent: boolean;
+        };
+        UserAssignOutletRequest: {
+            /** Format: int32 */
+            outletId: number;
+        };
+        TableOrderUpdateTableOrderResponse: {
+            isSuccess: boolean;
+        };
+        TableOrderUpdateTableOrderRequest: {
+            /** Format: int32 */
+            tableBookingId: number;
+            /** Format: int32 */
+            orderItemStatusId: number;
+        };
+        TableOrderUpdateOrderItemResponse: {
+            isSuccess: boolean;
+        };
+        TableOrderUpdateOrderItemRequest: {
+            orderItemIds: number[];
+            /** Format: int32 */
+            orderItemStatusId: number;
+        };
+        TableOrderUpdateGroupOrderResponse: {
+            isSuccess: boolean;
+        };
+        TableOrderUpdateGroupOrderRequest: {
+            /** Format: int32 */
+            orderGroupId: number;
+            /** Format: int32 */
+            orderItemStatusId: number;
+        };
+        TableOrderSendToKitchenResponse: {
+            isSuccess: boolean;
+        };
+        TableOrderSendToKitchenRequest: {
+            /** Format: int32 */
+            tableBookingId: number;
+        };
+        TableOrderRemoveItemResponse: {
+            isSuccess: boolean;
+        };
+        TableOrderRemoveItemRequest: {
+            /** Format: int32 */
+            orderItemId: number;
+        };
+        TableOrderFrontOfficeResponse: {
+            tables?: components["schemas"]["TableOrderOfficeTableBookingDTO"][] | null;
+            /** Format: date-time */
+            lastRefresh: string;
+            /** Format: int32 */
+            pendingTables: number;
+            /** Format: int32 */
+            pendingItems: number;
+        };
+        TableOrderOfficeTableBookingDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            tableId: number;
+            table: components["schemas"]["TableOrderOfficeTableDTO"];
+            orderItems?: components["schemas"]["TableOrderOfficeOrderItemDTO"][] | null;
+            bookingName: string;
+            /** Format: date-time */
+            bookingDate: string;
+            /** Format: date-time */
+            closeDate?: string | null;
+            user: components["schemas"]["DTOUserDTO"];
+        };
+        TableOrderOfficeTableDTO: {
+            /** Format: int32 */
+            tableId: number;
+            name: string;
+            /** Format: int32 */
+            outletId: number;
+            section?: components["schemas"]["TableOrderOfficeSectionDTO"] | null;
+        };
+        TableOrderOfficeSectionDTO: {
+            name: string;
+        };
+        TableOrderOfficeOrderItemDTO: {
+            /** Format: int32 */
+            orderItemId: number;
+            /** Format: int32 */
+            tableBookingId: number;
+            menuItem: components["schemas"]["TableOrderOfficeMenuItemDTO"];
+            /** Format: int32 */
+            divisionId: number;
+            note?: string | null;
+            /** Format: date-time */
+            orderReceived: string;
+            /** Format: date-time */
+            orderUpdated: string;
+            orderReceivedFormatted: string;
+            orderUpdatedFormatted: string;
+            /** Format: int32 */
+            orderItemStatusId: number;
+            orderItemStatus: components["schemas"]["TableOrderOfficeOrderItemStatusDTO"];
+            orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+            orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+        };
+        TableOrderOfficeMenuItemDTO: {
+            /** Format: int32 */
+            menuItemId: number;
+            name: string;
+            description: string;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            position: number;
+            /** Format: int32 */
+            divisionId: number;
+        };
+        TableOrderOfficeOrderItemStatusDTO: {
+            /** Format: int32 */
+            orderItemStatusId: number;
+            status: string;
+        };
+        DTOOrderItemOptionDTO: {
+            /** Format: int32 */
+            orderItemOptionId: number;
+            /** Format: int32 */
+            orderItemId: number;
+            /** Format: int32 */
+            optionId: number;
+            option: components["schemas"]["DTOOptionDTO"];
+        };
+        DTOOptionDTO: {
+            /** Format: int32 */
+            optionId: number;
+            name: string;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            optionGroupId: number;
+            optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
+        };
+        DTOOptionGroupBasicDTO: {
+            /** Format: int32 */
+            optionGroupId: number;
+            name: string;
+        };
+        DTOOrderItemExtraDTO: {
+            /** Format: int32 */
+            orderItemExtraId: number;
+            /** Format: int32 */
+            orderItemId: number;
+            /** Format: int32 */
+            extraId: number;
+            extra: components["schemas"]["DTOExtraDTO"];
+        };
+        DTOExtraDTO: {
+            /** Format: int32 */
+            extraId: number;
+            name: string;
+            /** Format: int32 */
+            positionId: number;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            extraGroupId: number;
+            extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
+        };
+        DTOExtraGroupBasicDTO: {
+            /** Format: int32 */
+            extraGroupId: number;
+            name: string;
+        };
+        DTOUserDTO: {
+            userId: string;
+            email: string;
+            image: string;
+            name: string;
+            isActive: boolean;
+        };
+        TableOrderFrontOfficeRequest: Record<string, never>;
+        TableOrderBackOfficeResponse: {
+            tables?: components["schemas"]["TableOrderOfficeTableBookingDTO"][] | null;
+            /** Format: date-time */
+            lastRefresh: string;
+            /** Format: int32 */
+            pendingTables: number;
+            /** Format: int32 */
+            pendingItems: number;
+        };
+        TableOrderBackOfficeRequest: Record<string, never>;
+        TableOrderOfficeOrderBasedBackResponse: {
+            orderGroups?: components["schemas"]["TableOrderOfficeOrderBasedBackOrderGroupDTO"][] | null;
+            /** Format: date-time */
+            lastRefresh: string;
+            /** Format: int32 */
+            pendingOrders: number;
+            /** Format: int32 */
+            pendingItems: number;
+        };
+        TableOrderOfficeOrderBasedBackOrderGroupDTO: {
+            /** Format: int32 */
+            orderGroupId: number;
+            /** Format: date-time */
+            lastDate: string;
+            /** Format: int32 */
+            priority: number;
+            tableBooking?: components["schemas"]["TableOrderOfficeOrderBasedBackTableBookingDTO"] | null;
+            /** Format: int32 */
+            tableBookingId: number;
+            orderItems?: components["schemas"]["TableOrderOfficeOrderBasedBackOrderItemDTO"][] | null;
+        };
+        TableOrderOfficeOrderBasedBackTableBookingDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            tableId: number;
+            table: components["schemas"]["TableOrderOfficeOrderBasedBackTableDTO"];
+            bookingName: string;
+            /** Format: date-time */
+            bookingDate: string;
+            /** Format: date-time */
+            closeDate?: string | null;
+            user: components["schemas"]["DTOUserDTO"];
+        };
+        TableOrderOfficeOrderBasedBackTableDTO: {
+            /** Format: int32 */
+            tableId: number;
+            name: string;
+            /** Format: int32 */
+            outletId: number;
+            section?: components["schemas"]["TableOrderOfficeOrderBasedBackSectionDTO"] | null;
+        };
+        TableOrderOfficeOrderBasedBackSectionDTO: {
+            name: string;
+        };
+        TableOrderOfficeOrderBasedBackOrderItemDTO: {
+            /** Format: int32 */
+            orderItemId: number;
+            /** Format: int32 */
+            orderGroupId?: number | null;
+            tableBooking?: components["schemas"]["TableOrderOfficeOrderBasedBackTableBookingDTO"] | null;
+            /** Format: int32 */
+            tableBookingId: number;
+            menuItem: components["schemas"]["TableOrderOfficeOrderBasedBackMenuItemDTO"];
+            /** Format: int32 */
+            divisionId: number;
+            note?: string | null;
+            /** Format: date-time */
+            orderReceived: string;
+            /** Format: date-time */
+            orderUpdated: string;
+            orderReceivedFormatted: string;
+            orderUpdatedFormatted: string;
+            /** Format: int32 */
+            orderItemStatusId: number;
+            orderItemStatus: components["schemas"]["TableOrderOfficeOrderBasedBackOrderItemStatusDTO"];
+            orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+            orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+        };
+        TableOrderOfficeOrderBasedBackMenuItemDTO: {
+            /** Format: int32 */
+            menuItemId: number;
+            name: string;
+            description: string;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            position: number;
+            /** Format: int32 */
+            divisionId: number;
+        };
+        TableOrderOfficeOrderBasedBackOrderItemStatusDTO: {
+            /** Format: int32 */
+            orderItemStatusId: number;
+            status: string;
+            /** Format: int32 */
+            priority: number;
+        };
+        TableOrderOfficeOrderBasedBackRequest: Record<string, never>;
+        TableOrderGetBillResponse: {
+            orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
+            /** Format: decimal */
+            total: number;
+            /** Format: decimal */
+            totalExVAT: number;
+            /** Format: decimal */
+            vat: number;
+            paymentsReceived: components["schemas"]["EntitiesPayment"][];
+            /** Format: decimal */
+            balance: number;
+            /** Format: decimal */
+            tipAmount: number;
+            /** Format: date-time */
+            billDate: string;
+            adjustments?: components["schemas"]["EntitiesAdjustment"][] | null;
+        };
+        TableOrderGetBillBillOrderItemDTO: {
+            /** Format: int32 */
+            orderItemId: number;
+            /** Format: int32 */
+            tableBookingId: number;
+            tableBooking: components["schemas"]["DTOTableBookingDTO"];
+            /** Format: int32 */
+            menuItemId: number;
+            menuItem: components["schemas"]["TableOrderGetBillBillMenuItemDTO"];
+            orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+            orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+            note?: string | null;
+        };
+        DTOTableBookingDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            tableId: number;
+            bookingName: string;
+            /** Format: date-time */
+            bookingDate: string;
+            /** Format: date-time */
+            closeDate?: string | null;
+            userId: string;
+            user: components["schemas"]["DTOUserDTO"];
+        };
+        TableOrderGetBillBillMenuItemDTO: {
+            /** Format: int32 */
+            menuItemId: number;
+            name: string;
+            /** Format: decimal */
+            price: number;
+        };
+        EntitiesPayment: {
+            /** Format: int32 */
+            id: number;
+            paymentReference: string;
+            /** Format: int32 */
+            tableBookingId: number;
+            tableBooking: components["schemas"]["EntitiesTableBooking"];
+            /** Format: decimal */
+            amount: number;
+            userId: string;
+            /** Format: int32 */
+            paymentTypeId?: number | null;
+            paymentType: components["schemas"]["EntitiesPaymentType"];
+            /** Format: date-time */
+            dateReceived: string;
+        };
+        EntitiesTableBooking: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            tableId: number;
+            table: components["schemas"]["EntitiesTable"];
+            bookingName: string;
+            /** Format: date-time */
+            bookingDate: string;
+            /** Format: date-time */
+            closeDate?: string | null;
+            /** Format: int32 */
+            salesPeriodId: number;
+            salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
+            userId: string;
+            user: components["schemas"]["EntitiesUser"];
+            orderItems?: components["schemas"]["EntitiesOrderItem"][] | null;
+            adjustments?: components["schemas"]["EntitiesAdjustment"][] | null;
+            /** Format: int32 */
+            cashUpUserId?: number | null;
+            /** Format: decimal */
+            total?: number | null;
+            cashUpUser?: components["schemas"]["EntitiesCashUpUser"] | null;
+            payments?: components["schemas"]["EntitiesPayment"][] | null;
+        };
+        EntitiesUser: {
+            userId: string;
+            email: string;
+            image: string;
+            name: string;
+            isActive: boolean;
+            userRole?: components["schemas"]["EntitiesUserRole"][] | null;
+        };
+        EntitiesUserRole: {
+            /** Format: int32 */
+            userRoleId: number;
+            userId: string;
+            /** Format: int32 */
+            roleId: number;
+            user: components["schemas"]["EntitiesUser"];
+            role?: components["schemas"]["EntitiesRole"] | null;
+        };
+        EntitiesRole: {
+            /** Format: int32 */
+            roleId: number;
+            name: string;
+            description: string;
+            isFrontLine: boolean;
+            isBackOffice: boolean;
+            /** Format: int32 */
+            outletId?: number | null;
+            userRole?: components["schemas"]["EntitiesUserRole"][] | null;
+        };
+        EntitiesOrderItem: {
+            /** Format: int32 */
+            orderItemId: number;
+            /** Format: int32 */
+            orderGroupId?: number | null;
+            orderGroup?: components["schemas"]["EntitiesOrderGroup"] | null;
+            /** Format: int32 */
+            tableBookingId: number;
+            tableBooking: components["schemas"]["EntitiesTableBooking"];
+            /** Format: int32 */
+            menuItemId: number;
+            menuItem: components["schemas"]["EntitiesMenuItem"];
+            /** Format: date-time */
+            orderReceived: string;
+            /** Format: date-time */
+            orderUpdated: string;
+            /** Format: date-time */
+            orderCompleted?: string | null;
+            /** Format: int32 */
+            orderItemStatusId: number;
+            orderItemStatus: components["schemas"]["EntitiesOrderItemStatus"];
+            orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
+            orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
+            note?: string | null;
+        };
+        EntitiesOrderGroup: {
+            /** Format: int32 */
+            orderGroupId: number;
+            orderItems?: components["schemas"]["EntitiesOrderItem"][] | null;
+        };
+        EntitiesMenuItem: {
+            /** Format: int32 */
+            menuItemId: number;
+            menuSection: components["schemas"]["EntitiesMenuSection"];
+            /** Format: int32 */
+            menuSectionId: number;
+            name: string;
+            description: string;
+            /** Format: decimal */
+            price: number;
+            searchVector: components["schemas"]["NpgsqlTypesNpgsqlTsVector_Lexeme"][];
+            /** Format: int32 */
+            position: number;
+            tags?: components["schemas"]["EntitiesTag"][] | null;
+            /** Format: int32 */
+            divisionId?: number | null;
+            division?: components["schemas"]["EntitiesDivision"] | null;
+            menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
+            menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
+            isAvailable: boolean;
+            /** Format: decimal */
+            stockPrice: number;
+        };
+        EntitiesMenuSection: {
+            /** Format: int32 */
+            menuSectionId: number;
+            name?: string | null;
+            menu: components["schemas"]["EntitiesMenu"];
+            /** Format: int32 */
+            menuId: number;
+            parent?: components["schemas"]["EntitiesMenuSection"] | null;
+            /** Format: int32 */
+            parentId?: number | null;
+            /** Format: int32 */
+            positionId?: number | null;
+            subMenuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
+            menuItems?: components["schemas"]["EntitiesMenuItem"][] | null;
+        };
+        EntitiesMenu: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            position: number;
+            outlet: components["schemas"]["EntitiesOutlet"];
+            menuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
+        };
+        NpgsqlTypesNpgsqlTsVector_Lexeme: {
+            text: string;
+            /** Format: int32 */
+            count: number;
+        };
+        EntitiesTag: {
+            /** Format: int32 */
+            tagId: number;
+            name: string;
+        };
+        EntitiesDivision: {
+            /** Format: int32 */
+            divisionId: number;
+            divisionName: string;
+        };
+        EntitiesMenuItemOptionGroup: {
+            /** Format: int32 */
+            menuItemId: number;
+            /** Format: int32 */
+            optionGroupId: number;
+            menuItem: components["schemas"]["EntitiesMenuItem"];
+            optionGroup: components["schemas"]["EntitiesOptionGroup"];
+        };
+        EntitiesOptionGroup: {
+            /** Format: int32 */
+            optionGroupId: number;
+            name: string;
+            /** Format: int32 */
+            minSelections: number;
+            /** Format: int32 */
+            maxSelections: number;
+            options: components["schemas"]["EntitiesOption"][];
+            menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
+        };
+        EntitiesOption: {
+            /** Format: int32 */
+            optionId: number;
+            name: string;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            positionId: number;
+            /** Format: int32 */
+            optionGroupId: number;
+            optionGroup: components["schemas"]["EntitiesOptionGroup"];
+            orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
+        };
+        EntitiesOrderItemOption: {
+            /** Format: int32 */
+            orderItemOptionId: number;
+            /** Format: int32 */
+            orderItemId: number;
+            orderItem: components["schemas"]["EntitiesOrderItem"];
+            /** Format: int32 */
+            optionId: number;
+            option: components["schemas"]["EntitiesOption"];
+        };
+        EntitiesMenuItemExtraGroup: {
+            /** Format: int32 */
+            menuItemId: number;
+            /** Format: int32 */
+            extraGroupId: number;
+            menuItem: components["schemas"]["EntitiesMenuItem"];
+            extraGroup: components["schemas"]["EntitiesExtraGroup"];
+        };
+        EntitiesExtraGroup: {
+            /** Format: int32 */
+            extraGroupId: number;
+            name: string;
+            extras: components["schemas"]["EntitiesExtra"][];
+            menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
+        };
+        EntitiesExtra: {
+            /** Format: int32 */
+            extraId: number;
+            name: string;
+            /** Format: int32 */
+            positionId: number;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            extraGroupId: number;
+            extraGroup: components["schemas"]["EntitiesExtraGroup"];
+            orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
+        };
+        EntitiesOrderItemExtra: {
+            /** Format: int32 */
+            orderItemExtraId: number;
+            /** Format: int32 */
+            orderItemId: number;
+            orderItem: components["schemas"]["EntitiesOrderItem"];
+            /** Format: int32 */
+            extraId: number;
+            extra: components["schemas"]["EntitiesExtra"];
+        };
+        EntitiesOrderItemStatus: {
+            /** Format: int32 */
+            orderItemStatusId: number;
+            status: string;
+            assignGroup: boolean;
+            isFrontLine: boolean;
+            isBackOffice: boolean;
+            isComplete: boolean;
+            isCancelled: boolean;
+            isBillable: boolean;
+            isHistory: boolean;
+            notify: boolean;
+            /** Format: int32 */
+            priority: number;
+        };
+        EntitiesAdjustment: {
+            /** Format: int32 */
+            adjustmentId: number;
+            adjustmentType: components["schemas"]["EntitiesAdjustmentType"];
+            /** Format: int32 */
+            adjustmentTypeId: number;
+            /** Format: date-time */
+            created: string;
+            userId: string;
+            /** Format: decimal */
+            amount: number;
+            note?: string | null;
+        };
+        EntitiesAdjustmentType: {
+            /** Format: int32 */
+            adjustmentTypeId: number;
+            name: string;
+            description?: string | null;
+        };
+        EntitiesCashUpUser: {
+            /** Format: int32 */
+            id: number;
+            userId: string;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: decimal */
+            openingBalance: number;
+            /** Format: decimal */
+            closingBalance: number;
+            cashUpUserItems: components["schemas"]["EntitiesCashUpUserItem"][];
+        };
+        EntitiesCashUpUserItem: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            userCashUpId: number;
+            cashUpUser: components["schemas"]["EntitiesCashUpUser"];
+            userId: string;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: decimal */
+            openingBalance: number;
+            /** Format: decimal */
+            closingBalance: number;
+            /** Format: int32 */
+            cashUpItemTypeId: number;
+            cashUpItemTypes: components["schemas"]["EntitiesCashUpUserItemType"];
+        };
+        EntitiesCashUpUserItemType: {
+            /** Format: int32 */
+            id: number;
+            itemType: string;
+            isAuto: boolean;
+            /** Format: int32 */
+            paymentTypeId?: number | null;
+            paymentType?: components["schemas"]["EntitiesPaymentType"] | null;
+            /** Format: int32 */
+            cashupConfigId?: number | null;
+            cashupConfig?: components["schemas"]["EntitiesCashUpConfig"] | null;
+        };
+        EntitiesCashUpConfig: {
+            /** Format: int32 */
+            id: number;
+            name?: string | null;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: decimal */
+            value: number;
+        };
+        TableOrderGetBillRequest: Record<string, never>;
+        TableOrderGetBasketResponse: {
+            orderItems: components["schemas"]["TableOrderGetBasketBillOrderItemDTO"][];
+            /** Format: decimal */
+            total: number;
+        };
+        TableOrderGetBasketBillOrderItemDTO: {
+            /** Format: int32 */
+            orderItemId: number;
+            /** Format: int32 */
+            tableBookingId: number;
+            tableBooking: components["schemas"]["DTOTableBookingDTO"];
+            /** Format: int32 */
+            menuItemId: number;
+            /** Format: int32 */
+            quantity: number;
+            menuItem: components["schemas"]["TableOrderGetBasketBillMenuItemDTO"];
+            orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+            orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+            note?: string | null;
+        };
+        TableOrderGetBasketBillMenuItemDTO: {
+            /** Format: int32 */
+            menuItemId: number;
+            name: string;
+            /** Format: decimal */
+            price: number;
+        };
+        TableOrderGetBasketRequest: Record<string, never>;
+        TableOrderCopyItemResponse: {
+            isSuccess: boolean;
+        };
+        TableOrderCopyItemRequest: {
+            /** Format: int32 */
+            orderItemId: number;
+        };
+        OrderClearBasketRequest: {
+            /** Format: int32 */
+            tableBookingId: number;
+        };
+        OrderAddItemsRequest: {
+            orders: components["schemas"]["OrderAddItemsOrder"][];
+            /** Format: int32 */
+            tableBookingId: number;
+        };
+        OrderAddItemsOrder: {
+            /** Format: int32 */
+            menuItemId: number;
+            optionIds?: number[] | null;
+            extraIds?: number[] | null;
+            note: string;
+            /** Format: int32 */
+            quantity: number;
+        };
+        TableBookingHistoryResponse: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            tableId: number;
+            table: components["schemas"]["ManagerOrderViewTableDTO"];
+            bookingName: string;
+            /** Format: date-time */
+            bookingDate: string;
+            /** Format: date-time */
+            closeDate?: string | null;
+            /** Format: int32 */
+            salesPeriodId: number;
+            /** Format: decimal */
+            total: number;
+        };
+        ManagerOrderViewTableDTO: {
+            /** Format: int32 */
+            tableId: number;
+            name: string;
+            /** Format: int32 */
+            outletId: number;
+            section?: components["schemas"]["ManagerOrderViewSectionDTO"] | null;
+        };
+        ManagerOrderViewSectionDTO: {
+            name: string;
+        };
+        TableBookingHistorySalesPeriodRequest: Record<string, never>;
+        TableBookingGetResponse: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            tableId: number;
+            table: components["schemas"]["ManagerOrderViewTableDTO"];
+            bookingName: string;
+            /** Format: date-time */
+            bookingDate: string;
+            /** Format: date-time */
+            closeDate?: string | null;
+            /** Format: int32 */
+            salesPeriodId: number;
+            userId: string;
+            user: components["schemas"]["DTOUserDTO"];
+        };
+        ErrorResponse: {
+            /**
+             * Format: int32
+             * @default 400
+             */
+            statusCode: number;
+            /** @default One or more errors occurred! */
+            message: string;
+            errors: {
+                [key: string]: string[] | undefined;
+            };
+        };
+        TableBookingGetRequest: Record<string, never>;
+        TableBookingEmailBillRequest: {
+            /** Format: int32 */
+            tableBookingId: number;
+            email: string;
+            name: string;
+        };
+        TableBookingCreateRequest: {
+            /** Format: int32 */
+            tableId: number;
+            bookingName: string;
+            /** Format: int32 */
+            salesPeriodId: number;
+        };
+        TableBookingCloseRequest: {
+            /** Format: int32 */
+            tableBookingId: number;
+        };
+        TableUpdateRequest: {
+            name: string;
+            /** Format: int32 */
+            sectionId: number;
+            /** Format: int32 */
+            capacity: number;
+        };
+        TableGetMyBookedResponse: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            tableId: number;
+            bookingName: string;
+            /** Format: date-time */
+            bookingDate: string;
+            /** Format: int32 */
+            salesPeriodId: number;
+            /** Format: int32 */
+            staffId: number;
+            table: components["schemas"]["TableGetMyBookedTableDto"];
+        };
+        TableGetMyBookedTableDto: {
+            /** Format: int32 */
+            tableId: number;
+            name: string;
+            section: components["schemas"]["TableGetMyBookedSectionDto"];
+        };
+        TableGetMyBookedSectionDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        TableGetMyBookedRequest: Record<string, never>;
+        TableGetAvailableResponse: {
+            /** Format: int32 */
+            tableId: number;
+            name: string;
+            /** Format: int32 */
+            capacity: number;
+            /** Format: int32 */
+            sectionId: number;
+            section: components["schemas"]["TableGetAvailableSectionDto"];
+        };
+        TableGetAvailableSectionDto: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        TableGetAvailableRequest: Record<string, never>;
+        TableCreateRequest: {
+            name: string;
+            /** Format: int32 */
+            sectionId: number;
+            /** Format: int32 */
+            capacity: number;
+        };
+        SectionUpdateRequest: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        SectionListRequest: Record<string, never>;
+        SectionGetRequest: Record<string, never>;
+        SectionCreateRequest: {
+            name: string;
+            /** Format: int32 */
+            outletId: number;
+        };
+        SalesPeriodGetRequest: Record<string, never>;
+        EntitiesCashUp: {
+            /** Format: int32 */
+            id: number;
+            /** Format: decimal */
+            cashUpTotal: number;
+            /** Format: int32 */
+            tableCount: number;
+            /** Format: int32 */
+            openTableCount: number;
+            /** Format: decimal */
+            cashUpBalance: number;
+            /** Format: decimal */
+            cashUpTotalPayments: number;
+            /** Format: int32 */
+            salesPeriodId: number;
+            salesPeriod: components["schemas"]["EntitiesSalesPeriod"];
+            userId: string;
+            signOffUserId: string;
+            /** Format: date-time */
+            signOffDate?: string | null;
+        };
+        SalesPeriodCreateCashUpRequest: Record<string, never>;
+        SalesPeriodCreateRequest: {
+            name: string;
+            /** Format: int32 */
+            outletId: number;
+        };
+        SalesPeriodCloseRequest: {
+            /** Format: int32 */
+            salesPeriodId: number;
+        };
+        SalesPeriodCashUpCashUp: components["schemas"]["EntitiesCashUp"] & {
+            userCashUps: components["schemas"]["SalesPeriodCashUpUserCashUp"][];
+        };
+        SalesPeriodCashUpUserCashUp: {
+            tableCashUps: components["schemas"]["SalesPeriodCashUpTableCashUp"][];
+            userId: string;
+            user: components["schemas"]["DTOUserDTO"];
+            /** Format: decimal */
+            userTotal: number;
+            /** Format: decimal */
+            userBalance: number;
+            /** Format: decimal */
+            userPaymentTotal: number;
+            /** Format: decimal */
+            userTipTotal: number;
+            /** Format: time */
+            tableTurnaroundTime: string;
+        };
+        SalesPeriodCashUpTableCashUp: {
+            orderItems: components["schemas"]["SalesPeriodCashUpBillOrderItemDTO"][];
+            /** Format: decimal */
+            total: number;
+            paymentsReceived: components["schemas"]["EntitiesPayment"][];
+            /** Format: decimal */
+            tablePaymentTotal: number;
+            /** Format: decimal */
+            balance: number;
+            userId?: string | null;
+            user?: components["schemas"]["DTOUserDTO"] | null;
+        };
+        SalesPeriodCashUpBillOrderItemDTO: {
+            /** Format: int32 */
+            orderItemId: number;
+            /** Format: int32 */
+            tableBookingId: number;
+            tableBooking: components["schemas"]["DTOTableBookingDTO"];
+            /** Format: int32 */
+            menuItemId: number;
+            menuItem: components["schemas"]["SalesPeriodCashUpBillMenuItemDTO"];
+            orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+            orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+            userId: string;
+            note?: string | null;
+        };
+        SalesPeriodCashUpBillMenuItemDTO: {
+            /** Format: int32 */
+            menuItemId: number;
+            name: string;
+            /** Format: decimal */
+            price: number;
+        };
+        SalesPeriodCashUpRequest: Record<string, never>;
+        RoleCreateRequest: {
+            name: string;
+            description: string;
+        };
+        RoleAddUserInRoleRequest: {
+            userId: string;
+            /** Format: int32 */
+            roleId: number;
+        };
+        CommonWrapperResultOfStatusResultDto: components["schemas"]["CommonWrapperResult"] & {
+            value?: components["schemas"]["PayDtoStatusResultDto"] | null;
+        };
+        PayDtoStatusResultDto: {
+            qrCodeState: string;
+            transactionId: string;
+            merchantTransactionReference: string;
+            userId: string;
+            status: string;
+            disposition: string;
+            /** Format: decimal */
+            amount: number;
+            currency: string;
+            type: string;
+            /** Format: int32 */
+            responseCode: number;
+            authorisationCode: string;
+            /** Format: date-time */
+            createdAt: string;
+            /** Format: date-time */
+            updatedAt: string;
+            paymentReference: string;
+            currencyCode: string;
+        };
+        CommonWrapperResult: {
+            success: boolean;
+            error: string;
+            failure: boolean;
+        };
+        PayStatusRequest: Record<string, never>;
+        PayManualPaymentRequest: {
+            /** Format: int32 */
+            paymentTypeId: number;
+            /** Format: int32 */
+            tableBookingId: number;
+            /** Format: decimal */
+            amount: number;
+        };
+        CommonWrapperResultOfResponse: components["schemas"]["CommonWrapperResult"] & {
+            value?: components["schemas"]["PayGetLinkResponse"] | null;
+        };
+        PayGetLinkResponse: {
+            url: string;
+            reference: string;
+        };
+        PayHaloPayRequest: Record<string, never>;
+        PayGetLinkRequest: Record<string, never>;
+        OutletUpdateRequest: {
+            name: string;
+            /** Format: int32 */
+            businessId: number;
+        };
+        OutletGetPaymentTypeRequest: Record<string, never>;
+        OutletGetRequest: Record<string, never>;
+        OutletCreateRequest: {
+            name: string;
+            /** Format: int32 */
+            businessId: number;
+        };
+        NotificationUserRequest: {
+            message: string;
+            userId: string;
+        };
+        NotificationTestNewRequest: {
+            title: string;
+            body: string;
+            userId: string;
+        };
+        NotificationTestRequest: {
+            message: string;
+        };
+        NotificationAddUserRequest: {
+            token: string;
+        };
+        MenuUpdateRequest: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        MenuGetSectionsResponse: {
+            sections?: components["schemas"]["DTOMenuSectionDTO"][] | null;
+            parents?: components["schemas"]["DTOMenuSectionDTO"][] | null;
+        };
+        DTOMenuSectionDTO: {
+            /** Format: int32 */
+            menuSectionId: number;
+            name?: string | null;
+            /** Format: int32 */
+            menuId: number;
+            /** Format: int32 */
+            parentId?: number | null;
+            parent?: components["schemas"]["DTOMenuSectionParentDTO"] | null;
+        };
+        DTOMenuSectionParentDTO: {
+            /** Format: int32 */
+            menuSectionId: number;
+            name?: string | null;
+            /** Format: int32 */
+            menuId: number;
+            /** Format: int32 */
+            parentId?: number | null;
+        };
+        MenuGetSectionsRequest: Record<string, never>;
+        MenuGetOutletMenuRequest: Record<string, never>;
+        DTOMenuItemDTOBasic: {
+            /** Format: int32 */
+            menuItemId: number;
+            /** Format: int32 */
+            menuSectionId: number;
+            name: string;
+            description: string;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            position: number;
+            tags?: components["schemas"]["EntitiesTag"][] | null;
+            menuSection: components["schemas"]["DTOMenuSectionBasicDTO"];
+            isAvailable: boolean;
+        };
+        DTOMenuSectionBasicDTO: {
+            /** Format: int32 */
+            menuSectionId: number;
+            name?: string | null;
+        };
+        MenuGetItemsRequest: Record<string, never>;
+        DTOMenuItemDTO: {
+            /** Format: int32 */
+            menuItemId: number;
+            /** Format: int32 */
+            menuSectionId: number;
+            name: string;
+            description: string;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            position: number;
+            tags?: components["schemas"]["EntitiesTag"][] | null;
+            /** Format: int32 */
+            divisionId: number;
+            menuItemOptionGroups: components["schemas"]["DTOMenuItemOptionGroupDTO"][];
+            menuItemExtraGroups: components["schemas"]["DTOMenuItemExtraGroupDTO"][];
+        };
+        DTOMenuItemOptionGroupDTO: {
+            /** Format: int32 */
+            menuItemId: number;
+            /** Format: int32 */
+            optionGroupId: number;
+            optionGroup: components["schemas"]["DTOOptionGroupDTO"];
+        };
+        DTOOptionGroupDTO: {
+            /** Format: int32 */
+            optionGroupId: number;
+            name: string;
+            /** Format: int32 */
+            minSelections: number;
+            /** Format: int32 */
+            maxSelections: number;
+            options: components["schemas"]["DTOOptionDTO"][];
+        };
+        DTOMenuItemExtraGroupDTO: {
+            /** Format: int32 */
+            menuItemId: number;
+            /** Format: int32 */
+            extraGroupId: number;
+            extraGroup: components["schemas"]["DTOExtraGroupDTO"];
+        };
+        DTOExtraGroupDTO: {
+            /** Format: int32 */
+            extraGroupId: number;
+            name: string;
+            extras: components["schemas"]["DTOExtraDTO"][];
+        };
+        MenuGetItemRequest: Record<string, never>;
+        MenuListRequest: Record<string, never>;
+        MenuGetRequest: Record<string, never>;
+        MenuCreateRequest: {
+            /** Format: int32 */
+            outletId: number;
+            name: string;
+        };
+        ManagerOrderViewResponse: {
+            /** Format: int32 */
+            divisionId: number;
+            division: components["schemas"]["EntitiesDivision"];
+            tables?: components["schemas"]["ManagerOrderViewTableBookingDTO"][] | null;
+            /** Format: date-time */
+            lastRefresh: string;
+            /** Format: int32 */
+            pendingTables: number;
+            /** Format: int32 */
+            pendingItems: number;
+        };
+        ManagerOrderViewTableBookingDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            tableId: number;
+            table: components["schemas"]["ManagerOrderViewTableDTO"];
+            orderItems?: components["schemas"]["ManagerOrderViewOrderItemDTO"][] | null;
+            bookingName: string;
+            /** Format: date-time */
+            bookingDate: string;
+            /** Format: date-time */
+            closeDate?: string | null;
+            user: components["schemas"]["DTOUserDTO"];
+        };
+        ManagerOrderViewOrderItemDTO: {
+            /** Format: int32 */
+            orderItemId: number;
+            /** Format: int32 */
+            tableBookingId: number;
+            menuItem: components["schemas"]["ManagerOrderViewMenuItemDTO"];
+            /** Format: int32 */
+            divisionId: number;
+            note?: string | null;
+            /** Format: date-time */
+            orderReceived: string;
+            /** Format: date-time */
+            orderUpdated: string;
+            orderReceivedFormatted: string;
+            orderUpdatedFormatted: string;
+            /** Format: int32 */
+            orderItemStatusId: number;
+            orderItemStatus: components["schemas"]["ManagerOrderViewOrderItemStatusDTO"];
+            orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
+            orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+        };
+        ManagerOrderViewMenuItemDTO: {
+            /** Format: int32 */
+            menuItemId: number;
+            name: string;
+            description: string;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            position: number;
+            /** Format: int32 */
+            divisionId?: number | null;
+        };
+        ManagerOrderViewOrderItemStatusDTO: {
+            /** Format: int32 */
+            orderItemStatusId: number;
+            status: string;
+        };
+        ManagerOrderViewRequest: Record<string, never>;
+        ClockListRequest: Record<string, never>;
+        EntitiesClock: {
+            /** Format: int32 */
+            id: number;
+            userId: string;
+            user: components["schemas"]["EntitiesUser"];
+            /** Format: date-time */
+            startDate: string;
+            /** Format: date-time */
+            endDate?: string | null;
+            /** Format: int32 */
+            outletId: number;
+            outlet: components["schemas"]["EntitiesOutlet"];
+        };
+        ClockClockOutRequest: {
+            /** Format: int32 */
+            outletId: number;
+        };
+        ClockClockInRequest: {
+            /** Format: int32 */
+            outletId: number;
+        };
+        CashUpUserGetResponse: {
+            userId: string;
+            user: components["schemas"]["EntitiesUser"];
+            /** Format: decimal */
+            sales: number;
+        };
+        CashUpUserGetRequest: Record<string, never>;
+        CashUpUserDetailResponse: {
+            userId: string;
+            user: components["schemas"]["EntitiesUser"];
+            responseItems: components["schemas"]["CashUpUserDetailResponseItem"][];
+        };
+        CashUpUserDetailResponseItem: {
+            cashUpUserItemType: components["schemas"]["EntitiesCashUpUserItemType"];
+            /** Format: decimal */
+            value: number;
+        };
+        CashUpUserDetailRequest: Record<string, never>;
+        BusinessGetRequest: Record<string, never>;
+        BusinessEditRequest: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        BusinessDeleteRequest: {
+            /** Format: int32 */
+            id: number;
+        };
+        BusinessCreateRequest: {
+            name: string;
+        };
+        AdjustmentGetAllRequest: Record<string, never>;
+        AdjustmentCreateRequest: {
+            /** Format: int32 */
+            tableBookingId: number;
+            /** Format: int32 */
+            adjustmentTypeId: number;
+            /** Format: decimal */
+            amount: number;
+            note?: string | null;
+        };
+    };
+    responses: never;
+    parameters: never;
+    requestBodies: never;
+    headers: never;
+    pathItems: never;
 }
-
 export type $defs = Record<string, never>;
-
-export type external = Record<string, never>;
-
 export interface operations {
-
-  UserValidate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["UserValidateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["UserValidateResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  UserGetStatus: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["UserGetStatusResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  UserGetRoles: {
-    parameters: {
-      query: {
-        userId: string;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": string[];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  UserAssignOutlet: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["UserAssignOutletRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesUserOutlet"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  Test: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": boolean;
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderUpdateTableOrder: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableOrderUpdateTableOrderRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderUpdateTableOrderResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderUpdateOrderItem: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableOrderUpdateOrderItemRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderUpdateOrderItemResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderUpdateGroupOrder: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableOrderUpdateGroupOrderRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderUpdateGroupOrderResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderSendToKitchen: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableOrderSendToKitchenRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderSendToKitchenResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderRemoveItem: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableOrderRemoveItemRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderRemoveItemResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderFrontOffice: {
-    parameters: {
-      query?: {
-        divisionIds?: string | null;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderFrontOfficeResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderBackOffice: {
-    parameters: {
-      query?: {
-        divisionIds?: string | null;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderBackOfficeResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderOfficeOrderBasedBack: {
-    parameters: {
-      query: {
-        divisionIds?: string | null;
-        complete: boolean;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderOfficeOrderBasedBackResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderGetBill: {
-    parameters: {
-      query: {
-        tableBookingId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderGetBillResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderGetBasket: {
-    parameters: {
-      query: {
-        tableBookingId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderGetBasketResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableOrderCopyItem: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableOrderCopyItemRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableOrderCopyItemResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  OrderClearBasket: {
-    requestBody: {
-      content: {
-        "*/*": components["schemas"]["OrderClearBasketRequest"];
-        "application/json": components["schemas"]["OrderClearBasketRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesOrderItem"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  OrderAddItems: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["OrderAddItemsRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesOrderItem"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableBookingGetHistory: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableBookingGetHistoryResponse"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableBookingGet: {
-    parameters: {
-      path: {
-        id: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableBookingGetResponse"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableBookingEmailBill: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableBookingEmailBillRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": boolean;
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableBookingCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableBookingCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesTableBooking"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableBookingClose: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableBookingCloseRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesTableBooking"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableUpdate: {
-    parameters: {
-      path: {
-        tableId: number;
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableUpdateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesTable"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableGetMyBooked: {
-    parameters: {
-      query: {
-        outletId: number;
-        myBooking: boolean;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableGetMyBookedResponse"][];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableGetAvailable: {
-    parameters: {
-      query: {
-        outletId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["TableGetAvailableResponse"][];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  TableCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["TableCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesTable"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SectionGet: {
-    parameters: {
-      path: {
-        sectionId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesSection"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SectionUpdate: {
-    parameters: {
-      path: {
-        sectionId: number;
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["SectionUpdateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesSection"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SectionList: {
-    parameters: {
-      query: {
-        outletId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesSection"][];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SectionCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["SectionCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesSection"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SalesPeriodGet: {
-    parameters: {
-      path: {
-        outletId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesSalesPeriod"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SalesPeriodCreateCashUp: {
-    parameters: {
-      query: {
-        cashUpTotal: number;
-        tableCount: number;
-        cashUpBalance: number;
-        cashUpTotalPayments: number;
-        salesPeriodId: number;
-        userId: string;
-        signOffUserId: string;
-        signOffDate?: string | null;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesCashUp"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SalesPeriodCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["SalesPeriodCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesSalesPeriod"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SalesPeriodClose: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["SalesPeriodCloseRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesSalesPeriod"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  SalesPeriodCashUp: {
-    parameters: {
-      query: {
-        salesPeriodId: number;
-        userId: string;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["SalesPeriodCashUpCashUp"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  RoleCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RoleCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "text/plain": unknown;
-          "application/json": unknown;
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  RoleAddUserInRole: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["RoleAddUserInRoleRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "text/plain": unknown;
-          "application/json": unknown;
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  RoleGetAll: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesRole"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  PayStatus: {
-    parameters: {
-      path: {
-        reference: string;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["CommonWrapperResultOfStatusResultDto"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  PayManualPayment: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["PayManualPaymentRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesPayment"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  PayHaloPay: {
-    parameters: {
-      path: {
-        tableBookingId: number;
-        amount: number;
-        userId: string;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["CommonWrapperResultOfResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  PayGetLink: {
-    parameters: {
-      query: {
-        amount: number;
-        tableBookingId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["CommonWrapperResultOfResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  OutletGet: {
-    parameters: {
-      path: {
-        id: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesOutlet"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  OutletUpdate: {
-    parameters: {
-      path: {
-        id: number;
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["OutletUpdateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesOutlet"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  OutletGetPaymentType: {
-    parameters: {
-      path: {
-        id: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesPaymentType"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  OutletList: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesOutlet"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  OutletCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["OutletCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesOutlet"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  NotificationUser: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["NotificationUserRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": boolean;
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  NotificationTestNew: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["NotificationTestNewRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": boolean;
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  NotificationTest: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["NotificationTestRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": boolean;
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  NotificationAddUser: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["NotificationAddUserRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": boolean;
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  MenuGet: {
-    parameters: {
-      path: {
-        menuId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesMenu"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  MenuUpdate: {
-    parameters: {
-      path: {
-        menuId: number;
-      };
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["MenuUpdateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesMenu"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  MenuGetSectionsGetMenusSections: {
-    parameters: {
-      query: {
-        menuId: number;
-        sectionId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["MenuGetSectionsResponse"];
-        };
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  MenuGetOutletMenuGetOutletMenus: {
-    parameters: {
-      query: {
-        outletId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesMenu"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  MenuGetItemsGetMenuItems: {
-    parameters: {
-      query: {
-        menuId: number;
-        sectionId: number;
-        search?: string | null;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["DTOMenuItemDTOBasic"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  MenuGetItemGetMenuItems: {
-    parameters: {
-      query: {
-        id: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["DTOMenuItemDTO"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  MenuList: {
-    parameters: {
-      query: {
-        outletId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesMenu"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  MenuCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["MenuCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesMenu"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  ManagerOrderView: {
-    parameters: {
-      query: {
-        /**
-         * @example [
-         *   0
-         * ]
-         */
-        divisionIds: number[];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["ManagerOrderViewResponse"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  ExtraGetAll: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesExtra"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  ClockList: {
-    parameters: {
-      query: {
-        outletId: number;
-        statusId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesUser"][];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  ClockClockOut: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ClockClockOutRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesClock"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  ClockClockIn: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ClockClockInRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesClock"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  BusinessGetAll: {
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesBusiness"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  BusinessEdit: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["BusinessEditRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "text/plain": unknown;
-          "application/json": unknown;
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  BusinessCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["BusinessCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesBusiness"];
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  BusinessDelete: {
-    requestBody: {
-      content: {
-        "*/*": components["schemas"]["BusinessDeleteRequest"];
-        "application/json": components["schemas"]["BusinessDeleteRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "text/plain": unknown;
-          "application/json": unknown;
-        };
-      };
-      /** @description Bad Request */
-      400: {
-        content: {
-          "application/problem+json": components["schemas"]["ErrorResponse"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  BusinessGet: {
-    parameters: {
-      path: {
-        id: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesBusiness"];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  AdjustmentGetAll: {
-    parameters: {
-      path: {
-        outletId: number;
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "application/json": components["schemas"]["EntitiesAdjustmentType"][];
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
-  AdjustmentCreate: {
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["AdjustmentCreateRequest"];
-      };
-    };
-    responses: {
-      /** @description Success */
-      200: {
-        content: {
-          "text/plain": unknown;
-          "application/json": unknown;
-        };
-      };
-      /** @description Unauthorized */
-      401: {
-        content: never;
-      };
-      /** @description Server Error */
-      500: {
-        content: {
-          "application/json": components["schemas"]["InternalErrorResponse"];
-        };
-      };
-    };
-  };
+    UserValidate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserValidateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserValidateResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserGetStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserGetStatusResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserGetRoles: {
+        parameters: {
+            query: {
+                userId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string[];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserAssignOutlet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserAssignOutletRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesUserOutlet"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    Test: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderUpdateTableOrder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableOrderUpdateTableOrderRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderUpdateTableOrderResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderUpdateOrderItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableOrderUpdateOrderItemRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderUpdateOrderItemResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderUpdateGroupOrder: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableOrderUpdateGroupOrderRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderUpdateGroupOrderResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderSendToKitchen: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableOrderSendToKitchenRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderSendToKitchenResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderRemoveItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableOrderRemoveItemRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderRemoveItemResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderFrontOffice: {
+        parameters: {
+            query?: {
+                divisionIds?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderFrontOfficeResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderBackOffice: {
+        parameters: {
+            query?: {
+                divisionIds?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderBackOfficeResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderOfficeOrderBasedBack: {
+        parameters: {
+            query: {
+                divisionIds?: string | null;
+                complete: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderOfficeOrderBasedBackResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderGetBill: {
+        parameters: {
+            query: {
+                tableBookingId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderGetBillResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderGetBasket: {
+        parameters: {
+            query: {
+                tableBookingId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderGetBasketResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableOrderCopyItem: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableOrderCopyItemRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableOrderCopyItemResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    OrderClearBasket: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "*/*": components["schemas"]["OrderClearBasketRequest"];
+                "application/json": components["schemas"]["OrderClearBasketRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesOrderItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    OrderAddItems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OrderAddItemsRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesOrderItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableBookingHistorySalesPeriod: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                salesPeriodId: number;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableBookingHistoryResponse"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableBookingHistory: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableBookingHistoryResponse"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableBookingGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableBookingGetResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableBookingEmailBill: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableBookingEmailBillRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableBookingCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableBookingCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesTableBooking"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableBookingClose: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableBookingCloseRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesTableBooking"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tableId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesTable"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableGetMyBooked: {
+        parameters: {
+            query: {
+                outletId: number;
+                myBooking: boolean;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableGetMyBookedResponse"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableGetAvailable: {
+        parameters: {
+            query: {
+                outletId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TableGetAvailableResponse"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesTable"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SectionGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sectionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesSection"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SectionUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                sectionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SectionUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesSection"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SectionList: {
+        parameters: {
+            query: {
+                outletId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesSection"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SectionCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SectionCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesSection"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SalesPeriodGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                outletId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesSalesPeriod"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SalesPeriodCreateCashUp: {
+        parameters: {
+            query: {
+                cashUpTotal: number;
+                tableCount: number;
+                cashUpBalance: number;
+                cashUpTotalPayments: number;
+                salesPeriodId: number;
+                userId: string;
+                signOffUserId: string;
+                signOffDate?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesCashUp"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SalesPeriodCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SalesPeriodCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesSalesPeriod"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SalesPeriodClose: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SalesPeriodCloseRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesSalesPeriod"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SalesPeriodCashUp: {
+        parameters: {
+            query: {
+                salesPeriodId: number;
+                userId: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["SalesPeriodCashUpCashUp"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    RoleCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoleCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    RoleAddUserInRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoleAddUserInRoleRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    RoleGetAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesRole"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PayStatus: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                reference: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommonWrapperResultOfStatusResultDto"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PayManualPayment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PayManualPaymentRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesPayment"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PayHaloPay: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tableBookingId: number;
+                amount: number;
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommonWrapperResultOfResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PayGetLink: {
+        parameters: {
+            query: {
+                amount: number;
+                tableBookingId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommonWrapperResultOfResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    OutletGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesOutlet"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    OutletUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OutletUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesOutlet"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    OutletGetPaymentType: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesPaymentType"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    OutletList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesOutlet"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    OutletCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["OutletCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesOutlet"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    NotificationUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NotificationUserRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    NotificationTestNew: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NotificationTestNewRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    NotificationTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NotificationTestRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    NotificationAddUser: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["NotificationAddUserRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                menuId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenu"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                menuId: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MenuUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenu"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuGetSectionsGetMenusSections: {
+        parameters: {
+            query: {
+                menuId: number;
+                sectionId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MenuGetSectionsResponse"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuGetOutletMenuGetOutletMenus: {
+        parameters: {
+            query: {
+                outletId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenu"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuGetItemsGetMenuItems: {
+        parameters: {
+            query: {
+                menuId: number;
+                sectionId: number;
+                search?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOMenuItemDTOBasic"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuGetItemGetMenuItems: {
+        parameters: {
+            query: {
+                id: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOMenuItemDTO"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuList: {
+        parameters: {
+            query: {
+                outletId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenu"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MenuCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenu"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ManagerOrderView: {
+        parameters: {
+            query: {
+                /** @example [
+                 *       0
+                 *     ] */
+                divisionIds: number[];
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ManagerOrderViewResponse"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraGetAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesExtra"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ClockList: {
+        parameters: {
+            query: {
+                outletId: number;
+                statusId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesUser"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ClockClockOut: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClockClockOutRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesClock"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ClockClockIn: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClockClockInRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesClock"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    CashUpUserGet: {
+        parameters: {
+            query: {
+                outletId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CashUpUserGetResponse"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    CashUpUserDetail: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                userId: string;
+                outletId: number;
+                salesPeriodId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CashUpUserDetailResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BusinessGetAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesBusiness"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BusinessEdit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BusinessEditRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BusinessCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BusinessCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesBusiness"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BusinessDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "*/*": components["schemas"]["BusinessDeleteRequest"];
+                "application/json": components["schemas"]["BusinessDeleteRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BusinessGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesBusiness"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    AdjustmentGetAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                outletId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesAdjustmentType"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    AdjustmentCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdjustmentCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
 }

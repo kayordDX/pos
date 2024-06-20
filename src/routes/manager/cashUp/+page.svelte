@@ -1,14 +1,11 @@
 <script lang="ts">
 	import Error from "$lib/components/Error.svelte";
 	import { client, createSalesPeriodCashUp } from "$lib/api";
-	import { Avatar, Button, Card, Loader, Separator, Table, toast } from "@kayord/ui";
+	import { Button, Card, Loader, toast } from "@kayord/ui";
 	import { getError } from "$lib/types";
-	import Item from "../../(salesPeriod)/(clockedIn)/table/bill/[id]/Item.svelte";
-	import { getInitials } from "$lib/util";
 	import { status } from "$lib/stores/status";
 	import { goto } from "$app/navigation";
-	import { PaymentTypeIcon } from "$lib/components/PaymentTypeIcon";
-	import { Description } from "@kayord/ui/formsnap";
+	import CashUpUser from "./CashUpUser.svelte";
 
 	const cashUpQuery = createSalesPeriodCashUp({
 		salesPeriodId: $status?.salesPeriodId ?? 0,
@@ -79,36 +76,7 @@
 			{/if}
 
 			{#each d.userCashUps as cash}
-				<Card.Root class="overflow-hidden">
-					<Card.Header class="flex flex-col items-start bg-muted/50 p-4">
-						<div class="flex items-center gap-2">
-							<Avatar.Root>
-								<Avatar.Image src={cash.user?.image} alt="profile" />
-								<Avatar.Fallback class="bg-primary text-primary-foreground">
-									{getInitials(cash.user?.name ?? "")}
-								</Avatar.Fallback>
-							</Avatar.Root>
-							<div>
-								<Card.Title>{cash.user.name}</Card.Title>
-								<Card.Description>{cash.user.email}</Card.Description>
-							</div>
-						</div>
-					</Card.Header>
-					<Card.Content>
-						<div class="grid gap-3 mt-3">
-							<ul class="grid gap-3">
-								<li class="flex items-center justify-between">
-									<span class="text-muted-foreground">Total</span>
-									<span>R{cash.userTotal.toFixed(2)}</span>
-								</li>
-								<li class="flex items-center justify-between">
-									<span class="text-muted-foreground">User Payment Total</span>
-									<span>R{cash.userPaymentTotal.toFixed(2)}</span>
-								</li>
-							</ul>
-						</div>
-					</Card.Content>
-				</Card.Root>
+				<CashUpUser {cash} />
 			{/each}
 		</div>
 	{/if}
