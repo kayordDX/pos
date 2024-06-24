@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createTableBookingHistorySalesPeriod } from "$lib/api";
+	import { createTableBookingHistoryUser } from "$lib/api";
 	import { DataTable, Button } from "@kayord/ui";
 	import { createRender, createTable, Render } from "svelte-headless-table";
 	import { addPagination, addResizedColumns } from "svelte-headless-table/plugins";
@@ -7,12 +7,8 @@
 	import { stringToFDate } from "$lib/util";
 	import View from "../../View.svelte";
 	import { page } from "$app/stores";
-	import { status } from "$lib/stores/status";
 
-	const query = createTableBookingHistorySalesPeriod(
-		$status.salesPeriodId,
-		$page.params.userId ?? ""
-	);
+	const query = createTableBookingHistoryUser($page.params.userId ?? "");
 
 	const data = writable($query.data ?? []);
 	$: $data = $query.data ?? [];

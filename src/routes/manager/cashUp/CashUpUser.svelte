@@ -23,7 +23,7 @@
 				</div>
 			</div>
 			<div class="flex gap-2 items-center">
-				<Button variant="outline" href={`/waiter/history/salesPeriod/${cash.userId}`}>
+				<Button variant="outline" href={`/waiter/history/user/${cash.userId}`}>
 					<ReceiptTextIcon class="size-5 mr-2" /> Bills
 				</Button>
 				<Button href={`/manager/cashUp/${cash.userId}`}>

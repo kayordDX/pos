@@ -729,7 +729,7 @@ export interface ErrorResponse {
 	statusCode: number;
 }
 
-export interface TableBookingHistorySalesPeriodRequest {
+export interface TableBookingHistoryUserRequest {
 	[key: string]: any;
 }
 

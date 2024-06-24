@@ -292,14 +292,14 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tableBooking/myHistory/{salesPeriodId}/{userId}": {
+    "/tableBooking/myHistory/{userId}": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["TableBookingHistorySalesPeriod"];
+        get: operations["TableBookingHistoryUser"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1916,7 +1916,7 @@ export interface components {
         ManagerOrderViewSectionDTO: {
             name: string;
         };
-        TableBookingHistorySalesPeriodRequest: Record<string, never>;
+        TableBookingHistoryUserRequest: Record<string, never>;
         TableBookingGetResponse: {
             /** Format: int32 */
             id: number;
@@ -3087,12 +3087,11 @@ export interface operations {
             };
         };
     };
-    TableBookingHistorySalesPeriod: {
+    TableBookingHistoryUser: {
         parameters: {
             query?: never;
             header?: never;
             path: {
-                salesPeriodId: number;
                 userId: string;
             };
             cookie?: never;

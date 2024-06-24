@@ -839,22 +839,13 @@
         ]
       }
     },
-    "/tableBooking/myHistory/{salesPeriodId}/{userId}": {
+    "/tableBooking/myHistory/{userId}": {
       "get": {
         "tags": [
           "Tablebooking"
         ],
-        "operationId": "TableBookingHistorySalesPeriod",
+        "operationId": "TableBookingHistoryUser",
         "parameters": [
-          {
-            "name": "salesPeriodId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
           {
             "name": "userId",
             "in": "path",
@@ -6834,7 +6825,7 @@
           }
         }
       },
-      "TableBookingHistorySalesPeriodRequest": {
+      "TableBookingHistoryUserRequest": {
         "type": "object",
         "additionalProperties": false
       },

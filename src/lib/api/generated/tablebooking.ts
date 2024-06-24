@@ -28,74 +28,59 @@ import type {
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType, BodyType } from "../mutator/customInstance";
 
-export const tableBookingHistorySalesPeriod = (salesPeriodId: number, userId: string) => {
+export const tableBookingHistoryUser = (userId: string) => {
 	return customInstance<TableBookingHistoryResponse[]>({
-		url: `/tableBooking/myHistory/${salesPeriodId}/${userId}`,
+		url: `/tableBooking/myHistory/${userId}`,
 		method: "GET",
 	});
 };
 
-export const getTableBookingHistorySalesPeriodQueryKey = (
-	salesPeriodId: number,
-	userId: string
-) => {
-	return [`/tableBooking/myHistory/${salesPeriodId}/${userId}`] as const;
+export const getTableBookingHistoryUserQueryKey = (userId: string) => {
+	return [`/tableBooking/myHistory/${userId}`] as const;
 };
 
-export const getTableBookingHistorySalesPeriodQueryOptions = <
-	TData = Awaited<ReturnType<typeof tableBookingHistorySalesPeriod>>,
+export const getTableBookingHistoryUserQueryOptions = <
+	TData = Awaited<ReturnType<typeof tableBookingHistoryUser>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	salesPeriodId: number,
 	userId: string,
 	options?: {
 		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistorySalesPeriod>>, TError, TData>
+			CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryUser>>, TError, TData>
 		>;
 	}
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey =
-		queryOptions?.queryKey ?? getTableBookingHistorySalesPeriodQueryKey(salesPeriodId, userId);
+	const queryKey = queryOptions?.queryKey ?? getTableBookingHistoryUserQueryKey(userId);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistorySalesPeriod>>> = () =>
-		tableBookingHistorySalesPeriod(salesPeriodId, userId);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistoryUser>>> = () =>
+		tableBookingHistoryUser(userId);
 
-	return {
-		queryKey,
-		queryFn,
-		enabled: !!(salesPeriodId && userId),
-		...queryOptions,
-	} as CreateQueryOptions<
-		Awaited<ReturnType<typeof tableBookingHistorySalesPeriod>>,
+	return { queryKey, queryFn, enabled: !!userId, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof tableBookingHistoryUser>>,
 		TError,
 		TData
 	> & { queryKey: QueryKey };
 };
 
-export type TableBookingHistorySalesPeriodQueryResult = NonNullable<
-	Awaited<ReturnType<typeof tableBookingHistorySalesPeriod>>
+export type TableBookingHistoryUserQueryResult = NonNullable<
+	Awaited<ReturnType<typeof tableBookingHistoryUser>>
 >;
-export type TableBookingHistorySalesPeriodQueryError = ErrorType<void | InternalErrorResponse>;
+export type TableBookingHistoryUserQueryError = ErrorType<void | InternalErrorResponse>;
 
-export const createTableBookingHistorySalesPeriod = <
-	TData = Awaited<ReturnType<typeof tableBookingHistorySalesPeriod>>,
+export const createTableBookingHistoryUser = <
+	TData = Awaited<ReturnType<typeof tableBookingHistoryUser>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	salesPeriodId: number,
 	userId: string,
 	options?: {
 		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistorySalesPeriod>>, TError, TData>
+			CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryUser>>, TError, TData>
 		>;
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
-	const queryOptions = getTableBookingHistorySalesPeriodQueryOptions(
-		salesPeriodId,
-		userId,
-		options
-	);
+	const queryOptions = getTableBookingHistoryUserQueryOptions(userId, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;
