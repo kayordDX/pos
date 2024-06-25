@@ -205,6 +205,7 @@ export interface DTOCashUpUserItemDTO {
 }
 
 export interface CashUpUserDetailResponse {
+	cashUpUserId: number;
 	cashUpUserItems: DTOCashUpUserItemDTO[];
 	user: EntitiesUser;
 	userId: string;
@@ -220,10 +221,6 @@ export interface CashUpUserGetResponse {
 	totalPayments: number;
 	user: EntitiesUser;
 	userId: string;
-}
-
-export interface CashUpUserItemTypeRequest {
-	[key: string]: unknown;
 }
 
 export interface ClockClockInRequest {

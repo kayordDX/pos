@@ -46,7 +46,7 @@
 						<CashUpItem {item} />
 					{/each}
 				</div>
-				<AddItem />
+				<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
 			</Card.Content>
 		</Card.Root>
 	{/if}

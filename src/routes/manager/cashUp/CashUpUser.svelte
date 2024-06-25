@@ -40,12 +40,12 @@
 					<span>R{cash.sales.toFixed(2)}</span>
 				</li>
 				<li class="flex items-center justify-between">
-					<span class="text-muted-foreground">Tips</span>
-					<span>R{cash.tips.toFixed(2)}</span>
-				</li>
-				<li class="flex items-center justify-between">
 					<span class="text-muted-foreground">Total Payments</span>
 					<span>R{cash.totalPayments.toFixed(2)}</span>
+				</li>
+				<li class="flex items-center justify-between">
+					<span class="text-muted-foreground">Tips</span>
+					<span>R{cash.tips.toFixed(2)}</span>
 				</li>
 			</ul>
 		</div>

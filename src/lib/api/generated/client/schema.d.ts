@@ -964,7 +964,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/cashUp/user/itemType/{isAuto}": {
+    "/cashUp/user/itemType": {
         parameters: {
             query?: never;
             header?: never;
@@ -2427,7 +2427,6 @@ export interface components {
             /** Format: int32 */
             outletId: number;
         };
-        CashUpUserItemTypeRequest: Record<string, never>;
         CashUpUserGetResponse: {
             userId: string;
             user: components["schemas"]["EntitiesUser"];
@@ -2442,6 +2441,8 @@ export interface components {
         CashUpUserDetailResponse: {
             userId: string;
             user: components["schemas"]["EntitiesUser"];
+            /** Format: int32 */
+            cashUpUserId: number;
             cashUpUserItems: components["schemas"]["DTOCashUpUserItemDTO"][];
         };
         DTOCashUpUserItemDTO: {
@@ -5031,9 +5032,7 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                isAuto: boolean;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;

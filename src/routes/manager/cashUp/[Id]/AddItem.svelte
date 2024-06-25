@@ -1,23 +1,38 @@
 <script lang="ts">
-	import { createCashUpUserItemType } from "$lib/api";
+	import { page } from "$app/stores";
+	import { createCashUpUserCreate, createCashUpUserItemType } from "$lib/api";
+	import { status } from "$lib/stores/status";
 	import { Button, Drawer, Form, Input, Select } from "@kayord/ui";
 	import { PlusIcon } from "lucide-svelte";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 
-	const query = createCashUpUserItemType(false);
+	let { refetch, cashUpUserId }: { refetch: () => void; cashUpUserId: number } = $props();
+	let open = $state(false);
 
-	$: console.log($query.data, "waht");
+	const query = createCashUpUserItemType();
+
+	const mutation = createCashUpUserCreate();
 
 	export const schema = z.object({
 		cashUpUserItemTypeId: z.number().min(1, { message: "Please select Cash Up User Item Type Id" }),
-		value: z.number().min(1, { message: "Please enter value" }),
+		value: z.number(),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
 	const onSubmit = async (data: FormSchema) => {
-		console.log(data, "boi");
+		await $mutation.mutateAsync({
+			data: {
+				cashUpUserId: cashUpUserId,
+				cashUpUserItemTypeId: data.cashUpUserItemTypeId,
+				outletId: $status.outletId,
+				userId: $page.params.Id ?? "",
+				value: data.value,
+			},
+		});
+		open = false;
+		refetch();
 	};
 
 	const form = superForm(defaults({ value: 0 }, zod(schema)), {
@@ -32,7 +47,7 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<Drawer.Root>
+<Drawer.Root bind:open>
 	<Drawer.Trigger class="w-full">
 		<Button class="w-full mt-5 p-86"><PlusIcon class="size-4 mr-2" /> Add Cash Up Item</Button>
 	</Drawer.Trigger>
@@ -79,12 +94,11 @@
 							on:focus={(e) => e.currentTarget.select()}
 						/>
 					</Form.Control>
-					<Form.Description>Enter value to add</Form.Description>
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
 			<Drawer.Footer>
-				<Button>Add</Button>
+				<Form.Button type="submit">Add</Form.Button>
 				<Drawer.Close>Cancel</Drawer.Close>
 			</Drawer.Footer>
 		</form>

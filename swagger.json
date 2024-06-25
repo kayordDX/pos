@@ -3377,22 +3377,12 @@
         ]
       }
     },
-    "/cashUp/user/itemType/{isAuto}": {
+    "/cashUp/user/itemType": {
       "get": {
         "tags": [
           "Cashup"
         ],
         "operationId": "CashUpUserItemType",
-        "parameters": [
-          {
-            "name": "isAuto",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "boolean"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -8625,10 +8615,6 @@
           }
         }
       },
-      "CashUpUserItemTypeRequest": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "CashUpUserGetResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -8670,6 +8656,7 @@
         "required": [
           "userId",
           "user",
+          "cashUpUserId",
           "cashUpUserItems"
         ],
         "properties": {
@@ -8678,6 +8665,10 @@
           },
           "user": {
             "$ref": "#/components/schemas/EntitiesUser"
+          },
+          "cashUpUserId": {
+            "type": "integer",
+            "format": "int32"
           },
           "cashUpUserItems": {
             "type": "array",

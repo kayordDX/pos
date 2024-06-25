@@ -28,36 +28,33 @@ import type {
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType, BodyType } from "../mutator/customInstance";
 
-export const cashUpUserItemType = (isAuto: boolean) => {
+export const cashUpUserItemType = () => {
 	return customInstance<EntitiesCashUpUserItemType[]>({
-		url: `/cashUp/user/itemType/${isAuto}`,
+		url: `/cashUp/user/itemType`,
 		method: "GET",
 	});
 };
 
-export const getCashUpUserItemTypeQueryKey = (isAuto: boolean) => {
-	return [`/cashUp/user/itemType/${isAuto}`] as const;
+export const getCashUpUserItemTypeQueryKey = () => {
+	return [`/cashUp/user/itemType`] as const;
 };
 
 export const getCashUpUserItemTypeQueryOptions = <
 	TData = Awaited<ReturnType<typeof cashUpUserItemType>>,
 	TError = ErrorType<void | InternalErrorResponse>,
->(
-	isAuto: boolean,
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>
-		>;
-	}
-) => {
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>
+	>;
+}) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getCashUpUserItemTypeQueryKey(isAuto);
+	const queryKey = queryOptions?.queryKey ?? getCashUpUserItemTypeQueryKey();
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof cashUpUserItemType>>> = () =>
-		cashUpUserItemType(isAuto);
+		cashUpUserItemType();
 
-	return { queryKey, queryFn, enabled: !!isAuto, ...queryOptions } as CreateQueryOptions<
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
 		Awaited<ReturnType<typeof cashUpUserItemType>>,
 		TError,
 		TData
@@ -72,15 +69,12 @@ export type CashUpUserItemTypeQueryError = ErrorType<void | InternalErrorRespons
 export const createCashUpUserItemType = <
 	TData = Awaited<ReturnType<typeof cashUpUserItemType>>,
 	TError = ErrorType<void | InternalErrorResponse>,
->(
-	isAuto: boolean,
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>
-		>;
-	}
-): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
-	const queryOptions = getCashUpUserItemTypeQueryOptions(isAuto, options);
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>
+	>;
+}): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = getCashUpUserItemTypeQueryOptions(options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;
