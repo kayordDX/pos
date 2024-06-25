@@ -1,13 +1,13 @@
 <script lang="ts">
-	import type { SalesPeriodCashUpUserCashUp } from "$lib/api";
+	import { type CashUpUserGetResponse } from "$lib/api";
 	import { getInitials } from "$lib/util";
 	import { Avatar, Button, Card } from "@kayord/ui";
 	import { ReceiptTextIcon, WalletCardsIcon } from "lucide-svelte";
 
-	let { cash }: { cash: SalesPeriodCashUpUserCashUp } = $props();
+	let { cash }: { cash: CashUpUserGetResponse } = $props();
 </script>
 
-<Card.Root class="overflow-hidden">
+<Card.Root class="overflow-hidden w-full">
 	<Card.Header class="flex flex-col items-start bg-muted/50 p-4">
 		<div class="flex items-center gap-2 justify-between w-full">
 			<div class="flex items-center gap-2">
@@ -36,12 +36,16 @@
 		<div class="grid gap-3 mt-3">
 			<ul class="grid gap-3">
 				<li class="flex items-center justify-between">
-					<span class="text-muted-foreground">Total</span>
-					<span>R{cash.userTotal.toFixed(2)}</span>
+					<span class="text-muted-foreground">Sales</span>
+					<span>R{cash.sales.toFixed(2)}</span>
 				</li>
 				<li class="flex items-center justify-between">
-					<span class="text-muted-foreground">User Payment Total</span>
-					<span>R{cash.userPaymentTotal.toFixed(2)}</span>
+					<span class="text-muted-foreground">Tips</span>
+					<span>R{cash.tips.toFixed(2)}</span>
+				</li>
+				<li class="flex items-center justify-between">
+					<span class="text-muted-foreground">Total Payments</span>
+					<span>R{cash.totalPayments.toFixed(2)}</span>
 				</li>
 			</ul>
 		</div>

@@ -3377,7 +3377,58 @@
         ]
       }
     },
-    "/cashUp/user": {
+    "/cashUp/user/itemType/{isAuto}": {
+      "get": {
+        "tags": [
+          "Cashup"
+        ],
+        "operationId": "CashUpUserItemType",
+        "parameters": [
+          {
+            "name": "isAuto",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntitiesCashUpUserItemType"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/cashUp/user/{outletId}": {
       "get": {
         "tags": [
           "Cashup"
@@ -3386,7 +3437,7 @@
         "parameters": [
           {
             "name": "outletId",
-            "in": "query",
+            "in": "path",
             "required": true,
             "schema": {
               "type": "integer",
@@ -3429,7 +3480,7 @@
         ]
       }
     },
-    "/cashUp/user/detail/{userId}/{outletId}/{salesPeriodId}": {
+    "/cashUp/user/detail/{userId}/{outletId}": {
       "get": {
         "tags": [
           "Cashup"
@@ -3455,7 +3506,7 @@
           },
           {
             "name": "salesPeriodId",
-            "in": "path",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "integer",
@@ -3470,6 +3521,57 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CashUpUserDetailResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/cashUp/user/create": {
+      "post": {
+        "tags": [
+          "Cashup"
+        ],
+        "operationId": "CashUpUserCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CashUpUserCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesCashUpUserItem"
                 }
               }
             }
@@ -6382,7 +6484,6 @@
           "userId",
           "outletId",
           "openingBalance",
-          "closingBalance",
           "cashUpUserItems"
         ],
         "properties": {
@@ -6403,7 +6504,8 @@
           },
           "closingBalance": {
             "type": "number",
-            "format": "decimal"
+            "format": "decimal",
+            "nullable": true
           },
           "cashUpUserItems": {
             "type": "array",
@@ -6418,21 +6520,20 @@
         "additionalProperties": false,
         "required": [
           "id",
-          "userCashUpId",
+          "cashUpUserId",
           "cashUpUser",
           "userId",
           "outletId",
-          "openingBalance",
-          "closingBalance",
-          "cashUpItemTypeId",
-          "cashUpItemTypes"
+          "cashUpUserItemTypeId",
+          "cashUpUserItemType",
+          "value"
         ],
         "properties": {
           "id": {
             "type": "integer",
             "format": "int32"
           },
-          "userCashUpId": {
+          "cashUpUserId": {
             "type": "integer",
             "format": "int32"
           },
@@ -6446,20 +6547,16 @@
             "type": "integer",
             "format": "int32"
           },
-          "openingBalance": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "closingBalance": {
-            "type": "number",
-            "format": "decimal"
-          },
-          "cashUpItemTypeId": {
+          "cashUpUserItemTypeId": {
             "type": "integer",
             "format": "int32"
           },
-          "cashUpItemTypes": {
+          "cashUpUserItemType": {
             "$ref": "#/components/schemas/EntitiesCashUpUserItemType"
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -6469,7 +6566,8 @@
         "required": [
           "id",
           "itemType",
-          "isAuto"
+          "isAuto",
+          "cashUpUserItemRule"
         ],
         "properties": {
           "id": {
@@ -6482,6 +6580,9 @@
           "isAuto": {
             "type": "boolean"
           },
+          "cashUpUserItemRule": {
+            "$ref": "#/components/schemas/CommonEnumsCashUpUserItemRule"
+          },
           "paymentTypeId": {
             "type": "integer",
             "format": "int32",
@@ -6492,6 +6593,19 @@
             "oneOf": [
               {
                 "$ref": "#/components/schemas/EntitiesPaymentType"
+              }
+            ]
+          },
+          "adjustmentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "adjustmentType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesAdjustmentType"
               }
             ]
           },
@@ -6509,6 +6623,30 @@
             ]
           }
         }
+      },
+      "CommonEnumsCashUpUserItemRule": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "PaymentTotal",
+          "PaymentTip",
+          "PaymentLevy",
+          "Adjustment",
+          "Config",
+          "SalesRevenue",
+          "CardPaymentTotal",
+          "CardTips"
+        ],
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ]
       },
       "EntitiesCashUpConfig": {
         "type": "object",
@@ -8487,13 +8625,19 @@
           }
         }
       },
+      "CashUpUserItemTypeRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "CashUpUserGetResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
           "userId",
           "user",
-          "sales"
+          "sales",
+          "tips",
+          "totalPayments"
         ],
         "properties": {
           "userId": {
@@ -8503,6 +8647,14 @@
             "$ref": "#/components/schemas/EntitiesUser"
           },
           "sales": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "tips": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "totalPayments": {
             "type": "number",
             "format": "decimal"
           }
@@ -8518,7 +8670,7 @@
         "required": [
           "userId",
           "user",
-          "responseItems"
+          "cashUpUserItems"
         ],
         "properties": {
           "userId": {
@@ -8527,24 +8679,52 @@
           "user": {
             "$ref": "#/components/schemas/EntitiesUser"
           },
-          "responseItems": {
+          "cashUpUserItems": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/CashUpUserDetailResponseItem"
+              "$ref": "#/components/schemas/DTOCashUpUserItemDTO"
             }
           }
         }
       },
-      "CashUpUserDetailResponseItem": {
+      "DTOCashUpUserItemDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "cashUpUserItemType",
+          "id",
+          "cashUpUserId",
+          "userId",
+          "outletId",
+          "cashUpUserItemTypeId",
           "value"
         ],
         "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cashUpUserId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cashUpUserItemTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "cashUpUserItemType": {
-            "$ref": "#/components/schemas/EntitiesCashUpUserItemType"
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/DTOCashUpUserItemTypeDTO"
+              }
+            ]
           },
           "value": {
             "type": "number",
@@ -8552,9 +8732,105 @@
           }
         }
       },
+      "DTOCashUpUserItemTypeDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "itemType",
+          "isAuto",
+          "cashUpUserItemRule"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "itemType": {
+            "type": "string"
+          },
+          "isAuto": {
+            "type": "boolean"
+          },
+          "cashUpUserItemRule": {
+            "$ref": "#/components/schemas/CommonEnumsCashUpUserItemRule"
+          },
+          "paymentTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "paymentType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesPaymentType"
+              }
+            ]
+          },
+          "adjustmentId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "adjustmentType": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesAdjustmentType"
+              }
+            ]
+          },
+          "cashupConfigId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cashupConfig": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/EntitiesCashUpConfig"
+              }
+            ]
+          }
+        }
+      },
       "CashUpUserDetailRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "CashUpUserCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "cashUpUserId",
+          "userId",
+          "outletId",
+          "cashUpUserItemTypeId",
+          "value"
+        ],
+        "properties": {
+          "cashUpUserId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "cashUpUserItemTypeId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "value": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
       },
       "BusinessGetRequest": {
         "type": "object",

@@ -964,7 +964,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/cashUp/user": {
+    "/cashUp/user/itemType/{isAuto}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["CashUpUserItemType"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cashUp/user/{outletId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -980,7 +996,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/cashUp/user/detail/{userId}/{outletId}/{salesPeriodId}": {
+    "/cashUp/user/detail/{userId}/{outletId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -990,6 +1006,22 @@ export interface paths {
         get: operations["CashUpUserDetail"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cashUp/user/create": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CashUpUserCreate"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1794,38 +1826,42 @@ export interface components {
             /** Format: decimal */
             openingBalance: number;
             /** Format: decimal */
-            closingBalance: number;
+            closingBalance?: number | null;
             cashUpUserItems: components["schemas"]["EntitiesCashUpUserItem"][];
         };
         EntitiesCashUpUserItem: {
             /** Format: int32 */
             id: number;
             /** Format: int32 */
-            userCashUpId: number;
+            cashUpUserId: number;
             cashUpUser: components["schemas"]["EntitiesCashUpUser"];
             userId: string;
             /** Format: int32 */
             outletId: number;
-            /** Format: decimal */
-            openingBalance: number;
-            /** Format: decimal */
-            closingBalance: number;
             /** Format: int32 */
-            cashUpItemTypeId: number;
-            cashUpItemTypes: components["schemas"]["EntitiesCashUpUserItemType"];
+            cashUpUserItemTypeId: number;
+            cashUpUserItemType: components["schemas"]["EntitiesCashUpUserItemType"];
+            /** Format: decimal */
+            value: number;
         };
         EntitiesCashUpUserItemType: {
             /** Format: int32 */
             id: number;
             itemType: string;
             isAuto: boolean;
+            cashUpUserItemRule: components["schemas"]["CommonEnumsCashUpUserItemRule"];
             /** Format: int32 */
             paymentTypeId?: number | null;
             paymentType?: components["schemas"]["EntitiesPaymentType"] | null;
             /** Format: int32 */
+            adjustmentId?: number | null;
+            adjustmentType?: components["schemas"]["EntitiesAdjustmentType"] | null;
+            /** Format: int32 */
             cashupConfigId?: number | null;
             cashupConfig?: components["schemas"]["EntitiesCashUpConfig"] | null;
         };
+        /** @enum {integer} */
+        CommonEnumsCashUpUserItemRule: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
         EntitiesCashUpConfig: {
             /** Format: int32 */
             id: number;
@@ -2391,24 +2427,65 @@ export interface components {
             /** Format: int32 */
             outletId: number;
         };
+        CashUpUserItemTypeRequest: Record<string, never>;
         CashUpUserGetResponse: {
             userId: string;
             user: components["schemas"]["EntitiesUser"];
             /** Format: decimal */
             sales: number;
+            /** Format: decimal */
+            tips: number;
+            /** Format: decimal */
+            totalPayments: number;
         };
         CashUpUserGetRequest: Record<string, never>;
         CashUpUserDetailResponse: {
             userId: string;
             user: components["schemas"]["EntitiesUser"];
-            responseItems: components["schemas"]["CashUpUserDetailResponseItem"][];
+            cashUpUserItems: components["schemas"]["DTOCashUpUserItemDTO"][];
         };
-        CashUpUserDetailResponseItem: {
-            cashUpUserItemType: components["schemas"]["EntitiesCashUpUserItemType"];
+        DTOCashUpUserItemDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            cashUpUserId: number;
+            userId: string;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            cashUpUserItemTypeId: number;
+            cashUpUserItemType?: components["schemas"]["DTOCashUpUserItemTypeDTO"] | null;
             /** Format: decimal */
             value: number;
         };
+        DTOCashUpUserItemTypeDTO: {
+            /** Format: int32 */
+            id: number;
+            itemType: string;
+            isAuto: boolean;
+            cashUpUserItemRule: components["schemas"]["CommonEnumsCashUpUserItemRule"];
+            /** Format: int32 */
+            paymentTypeId?: number | null;
+            paymentType?: components["schemas"]["EntitiesPaymentType"] | null;
+            /** Format: int32 */
+            adjustmentId?: number | null;
+            adjustmentType?: components["schemas"]["EntitiesAdjustmentType"] | null;
+            /** Format: int32 */
+            cashupConfigId?: number | null;
+            cashupConfig?: components["schemas"]["EntitiesCashUpConfig"] | null;
+        };
         CashUpUserDetailRequest: Record<string, never>;
+        CashUpUserCreateRequest: {
+            /** Format: int32 */
+            cashUpUserId: number;
+            userId: string;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            cashUpUserItemTypeId: number;
+            /** Format: decimal */
+            value: number;
+        };
         BusinessGetRequest: Record<string, never>;
         BusinessEditRequest: {
             /** Format: int32 */
@@ -4950,13 +5027,51 @@ export interface operations {
             };
         };
     };
+    CashUpUserItemType: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                isAuto: boolean;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesCashUpUserItemType"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     CashUpUserGet: {
         parameters: {
-            query: {
+            query?: never;
+            header?: never;
+            path: {
                 outletId: number;
             };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -4990,12 +5105,13 @@ export interface operations {
     };
     CashUpUserDetail: {
         parameters: {
-            query?: never;
+            query: {
+                salesPeriodId: number;
+            };
             header?: never;
             path: {
                 userId: string;
                 outletId: number;
-                salesPeriodId: number;
             };
             cookie?: never;
         };
@@ -5008,6 +5124,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CashUpUserDetailResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    CashUpUserCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CashUpUserCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesCashUpUserItem"];
                 };
             };
             /** @description Unauthorized */
