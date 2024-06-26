@@ -8,7 +8,12 @@
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 
-	let { refetch, cashUpUserId }: { refetch: () => void; cashUpUserId: number } = $props();
+	interface Props {
+		cashUpUserId: number;
+		refetch: () => void;
+	}
+
+	let { refetch, cashUpUserId }: Props = $props();
 	let open = $state(false);
 
 	const query = createCashUpUserItemType();

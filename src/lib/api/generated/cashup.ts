@@ -18,6 +18,7 @@ import type {
 } from "@tanstack/svelte-query";
 import type {
 	CashUpUserCreateRequest,
+	CashUpUserDeleteRequest,
 	CashUpUserDetailParams,
 	CashUpUserDetailResponse,
 	CashUpUserGetResponse,
@@ -219,9 +220,74 @@ export const createCashUpUserDetail = <
 	return query;
 };
 
+export const cashUpUserDelete = (cashUpUserDeleteRequest: BodyType<CashUpUserDeleteRequest>) => {
+	return customInstance<EntitiesCashUpUserItem>({
+		url: `/cashUp/user`,
+		method: "DELETE",
+		headers: { "Content-Type": "*/*" },
+		data: cashUpUserDeleteRequest,
+	});
+};
+
+export const getCashUpUserDeleteMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof cashUpUserDelete>>,
+		TError,
+		{ data: BodyType<CashUpUserDeleteRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof cashUpUserDelete>>,
+	TError,
+	{ data: BodyType<CashUpUserDeleteRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof cashUpUserDelete>>,
+		{ data: BodyType<CashUpUserDeleteRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return cashUpUserDelete(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type CashUpUserDeleteMutationResult = NonNullable<
+	Awaited<ReturnType<typeof cashUpUserDelete>>
+>;
+export type CashUpUserDeleteMutationBody = BodyType<CashUpUserDeleteRequest>;
+export type CashUpUserDeleteMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createCashUpUserDelete = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof cashUpUserDelete>>,
+		TError,
+		{ data: BodyType<CashUpUserDeleteRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof cashUpUserDelete>>,
+	TError,
+	{ data: BodyType<CashUpUserDeleteRequest> },
+	TContext
+> => {
+	const mutationOptions = getCashUpUserDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const cashUpUserCreate = (cashUpUserCreateRequest: BodyType<CashUpUserCreateRequest>) => {
 	return customInstance<EntitiesCashUpUserItem>({
-		url: `/cashUp/user/create`,
+		url: `/cashUp/user`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
 		data: cashUpUserCreateRequest,

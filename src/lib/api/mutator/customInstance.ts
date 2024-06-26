@@ -13,7 +13,9 @@ export const customInstance = async <T>({
 }: {
 	url: string;
 	method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	params?: Record<string, any>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	headers?: Record<string, any>;
 	data?: BodyType<unknown>;
 }): Promise<T> => {
@@ -59,6 +61,9 @@ export const customInstance = async <T>({
 		}
 		if (response.status == 403) {
 			throw new Error("Forbidden", { cause: "403" });
+		}
+		if (response.status == 404) {
+			throw new Error("Not found", { cause: "404" });
 		}
 		// Error response
 		const errorResult = await response.json();

@@ -43,7 +43,7 @@
 			<Card.Content>
 				<div class="flex flex-col gap-2 items-center mt-5">
 					{#each $query.data.cashUpUserItems as item}
-						<CashUpItem {item} />
+						<CashUpItem {item} refetch={$query.refetch} />
 					{/each}
 				</div>
 				<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />

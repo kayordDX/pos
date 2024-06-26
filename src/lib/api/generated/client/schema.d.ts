@@ -1012,7 +1012,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/cashUp/user/create": {
+    "/cashUp/user": {
         parameters: {
             query?: never;
             header?: never;
@@ -1022,7 +1022,7 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["CashUpUserCreate"];
-        delete?: never;
+        delete: operations["CashUpUserDelete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2476,6 +2476,10 @@ export interface components {
             cashupConfig?: components["schemas"]["EntitiesCashUpConfig"] | null;
         };
         CashUpUserDetailRequest: Record<string, never>;
+        CashUpUserDeleteRequest: {
+            /** Format: int32 */
+            id: number;
+        };
         CashUpUserCreateRequest: {
             /** Format: int32 */
             cashUpUserId: number;
@@ -5153,6 +5157,47 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["CashUpUserCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesCashUpUserItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    CashUpUserDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "*/*": components["schemas"]["CashUpUserDeleteRequest"];
+                "application/json": components["schemas"]["CashUpUserDeleteRequest"];
             };
         };
         responses: {

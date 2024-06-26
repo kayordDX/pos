@@ -150,6 +150,10 @@ export interface CashUpUserCreateRequest {
 	value: number;
 }
 
+export interface CashUpUserDeleteRequest {
+	id: number;
+}
+
 export interface CashUpUserDetailRequest {
 	[key: string]: unknown;
 }
