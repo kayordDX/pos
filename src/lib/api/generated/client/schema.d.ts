@@ -1012,6 +1012,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/cashUp/user/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["CashUpUserDelete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/cashUp/user": {
         parameters: {
             query?: never;
@@ -1022,7 +1038,7 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["CashUpUserCreate"];
-        delete: operations["CashUpUserDelete"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -2427,6 +2443,7 @@ export interface components {
             /** Format: int32 */
             outletId: number;
         };
+        CashUpUserItemTypeRequest: Record<string, never>;
         CashUpUserGetResponse: {
             userId: string;
             user: components["schemas"]["EntitiesUser"];
@@ -2444,6 +2461,12 @@ export interface components {
             /** Format: int32 */
             cashUpUserId: number;
             cashUpUserItems: components["schemas"]["DTOCashUpUserItemDTO"][];
+            /** Format: decimal */
+            openingBalance: number;
+            /** Format: decimal */
+            grossBalance: number;
+            /** Format: decimal */
+            netBalance: number;
         };
         DTOCashUpUserItemDTO: {
             /** Format: int32 */
@@ -2476,10 +2499,7 @@ export interface components {
             cashupConfig?: components["schemas"]["EntitiesCashUpConfig"] | null;
         };
         CashUpUserDetailRequest: Record<string, never>;
-        CashUpUserDeleteRequest: {
-            /** Format: int32 */
-            id: number;
-        };
+        CashUpUserDeleteRequest: Record<string, never>;
         CashUpUserCreateRequest: {
             /** Format: int32 */
             cashUpUserId: number;
@@ -5034,7 +5054,9 @@ export interface operations {
     };
     CashUpUserItemType: {
         parameters: {
-            query?: never;
+            query: {
+                isAuto: boolean;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -5147,18 +5169,16 @@ export interface operations {
             };
         };
     };
-    CashUpUserCreate: {
+    CashUpUserDelete: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                id: number;
+            };
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["CashUpUserCreateRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
             /** @description Success */
             200: {
@@ -5187,7 +5207,7 @@ export interface operations {
             };
         };
     };
-    CashUpUserDelete: {
+    CashUpUserCreate: {
         parameters: {
             query?: never;
             header?: never;
@@ -5196,8 +5216,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "*/*": components["schemas"]["CashUpUserDeleteRequest"];
-                "application/json": components["schemas"]["CashUpUserDeleteRequest"];
+                "application/json": components["schemas"]["CashUpUserCreateRequest"];
             };
         };
         responses: {

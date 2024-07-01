@@ -3383,6 +3383,16 @@
           "Cashup"
         ],
         "operationId": "CashUpUserItemType",
+        "parameters": [
+          {
+            "name": "isAuto",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -3536,30 +3546,23 @@
         ]
       }
     },
-    "/cashUp/user": {
+    "/cashUp/user/{id}": {
       "delete": {
         "tags": [
           "Cashup"
         ],
         "operationId": "CashUpUserDelete",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "*/*": {
-              "schema": {
-                "$ref": "#/components/schemas/CashUpUserDeleteRequest"
-              }
-            },
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/CashUpUserDeleteRequest"
-              }
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
-          },
-          "required": true,
-          "x-position": 1
-        },
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -3590,7 +3593,9 @@
             "JWTBearerAuth": []
           }
         ]
-      },
+      }
+    },
+    "/cashUp/user": {
       "post": {
         "tags": [
           "Cashup"
@@ -8669,6 +8674,10 @@
           }
         }
       },
+      "CashUpUserItemTypeRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "CashUpUserGetResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -8711,7 +8720,10 @@
           "userId",
           "user",
           "cashUpUserId",
-          "cashUpUserItems"
+          "cashUpUserItems",
+          "openingBalance",
+          "grossBalance",
+          "netBalance"
         ],
         "properties": {
           "userId": {
@@ -8729,6 +8741,18 @@
             "items": {
               "$ref": "#/components/schemas/DTOCashUpUserItemDTO"
             }
+          },
+          "openingBalance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "grossBalance": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "netBalance": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -8847,16 +8871,7 @@
       },
       "CashUpUserDeleteRequest": {
         "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
+        "additionalProperties": false
       },
       "CashUpUserCreateRequest": {
         "type": "object",

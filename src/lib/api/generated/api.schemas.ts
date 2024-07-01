@@ -10,6 +10,10 @@ export type CashUpUserDetailParams = {
 	salesPeriodId: number;
 };
 
+export type CashUpUserItemTypeParams = {
+	isAuto: boolean;
+};
+
 export type ClockListParams = {
 	outletId: number;
 	statusId: number;
@@ -151,7 +155,7 @@ export interface CashUpUserCreateRequest {
 }
 
 export interface CashUpUserDeleteRequest {
-	id: number;
+	[key: string]: unknown;
 }
 
 export interface CashUpUserDetailRequest {
@@ -211,6 +215,9 @@ export interface DTOCashUpUserItemDTO {
 export interface CashUpUserDetailResponse {
 	cashUpUserId: number;
 	cashUpUserItems: DTOCashUpUserItemDTO[];
+	grossBalance: number;
+	netBalance: number;
+	openingBalance: number;
 	user: EntitiesUser;
 	userId: string;
 }
@@ -225,6 +232,10 @@ export interface CashUpUserGetResponse {
 	totalPayments: number;
 	user: EntitiesUser;
 	userId: string;
+}
+
+export interface CashUpUserItemTypeRequest {
+	[key: string]: unknown;
 }
 
 export interface ClockClockInRequest {
@@ -626,8 +637,6 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
-
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -658,6 +667,8 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
+
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: unknown;
@@ -1007,29 +1018,6 @@ export interface EntitiesOrderItemStatus {
 	status: string;
 }
 
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
-}
-
-export interface EntitiesMenuItemExtraGroup {
-	extraGroup: EntitiesExtraGroup;
-	extraGroupId: number;
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-}
-
-export interface EntitiesExtraGroup {
-	extraGroupId: number;
-	extras: EntitiesExtra[];
-	/** @nullable */
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	name: string;
-}
-
 export interface EntitiesExtra {
 	extraGroup: EntitiesExtraGroup;
 	extraGroupId: number;
@@ -1039,6 +1027,14 @@ export interface EntitiesExtra {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	positionId: number;
 	price: number;
+}
+
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -1153,6 +1149,21 @@ export interface EntitiesMenuItem {
 	tags?: EntitiesTag[] | null;
 }
 
+export interface EntitiesMenuItemExtraGroup {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	extras: EntitiesExtra[];
+	/** @nullable */
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	name: string;
+}
+
 /**
  * @nullable
  */
@@ -1188,6 +1199,18 @@ export interface EntitiesOrderGroup {
 	orderItems?: EntitiesOrderItem[] | null;
 }
 
+export interface EntitiesRole {
+	description: string;
+	isBackOffice: boolean;
+	isFrontLine: boolean;
+	name: string;
+	/** @nullable */
+	outletId?: number | null;
+	roleId: number;
+	/** @nullable */
+	userRole?: EntitiesUserRole[] | null;
+}
+
 /**
  * @nullable
  */
@@ -1210,18 +1233,6 @@ export interface EntitiesUserRole {
 	user: EntitiesUser;
 	userId: string;
 	userRoleId: number;
-}
-
-export interface EntitiesRole {
-	description: string;
-	isBackOffice: boolean;
-	isFrontLine: boolean;
-	name: string;
-	/** @nullable */
-	outletId?: number | null;
-	roleId: number;
-	/** @nullable */
-	userRole?: EntitiesUserRole[] | null;
 }
 
 /**

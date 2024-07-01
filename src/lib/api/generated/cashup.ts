@@ -18,10 +18,10 @@ import type {
 } from "@tanstack/svelte-query";
 import type {
 	CashUpUserCreateRequest,
-	CashUpUserDeleteRequest,
 	CashUpUserDetailParams,
 	CashUpUserDetailResponse,
 	CashUpUserGetResponse,
+	CashUpUserItemTypeParams,
 	EntitiesCashUpUserItem,
 	EntitiesCashUpUserItemType,
 	InternalErrorResponse,
@@ -29,31 +29,35 @@ import type {
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType, BodyType } from "../mutator/customInstance";
 
-export const cashUpUserItemType = () => {
+export const cashUpUserItemType = (params: CashUpUserItemTypeParams) => {
 	return customInstance<EntitiesCashUpUserItemType[]>({
 		url: `/cashUp/user/itemType`,
 		method: "GET",
+		params,
 	});
 };
 
-export const getCashUpUserItemTypeQueryKey = () => {
-	return [`/cashUp/user/itemType`] as const;
+export const getCashUpUserItemTypeQueryKey = (params: CashUpUserItemTypeParams) => {
+	return [`/cashUp/user/itemType`, ...(params ? [params] : [])] as const;
 };
 
 export const getCashUpUserItemTypeQueryOptions = <
 	TData = Awaited<ReturnType<typeof cashUpUserItemType>>,
 	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
-	query?: Partial<
-		CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>
-	>;
-}) => {
+>(
+	params: CashUpUserItemTypeParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>
+		>;
+	}
+) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getCashUpUserItemTypeQueryKey();
+	const queryKey = queryOptions?.queryKey ?? getCashUpUserItemTypeQueryKey(params);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof cashUpUserItemType>>> = () =>
-		cashUpUserItemType();
+		cashUpUserItemType(params);
 
 	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
 		Awaited<ReturnType<typeof cashUpUserItemType>>,
@@ -70,12 +74,15 @@ export type CashUpUserItemTypeQueryError = ErrorType<void | InternalErrorRespons
 export const createCashUpUserItemType = <
 	TData = Awaited<ReturnType<typeof cashUpUserItemType>>,
 	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
-	query?: Partial<
-		CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>
-	>;
-}): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
-	const queryOptions = getCashUpUserItemTypeQueryOptions(options);
+>(
+	params: CashUpUserItemTypeParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
+	const queryOptions = getCashUpUserItemTypeQueryOptions(params, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;
@@ -220,13 +227,8 @@ export const createCashUpUserDetail = <
 	return query;
 };
 
-export const cashUpUserDelete = (cashUpUserDeleteRequest: BodyType<CashUpUserDeleteRequest>) => {
-	return customInstance<EntitiesCashUpUserItem>({
-		url: `/cashUp/user`,
-		method: "DELETE",
-		headers: { "Content-Type": "*/*" },
-		data: cashUpUserDeleteRequest,
-	});
+export const cashUpUserDelete = (id: number) => {
+	return customInstance<EntitiesCashUpUserItem>({ url: `/cashUp/user/${id}`, method: "DELETE" });
 };
 
 export const getCashUpUserDeleteMutationOptions = <
@@ -236,24 +238,24 @@ export const getCashUpUserDeleteMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<typeof cashUpUserDelete>>,
 		TError,
-		{ data: BodyType<CashUpUserDeleteRequest> },
+		{ id: number },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<typeof cashUpUserDelete>>,
 	TError,
-	{ data: BodyType<CashUpUserDeleteRequest> },
+	{ id: number },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<typeof cashUpUserDelete>>,
-		{ data: BodyType<CashUpUserDeleteRequest> }
+		{ id: number }
 	> = (props) => {
-		const { data } = props ?? {};
+		const { id } = props ?? {};
 
-		return cashUpUserDelete(data);
+		return cashUpUserDelete(id);
 	};
 
 	return { mutationFn, ...mutationOptions };
@@ -262,7 +264,7 @@ export const getCashUpUserDeleteMutationOptions = <
 export type CashUpUserDeleteMutationResult = NonNullable<
 	Awaited<ReturnType<typeof cashUpUserDelete>>
 >;
-export type CashUpUserDeleteMutationBody = BodyType<CashUpUserDeleteRequest>;
+
 export type CashUpUserDeleteMutationError = ErrorType<void | InternalErrorResponse>;
 
 export const createCashUpUserDelete = <
@@ -272,13 +274,13 @@ export const createCashUpUserDelete = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<typeof cashUpUserDelete>>,
 		TError,
-		{ data: BodyType<CashUpUserDeleteRequest> },
+		{ id: number },
 		TContext
 	>;
 }): CreateMutationResult<
 	Awaited<ReturnType<typeof cashUpUserDelete>>,
 	TError,
-	{ data: BodyType<CashUpUserDeleteRequest> },
+	{ id: number },
 	TContext
 > => {
 	const mutationOptions = getCashUpUserDeleteMutationOptions(options);

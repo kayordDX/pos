@@ -4,10 +4,11 @@
 	import { status } from "$lib/stores/status";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
-	import { Avatar, Card, Loader } from "@kayord/ui";
+	import { Avatar, Button, Card, Loader, Separator } from "@kayord/ui";
 	import { getInitials } from "$lib/util";
 	import CashUpItem from "./CashUpItem.svelte";
 	import AddItem from "./AddItem.svelte";
+	import { BookUpIcon } from "lucide-svelte";
 
 	const query = createCashUpUserDetail($page.params.Id ?? "", $status.outletId, {
 		salesPeriodId: $status.salesPeriodId,
@@ -46,8 +47,29 @@
 						<CashUpItem {item} refetch={$query.refetch} />
 					{/each}
 				</div>
-				<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
+				<Separator class="m-4" />
+				<div class="grid gap-3">
+					<div class="font-semibold">Balances</div>
+					<ul class="grid gap-3">
+						<li class="flex items-center justify-between">
+							<span class="text-muted-foreground">Opening Balance</span>
+							<span>R {$query.data.openingBalance.toFixed(2)}</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="text-muted-foreground">Gross Balance</span>
+							<span>R {$query.data.grossBalance.toFixed(2)}</span>
+						</li>
+						<li class="flex items-center justify-between">
+							<span class="text-muted-foreground">Net Balance</span>
+							<span>R {$query.data.netBalance.toFixed(2)}</span>
+						</li>
+					</ul>
+				</div>
 			</Card.Content>
+			<Card.Footer class="flex flex-col gap-2">
+				<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
+				<Button class="w-full"><BookUpIcon class="size-4 mr-2" /> Cash Up</Button>
+			</Card.Footer>
 		</Card.Root>
 	{/if}
 </div>
