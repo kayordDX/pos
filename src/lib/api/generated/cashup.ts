@@ -17,8 +17,8 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	CashUpUserCloseRequest,
 	CashUpUserCreateRequest,
-	CashUpUserDetailParams,
 	CashUpUserDetailResponse,
 	CashUpUserGetResponse,
 	CashUpUserItemTypeParams,
@@ -150,24 +150,15 @@ export const createCashUpUserGet = <
 	return query;
 };
 
-export const cashUpUserDetail = (
-	userId: string,
-	outletId: number,
-	params: CashUpUserDetailParams
-) => {
+export const cashUpUserDetail = (userId: string, outletId: number) => {
 	return customInstance<CashUpUserDetailResponse>({
 		url: `/cashUp/user/detail/${userId}/${outletId}`,
 		method: "GET",
-		params,
 	});
 };
 
-export const getCashUpUserDetailQueryKey = (
-	userId: string,
-	outletId: number,
-	params: CashUpUserDetailParams
-) => {
-	return [`/cashUp/user/detail/${userId}/${outletId}`, ...(params ? [params] : [])] as const;
+export const getCashUpUserDetailQueryKey = (userId: string, outletId: number) => {
+	return [`/cashUp/user/detail/${userId}/${outletId}`] as const;
 };
 
 export const getCashUpUserDetailQueryOptions = <
@@ -176,7 +167,6 @@ export const getCashUpUserDetailQueryOptions = <
 >(
 	userId: string,
 	outletId: number,
-	params: CashUpUserDetailParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserDetail>>, TError, TData>
@@ -185,10 +175,10 @@ export const getCashUpUserDetailQueryOptions = <
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getCashUpUserDetailQueryKey(userId, outletId, params);
+	const queryKey = queryOptions?.queryKey ?? getCashUpUserDetailQueryKey(userId, outletId);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof cashUpUserDetail>>> = () =>
-		cashUpUserDetail(userId, outletId, params);
+		cashUpUserDetail(userId, outletId);
 
 	return {
 		queryKey,
@@ -209,14 +199,13 @@ export const createCashUpUserDetail = <
 >(
 	userId: string,
 	outletId: number,
-	params: CashUpUserDetailParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserDetail>>, TError, TData>
 		>;
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: QueryKey } => {
-	const queryOptions = getCashUpUserDetailQueryOptions(userId, outletId, params, options);
+	const queryOptions = getCashUpUserDetailQueryOptions(userId, outletId, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;
@@ -349,6 +338,71 @@ export const createCashUpUserCreate = <
 	TContext
 > => {
 	const mutationOptions = getCashUpUserCreateMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const cashUpUserClose = (cashUpUserCloseRequest: BodyType<CashUpUserCloseRequest>) => {
+	return customInstance<CashUpUserDetailResponse>({
+		url: `/cashUp/close`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: cashUpUserCloseRequest,
+	});
+};
+
+export const getCashUpUserCloseMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof cashUpUserClose>>,
+		TError,
+		{ data: BodyType<CashUpUserCloseRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof cashUpUserClose>>,
+	TError,
+	{ data: BodyType<CashUpUserCloseRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof cashUpUserClose>>,
+		{ data: BodyType<CashUpUserCloseRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return cashUpUserClose(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type CashUpUserCloseMutationResult = NonNullable<
+	Awaited<ReturnType<typeof cashUpUserClose>>
+>;
+export type CashUpUserCloseMutationBody = BodyType<CashUpUserCloseRequest>;
+export type CashUpUserCloseMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createCashUpUserClose = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof cashUpUserClose>>,
+		TError,
+		{ data: BodyType<CashUpUserCloseRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof cashUpUserClose>>,
+	TError,
+	{ data: BodyType<CashUpUserCloseRequest> },
+	TContext
+> => {
+	const mutationOptions = getCashUpUserCloseMutationOptions(options);
 
 	return createMutation(mutationOptions);
 };

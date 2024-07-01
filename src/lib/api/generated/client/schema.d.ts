@@ -292,6 +292,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/tableBooking/paymentType": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TableBookingPaymentType"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/tableBooking/myHistory/{userId}": {
         parameters: {
             query?: never;
@@ -1038,6 +1054,22 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["CashUpUserCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/cashUp/close": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["CashUpUserClose"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1843,6 +1875,7 @@ export interface components {
             openingBalance: number;
             /** Format: decimal */
             closingBalance?: number | null;
+            completerUserId: string;
             cashUpUserItems: components["schemas"]["EntitiesCashUpUserItem"][];
         };
         EntitiesCashUpUserItem: {
@@ -1940,6 +1973,12 @@ export interface components {
             note: string;
             /** Format: int32 */
             quantity: number;
+        };
+        TableBookingPaymentTypeRequest: {
+            /** Format: int32 */
+            paymentId: number;
+            /** Format: int32 */
+            paymentTypeId: number;
         };
         TableBookingHistoryResponse: {
             /** Format: int32 */
@@ -2457,7 +2496,7 @@ export interface components {
         CashUpUserGetRequest: Record<string, never>;
         CashUpUserDetailResponse: {
             userId: string;
-            user: components["schemas"]["EntitiesUser"];
+            user: components["schemas"]["DTOUserDTO"];
             /** Format: int32 */
             cashUpUserId: number;
             cashUpUserItems: components["schemas"]["DTOCashUpUserItemDTO"][];
@@ -2510,6 +2549,11 @@ export interface components {
             cashUpUserItemTypeId: number;
             /** Format: decimal */
             value: number;
+        };
+        CashUpUserCloseRequest: {
+            /** Format: int32 */
+            outletId: number;
+            userId: string;
         };
         BusinessGetRequest: Record<string, never>;
         BusinessEditRequest: {
@@ -3169,6 +3213,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesOrderItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableBookingPaymentType: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TableBookingPaymentTypeRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesCashUpUserItem"];
                 };
             };
             /** @description Unauthorized */
@@ -5130,9 +5214,7 @@ export interface operations {
     };
     CashUpUserDetail: {
         parameters: {
-            query: {
-                salesPeriodId: number;
-            };
+            query?: never;
             header?: never;
             path: {
                 userId: string;
@@ -5227,6 +5309,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesCashUpUserItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    CashUpUserClose: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["CashUpUserCloseRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CashUpUserDetailResponse"];
                 };
             };
             /** @description Unauthorized */

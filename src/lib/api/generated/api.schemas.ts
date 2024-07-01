@@ -6,10 +6,6 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
-export type CashUpUserDetailParams = {
-	salesPeriodId: number;
-};
-
 export type CashUpUserItemTypeParams = {
 	isAuto: boolean;
 };
@@ -146,6 +142,11 @@ export interface BusinessGetRequest {
 	[key: string]: unknown;
 }
 
+export interface CashUpUserCloseRequest {
+	outletId: number;
+	userId: string;
+}
+
 export interface CashUpUserCreateRequest {
 	cashUpUserId: number;
 	cashUpUserItemTypeId: number;
@@ -218,7 +219,7 @@ export interface CashUpUserDetailResponse {
 	grossBalance: number;
 	netBalance: number;
 	openingBalance: number;
-	user: EntitiesUser;
+	user: DTOUserDTO;
 	userId: string;
 }
 
@@ -637,6 +638,8 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
+
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -667,8 +670,6 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
-
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: unknown;
@@ -847,6 +848,11 @@ export interface TableBookingHistoryResponse {
 	total: number;
 }
 
+export interface TableBookingPaymentTypeRequest {
+	paymentId: number;
+	paymentTypeId: number;
+}
+
 export interface OrderAddItemsOrder {
 	/** @nullable */
 	extraIds?: number[] | null;
@@ -964,6 +970,7 @@ export interface EntitiesCashUpUser {
 	cashUpUserItems: EntitiesCashUpUserItem[];
 	/** @nullable */
 	closingBalance?: number | null;
+	completerUserId: string;
 	id: number;
 	openingBalance: number;
 	outletId: number;

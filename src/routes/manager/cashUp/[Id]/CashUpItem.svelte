@@ -18,16 +18,14 @@
 	};
 </script>
 
-<div class="w-full">
-	<div class="flex items-center justify-between p-2">
-		<div class="flex items-center">
-			<span class="text-muted-foreground">{item.cashUpUserItemType?.itemType}</span>
-			{#if item.id}
-				<Button class="ml-2 size-6" variant="destructive" size="icon" on:click={deleteItem}>
-					<Trash2Icon class="size-5 text-destructive-foreground" />
-				</Button>
-			{/if}
-		</div>
-		<span>R {item.value.toFixed(2)}</span>
+<div class="flex items-center justify-between py-1 w-full">
+	<div class="flex items-center">
+		<span class="text-muted-foreground">{item.cashUpUserItemType?.itemType}</span>
+		{#if item.id}
+			<Button class="ml-2 size-6" variant="destructive" size="icon" on:click={deleteItem}>
+				<Trash2Icon class="size-4 text-destructive-foreground" />
+			</Button>
+		{/if}
 	</div>
+	<span>R {item.value.toFixed(2)}</span>
 </div>

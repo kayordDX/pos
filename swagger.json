@@ -839,6 +839,57 @@
         ]
       }
     },
+    "/tableBooking/paymentType": {
+      "post": {
+        "tags": [
+          "Tablebooking"
+        ],
+        "operationId": "TableBookingPaymentType",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableBookingPaymentTypeRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesCashUpUserItem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/tableBooking/myHistory/{userId}": {
       "get": {
         "tags": [
@@ -3503,15 +3554,6 @@
               "type": "integer",
               "format": "int32"
             }
-          },
-          {
-            "name": "salesPeriodId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
           }
         ],
         "responses": {
@@ -3621,6 +3663,57 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntitiesCashUpUserItem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/cashUp/close": {
+      "post": {
+        "tags": [
+          "Cashup"
+        ],
+        "operationId": "CashUpUserClose",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CashUpUserCloseRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CashUpUserDetailResponse"
                 }
               }
             }
@@ -6533,6 +6626,7 @@
           "userId",
           "outletId",
           "openingBalance",
+          "completerUserId",
           "cashUpUserItems"
         ],
         "properties": {
@@ -6555,6 +6649,9 @@
             "type": "number",
             "format": "decimal",
             "nullable": true
+          },
+          "completerUserId": {
+            "type": "string"
           },
           "cashUpUserItems": {
             "type": "array",
@@ -6919,6 +7016,24 @@
             "type": "string"
           },
           "quantity": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "TableBookingPaymentTypeRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "paymentId",
+          "paymentTypeId"
+        ],
+        "properties": {
+          "paymentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentTypeId": {
             "type": "integer",
             "format": "int32"
           }
@@ -8730,7 +8845,7 @@
             "type": "string"
           },
           "user": {
-            "$ref": "#/components/schemas/EntitiesUser"
+            "$ref": "#/components/schemas/DTOUserDTO"
           },
           "cashUpUserId": {
             "type": "integer",
@@ -8902,6 +9017,23 @@
           "value": {
             "type": "number",
             "format": "decimal"
+          }
+        }
+      },
+      "CashUpUserCloseRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "outletId",
+          "userId"
+        ],
+        "properties": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "string"
           }
         }
       },

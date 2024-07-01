@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	import { createCashUpUserDetail } from "$lib/api";
+	import { createCashUpUserClose, createCashUpUserDetail } from "$lib/api";
 	import { status } from "$lib/stores/status";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
@@ -9,10 +9,21 @@
 	import CashUpItem from "./CashUpItem.svelte";
 	import AddItem from "./AddItem.svelte";
 	import { BookUpIcon } from "lucide-svelte";
+	import { goto } from "$app/navigation";
+	import { QueryCache } from "@tanstack/svelte-query";
 
-	const query = createCashUpUserDetail($page.params.Id ?? "", $status.outletId, {
-		salesPeriodId: $status.salesPeriodId,
-	});
+	const query = createCashUpUserDetail($page.params.Id ?? "", $status.outletId);
+
+	const mutation = createCashUpUserClose();
+
+	const cashUpClose = async () => {
+		try {
+			await $mutation.mutateAsync({
+				data: { outletId: $status.outletId, userId: $page.params.Id ?? "" },
+			});
+			await goto("/manager/cashUp");
+		} catch (error) {}
+	};
 </script>
 
 <div class="m-2">
@@ -42,7 +53,8 @@
 				</div>
 			</Card.Header>
 			<Card.Content>
-				<div class="flex flex-col gap-2 items-center mt-5">
+				<div class="font-semibold text-left mt-5">Cash Up Items</div>
+				<div class="flex flex-col gap-2 items-center mt-2">
 					{#each $query.data.cashUpUserItems as item}
 						<CashUpItem {item} refetch={$query.refetch} />
 					{/each}
@@ -68,7 +80,9 @@
 			</Card.Content>
 			<Card.Footer class="flex flex-col gap-2">
 				<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
-				<Button class="w-full"><BookUpIcon class="size-4 mr-2" /> Cash Up</Button>
+				<Button class="w-full" on:click={cashUpClose}>
+					<BookUpIcon class="size-4 mr-2" /> Cash Up
+				</Button>
 			</Card.Footer>
 		</Card.Root>
 	{/if}

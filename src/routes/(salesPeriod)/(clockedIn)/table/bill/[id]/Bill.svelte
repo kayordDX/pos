@@ -7,10 +7,12 @@
 	import { getError } from "$lib/types";
 	import EmailBill from "./EmailBill.svelte";
 	import { stringToFDate } from "$lib/util";
-	import { CreditCardIcon, NfcIcon } from "lucide-svelte";
+	import { CreditCardIcon, NfcIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
 	import Items from "./Items.svelte";
 	import Adjustment from "./Adjustment.svelte";
 	import PaymentTypeIcon from "$lib/components/PaymentTypeIcon/PaymentTypeIcon.svelte";
+	import { status } from "$lib/stores/status";
+	import EditPaymentType from "./EditPaymentType.svelte";
 
 	export let data: TableOrderGetBillResponse;
 	export let bookingId: number;
@@ -27,6 +29,8 @@
 	};
 
 	let adjustmentOpen = false;
+
+	$: isManager = $status.roles.includes("Manager");
 </script>
 
 <Card.Root class="overflow-hidden m-2 mb-12">
@@ -78,10 +82,13 @@
 				<dl class="grid gap-3">
 					{#each data.paymentsReceived as payment}
 						<div class="flex items-center justify-between">
-							<dt class="flex items-center gap-1 text-muted-foreground">
+							<div class="flex items-center gap-1 text-muted-foreground">
 								<PaymentTypeIcon type={payment.paymentType.paymentTypeName} />
 								{payment.paymentType.paymentTypeName}
-							</dt>
+								{#if isManager}
+									<EditPaymentType paymentId={payment.id} {refetch} />
+								{/if}
+							</div>
 							<dd>{payment.amount.toFixed(2)}</dd>
 						</div>
 					{/each}

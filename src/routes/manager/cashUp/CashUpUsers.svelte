@@ -6,7 +6,7 @@
 	import Error from "$lib/components/Error.svelte";
 	import CashUpUser from "./CashUpUser.svelte";
 
-	const query = createCashUpUserGet($status.outletId);
+	$: query = createCashUpUserGet($status.outletId);
 </script>
 
 {#if $query.isPending}

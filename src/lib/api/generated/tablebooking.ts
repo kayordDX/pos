@@ -17,6 +17,7 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	EntitiesCashUpUserItem,
 	EntitiesTableBooking,
 	ErrorResponse,
 	InternalErrorResponse,
@@ -25,10 +26,78 @@ import type {
 	TableBookingEmailBillRequest,
 	TableBookingGetResponse,
 	TableBookingHistoryResponse,
+	TableBookingPaymentTypeRequest,
 } from "./api.schemas";
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType, BodyType } from "../mutator/customInstance";
 
+export const tableBookingPaymentType = (
+	tableBookingPaymentTypeRequest: BodyType<TableBookingPaymentTypeRequest>
+) => {
+	return customInstance<EntitiesCashUpUserItem>({
+		url: `/tableBooking/paymentType`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: tableBookingPaymentTypeRequest,
+	});
+};
+
+export const getTableBookingPaymentTypeMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof tableBookingPaymentType>>,
+		TError,
+		{ data: BodyType<TableBookingPaymentTypeRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof tableBookingPaymentType>>,
+	TError,
+	{ data: BodyType<TableBookingPaymentTypeRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof tableBookingPaymentType>>,
+		{ data: BodyType<TableBookingPaymentTypeRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableBookingPaymentType(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableBookingPaymentTypeMutationResult = NonNullable<
+	Awaited<ReturnType<typeof tableBookingPaymentType>>
+>;
+export type TableBookingPaymentTypeMutationBody = BodyType<TableBookingPaymentTypeRequest>;
+export type TableBookingPaymentTypeMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createTableBookingPaymentType = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof tableBookingPaymentType>>,
+		TError,
+		{ data: BodyType<TableBookingPaymentTypeRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof tableBookingPaymentType>>,
+	TError,
+	{ data: BodyType<TableBookingPaymentTypeRequest> },
+	TContext
+> => {
+	const mutationOptions = getTableBookingPaymentTypeMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const tableBookingHistoryUser = (userId: string) => {
 	return customInstance<TableBookingHistoryResponse[]>({
 		url: `/tableBooking/myHistory/${userId}`,
