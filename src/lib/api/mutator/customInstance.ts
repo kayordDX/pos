@@ -1,5 +1,5 @@
 import { get } from "svelte/store";
-import { isAPIError, isValidationError } from "$lib/types";
+import { getError, isValidationError } from "$lib/types";
 import { PUBLIC_API_URL } from "$env/static/public";
 import { session } from "$lib/firebase";
 import qs from "qs";
@@ -72,10 +72,8 @@ export const customInstance = async <T>({
 			throw new Error(errorResult.message, {
 				cause: errorMessage.join("\n"),
 			});
-		} else if (isAPIError(errorResult)) {
-			throw new Error(errorResult.title);
 		} else {
-			throw new Error("Network response was not ok");
+			throw new Error(getError(errorResult).message);
 		}
 	}
 };

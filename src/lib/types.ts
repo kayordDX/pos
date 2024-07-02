@@ -33,14 +33,14 @@ interface ErrorGenericErrors {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const isErrorResponse = (error: any): error is ErrorResponse => {
+export const isInternalErrorResponse = (error: any): error is InternalErrorResponse => {
 	return "status" in error && "code" in error && "reason" in error;
 };
 
-export const isInternalErrorResponse = (
+export const isErrorResponse = (
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	error: any
-): error is InternalErrorResponse => {
+): error is ErrorResponse => {
 	return "statusCode" in error && "message" in error && "errors" in error;
 };
 
@@ -48,11 +48,6 @@ export const isInternalErrorResponse = (
 export function isError(err: any | unknown): err is Error {
 	return (err as Error).message !== undefined;
 }
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const isAPIError = (apiError: any): apiError is APIError => {
-	return "status" in apiError && "type" in apiError && "title" in apiError;
-};
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const isValidationError = (apiError: any): apiError is ValidationError => {
@@ -105,10 +100,12 @@ export const getError = (inputError: ApiError): ErrorGeneric => {
 			})
 			.join();
 	} else if (isInternalErrorResponse(inputError)) {
-		error.message = inputError.status;
+		error.message = inputError.reason;
 		error.statusCode = inputError.code;
-		error.summary = inputError.reason;
+		error.summary = inputError.note;
 		error.errors = {
+			code: [inputError.code.toString()],
+			status: [inputError.status],
 			reason: [inputError.reason],
 			note: [inputError.note],
 		};
