@@ -26,27 +26,27 @@
 				<Card.Root class="min-w-52">
 					<Card.Header>
 						<Card.Title>R{d.cashUpTotal.toFixed(2)}</Card.Title>
-						<Card.Description>Cash Up Total</Card.Description>
+						<Card.Description class="text-xs">Total Sales</Card.Description>
 					</Card.Header>
 				</Card.Root>
 				<Card.Root class="min-w-52">
 					<Card.Header>
 						<Card.Title>{d.tableCount}</Card.Title>
-						<Card.Description>Table Count</Card.Description>
+						<Card.Description>Total Payments</Card.Description>
 					</Card.Header>
 				</Card.Root>
 				<Card.Root class="min-w-52">
 					<Card.Header>
 						<Card.Title>R{d.cashUpBalance.toFixed(2)}</Card.Title>
-						<Card.Description>Cash Up Balance</Card.Description>
+						<Card.Description>Total Tips</Card.Description>
 					</Card.Header>
 				</Card.Root>
-				<Card.Root class="min-w-52">
+				<!-- <Card.Root class="min-w-52">
 					<Card.Header>
 						<Card.Title>R{d.cashUpTotalPayments.toFixed(2)}</Card.Title>
 						<Card.Description>Cash Up Total Payments</Card.Description>
 					</Card.Header>
-				</Card.Root>
+				</Card.Root> -->
 			</div>
 		</div>
 	{/if}

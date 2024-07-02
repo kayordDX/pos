@@ -53,10 +53,10 @@
 </script>
 
 <Drawer.Root bind:open>
-	<Drawer.Trigger class="w-full">
-		<Button class="w-full mt-5 p-86" variant="secondary"
-			><PlusIcon class="size-4 mr-2" /> Add Cash Up Item</Button
-		>
+	<Drawer.Trigger>
+		<Button class="p-86 p-4" variant="secondary">
+			<PlusIcon class="size-4 mr-2" /> Add Cash Up Item
+		</Button>
 	</Drawer.Trigger>
 	<Drawer.Content>
 		<form method="POST" use:enhance>

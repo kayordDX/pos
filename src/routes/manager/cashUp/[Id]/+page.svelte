@@ -50,6 +50,7 @@
 							<Card.Description>{$query.data.user.email}</Card.Description>
 						</div>
 					</div>
+					<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
 				</div>
 			</Card.Header>
 			<Card.Content>
@@ -72,6 +73,10 @@
 							<span>R {$query.data.grossBalance.toFixed(2)}</span>
 						</li>
 						<li class="flex items-center justify-between">
+							<span class="text-muted-foreground">Waiter cash deposit</span>
+							<span>R {$query.data.grossBalance.toFixed(2)}</span>
+						</li>
+						<li class="flex items-center justify-between">
 							<span class="text-muted-foreground">Net Balance</span>
 							<span>R {$query.data.netBalance.toFixed(2)}</span>
 						</li>
@@ -79,7 +84,6 @@
 				</div>
 			</Card.Content>
 			<Card.Footer class="flex flex-col gap-2">
-				<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
 				<Button class="w-full" on:click={cashUpClose}>
 					<BookUpIcon class="size-4 mr-2" /> Cash Up
 				</Button>
