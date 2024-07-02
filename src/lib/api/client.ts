@@ -6,22 +6,22 @@ import { get } from "svelte/store";
 import { session } from "$lib/firebase";
 
 const myMiddleware: Middleware = {
-	async onRequest(req) {
+	async onRequest({ request }) {
 		if (browser) {
 			const token = (await get(session)?.getIdToken()) ?? "";
-			req.headers.set("Authorization", `Bearer ${token}`);
+			request.headers.set("Authorization", `Bearer ${token}`);
 		}
-		if (req.method != "GET") {
-			req.headers.set("Content-Type", "application/json");
+		if (request.method != "GET") {
+			request.headers.set("Content-Type", "application/json");
 		}
-		return req;
+		return request;
 	},
 };
 
 export const client = createClient<paths>({
 	baseUrl: PUBLIC_API_URL,
-	headers: {
-		"Content-Type": null,
-	},
+	// headers: {
+	// 	"Content-Type": null,
+	// },
 });
 client.use(myMiddleware);
