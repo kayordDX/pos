@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@kayord/tw-plugin": "^1.0.2",
-		"@kayord/ui": "^0.9.5",
+		"@kayord/ui": "^0.9.6",
 		"@sveltejs/adapter-static": "^3.0.2",
 		"@sveltejs/kit": "^2.5.18",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
