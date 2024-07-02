@@ -86,7 +86,11 @@
 								<PaymentTypeIcon type={payment.paymentType.paymentTypeName} />
 								{payment.paymentType.paymentTypeName}
 								{#if isManager}
-									<EditPaymentType paymentId={payment.id} {refetch} />
+									<EditPaymentType
+										paymentId={payment.id}
+										{refetch}
+										paymentTypeId={payment.paymentTypeId ?? 0}
+									/>
 								{/if}
 							</div>
 							<dd>{payment.amount.toFixed(2)}</dd>

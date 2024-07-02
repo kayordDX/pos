@@ -1,27 +1,22 @@
 <script lang="ts">
-	import { page } from "$app/stores";
-	import {
-		createCashUpUserCreate,
-		createCashUpUserItemType,
-		createOutletGetPaymentType,
-		createTableBookingPaymentType,
-	} from "$lib/api";
+	import { createOutletGetPaymentType, createTableBookingPaymentType } from "$lib/api";
 	import { status } from "$lib/stores/status";
-	import { Button, Drawer, Form, Input, Select } from "@kayord/ui";
-	import { PencilIcon, PlusIcon } from "lucide-svelte";
+	import { getError } from "$lib/types";
+	import { Button, Drawer, Form, Select, toast } from "@kayord/ui";
+	import { PencilIcon } from "lucide-svelte";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 
 	interface Props {
 		paymentId: number;
+		paymentTypeId: number;
 		refetch: () => void;
 	}
 
-	let { refetch, paymentId }: Props = $props();
+	let { refetch, paymentId, paymentTypeId }: Props = $props();
 	let open = $state(false);
 
-	const query = createCashUpUserItemType({ isAuto: false });
 	const paymentTypeQuery = createOutletGetPaymentType($status?.outletId ?? 0);
 
 	const mutation = createTableBookingPaymentType();
@@ -32,19 +27,24 @@
 	type FormSchema = z.infer<typeof schema>;
 
 	const onSubmit = async (data: FormSchema) => {
-		await $mutation.mutateAsync({
-			data: {
-				paymentId: paymentId,
-				paymentTypeId: data.paymentTypeId,
-			},
-		});
-		open = false;
-		refetch();
+		try {
+			await $mutation.mutateAsync({
+				data: {
+					paymentId: paymentId,
+					paymentTypeId: data.paymentTypeId,
+				},
+			});
+			open = false;
+			refetch();
+		} catch (error) {
+			toast.error(getError(error).message);
+		}
 	};
 
-	const form = superForm(defaults({ paymentTypeId: paymentId }, zod(schema)), {
+	const form = superForm(defaults({ paymentTypeId }, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		resetForm: false,
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);
@@ -56,7 +56,7 @@
 
 <Drawer.Root bind:open>
 	<Drawer.Trigger class="w-full">
-		<Button class="size-6" variant="secondary" size="icon" on:click={() => {}}>
+		<Button class="size-6" variant="secondary" size="icon">
 			<PencilIcon class="size-3 text-secondary-foreground" />
 		</Button>
 	</Drawer.Trigger>
