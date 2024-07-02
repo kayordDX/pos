@@ -55,7 +55,7 @@
 </script>
 
 <Drawer.Root bind:open>
-	<Drawer.Trigger class="w-full">
+	<Drawer.Trigger>
 		<Button class="size-6" variant="secondary" size="icon">
 			<PencilIcon class="size-3 text-secondary-foreground" />
 		</Button>

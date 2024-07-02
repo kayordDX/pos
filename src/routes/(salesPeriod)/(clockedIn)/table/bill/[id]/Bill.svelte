@@ -7,17 +7,20 @@
 	import { getError } from "$lib/types";
 	import EmailBill from "./EmailBill.svelte";
 	import { stringToFDate } from "$lib/util";
-	import { CreditCardIcon, NfcIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
 	import Items from "./Items.svelte";
 	import Adjustment from "./Adjustment.svelte";
 	import PaymentTypeIcon from "$lib/components/PaymentTypeIcon/PaymentTypeIcon.svelte";
 	import { status } from "$lib/stores/status";
 	import EditPaymentType from "./EditPaymentType.svelte";
 
-	export let data: TableOrderGetBillResponse;
-	export let bookingId: number;
-	export let isReadOnly: boolean = false;
-	export let refetch: () => void;
+	interface Props {
+		data: TableOrderGetBillResponse;
+		bookingId: number;
+		isReadOnly: boolean;
+		refetch: () => void;
+	}
+
+	let { data, bookingId, isReadOnly = false, refetch }: Props = $props();
 
 	const closeTableMut = createTableBookingClose();
 
@@ -28,9 +31,9 @@
 		}
 	};
 
-	let adjustmentOpen = false;
+	let adjustmentOpen = $state(false);
 
-	$: isManager = $status.roles.includes("Manager");
+	const isManager = $derived($status.roles.includes("Manager"));
 </script>
 
 <Card.Root class="overflow-hidden m-2 mb-12">
@@ -82,9 +85,8 @@
 				<dl class="grid gap-3">
 					{#each data.paymentsReceived as payment}
 						<div class="flex items-center justify-between">
-							<div class="flex items-center gap-1 text-muted-foreground">
+							<div class="flex items-center gap-1 text-muted-foreground w-full justify-start">
 								<PaymentTypeIcon type={payment.paymentType.paymentTypeName} />
-								{payment.paymentType.paymentTypeName}
 								{#if isManager}
 									<EditPaymentType
 										paymentId={payment.id}
@@ -92,8 +94,9 @@
 										paymentTypeId={payment.paymentTypeId ?? 0}
 									/>
 								{/if}
+								<div class="truncate w-full">{payment.paymentType.paymentTypeName}</div>
 							</div>
-							<dd>{payment.amount.toFixed(2)}</dd>
+							<div>{payment.amount.toFixed(2)}</div>
 						</div>
 					{/each}
 				</dl>
