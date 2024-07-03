@@ -2,15 +2,18 @@
 	import type { EntitiesMenu } from "$lib/api";
 	import { Card } from "@kayord/ui";
 
-	export let menus: EntitiesMenu[];
-	export let open = false;
+	interface Props {
+		menus: EntitiesMenu[];
+		open?: boolean;
+	}
+	let { menus, open = $bindable(false) }: Props = $props();
 
 	import { selection } from "$lib/stores/selection";
 	import { cn } from "@kayord/ui/utils";
 
 	const setMenu = (menuId: number) => {
-		$selection.menuId = menuId;
 		open = false;
+		$selection.menuId = menuId;
 	};
 
 	if ($selection.menuId == 0) {
@@ -23,7 +26,7 @@
 <div class="flex flex-col items-center gap-2 mt-4">
 	{#each menus as menu}
 		{@const extraClass = menu.id == $selection.menuId ? "bg-primary text-primary-foreground" : ""}
-		<button on:click={() => setMenu(menu.id)} class="w-full">
+		<button onclick={() => setMenu(menu.id)} class="w-full">
 			<Card.Root class={cn("p-4 w-full", extraClass)}>
 				{menu.name}
 			</Card.Root>

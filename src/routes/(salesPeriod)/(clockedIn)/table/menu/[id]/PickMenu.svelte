@@ -3,9 +3,12 @@
 	import { SquareMenuIcon } from "lucide-svelte";
 	import Menus from "./Menus.svelte";
 	import type { EntitiesMenu } from "$lib/api";
-	export let data: EntitiesMenu[] | undefined;
 
-	let open = false;
+	interface Props {
+		data: EntitiesMenu[] | undefined;
+	}
+	let { data }: Props = $props();
+	let open = $state(false);
 </script>
 
 {#if (data?.length ?? 0) > 1}
