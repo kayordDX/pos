@@ -6,13 +6,18 @@
 	import AddMenuItem from "./AddMenuItem.svelte";
 	import { getError } from "$lib/types";
 
-	export let data: DTOMenuItemDTOBasic[];
-	export let tableBookingId: number;
+	interface Props {
+		data: DTOMenuItemDTOBasic[];
+		tableBookingId: number;
+	}
+	let { data, tableBookingId }: Props = $props();
 
-	let menuItemId = 0;
-	let open = false;
+	let menuItemId = $state(0);
+	let open = $state(false);
 
-	$: query = createMenuGetItemGetMenuItems({ id: menuItemId }, { query: { enabled: open } });
+	const query = $derived(
+		createMenuGetItemGetMenuItems({ id: menuItemId }, { query: { enabled: open } })
+	);
 </script>
 
 <Drawer.Root bind:open>

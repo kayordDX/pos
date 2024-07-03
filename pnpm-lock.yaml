@@ -74,6 +74,9 @@ importers:
       qs:
         specifier: ^6.12.2
         version: 6.12.2
+      runed:
+        specifier: ^0.14.0
+        version: 0.14.0(svelte@5.0.0-next.158)
       svelte:
         specifier: 5.0.0-next.158
         version: 5.0.0-next.158
@@ -2656,6 +2659,11 @@ packages:
 
   run-parallel@1.2.0:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
+
+  runed@0.14.0:
+    resolution: {integrity: sha512-idzH26gZ8HH1wnzZ71TYrYZ+g/xVnXETgqFgNMReKU8WELm9czLWlq2VEQEwETZknl4T76NjwoYiLphAXdbw0w==}
+    peerDependencies:
+      svelte: ^5.0.0-next.1
 
   sade@1.8.1:
     resolution: {integrity: sha512-xal3CZX1Xlo/k4ApwCFrHVACi9fBqJ7V+mwhBsuf/1IOKbBy098Fex+Wa/5QMubw09pSZ/u8EY8PWgevJsXp1A==}
@@ -6027,6 +6035,11 @@ snapshots:
   run-parallel@1.2.0:
     dependencies:
       queue-microtask: 1.2.3
+
+  runed@0.14.0(svelte@5.0.0-next.158):
+    dependencies:
+      esm-env: 1.0.0
+      svelte: 5.0.0-next.158
 
   sade@1.8.1:
     dependencies:

@@ -3,6 +3,8 @@
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
 	import { createTableBookingGet } from "$lib/api";
 	import { Header } from "$lib/components/Header";
+	import type { Snippet } from "svelte";
+	let { children }: { children?: Snippet } = $props();
 
 	const menuActive = $derived($page.route.id?.includes("menu") ?? false);
 	const billActive = $derived($page.route.id?.includes("bill") ?? false);
@@ -38,7 +40,9 @@
 		</div>
 	</div>
 </Header>
-<slot />
+{#if children}
+	{@render children()}
+{/if}
 <div class="w-full flex mb-2 items-center justify-center fixed bottom-0">
 	<div class="bg-secondary flex items-center py-1 gap-2 rounded-sm px-2">
 		<a class="flex items-center text-muted-foreground" href={`/waiter`}

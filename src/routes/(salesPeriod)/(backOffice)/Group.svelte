@@ -9,9 +9,12 @@
 	import Item from "./Item.svelte";
 	import { backOffice } from "$lib/stores/backOffice";
 
-	export let group: TableOrderOfficeOrderBasedBackOrderGroupDTO;
-	export let refetch: () => void;
-	export let isHistory = false;
+	interface Props {
+		group: TableOrderOfficeOrderBasedBackOrderGroupDTO;
+		refetch: () => void;
+		isHistory?: boolean;
+	}
+	let { group, refetch, isHistory = false }: Props = $props();
 
 	const mutation = createTableOrderUpdateGroupOrder();
 	const readyAll = async (id: number, statusId: number) => {
@@ -19,10 +22,10 @@
 		refetch();
 	};
 
-	$: height = $backOffice ?? 500;
-	let clientHeight = 0;
+	const height = $derived($backOffice ?? 500);
+	let clientHeight = $state(0);
 
-	$: showMore = clientHeight > height;
+	const showMore = $derived(clientHeight > height);
 </script>
 
 <div style={`height: ${height}px`} class="w-full">
