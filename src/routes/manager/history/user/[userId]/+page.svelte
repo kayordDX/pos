@@ -5,13 +5,14 @@
 	import { addPagination, addResizedColumns } from "svelte-headless-table/plugins";
 	import { writable } from "svelte/store";
 	import { stringToFDate } from "$lib/util";
-	import View from "../../View.svelte";
+	import View from "./View.svelte";
 	import { page } from "$app/stores";
 
 	const query = createTableBookingHistoryUser($page.params.userId ?? "");
 
 	const data = writable($query.data ?? []);
 	$: $data = $query.data ?? [];
+	$: console.log($data);
 
 	const table = createTable(data, {
 		page: addPagination({ serverSide: false, initialPageSize: 10 }),
