@@ -10,7 +10,7 @@
 	import AddItem from "./AddItem.svelte";
 	import { BookUpIcon } from "lucide-svelte";
 	import { goto } from "$app/navigation";
-	import { QueryCache } from "@tanstack/svelte-query";
+	import CashUpItemManual from "./CashUpItemManual.svelte";
 
 	const query = createCashUpUserDetail($page.params.Id ?? "", $status.outletId);
 
@@ -24,6 +24,14 @@
 			await goto("/manager/cashUp");
 		} catch (error) {}
 	};
+
+	const manualItems = $derived(
+		$query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == false) ?? []
+	);
+
+	const autoItems = $derived(
+		$query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == true) ?? []
+	);
 </script>
 
 <div class="m-2">
@@ -56,8 +64,8 @@
 			<Card.Content>
 				<div class="font-semibold text-left mt-5">Cash Up Items</div>
 				<div class="flex flex-col gap-2 items-center mt-2">
-					{#each $query.data.cashUpUserItems as item}
-						<CashUpItem {item} refetch={$query.refetch} />
+					{#each autoItems as item}
+						<CashUpItem {item} />
 					{/each}
 				</div>
 				<Separator class="m-4" />
@@ -76,6 +84,11 @@
 							<span class="text-muted-foreground">Waiter cash deposit</span>
 							<span>R {$query.data.grossBalance.toFixed(2)}</span>
 						</li>
+						<div class="flex flex-col gap-2 items-center mt-2">
+							{#each manualItems as item}
+								<CashUpItemManual {item} refetch={$query.refetch} />
+							{/each}
+						</div>
 						<li class="flex items-center justify-between">
 							<span class="text-muted-foreground">Net Balance</span>
 							<span>R {$query.data.netBalance.toFixed(2)}</span>

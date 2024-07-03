@@ -10,7 +10,6 @@
 	const query = createTableBookingHistory();
 
 	const data = writable($query.data ?? []);
-	$: $data = $query.data ?? [];
 
 	const table = createTable(data, {
 		page: addPagination({ serverSide: false, initialPageSize: 10 }),

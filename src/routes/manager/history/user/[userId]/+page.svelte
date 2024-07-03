@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createTableBookingHistoryUser } from "$lib/api";
-	import { DataTable, Button } from "@kayord/ui";
-	import { createRender, createTable, Render } from "svelte-headless-table";
+	import { DataTable } from "@kayord/ui";
+	import { createRender, createTable } from "svelte-headless-table";
 	import { addPagination, addResizedColumns } from "svelte-headless-table/plugins";
 	import { writable } from "svelte/store";
 	import { stringToFDate } from "$lib/util";
@@ -11,7 +11,6 @@
 	const query = createTableBookingHistoryUser($page.params.userId ?? "");
 
 	const data = writable($query.data ?? []);
-	$: $data = $query.data ?? [];
 
 	const table = createTable(data, {
 		page: addPagination({ serverSide: false, initialPageSize: 10 }),

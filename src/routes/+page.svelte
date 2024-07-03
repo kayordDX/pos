@@ -3,7 +3,7 @@
 	import { status } from "$lib/stores/status";
 	import { goto } from "$app/navigation";
 
-	let init = false;
+	let init = $state(false);
 
 	const redirect = async () => {
 		if (
@@ -23,7 +23,9 @@
 		init = true;
 	};
 
-	$: redirect();
+	$effect(() => {
+		redirect();
+	});
 </script>
 
 {#if !init}

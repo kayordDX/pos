@@ -4,9 +4,9 @@
 	import { createTableBookingGet } from "$lib/api";
 	import { Header } from "$lib/components/Header";
 
-	$: menuActive = $page.route.id?.includes("menu") ?? false;
-	$: billActive = $page.route.id?.includes("bill") ?? false;
-	$: basketActive = $page.route.id?.includes("basket") ?? false;
+	const menuActive = $derived($page.route.id?.includes("menu") ?? false);
+	const billActive = $derived($page.route.id?.includes("bill") ?? false);
+	const basketActive = $derived($page.route.id?.includes("basket") ?? false);
 
 	let id = Number($page.params.id ?? "0");
 
@@ -20,7 +20,9 @@
 		});
 	};
 
-	$: id > 0 && loadBookingDetails();
+	$effect(() => {
+		if (id > 0) loadBookingDetails();
+	});
 </script>
 
 <Header>

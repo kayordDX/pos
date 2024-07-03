@@ -16,8 +16,8 @@
 	interface Props {
 		data: TableOrderGetBillResponse;
 		bookingId: number;
-		isReadOnly: boolean;
 		refetch: () => void;
+		isReadOnly?: boolean;
 	}
 
 	let { data, bookingId, isReadOnly = false, refetch }: Props = $props();
