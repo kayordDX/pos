@@ -80,10 +80,6 @@
 							<span class="text-muted-foreground">Gross Balance</span>
 							<span>R {$query.data.grossBalance.toFixed(2)}</span>
 						</li>
-						<li class="flex items-center justify-between">
-							<span class="text-muted-foreground">Waiter cash deposit</span>
-							<span>R {$query.data.grossBalance.toFixed(2)}</span>
-						</li>
 						<div class="flex flex-col gap-2 items-center mt-2">
 							{#each manualItems as item}
 								<CashUpItemManual {item} refetch={$query.refetch} />

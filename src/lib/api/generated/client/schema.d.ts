@@ -1899,8 +1899,7 @@ export interface components {
             id: number;
             itemType: string;
             isAuto: boolean;
-            increaseBalance: boolean;
-            decreaseBalance: boolean;
+            affectsGrossBalance: boolean;
             /** Format: int32 */
             position: number;
             cashUpUserItemRule: components["schemas"]["CommonEnumsCashUpUserItemRule"];
@@ -1915,7 +1914,7 @@ export interface components {
             cashupConfig?: components["schemas"]["EntitiesCashUpConfig"] | null;
         };
         /** @enum {integer} */
-        CommonEnumsCashUpUserItemRule: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7;
+        CommonEnumsCashUpUserItemRule: 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8;
         EntitiesCashUpConfig: {
             /** Format: int32 */
             id: number;
@@ -2489,6 +2488,15 @@ export interface components {
         };
         CashUpUserItemTypeRequest: Record<string, never>;
         CashUpUserGetResponse: {
+            items: components["schemas"]["CashUpUserGetItems"][];
+            /** Format: decimal */
+            totalSales: number;
+            /** Format: decimal */
+            totalTips: number;
+            /** Format: decimal */
+            totalPayments: number;
+        };
+        CashUpUserGetItems: {
             userId: string;
             user: components["schemas"]["EntitiesUser"];
             /** Format: decimal */
@@ -2496,7 +2504,7 @@ export interface components {
             /** Format: decimal */
             tips: number;
             /** Format: decimal */
-            totalPayments: number;
+            payments: number;
         };
         CashUpUserGetRequest: Record<string, never>;
         CashUpUserDetailResponse: {
@@ -2533,8 +2541,7 @@ export interface components {
             /** Format: int32 */
             outletId: number;
             isAuto: boolean;
-            increaseBalance: boolean;
-            decreaseBalance: boolean;
+            affectsGrossBalance: boolean;
             /** Format: int32 */
             position: number;
             cashUpUserItemRule: components["schemas"]["CommonEnumsCashUpUserItemRule"];
@@ -5202,7 +5209,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CashUpUserGetResponse"][];
+                    "application/json": components["schemas"]["CashUpUserGetResponse"];
                 };
             };
             /** @description Unauthorized */

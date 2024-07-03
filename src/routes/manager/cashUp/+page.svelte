@@ -19,7 +19,7 @@
 	{/if}
 
 	{#if $query.data}
-		{#if !$query.data.length}
+		{#if !$query.data.items.length}
 			<Card.Root class="m-4">
 				<Card.Header class="flex flex-row items-center gap-4">
 					<div class="bg-primary rounded-full p-2">
@@ -34,7 +34,7 @@
 		{/if}
 		<!-- <CashUpSummary /> -->
 		<div class="flex flex-col gap-2 items-center">
-			{#each $query.data as cash}
+			{#each $query.data.items as cash}
 				<CashUpUser {cash} />
 			{/each}
 		</div>

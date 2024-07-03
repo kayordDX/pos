@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { type CashUpUserGetResponse } from "$lib/api";
+	import { type CashUpUserGetItems } from "$lib/api";
 	import { getInitials } from "$lib/util";
 	import { Avatar, Button, Card } from "@kayord/ui";
 	import { ReceiptTextIcon, WalletCardsIcon } from "lucide-svelte";
 
-	let { cash }: { cash: CashUpUserGetResponse } = $props();
+	let { cash }: { cash: CashUpUserGetItems } = $props();
 </script>
 
 <Card.Root class="overflow-hidden w-full">
@@ -41,7 +41,7 @@
 				</li>
 				<li class="flex items-center justify-between">
 					<span class="text-muted-foreground">Total Payments</span>
-					<span>R{cash.totalPayments.toFixed(2)}</span>
+					<span>R{cash.payments.toFixed(2)}</span>
 				</li>
 				<li class="flex items-center justify-between">
 					<span class="text-muted-foreground">Tips</span>

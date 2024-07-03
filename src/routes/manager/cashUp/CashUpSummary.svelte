@@ -41,12 +41,6 @@
 						<Card.Description>Total Tips</Card.Description>
 					</Card.Header>
 				</Card.Root>
-				<!-- <Card.Root class="min-w-52">
-					<Card.Header>
-						<Card.Title>R{d.cashUpTotalPayments.toFixed(2)}</Card.Title>
-						<Card.Description>Cash Up Total Payments</Card.Description>
-					</Card.Header>
-				</Card.Root> -->
 			</div>
 		</div>
 	{/if}

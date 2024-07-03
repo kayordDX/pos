@@ -2,8 +2,8 @@
 	import { page } from "$app/stores";
 	import { createCashUpUserCreate, createCashUpUserItemType } from "$lib/api";
 	import { status } from "$lib/stores/status";
-	import { Button, Drawer, Form, Input, Select } from "@kayord/ui";
-	import { PlusIcon } from "lucide-svelte";
+	import { Alert, Button, Drawer, Form, Input, Select } from "@kayord/ui";
+	import { MessageCircleWarningIcon, PlusIcon } from "lucide-svelte";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
@@ -103,6 +103,15 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
+				<Alert.Root class="border-primary">
+					<MessageCircleWarningIcon class="size-5 animate-bounce text-primary" />
+					<Alert.Title>Heads up!</Alert.Title>
+					<Alert.Description>
+						The amount of <span class="font-semibold">R{Number($formData.value).toFixed(2)}</span>
+						will be
+						{$formData.value > 0 ? "added to" : "removed from"} the balance.
+					</Alert.Description>
+				</Alert.Root>
 			</div>
 			<Drawer.Footer>
 				<Form.Button type="submit">Add</Form.Button>

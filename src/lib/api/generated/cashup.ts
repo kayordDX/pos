@@ -94,10 +94,7 @@ export const createCashUpUserItemType = <
 };
 
 export const cashUpUserGet = (outletId: number) => {
-	return customInstance<CashUpUserGetResponse[]>({
-		url: `/cashUp/user/${outletId}`,
-		method: "GET",
-	});
+	return customInstance<CashUpUserGetResponse>({ url: `/cashUp/user/${outletId}`, method: "GET" });
 };
 
 export const getCashUpUserGetQueryKey = (outletId: number) => {

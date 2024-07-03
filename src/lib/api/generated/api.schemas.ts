@@ -183,14 +183,13 @@ export interface DTOCashUpUserItemTypeDTO {
 	adjustmentType?: DTOCashUpUserItemTypeDTOAdjustmentType;
 	/** @nullable */
 	adjustmentTypeId?: number | null;
+	affectsGrossBalance: boolean;
 	/** @nullable */
 	cashupConfig?: DTOCashUpUserItemTypeDTOCashupConfig;
 	/** @nullable */
 	cashupConfigId?: number | null;
 	cashUpUserItemRule: CommonEnumsCashUpUserItemRule;
-	decreaseBalance: boolean;
 	id: number;
-	increaseBalance: boolean;
 	isAuto: boolean;
 	itemType: string;
 	outletId: number;
@@ -231,12 +230,19 @@ export interface CashUpUserGetRequest {
 	[key: string]: unknown;
 }
 
-export interface CashUpUserGetResponse {
+export interface CashUpUserGetItems {
+	payments: number;
 	sales: number;
 	tips: number;
-	totalPayments: number;
 	user: EntitiesUser;
 	userId: string;
+}
+
+export interface CashUpUserGetResponse {
+	items: CashUpUserGetItems[];
+	totalPayments: number;
+	totalSales: number;
+	totalTips: number;
 }
 
 export interface CashUpUserItemTypeRequest {
@@ -931,14 +937,15 @@ export type CommonEnumsCashUpUserItemRule =
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
 export const CommonEnumsCashUpUserItemRule = {
-	PaymentTotal: 0,
-	PaymentTip: 1,
-	PaymentLevy: 2,
-	Adjustment: 3,
-	Config: 4,
-	SalesRevenue: 5,
-	CardPaymentTotal: 6,
-	CardTips: 7,
+	None: 0,
+	PaymentTotal: 1,
+	PaymentTip: 2,
+	PaymentLevy: 3,
+	Adjustment: 4,
+	Config: 5,
+	SalesRevenue: 6,
+	CardPaymentTotal: 7,
+	CardTips: 8,
 } as const;
 
 /**
@@ -956,14 +963,13 @@ export interface EntitiesCashUpUserItemType {
 	adjustmentType?: EntitiesCashUpUserItemTypeAdjustmentType;
 	/** @nullable */
 	adjustmentTypeId?: number | null;
+	affectsGrossBalance: boolean;
 	/** @nullable */
 	cashupConfig?: EntitiesCashUpUserItemTypeCashupConfig;
 	/** @nullable */
 	cashupConfigId?: number | null;
 	cashUpUserItemRule: CommonEnumsCashUpUserItemRule;
-	decreaseBalance: boolean;
 	id: number;
-	increaseBalance: boolean;
 	isAuto: boolean;
 	itemType: string;
 	/** @nullable */
