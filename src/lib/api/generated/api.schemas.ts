@@ -180,21 +180,25 @@ export type DTOCashUpUserItemTypeDTOAdjustmentType = EntitiesAdjustmentType | nu
 
 export interface DTOCashUpUserItemTypeDTO {
 	/** @nullable */
-	adjustmentId?: number | null;
-	/** @nullable */
 	adjustmentType?: DTOCashUpUserItemTypeDTOAdjustmentType;
+	/** @nullable */
+	adjustmentTypeId?: number | null;
 	/** @nullable */
 	cashupConfig?: DTOCashUpUserItemTypeDTOCashupConfig;
 	/** @nullable */
 	cashupConfigId?: number | null;
 	cashUpUserItemRule: CommonEnumsCashUpUserItemRule;
+	decreaseBalance: boolean;
 	id: number;
+	increaseBalance: boolean;
 	isAuto: boolean;
 	itemType: string;
+	outletId: number;
 	/** @nullable */
 	paymentType?: DTOCashUpUserItemTypeDTOPaymentType;
 	/** @nullable */
 	paymentTypeId?: number | null;
+	position: number;
 }
 
 /**
@@ -949,21 +953,24 @@ export type EntitiesCashUpUserItemTypeCashupConfig = EntitiesCashUpConfig | null
 
 export interface EntitiesCashUpUserItemType {
 	/** @nullable */
-	adjustmentId?: number | null;
-	/** @nullable */
 	adjustmentType?: EntitiesCashUpUserItemTypeAdjustmentType;
+	/** @nullable */
+	adjustmentTypeId?: number | null;
 	/** @nullable */
 	cashupConfig?: EntitiesCashUpUserItemTypeCashupConfig;
 	/** @nullable */
 	cashupConfigId?: number | null;
 	cashUpUserItemRule: CommonEnumsCashUpUserItemRule;
+	decreaseBalance: boolean;
 	id: number;
+	increaseBalance: boolean;
 	isAuto: boolean;
 	itemType: string;
 	/** @nullable */
 	paymentType?: EntitiesCashUpUserItemTypePaymentType;
 	/** @nullable */
 	paymentTypeId?: number | null;
+	position: number;
 }
 
 export interface EntitiesCashUpUser {
@@ -1322,6 +1329,7 @@ export interface TableOrderGetBillResponse {
 	adjustments?: EntitiesAdjustment[] | null;
 	balance: number;
 	billDate: string;
+	isCashedUp: boolean;
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
 	paymentsReceived: EntitiesPayment[];
 	tipAmount: number;

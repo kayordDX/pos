@@ -1554,6 +1554,7 @@ export interface components {
             /** Format: date-time */
             billDate: string;
             adjustments?: components["schemas"]["EntitiesAdjustment"][] | null;
+            isCashedUp: boolean;
         };
         TableOrderGetBillBillOrderItemDTO: {
             /** Format: int32 */
@@ -1898,12 +1899,16 @@ export interface components {
             id: number;
             itemType: string;
             isAuto: boolean;
+            increaseBalance: boolean;
+            decreaseBalance: boolean;
+            /** Format: int32 */
+            position: number;
             cashUpUserItemRule: components["schemas"]["CommonEnumsCashUpUserItemRule"];
             /** Format: int32 */
             paymentTypeId?: number | null;
             paymentType?: components["schemas"]["EntitiesPaymentType"] | null;
             /** Format: int32 */
-            adjustmentId?: number | null;
+            adjustmentTypeId?: number | null;
             adjustmentType?: components["schemas"]["EntitiesAdjustmentType"] | null;
             /** Format: int32 */
             cashupConfigId?: number | null;
@@ -2525,13 +2530,19 @@ export interface components {
             /** Format: int32 */
             id: number;
             itemType: string;
+            /** Format: int32 */
+            outletId: number;
             isAuto: boolean;
+            increaseBalance: boolean;
+            decreaseBalance: boolean;
+            /** Format: int32 */
+            position: number;
             cashUpUserItemRule: components["schemas"]["CommonEnumsCashUpUserItemRule"];
             /** Format: int32 */
             paymentTypeId?: number | null;
             paymentType?: components["schemas"]["EntitiesPaymentType"] | null;
             /** Format: int32 */
-            adjustmentId?: number | null;
+            adjustmentTypeId?: number | null;
             adjustmentType?: components["schemas"]["EntitiesAdjustmentType"] | null;
             /** Format: int32 */
             cashupConfigId?: number | null;

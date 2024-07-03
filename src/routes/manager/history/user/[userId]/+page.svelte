@@ -12,7 +12,6 @@
 
 	const data = writable($query.data ?? []);
 	$: $data = $query.data ?? [];
-	$: console.log($data);
 
 	const table = createTable(data, {
 		page: addPagination({ serverSide: false, initialPageSize: 10 }),

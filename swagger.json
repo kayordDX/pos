@@ -5478,7 +5478,8 @@
           "paymentsReceived",
           "balance",
           "tipAmount",
-          "billDate"
+          "billDate",
+          "isCashedUp"
         ],
         "properties": {
           "orderItems": {
@@ -5523,6 +5524,9 @@
             "items": {
               "$ref": "#/components/schemas/EntitiesAdjustment"
             }
+          },
+          "isCashedUp": {
+            "type": "boolean"
           }
         }
       },
@@ -6713,6 +6717,9 @@
           "id",
           "itemType",
           "isAuto",
+          "increaseBalance",
+          "decreaseBalance",
+          "position",
           "cashUpUserItemRule"
         ],
         "properties": {
@@ -6725,6 +6732,16 @@
           },
           "isAuto": {
             "type": "boolean"
+          },
+          "increaseBalance": {
+            "type": "boolean"
+          },
+          "decreaseBalance": {
+            "type": "boolean"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
           },
           "cashUpUserItemRule": {
             "$ref": "#/components/schemas/CommonEnumsCashUpUserItemRule"
@@ -6742,7 +6759,7 @@
               }
             ]
           },
-          "adjustmentId": {
+          "adjustmentTypeId": {
             "type": "integer",
             "format": "int32",
             "nullable": true
@@ -8922,7 +8939,11 @@
         "required": [
           "id",
           "itemType",
+          "outletId",
           "isAuto",
+          "increaseBalance",
+          "decreaseBalance",
+          "position",
           "cashUpUserItemRule"
         ],
         "properties": {
@@ -8933,8 +8954,22 @@
           "itemType": {
             "type": "string"
           },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "isAuto": {
             "type": "boolean"
+          },
+          "increaseBalance": {
+            "type": "boolean"
+          },
+          "decreaseBalance": {
+            "type": "boolean"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
           },
           "cashUpUserItemRule": {
             "$ref": "#/components/schemas/CommonEnumsCashUpUserItemRule"
@@ -8952,7 +8987,7 @@
               }
             ]
           },
-          "adjustmentId": {
+          "adjustmentTypeId": {
             "type": "integer",
             "format": "int32",
             "nullable": true

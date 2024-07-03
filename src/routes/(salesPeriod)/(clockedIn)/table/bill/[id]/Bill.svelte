@@ -34,6 +34,7 @@
 	let adjustmentOpen = $state(false);
 
 	const isManager = $derived($status.roles.includes("Manager"));
+	const showAdjustment = $derived(!isReadOnly || (isManager && !data.isCashedUp));
 </script>
 
 <Card.Root class="overflow-hidden m-2 mb-12">
@@ -121,8 +122,10 @@
 	</Card.Content>
 	<Card.Footer class="flex flex-col items-center border-t bg-muted/50 p-4">
 		<div class="flex flex-col gap-2 w-full">
-			{#if !isReadOnly}
+			{#if showAdjustment}
 				<Adjustment tableBookingId={bookingId} bind:open={adjustmentOpen} {refetch} />
+			{/if}
+			{#if !isReadOnly}
 				<Button href={`/table/pay/${bookingId}?total=${data.total}&balance=${data?.balance}`}>
 					Pay Bill
 				</Button>
