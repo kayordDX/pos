@@ -80,7 +80,7 @@
 							<span class="text-muted-foreground">Gross Balance</span>
 							<span>R {$query.data.grossBalance.toFixed(2)}</span>
 						</li>
-						<div class="flex flex-col gap-2 items-center mt-2">
+						<div class="flex flex-col gap-2 items-center">
 							{#each manualItems as item}
 								<CashUpItemManual {item} refetch={$query.refetch} />
 							{/each}
