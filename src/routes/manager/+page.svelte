@@ -13,7 +13,6 @@
 			</Card.Header>
 			<Card.Footer class="flex items-center gap-2">
 				<Button href="manager/cashUp">Cash Up</Button>
-				<Button href="manager/cashUpOld">Cash Up Old</Button>
 			</Card.Footer>
 		</Card.Root>
 	{:else}
