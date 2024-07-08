@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TableOrderGetBillResponse } from "$lib/api";
-	import { Button, Card, Separator } from "@kayord/ui";
+	import { Button, Card, Separator, Switch } from "@kayord/ui";
 	import { createTableBookingClose } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
@@ -35,21 +35,24 @@
 
 	const isManager = $derived($status.roles.includes("Manager"));
 	const showAdjustment = $derived(!isReadOnly || (isManager && !data.isCashedUp));
+
+	let showDetail = $state(false);
 </script>
 
 <Card.Root class="overflow-hidden m-2 mb-12">
 	<Card.Header class="flex flex-row items-start bg-muted/50 p-4">
-		<div class="grid gap-0.5">
+		<div class="grid gap-0.5 w-full">
 			<Card.Title class="group flex items-center gap-2 text-lg">
 				Bill #{bookingId}
 			</Card.Title>
 			<Card.Description>{stringToFDate(data.billDate)}</Card.Description>
 		</div>
+		<div><Switch bind:checked={showDetail} /></div>
 	</Card.Header>
 	<Card.Content class="p-6 text-sm">
 		<div class="grid gap-3">
 			<div class="font-semibold">Order Details</div>
-			<Items data={data?.orderItems ?? []} />
+			<Items data={data?.orderItems ?? []} {showDetail} />
 
 			{#if (data?.adjustments?.length ?? 0) > 0}
 				<Separator class="my-2" />

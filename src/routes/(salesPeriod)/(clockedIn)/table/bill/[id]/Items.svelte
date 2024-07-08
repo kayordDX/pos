@@ -2,13 +2,23 @@
 	import type { TableOrderGetBillBillOrderItemDTO } from "$lib/api";
 	import { Table } from "@kayord/ui";
 
-	export let data: Array<TableOrderGetBillBillOrderItemDTO>;
+	interface Props {
+		data: Array<TableOrderGetBillBillOrderItemDTO>;
+		showDetail?: boolean;
+	}
+
+	let { data, showDetail = false }: Props = $props();
 </script>
 
 <ul class="grid gap-3">
 	{#each data as item}
 		<li class="flex items-center justify-between">
 			<span class="text-muted-foreground">
+				{#if showDetail}
+					<div class="line-clamp-1 text-xs">
+						{new Date(item.orderReceived).toLocaleTimeString()}
+					</div>
+				{/if}
 				<div class="line-clamp-1">{item.menuItem.name}</div>
 				{#each item.orderItemOptions ?? [] as option}
 					<div class="ml-4 flex items-center gap-1">
@@ -26,6 +36,9 @@
 				{/each}
 			</span>
 			<span class="text-right">
+				{#if showDetail}
+					<div class="h-3"></div>
+				{/if}
 				{item.menuItem.price.toFixed(2)}
 				{#each item.orderItemOptions ?? [] as option}
 					<div>{option.option.price.toFixed(2)}</div>

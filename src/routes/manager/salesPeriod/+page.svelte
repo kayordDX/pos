@@ -14,6 +14,7 @@
 			await $mutation.mutateAsync({
 				data: { outletId: $status?.outletId ?? 0, name: name },
 			});
+			await status.getStatus();
 			toast.success("Successfully opened sales period");
 			await goto("/", { invalidateAll: true });
 		} catch (err) {

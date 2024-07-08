@@ -1567,6 +1567,8 @@ export interface components {
             menuItem: components["schemas"]["TableOrderGetBillBillMenuItemDTO"];
             orderItemOptions?: components["schemas"]["DTOOrderItemOptionDTO"][] | null;
             orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
+            /** Format: date-time */
+            orderReceived: string;
             note?: string | null;
         };
         DTOTableBookingDTO: {
@@ -1877,6 +1879,8 @@ export interface components {
             /** Format: decimal */
             closingBalance?: number | null;
             completerUserId: string;
+            /** Format: date-time */
+            cashUpDate?: string | null;
             cashUpUserItems: components["schemas"]["EntitiesCashUpUserItem"][];
         };
         EntitiesCashUpUserItem: {
@@ -2505,6 +2509,8 @@ export interface components {
             tips: number;
             /** Format: decimal */
             payments: number;
+            /** Format: int32 */
+            openTableCount: number;
         };
         CashUpUserGetRequest: Record<string, never>;
         CashUpUserDetailResponse: {

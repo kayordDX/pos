@@ -1,13 +1,16 @@
 <script lang="ts">
 	import { type CashUpUserGetItems } from "$lib/api";
+	import Error from "$lib/components/Error.svelte";
 	import { getInitials } from "$lib/util";
 	import { Avatar, Button, Card } from "@kayord/ui";
 	import { ReceiptTextIcon, WalletCardsIcon } from "lucide-svelte";
 
 	let { cash }: { cash: CashUpUserGetItems } = $props();
+
+	const hasOpenTables = $derived(cash.openTableCount > 0);
 </script>
 
-<Card.Root class="overflow-hidden w-full">
+<Card.Root class={`overflow-hidden w-full ${hasOpenTables ? "border-4 border-destructive" : ""}`}>
 	<Card.Header class="flex flex-col items-start bg-muted/50 p-4">
 		<div class="flex items-center gap-2 justify-between w-full">
 			<div class="flex items-center gap-2">
@@ -50,4 +53,9 @@
 			</ul>
 		</div>
 	</Card.Content>
+	{#if hasOpenTables}
+		<Card.Footer>
+			<Error title="Open tables" message={`User has ${cash.openTableCount} open table(s)`} />
+		</Card.Footer>
+	{/if}
 </Card.Root>

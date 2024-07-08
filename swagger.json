@@ -1,5 +1,5 @@
 {
-  "x-generator": "NSwag v14.0.7.0 (NJsonSchema v11.0.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "x-generator": "NSwag v14.0.8.0 (NJsonSchema v11.0.1.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "Kayord.Pos",
@@ -5535,7 +5535,8 @@
           "tableBookingId",
           "tableBooking",
           "menuItemId",
-          "menuItem"
+          "menuItem",
+          "orderReceived"
         ],
         "properties": {
           "orderItemId": {
@@ -5569,6 +5570,10 @@
             "items": {
               "$ref": "#/components/schemas/DTOOrderItemExtraDTO"
             }
+          },
+          "orderReceived": {
+            "type": "string",
+            "format": "date-time"
           },
           "note": {
             "type": "string",
@@ -6653,6 +6658,11 @@
           },
           "completerUserId": {
             "type": "string"
+          },
+          "cashUpDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
           "cashUpUserItems": {
             "type": "array",
@@ -8843,7 +8853,8 @@
           "user",
           "sales",
           "tips",
-          "payments"
+          "payments",
+          "openTableCount"
         ],
         "properties": {
           "userId": {
@@ -8863,6 +8874,10 @@
           "payments": {
             "type": "number",
             "format": "decimal"
+          },
+          "openTableCount": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

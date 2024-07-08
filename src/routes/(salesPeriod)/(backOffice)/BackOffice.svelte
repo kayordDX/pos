@@ -37,13 +37,6 @@
 
 	let [minColWidth, maxColWidth, gap] = [500, 600, 10];
 	let screenWidth = $state(0);
-	const calcCols = $derived(
-		Math.min(screenWidth, Math.floor((screenWidth + gap) / (minColWidth + gap)) || 1)
-	);
-
-	$effect(() => {
-		console.log(calcCols);
-	});
 </script>
 
 <div class="m-1" bind:clientWidth={screenWidth}>

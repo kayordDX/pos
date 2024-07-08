@@ -231,6 +231,7 @@ export interface CashUpUserGetRequest {
 }
 
 export interface CashUpUserGetItems {
+	openTableCount: number;
 	payments: number;
 	sales: number;
 	tips: number;
@@ -980,6 +981,8 @@ export interface EntitiesCashUpUserItemType {
 }
 
 export interface EntitiesCashUpUser {
+	/** @nullable */
+	cashUpDate?: string | null;
 	cashUpUserItems: EntitiesCashUpUserItem[];
 	/** @nullable */
 	closingBalance?: number | null;
@@ -1326,6 +1329,7 @@ export interface TableOrderGetBillBillOrderItemDTO {
 	orderItemId: number;
 	/** @nullable */
 	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	orderReceived: string;
 	tableBooking: DTOTableBookingDTO;
 	tableBookingId: number;
 }
