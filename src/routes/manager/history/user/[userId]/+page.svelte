@@ -12,6 +12,10 @@
 
 	const data = writable($query.data ?? []);
 
+	$effect(() => {
+		data.set($query.data ?? []);
+	});
+
 	const table = createTable(data, {
 		page: addPagination({ serverSide: false, initialPageSize: 10 }),
 		resize: addResizedColumns(),
