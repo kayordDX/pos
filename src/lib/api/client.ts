@@ -20,8 +20,8 @@ const myMiddleware: Middleware = {
 
 export const client = createClient<paths>({
 	baseUrl: PUBLIC_API_URL,
-	// headers: {
-	// 	"Content-Type": null,
-	// },
+	headers: {
+		"Content-Type": null,
+	},
 });
 client.use(myMiddleware);
