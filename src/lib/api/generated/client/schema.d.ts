@@ -2041,7 +2041,7 @@ export interface components {
             /** @default One or more errors occurred! */
             message: string;
             errors: {
-                [key: string]: string[] | undefined;
+                [key: string]: string[];
             };
         };
         TableBookingGetRequest: Record<string, never>;
