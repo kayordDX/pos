@@ -56,6 +56,7 @@ export const auth = getAuth(app);
 
 export const signInGoogle = async () => {
 	const provider = new GoogleAuthProvider();
+	provider.setCustomParameters({ prompt: "select_account" });
 	const result = await signInWithPopup(auth, provider);
 
 	await client.POST("/user/validate", {
