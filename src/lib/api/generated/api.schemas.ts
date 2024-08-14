@@ -1041,6 +1041,29 @@ export interface EntitiesOrderItemStatus {
 	status: string;
 }
 
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
+}
+
+export interface EntitiesMenuItemExtraGroup {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	extras: EntitiesExtra[];
+	/** @nullable */
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	name: string;
+}
+
 export interface EntitiesExtra {
 	extraGroup: EntitiesExtraGroup;
 	extraGroupId: number;
@@ -1050,14 +1073,6 @@ export interface EntitiesExtra {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	positionId: number;
 	price: number;
-}
-
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -1088,14 +1103,6 @@ export interface EntitiesOption {
 	price: number;
 }
 
-export interface EntitiesOrderItemOption {
-	option: EntitiesOption;
-	optionId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemId: number;
-	orderItemOptionId: number;
-}
-
 export interface EntitiesDivision {
 	divisionId: number;
 	divisionName: string;
@@ -1111,29 +1118,6 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
-/**
- * @nullable
- */
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
-
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	parent?: EntitiesMenuSectionParent;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
-}
-
 export interface EntitiesMenu {
 	id: number;
 	/** @nullable */
@@ -1143,6 +1127,11 @@ export interface EntitiesMenu {
 	outletId: number;
 	position: number;
 }
+
+/**
+ * @nullable
+ */
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
 /**
  * @nullable
@@ -1172,19 +1161,22 @@ export interface EntitiesMenuItem {
 	tags?: EntitiesTag[] | null;
 }
 
-export interface EntitiesMenuItemExtraGroup {
-	extraGroup: EntitiesExtraGroup;
-	extraGroupId: number;
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-}
-
-export interface EntitiesExtraGroup {
-	extraGroupId: number;
-	extras: EntitiesExtra[];
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
 	/** @nullable */
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	name: string;
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	parent?: EntitiesMenuSectionParent;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
 }
 
 /**
@@ -1216,22 +1208,18 @@ export interface EntitiesOrderItem {
 	tableBookingId: number;
 }
 
+export interface EntitiesOrderItemOption {
+	option: EntitiesOption;
+	optionId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemId: number;
+	orderItemOptionId: number;
+}
+
 export interface EntitiesOrderGroup {
 	orderGroupId: number;
 	/** @nullable */
 	orderItems?: EntitiesOrderItem[] | null;
-}
-
-export interface EntitiesRole {
-	description: string;
-	isBackOffice: boolean;
-	isFrontLine: boolean;
-	name: string;
-	/** @nullable */
-	outletId?: number | null;
-	roleId: number;
-	/** @nullable */
-	userRole?: EntitiesUserRole[] | null;
 }
 
 /**
@@ -1256,6 +1244,18 @@ export interface EntitiesUserRole {
 	user: EntitiesUser;
 	userId: string;
 	userRoleId: number;
+}
+
+export interface EntitiesRole {
+	description: string;
+	isBackOffice: boolean;
+	isFrontLine: boolean;
+	name: string;
+	/** @nullable */
+	outletId?: number | null;
+	roleId: number;
+	/** @nullable */
+	userRole?: EntitiesUserRole[] | null;
 }
 
 /**
@@ -1373,29 +1373,6 @@ export interface TableOrderOfficeOrderBasedBackMenuItemDTO {
 export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
 	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
 
-export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
-	divisionId: number;
-	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
-	/** @nullable */
-	note?: string | null;
-	/** @nullable */
-	orderGroupId?: number | null;
-	/** @nullable */
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	/** @nullable */
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	orderItemStatus: TableOrderOfficeOrderBasedBackOrderItemStatusDTO;
-	orderItemStatusId: number;
-	orderReceived: string;
-	orderReceivedFormatted: string;
-	orderUpdated: string;
-	orderUpdatedFormatted: string;
-	/** @nullable */
-	tableBooking?: TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking;
-	tableBookingId: number;
-}
-
 export interface TableOrderOfficeOrderBasedBackSectionDTO {
 	name: string;
 }
@@ -1493,6 +1470,29 @@ export interface DTOOrderItemExtraDTO {
 	extraId: number;
 	orderItemExtraId: number;
 	orderItemId: number;
+}
+
+export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
+	divisionId: number;
+	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	orderGroupId?: number | null;
+	/** @nullable */
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	/** @nullable */
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	orderItemStatus: TableOrderOfficeOrderBasedBackOrderItemStatusDTO;
+	orderItemStatusId: number;
+	orderReceived: string;
+	orderReceivedFormatted: string;
+	orderUpdated: string;
+	orderUpdatedFormatted: string;
+	/** @nullable */
+	tableBooking?: TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking;
+	tableBookingId: number;
 }
 
 export interface DTOOptionGroupBasicDTO {
@@ -1676,14 +1676,20 @@ export interface EntitiesCustomer {
 }
 
 export interface EntitiesOutlet {
+	/** @nullable */
+	address?: string | null;
 	business: EntitiesBusiness;
 	businessId: number;
+	/** @nullable */
+	company?: string | null;
 	id: number;
 	/** @nullable */
 	logo?: string | null;
 	name: string;
 	/** @nullable */
 	outletPaymentTypes?: EntitiesOutletPaymentType[] | null;
+	/** @nullable */
+	registration?: string | null;
 	/** @nullable */
 	sections?: EntitiesSection[] | null;
 	vatNumber: string;
@@ -1749,6 +1755,22 @@ export interface UserValidateRequest {
 	userId: string;
 }
 
+export interface UserValidateResponse {
+	userId: string;
+	/** @nullable */
+	userRoles?: string[] | null;
+}
+
+export interface ServicesWhatsappQrResponse {
+	qr: string;
+	success: boolean;
+}
+
+export interface ServicesWhatsappResponse {
+	message: string;
+	success: boolean;
+}
+
 export interface InternalErrorResponse {
 	code: number;
 	note: string;
@@ -1756,8 +1778,8 @@ export interface InternalErrorResponse {
 	status: string;
 }
 
-export interface UserValidateResponse {
-	userId: string;
-	/** @nullable */
-	userRoles?: string[] | null;
+export interface ServicesWhatsappStatus {
+	message: string;
+	state: string;
+	success: boolean;
 }

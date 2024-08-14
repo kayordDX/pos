@@ -13,7 +13,7 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { InternalErrorResponse } from "./api.schemas";
+import type { InternalErrorResponse, ServicesWhatsappStatus } from "./api.schemas";
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType } from "../mutator/customInstance";
 
@@ -54,6 +54,54 @@ export function createTest<
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof test>>, TError, TData>>;
 }): CreateQueryResult<TData, TError> & { queryKey: QueryKey } {
 	const queryOptions = getTestQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const testWhatsAppTest = () => {
+	return customInstance<ServicesWhatsappStatus>({ url: `/test/whatsapp`, method: "GET" });
+};
+
+export const getTestWhatsAppTestQueryKey = () => {
+	return [`/test/whatsapp`] as const;
+};
+
+export const getTestWhatsAppTestQueryOptions = <
+	TData = Awaited<ReturnType<typeof testWhatsAppTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testWhatsAppTest>>, TError, TData>>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTestWhatsAppTestQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof testWhatsAppTest>>> = () =>
+		testWhatsAppTest();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof testWhatsAppTest>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type TestWhatsAppTestQueryResult = NonNullable<Awaited<ReturnType<typeof testWhatsAppTest>>>;
+export type TestWhatsAppTestQueryError = ErrorType<InternalErrorResponse>;
+
+export function createTestWhatsAppTest<
+	TData = Awaited<ReturnType<typeof testWhatsAppTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testWhatsAppTest>>, TError, TData>>;
+}): CreateQueryResult<TData, TError> & { queryKey: QueryKey } {
+	const queryOptions = getTestWhatsAppTestQueryOptions(options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;

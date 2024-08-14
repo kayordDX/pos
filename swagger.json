@@ -11,6 +11,115 @@
     }
   ],
   "paths": {
+    "/whatsapp/status": {
+      "get": {
+        "tags": [
+          "Whatsapp"
+        ],
+        "operationId": "WhatsappStatus",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesWhatsappStatus"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/whatsapp/restart": {
+      "get": {
+        "tags": [
+          "Whatsapp"
+        ],
+        "operationId": "WhatsappRestart",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ServicesWhatsappResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/whatsapp/qr": {
+      "get": {
+        "tags": [
+          "Whatsapp"
+        ],
+        "operationId": "WhatsappQrCode",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesWhatsappQrResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/user/validate": {
       "post": {
         "tags": [
@@ -191,6 +300,36 @@
               "application/json": {
                 "schema": {
                   "type": "boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test/whatsapp": {
+      "get": {
+        "tags": [
+          "Test"
+        ],
+        "operationId": "TestWhatsAppTest",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesWhatsappStatus"
                 }
               }
             }
@@ -4117,22 +4256,23 @@
   },
   "components": {
     "schemas": {
-      "UserValidateResponse": {
+      "ServicesWhatsappStatus": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "userId"
+          "success",
+          "state",
+          "message"
         ],
         "properties": {
-          "userId": {
+          "success": {
+            "type": "boolean"
+          },
+          "state": {
             "type": "string"
           },
-          "userRoles": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "type": "string"
-            }
+          "message": {
+            "type": "string"
           }
         }
       },
@@ -4162,6 +4302,57 @@
           "note": {
             "type": "string",
             "default": "See application log for stack trace."
+          }
+        }
+      },
+      "ServicesWhatsappResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "success",
+          "message"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
+          }
+        }
+      },
+      "ServicesWhatsappQrResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "success",
+          "qr"
+        ],
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "qr": {
+            "type": "string"
+          }
+        }
+      },
+      "UserValidateResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "userRoles": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -4307,6 +4498,18 @@
             "items": {
               "$ref": "#/components/schemas/EntitiesOutletPaymentType"
             }
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "company": {
+            "type": "string",
+            "nullable": true
+          },
+          "registration": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

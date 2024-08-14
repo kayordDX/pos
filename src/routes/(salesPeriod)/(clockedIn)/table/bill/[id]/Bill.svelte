@@ -125,7 +125,7 @@
 	</Card.Content>
 	<Card.Footer class="flex flex-col items-center border-t bg-muted/50 p-4">
 		<div class="flex flex-col gap-2 w-full">
-			{#if showAdjustment}
+			{#if isManager && showAdjustment}
 				<Adjustment tableBookingId={bookingId} bind:open={adjustmentOpen} {refetch} />
 			{/if}
 			{#if !isReadOnly}
@@ -144,9 +144,7 @@
 					<Error message={getError($closeTableMut.error).message} />
 				{/if}
 			{/if}
-			{#if data?.balance == 0}
-				<EmailBill {bookingId} />
-			{/if}
+			<EmailBill {bookingId} />
 		</div>
 	</Card.Footer>
 </Card.Root>

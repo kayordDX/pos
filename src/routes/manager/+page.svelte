@@ -18,4 +18,6 @@
 	{:else}
 		<Button href="/manager/salesPeriod">Open Sales Period</Button>
 	{/if}
+
+	<Button class="m-2" href="manager/whatsapp">Whatsapp</Button>
 </div>

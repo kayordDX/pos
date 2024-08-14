@@ -1,7 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-export * from "./user";
+export * from "./whatsapp";
 export * from "./api.schemas";
+export * from "./user";
 export * from "./test";
 export * from "./order";
 export * from "./frontoffice";
