@@ -1,6 +1,6 @@
 <script>
 	import { createCashUpUserGet, createSalesPeriodClose } from "$lib/api";
-	import { Button, Card, Loader } from "@kayord/ui";
+	import { Button, Card, Loader, toast } from "@kayord/ui";
 	import { status } from "$lib/stores/status";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
@@ -13,9 +13,13 @@
 	const mutation = createSalesPeriodClose();
 
 	const closeSalesPeriod = async () => {
-		await $mutation.mutateAsync({ data: { salesPeriodId: $status.salesPeriodId } });
-		await status.getStatus();
-		await goto("/manager");
+		try {
+			await $mutation.mutateAsync({ data: { salesPeriodId: $status.salesPeriodId } });
+			await status.getStatus();
+			await goto("/manager");
+		} catch (ex) {
+			toast.error(getError(ex).message);
+		}
 	};
 </script>
 
