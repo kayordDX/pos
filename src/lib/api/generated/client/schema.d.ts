@@ -1374,6 +1374,7 @@ export interface components {
             orderGroupId: number;
             /** Format: int32 */
             orderItemStatusId: number;
+            divisionIds?: string | null;
         };
         TableOrderSendToKitchenResponse: {
             isSuccess: boolean;

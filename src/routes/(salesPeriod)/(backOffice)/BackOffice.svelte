@@ -85,7 +85,7 @@
 			idKey="orderGroupId"
 		>
 			{#snippet itemChild(item)}
-				<Group group={item} refetch={$query.refetch} {isHistory} />
+				<Group group={item} refetch={$query.refetch} {isHistory} {divisionIds} />
 			{/snippet}
 		</Masonry>
 	{/if}

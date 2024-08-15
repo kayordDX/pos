@@ -1604,6 +1604,8 @@ export interface TableOrderSendToKitchenResponse {
 }
 
 export interface TableOrderUpdateGroupOrderRequest {
+	/** @nullable */
+	divisionIds?: string | null;
 	orderGroupId: number;
 	orderItemStatusId: number;
 }

@@ -4847,6 +4847,10 @@
           "orderItemStatusId": {
             "type": "integer",
             "format": "int32"
+          },
+          "divisionIds": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
