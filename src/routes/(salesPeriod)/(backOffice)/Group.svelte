@@ -45,7 +45,9 @@
 											src={group.tableBooking?.user.image}
 											alt={group.tableBooking?.user.name}
 										/>
-										<Avatar.Fallback>{getInitials("Jaco Kok")}</Avatar.Fallback>
+										<Avatar.Fallback
+											>{getInitials(group.tableBooking?.user.name ?? "")}</Avatar.Fallback
+										>
 									</Avatar.Root>
 								</Popover.Trigger>
 								<Popover.Content>{group.tableBooking?.user.name}</Popover.Content>

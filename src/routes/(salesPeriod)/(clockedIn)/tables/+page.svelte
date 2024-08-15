@@ -3,9 +3,10 @@
 
 	import { createTableGetMyBooked } from "$lib/api";
 
-	import { Card, Loader, Badge } from "@kayord/ui";
+	import { Card, Loader, Badge, Avatar } from "@kayord/ui";
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status";
+	import { getInitials } from "$lib/util";
 
 	const query = createTableGetMyBooked({ myBooking: false, outletId: $status?.outletId ?? 0 });
 </script>
@@ -29,7 +30,19 @@
 								<h3>{otherTable.table.name}</h3>
 								<Badge>{otherTable.table.section.name}</Badge>
 							</div>
-							<p class="text-xs">{otherTable.bookingName}</p>
+
+							<div class="flex items-center gap-2 mt-2">
+								<Avatar.Root>
+									<Avatar.Image src={otherTable.user.image} alt="profile" />
+									<Avatar.Fallback class="bg-primary text-primary-foreground">
+										{getInitials(otherTable.user.name ?? "")}
+									</Avatar.Fallback>
+								</Avatar.Root>
+								<div>
+									<div>{otherTable.user.name}</div>
+									<p class="text-xs">{otherTable.bookingName}</p>
+								</div>
+							</div>
 						</Card.Root>
 					</a>
 				{/each}

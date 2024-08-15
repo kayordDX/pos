@@ -763,6 +763,7 @@ export interface TableGetMyBookedResponse {
 	staffId: number;
 	table: TableGetMyBookedTableDto;
 	tableId: number;
+	user: DTOUserDTO;
 }
 
 export interface TableUpdateRequest {

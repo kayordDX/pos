@@ -2162,6 +2162,7 @@ export interface components {
             /** Format: int32 */
             staffId: number;
             table: components["schemas"]["TableGetMyBookedTableDto"];
+            user: components["schemas"]["DTOUserDTO"];
         };
         TableGetMyBookedTableDto: {
             /** Format: int32 */

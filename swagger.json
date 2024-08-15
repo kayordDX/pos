@@ -7534,7 +7534,8 @@
           "bookingDate",
           "salesPeriodId",
           "staffId",
-          "table"
+          "table",
+          "user"
         ],
         "properties": {
           "id": {
@@ -7562,6 +7563,9 @@
           },
           "table": {
             "$ref": "#/components/schemas/TableGetMyBookedTableDto"
+          },
+          "user": {
+            "$ref": "#/components/schemas/DTOUserDTO"
           }
         }
       },
