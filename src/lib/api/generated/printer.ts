@@ -17,69 +17,6 @@ import type { InternalErrorResponse, PrinterPrinterStatus } from "./api.schemas"
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType } from "../mutator/customInstance";
 
-export const printerTestPrint = (outletId: number, printerId: number) => {
-	return customInstance<boolean>({ url: `/printer/test/${outletId}/${printerId}`, method: "GET" });
-};
-
-export const getPrinterTestPrintQueryKey = (outletId: number, printerId: number) => {
-	return [`/printer/test/${outletId}/${printerId}`] as const;
-};
-
-export const getPrinterTestPrintQueryOptions = <
-	TData = Awaited<ReturnType<typeof printerTestPrint>>,
-	TError = ErrorType<InternalErrorResponse>,
->(
-	outletId: number,
-	printerId: number,
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof printerTestPrint>>, TError, TData>
-		>;
-	}
-) => {
-	const { query: queryOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getPrinterTestPrintQueryKey(outletId, printerId);
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof printerTestPrint>>> = () =>
-		printerTestPrint(outletId, printerId);
-
-	return {
-		queryKey,
-		queryFn,
-		enabled: !!(outletId && printerId),
-		...queryOptions,
-	} as CreateQueryOptions<Awaited<ReturnType<typeof printerTestPrint>>, TError, TData> & {
-		queryKey: QueryKey;
-	};
-};
-
-export type PrinterTestPrintQueryResult = NonNullable<Awaited<ReturnType<typeof printerTestPrint>>>;
-export type PrinterTestPrintQueryError = ErrorType<InternalErrorResponse>;
-
-export function createPrinterTestPrint<
-	TData = Awaited<ReturnType<typeof printerTestPrint>>,
-	TError = ErrorType<InternalErrorResponse>,
->(
-	outletId: number,
-	printerId: number,
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof printerTestPrint>>, TError, TData>
-		>;
-	}
-): CreateQueryResult<TData, TError> & { queryKey: QueryKey } {
-	const queryOptions = getPrinterTestPrintQueryOptions(outletId, printerId, options);
-
-	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
-		queryKey: QueryKey;
-	};
-
-	query.queryKey = queryOptions.queryKey;
-
-	return query;
-}
-
 export const printerList = (outletId: number) => {
 	return customInstance<PrinterPrinterStatus[]>({
 		url: `/printer/list/${outletId}`,

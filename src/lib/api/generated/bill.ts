@@ -16,10 +16,77 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { BillEmailBillRequest, InternalErrorResponse } from "./api.schemas";
+import type {
+	BillEmailBillRequest,
+	BillPrintBillRequest,
+	InternalErrorResponse,
+} from "./api.schemas";
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType, BodyType } from "../mutator/customInstance";
 
+export const billPrintBill = (billPrintBillRequest: BodyType<BillPrintBillRequest>) => {
+	return customInstance<boolean>({
+		url: `/bill/print`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: billPrintBillRequest,
+	});
+};
+
+export const getBillPrintBillMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof billPrintBill>>,
+		TError,
+		{ data: BodyType<BillPrintBillRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof billPrintBill>>,
+	TError,
+	{ data: BodyType<BillPrintBillRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof billPrintBill>>,
+		{ data: BodyType<BillPrintBillRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return billPrintBill(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type BillPrintBillMutationResult = NonNullable<Awaited<ReturnType<typeof billPrintBill>>>;
+export type BillPrintBillMutationBody = BodyType<BillPrintBillRequest>;
+export type BillPrintBillMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createBillPrintBill = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof billPrintBill>>,
+		TError,
+		{ data: BodyType<BillPrintBillRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof billPrintBill>>,
+	TError,
+	{ data: BodyType<BillPrintBillRequest> },
+	TContext
+> => {
+	const mutationOptions = getBillPrintBillMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const billEmailBill = (billEmailBillRequest: BodyType<BillEmailBillRequest>) => {
 	return customInstance<boolean>({
 		url: `/bill/email`,

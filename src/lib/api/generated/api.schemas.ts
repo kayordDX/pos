@@ -123,6 +123,12 @@ export interface BillEmailBillRequest {
 	tableBookingId: number;
 }
 
+export interface BillPrintBillRequest {
+	outletId: number;
+	printerId: number;
+	tableBookingId: number;
+}
+
 export interface BusinessCreateRequest {
 	/**
 	 * @minLength 1
@@ -648,10 +654,6 @@ export interface PrinterPrinterStatus {
 	printerConfig: PrinterPrinterConfig;
 	/** @nullable */
 	printerStatusEventArgs?: PrinterPrinterStatusPrinterStatusEventArgs;
-}
-
-export interface PrinterTestPrintRequest {
-	[key: string]: unknown;
 }
 
 export interface RoleAddUserInRoleRequest {

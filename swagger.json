@@ -2152,56 +2152,6 @@
         ]
       }
     },
-    "/printer/test/{outletId}/{printerId}": {
-      "get": {
-        "tags": [
-          "Printer"
-        ],
-        "operationId": "PrinterTestPrint",
-        "parameters": [
-          {
-            "name": "outletId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "printerId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/printer/list/{outletId}": {
       "get": {
         "tags": [
@@ -4167,6 +4117,57 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/EntitiesBusiness"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/bill/print": {
+      "post": {
+        "tags": [
+          "Bill"
+        ],
+        "operationId": "BillPrintBill",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BillPrintBillRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -8193,10 +8194,6 @@
           }
         }
       },
-      "PrinterTestPrintRequest": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "PrinterPrinterStatus": {
         "type": "object",
         "additionalProperties": false,
@@ -9617,6 +9614,29 @@
             "type": "string",
             "minLength": 1,
             "nullable": false
+          }
+        }
+      },
+      "BillPrintBillRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId",
+          "outletId",
+          "printerId"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "printerId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

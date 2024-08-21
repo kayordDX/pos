@@ -1,7 +1,10 @@
 <script lang="ts">
+	import { page } from "$app/stores";
 	import type { PrinterPrinterStatus } from "$lib/api";
+	import { createBillPrintBill } from "$lib/api";
+	import { getError } from "$lib/types";
 	import { stringToFDate } from "$lib/util";
-	import { Badge, Button, Card, Switch, Table } from "@kayord/ui";
+	import { Badge, Button, Card, Switch, Table, toast } from "@kayord/ui";
 	import { PrinterIcon } from "lucide-svelte";
 
 	interface Props {
@@ -13,6 +16,23 @@
 	const boolToText = (bool?: boolean | null) => {
 		if (bool == undefined || bool == null) return "";
 		return bool ? "Yes" : "No";
+	};
+
+	const mutation = createBillPrintBill();
+
+	const printBill = async () => {
+		try {
+			await $mutation.mutateAsync({
+				data: {
+					outletId: printer.printerConfig.outletId,
+					printerId: printer.printerConfig.printerId,
+					tableBookingId: Number($page.params.id),
+				},
+			});
+			toast.info("Printing Bill");
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
 	};
 </script>
 
@@ -120,7 +140,7 @@
 		</div>
 	</Card.Content>
 	<Card.Footer>
-		<Button class="w-full">
+		<Button class="w-full" onclick={printBill}>
 			<PrinterIcon class="size-4 mr-2" />
 			Print
 		</Button>
