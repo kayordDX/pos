@@ -3,7 +3,8 @@
 	import { Alert, Card } from "@kayord/ui";
 	import Printer from "./Printer.svelte";
 	import TriangleAlertIcon from "lucide-svelte/icons/triangle-alert";
-	const query = createPrinterList(1);
+	import { status } from "$lib/stores/status";
+	const query = createPrinterList($status.outletId);
 </script>
 
 <Card.Root class="m-4">
