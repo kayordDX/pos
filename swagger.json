@@ -8199,12 +8199,20 @@
         "additionalProperties": false,
         "required": [
           "dateUpdated",
+          "isOutdated",
+          "dateUpdatedFormatted",
           "printerConfig"
         ],
         "properties": {
           "dateUpdated": {
             "type": "string",
             "format": "date-time"
+          },
+          "isOutdated": {
+            "type": "boolean"
+          },
+          "dateUpdatedFormatted": {
+            "type": "string"
           },
           "printerConfig": {
             "$ref": "#/components/schemas/PrinterPrinterConfig"

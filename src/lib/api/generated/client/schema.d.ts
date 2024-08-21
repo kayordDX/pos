@@ -2350,6 +2350,8 @@ export interface components {
         PrinterPrinterStatus: {
             /** Format: date-time */
             dateUpdated: string;
+            isOutdated: boolean;
+            dateUpdatedFormatted: string;
             printerConfig: components["schemas"]["PrinterPrinterConfig"];
             printerStatusEventArgs?: components["schemas"]["ESCPOS_NETPrinterStatusEventArgs"] | null;
         };

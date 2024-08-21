@@ -21,7 +21,7 @@
 		{:else}
 			<div class="flex flex-col gap-4">
 				{#each $query.data ?? [] as printer}
-					<Printer {printer} />
+					<Printer {printer} refetch={$query.refetch} />
 				{/each}
 			</div>
 		{/if}

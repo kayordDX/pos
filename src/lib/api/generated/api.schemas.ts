@@ -651,6 +651,8 @@ export type PrinterPrinterStatusPrinterStatusEventArgs = ESCPOSNETPrinterStatusE
 
 export interface PrinterPrinterStatus {
 	dateUpdated: string;
+	dateUpdatedFormatted: string;
+	isOutdated: boolean;
 	printerConfig: PrinterPrinterConfig;
 	/** @nullable */
 	printerStatusEventArgs?: PrinterPrinterStatusPrinterStatusEventArgs;

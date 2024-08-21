@@ -9,8 +9,9 @@
 
 	interface Props {
 		printer: PrinterPrinterStatus;
+		refetch: () => void;
 	}
-	let { printer }: Props = $props();
+	let { printer, refetch }: Props = $props();
 	let showDetail = $state(false);
 
 	const boolToText = (bool?: boolean | null) => {
@@ -34,6 +35,8 @@
 			toast.error(getError(err).message);
 		}
 	};
+
+	const isOnline = $derived(printer.printerStatusEventArgs?.isPrinterOnline ?? false);
 </script>
 
 <Card.Root>
@@ -41,7 +44,11 @@
 		<div class="grid gap-0.5 w-full">
 			<Card.Title>{printer.printerConfig.name}</Card.Title>
 			<Card.Description>
-				<Badge>Last Updated: {stringToFDate(printer.dateUpdated)}</Badge>
+				{#if printer.isOutdated}
+					<Badge variant="destructive">Last update was longer than 10 minutes ago</Badge>
+				{:else}
+					<Badge onclick={refetch}>Updated: {printer.dateUpdatedFormatted}</Badge>
+				{/if}
 			</Card.Description>
 		</div>
 		<div><Switch bind:checked={showDetail} /></div>
@@ -53,7 +60,7 @@
 					<Table.Row>
 						<Table.Cell>Online</Table.Cell>
 						<Table.Cell class="text-right">
-							{boolToText(printer.printerStatusEventArgs?.isPrinterOnline)}
+							{boolToText(isOnline)}
 						</Table.Cell>
 					</Table.Row>
 					<Table.Row>
@@ -140,7 +147,7 @@
 		</div>
 	</Card.Content>
 	<Card.Footer>
-		<Button class="w-full" onclick={printBill}>
+		<Button class="w-full" onclick={printBill} disabled={!isOnline || printer.isOutdated}>
 			<PrinterIcon class="size-4 mr-2" />
 			Print
 		</Button>
