@@ -420,22 +420,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tableBooking/emailBill": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["TableBookingEmailBill"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/tableBooking": {
         parameters: {
             query?: never;
@@ -684,6 +668,38 @@ export interface paths {
             cookie?: never;
         };
         get: operations["RoleGetAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/printer/test/{outletId}/{printerId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PrinterTestPrint"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/printer/list/{outletId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["PrinterList"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1164,6 +1180,38 @@ export interface paths {
             cookie?: never;
         };
         get: operations["BusinessGet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/bill/email": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["BillEmailBill"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/bill/download/{tableBookingId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BillDownloadBill"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2126,12 +2174,6 @@ export interface components {
             };
         };
         TableBookingGetRequest: Record<string, never>;
-        TableBookingEmailBillRequest: {
-            /** Format: int32 */
-            tableBookingId: number;
-            email: string;
-            name: string;
-        };
         TableBookingCreateRequest: {
             /** Format: int32 */
             tableId: number;
@@ -2305,6 +2347,37 @@ export interface components {
             /** Format: int32 */
             roleId: number;
         };
+        PrinterTestPrintRequest: Record<string, never>;
+        PrinterPrinterStatus: {
+            /** Format: date-time */
+            dateUpdated: string;
+            printerConfig: components["schemas"]["PrinterPrinterConfig"];
+            printerStatusEventArgs?: components["schemas"]["ESCPOS_NETPrinterStatusEventArgs"] | null;
+        };
+        PrinterPrinterConfig: {
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            printerId: number;
+            name: string;
+        };
+        ESCPOS_NETPrinterStatusEventArgs: components["schemas"]["SystemEventArgs"] & {
+            isWaitingForOnlineRecovery?: boolean | null;
+            isPaperCurrentlyFeeding?: boolean | null;
+            isPaperFeedButtonPushed?: boolean | null;
+            isPrinterOnline?: boolean | null;
+            isCashDrawerOpen?: boolean | null;
+            isCoverOpen?: boolean | null;
+            isPaperLow?: boolean | null;
+            isPaperOut?: boolean | null;
+            isInErrorState?: boolean | null;
+            didRecoverableErrorOccur?: boolean | null;
+            didUnrecoverableErrorOccur?: boolean | null;
+            didAutocutterErrorOccur?: boolean | null;
+            didRecoverableNonAutocutterErrorOccur?: boolean | null;
+        };
+        SystemEventArgs: Record<string, never>;
+        PrinterListRequest: Record<string, never>;
         CommonWrapperResultOfStatusResultDto: components["schemas"]["CommonWrapperResult"] & {
             value?: components["schemas"]["PayDtoStatusResultDto"] | null;
         };
@@ -2674,6 +2747,13 @@ export interface components {
         BusinessCreateRequest: {
             name: string;
         };
+        BillEmailBillRequest: {
+            /** Format: int32 */
+            tableBookingId: number;
+            email: string;
+            name: string;
+        };
+        BillDownloadBillRequest: Record<string, never>;
         AdjustmentGetAllRequest: Record<string, never>;
         AdjustmentCreateRequest: {
             /** Format: int32 */
@@ -3623,46 +3703,6 @@ export interface operations {
             };
         };
     };
-    TableBookingEmailBill: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["TableBookingEmailBillRequest"];
-            };
-        };
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": boolean;
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["InternalErrorResponse"];
-                };
-            };
-        };
-    };
     TableBookingCreate: {
         parameters: {
             query?: never;
@@ -4353,6 +4393,69 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PrinterTestPrint: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                outletId: number;
+                printerId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PrinterList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                outletId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["PrinterPrinterStatus"][];
+                };
             };
             /** @description Server Error */
             500: {
@@ -5809,6 +5912,85 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesBusiness"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BillEmailBill: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillEmailBillRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BillDownloadBill: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                tableBookingId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
                 };
             };
             /** @description Unauthorized */

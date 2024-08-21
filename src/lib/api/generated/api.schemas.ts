@@ -113,6 +113,16 @@ export interface AdjustmentGetAllRequest {
 	[key: string]: unknown;
 }
 
+export interface BillDownloadBillRequest {
+	[key: string]: unknown;
+}
+
+export interface BillEmailBillRequest {
+	email: string;
+	name: string;
+	tableBookingId: number;
+}
+
 export interface BusinessCreateRequest {
 	/**
 	 * @minLength 1
@@ -532,6 +542,9 @@ export type CommonWrapperResultOfResponseAllOf = {
 	value?: CommonWrapperResultOfResponseAllOfValue;
 };
 
+export type CommonWrapperResultOfResponse = CommonWrapperResult &
+	CommonWrapperResultOfResponseAllOf;
+
 export interface PayManualPaymentRequest {
 	amount: number;
 	paymentTypeId: number;
@@ -547,9 +560,6 @@ export interface CommonWrapperResult {
 	failure: boolean;
 	success: boolean;
 }
-
-export type CommonWrapperResultOfResponse = CommonWrapperResult &
-	CommonWrapperResultOfResponseAllOf;
 
 export interface PayDtoStatusResultDto {
 	amount: number;
@@ -581,6 +591,68 @@ export type CommonWrapperResultOfStatusResultDtoAllOf = {
 
 export type CommonWrapperResultOfStatusResultDto = CommonWrapperResult &
 	CommonWrapperResultOfStatusResultDtoAllOf;
+
+export interface PrinterListRequest {
+	[key: string]: unknown;
+}
+
+export interface SystemEventArgs {
+	[key: string]: unknown;
+}
+
+export type ESCPOSNETPrinterStatusEventArgsAllOf = {
+	/** @nullable */
+	didAutocutterErrorOccur?: boolean | null;
+	/** @nullable */
+	didRecoverableErrorOccur?: boolean | null;
+	/** @nullable */
+	didRecoverableNonAutocutterErrorOccur?: boolean | null;
+	/** @nullable */
+	didUnrecoverableErrorOccur?: boolean | null;
+	/** @nullable */
+	isCashDrawerOpen?: boolean | null;
+	/** @nullable */
+	isCoverOpen?: boolean | null;
+	/** @nullable */
+	isInErrorState?: boolean | null;
+	/** @nullable */
+	isPaperCurrentlyFeeding?: boolean | null;
+	/** @nullable */
+	isPaperFeedButtonPushed?: boolean | null;
+	/** @nullable */
+	isPaperLow?: boolean | null;
+	/** @nullable */
+	isPaperOut?: boolean | null;
+	/** @nullable */
+	isPrinterOnline?: boolean | null;
+	/** @nullable */
+	isWaitingForOnlineRecovery?: boolean | null;
+};
+
+export type ESCPOSNETPrinterStatusEventArgs = SystemEventArgs &
+	ESCPOSNETPrinterStatusEventArgsAllOf;
+
+export interface PrinterPrinterConfig {
+	name: string;
+	outletId: number;
+	printerId: number;
+}
+
+/**
+ * @nullable
+ */
+export type PrinterPrinterStatusPrinterStatusEventArgs = ESCPOSNETPrinterStatusEventArgs | null;
+
+export interface PrinterPrinterStatus {
+	dateUpdated: string;
+	printerConfig: PrinterPrinterConfig;
+	/** @nullable */
+	printerStatusEventArgs?: PrinterPrinterStatusPrinterStatusEventArgs;
+}
+
+export interface PrinterTestPrintRequest {
+	[key: string]: unknown;
+}
 
 export interface RoleAddUserInRoleRequest {
 	roleId: number;
@@ -649,8 +721,6 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
-
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -681,6 +751,8 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
+
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: unknown;
@@ -794,12 +866,6 @@ export interface TableBookingCreateRequest {
 	 * @exclusiveMinimum
 	 */
 	tableId: number;
-}
-
-export interface TableBookingEmailBillRequest {
-	email: string;
-	name: string;
-	tableBookingId: number;
 }
 
 export interface TableBookingGetRequest {
@@ -1042,29 +1108,6 @@ export interface EntitiesOrderItemStatus {
 	status: string;
 }
 
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
-}
-
-export interface EntitiesMenuItemExtraGroup {
-	extraGroup: EntitiesExtraGroup;
-	extraGroupId: number;
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-}
-
-export interface EntitiesExtraGroup {
-	extraGroupId: number;
-	extras: EntitiesExtra[];
-	/** @nullable */
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	name: string;
-}
-
 export interface EntitiesExtra {
 	extraGroup: EntitiesExtraGroup;
 	extraGroupId: number;
@@ -1074,6 +1117,14 @@ export interface EntitiesExtra {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	positionId: number;
 	price: number;
+}
+
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -1104,6 +1155,14 @@ export interface EntitiesOption {
 	price: number;
 }
 
+export interface EntitiesOrderItemOption {
+	option: EntitiesOption;
+	optionId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemId: number;
+	orderItemOptionId: number;
+}
+
 export interface EntitiesDivision {
 	divisionId: number;
 	divisionName: string;
@@ -1119,6 +1178,29 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
+/**
+ * @nullable
+ */
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
+
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
+	/** @nullable */
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	parent?: EntitiesMenuSectionParent;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
+}
+
 export interface EntitiesMenu {
 	id: number;
 	/** @nullable */
@@ -1128,11 +1210,6 @@ export interface EntitiesMenu {
 	outletId: number;
 	position: number;
 }
-
-/**
- * @nullable
- */
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
 /**
  * @nullable
@@ -1162,22 +1239,19 @@ export interface EntitiesMenuItem {
 	tags?: EntitiesTag[] | null;
 }
 
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
+export interface EntitiesMenuItemExtraGroup {
+	extraGroup: EntitiesExtraGroup;
+	extraGroupId: number;
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	extras: EntitiesExtra[];
 	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	parent?: EntitiesMenuSectionParent;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	name: string;
 }
 
 /**
@@ -1209,18 +1283,22 @@ export interface EntitiesOrderItem {
 	tableBookingId: number;
 }
 
-export interface EntitiesOrderItemOption {
-	option: EntitiesOption;
-	optionId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemId: number;
-	orderItemOptionId: number;
-}
-
 export interface EntitiesOrderGroup {
 	orderGroupId: number;
 	/** @nullable */
 	orderItems?: EntitiesOrderItem[] | null;
+}
+
+export interface EntitiesRole {
+	description: string;
+	isBackOffice: boolean;
+	isFrontLine: boolean;
+	name: string;
+	/** @nullable */
+	outletId?: number | null;
+	roleId: number;
+	/** @nullable */
+	userRole?: EntitiesUserRole[] | null;
 }
 
 /**
@@ -1245,18 +1323,6 @@ export interface EntitiesUserRole {
 	user: EntitiesUser;
 	userId: string;
 	userRoleId: number;
-}
-
-export interface EntitiesRole {
-	description: string;
-	isBackOffice: boolean;
-	isFrontLine: boolean;
-	name: string;
-	/** @nullable */
-	outletId?: number | null;
-	roleId: number;
-	/** @nullable */
-	userRole?: EntitiesUserRole[] | null;
 }
 
 /**
@@ -1307,17 +1373,6 @@ export interface TableOrderGetBillBillMenuItemDTO {
 	menuItemId: number;
 	name: string;
 	price: number;
-}
-
-export interface DTOTableBookingDTO {
-	bookingDate: string;
-	bookingName: string;
-	/** @nullable */
-	closeDate?: string | null;
-	id: number;
-	tableId: number;
-	user: DTOUserDTO;
-	userId: string;
 }
 
 export interface TableOrderGetBillBillOrderItemDTO {
@@ -1438,6 +1493,17 @@ export interface DTOUserDTO {
 	image: string;
 	isActive: boolean;
 	name: string;
+	userId: string;
+}
+
+export interface DTOTableBookingDTO {
+	bookingDate: string;
+	bookingName: string;
+	/** @nullable */
+	closeDate?: string | null;
+	id: number;
+	tableId: number;
+	user: DTOUserDTO;
 	userId: string;
 }
 

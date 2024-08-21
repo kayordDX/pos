@@ -4,11 +4,11 @@
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
-	import { Field, Control, FieldErrors, Fieldset, Legend, Label } from "@kayord/ui/formsnap";
+	import { Field, Control, FieldErrors } from "@kayord/ui/formsnap";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status";
-	import { MessageCircleWarningIcon } from "lucide-svelte";
+	import { MessageCircleWarningIcon, SquareDotIcon } from "lucide-svelte";
 
 	export let tableBookingId: number;
 	export let open = false;
@@ -53,7 +53,9 @@
 
 <Drawer.Root bind:open>
 	<Drawer.Trigger>
-		<Button class="w-full" variant="secondary">Manual Adjustment</Button>
+		<Button class="w-full" variant="secondary">
+			<SquareDotIcon class="size-4 mr-2" /> Manual Adjustment
+		</Button>
 	</Drawer.Trigger>
 	<Drawer.Content class="fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full">
 		<form use:enhance method="POST">

@@ -5,13 +5,14 @@
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import EmailBill from "./EmailBill.svelte";
 	import { stringToFDate } from "$lib/util";
 	import Items from "./Items.svelte";
 	import Adjustment from "./Adjustment.svelte";
 	import PaymentTypeIcon from "$lib/components/PaymentTypeIcon/PaymentTypeIcon.svelte";
 	import { status } from "$lib/stores/status";
 	import EditPaymentType from "./EditPaymentType.svelte";
+	import BillOptions from "./BillOptions.svelte";
+	import { WalletCardsIcon, DoorOpenIcon } from "lucide-svelte";
 
 	interface Props {
 		data: TableOrderGetBillResponse;
@@ -130,21 +131,25 @@
 			{/if}
 			{#if !isReadOnly}
 				<Button href={`/table/pay/${bookingId}?total=${data.total}&balance=${data?.balance}`}>
-					Pay Bill
+					<WalletCardsIcon class="size-4 mr-2" />
+					Pay
 				</Button>
 				{#if data?.balance == 0}
 					<Button
 						class="w-full"
 						disabled={$closeTableMut.isPending}
 						variant="destructive"
-						on:click={closeTable}>Close Table</Button
+						on:click={closeTable}
 					>
+						<DoorOpenIcon class="size-4 mr-2" />
+						Close Table
+					</Button>
 				{/if}
 				{#if $closeTableMut.error}
 					<Error message={getError($closeTableMut.error).message} />
 				{/if}
 			{/if}
-			<EmailBill {bookingId} />
+			<BillOptions {bookingId} />
 		</div>
 	</Card.Footer>
 </Card.Root>

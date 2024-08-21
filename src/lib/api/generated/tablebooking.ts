@@ -23,7 +23,6 @@ import type {
 	InternalErrorResponse,
 	TableBookingCloseRequest,
 	TableBookingCreateRequest,
-	TableBookingEmailBillRequest,
 	TableBookingGetResponse,
 	TableBookingHistoryResponse,
 	TableBookingPaymentTypeRequest,
@@ -272,73 +271,6 @@ export function createTableBookingGet<
 	return query;
 }
 
-export const tableBookingEmailBill = (
-	tableBookingEmailBillRequest: BodyType<TableBookingEmailBillRequest>
-) => {
-	return customInstance<boolean>({
-		url: `/tableBooking/emailBill`,
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		data: tableBookingEmailBillRequest,
-	});
-};
-
-export const getTableBookingEmailBillMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof tableBookingEmailBill>>,
-		TError,
-		{ data: BodyType<TableBookingEmailBillRequest> },
-		TContext
-	>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof tableBookingEmailBill>>,
-	TError,
-	{ data: BodyType<TableBookingEmailBillRequest> },
-	TContext
-> => {
-	const { mutation: mutationOptions } = options ?? {};
-
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof tableBookingEmailBill>>,
-		{ data: BodyType<TableBookingEmailBillRequest> }
-	> = (props) => {
-		const { data } = props ?? {};
-
-		return tableBookingEmailBill(data);
-	};
-
-	return { mutationFn, ...mutationOptions };
-};
-
-export type TableBookingEmailBillMutationResult = NonNullable<
-	Awaited<ReturnType<typeof tableBookingEmailBill>>
->;
-export type TableBookingEmailBillMutationBody = BodyType<TableBookingEmailBillRequest>;
-export type TableBookingEmailBillMutationError = ErrorType<void | InternalErrorResponse>;
-
-export const createTableBookingEmailBill = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof tableBookingEmailBill>>,
-		TError,
-		{ data: BodyType<TableBookingEmailBillRequest> },
-		TContext
-	>;
-}): CreateMutationResult<
-	Awaited<ReturnType<typeof tableBookingEmailBill>>,
-	TError,
-	{ data: BodyType<TableBookingEmailBillRequest> },
-	TContext
-> => {
-	const mutationOptions = getTableBookingEmailBillMutationOptions(options);
-
-	return createMutation(mutationOptions);
-};
 export const tableBookingCreate = (
 	tableBookingCreateRequest: BodyType<TableBookingCreateRequest>
 ) => {

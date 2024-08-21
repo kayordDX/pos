@@ -1,17 +1,24 @@
 <script lang="ts">
-	import { Button, Drawer, Form, Input, toast } from "@kayord/ui";
+	import { Button, Card, Form, Input, toast } from "@kayord/ui";
 	import { Control, Field, FieldErrors } from "@kayord/ui/formsnap";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
-	import { createTableBookingEmailBill } from "$lib/api";
+	import { createBillEmailBill } from "$lib/api";
 	import { page } from "$app/stores";
 	import { getError } from "$lib/types";
+	import { goto } from "$app/navigation";
 
-	const mutation = createTableBookingEmailBill();
+	interface Props {
+		bookingId: number;
+	}
+	let { bookingId }: Props = $props();
 
-	export let bookingId: number;
-	let dialogOpen = false;
+	const mutation = createBillEmailBill();
+
+	const goBack = () => {
+		goto(`/table/bill/${bookingId}`);
+	};
 
 	const schema = z.object({
 		email: z
@@ -23,11 +30,11 @@
 	type FormSchema = z.infer<typeof schema>;
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			dialogOpen = false;
 			await $mutation.mutateAsync({
 				data: { email: data.email, name: data.name, tableBookingId: Number($page.params.id) },
 			});
 			toast.info(`Sending email to ${data.email}`);
+			await goBack();
 		} catch (err) {
 			toast.error(getError(err).message);
 		}
@@ -35,6 +42,7 @@
 
 	const form = superForm(defaults(zod(schema)), {
 		SPA: true,
+		resetForm: false,
 		validators: zod(schema),
 		onUpdate({ form }) {
 			if (form.valid) {
@@ -46,17 +54,16 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<Button class="w-full" on:click={() => (dialogOpen = true)}>Email bill</Button>
-
-<Drawer.Root bind:open={dialogOpen}>
-	<Drawer.Trigger />
-	<Drawer.Content class="fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full">
+<Card.Root class="m-4">
+	<div class="flex flex-col gap-2">
 		<form use:enhance method="POST">
-			<Drawer.Header>
-				<Drawer.Title>Email bill #{bookingId}</Drawer.Title>
-				<Drawer.Description>This will send email with bill attached</Drawer.Description>
-			</Drawer.Header>
-			<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
+			<Card.Header>
+				<Card.Title>Email bill #{bookingId}</Card.Title>
+				<Card.Description>This will send email with bill attached</Card.Description>
+			</Card.Header>
+			<div
+				class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2 overflow-y-scroll"
+			>
 				<Field {form} name="name">
 					<Control let:attrs>
 						<Form.Label>Name</Form.Label>
@@ -72,9 +79,10 @@
 					<FieldErrors class="text-sm text-destructive" />
 				</Field>
 			</div>
-			<Drawer.Footer>
-				<Button type="submit" disabled={false}>Send Email</Button>
-			</Drawer.Footer>
+			<Card.Footer class="flex justify-between items-center">
+				<Button variant="secondary" onclick={goBack}>Cancel</Button>
+				<Button type="submit" disabled={$mutation.isPending}>Send Email</Button>
+			</Card.Footer>
 		</form>
-	</Drawer.Content>
-</Drawer.Root>
+	</div>
+</Card.Root>

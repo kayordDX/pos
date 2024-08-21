@@ -1172,57 +1172,6 @@
         }
       }
     },
-    "/tableBooking/emailBill": {
-      "post": {
-        "tags": [
-          "Tablebooking"
-        ],
-        "operationId": "TableBookingEmailBill",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/TableBookingEmailBillRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWTBearerAuth": []
-          }
-        ]
-      }
-    },
     "/tableBooking": {
       "post": {
         "tags": [
@@ -2201,6 +2150,100 @@
             "JWTBearerAuth": []
           }
         ]
+      }
+    },
+    "/printer/test/{outletId}/{printerId}": {
+      "get": {
+        "tags": [
+          "Printer"
+        ],
+        "operationId": "PrinterTestPrint",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "printerId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/printer/list/{outletId}": {
+      "get": {
+        "tags": [
+          "Printer"
+        ],
+        "operationId": "PrinterList",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/PrinterPrinterStatus"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/pay/status/{reference}": {
@@ -4125,6 +4168,107 @@
                 "schema": {
                   "$ref": "#/components/schemas/EntitiesBusiness"
                 }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/bill/email": {
+      "post": {
+        "tags": [
+          "Bill"
+        ],
+        "operationId": "BillEmailBill",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BillEmailBillRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/bill/download/{tableBookingId}": {
+      "get": {
+        "tags": [
+          "Bill"
+        ],
+        "operationId": "BillDownloadBill",
+        "parameters": [
+          {
+            "name": "tableBookingId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -7442,27 +7586,6 @@
         "type": "object",
         "additionalProperties": false
       },
-      "TableBookingEmailBillRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "tableBookingId",
-          "email",
-          "name"
-        ],
-        "properties": {
-          "tableBookingId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "email": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
       "TableBookingCreateRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -8069,6 +8192,130 @@
             "format": "int32"
           }
         }
+      },
+      "PrinterTestPrintRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PrinterPrinterStatus": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "dateUpdated",
+          "printerConfig"
+        ],
+        "properties": {
+          "dateUpdated": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "printerConfig": {
+            "$ref": "#/components/schemas/PrinterPrinterConfig"
+          },
+          "printerStatusEventArgs": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ESCPOS_NETPrinterStatusEventArgs"
+              }
+            ]
+          }
+        }
+      },
+      "PrinterPrinterConfig": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "outletId",
+          "printerId",
+          "name"
+        ],
+        "properties": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "printerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ESCPOS_NETPrinterStatusEventArgs": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/SystemEventArgs"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "isWaitingForOnlineRecovery": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "isPaperCurrentlyFeeding": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "isPaperFeedButtonPushed": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "isPrinterOnline": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "isCashDrawerOpen": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "isCoverOpen": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "isPaperLow": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "isPaperOut": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "isInErrorState": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "didRecoverableErrorOccur": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "didUnrecoverableErrorOccur": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "didAutocutterErrorOccur": {
+                "type": "boolean",
+                "nullable": true
+              },
+              "didRecoverableNonAutocutterErrorOccur": {
+                "type": "boolean",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "SystemEventArgs": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PrinterListRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "CommonWrapperResultOfStatusResultDto": {
         "allOf": [
@@ -9372,6 +9619,31 @@
             "nullable": false
           }
         }
+      },
+      "BillEmailBillRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId",
+          "email",
+          "name"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "BillDownloadBillRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "AdjustmentGetAllRequest": {
         "type": "object",
