@@ -7,7 +7,7 @@
 	import { Avatar, Badge, Button, Card, Dialog, Drawer, Popover, ScrollArea } from "@kayord/ui";
 	import { BellElectricIcon, EllipsisIcon } from "lucide-svelte";
 	import Item from "./Item.svelte";
-	import { backOffice } from "$lib/stores/backOffice";
+	import { backOffice } from "$lib/stores/backOffice.svelte";
 
 	interface Props {
 		group: TableOrderOfficeOrderBasedBackOrderGroupDTO;
@@ -25,13 +25,16 @@
 		refetch();
 	};
 
-	const height = $derived($backOffice ?? 500);
+	const height = $derived(backOffice.value.itemHeight ?? 500);
 	let clientHeight = $state(0);
 
 	const showMore = $derived(clientHeight > height);
 </script>
 
-<div style={`height: ${height}px`} class="w-full">
+<div
+	style={`height: ${height}px; font-size: ${backOffice.value.fontSize / 1000}rem`}
+	class="w-full"
+>
 	<ScrollArea class="overflow-hidden h-full">
 		<Card.Root
 			class={`p-2 ${group.priority > 10 ? "border-4 border-destructive" : ""}`}
@@ -57,7 +60,7 @@
 							</Popover.Root>
 							<div class="max-w-64 line-clamp-2 flex flex-col">
 								<div class="leading-none"># {group.orderGroupId}</div>
-								<div class="text-sm font-bold">
+								<div class="font-bold">
 									{group.tableBooking?.table.name} - {group.tableBooking?.table.section?.name}
 									<span class="text-muted-foreground text-xs"
 										>({group.tableBooking?.bookingName})</span

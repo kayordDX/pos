@@ -7,7 +7,7 @@
 	import ToggleHeader from "./ToggleHeader.svelte";
 	import Settings from "./Settings.svelte";
 	import { Masonry } from "$lib/components/Masonry";
-	import { backOffice } from "$lib/stores/backOffice";
+	import { backOffice } from "$lib/stores/backOffice.svelte";
 
 	interface Props {
 		isHistory?: boolean;
@@ -33,7 +33,7 @@
 		return string.charAt(0).toUpperCase() + string.slice(1);
 	};
 
-	const maxColHeight = $derived($backOffice ?? 500);
+	const maxColHeight = $derived(backOffice.value.itemHeight ?? 500);
 
 	let [minColWidth, maxColWidth, gap] = [500, 600, 10];
 	let screenWidth = $state(0);
