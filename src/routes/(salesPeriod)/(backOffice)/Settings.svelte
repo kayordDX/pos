@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Badge, Popover, Slider } from "@kayord/ui";
+	import { Badge, Button, Popover, Slider } from "@kayord/ui";
 	import { Settings2Icon } from "lucide-svelte";
 	import { backOffice } from "$lib/stores/backOffice.svelte";
 	import { useLocalStorage } from "$lib/stores";
@@ -11,6 +11,10 @@
 	$effect(() => {
 		test.value = backOffice.value;
 	});
+
+	const reset = () => {
+		backOffice.value = { itemHeight: 500, fontSize: 1000 };
+	};
 </script>
 
 <Popover.Root>
@@ -41,5 +45,6 @@
 				backOffice.value.fontSize = v[0] ?? 1000;
 			}}
 		/>
+		<Button class="w-full mt-4" onclick={reset}>Reset</Button>
 	</Popover.Content>
 </Popover.Root>
