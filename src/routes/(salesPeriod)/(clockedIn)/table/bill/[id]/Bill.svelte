@@ -47,6 +47,14 @@
 				Bill #{bookingId}
 			</Card.Title>
 			<Card.Description>{stringToFDate(data.billDate)}</Card.Description>
+			{#if showDetail}
+				<Separator class="mt-2" />
+				<div class="text-muted-foreground flex flex-col text-sm">
+					<div>{data.tableName}</div>
+					<div>Waiter {data.waiter}</div>
+					<div>Bill Status {data.isClosed ? "Closed" : "Open"}</div>
+				</div>
+			{/if}
 		</div>
 		<div><Switch bind:checked={showDetail} /></div>
 	</Card.Header>

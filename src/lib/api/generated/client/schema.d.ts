@@ -1684,6 +1684,9 @@ export interface components {
             billDate: string;
             adjustments?: components["schemas"]["EntitiesAdjustment"][] | null;
             isCashedUp: boolean;
+            tableName?: string | null;
+            waiter?: string | null;
+            isClosed: boolean;
         };
         TableOrderGetBillBillOrderItemDTO: {
             /** Format: int32 */

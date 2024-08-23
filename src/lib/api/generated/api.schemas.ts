@@ -1400,12 +1400,17 @@ export interface TableOrderGetBillResponse {
 	balance: number;
 	billDate: string;
 	isCashedUp: boolean;
+	isClosed: boolean;
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
 	paymentsReceived: EntitiesPayment[];
+	/** @nullable */
+	tableName?: string | null;
 	tipAmount: number;
 	total: number;
 	totalExVAT: number;
 	vat: number;
+	/** @nullable */
+	waiter?: string | null;
 }
 
 export interface TableOrderOfficeOrderBasedBackRequest {
