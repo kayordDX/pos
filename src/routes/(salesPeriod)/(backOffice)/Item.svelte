@@ -39,7 +39,7 @@
 		<div>
 			<div>{item.menuItem.name}</div>
 			{#if (item.orderItemOptions ?? []).length > 0}
-				<div class="text-muted-foreground mt-1 text-sm">
+				<div class="text-muted-foreground mt-1">
 					<div class="ml-4">
 						{#each item.orderItemOptions ?? [] as option}
 							<div>
@@ -53,7 +53,7 @@
 			{/if}
 
 			{#if (item.orderItemExtras ?? []).length > 0}
-				<div class="text-muted-foreground mt-1 text-sm">
+				<div class="text-muted-foreground mt-1">
 					<div class="ml-4">
 						{#each item.orderItemExtras ?? [] as extra}
 							<div>
