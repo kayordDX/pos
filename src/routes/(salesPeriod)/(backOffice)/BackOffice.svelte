@@ -60,8 +60,8 @@
 					<Badge>{$query.data.pendingItems} pending items(s)</Badge>
 				{/if}
 			</div>
+			<NotifyIndicator />
 			<div class="flex gap-1 items-center">
-				<NotifyIndicator />
 				<div>
 					{#if !isHistory}
 						<a href={`/${type}/history`}>
