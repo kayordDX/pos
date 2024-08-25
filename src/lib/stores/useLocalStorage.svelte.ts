@@ -8,8 +8,10 @@ export function useLocalStorage<T>(key: string, value: T) {
 		if (item) storage.value = JSON.parse(item);
 	}
 
-	$effect(() => {
-		localStorage.setItem(key, JSON.stringify(storage.value));
+	$effect.root(() => {
+		$effect(() => {
+			localStorage.setItem(key, JSON.stringify(storage.value));
+		});
 	});
 
 	return storage;

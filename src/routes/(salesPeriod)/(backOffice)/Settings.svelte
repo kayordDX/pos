@@ -2,15 +2,6 @@
 	import { Badge, Button, Popover, Slider } from "@kayord/ui";
 	import { Settings2Icon } from "lucide-svelte";
 	import { backOffice } from "$lib/stores/backOffice.svelte";
-	import { useLocalStorage } from "$lib/stores";
-
-	const test = useLocalStorage("test", { itemHeight: 500, fontSize: 1000 });
-	$effect(() => {
-		backOffice.value = test.value;
-	});
-	$effect(() => {
-		test.value = backOffice.value;
-	});
 
 	const reset = () => {
 		backOffice.value = { itemHeight: 500, fontSize: 1000 };

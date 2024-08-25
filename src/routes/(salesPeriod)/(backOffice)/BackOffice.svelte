@@ -8,6 +8,8 @@
 	import Settings from "./Settings.svelte";
 	import { Masonry } from "$lib/components/Masonry";
 	import { backOffice } from "$lib/stores/backOffice.svelte";
+	import NotifyIndicator from "./NotifyIndicator.svelte";
+	import Hub from "./Hub.svelte";
 
 	interface Props {
 		isHistory?: boolean;
@@ -59,6 +61,7 @@
 				{/if}
 			</div>
 			<div class="flex gap-1 items-center">
+				<NotifyIndicator />
 				<div>
 					{#if !isHistory}
 						<a href={`/${type}/history`}>
@@ -75,6 +78,7 @@
 				<ToggleHeader />
 			</div>
 		</div>
+		<Hub />
 
 		<Masonry
 			items={$query.data?.orderGroups ?? []}

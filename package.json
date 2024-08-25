@@ -15,6 +15,7 @@
 	"devDependencies": {
 		"@kayord/tw-plugin": "^1.0.2",
 		"@kayord/ui": "^0.9.14",
+		"@microsoft/signalr": "^8.0.7",
 		"@sveltejs/adapter-static": "^3.0.4",
 		"@sveltejs/kit": "^2.5.22",
 		"@sveltejs/vite-plugin-svelte": "^3.1.1",
@@ -50,5 +51,5 @@
 		"zod": "^3.23.8"
 	},
 	"type": "module",
-	"packageManager": "pnpm@9.7.0+sha512.dc09430156b427f5ecfc79888899e1c39d2d690f004be70e05230b72cb173d96839587545d09429b55ac3c429c801b4dc3c0e002f653830a420fa2dd4e3cf9cf"
+	"packageManager": "pnpm@9.8.0+sha512.8e4c3550fb500e808dbc30bb0ce4dd1eb614e30b1c55245f211591ec2cdf9c611cabd34e1364b42f564bd54b3945ed0f49d61d1bbf2ec9bd74b866fcdc723276"
 }
