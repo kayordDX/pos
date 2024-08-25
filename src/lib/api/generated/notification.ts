@@ -219,6 +219,56 @@ export const createNotificationTest = <
 
 	return createMutation(mutationOptions);
 };
+export const notificationSound = () => {
+	return customInstance<boolean>({ url: `/notification/sound`, method: "POST" });
+};
+
+export const getNotificationSoundMutationOptions = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof notificationSound>>,
+		TError,
+		void,
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof notificationSound>>,
+	TError,
+	void,
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof notificationSound>>, void> = () => {
+		return notificationSound();
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type NotificationSoundMutationResult = NonNullable<
+	Awaited<ReturnType<typeof notificationSound>>
+>;
+
+export type NotificationSoundMutationError = ErrorType<InternalErrorResponse>;
+
+export const createNotificationSound = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof notificationSound>>,
+		TError,
+		void,
+		TContext
+	>;
+}): CreateMutationResult<Awaited<ReturnType<typeof notificationSound>>, TError, void, TContext> => {
+	const mutationOptions = getNotificationSoundMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const notificationAddUser = (
 	notificationAddUserRequest: BodyType<NotificationAddUserRequest>
 ) => {

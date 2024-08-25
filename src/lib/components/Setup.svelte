@@ -68,6 +68,11 @@
 		getNotifyPermission();
 		await getServiceWorker();
 	});
+
+	const playSound = () => {
+		const audio = new Audio("/sounds/notification.mp3");
+		audio.play();
+	};
 </script>
 
 <Card.Root class="p-5 m-5">
@@ -180,4 +185,14 @@
 			<Button variant="link" href="/">Cancel</Button>
 		</form>
 	</Card.Content>
+</Card.Root>
+
+<Card.Root class="p-5 m-5">
+	<Card.Header>
+		<Card.Title>Sound</Card.Title>
+		<Card.Description>Play Sound</Card.Description>
+	</Card.Header>
+	<Card.Footer>
+		<Button onclick={playSound}>Play</Button>
+	</Card.Footer>
 </Card.Root>

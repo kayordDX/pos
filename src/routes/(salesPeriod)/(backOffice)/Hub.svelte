@@ -2,9 +2,23 @@
 	import { PUBLIC_API_URL } from "$env/static/public";
 	import { session } from "$lib/firebase";
 	import { notification } from "$lib/stores/notify.svelte";
+	import { status } from "$lib/stores/status";
 	import * as signalR from "@microsoft/signalr";
 
+	interface SoundEvent {
+		outletId: number;
+		divisions: Array<number>;
+	}
+
+	interface Props {
+		refetch: () => void;
+		divisionIds?: string;
+	}
+	let { refetch, divisionIds }: Props = $props();
+
 	let connectionRef = $state<signalR.HubConnection>();
+
+	const divisions = $derived(divisionIds ? divisionIds.split(",").map(Number) : []);
 
 	const createHubConnection = async () => {
 		const token = await $session?.getIdToken();
@@ -29,10 +43,17 @@
 			connectionRef
 				.start()
 				.then(function () {
-					connectionRef?.on("PlaySound", () => {
-						console.log("PlaySound");
-						audio.play();
-						notification.notify();
+					connectionRef
+						?.invoke("JoinGroup", `outlet:${$status?.outletId}`)
+						.catch((err) => console.error(err));
+					connectionRef?.on("PlaySound", (e: SoundEvent) => {
+						console.log("PlaySound", e);
+						const shouldNotify = divisions.some((r) => e.divisions.includes(r));
+						if (shouldNotify) {
+							refetch();
+							notification.notify();
+							audio.play();
+						}
 					});
 				})
 				.catch((err) => console.error(err));

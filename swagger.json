@@ -2795,6 +2795,36 @@
         }
       }
     },
+    "/notification/sound": {
+      "post": {
+        "tags": [
+          "Notification"
+        ],
+        "operationId": "NotificationSound",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/notification/addUser": {
       "post": {
         "tags": [

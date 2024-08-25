@@ -24,7 +24,7 @@
 			divisionIds: divisionIds,
 			complete: isHistory,
 		},
-		{ query: { refetchInterval: 20000 } }
+		{ query: { refetchInterval: 30000 } }
 	);
 
 	const getTime = (date: string) => {
@@ -78,7 +78,7 @@
 				<ToggleHeader />
 			</div>
 		</div>
-		<Hub />
+		<Hub refetch={$query.refetch} {divisionIds} />
 
 		<Masonry
 			items={$query.data?.orderGroups ?? []}
