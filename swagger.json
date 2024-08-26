@@ -4172,6 +4172,49 @@
         ]
       }
     },
+    "/bill/whatsapp": {
+      "post": {
+        "tags": [
+          "Bill"
+        ],
+        "operationId": "BillWhatsappBill",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BillWhatsappBillRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/bill/print": {
       "post": {
         "tags": [
@@ -9664,6 +9707,31 @@
             "type": "string",
             "minLength": 1,
             "nullable": false
+          }
+        }
+      },
+      "BillWhatsappBillRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId",
+          "name",
+          "phoneNumber"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "countryCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string"
           }
         }
       },

@@ -31,10 +31,10 @@
 				<PrinterIcon class="size-4 mr-2" />
 				Print
 			</Button>
-			<!-- <Button class="w-full" href={`/table/bill/${bookingId}/actions/email`}>
+			<Button class="w-full" href={`/table/bill/${bookingId}/actions/whatsapp`}>
 				<MessageCircleMoreIcon class="size-4 mr-2" />
 				Whatsapp
-			</Button> -->
+			</Button>
 		</div>
 	</Drawer.Content>
 </Drawer.Root>

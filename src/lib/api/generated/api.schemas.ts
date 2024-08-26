@@ -129,6 +129,14 @@ export interface BillPrintBillRequest {
 	tableBookingId: number;
 }
 
+export interface BillWhatsappBillRequest {
+	/** @nullable */
+	countryCode?: string | null;
+	name: string;
+	phoneNumber: string;
+	tableBookingId: number;
+}
+
 export interface BusinessCreateRequest {
 	/**
 	 * @minLength 1
@@ -548,9 +556,6 @@ export type CommonWrapperResultOfResponseAllOf = {
 	value?: CommonWrapperResultOfResponseAllOfValue;
 };
 
-export type CommonWrapperResultOfResponse = CommonWrapperResult &
-	CommonWrapperResultOfResponseAllOf;
-
 export interface PayManualPaymentRequest {
 	amount: number;
 	paymentTypeId: number;
@@ -566,6 +571,9 @@ export interface CommonWrapperResult {
 	failure: boolean;
 	success: boolean;
 }
+
+export type CommonWrapperResultOfResponse = CommonWrapperResult &
+	CommonWrapperResultOfResponseAllOf;
 
 export interface PayDtoStatusResultDto {
 	amount: number;
@@ -725,6 +733,8 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
+
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -755,8 +765,6 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
-
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: unknown;
@@ -1030,6 +1038,11 @@ export type EntitiesCashUpUserItemTypePaymentType = EntitiesPaymentType | null;
  */
 export type EntitiesCashUpUserItemTypeCashupConfig = EntitiesCashUpConfig | null;
 
+/**
+ * @nullable
+ */
+export type EntitiesCashUpUserItemTypeAdjustmentType = EntitiesAdjustmentType | null;
+
 export interface EntitiesCashUpUserItemType {
 	/** @nullable */
 	adjustmentType?: EntitiesCashUpUserItemTypeAdjustmentType;
@@ -1082,11 +1095,6 @@ export interface EntitiesAdjustmentType {
 	name: string;
 }
 
-/**
- * @nullable
- */
-export type EntitiesCashUpUserItemTypeAdjustmentType = EntitiesAdjustmentType | null;
-
 export interface EntitiesAdjustment {
 	adjustmentId: number;
 	adjustmentType: EntitiesAdjustmentType;
@@ -1110,6 +1118,14 @@ export interface EntitiesOrderItemStatus {
 	orderItemStatusId: number;
 	priority: number;
 	status: string;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	extras: EntitiesExtra[];
+	/** @nullable */
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	name: string;
 }
 
 export interface EntitiesExtra {
@@ -1248,14 +1264,6 @@ export interface EntitiesMenuItemExtraGroup {
 	extraGroupId: number;
 	menuItem: EntitiesMenuItem;
 	menuItemId: number;
-}
-
-export interface EntitiesExtraGroup {
-	extraGroupId: number;
-	extras: EntitiesExtra[];
-	/** @nullable */
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	name: string;
 }
 
 /**

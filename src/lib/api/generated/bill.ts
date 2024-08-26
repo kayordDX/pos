@@ -19,11 +19,77 @@ import type {
 import type {
 	BillEmailBillRequest,
 	BillPrintBillRequest,
+	BillWhatsappBillRequest,
 	InternalErrorResponse,
 } from "./api.schemas";
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType, BodyType } from "../mutator/customInstance";
 
+export const billWhatsappBill = (billWhatsappBillRequest: BodyType<BillWhatsappBillRequest>) => {
+	return customInstance<boolean>({
+		url: `/bill/whatsapp`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: billWhatsappBillRequest,
+	});
+};
+
+export const getBillWhatsappBillMutationOptions = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof billWhatsappBill>>,
+		TError,
+		{ data: BodyType<BillWhatsappBillRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof billWhatsappBill>>,
+	TError,
+	{ data: BodyType<BillWhatsappBillRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof billWhatsappBill>>,
+		{ data: BodyType<BillWhatsappBillRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return billWhatsappBill(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type BillWhatsappBillMutationResult = NonNullable<
+	Awaited<ReturnType<typeof billWhatsappBill>>
+>;
+export type BillWhatsappBillMutationBody = BodyType<BillWhatsappBillRequest>;
+export type BillWhatsappBillMutationError = ErrorType<InternalErrorResponse>;
+
+export const createBillWhatsappBill = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof billWhatsappBill>>,
+		TError,
+		{ data: BodyType<BillWhatsappBillRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof billWhatsappBill>>,
+	TError,
+	{ data: BodyType<BillWhatsappBillRequest> },
+	TContext
+> => {
+	const mutationOptions = getBillWhatsappBillMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const billPrintBill = (billPrintBillRequest: BodyType<BillPrintBillRequest>) => {
 	return customInstance<boolean>({
 		url: `/bill/print`,

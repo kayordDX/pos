@@ -24,7 +24,7 @@
 			divisionIds: divisionIds,
 			complete: isHistory,
 		},
-		{ query: { refetchInterval: 30000 } }
+		{ query: { refetchInterval: 40000 } }
 	);
 
 	const getTime = (date: string) => {
