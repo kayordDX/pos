@@ -5,7 +5,11 @@ import { kayordPlugin } from "@kayord/tw-plugin";
 
 export default {
 	darkMode: ["class"],
-	content: ["./src/**/*.{html,js,svelte,ts}", "./node_modules/@kayord/ui/**/*.{html,js,svelte,ts}"],
+	content: [
+		"./src/**/*.{html,js,svelte,ts}",
+		"./node_modules/@kayord/ui/**/*.{html,js,svelte,ts}",
+		"./node_modules/layerchart/**/*.{svelte,js}",
+	],
 	theme: {
 		container: {
 			center: true,
@@ -48,6 +52,12 @@ export default {
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))",
+				},
+				surface: {
+					content: "hsl(var(--card-foreground) / <alpha-value>)",
+					100: "hsl(var(--background) / <alpha-value>)",
+					200: "hsl(var(---muted) / <alpha-value>)",
+					300: "hsl(var(--background) / <alpha-value>)",
 				},
 			},
 			borderRadius: {
