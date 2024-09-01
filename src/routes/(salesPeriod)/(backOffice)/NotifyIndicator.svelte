@@ -4,7 +4,7 @@
 </script>
 
 {#if notification.show}
-	<div transition:slide class="absolute top-0 right-0 bottom-0 left-0 z-[-1] overflow-hidden">
+	<div transition:slide class="fixed top-0 right-0 bottom-0 left-0 z-[-1] overflow-hidden">
 		<div class="bg-foreground/20 w-full h-full"></div>
 	</div>
 {/if}
