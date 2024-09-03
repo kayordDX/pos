@@ -12,7 +12,9 @@
 	import { goto } from "$app/navigation";
 	import CashUpItemManual from "./CashUpItemManual.svelte";
 
-	const query = createCashUpUserDetail($page.params.Id ?? "", $status.outletId);
+	const query = createCashUpUserDetail($page.params.Id ?? "", $status.outletId, {
+		cashUpUserId: Number($page.params.cashUpUserId ?? 0),
+	});
 
 	const mutation = createCashUpUserClose();
 
@@ -58,7 +60,9 @@
 							<Card.Description>{$query.data.user.email}</Card.Description>
 						</div>
 					</div>
-					<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
+					{#if Number($page.params.cashUpUserId ?? 0) == 0}
+						<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
+					{/if}
 				</div>
 			</Card.Header>
 			<Card.Content>
@@ -93,9 +97,11 @@
 				</div>
 			</Card.Content>
 			<Card.Footer class="flex flex-col gap-2">
-				<Button class="w-full" on:click={cashUpClose}>
-					<BookUpIcon class="size-4 mr-2" /> Cash Up
-				</Button>
+				{#if Number($page.params.cashUpUserId ?? 0) == 0}
+					<Button class="w-full" on:click={cashUpClose}>
+						<BookUpIcon class="size-4 mr-2" /> Cash Up
+					</Button>
+				{/if}
 			</Card.Footer>
 		</Card.Root>
 	{/if}

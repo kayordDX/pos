@@ -10,12 +10,16 @@
 
 	let billId = $state<number>();
 
-	let query = createTableBookingHistoryUser($page.params.userId ?? "", { tableBookingId: 0 });
+	let query = createTableBookingHistoryUser($page.params.userId ?? "", {
+		tableBookingId: 0,
+		cashUpUserId: 0,
+	});
 	const data = writable($query.data ?? []);
 
 	$effect(() => {
 		query = createTableBookingHistoryUser($page.params.userId ?? "", {
 			tableBookingId: billId ?? 0,
+			cashUpUserId: Number($page.params.cashUpUserId ?? 0),
 		});
 		data.set($query.data ?? []);
 	});

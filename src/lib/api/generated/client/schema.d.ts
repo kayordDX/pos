@@ -2062,6 +2062,8 @@ export interface components {
             /** Format: date-time */
             cashUpDate?: string | null;
             cashUpUserItems: components["schemas"]["EntitiesCashUpUserItem"][];
+            /** Format: int32 */
+            salesPeriodId: number;
         };
         EntitiesCashUpUserItem: {
             /** Format: int32 */
@@ -2722,6 +2724,8 @@ export interface components {
             payments: number;
             /** Format: int32 */
             openTableCount: number;
+            /** Format: int32 */
+            cashUpUserId: number;
         };
         CashUpUserGetRequest: Record<string, never>;
         CashUpUserDetailResponse: {
@@ -2736,6 +2740,7 @@ export interface components {
             grossBalance: number;
             /** Format: decimal */
             netBalance: number;
+            isCashedUp: boolean;
         };
         DTOCashUpUserItemDTO: {
             /** Format: int32 */
@@ -3703,6 +3708,7 @@ export interface operations {
     TableBookingHistoryUser: {
         parameters: {
             query: {
+                cashUpUserId: number;
                 tableBookingId: number;
             };
             header?: never;
@@ -5665,7 +5671,9 @@ export interface operations {
     };
     CashUpUserDetail: {
         parameters: {
-            query?: never;
+            query: {
+                cashUpUserId: number;
+            };
             header?: never;
             path: {
                 userId: string;

@@ -21,6 +21,8 @@
 			toast.error(getError(ex).message);
 		}
 	};
+
+	const isCashUpBusy = $derived(($query.data?.items ?? []).some((d) => d.cashUpUserId == 0));
 </script>
 
 <div class="m-2">
@@ -32,7 +34,7 @@
 	{/if}
 
 	{#if $query.data}
-		{#if !$query.data.items.length}
+		{#if !isCashUpBusy}
 			<Card.Root class="m-4">
 				<Card.Header class="flex flex-row items-center gap-4">
 					<div class="bg-primary rounded-full p-2">

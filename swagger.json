@@ -1106,6 +1106,15 @@
             }
           },
           {
+            "name": "cashUpUserId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
             "name": "tableBookingId",
             "in": "query",
             "required": true,
@@ -3789,6 +3798,15 @@
           {
             "name": "outletId",
             "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "cashUpUserId",
+            "in": "query",
             "required": true,
             "schema": {
               "type": "integer",
@@ -7151,7 +7169,8 @@
           "outletId",
           "openingBalance",
           "completerUserId",
-          "cashUpUserItems"
+          "cashUpUserItems",
+          "salesPeriodId"
         ],
         "properties": {
           "id": {
@@ -7187,6 +7206,10 @@
             "items": {
               "$ref": "#/components/schemas/EntitiesCashUpUserItem"
             }
+          },
+          "salesPeriodId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -9499,7 +9522,8 @@
           "sales",
           "tips",
           "payments",
-          "openTableCount"
+          "openTableCount",
+          "cashUpUserId"
         ],
         "properties": {
           "userId": {
@@ -9523,6 +9547,10 @@
           "openTableCount": {
             "type": "integer",
             "format": "int32"
+          },
+          "cashUpUserId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -9540,7 +9568,8 @@
           "cashUpUserItems",
           "openingBalance",
           "grossBalance",
-          "netBalance"
+          "netBalance",
+          "isCashedUp"
         ],
         "properties": {
           "userId": {
@@ -9570,6 +9599,9 @@
           "netBalance": {
             "type": "number",
             "format": "decimal"
+          },
+          "isCashedUp": {
+            "type": "boolean"
           }
         }
       },

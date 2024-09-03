@@ -12,8 +12,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@kayord/ui':
-        specifier: ^0.9.19
-        version: 0.9.19(lucide-svelte@0.438.0(svelte@5.0.0-next.238))(svelte@5.0.0-next.238)(sveltekit-superforms@2.17.0(@sveltejs/kit@2.5.25(@sveltejs/vite-plugin-svelte@4.0.0-next.6(svelte@5.0.0-next.238)(vite@5.4.2(@types/node@22.5.2)))(svelte@5.0.0-next.238)(vite@5.4.2(@types/node@22.5.2)))(svelte@5.0.0-next.238))(tailwindcss@3.4.10)(zod@3.23.8)
+        specifier: ^0.9.20
+        version: 0.9.20(lucide-svelte@0.438.0(svelte@5.0.0-next.238))(svelte@5.0.0-next.238)(sveltekit-superforms@2.17.0(@sveltejs/kit@2.5.25(@sveltejs/vite-plugin-svelte@4.0.0-next.6(svelte@5.0.0-next.238)(vite@5.4.2(@types/node@22.5.2)))(svelte@5.0.0-next.238)(vite@5.4.2(@types/node@22.5.2)))(svelte@5.0.0-next.238))(tailwindcss@3.4.10)(zod@3.23.8)
       '@microsoft/signalr':
         specifier: ^8.0.7
         version: 8.0.7
@@ -883,8 +883,8 @@ packages:
   '@kayord/tw-plugin@1.0.2':
     resolution: {integrity: sha512-ut5znLn7cb65280bhvDbuirde/pT4ys3N1A+irIi9w2KR8rlbeFOwkByYnv/KBAzHPoRp2uZ6eynIUv4Imi08A==}
 
-  '@kayord/ui@0.9.19':
-    resolution: {integrity: sha512-rSgL403rsRafOA/Ms+BK3gTVGI4GIqCAc6SrLofVdVfOI44k3PN7hXrXgNF/92x3lNjvhpyOkTgdscZxfZS6aQ==}
+  '@kayord/ui@0.9.20':
+    resolution: {integrity: sha512-b233hNqocGTDSDSjTi90nJAAVIOU6Zzm+VcEYOWBX4wNisSwGl1VV00fiHLdtll884Sh68jIm9C84qilndYb/w==}
     peerDependencies:
       lucide-svelte: '>= 0.400.0 < 1.0.0'
       svelte: ^4.0.0 || ^5.0.0-next.1
@@ -3935,7 +3935,7 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  '@kayord/ui@0.9.19(lucide-svelte@0.438.0(svelte@5.0.0-next.238))(svelte@5.0.0-next.238)(sveltekit-superforms@2.17.0(@sveltejs/kit@2.5.25(@sveltejs/vite-plugin-svelte@4.0.0-next.6(svelte@5.0.0-next.238)(vite@5.4.2(@types/node@22.5.2)))(svelte@5.0.0-next.238)(vite@5.4.2(@types/node@22.5.2)))(svelte@5.0.0-next.238))(tailwindcss@3.4.10)(zod@3.23.8)':
+  '@kayord/ui@0.9.20(lucide-svelte@0.438.0(svelte@5.0.0-next.238))(svelte@5.0.0-next.238)(sveltekit-superforms@2.17.0(@sveltejs/kit@2.5.25(@sveltejs/vite-plugin-svelte@4.0.0-next.6(svelte@5.0.0-next.238)(vite@5.4.2(@types/node@22.5.2)))(svelte@5.0.0-next.238)(vite@5.4.2(@types/node@22.5.2)))(svelte@5.0.0-next.238))(tailwindcss@3.4.10)(zod@3.23.8)':
     dependencies:
       '@internationalized/date': 3.5.5
       bits-ui: 0.21.13(svelte@5.0.0-next.238)

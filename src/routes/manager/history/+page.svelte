@@ -5,8 +5,7 @@
 	import { addPagination, addResizedColumns } from "svelte-headless-table/plugins";
 	import { writable } from "svelte/store";
 	import { stringToFDate } from "$lib/util";
-	import View from "./user/[userId]/View.svelte";
-	import { page } from "$app/stores";
+	import View from "./user/[userId]/[cashUpUserId]/View.svelte";
 	import { status } from "$lib/stores/status";
 
 	let billId = $state<number>();
