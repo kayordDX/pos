@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createAdjustmentCreate, createAdjustmentGetAll } from "$lib/api";
-	import { Alert, AlertDialog, Button, Drawer, Form, Input, Select, Textarea } from "@kayord/ui";
+	import { Alert, Button, Drawer, Form, Input, Select, Textarea } from "@kayord/ui";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
