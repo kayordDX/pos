@@ -978,6 +978,67 @@
         ]
       }
     },
+    "/tableBooking/history/salesPeriod/{salesPeriodId}": {
+      "get": {
+        "tags": [
+          "Tablebooking"
+        ],
+        "operationId": "TableBookingPeriodHistory",
+        "parameters": [
+          {
+            "name": "salesPeriodId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "tableBookingId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TableBookingHistoryResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/tableBooking/paymentType": {
       "post": {
         "tags": [
@@ -1043,6 +1104,15 @@
             "schema": {
               "type": "string"
             }
+          },
+          {
+            "name": "tableBookingId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
@@ -1086,6 +1156,17 @@
           "Tablebooking"
         ],
         "operationId": "TableBookingHistory",
+        "parameters": [
+          {
+            "name": "tableBookingId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -7480,24 +7561,6 @@
           }
         }
       },
-      "TableBookingPaymentTypeRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "paymentId",
-          "paymentTypeId"
-        ],
-        "properties": {
-          "paymentId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "paymentTypeId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
-      },
       "TableBookingHistoryResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -7508,7 +7571,8 @@
           "bookingName",
           "bookingDate",
           "salesPeriodId",
-          "total"
+          "total",
+          "user"
         ],
         "properties": {
           "id": {
@@ -7541,6 +7605,9 @@
           "total": {
             "type": "number",
             "format": "decimal"
+          },
+          "user": {
+            "$ref": "#/components/schemas/DTOUserDTO"
           }
         }
       },
@@ -7586,7 +7653,33 @@
           }
         }
       },
+      "TableBookingPeriodHistoryRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "TableBookingPaymentTypeRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "paymentId",
+          "paymentTypeId"
+        ],
+        "properties": {
+          "paymentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "paymentTypeId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "TableBookingHistoryUserRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "TableBookingHistoryRequest": {
         "type": "object",
         "additionalProperties": false
       },
@@ -8309,6 +8402,10 @@
                 "$ref": "#/components/schemas/ESCPOS_NETPrinterStatusEventArgs"
               }
             ]
+          },
+          "lastException": {
+            "type": "string",
+            "nullable": true
           }
         }
       },

@@ -27,10 +27,10 @@
 			</div>
 			<div class="flex gap-2 items-center">
 				<Button variant="outline" href={`/manager/history/user/${cash.userId}`}>
-					<ReceiptTextIcon class="size-5 mr-2" /> Bills
+					<ReceiptTextIcon class="size-4 mr-2" /> Bills
 				</Button>
 				<Button href={`/manager/cashUp/${cash.userId}`}>
-					<WalletCardsIcon class="size-5 mr-2" /> Cash Up
+					<WalletCardsIcon class="size-4 mr-2" /> Cash Up
 				</Button>
 			</div>
 		</div>
