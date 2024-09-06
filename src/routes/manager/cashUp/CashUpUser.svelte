@@ -7,7 +7,7 @@
 
 	let { cash }: { cash: CashUpUserGetItems } = $props();
 
-	const hasOpenTables = $derived(cash.openTableCount > 0 && cash.cashUpUserId <= 0);
+	const hasOpenTables = $derived(cash.openTableCount > 0);
 </script>
 
 <Card.Root
