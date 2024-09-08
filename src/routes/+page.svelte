@@ -31,7 +31,7 @@
 {#if !init}
 	<Loader />
 {:else}
-	<div class="m-8 flex gap-4">
+	<div class="m-8 flex gap-4 flex-wrap">
 		{#if $status.roles.includes("Waiter")}
 			<div class="flex flex-col">
 				<Button href="/waiter">Waiter</Button>

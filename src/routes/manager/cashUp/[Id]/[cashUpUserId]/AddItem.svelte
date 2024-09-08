@@ -55,7 +55,7 @@
 <Drawer.Root bind:open>
 	<Drawer.Trigger>
 		<Button class="p-86 p-4" variant="secondary">
-			<PlusIcon class="size-4 mr-2" /> Add Cash Up Item
+			<PlusIcon class="size-4 mr-2 hidden sm:block" /> Add Cash Up Item
 		</Button>
 	</Drawer.Trigger>
 	<Drawer.Content>

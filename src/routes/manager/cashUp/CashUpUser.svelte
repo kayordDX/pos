@@ -29,7 +29,7 @@
 					<Card.Description>{cash.user.email}</Card.Description>
 				</div>
 			</div>
-			<div class="flex gap-2 items-center">
+			<div class="flex gap-2 flex-col items-end sm:items-center sm:flex-row">
 				<Button
 					variant="outline"
 					href={`/manager/history/user/${cash.userId}/${cash.cashUpUserId}`}

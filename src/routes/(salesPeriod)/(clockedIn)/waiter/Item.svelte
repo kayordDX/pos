@@ -68,12 +68,12 @@
 				</div>
 			{/if}
 		</div>
-		<div class="flex items-center gap-2">
+		<div class="flex gap-2 flex-col justify-end items-end sm:flex-row sm:items-center">
 			<div class="flex flex-col gap-1">
 				<Badge class="truncate self-end">{item.orderItemStatus?.status}</Badge>
-				<Badge class="truncate animate-pulse self-end" style={getStatus()}
-					>{item.orderReceivedFormatted}</Badge
-				>
+				<Badge class="truncate animate-pulse self-end" style={getStatus()}>
+					{item.orderReceivedFormatted}
+				</Badge>
 			</div>
 			<Button on:click={() => completeItem(item.orderItemId, 6)}>Done</Button>
 		</div>
