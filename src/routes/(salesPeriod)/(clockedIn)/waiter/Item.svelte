@@ -1,10 +1,15 @@
 <script lang="ts">
 	import type { TableOrderOfficeOrderItemDTO } from "$lib/api";
-	import { Badge, Button, Card } from "@kayord/ui";
-	export let item: TableOrderOfficeOrderItemDTO;
+	import { Badge, Button, Card, Loader } from "@kayord/ui";
 	import { createTableOrderUpdateOrderItem } from "$lib/api";
 
-	export let refetch: () => void;
+	interface Props {
+		item: TableOrderOfficeOrderItemDTO;
+		refetch: () => void;
+	}
+	let { item, refetch }: Props = $props();
+
+	let completeItemBusy = $state(false);
 
 	const getStatus = () => {
 		const theDate = new Date(item.orderReceived);
@@ -24,8 +29,15 @@
 	const mutation = createTableOrderUpdateOrderItem();
 
 	const completeItem = async (id: number, statusId: number) => {
-		await $mutation.mutateAsync({ data: { orderItemIds: [id], orderItemStatusId: statusId } });
-		refetch();
+		try {
+			completeItemBusy = true;
+			await $mutation.mutateAsync({ data: { orderItemIds: [id], orderItemStatusId: statusId } });
+		} catch (e) {
+			console.log(e);
+		} finally {
+			completeItemBusy = false;
+			refetch();
+		}
 	};
 </script>
 
@@ -75,7 +87,12 @@
 					{item.orderReceivedFormatted}
 				</Badge>
 			</div>
-			<Button on:click={() => completeItem(item.orderItemId, 6)}>Done</Button>
+			<Button on:click={() => completeItem(item.orderItemId, 6)} disabled={completeItemBusy}>
+				Done
+				{#if completeItemBusy}
+					<Loader class="size-5" />
+				{/if}
+			</Button>
 		</div>
 	</div>
 </Card.Root>
