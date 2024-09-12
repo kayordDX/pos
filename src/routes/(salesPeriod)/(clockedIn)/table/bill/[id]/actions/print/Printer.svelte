@@ -3,7 +3,6 @@
 	import type { PrinterPrinterStatus } from "$lib/api";
 	import { createBillPrintBill } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { stringToFDate } from "$lib/util";
 	import { Badge, Button, Card, Switch, Table, toast } from "@kayord/ui";
 	import { PrinterIcon } from "lucide-svelte";
 
@@ -25,8 +24,8 @@
 		try {
 			await $mutation.mutateAsync({
 				data: {
-					outletId: printer.printerConfig.outletId,
-					printerId: printer.printerConfig.printerId,
+					outletId: printer.outletId,
+					printerId: printer.printerId,
 					tableBookingId: Number($page.params.id),
 				},
 			});
@@ -42,7 +41,7 @@
 <Card.Root>
 	<Card.Header class="flex flex-row items-start bg-muted/50 p-4">
 		<div class="grid gap-0.5 w-full">
-			<Card.Title>{printer.printerConfig.name}</Card.Title>
+			<Card.Title>{printer.name}</Card.Title>
 			<Card.Description>
 				{#if printer.isOutdated}
 					<Badge variant="destructive">Last update was longer than 10 minutes ago</Badge>
@@ -72,7 +71,7 @@
 					{#if showDetail}
 						<Table.Row>
 							<Table.Cell>Printer Id</Table.Cell>
-							<Table.Cell class="text-right">{printer.printerConfig.printerId}</Table.Cell>
+							<Table.Cell class="text-right">{printer.printerId}</Table.Cell>
 						</Table.Row>
 
 						<Table.Row>

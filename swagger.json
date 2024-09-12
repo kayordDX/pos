@@ -6303,6 +6303,16 @@
             "format": "decimal",
             "nullable": true
           },
+          "totalTips": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
+          "totalPayments": {
+            "type": "number",
+            "format": "decimal",
+            "nullable": true
+          },
           "cashUpUser": {
             "nullable": true,
             "oneOf": [
@@ -6549,6 +6559,7 @@
           "searchVector",
           "position",
           "isAvailable",
+          "isEnabled",
           "stockPrice"
         ],
         "properties": {
@@ -6618,6 +6629,9 @@
             }
           },
           "isAvailable": {
+            "type": "boolean"
+          },
+          "isEnabled": {
             "type": "boolean"
           },
           "stockPrice": {
@@ -7170,7 +7184,10 @@
           "openingBalance",
           "completerUserId",
           "cashUpUserItems",
-          "salesPeriodId"
+          "salesPeriodId",
+          "sales",
+          "tips",
+          "payments"
         ],
         "properties": {
           "id": {
@@ -7210,6 +7227,18 @@
           "salesPeriodId": {
             "type": "integer",
             "format": "int32"
+          },
+          "sales": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "tips": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "payments": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -8402,7 +8431,9 @@
           "dateUpdated",
           "isOutdated",
           "dateUpdatedFormatted",
-          "printerConfig"
+          "printerId",
+          "name",
+          "outletId"
         ],
         "properties": {
           "dateUpdated": {
@@ -8415,9 +8446,6 @@
           "dateUpdatedFormatted": {
             "type": "string"
           },
-          "printerConfig": {
-            "$ref": "#/components/schemas/PrinterPrinterConfig"
-          },
           "printerStatusEventArgs": {
             "nullable": true,
             "oneOf": [
@@ -8429,21 +8457,6 @@
           "lastException": {
             "type": "string",
             "nullable": true
-          }
-        }
-      },
-      "PrinterPrinterConfig": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "outletId",
-          "printerId",
-          "name"
-        ],
-        "properties": {
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
           },
           "printerId": {
             "type": "integer",
@@ -8451,6 +8464,18 @@
           },
           "name": {
             "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "printerConfig": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/PrinterPrinterConfig"
+              }
+            ]
           }
         }
       },
@@ -8522,6 +8547,28 @@
       "SystemEventArgs": {
         "type": "object",
         "additionalProperties": false
+      },
+      "PrinterPrinterConfig": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "outletId",
+          "printerId",
+          "name"
+        ],
+        "properties": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "printerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
       },
       "PrinterListRequest": {
         "type": "object",
@@ -8940,7 +8987,8 @@
           "price",
           "position",
           "menuSection",
-          "isAvailable"
+          "isAvailable",
+          "isEnabled"
         ],
         "properties": {
           "menuItemId": {
@@ -8976,6 +9024,9 @@
             "$ref": "#/components/schemas/DTOMenuSectionBasicDTO"
           },
           "isAvailable": {
+            "type": "boolean"
+          },
+          "isEnabled": {
             "type": "boolean"
           }
         }

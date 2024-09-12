@@ -447,6 +447,7 @@ export interface DTOMenuSectionBasicDTO {
 export interface DTOMenuItemDTOBasic {
 	description: string;
 	isAvailable: boolean;
+	isEnabled: boolean;
 	menuItemId: number;
 	menuSection: DTOMenuSectionBasicDTO;
 	menuSectionId: number;
@@ -629,6 +630,12 @@ export interface PrinterListRequest {
 	[key: string]: unknown;
 }
 
+export interface PrinterPrinterConfig {
+	name: string;
+	outletId: number;
+	printerId: number;
+}
+
 export interface SystemEventArgs {
 	[key: string]: unknown;
 }
@@ -665,16 +672,15 @@ export type ESCPOSNETPrinterStatusEventArgsAllOf = {
 export type ESCPOSNETPrinterStatusEventArgs = SystemEventArgs &
 	ESCPOSNETPrinterStatusEventArgsAllOf;
 
-export interface PrinterPrinterConfig {
-	name: string;
-	outletId: number;
-	printerId: number;
-}
-
 /**
  * @nullable
  */
 export type PrinterPrinterStatusPrinterStatusEventArgs = ESCPOSNETPrinterStatusEventArgs | null;
+
+/**
+ * @nullable
+ */
+export type PrinterPrinterStatusPrinterConfig = PrinterPrinterConfig | null;
 
 export interface PrinterPrinterStatus {
 	dateUpdated: string;
@@ -682,7 +688,11 @@ export interface PrinterPrinterStatus {
 	isOutdated: boolean;
 	/** @nullable */
 	lastException?: string | null;
-	printerConfig: PrinterPrinterConfig;
+	name: string;
+	outletId: number;
+	/** @nullable */
+	printerConfig?: PrinterPrinterStatusPrinterConfig;
+	printerId: number;
 	/** @nullable */
 	printerStatusEventArgs?: PrinterPrinterStatusPrinterStatusEventArgs;
 }
@@ -1104,7 +1114,10 @@ export interface EntitiesCashUpUser {
 	id: number;
 	openingBalance: number;
 	outletId: number;
+	payments: number;
+	sales: number;
 	salesPeriodId: number;
+	tips: number;
 	userId: string;
 }
 
@@ -1253,6 +1266,7 @@ export interface EntitiesMenuItem {
 	/** @nullable */
 	divisionId?: number | null;
 	isAvailable: boolean;
+	isEnabled: boolean;
 	/** @nullable */
 	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
 	menuItemId: number;
@@ -1408,6 +1422,10 @@ export interface EntitiesTableBooking {
 	tableId: number;
 	/** @nullable */
 	total?: number | null;
+	/** @nullable */
+	totalPayments?: number | null;
+	/** @nullable */
+	totalTips?: number | null;
 	user: EntitiesUser;
 	userId: string;
 }

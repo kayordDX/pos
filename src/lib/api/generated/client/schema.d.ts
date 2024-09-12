@@ -1809,6 +1809,10 @@ export interface components {
             cashUpUserId?: number | null;
             /** Format: decimal */
             total?: number | null;
+            /** Format: decimal */
+            totalTips?: number | null;
+            /** Format: decimal */
+            totalPayments?: number | null;
             cashUpUser?: components["schemas"]["EntitiesCashUpUser"] | null;
             payments?: components["schemas"]["EntitiesPayment"][] | null;
         };
@@ -1890,6 +1894,7 @@ export interface components {
             menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
             menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
             isAvailable: boolean;
+            isEnabled: boolean;
             /** Format: decimal */
             stockPrice: number;
         };
@@ -2064,6 +2069,12 @@ export interface components {
             cashUpUserItems: components["schemas"]["EntitiesCashUpUserItem"][];
             /** Format: int32 */
             salesPeriodId: number;
+            /** Format: decimal */
+            sales: number;
+            /** Format: decimal */
+            tips: number;
+            /** Format: decimal */
+            payments: number;
         };
         EntitiesCashUpUserItem: {
             /** Format: int32 */
@@ -2408,16 +2419,14 @@ export interface components {
             dateUpdated: string;
             isOutdated: boolean;
             dateUpdatedFormatted: string;
-            printerConfig: components["schemas"]["PrinterPrinterConfig"];
             printerStatusEventArgs?: components["schemas"]["ESCPOS_NETPrinterStatusEventArgs"] | null;
             lastException?: string | null;
-        };
-        PrinterPrinterConfig: {
-            /** Format: int32 */
-            outletId: number;
             /** Format: int32 */
             printerId: number;
             name: string;
+            /** Format: int32 */
+            outletId: number;
+            printerConfig?: components["schemas"]["PrinterPrinterConfig"] | null;
         };
         ESCPOS_NETPrinterStatusEventArgs: components["schemas"]["SystemEventArgs"] & {
             isWaitingForOnlineRecovery?: boolean | null;
@@ -2435,6 +2444,13 @@ export interface components {
             didRecoverableNonAutocutterErrorOccur?: boolean | null;
         };
         SystemEventArgs: Record<string, never>;
+        PrinterPrinterConfig: {
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            printerId: number;
+            name: string;
+        };
         PrinterListRequest: Record<string, never>;
         CommonWrapperResultOfStatusResultDto: components["schemas"]["CommonWrapperResult"] & {
             value?: components["schemas"]["PayDtoStatusResultDto"] | null;
@@ -2554,6 +2570,7 @@ export interface components {
             tags?: components["schemas"]["EntitiesTag"][] | null;
             menuSection: components["schemas"]["DTOMenuSectionBasicDTO"];
             isAvailable: boolean;
+            isEnabled: boolean;
         };
         DTOMenuSectionBasicDTO: {
             /** Format: int32 */
