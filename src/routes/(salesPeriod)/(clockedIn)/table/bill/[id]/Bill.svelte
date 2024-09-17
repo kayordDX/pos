@@ -10,7 +10,7 @@
 	import Adjustment from "./Adjustment.svelte";
 	import PaymentTypeIcon from "$lib/components/PaymentTypeIcon/PaymentTypeIcon.svelte";
 	import { status } from "$lib/stores/status";
-	import EditPaymentType from "./EditPaymentType.svelte";
+	import EditPayment from "./EditPayment.svelte";
 	import BillOptions from "./BillOptions.svelte";
 	import { WalletCardsIcon, DoorOpenIcon } from "lucide-svelte";
 
@@ -101,8 +101,9 @@
 							<div class="flex items-center gap-1 text-muted-foreground w-full justify-start">
 								<PaymentTypeIcon type={payment.paymentType.paymentTypeName} />
 								{#if isManager}
-									<EditPaymentType
+									<EditPayment
 										paymentId={payment.id}
+										amount={payment.amount}
 										{refetch}
 										paymentTypeId={payment.paymentTypeId ?? 0}
 									/>

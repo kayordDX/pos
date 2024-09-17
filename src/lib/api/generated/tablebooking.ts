@@ -27,7 +27,7 @@ import type {
 	TableBookingHistoryParams,
 	TableBookingHistoryResponse,
 	TableBookingHistoryUserParams,
-	TableBookingPaymentTypeRequest,
+	TableBookingPaymentEditRequest,
 	TableBookingPeriodHistoryParams,
 } from "./api.schemas";
 import { customInstance } from "../mutator/customInstance";
@@ -109,70 +109,70 @@ export function createTableBookingPeriodHistory<
 	return query;
 }
 
-export const tableBookingPaymentType = (
-	tableBookingPaymentTypeRequest: BodyType<TableBookingPaymentTypeRequest>
+export const tableBookingPaymentEdit = (
+	tableBookingPaymentEditRequest: BodyType<TableBookingPaymentEditRequest>
 ) => {
 	return customInstance<EntitiesCashUpUserItem>({
-		url: `/tableBooking/paymentType`,
+		url: `/tableBooking/payment`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		data: tableBookingPaymentTypeRequest,
+		data: tableBookingPaymentEditRequest,
 	});
 };
 
-export const getTableBookingPaymentTypeMutationOptions = <
+export const getTableBookingPaymentEditMutationOptions = <
 	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof tableBookingPaymentType>>,
+		Awaited<ReturnType<typeof tableBookingPaymentEdit>>,
 		TError,
-		{ data: BodyType<TableBookingPaymentTypeRequest> },
+		{ data: BodyType<TableBookingPaymentEditRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
-	Awaited<ReturnType<typeof tableBookingPaymentType>>,
+	Awaited<ReturnType<typeof tableBookingPaymentEdit>>,
 	TError,
-	{ data: BodyType<TableBookingPaymentTypeRequest> },
+	{ data: BodyType<TableBookingPaymentEditRequest> },
 	TContext
 > => {
 	const { mutation: mutationOptions } = options ?? {};
 
 	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof tableBookingPaymentType>>,
-		{ data: BodyType<TableBookingPaymentTypeRequest> }
+		Awaited<ReturnType<typeof tableBookingPaymentEdit>>,
+		{ data: BodyType<TableBookingPaymentEditRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
-		return tableBookingPaymentType(data);
+		return tableBookingPaymentEdit(data);
 	};
 
 	return { mutationFn, ...mutationOptions };
 };
 
-export type TableBookingPaymentTypeMutationResult = NonNullable<
-	Awaited<ReturnType<typeof tableBookingPaymentType>>
+export type TableBookingPaymentEditMutationResult = NonNullable<
+	Awaited<ReturnType<typeof tableBookingPaymentEdit>>
 >;
-export type TableBookingPaymentTypeMutationBody = BodyType<TableBookingPaymentTypeRequest>;
-export type TableBookingPaymentTypeMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableBookingPaymentEditMutationBody = BodyType<TableBookingPaymentEditRequest>;
+export type TableBookingPaymentEditMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createTableBookingPaymentType = <
+export const createTableBookingPaymentEdit = <
 	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof tableBookingPaymentType>>,
+		Awaited<ReturnType<typeof tableBookingPaymentEdit>>,
 		TError,
-		{ data: BodyType<TableBookingPaymentTypeRequest> },
+		{ data: BodyType<TableBookingPaymentEditRequest> },
 		TContext
 	>;
 }): CreateMutationResult<
-	Awaited<ReturnType<typeof tableBookingPaymentType>>,
+	Awaited<ReturnType<typeof tableBookingPaymentEdit>>,
 	TError,
-	{ data: BodyType<TableBookingPaymentTypeRequest> },
+	{ data: BodyType<TableBookingPaymentEditRequest> },
 	TContext
 > => {
-	const mutationOptions = getTableBookingPaymentTypeMutationOptions(options);
+	const mutationOptions = getTableBookingPaymentEditMutationOptions(options);
 
 	return createMutation(mutationOptions);
 };

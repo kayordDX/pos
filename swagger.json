@@ -1039,19 +1039,19 @@
         ]
       }
     },
-    "/tableBooking/paymentType": {
+    "/tableBooking/payment": {
       "post": {
         "tags": [
           "Tablebooking"
         ],
-        "operationId": "TableBookingPaymentType",
+        "operationId": "TableBookingPaymentEdit",
         "requestBody": {
           "x-name": "Request",
           "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/TableBookingPaymentTypeRequest"
+                "$ref": "#/components/schemas/TableBookingPaymentEditRequest"
               }
             }
           },
@@ -5004,7 +5004,8 @@
           "paymentTypeId",
           "paymentTypeName",
           "tipLevyPercentage",
-          "discountPercentage"
+          "discountPercentage",
+          "canEdit"
         ],
         "properties": {
           "paymentTypeId": {
@@ -5028,6 +5029,9 @@
             "items": {
               "$ref": "#/components/schemas/EntitiesOutletPaymentType"
             }
+          },
+          "canEdit": {
+            "type": "boolean"
           }
         }
       },
@@ -7709,12 +7713,13 @@
         "type": "object",
         "additionalProperties": false
       },
-      "TableBookingPaymentTypeRequest": {
+      "TableBookingPaymentEditRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
           "paymentId",
-          "paymentTypeId"
+          "paymentTypeId",
+          "amount"
         ],
         "properties": {
           "paymentId": {
@@ -7724,6 +7729,10 @@
           "paymentTypeId": {
             "type": "integer",
             "format": "int32"
+          },
+          "amount": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },

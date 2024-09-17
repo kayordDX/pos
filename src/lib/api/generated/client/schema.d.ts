@@ -372,7 +372,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/tableBooking/paymentType": {
+    "/tableBooking/payment": {
         parameters: {
             query?: never;
             header?: never;
@@ -381,7 +381,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["TableBookingPaymentType"];
+        post: operations["TableBookingPaymentEdit"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1431,6 +1431,7 @@ export interface components {
             /** Format: decimal */
             discountPercentage: number;
             outletPaymentTypes?: components["schemas"]["EntitiesOutletPaymentType"][] | null;
+            canEdit: boolean;
         };
         UserGetRolesRequest: Record<string, never>;
         EntitiesUserOutlet: {
@@ -2204,11 +2205,13 @@ export interface components {
             name: string;
         };
         TableBookingPeriodHistoryRequest: Record<string, never>;
-        TableBookingPaymentTypeRequest: {
+        TableBookingPaymentEditRequest: {
             /** Format: int32 */
             paymentId: number;
             /** Format: int32 */
             paymentTypeId: number;
+            /** Format: decimal */
+            amount: number;
         };
         TableBookingHistoryUserRequest: Record<string, never>;
         TableBookingHistoryRequest: Record<string, never>;
@@ -3682,7 +3685,7 @@ export interface operations {
             };
         };
     };
-    TableBookingPaymentType: {
+    TableBookingPaymentEdit: {
         parameters: {
             query?: never;
             header?: never;
@@ -3691,7 +3694,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["TableBookingPaymentTypeRequest"];
+                "application/json": components["schemas"]["TableBookingPaymentEditRequest"];
             };
         };
         responses: {

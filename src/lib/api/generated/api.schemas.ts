@@ -944,7 +944,8 @@ export interface TableBookingHistoryUserRequest {
 	[key: string]: unknown;
 }
 
-export interface TableBookingPaymentTypeRequest {
+export interface TableBookingPaymentEditRequest {
+	amount: number;
 	paymentId: number;
 	paymentTypeId: number;
 }
@@ -1788,6 +1789,7 @@ export interface EntitiesOutletPaymentType {
 }
 
 export interface EntitiesPaymentType {
+	canEdit: boolean;
 	discountPercentage: number;
 	/** @nullable */
 	outletPaymentTypes?: EntitiesOutletPaymentType[] | null;

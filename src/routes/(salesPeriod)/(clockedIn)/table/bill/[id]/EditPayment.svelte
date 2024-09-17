@@ -1,8 +1,8 @@
 <script lang="ts">
-	import { createOutletGetPaymentType, createTableBookingPaymentType } from "$lib/api";
+	import { createOutletGetPaymentType, createTableBookingPaymentEdit } from "$lib/api";
 	import { status } from "$lib/stores/status";
 	import { getError } from "$lib/types";
-	import { Button, Drawer, Form, Select, toast } from "@kayord/ui";
+	import { Button, Drawer, Form, Select, toast, Input } from "@kayord/ui";
 	import { PencilIcon } from "lucide-svelte";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
@@ -11,18 +11,20 @@
 	interface Props {
 		paymentId: number;
 		paymentTypeId: number;
+		amount: number;
 		refetch: () => void;
 	}
 
-	let { refetch, paymentId, paymentTypeId }: Props = $props();
+	let { refetch, paymentId, paymentTypeId, amount }: Props = $props();
 	let open = $state(false);
 
 	const paymentTypeQuery = createOutletGetPaymentType($status?.outletId ?? 0);
 
-	const mutation = createTableBookingPaymentType();
+	const mutation = createTableBookingPaymentEdit();
 
 	export const schema = z.object({
 		paymentTypeId: z.number().min(1, { message: "Please select PaymentTypeId" }),
+		amount: z.number().min(0, { message: "Please enter amount" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -32,6 +34,7 @@
 				data: {
 					paymentId: paymentId,
 					paymentTypeId: data.paymentTypeId,
+					amount: data.amount,
 				},
 			});
 			open = false;
@@ -41,7 +44,7 @@
 		}
 	};
 
-	const form = superForm(defaults({ paymentTypeId }, zod(schema)), {
+	const form = superForm(defaults({ paymentTypeId, amount }, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
 		resetForm: false,
@@ -70,6 +73,20 @@
 				<Form.Field {form} name="paymentTypeId">
 					<Form.Control let:attrs>
 						<Form.Label>Payment Type</Form.Label>
+						<Form.Field {form} name="amount">
+							<Form.Control let:attrs>
+								<Form.Label>Amount</Form.Label>
+								<Input
+									{...attrs}
+									type="number"
+									step="0.01"
+									bind:value={$formData.amount}
+									on:focus={(e) => e.currentTarget.select()}
+								/>
+							</Form.Control>
+							<Form.Description>Enter amount to pay</Form.Description>
+							<Form.FieldErrors />
+						</Form.Field>
 						<Select.Root
 							selected={{
 								value: $formData.paymentTypeId,
@@ -86,9 +103,11 @@
 							</Select.Trigger>
 							<Select.Content>
 								{#each $paymentTypeQuery.data ?? [] as paymentType}
-									<Select.Item value={paymentType.paymentTypeId}
-										>{paymentType.paymentTypeName}</Select.Item
-									>
+									{#if paymentType.canEdit}
+										<Select.Item value={paymentType.paymentTypeId}>
+											{paymentType.paymentTypeName}
+										</Select.Item>
+									{/if}
 								{/each}
 							</Select.Content>
 						</Select.Root>
