@@ -1,72 +1,86 @@
 <script lang="ts">
-	import { createTableBookingHistory } from "$lib/api";
-	import { DataTable, Input } from "@kayord/ui";
-	import { createRender, createTable } from "svelte-headless-table";
-	import { addPagination, addResizedColumns } from "svelte-headless-table/plugins";
-	import { writable } from "svelte/store";
+	import { createTableBookingHistory, type TableBookingHistoryResponse } from "$lib/api";
+	import { Input, DataTable } from "@kayord/ui";
 	import { stringToFDate } from "$lib/util";
 	import View from "./View.svelte";
+
+	import {
+		type ColumnDef,
+		createTable,
+		getCoreRowModel,
+		type Updater,
+		type PaginationState,
+		getPaginationRowModel,
+		renderComponent,
+	} from "@tanstack/svelte-table";
 
 	let billId = $state<number>();
 
 	let query = createTableBookingHistory({ tableBookingId: 0 });
-	const data = writable($query.data ?? []);
+	let data = $state<TableBookingHistoryResponse[]>([]);
 
 	$effect(() => {
 		query = createTableBookingHistory({ tableBookingId: billId ?? 0 });
-		data.set($query.data ?? []);
+		data = $query.data ?? [];
 	});
 
-	const getTableViewModel = () => {
-		const table = createTable(data, {
-			page: addPagination({ serverSide: false, initialPageSize: 10 }),
-			resize: addResizedColumns(),
-		});
-		const columns = table.createColumns([
-			table.column({
-				header: "",
-				accessor: ({ id }) => id,
-				cell: (item) => {
-					return createRender(View, {
-						id: item.value,
-					});
-				},
-				plugins: {
-					resize: {
-						initialWidth: 100,
-					},
-				},
-			}),
-			table.column({
-				header: "Bill#",
-				accessor: "id",
-			}),
-			table.column({
-				header: "Booking Name",
-				accessor: "bookingName",
-			}),
-			table.column({
-				header: "Table Name",
-				accessor: ({ table }) => table.name,
-			}),
-			table.column({
-				header: "Booking Date",
-				accessor: ({ bookingDate }) => stringToFDate(bookingDate),
-			}),
-			table.column({
-				header: "Close Date",
-				accessor: ({ closeDate }) => stringToFDate(closeDate),
-			}),
-			table.column({
-				header: "Total",
-				accessor: ({ total }) => `R ${total.toFixed(2)}`,
-			}),
-		]);
+	const columns: ColumnDef<TableBookingHistoryResponse>[] = [
+		{
+			accessorKey: "id",
+			header: "",
+			cell: (item) =>
+				renderComponent(View, {
+					id: Number(item.getValue()),
+				}),
+		},
+		{
+			accessorKey: "id",
+			header: "Bill#",
+		},
+		{
+			accessorKey: "bookingName",
+			header: "Booking Name",
+		},
+		{
+			header: "Table Name",
+			accessorFn: ({ table }) => table.name,
+		},
+		{
+			header: "Booking Date",
+			accessorFn: ({ bookingDate }) => stringToFDate(bookingDate),
+		},
+		{
+			header: "Close Date",
+			accessorFn: ({ closeDate }) => stringToFDate(closeDate),
+		},
+		{
+			header: "Total",
+			accessorFn: ({ total }) => `R ${total.toFixed(2)}`,
+		},
+	];
 
-		const tableViewModel = table.createViewModel(columns);
-		return tableViewModel;
+	let pagination: PaginationState = $state({ pageIndex: 0, pageSize: 10 });
+	const setPagination = (updater: Updater<PaginationState>) => {
+		if (updater instanceof Function) {
+			pagination = updater(pagination);
+		} else pagination = updater;
 	};
-	const tableViewModel = $derived.by(() => getTableViewModel());
+
+	const table = createTable({
+		columns,
+		get data() {
+			return data;
+		},
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		state: {
+			get pagination() {
+				return pagination;
+			},
+		},
+		onPaginationChange: setPagination,
+		enableRowSelection: false,
+	});
 </script>
 
 <div class="m-4 flex items-center justify-between">
@@ -80,9 +94,4 @@
 	</div>
 </div>
 
-<DataTable
-	title="Bill History"
-	isLoading={$query.isPending}
-	{tableViewModel}
-	noDataMessage="No history available"
-></DataTable>
+<DataTable {table} {columns} isLoading={$query.isPending} noDataMessage="No history available" />
