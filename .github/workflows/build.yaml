@@ -11,6 +11,25 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: latest
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm i
+
+      - name: Build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: pnpm build
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -26,6 +45,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
+          context: .
           push: true
           platforms: linux/amd64,linux/arm64
           tags: doink/kayord-pos:latest, doink/kayord-pos:${{ github.sha }}
