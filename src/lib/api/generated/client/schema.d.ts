@@ -3730,6 +3730,7 @@ export interface operations {
             query: {
                 cashUpUserId: number;
                 tableBookingId: number;
+                outletId: number;
             };
             header?: never;
             path: {

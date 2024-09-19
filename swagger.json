@@ -1122,6 +1122,15 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "outletId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         ],
         "responses": {
