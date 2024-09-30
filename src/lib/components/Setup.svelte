@@ -188,7 +188,7 @@
 </Card.Root>
 
 <Card.Root class="p-5 m-5">
-	<Card.Header>
+	<Card.Header class="pb-6">
 		<Card.Title>Sound</Card.Title>
 		<Card.Description>Play Sound</Card.Description>
 	</Card.Header>

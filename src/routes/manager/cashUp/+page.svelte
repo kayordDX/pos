@@ -36,7 +36,7 @@
 	{#if $query.data}
 		{#if !isCashUpBusy}
 			<Card.Root class="m-4">
-				<Card.Header class="flex flex-row items-center gap-4">
+				<Card.Header class="flex flex-row items-center gap-4 pb-6">
 					<div class="bg-primary rounded-full p-2">
 						<CheckIcon class="text-primary-foreground" />
 					</div>

@@ -17,7 +17,7 @@
 
 <div class="m-2">
 	<Card.Root>
-		<Card.Header class="flex flex-row items-center gap-4">
+		<Card.Header class="flex flex-row items-center gap-4 pb-6">
 			<CalendarOffIcon />
 			<div>
 				<Card.Title>No Active sales period</Card.Title>

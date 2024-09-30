@@ -50,7 +50,7 @@
 		{:else}
 			<div class="flex items-center justify-center">
 				<Card.Root class="max-w-md w-full">
-					<Card.Header>
+					<Card.Header class="pb-6">
 						<Card.Title>Booked Tables</Card.Title>
 						<Card.Description>There are no tables booked by other users</Card.Description>
 					</Card.Header>
