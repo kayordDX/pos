@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Checkbox } from "@kayord/ui";
+	import { Button, Checkbox, toast } from "@kayord/ui";
 	import BasketItem from "./BasketItem.svelte";
 	import EmptyBasket from "./EmptyBasket.svelte";
 	import { ChefHatIcon } from "lucide-svelte";
@@ -14,6 +14,7 @@
 	import { zod } from "sveltekit-superforms/adapters";
 	import { schema, type FormSchema } from "./types";
 	import { Control, FieldErrors, Fieldset, Label } from "@kayord/ui/formsnap";
+	import { getError } from "$lib/types";
 
 	const query = createTableOrderGetBasket({ tableBookingId: Number($page.params.id) });
 
@@ -24,10 +25,14 @@
 	const updateOrderItem = createTableOrderUpdateOrderItem();
 
 	const onSubmit = async (data: FormSchema) => {
-		await $updateOrderItem.mutateAsync({
-			data,
-		});
-		refetch();
+		try {
+			await $updateOrderItem.mutateAsync({
+				data,
+			});
+			refetch();
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
 	};
 	const form = superForm(
 		defaults(zod(schema), { defaults: { orderItemIds: [], orderItemStatusId: 2 } }),
@@ -46,12 +51,16 @@
 	const mutation = createTableOrderSendToKitchen();
 
 	const sendAllToKitchen = async () => {
-		await $mutation.mutateAsync({
-			data: {
-				tableBookingId: Number($page.params.id),
-			},
-		});
-		goto(`/table/menu/${$page.params.id}`);
+		try {
+			await $mutation.mutateAsync({
+				data: {
+					tableBookingId: Number($page.params.id),
+				},
+			});
+			goto(`/table/menu/${$page.params.id}`);
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
 	};
 
 	function addItem(id: number) {
