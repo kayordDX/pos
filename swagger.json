@@ -317,6 +317,36 @@
         }
       }
     },
+    "/test/total": {
+      "get": {
+        "tags": [
+          "Test"
+        ],
+        "operationId": "TestTotalTest",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillTableTotal"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/test/whatsapp": {
       "get": {
         "tags": [
@@ -5087,6 +5117,29 @@
           }
         }
       },
+      "BillTableTotal": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "total",
+          "totalPayments",
+          "tipTotal"
+        ],
+        "properties": {
+          "total": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "totalPayments": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "tipTotal": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
       "TableOrderUpdateTableOrderResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -8486,14 +8539,6 @@
           "outletId": {
             "type": "integer",
             "format": "int32"
-          },
-          "printerConfig": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/PrinterPrinterConfig"
-              }
-            ]
           }
         }
       },
@@ -8565,28 +8610,6 @@
       "SystemEventArgs": {
         "type": "object",
         "additionalProperties": false
-      },
-      "PrinterPrinterConfig": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "outletId",
-          "printerId",
-          "name"
-        ],
-        "properties": {
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "printerId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
       },
       "PrinterListRequest": {
         "type": "object",

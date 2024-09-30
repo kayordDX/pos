@@ -631,12 +631,6 @@ export interface PrinterListRequest {
 	[key: string]: unknown;
 }
 
-export interface PrinterPrinterConfig {
-	name: string;
-	outletId: number;
-	printerId: number;
-}
-
 export interface SystemEventArgs {
 	[key: string]: unknown;
 }
@@ -678,11 +672,6 @@ export type ESCPOSNETPrinterStatusEventArgs = SystemEventArgs &
  */
 export type PrinterPrinterStatusPrinterStatusEventArgs = ESCPOSNETPrinterStatusEventArgs | null;
 
-/**
- * @nullable
- */
-export type PrinterPrinterStatusPrinterConfig = PrinterPrinterConfig | null;
-
 export interface PrinterPrinterStatus {
 	dateUpdated: string;
 	dateUpdatedFormatted: string;
@@ -691,8 +680,6 @@ export interface PrinterPrinterStatus {
 	lastException?: string | null;
 	name: string;
 	outletId: number;
-	/** @nullable */
-	printerConfig?: PrinterPrinterStatusPrinterConfig;
 	printerId: number;
 	/** @nullable */
 	printerStatusEventArgs?: PrinterPrinterStatusPrinterStatusEventArgs;
@@ -1166,6 +1153,14 @@ export interface EntitiesOrderItemStatus {
 	status: string;
 }
 
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
+}
+
 export interface EntitiesMenuItemExtraGroup {
 	extraGroup: EntitiesExtraGroup;
 	extraGroupId: number;
@@ -1190,14 +1185,6 @@ export interface EntitiesExtra {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	positionId: number;
 	price: number;
-}
-
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -1256,6 +1243,34 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
  */
 export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
+	/** @nullable */
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	parent?: EntitiesMenuSectionParent;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
+}
+
+export interface EntitiesMenu {
+	id: number;
+	/** @nullable */
+	menuSections?: EntitiesMenuSection[] | null;
+	name: string;
+	outlet: EntitiesOutlet;
+	outletId: number;
+	position: number;
+}
+
 /**
  * @nullable
  */
@@ -1283,34 +1298,6 @@ export interface EntitiesMenuItem {
 	stockPrice: number;
 	/** @nullable */
 	tags?: EntitiesTag[] | null;
-}
-
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	parent?: EntitiesMenuSectionParent;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
-}
-
-export interface EntitiesMenu {
-	id: number;
-	/** @nullable */
-	menuSections?: EntitiesMenuSection[] | null;
-	name: string;
-	outlet: EntitiesOutlet;
-	outletId: number;
-	position: number;
 }
 
 /**
@@ -1764,6 +1751,12 @@ export interface TableOrderUpdateTableOrderRequest {
 
 export interface TableOrderUpdateTableOrderResponse {
 	isSuccess: boolean;
+}
+
+export interface BillTableTotal {
+	tipTotal: number;
+	total: number;
+	totalPayments: number;
 }
 
 export interface UserAssignOutletRequest {

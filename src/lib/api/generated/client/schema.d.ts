@@ -132,6 +132,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/test/total": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TestTotalTest"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/test/whatsapp": {
         parameters: {
             query?: never;
@@ -1446,6 +1462,14 @@ export interface components {
             /** Format: int32 */
             outletId: number;
         };
+        BillTableTotal: {
+            /** Format: decimal */
+            total: number;
+            /** Format: decimal */
+            totalPayments: number;
+            /** Format: decimal */
+            tipTotal: number;
+        };
         TableOrderUpdateTableOrderResponse: {
             isSuccess: boolean;
         };
@@ -2429,7 +2453,6 @@ export interface components {
             name: string;
             /** Format: int32 */
             outletId: number;
-            printerConfig?: components["schemas"]["PrinterPrinterConfig"] | null;
         };
         ESCPOS_NETPrinterStatusEventArgs: components["schemas"]["SystemEventArgs"] & {
             isWaitingForOnlineRecovery?: boolean | null;
@@ -2447,13 +2470,6 @@ export interface components {
             didRecoverableNonAutocutterErrorOccur?: boolean | null;
         };
         SystemEventArgs: Record<string, never>;
-        PrinterPrinterConfig: {
-            /** Format: int32 */
-            outletId: number;
-            /** Format: int32 */
-            printerId: number;
-            name: string;
-        };
         PrinterListRequest: Record<string, never>;
         CommonWrapperResultOfStatusResultDto: components["schemas"]["CommonWrapperResult"] & {
             value?: components["schemas"]["PayDtoStatusResultDto"] | null;
@@ -3119,6 +3135,35 @@ export interface operations {
                 };
                 content: {
                     "application/json": boolean;
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TestTotalTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["BillTableTotal"];
                 };
             };
             /** @description Server Error */

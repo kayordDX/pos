@@ -13,7 +13,7 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { InternalErrorResponse, ServicesWhatsappStatus } from "./api.schemas";
+import type { BillTableTotal, InternalErrorResponse, ServicesWhatsappStatus } from "./api.schemas";
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType } from "../mutator/customInstance";
 
@@ -54,6 +54,53 @@ export function createTest<
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof test>>, TError, TData>>;
 }): CreateQueryResult<TData, TError> & { queryKey: QueryKey } {
 	const queryOptions = getTestQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const testTotalTest = () => {
+	return customInstance<BillTableTotal>({ url: `/test/total`, method: "GET" });
+};
+
+export const getTestTotalTestQueryKey = () => {
+	return [`/test/total`] as const;
+};
+
+export const getTestTotalTestQueryOptions = <
+	TData = Awaited<ReturnType<typeof testTotalTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testTotalTest>>, TError, TData>>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTestTotalTestQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof testTotalTest>>> = () => testTotalTest();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof testTotalTest>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type TestTotalTestQueryResult = NonNullable<Awaited<ReturnType<typeof testTotalTest>>>;
+export type TestTotalTestQueryError = ErrorType<InternalErrorResponse>;
+
+export function createTestTotalTest<
+	TData = Awaited<ReturnType<typeof testTotalTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testTotalTest>>, TError, TData>>;
+}): CreateQueryResult<TData, TError> & { queryKey: QueryKey } {
+	const queryOptions = getTestTotalTestQueryOptions(options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: QueryKey;
