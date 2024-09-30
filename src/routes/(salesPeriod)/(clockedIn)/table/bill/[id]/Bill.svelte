@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { TableOrderGetBillResponse } from "$lib/api";
-	import { Button, Card, Separator, Switch } from "@kayord/ui";
+	import { Button, Card, Separator, Switch, toast } from "@kayord/ui";
 	import { createTableBookingClose } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
@@ -26,9 +26,13 @@
 	const closeTableMut = createTableBookingClose();
 
 	const closeTable = async () => {
-		const result = await $closeTableMut.mutateAsync({ data: { tableBookingId: bookingId } });
-		if (result.id) {
-			goto("/waiter");
+		try {
+			const result = await $closeTableMut.mutateAsync({ data: { tableBookingId: bookingId } });
+			if (result.id) {
+				goto("/waiter");
+			}
+		} catch (error) {
+			toast.error(getError(error).message);
 		}
 	};
 
