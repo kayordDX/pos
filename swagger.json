@@ -163,6 +163,80 @@
         }
       }
     },
+    "/user/list": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserUsers",
+        "parameters": [
+          {
+            "name": "sorts",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfUserResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/user/unassigned": {
       "get": {
         "tags": [
@@ -211,13 +285,139 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse"
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfUserResponse"
                 }
               }
             }
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/role/{userId}/{role}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserRemoveUserOutletRole",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "role",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/outlet/{userId}": {
+      "delete": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserRemoveUserOutlet",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "500": {
             "description": "Server Error",
@@ -345,6 +545,58 @@
                 "schema": {
                   "$ref": "#/components/schemas/EntitiesUserOutlet"
                 }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/role": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserAddUserOutletRole",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserAddUserOutletRoleRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -2247,50 +2499,6 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/RoleCreateRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {}
-              },
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/role/addUserInRole": {
-      "post": {
-        "tags": [
-          "Role"
-        ],
-        "operationId": "RoleAddUserInRole",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/RoleAddUserInRoleRequest"
               }
             }
           },
@@ -4818,7 +5026,7 @@
           }
         }
       },
-      "CommonModelsPaginatedListOfResponse": {
+      "CommonModelsPaginatedListOfUserResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -4833,7 +5041,7 @@
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/UserUnassignedUsersResponse"
+              "$ref": "#/components/schemas/UserUserResponse"
             }
           },
           "pageNumber": {
@@ -4856,7 +5064,7 @@
           }
         }
       },
-      "UserUnassignedUsersResponse": {
+      "UserUserResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -4864,7 +5072,8 @@
           "userId",
           "email",
           "image",
-          "name"
+          "name",
+          "roles"
         ],
         "properties": {
           "isCurrent": {
@@ -4881,8 +5090,26 @@
           },
           "name": {
             "type": "string"
+          },
+          "roles": {
+            "type": "string"
           }
         }
+      },
+      "UserUsersRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommonModelsQueryModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "CommonModelsQueryModel": {
+        "type": "object",
+        "additionalProperties": false
       },
       "UserUnassignedUsersRequest": {
         "allOf": [
@@ -4895,7 +5122,40 @@
           }
         ]
       },
-      "CommonModelsQueryModel": {
+      "ErrorResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "statusCode",
+          "message",
+          "errors"
+        ],
+        "properties": {
+          "statusCode": {
+            "type": "integer",
+            "format": "int32",
+            "default": 400
+          },
+          "message": {
+            "type": "string",
+            "default": "One or more errors occurred!"
+          },
+          "errors": {
+            "type": "object",
+            "additionalProperties": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "UserRemoveUserOutletRoleRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "UserRemoveUserOutletRequest": {
         "type": "object",
         "additionalProperties": false
       },
@@ -5275,6 +5535,23 @@
         ],
         "properties": {
           "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UserAddUserOutletRoleRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "roleId"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "roleId": {
             "type": "integer",
             "format": "int32"
           }
@@ -8018,35 +8295,6 @@
           }
         }
       },
-      "ErrorResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "statusCode",
-          "message",
-          "errors"
-        ],
-        "properties": {
-          "statusCode": {
-            "type": "integer",
-            "format": "int32",
-            "default": 400
-          },
-          "message": {
-            "type": "string",
-            "default": "One or more errors occurred!"
-          },
-          "errors": {
-            "type": "object",
-            "additionalProperties": {
-              "type": "array",
-              "items": {
-                "type": "string"
-              }
-            }
-          }
-        }
-      },
       "TableBookingGetRequest": {
         "type": "object",
         "additionalProperties": false
@@ -8638,23 +8886,6 @@
           },
           "description": {
             "type": "string"
-          }
-        }
-      },
-      "RoleAddUserInRoleRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "userId",
-          "roleId"
-        ],
-        "properties": {
-          "userId": {
-            "type": "string"
-          },
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
           }
         }
       },

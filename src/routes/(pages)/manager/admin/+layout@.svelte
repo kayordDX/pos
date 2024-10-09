@@ -5,11 +5,10 @@
 	import { Button } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
 	import {
-		SettingsIcon,
 		Settings2Icon,
 		MessageCircleIcon,
-		UserRoundCogIcon,
-		UserRoundPlusIcon,
+		UserRoundSearchIcon,
+		UsersIcon,
 		ArrowLeftIcon,
 		MenuIcon,
 	} from "lucide-svelte";
@@ -32,22 +31,17 @@
 			{
 				title: "Users",
 				href: "/manager/admin/users",
-				icon: UserRoundCogIcon,
+				icon: UsersIcon,
 			},
 			{
 				title: "Unassigned Users",
 				href: "/manager/admin/users/unassigned",
-				icon: UserRoundPlusIcon,
+				icon: UserRoundSearchIcon,
 			},
 			{
 				title: "Whatsapp",
 				href: "/manager/admin/whatsapp",
 				icon: MessageCircleIcon,
-			},
-			{
-				title: "Settings",
-				href: "/manager/admin/settings",
-				icon: SettingsIcon,
 			},
 		],
 	};

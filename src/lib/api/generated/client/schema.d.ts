@@ -68,6 +68,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user/list": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserUsers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user/unassigned": {
         parameters: {
             query?: never;
@@ -79,6 +95,38 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/role/{userId}/{role}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["UserRemoveUserOutletRole"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/outlet/{userId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["UserRemoveUserOutlet"];
         options?: never;
         head?: never;
         patch?: never;
@@ -126,6 +174,22 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["UserAssignOutlet"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/role": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UserAddUserOutletRole"];
         delete?: never;
         options?: never;
         head?: never;
@@ -686,22 +750,6 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["RoleCreate"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/role/addUserInRole": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["RoleAddUserInRole"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1372,8 +1420,8 @@ export interface components {
             image?: string | null;
             name: string;
         };
-        CommonModelsPaginatedListOfResponse: {
-            items: components["schemas"]["UserUnassignedUsersResponse"][];
+        CommonModelsPaginatedListOfUserResponse: {
+            items: components["schemas"]["UserUserResponse"][];
             /** Format: int32 */
             pageNumber: number;
             /** Format: int32 */
@@ -1383,15 +1431,31 @@ export interface components {
             hasPreviousPage: boolean;
             hasNextPage: boolean;
         };
-        UserUnassignedUsersResponse: {
+        UserUserResponse: {
             isCurrent: boolean;
             userId: string;
             email: string;
             image: string;
             name: string;
+            roles: string;
         };
-        UserUnassignedUsersRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        UserUsersRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         CommonModelsQueryModel: Record<string, never>;
+        UserUnassignedUsersRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        ErrorResponse: {
+            /**
+             * Format: int32
+             * @default 400
+             */
+            statusCode: number;
+            /** @default One or more errors occurred! */
+            message: string;
+            errors: {
+                [key: string]: string[];
+            };
+        };
+        UserRemoveUserOutletRoleRequest: Record<string, never>;
+        UserRemoveUserOutletRequest: Record<string, never>;
         UserGetStatusResponse: {
             /** Format: int32 */
             outletId: number;
@@ -1497,6 +1561,11 @@ export interface components {
         UserAssignOutletRequest: {
             /** Format: int32 */
             outletId: number;
+        };
+        UserAddUserOutletRoleRequest: {
+            userId: string;
+            /** Format: int32 */
+            roleId: number;
         };
         BillTableTotal: {
             /** Format: decimal */
@@ -2291,18 +2360,6 @@ export interface components {
             userId: string;
             user: components["schemas"]["DTOUserDTO"];
         };
-        ErrorResponse: {
-            /**
-             * Format: int32
-             * @default 400
-             */
-            statusCode: number;
-            /** @default One or more errors occurred! */
-            message: string;
-            errors: {
-                [key: string]: string[];
-            };
-        };
         TableBookingGetRequest: Record<string, never>;
         TableBookingCreateRequest: {
             /** Format: int32 */
@@ -2471,11 +2528,6 @@ export interface components {
         RoleCreateRequest: {
             name: string;
             description: string;
-        };
-        RoleAddUserInRoleRequest: {
-            userId: string;
-            /** Format: int32 */
-            roleId: number;
         };
         PrinterPrinterStatus: {
             /** Format: date-time */
@@ -3055,6 +3107,47 @@ export interface operations {
             };
         };
     };
+    UserUsers: {
+        parameters: {
+            query?: {
+                sorts?: string | null;
+                filters?: string | null;
+                page?: number | null;
+                pageSize?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfUserResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     UserUnassignedUsers: {
         parameters: {
             query?: {
@@ -3075,7 +3168,104 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CommonModelsPaginatedListOfResponse"];
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfUserResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserRemoveUserOutletRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                userId: string;
+                role: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserRemoveUserOutlet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                userId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */
@@ -3183,6 +3373,47 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesUserOutlet"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserAddUserOutletRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserAddUserOutletRoleRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
                 };
             };
             /** @description Unauthorized */
@@ -4582,40 +4813,6 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["RoleCreateRequest"];
-            };
-        };
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
-            };
-            /** @description Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["InternalErrorResponse"];
-                };
-            };
-        };
-    };
-    RoleAddUserInRole: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["RoleAddUserInRoleRequest"];
             };
         };
         responses: {

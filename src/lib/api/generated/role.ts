@@ -16,12 +16,7 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type {
-	EntitiesRole,
-	InternalErrorResponse,
-	RoleAddUserInRoleRequest,
-	RoleCreateRequest,
-} from "./api.schemas";
+import type { EntitiesRole, InternalErrorResponse, RoleCreateRequest } from "./api.schemas";
 import { customInstance } from "../mutator/customInstance";
 import type { ErrorType, BodyType } from "../mutator/customInstance";
 
@@ -85,71 +80,6 @@ export const createRoleCreate = <
 	TContext
 > => {
 	const mutationOptions = getRoleCreateMutationOptions(options);
-
-	return createMutation(mutationOptions);
-};
-export const roleAddUserInRole = (roleAddUserInRoleRequest: BodyType<RoleAddUserInRoleRequest>) => {
-	return customInstance<unknown>({
-		url: `/role/addUserInRole`,
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		data: roleAddUserInRoleRequest,
-	});
-};
-
-export const getRoleAddUserInRoleMutationOptions = <
-	TError = ErrorType<InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof roleAddUserInRole>>,
-		TError,
-		{ data: BodyType<RoleAddUserInRoleRequest> },
-		TContext
-	>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof roleAddUserInRole>>,
-	TError,
-	{ data: BodyType<RoleAddUserInRoleRequest> },
-	TContext
-> => {
-	const { mutation: mutationOptions } = options ?? {};
-
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof roleAddUserInRole>>,
-		{ data: BodyType<RoleAddUserInRoleRequest> }
-	> = (props) => {
-		const { data } = props ?? {};
-
-		return roleAddUserInRole(data);
-	};
-
-	return { mutationFn, ...mutationOptions };
-};
-
-export type RoleAddUserInRoleMutationResult = NonNullable<
-	Awaited<ReturnType<typeof roleAddUserInRole>>
->;
-export type RoleAddUserInRoleMutationBody = BodyType<RoleAddUserInRoleRequest>;
-export type RoleAddUserInRoleMutationError = ErrorType<InternalErrorResponse>;
-
-export const createRoleAddUserInRole = <
-	TError = ErrorType<InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof roleAddUserInRole>>,
-		TError,
-		{ data: BodyType<RoleAddUserInRoleRequest> },
-		TContext
-	>;
-}): CreateMutationResult<
-	Awaited<ReturnType<typeof roleAddUserInRole>>,
-	TError,
-	{ data: BodyType<RoleAddUserInRoleRequest> },
-	TContext
-> => {
-	const mutationOptions = getRoleAddUserInRoleMutationOptions(options);
 
 	return createMutation(mutationOptions);
 };

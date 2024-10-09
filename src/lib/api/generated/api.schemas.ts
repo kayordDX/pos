@@ -126,6 +126,13 @@ export type UserUnassignedUsersParams = {
 	pageSize?: number | null;
 };
 
+export type UserUsersParams = {
+	sorts?: string | null;
+	filters?: string | null;
+	page?: number | null;
+	pageSize?: number | null;
+};
+
 export interface AdjustmentCreateRequest {
 	adjustmentTypeId: number;
 	amount: number;
@@ -584,9 +591,6 @@ export type CommonWrapperResultOfResponseAllOf = {
 	value?: CommonWrapperResultOfResponseAllOfValue;
 };
 
-export type CommonWrapperResultOfResponse = CommonWrapperResult &
-	CommonWrapperResultOfResponseAllOf;
-
 export interface PayManualPaymentRequest {
 	amount: number;
 	paymentTypeId: number;
@@ -602,6 +606,9 @@ export interface CommonWrapperResult {
 	failure: boolean;
 	success: boolean;
 }
+
+export type CommonWrapperResultOfResponse = CommonWrapperResult &
+	CommonWrapperResultOfResponseAllOf;
 
 export interface PayDtoStatusResultDto {
 	amount: number;
@@ -692,11 +699,6 @@ export interface PrinterPrinterStatus {
 	printerStatusEventArgs?: PrinterPrinterStatusPrinterStatusEventArgs;
 }
 
-export interface RoleAddUserInRoleRequest {
-	roleId: number;
-	userId: string;
-}
-
 export interface RoleCreateRequest {
 	description: string;
 	name: string;
@@ -759,8 +761,6 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
-
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -791,6 +791,8 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
+
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: unknown;
@@ -908,14 +910,6 @@ export interface TableBookingCreateRequest {
 
 export interface TableBookingGetRequest {
 	[key: string]: unknown;
-}
-
-export type ErrorResponseErrors = { [key: string]: string[] };
-
-export interface ErrorResponse {
-	errors: ErrorResponseErrors;
-	message: string;
-	statusCode: number;
 }
 
 export interface TableBookingGetResponse {
@@ -1074,6 +1068,11 @@ export type EntitiesCashUpUserItemTypePaymentType = EntitiesPaymentType | null;
  */
 export type EntitiesCashUpUserItemTypeCashupConfig = EntitiesCashUpConfig | null;
 
+/**
+ * @nullable
+ */
+export type EntitiesCashUpUserItemTypeAdjustmentType = EntitiesAdjustmentType | null;
+
 export interface EntitiesCashUpUserItemType {
 	/** @nullable */
 	adjustmentType?: EntitiesCashUpUserItemTypeAdjustmentType;
@@ -1129,11 +1128,6 @@ export interface EntitiesAdjustmentType {
 	description?: string | null;
 	name: string;
 }
-
-/**
- * @nullable
- */
-export type EntitiesCashUpUserItemTypeAdjustmentType = EntitiesAdjustmentType | null;
 
 export interface EntitiesAdjustment {
 	adjustmentId: number;
@@ -1194,23 +1188,6 @@ export interface EntitiesExtra {
 	price: number;
 }
 
-export interface EntitiesMenuItemOptionGroup {
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-	optionGroup: EntitiesOptionGroup;
-	optionGroupId: number;
-}
-
-export interface EntitiesOptionGroup {
-	maxSelections: number;
-	/** @nullable */
-	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
-	minSelections: number;
-	name: string;
-	optionGroupId: number;
-	options: EntitiesOption[];
-}
-
 export interface EntitiesOption {
 	name: string;
 	optionGroup: EntitiesOptionGroup;
@@ -1245,29 +1222,6 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
-/**
- * @nullable
- */
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
-
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	parent?: EntitiesMenuSectionParent;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
-}
-
 export interface EntitiesMenu {
 	id: number;
 	/** @nullable */
@@ -1277,6 +1231,11 @@ export interface EntitiesMenu {
 	outletId: number;
 	position: number;
 }
+
+/**
+ * @nullable
+ */
+export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
 
 /**
  * @nullable
@@ -1305,6 +1264,41 @@ export interface EntitiesMenuItem {
 	stockPrice: number;
 	/** @nullable */
 	tags?: EntitiesTag[] | null;
+}
+
+export interface EntitiesMenuItemOptionGroup {
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+	optionGroup: EntitiesOptionGroup;
+	optionGroupId: number;
+}
+
+export interface EntitiesOptionGroup {
+	maxSelections: number;
+	/** @nullable */
+	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
+	minSelections: number;
+	name: string;
+	optionGroupId: number;
+	options: EntitiesOption[];
+}
+
+export interface EntitiesMenuSection {
+	menu: EntitiesMenu;
+	menuId: number;
+	/** @nullable */
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	parent?: EntitiesMenuSectionParent;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
 }
 
 /**
@@ -1342,6 +1336,18 @@ export interface EntitiesOrderGroup {
 	orderItems?: EntitiesOrderItem[] | null;
 }
 
+export interface EntitiesRole {
+	description: string;
+	isBackOffice: boolean;
+	isFrontLine: boolean;
+	name: string;
+	/** @nullable */
+	outletId?: number | null;
+	roleId: number;
+	/** @nullable */
+	userRole?: EntitiesUserRole[] | null;
+}
+
 /**
  * @nullable
  */
@@ -1364,18 +1370,6 @@ export interface EntitiesUserRole {
 	user: EntitiesUser;
 	userId: string;
 	userRoleId: number;
-}
-
-export interface EntitiesRole {
-	description: string;
-	isBackOffice: boolean;
-	isFrontLine: boolean;
-	name: string;
-	/** @nullable */
-	outletId?: number | null;
-	roleId: number;
-	/** @nullable */
-	userRole?: EntitiesUserRole[] | null;
 }
 
 /**
@@ -1496,6 +1490,35 @@ export interface TableOrderOfficeOrderBasedBackMenuItemDTO {
 	price: number;
 }
 
+/**
+ * @nullable
+ */
+export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
+	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
+
+export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
+	divisionId: number;
+	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	orderGroupId?: number | null;
+	/** @nullable */
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	/** @nullable */
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	orderItemStatus: TableOrderOfficeOrderBasedBackOrderItemStatusDTO;
+	orderItemStatusId: number;
+	orderReceived: string;
+	orderReceivedFormatted: string;
+	orderUpdated: string;
+	orderUpdatedFormatted: string;
+	/** @nullable */
+	tableBooking?: TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking;
+	tableBookingId: number;
+}
+
 export interface TableOrderOfficeOrderBasedBackSectionDTO {
 	name: string;
 }
@@ -1524,12 +1547,6 @@ export interface TableOrderOfficeOrderBasedBackTableBookingDTO {
 	tableId: number;
 	user: DTOUserDTO;
 }
-
-/**
- * @nullable
- */
-export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
-	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
 
 /**
  * @nullable
@@ -1599,29 +1616,6 @@ export interface DTOOrderItemExtraDTO {
 	extraId: number;
 	orderItemExtraId: number;
 	orderItemId: number;
-}
-
-export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
-	divisionId: number;
-	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
-	/** @nullable */
-	note?: string | null;
-	/** @nullable */
-	orderGroupId?: number | null;
-	/** @nullable */
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	/** @nullable */
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	orderItemStatus: TableOrderOfficeOrderBasedBackOrderItemStatusDTO;
-	orderItemStatusId: number;
-	orderReceived: string;
-	orderReceivedFormatted: string;
-	orderUpdated: string;
-	orderUpdatedFormatted: string;
-	/** @nullable */
-	tableBooking?: TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking;
-	tableBookingId: number;
 }
 
 export interface DTOOptionGroupBasicDTO {
@@ -1766,6 +1760,11 @@ export interface BillTableTotal {
 	totalPayments: number;
 }
 
+export interface UserAddUserOutletRoleRequest {
+	roleId: number;
+	userId: string;
+}
+
 export interface UserAssignOutletRequest {
 	outletId: number;
 }
@@ -1779,6 +1778,14 @@ export interface EntitiesUserOutlet {
 
 export interface UserGetRolesRequest {
 	[key: string]: unknown;
+}
+
+export interface EntitiesOutletPaymentType {
+	outlet: EntitiesOutlet;
+	outletId: number;
+	paymentType: EntitiesPaymentType;
+	paymentTypeId: number;
+	position: number;
 }
 
 export interface EntitiesPaymentType {
@@ -1823,14 +1830,6 @@ export interface EntitiesOutlet {
 	/** @nullable */
 	sections?: EntitiesSection[] | null;
 	vatNumber: string;
-}
-
-export interface EntitiesOutletPaymentType {
-	outlet: EntitiesOutlet;
-	outletId: number;
-	paymentType: EntitiesPaymentType;
-	paymentTypeId: number;
-	position: number;
 }
 
 export interface EntitiesSection {
@@ -1885,26 +1884,47 @@ export interface UserGetStatusResponse {
 	salesPeriodId: number;
 }
 
-export interface CommonModelsQueryModel {
+export interface UserRemoveUserOutletRequest {
 	[key: string]: unknown;
+}
+
+export interface UserRemoveUserOutletRoleRequest {
+	[key: string]: unknown;
+}
+
+export type ErrorResponseErrors = { [key: string]: string[] };
+
+export interface ErrorResponse {
+	errors: ErrorResponseErrors;
+	message: string;
+	statusCode: number;
 }
 
 export type UserUnassignedUsersRequestAllOf = { [key: string]: unknown };
 
+export interface CommonModelsQueryModel {
+	[key: string]: unknown;
+}
+
 export type UserUnassignedUsersRequest = CommonModelsQueryModel & UserUnassignedUsersRequestAllOf;
 
-export interface UserUnassignedUsersResponse {
+export type UserUsersRequestAllOf = { [key: string]: unknown };
+
+export type UserUsersRequest = CommonModelsQueryModel & UserUsersRequestAllOf;
+
+export interface UserUserResponse {
 	email: string;
 	image: string;
 	isCurrent: boolean;
 	name: string;
+	roles: string;
 	userId: string;
 }
 
-export interface CommonModelsPaginatedListOfResponse {
+export interface CommonModelsPaginatedListOfUserResponse {
 	hasNextPage: boolean;
 	hasPreviousPage: boolean;
-	items: UserUnassignedUsersResponse[];
+	items: UserUserResponse[];
 	pageNumber: number;
 	totalCount: number;
 	totalPages: number;

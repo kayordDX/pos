@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createUserUnassignedUsers, type UserUnassignedUsersResponse } from "$lib/api";
+	import { createUserUnassignedUsers, type UserUserResponse } from "$lib/api";
 	import { DataTable } from "@kayord/ui";
 	import {
 		type ColumnDef,
@@ -12,8 +12,10 @@
 	} from "@tanstack/svelte-table";
 	import Current from "../Current.svelte";
 	import Avatar from "../Avatar.svelte";
+	import AddRole from "../AddRole.svelte";
+	import RemoveRole from "../RemoveRole.svelte";
 
-	const columns: ColumnDef<UserUnassignedUsersResponse>[] = [
+	const columns: ColumnDef<UserUserResponse>[] = [
 		{
 			accessorKey: "image",
 			header: "Image",
@@ -39,6 +41,24 @@
 					isCurrent: Boolean(item.getValue()),
 				}),
 		},
+		{
+			header: "Roles",
+			accessorKey: "roles",
+			cell: (item) =>
+				renderComponent(AddRole, {
+					userId: item.row.original.userId,
+					refetch: $query.refetch,
+				}),
+		},
+		{
+			header: "Reject",
+			accessorKey: "roles",
+			cell: (item) =>
+				renderComponent(RemoveRole, {
+					userId: item.row.original.userId,
+					refetch: $query.refetch,
+				}),
+		},
 	];
 
 	let pagination: PaginationState = $state({ pageIndex: 0, pageSize: 10 });
@@ -49,7 +69,7 @@
 	};
 
 	let query = createUserUnassignedUsers();
-	let data = $state<UserUnassignedUsersResponse[]>([]);
+	let data = $state<UserUserResponse[]>([]);
 	let rowCount = $state($query.data?.totalCount ?? 0);
 
 	$effect(() => {
@@ -79,7 +99,8 @@
 	});
 </script>
 
-<div class="m-2">
+<div class="m-4">
+	<h2>Unassigned Users</h2>
 	<DataTable
 		{table}
 		{columns}
