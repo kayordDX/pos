@@ -17,11 +17,13 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
+	CommonModelsPaginatedListOfResponse,
 	EntitiesUserOutlet,
 	InternalErrorResponse,
 	UserAssignOutletRequest,
 	UserGetRolesParams,
 	UserGetStatusResponse,
+	UserUnassignedUsersParams,
 	UserValidateRequest,
 	UserValidateResponse,
 } from "./api.schemas";
@@ -91,6 +93,70 @@ export const createUserValidate = <
 
 	return createMutation(mutationOptions);
 };
+export const userUnassignedUsers = (params?: UserUnassignedUsersParams) => {
+	return customInstance<CommonModelsPaginatedListOfResponse>({
+		url: `/user/unassigned`,
+		method: "GET",
+		params,
+	});
+};
+
+export const getUserUnassignedUsersQueryKey = (params?: UserUnassignedUsersParams) => {
+	return [`/user/unassigned`, ...(params ? [params] : [])] as const;
+};
+
+export const getUserUnassignedUsersQueryOptions = <
+	TData = Awaited<ReturnType<typeof userUnassignedUsers>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params?: UserUnassignedUsersParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof userUnassignedUsers>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getUserUnassignedUsersQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userUnassignedUsers>>> = () =>
+		userUnassignedUsers(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof userUnassignedUsers>>,
+		TError,
+		TData
+	> & { queryKey: QueryKey };
+};
+
+export type UserUnassignedUsersQueryResult = NonNullable<
+	Awaited<ReturnType<typeof userUnassignedUsers>>
+>;
+export type UserUnassignedUsersQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createUserUnassignedUsers<
+	TData = Awaited<ReturnType<typeof userUnassignedUsers>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params?: UserUnassignedUsersParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof userUnassignedUsers>>, TError, TData>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: QueryKey } {
+	const queryOptions = getUserUnassignedUsersQueryOptions(params, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: QueryKey;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const userGetStatus = () => {
 	return customInstance<UserGetStatusResponse>({ url: `/user/getStatus`, method: "GET" });
 };
@@ -148,7 +214,7 @@ export const getUserGetRolesQueryKey = (params: UserGetRolesParams) => {
 
 export const getUserGetRolesQueryOptions = <
 	TData = Awaited<ReturnType<typeof userGetRoles>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: UserGetRolesParams,
 	options?: {
@@ -170,11 +236,11 @@ export const getUserGetRolesQueryOptions = <
 };
 
 export type UserGetRolesQueryResult = NonNullable<Awaited<ReturnType<typeof userGetRoles>>>;
-export type UserGetRolesQueryError = ErrorType<InternalErrorResponse>;
+export type UserGetRolesQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createUserGetRoles<
 	TData = Awaited<ReturnType<typeof userGetRoles>>,
-	TError = ErrorType<InternalErrorResponse>,
+	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	params: UserGetRolesParams,
 	options?: {

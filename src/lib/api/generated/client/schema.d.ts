@@ -68,6 +68,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user/unassigned": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserUnassignedUsers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user/getStatus": {
         parameters: {
             query?: never;
@@ -1356,6 +1372,26 @@ export interface components {
             image?: string | null;
             name: string;
         };
+        CommonModelsPaginatedListOfResponse: {
+            items: components["schemas"]["UserUnassignedUsersResponse"][];
+            /** Format: int32 */
+            pageNumber: number;
+            /** Format: int32 */
+            totalPages: number;
+            /** Format: int32 */
+            totalCount: number;
+            hasPreviousPage: boolean;
+            hasNextPage: boolean;
+        };
+        UserUnassignedUsersResponse: {
+            isCurrent: boolean;
+            userId: string;
+            email: string;
+            image: string;
+            name: string;
+        };
+        UserUnassignedUsersRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        CommonModelsQueryModel: Record<string, never>;
         UserGetStatusResponse: {
             /** Format: int32 */
             outletId: number;
@@ -3019,6 +3055,47 @@ export interface operations {
             };
         };
     };
+    UserUnassignedUsers: {
+        parameters: {
+            query?: {
+                sorts?: string | null;
+                filters?: string | null;
+                page?: number | null;
+                pageSize?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     UserGetStatus: {
         parameters: {
             query?: never;
@@ -3067,6 +3144,13 @@ export interface operations {
                 content: {
                     "application/json": string[];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {

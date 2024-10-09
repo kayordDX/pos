@@ -119,6 +119,13 @@ export type UserGetRolesParams = {
 	userId: string;
 };
 
+export type UserUnassignedUsersParams = {
+	sorts?: string | null;
+	filters?: string | null;
+	page?: number | null;
+	pageSize?: number | null;
+};
+
 export interface AdjustmentCreateRequest {
 	adjustmentTypeId: number;
 	amount: number;
@@ -1067,11 +1074,6 @@ export type EntitiesCashUpUserItemTypePaymentType = EntitiesPaymentType | null;
  */
 export type EntitiesCashUpUserItemTypeCashupConfig = EntitiesCashUpConfig | null;
 
-/**
- * @nullable
- */
-export type EntitiesCashUpUserItemTypeAdjustmentType = EntitiesAdjustmentType | null;
-
 export interface EntitiesCashUpUserItemType {
 	/** @nullable */
 	adjustmentType?: EntitiesCashUpUserItemTypeAdjustmentType;
@@ -1127,6 +1129,11 @@ export interface EntitiesAdjustmentType {
 	description?: string | null;
 	name: string;
 }
+
+/**
+ * @nullable
+ */
+export type EntitiesCashUpUserItemTypeAdjustmentType = EntitiesAdjustmentType | null;
 
 export interface EntitiesAdjustment {
 	adjustmentId: number;
@@ -1489,35 +1496,6 @@ export interface TableOrderOfficeOrderBasedBackMenuItemDTO {
 	price: number;
 }
 
-/**
- * @nullable
- */
-export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
-	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
-
-export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
-	divisionId: number;
-	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
-	/** @nullable */
-	note?: string | null;
-	/** @nullable */
-	orderGroupId?: number | null;
-	/** @nullable */
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	/** @nullable */
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	orderItemStatus: TableOrderOfficeOrderBasedBackOrderItemStatusDTO;
-	orderItemStatusId: number;
-	orderReceived: string;
-	orderReceivedFormatted: string;
-	orderUpdated: string;
-	orderUpdatedFormatted: string;
-	/** @nullable */
-	tableBooking?: TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking;
-	tableBookingId: number;
-}
-
 export interface TableOrderOfficeOrderBasedBackSectionDTO {
 	name: string;
 }
@@ -1546,6 +1524,12 @@ export interface TableOrderOfficeOrderBasedBackTableBookingDTO {
 	tableId: number;
 	user: DTOUserDTO;
 }
+
+/**
+ * @nullable
+ */
+export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
+	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
 
 /**
  * @nullable
@@ -1615,6 +1599,29 @@ export interface DTOOrderItemExtraDTO {
 	extraId: number;
 	orderItemExtraId: number;
 	orderItemId: number;
+}
+
+export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
+	divisionId: number;
+	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	orderGroupId?: number | null;
+	/** @nullable */
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	/** @nullable */
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	orderItemStatus: TableOrderOfficeOrderBasedBackOrderItemStatusDTO;
+	orderItemStatusId: number;
+	orderReceived: string;
+	orderReceivedFormatted: string;
+	orderUpdated: string;
+	orderUpdatedFormatted: string;
+	/** @nullable */
+	tableBooking?: TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking;
+	tableBookingId: number;
 }
 
 export interface DTOOptionGroupBasicDTO {
@@ -1774,14 +1781,6 @@ export interface UserGetRolesRequest {
 	[key: string]: unknown;
 }
 
-export interface EntitiesOutletPaymentType {
-	outlet: EntitiesOutlet;
-	outletId: number;
-	paymentType: EntitiesPaymentType;
-	paymentTypeId: number;
-	position: number;
-}
-
 export interface EntitiesPaymentType {
 	canEdit: boolean;
 	discountPercentage: number;
@@ -1824,6 +1823,14 @@ export interface EntitiesOutlet {
 	/** @nullable */
 	sections?: EntitiesSection[] | null;
 	vatNumber: string;
+}
+
+export interface EntitiesOutletPaymentType {
+	outlet: EntitiesOutlet;
+	outletId: number;
+	paymentType: EntitiesPaymentType;
+	paymentTypeId: number;
+	position: number;
 }
 
 export interface EntitiesSection {
@@ -1876,6 +1883,31 @@ export interface UserGetStatusResponse {
 	/** @nullable */
 	salesPeriod?: UserGetStatusResponseSalesPeriod;
 	salesPeriodId: number;
+}
+
+export interface CommonModelsQueryModel {
+	[key: string]: unknown;
+}
+
+export type UserUnassignedUsersRequestAllOf = { [key: string]: unknown };
+
+export type UserUnassignedUsersRequest = CommonModelsQueryModel & UserUnassignedUsersRequestAllOf;
+
+export interface UserUnassignedUsersResponse {
+	email: string;
+	image: string;
+	isCurrent: boolean;
+	name: string;
+	userId: string;
+}
+
+export interface CommonModelsPaginatedListOfResponse {
+	hasNextPage: boolean;
+	hasPreviousPage: boolean;
+	items: UserUnassignedUsersResponse[];
+	pageNumber: number;
+	totalCount: number;
+	totalPages: number;
 }
 
 export interface UserValidateRequest {

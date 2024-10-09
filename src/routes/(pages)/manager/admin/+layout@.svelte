@@ -9,6 +9,7 @@
 		Settings2Icon,
 		MessageCircleIcon,
 		UserRoundCogIcon,
+		UserRoundPlusIcon,
 		ArrowLeftIcon,
 		MenuIcon,
 	} from "lucide-svelte";
@@ -18,7 +19,8 @@
 
 	let { children }: { children?: Snippet } = $props();
 
-	const activeClass = "bg-primary text-primary-foreground";
+	const activeClass =
+		"bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground";
 
 	const menuItems = {
 		top: [
@@ -31,6 +33,11 @@
 				title: "Users",
 				href: "/manager/admin/users",
 				icon: UserRoundCogIcon,
+			},
+			{
+				title: "Unassigned Users",
+				href: "/manager/admin/users/unassigned",
+				icon: UserRoundPlusIcon,
 			},
 			{
 				title: "Whatsapp",
@@ -65,7 +72,9 @@
 						href={item.href}
 						variant="ghost"
 						size="icon"
-						class={$page.url.pathname === item.href ? cn(activeClass) : ""}
+						class={$page.url.pathname === item.href
+							? cn(activeClass)
+							: "hover:bg-primary hover:text-primary-foreground"}
 					>
 						<item.icon class="h-6 w-6" />
 					</Button>
