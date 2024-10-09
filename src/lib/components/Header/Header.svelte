@@ -6,7 +6,16 @@
 	import { page } from "$app/stores";
 	import { slide } from "svelte/transition";
 	import type { Snippet } from "svelte";
-	let { children }: { children?: Snippet } = $props();
+	import { cn } from "@kayord/ui/utils";
+
+	interface Props {
+		children?: Snippet;
+		class?: string;
+		hideHeader?: boolean;
+		leftHeader?: Snippet;
+	}
+
+	let { children, class: className, hideHeader = false, leftHeader }: Props = $props();
 
 	const hideHeaderPages = $derived(
 		($page.route.id?.includes("kitchen") ?? false) || ($page.route.id?.includes("bar") ?? false)
@@ -15,13 +24,21 @@
 
 {#if $header || !hideHeaderPages}
 	<div
-		class="bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary"
+		class={cn(
+			"bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary",
+			className
+		)}
 		transition:slide
 	>
-		<button class="flex items-center" onclick={() => goto("/")}>
-			<img src="/logo.svg" alt="kayord-logo" class="h-10" />
-			<span class="hidden md:block">ayord.Pos</span>
-		</button>
+		{#if !hideHeader}
+			<button class="flex items-center" onclick={() => goto("/")}>
+				<img src="/logo.svg" alt="kayord-logo" class="h-10" />
+				<span class="hidden md:block">ayord.Pos</span>
+			</button>
+		{/if}
+		{#if leftHeader}
+			{@render leftHeader()}
+		{/if}
 		<span>
 			{#if children}
 				{@render children()}

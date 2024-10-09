@@ -7,14 +7,11 @@
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
 	import AuthCheck from "$lib/components/Check/AuthCheck.svelte";
 	import OutletCheck from "$lib/components/Check/OutletCheck.svelte";
-	import { page } from "$app/stores";
 	import { Notification } from "$lib/components/Notification";
 	import { status } from "$lib/stores/status";
 	import type { Snippet } from "svelte";
 	import { session } from "$lib/firebase";
 	let { children }: { children?: Snippet } = $props();
-
-	const hideHeader = $derived(!$page.route.id?.startsWith("/(salesPeriod)/(clockedIn)/table"));
 
 	$effect(() => {
 		if ($session) {
@@ -36,9 +33,6 @@
 	<ModeWatcher />
 	<Notification />
 	<QueryClientProvider client={queryClient}>
-		{#if hideHeader}
-			<Header />
-		{/if}
 		<OutletCheck>
 			{#if children}
 				{@render children()}
