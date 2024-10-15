@@ -2,6 +2,7 @@
 	import { Button, Loader } from "@kayord/ui";
 	import { status } from "$lib/stores/status";
 	import { goto } from "$app/navigation";
+	import { Header } from "$lib/components/Header";
 
 	let init = $state(false);
 
@@ -31,6 +32,7 @@
 {#if !init}
 	<Loader />
 {:else}
+	<Header />
 	<div class="m-8 flex gap-4 flex-wrap">
 		{#if $status.roles.includes("Waiter")}
 			<div class="flex flex-col">
