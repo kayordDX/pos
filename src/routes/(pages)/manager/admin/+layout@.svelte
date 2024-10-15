@@ -5,7 +5,7 @@
 	import { Button } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
 	import {
-		Settings2Icon,
+		PrinterIcon,
 		MessageCircleIcon,
 		UserRoundSearchIcon,
 		UsersIcon,
@@ -26,7 +26,7 @@
 			{
 				title: "Admin",
 				href: "/manager/admin",
-				icon: Settings2Icon,
+				icon: PrinterIcon,
 			},
 			{
 				title: "Users",

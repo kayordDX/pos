@@ -8,9 +8,10 @@
 
 	interface Props {
 		printer: PrinterPrinterStatus;
+		canPrint: boolean;
 		refetch: () => void;
 	}
-	let { printer, refetch }: Props = $props();
+	let { printer, canPrint, refetch }: Props = $props();
 	let showDetail = $state(false);
 
 	const boolToText = (bool?: boolean | null) => {
@@ -145,10 +146,12 @@
 			</Table.Root>
 		</div>
 	</Card.Content>
-	<Card.Footer>
-		<Button class="w-full" onclick={printBill} disabled={!isOnline || printer.isOutdated}>
-			<PrinterIcon class="size-4 mr-2" />
-			Print
-		</Button>
-	</Card.Footer>
+	{#if canPrint}
+		<Card.Footer>
+			<Button class="w-full" onclick={printBill} disabled={!isOnline || printer.isOutdated}>
+				<PrinterIcon class="size-4 mr-2" />
+				Print
+			</Button>
+		</Card.Footer>
+	{/if}
 </Card.Root>

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { createPrinterList } from "$lib/api";
 	import { Alert, Card } from "@kayord/ui";
-	import Printer from "./Printer.svelte";
 	import TriangleAlertIcon from "lucide-svelte/icons/triangle-alert";
 	import { status } from "$lib/stores/status";
+	import Printer from "$lib/components/Printer.svelte";
 	const query = createPrinterList($status.outletId);
 </script>
 
@@ -22,7 +22,7 @@
 		{:else}
 			<div class="flex flex-col gap-4">
 				{#each $query.data ?? [] as printer}
-					<Printer {printer} refetch={$query.refetch} />
+					<Printer {printer} refetch={$query.refetch} canPrint={true} />
 				{/each}
 			</div>
 		{/if}
