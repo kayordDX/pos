@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { TableOrderGetBillResponse } from "$lib/api";
 	import { Button, Card, Separator, Switch, toast } from "@kayord/ui";
-	import { createTableBookingClose } from "$lib/api";
+	import { createTableBookingClose, createPayCheck } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
@@ -12,7 +12,7 @@
 	import { status } from "$lib/stores/status";
 	import EditPayment from "./EditPayment.svelte";
 	import BillOptions from "./BillOptions.svelte";
-	import { WalletCardsIcon, DoorOpenIcon } from "lucide-svelte";
+	import { WalletCardsIcon, DoorOpenIcon, RotateCcwIcon } from "lucide-svelte";
 
 	interface Props {
 		data: TableOrderGetBillResponse;
@@ -24,6 +24,7 @@
 	let { data, bookingId, isReadOnly = false, refetch }: Props = $props();
 
 	const closeTableMut = createTableBookingClose();
+	const recheckHaloPayment = createPayCheck();
 
 	const closeTable = async () => {
 		try {
@@ -36,6 +37,20 @@
 		}
 	};
 
+	let recheckHaloLoading = $state(false);
+
+	const recheckHaloPayments = async () => {
+		try {
+			recheckHaloLoading = true;
+			const result = await $recheckHaloPayment.mutateAsync({ data: { tableBookingId: bookingId } });
+			toast.info(`${result.checked} Halo payment checked`);
+		} catch (error) {
+			toast.error(getError(error).message);
+		} finally {
+			recheckHaloLoading = false;
+		}
+	};
+
 	let adjustmentOpen = $state(false);
 
 	const isManager = $derived($status.roles.includes("Manager"));
@@ -45,23 +60,36 @@
 </script>
 
 <Card.Root class="overflow-hidden m-2 mb-12">
-	<Card.Header class="flex flex-row items-start bg-muted/50 p-4">
-		<div class="grid gap-0.5 w-full">
-			<Card.Title class="group flex items-center gap-2 text-lg">
-				Bill #{bookingId}
-			</Card.Title>
-			<Card.Description>{stringToFDate(data.billDate)}</Card.Description>
-			{#if showDetail}
-				<Separator class="mt-2" />
-				<div class="text-muted-foreground flex flex-col text-sm">
+	<Card.Header class="flex flex-col bg-muted/50 p-4">
+		<div class="flex flex-row w-full justify-between">
+			<div class="flex flex-col">
+				<Card.Title class="group flex items-center gap-2 text-lg">
+					Bill #{bookingId}
+				</Card.Title>
+				<Card.Description>{stringToFDate(data.billDate)}</Card.Description>
+			</div>
+			<div><Switch bind:checked={showDetail} /></div>
+		</div>
+		{#if showDetail}
+			<Separator class="mt-2" />
+			<div class="text-muted-foreground flex flex-row text-sm justify-between">
+				<div class="flex flex-col">
 					<div>{data.tableName}</div>
 					<div>Waiter {data.waiter}</div>
 					<div>Bill Status {data.isClosed ? "Closed" : "Open"}</div>
 				</div>
-			{/if}
-		</div>
-		<div><Switch bind:checked={showDetail} /></div>
+				<div class="flex flex-col justify-center">
+					{#if !isReadOnly}
+						<Button disabled={recheckHaloLoading} onclick={recheckHaloPayments}>
+							<RotateCcwIcon class="size-4 mr-2" />
+							Re-Check Halo Payment
+						</Button>
+					{/if}
+				</div>
+			</div>
+		{/if}
 	</Card.Header>
+
 	<Card.Content class="p-6 text-sm">
 		<div class="grid gap-3">
 			<div class="font-semibold">Order Details</div>

@@ -21,6 +21,8 @@ import type {
 	CommonWrapperResultOfStatusResultDto,
 	EntitiesPayment,
 	InternalErrorResponse,
+	PayCheckRequest,
+	PayCheckResponse,
 	PayGetLinkParams,
 	PayManualPaymentRequest,
 } from "./api.schemas";
@@ -148,70 +150,6 @@ export const createPayManualPayment = <
 
 	return createMutation(mutationOptions);
 };
-export const payHaloPay = (tableBookingId: number, amount: number, userId: string) => {
-	return customInstance<CommonWrapperResultOfResponse>({
-		url: `/pay/haloPay/${tableBookingId}/${amount}/${userId}`,
-		method: "GET",
-	});
-};
-
-export const getPayHaloPayQueryKey = (tableBookingId: number, amount: number, userId: string) => {
-	return [`/pay/haloPay/${tableBookingId}/${amount}/${userId}`] as const;
-};
-
-export const getPayHaloPayQueryOptions = <
-	TData = Awaited<ReturnType<typeof payHaloPay>>,
-	TError = ErrorType<InternalErrorResponse>,
->(
-	tableBookingId: number,
-	amount: number,
-	userId: string,
-	options?: {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof payHaloPay>>, TError, TData>>;
-	}
-) => {
-	const { query: queryOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getPayHaloPayQueryKey(tableBookingId, amount, userId);
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof payHaloPay>>> = () =>
-		payHaloPay(tableBookingId, amount, userId);
-
-	return {
-		queryKey,
-		queryFn,
-		enabled: !!(tableBookingId && amount && userId),
-		...queryOptions,
-	} as CreateQueryOptions<Awaited<ReturnType<typeof payHaloPay>>, TError, TData> & {
-		queryKey: QueryKey;
-	};
-};
-
-export type PayHaloPayQueryResult = NonNullable<Awaited<ReturnType<typeof payHaloPay>>>;
-export type PayHaloPayQueryError = ErrorType<InternalErrorResponse>;
-
-export function createPayHaloPay<
-	TData = Awaited<ReturnType<typeof payHaloPay>>,
-	TError = ErrorType<InternalErrorResponse>,
->(
-	tableBookingId: number,
-	amount: number,
-	userId: string,
-	options?: {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof payHaloPay>>, TError, TData>>;
-	}
-): CreateQueryResult<TData, TError> & { queryKey: QueryKey } {
-	const queryOptions = getPayHaloPayQueryOptions(tableBookingId, amount, userId, options);
-
-	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
-		queryKey: QueryKey;
-	};
-
-	query.queryKey = queryOptions.queryKey;
-
-	return query;
-}
-
 export const payGetLink = (params: PayGetLinkParams) => {
 	return customInstance<CommonWrapperResultOfResponse>({
 		url: `/pay/getLink`,
@@ -268,3 +206,67 @@ export function createPayGetLink<
 
 	return query;
 }
+
+export const payCheck = (payCheckRequest: BodyType<PayCheckRequest>) => {
+	return customInstance<PayCheckResponse>({
+		url: `/pay/check`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: payCheckRequest,
+	});
+};
+
+export const getPayCheckMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof payCheck>>,
+		TError,
+		{ data: BodyType<PayCheckRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof payCheck>>,
+	TError,
+	{ data: BodyType<PayCheckRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof payCheck>>,
+		{ data: BodyType<PayCheckRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return payCheck(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type PayCheckMutationResult = NonNullable<Awaited<ReturnType<typeof payCheck>>>;
+export type PayCheckMutationBody = BodyType<PayCheckRequest>;
+export type PayCheckMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createPayCheck = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof payCheck>>,
+		TError,
+		{ data: BodyType<PayCheckRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof payCheck>>,
+	TError,
+	{ data: BodyType<PayCheckRequest> },
+	TContext
+> => {
+	const mutationOptions = getPayCheckMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};

@@ -820,22 +820,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/pay/haloPay/{tableBookingId}/{amount}/{userId}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["PayHaloPay"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/pay/getLink": {
         parameters: {
             query?: never;
@@ -846,6 +830,22 @@ export interface paths {
         get: operations["PayGetLink"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/pay/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["PayCheck"];
         delete?: never;
         options?: never;
         head?: never;
@@ -1412,7 +1412,6 @@ export interface components {
         };
         UserValidateResponse: {
             userId: string;
-            userRoles?: string[] | null;
         };
         UserValidateRequest: {
             userId: string;
@@ -1952,27 +1951,6 @@ export interface components {
             image: string;
             name: string;
             isActive: boolean;
-            userRole?: components["schemas"]["EntitiesUserRole"][] | null;
-        };
-        EntitiesUserRole: {
-            /** Format: int32 */
-            userRoleId: number;
-            userId: string;
-            /** Format: int32 */
-            roleId: number;
-            user: components["schemas"]["EntitiesUser"];
-            role?: components["schemas"]["EntitiesRole"] | null;
-        };
-        EntitiesRole: {
-            /** Format: int32 */
-            roleId: number;
-            name: string;
-            description: string;
-            isFrontLine: boolean;
-            isBackOffice: boolean;
-            /** Format: int32 */
-            outletId?: number | null;
-            userRole?: components["schemas"]["EntitiesUserRole"][] | null;
         };
         EntitiesOrderItem: {
             /** Format: int32 */
@@ -2529,6 +2507,16 @@ export interface components {
             name: string;
             description: string;
         };
+        EntitiesRole: {
+            /** Format: int32 */
+            roleId: number;
+            name: string;
+            description: string;
+            isFrontLine: boolean;
+            isBackOffice: boolean;
+            /** Format: int32 */
+            outletId?: number | null;
+        };
         PrinterPrinterStatus: {
             /** Format: date-time */
             dateUpdated: string;
@@ -2604,8 +2592,15 @@ export interface components {
             url: string;
             reference: string;
         };
-        PayHaloPayRequest: Record<string, never>;
         PayGetLinkRequest: Record<string, never>;
+        PayCheckResponse: {
+            /** Format: int32 */
+            checked: number;
+        };
+        PayCheckRequest: {
+            /** Format: int32 */
+            tableBookingId: number;
+        };
         OutletUpdateRequest: {
             name: string;
             /** Format: int32 */
@@ -4975,15 +4970,14 @@ export interface operations {
             };
         };
     };
-    PayHaloPay: {
+    PayGetLink: {
         parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                tableBookingId: number;
+            query: {
                 amount: number;
-                userId: string;
+                tableBookingId: number;
             };
+            header?: never;
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -5008,17 +5002,18 @@ export interface operations {
             };
         };
     };
-    PayGetLink: {
+    PayCheck: {
         parameters: {
-            query: {
-                amount: number;
-                tableBookingId: number;
-            };
+            query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PayCheckRequest"];
+            };
+        };
         responses: {
             /** @description Success */
             200: {
@@ -5026,8 +5021,15 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CommonWrapperResultOfResponse"];
+                    "application/json": components["schemas"]["PayCheckResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {

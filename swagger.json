@@ -2706,64 +2706,6 @@
         }
       }
     },
-    "/pay/haloPay/{tableBookingId}/{amount}/{userId}": {
-      "get": {
-        "tags": [
-          "Pay"
-        ],
-        "operationId": "PayHaloPay",
-        "parameters": [
-          {
-            "name": "tableBookingId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "amount",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "number",
-              "format": "decimal"
-            }
-          },
-          {
-            "name": "userId",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CommonWrapperResultOfResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "/pay/getLink": {
       "get": {
         "tags": [
@@ -2812,6 +2754,57 @@
             }
           }
         }
+      }
+    },
+    "/pay/check": {
+      "post": {
+        "tags": [
+          "Pay"
+        ],
+        "operationId": "PayCheck",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayCheckRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PayCheckResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/outlet/{id}": {
@@ -4992,13 +4985,6 @@
         "properties": {
           "userId": {
             "type": "string"
-          },
-          "userRoles": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "type": "string"
-            }
           }
         }
       },
@@ -6861,88 +6847,6 @@
           },
           "isActive": {
             "type": "boolean"
-          },
-          "userRole": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesUserRole"
-            }
-          }
-        }
-      },
-      "EntitiesUserRole": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "userRoleId",
-          "userId",
-          "roleId",
-          "user"
-        ],
-        "properties": {
-          "userRoleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "user": {
-            "$ref": "#/components/schemas/EntitiesUser"
-          },
-          "role": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/EntitiesRole"
-              }
-            ]
-          }
-        }
-      },
-      "EntitiesRole": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "roleId",
-          "name",
-          "description",
-          "isFrontLine",
-          "isBackOffice"
-        ],
-        "properties": {
-          "roleId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "description": {
-            "type": "string"
-          },
-          "isFrontLine": {
-            "type": "boolean"
-          },
-          "isBackOffice": {
-            "type": "boolean"
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "userRole": {
-            "type": "array",
-            "nullable": true,
-            "items": {
-              "$ref": "#/components/schemas/EntitiesUserRole"
-            }
           }
         }
       },
@@ -8889,6 +8793,40 @@
           }
         }
       },
+      "EntitiesRole": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "roleId",
+          "name",
+          "description",
+          "isFrontLine",
+          "isBackOffice"
+        ],
+        "properties": {
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "isFrontLine": {
+            "type": "boolean"
+          },
+          "isBackOffice": {
+            "type": "boolean"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        }
+      },
       "PrinterPrinterStatus": {
         "type": "object",
         "additionalProperties": false,
@@ -9186,13 +9124,35 @@
           }
         }
       },
-      "PayHaloPayRequest": {
-        "type": "object",
-        "additionalProperties": false
-      },
       "PayGetLinkRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "PayCheckResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "checked"
+        ],
+        "properties": {
+          "checked": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "PayCheckRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tableBookingId"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "OutletUpdateRequest": {
         "type": "object",

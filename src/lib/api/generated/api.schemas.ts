@@ -568,11 +568,15 @@ export interface OutletUpdateRequest {
 	name: string;
 }
 
-export interface PayGetLinkRequest {
-	[key: string]: unknown;
+export interface PayCheckRequest {
+	tableBookingId: number;
 }
 
-export interface PayHaloPayRequest {
+export interface PayCheckResponse {
+	checked: number;
+}
+
+export interface PayGetLinkRequest {
 	[key: string]: unknown;
 }
 
@@ -591,6 +595,9 @@ export type CommonWrapperResultOfResponseAllOf = {
 	value?: CommonWrapperResultOfResponseAllOfValue;
 };
 
+export type CommonWrapperResultOfResponse = CommonWrapperResult &
+	CommonWrapperResultOfResponseAllOf;
+
 export interface PayManualPaymentRequest {
 	amount: number;
 	paymentTypeId: number;
@@ -606,9 +613,6 @@ export interface CommonWrapperResult {
 	failure: boolean;
 	success: boolean;
 }
-
-export type CommonWrapperResultOfResponse = CommonWrapperResult &
-	CommonWrapperResultOfResponseAllOf;
 
 export interface PayDtoStatusResultDto {
 	amount: number;
@@ -697,6 +701,16 @@ export interface PrinterPrinterStatus {
 	printerId: number;
 	/** @nullable */
 	printerStatusEventArgs?: PrinterPrinterStatusPrinterStatusEventArgs;
+}
+
+export interface EntitiesRole {
+	description: string;
+	isBackOffice: boolean;
+	isFrontLine: boolean;
+	name: string;
+	/** @nullable */
+	outletId?: number | null;
+	roleId: number;
 }
 
 export interface RoleCreateRequest {
@@ -912,19 +926,6 @@ export interface TableBookingGetRequest {
 	[key: string]: unknown;
 }
 
-export interface TableBookingGetResponse {
-	bookingDate: string;
-	bookingName: string;
-	/** @nullable */
-	closeDate?: string | null;
-	id: number;
-	salesPeriodId: number;
-	table: ManagerOrderViewTableDTO;
-	tableId: number;
-	user: DTOUserDTO;
-	userId: string;
-}
-
 export interface TableBookingHistoryRequest {
 	[key: string]: unknown;
 }
@@ -958,6 +959,19 @@ export interface ManagerOrderViewTableDTO {
 	/** @nullable */
 	section?: ManagerOrderViewTableDTOSection;
 	tableId: number;
+}
+
+export interface TableBookingGetResponse {
+	bookingDate: string;
+	bookingName: string;
+	/** @nullable */
+	closeDate?: string | null;
+	id: number;
+	salesPeriodId: number;
+	table: ManagerOrderViewTableDTO;
+	tableId: number;
+	user: DTOUserDTO;
+	userId: string;
 }
 
 export interface TableBookingHistoryResponse {
@@ -1188,6 +1202,16 @@ export interface EntitiesExtra {
 	price: number;
 }
 
+export interface EntitiesOptionGroup {
+	maxSelections: number;
+	/** @nullable */
+	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
+	minSelections: number;
+	name: string;
+	optionGroupId: number;
+	options: EntitiesOption[];
+}
+
 export interface EntitiesOption {
 	name: string;
 	optionGroup: EntitiesOptionGroup;
@@ -1273,16 +1297,6 @@ export interface EntitiesMenuItemOptionGroup {
 	optionGroupId: number;
 }
 
-export interface EntitiesOptionGroup {
-	maxSelections: number;
-	/** @nullable */
-	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
-	minSelections: number;
-	name: string;
-	optionGroupId: number;
-	options: EntitiesOption[];
-}
-
 export interface EntitiesMenuSection {
 	menu: EntitiesMenu;
 	menuId: number;
@@ -1336,40 +1350,12 @@ export interface EntitiesOrderGroup {
 	orderItems?: EntitiesOrderItem[] | null;
 }
 
-export interface EntitiesRole {
-	description: string;
-	isBackOffice: boolean;
-	isFrontLine: boolean;
-	name: string;
-	/** @nullable */
-	outletId?: number | null;
-	roleId: number;
-	/** @nullable */
-	userRole?: EntitiesUserRole[] | null;
-}
-
-/**
- * @nullable
- */
-export type EntitiesUserRoleRole = EntitiesRole | null;
-
 export interface EntitiesUser {
 	email: string;
 	image: string;
 	isActive: boolean;
 	name: string;
 	userId: string;
-	/** @nullable */
-	userRole?: EntitiesUserRole[] | null;
-}
-
-export interface EntitiesUserRole {
-	/** @nullable */
-	role?: EntitiesUserRoleRole;
-	roleId: number;
-	user: EntitiesUser;
-	userId: string;
-	userRoleId: number;
 }
 
 /**
@@ -1940,8 +1926,6 @@ export interface UserValidateRequest {
 
 export interface UserValidateResponse {
 	userId: string;
-	/** @nullable */
-	userRoles?: string[] | null;
 }
 
 export interface ServicesWhatsappQrResponse {
