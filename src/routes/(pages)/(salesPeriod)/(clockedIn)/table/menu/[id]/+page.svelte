@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from "svelte/legacy";
+
 	import { Input, Loader } from "@kayord/ui";
 	import { SearchIcon } from "lucide-svelte";
 	import {
@@ -19,22 +21,19 @@
 	import { debounce } from "$lib/util";
 	import MenuItems from "./MenuItems.svelte";
 
-	let query = createMenuList({ outletId: $status?.outletId });
-	$: query = createMenuList({ outletId: $status?.outletId });
+	let query = $state(createMenuList({ outletId: $status?.outletId }));
 
-	let itemParams: MenuGetItemsGetMenuItemsParams = {
+	let itemParams: MenuGetItemsGetMenuItemsParams = $state({
 		menuId: selection.value.menuId,
 		sectionId: 0,
-	};
+	});
 
-	let sectionParams: MenuGetSectionsGetMenusSectionsParams = {
+	let sectionParams: MenuGetSectionsGetMenusSectionsParams = $state({
 		menuId: selection.value.menuId,
 		sectionId: 0,
-	};
+	});
 
 	const search = $page.url.searchParams.get("search");
-	$: itemParams.search = search;
-	$: selection.value.menuId && setMenuId();
 
 	const setMenuId = () => {
 		sectionParams.menuId = selection.value.menuId;
@@ -49,11 +48,9 @@
 	};
 	const debouncedHandleInput = debounce(setSearchString, 500);
 
-	let itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
-	$: itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
+	let itemsQuery = $state(createMenuGetItemsGetMenuItems(itemParams));
 
-	let sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
-	$: sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
+	let sectionsQuery = $state(createMenuGetSectionsGetMenusSections(sectionParams));
 
 	const setMenuSelection = (menuId: number) => {
 		selection.value.menuId = menuId;
@@ -67,7 +64,22 @@
 		}
 	};
 
-	$: checkMenuSelection();
+	$effect(() => {
+		query = createMenuList({ outletId: $status?.outletId });
+		itemParams.search = search;
+	});
+	run(() => {
+		selection.value.menuId && setMenuId();
+	});
+	run(() => {
+		itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
+	});
+	run(() => {
+		sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
+	});
+	run(() => {
+		checkMenuSelection();
+	});
 </script>
 
 <div class="flex justify-center flex-col mb-12 mt-2 items-center">
