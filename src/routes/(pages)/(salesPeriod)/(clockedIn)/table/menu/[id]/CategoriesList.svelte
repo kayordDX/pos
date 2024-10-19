@@ -8,9 +8,6 @@
 	import { cn } from "@kayord/ui/utils";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	export let sections: MenuGetSectionsResponse | undefined;
-	export let sectionParams: MenuGetSectionsGetMenusSectionsParams;
-	export let itemParams: MenuGetItemsGetMenuItemsParams;
 	const setSection = (sectionId: number) => {
 		sectionParams.sectionId = sectionId;
 		itemParams.sectionId = sectionId;
@@ -18,8 +15,22 @@
 
 	type ClassNameProp = HTMLAttributes<HTMLElement>;
 
-	export let className: ClassNameProp["class"] = undefined;
-	export { className as class };
+	interface Props {
+		sections: MenuGetSectionsResponse | undefined;
+		sectionParams: MenuGetSectionsGetMenusSectionsParams;
+		itemParams: MenuGetItemsGetMenuItemsParams;
+		class?: ClassNameProp["class"];
+		children?: import('svelte').Snippet;
+	}
+
+	let {
+		sections,
+		sectionParams = $bindable(),
+		itemParams = $bindable(),
+		class: className = undefined,
+		children
+	}: Props = $props();
+	
 </script>
 
 <div class="w-full flex flex-col gap-2 items-center">
@@ -29,7 +40,7 @@
 				<Breadcrumb.List>
 					<Breadcrumb.Item>
 						<button
-							on:click={() => {
+							onclick={() => {
 								setSection(0);
 							}}
 						>
@@ -40,7 +51,7 @@
 						<Breadcrumb.Separator />
 
 						{#if parent.parent}
-							<button on:click={() => setSection(parent?.parent?.menuSectionId ?? 0)}>
+							<button onclick={() => setSection(parent?.parent?.menuSectionId ?? 0)}>
 								<Breadcrumb.Item>
 									<Breadcrumb.Link>{parent.parent.name}</Breadcrumb.Link>
 								</Breadcrumb.Item>
@@ -49,7 +60,7 @@
 						{/if}
 
 						<Breadcrumb.Item>
-							<button on:click={() => setSection(parent.menuSectionId)}>
+							<button onclick={() => setSection(parent.menuSectionId)}>
 								<Breadcrumb.Page>{parent.name}</Breadcrumb.Page>
 							</button>
 						</Breadcrumb.Item>
@@ -57,6 +68,6 @@
 				</Breadcrumb.List>
 			</Breadcrumb.Root>
 		{/if}
-		<slot />
+		{@render children?.()}
 	{/if}
 </div>

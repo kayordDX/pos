@@ -8,15 +8,15 @@
 	}
 	let { menus, open = $bindable(false) }: Props = $props();
 
-	import { selection } from "$lib/stores/selection";
+	import { selection } from "$lib/stores/selection.svelte";
 	import { cn } from "@kayord/ui/utils";
 
 	const setMenu = (menuId: number) => {
 		open = false;
-		$selection.menuId = menuId;
+		selection.value.menuId = menuId;
 	};
 
-	if ($selection.menuId == 0) {
+	if (selection.value.menuId == 0) {
 		if (menus.length > 0 && menus[0]) {
 			setMenu(menus[0].id);
 		}
@@ -25,7 +25,8 @@
 
 <div class="flex flex-col items-center gap-2 mt-4">
 	{#each menus as menu}
-		{@const extraClass = menu.id == $selection.menuId ? "bg-primary text-primary-foreground" : ""}
+		{@const extraClass =
+			menu.id == selection.value.menuId ? "bg-primary text-primary-foreground" : ""}
 		<button onclick={() => setMenu(menu.id)} class="w-full">
 			<Card.Root class={cn("p-4 w-full", extraClass)}>
 				{menu.name}

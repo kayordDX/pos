@@ -1,22 +1,26 @@
 <script lang="ts">
 	import { Button, DropdownMenu } from "@kayord/ui";
 	import { SquareMenuIcon } from "lucide-svelte";
-	import { selection } from "$lib/stores/selection";
+	import { selection } from "$lib/stores/selection.svelte";
 	import type { EntitiesMenu } from "$lib/api";
 
-	export let menus: EntitiesMenu[];
+	interface Props {
+		menus: EntitiesMenu[];
+	}
+
+	let { menus }: Props = $props();
 
 	const setMenu = (menuId: number) => {
-		$selection.menuId = menuId;
+		selection.value.menuId = menuId;
 	};
 
-	if ($selection.menuId == 0) {
+	if (selection.value.menuId == 0) {
 		if (menus.length > 0 && menus[0]) {
 			setMenu(menus[0].id);
 		}
 	}
 
-	let value = $selection.menuId.toString();
+	let value = $state(selection.value.menuId.toString());
 </script>
 
 <DropdownMenu.Root>

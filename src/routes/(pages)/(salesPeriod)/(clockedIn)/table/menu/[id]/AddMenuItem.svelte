@@ -11,11 +11,15 @@
 	import { getError } from "$lib/types";
 	import Quantity from "$lib/components/Quantity/Quantity.svelte";
 
-	export let data: DTOMenuItemDTO;
-	export let tableBookingId: number;
-	export let open = false;
+	interface Props {
+		data: DTOMenuItemDTO;
+		tableBookingId: number;
+		open?: boolean;
+	}
 
-	let currentExtras: Array<number> = [];
+	let { data, tableBookingId, open = $bindable(false) }: Props = $props();
+
+	let currentExtras: Array<number> = $state([]);
 
 	const getSelectedCountInOptionGroup = (options: Array<DTOOptionDTO>) => {
 		return options.filter((x) => $formData.options.includes(x.optionId)).length;
