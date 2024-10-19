@@ -16,18 +16,6 @@
 
 	const paymentTypeQuery = createOutletGetPaymentType($status?.outletId ?? 0);
 
-	// Set Default Value
-	$: {
-		if (
-			$formData.paymentTypeId == 0 &&
-			$paymentTypeQuery.data &&
-			$paymentTypeQuery.data.length > 0 &&
-			$paymentTypeQuery.data[0]?.paymentTypeId != undefined
-		) {
-			$formData.paymentTypeId = $paymentTypeQuery.data[0]?.paymentTypeId;
-		}
-	}
-
 	const schema = z.object({
 		amount: z.coerce.number().min(1, { message: "You need an amount of bigger than 1" }),
 		paymentTypeId: z.coerce.number().min(1, { message: "Payment Type is Required" }),
@@ -86,6 +74,18 @@
 	});
 
 	const { form: formData, enhance } = form;
+
+	// Set Default Value
+	$effect(() => {
+		if (
+			$formData.paymentTypeId == 0 &&
+			$paymentTypeQuery.data &&
+			$paymentTypeQuery.data.length > 0 &&
+			$paymentTypeQuery.data[0]?.paymentTypeId != undefined
+		) {
+			$formData.paymentTypeId = $paymentTypeQuery.data[0]?.paymentTypeId;
+		}
+	});
 
 	const total = Number($page.url.searchParams.get("total") ?? "0").toFixed(2);
 	const balance = Number($page.url.searchParams.get("balance") ?? "0").toFixed(2);

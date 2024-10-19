@@ -9,13 +9,17 @@
 	import CategoriesList from "./CategoriesList.svelte";
 	import { cn } from "@kayord/ui/utils";
 
-	let open = false;
+	let open = $state(false);
 
-	export let sections: MenuGetSectionsResponse | undefined;
-	export let sectionParams: MenuGetSectionsGetMenusSectionsParams;
-	export let itemParams: MenuGetItemsGetMenuItemsParams;
+	interface Props {
+		sections: MenuGetSectionsResponse | undefined;
+		sectionParams: MenuGetSectionsGetMenusSectionsParams;
+		itemParams: MenuGetItemsGetMenuItemsParams;
+	}
 
-	$: hasFilter = itemParams.sectionId > 0;
+	let { sections, sectionParams = $bindable(), itemParams = $bindable() }: Props = $props();
+
+	let hasFilter = $derived(itemParams.sectionId > 0);
 
 	const clear = () => {
 		sectionParams.sectionId = 0;
@@ -33,7 +37,7 @@
 		}
 	};
 
-	$: sections && checkEmptySections();
+	$effect(() => sections && checkEmptySections());
 
 	const setFilterDefault = (open: boolean) => {
 		if (open) {
@@ -64,7 +68,7 @@
 							? "bg-primary text-primary-foreground"
 							: ""}
 
-					<button on:click={() => setSection(section.menuSectionId)} class="w-full">
+					<button onclick={() => setSection(section.menuSectionId)} class="w-full">
 						<Card.Root class={cn("p-2 w-full", extraClass)}>
 							{section.name}
 						</Card.Root>
