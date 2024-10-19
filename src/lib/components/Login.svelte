@@ -4,7 +4,7 @@
 	import GoogleSvg from "$lib/SVG/GoogleSVG.svelte";
 	import { signInGoogle } from "$lib/firebase";
 
-	let isLoading = false;
+	let isLoading = $state(false);
 
 	const login = async () => {
 		try {

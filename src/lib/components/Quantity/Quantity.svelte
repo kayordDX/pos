@@ -2,7 +2,11 @@
 	import { Button, Card } from "@kayord/ui";
 	import { MinusIcon, PlusIcon } from "lucide-svelte";
 
-	export let value: number;
+	interface Props {
+		value: number;
+	}
+
+	let { value = $bindable() }: Props = $props();
 
 	const increment = () => {
 		value++;

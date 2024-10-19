@@ -3,13 +3,17 @@
 	import { Badge, Button, Card, Drawer } from "@kayord/ui";
 	import { ConciergeBellIcon } from "lucide-svelte";
 	import { createTableOrderUpdateOrderItem } from "$lib/api";
-	export let refetch: () => void;
-	export let isHistory = false;
-	let open = false;
+	let open = $state(false);
 
 	const mutation = createTableOrderUpdateOrderItem();
 
-	export let item: TableOrderOfficeOrderItemDTO;
+	interface Props {
+		refetch: () => void;
+		isHistory?: boolean;
+		item: TableOrderOfficeOrderItemDTO;
+	}
+
+	let { refetch, isHistory = false, item }: Props = $props();
 
 	const getStatus = () => {
 		const theDate = new Date(item.orderReceived);

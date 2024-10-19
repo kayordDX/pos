@@ -1,8 +1,12 @@
 <script lang="ts">
 	import { Badge } from "@kayord/ui";
-	export let roleId: number;
 
 	import { createRoleGetAll } from "$lib/api";
+	interface Props {
+		roleId: number;
+	}
+
+	let { roleId }: Props = $props();
 	const query = createRoleGetAll();
 
 	const result = $query.data?.find((x) => x.roleId === roleId);

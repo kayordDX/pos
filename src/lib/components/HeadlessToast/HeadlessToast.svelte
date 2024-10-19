@@ -1,10 +1,14 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
 	const dispatch = createEventDispatcher();
-	export let message: string;
-	export let type: "success" | "error";
 	import { XIcon, InfoIcon, AlertTriangleIcon } from "lucide-svelte";
 	import { Button } from "@kayord/ui";
+	interface Props {
+		message: string;
+		type: "success" | "error";
+	}
+
+	let { message, type }: Props = $props();
 
 	const closeToast = () => {
 		dispatch("closeToast");

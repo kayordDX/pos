@@ -53,8 +53,8 @@
 	const isChrome = /chrome/i.test(navigator.userAgent);
 	const isAndroid = /android/i.test(navigator.userAgent);
 
-	let hasNotifyPermission = false;
-	let serviceWorker: ServiceWorkerRegistration | undefined;
+	let hasNotifyPermission = $state(false);
+	let serviceWorker: ServiceWorkerRegistration | undefined = $state();
 
 	const getNotifyPermission = () => {
 		hasNotifyPermission = Notification.permission == "granted";

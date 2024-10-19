@@ -2,7 +2,11 @@
 	import type { TableOrderGetBillBillOrderItemDTO } from "$lib/api";
 	import { Table } from "@kayord/ui";
 
-	export let data: Array<TableOrderGetBillBillOrderItemDTO>;
+	interface Props {
+		data: Array<TableOrderGetBillBillOrderItemDTO>;
+	}
+
+	let { data }: Props = $props();
 </script>
 
 <Table.Body>
