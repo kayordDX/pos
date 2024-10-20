@@ -6,8 +6,12 @@
 
 	const query = createExtraGetAll();
 
-	let specialExtraOpen = false;
-	export let currentExtras: Array<number> = [];
+	let specialExtraOpen = $state(false);
+	interface Props {
+		currentExtras?: Array<number>;
+	}
+
+	let { currentExtras = $bindable([]) }: Props = $props();
 
 	const selectItem = (id: number) => {
 		currentExtras.push(id);
@@ -31,7 +35,7 @@
 	<div class="mt-2 flex flex-wrap gap-2">
 		{#each currentExtras as current}
 			<button
-				on:click={(e) => {
+				onclick={(e) => {
 					removeItem(current);
 					e.preventDefault();
 				}}

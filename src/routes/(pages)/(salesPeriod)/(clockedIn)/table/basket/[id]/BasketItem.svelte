@@ -10,13 +10,27 @@
 	import { CopyIcon, TrashIcon } from "lucide-svelte";
 	import ItemCount from "./ItemCount.svelte";
 
-	export let id: number;
-	export let quantity: number;
-	export let price: number;
-	export let note: string | null | undefined = undefined;
-	export let options: Array<DTOOrderItemOptionDTO>;
-	export let extras: Array<DTOOrderItemExtraDTO>;
-	export let refetch: () => any;
+	interface Props {
+		id: number;
+		quantity: number;
+		price: number;
+		note?: string | null | undefined;
+		options: Array<DTOOrderItemOptionDTO>;
+		extras: Array<DTOOrderItemExtraDTO>;
+		refetch: () => any;
+		children?: import('svelte').Snippet;
+	}
+
+	let {
+		id,
+		quantity,
+		price,
+		note = undefined,
+		options,
+		extras,
+		refetch,
+		children
+	}: Props = $props();
 
 	const removeItem = createTableOrderRemoveItem();
 	const copyItem = createTableOrderCopyItem();
@@ -35,7 +49,7 @@
 <Card.Root class="p-4 flex justify-between relative">
 	<ItemCount value={quantity} />
 	<div class="flex flex-col gap-2 justify-center">
-		<slot />
+		{@render children?.()}
 		{#if (options ?? []).length > 0}
 			<div class="text-muted-foreground mt-2">
 				Options

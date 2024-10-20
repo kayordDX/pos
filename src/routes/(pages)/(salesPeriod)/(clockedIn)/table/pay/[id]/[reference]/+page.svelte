@@ -11,7 +11,7 @@
 
 	const url = $page.url.searchParams.get("url");
 
-	let a: HTMLAnchorElement;
+	let a: HTMLAnchorElement | undefined = $state();
 	onMount(() => {
 		if (a && $payment.url) {
 			a.href = $payment.url;
@@ -40,7 +40,9 @@
 		}
 	};
 
-	$: $query.data?.value && paymentCheck();
+	$effect(() => {
+		$query.data?.value && paymentCheck();
+	});
 </script>
 
 <a class="hidden" href="/" bind:this={a}>Halo</a>

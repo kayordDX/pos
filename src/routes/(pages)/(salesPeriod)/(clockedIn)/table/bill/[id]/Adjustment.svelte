@@ -10,9 +10,13 @@
 	import { status } from "$lib/stores/status";
 	import { MessageCircleWarningIcon, SquareDotIcon } from "lucide-svelte";
 
-	export let tableBookingId: number;
-	export let open = false;
-	export let refetch: () => void;
+	interface Props {
+		tableBookingId: number;
+		open?: boolean;
+		refetch: () => void;
+	}
+
+	let { tableBookingId, open = $bindable(false), refetch }: Props = $props();
 
 	const schema = z.object({
 		adjustmentTypeId: z.coerce.number().min(1, { message: "Type is Required" }),
@@ -48,7 +52,7 @@
 
 	const { form: formData, enhance } = form;
 
-	$: query = createAdjustmentGetAll($status.outletId, { query: { enabled: open } });
+	let query = $derived(createAdjustmentGetAll($status.outletId, { query: { enabled: open } }));
 </script>
 
 <Drawer.Root bind:open>

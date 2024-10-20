@@ -5,7 +5,7 @@
 	import { goto } from "$app/navigation";
 	import { status } from "$lib/stores/status";
 
-	let name: string;
+	let name: string = $state("");
 
 	const mutation = createSalesPeriodCreate();
 

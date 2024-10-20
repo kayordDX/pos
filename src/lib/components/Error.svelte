@@ -2,8 +2,12 @@
 	import { Alert } from "@kayord/ui";
 	import { AlertTriangleIcon } from "lucide-svelte";
 
-	export let message: string | undefined = undefined;
-	export let title: string = "Error";
+	interface Props {
+		message?: string | undefined;
+		title?: string;
+	}
+
+	let { message = undefined, title = "Error" }: Props = $props();
 </script>
 
 <Alert.Root variant="destructive">

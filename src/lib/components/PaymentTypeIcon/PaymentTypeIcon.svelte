@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { BanknoteIcon, CreditCardIcon, NfcIcon, WalletCardsIcon } from "lucide-svelte";
 
-	export let type: string;
+	interface Props {
+		type: string;
+	}
+
+	let { type }: Props = $props();
 </script>
 
 <div>

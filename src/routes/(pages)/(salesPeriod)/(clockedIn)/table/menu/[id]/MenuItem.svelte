@@ -2,9 +2,13 @@
 	import type { DTOMenuItemDTOBasic } from "$lib/api";
 	import { Card } from "@kayord/ui";
 
-	export let menuItem: DTOMenuItemDTOBasic;
-	export let open: boolean;
-	export let menuItemId: number;
+	interface Props {
+		menuItem: DTOMenuItemDTOBasic;
+		open: boolean;
+		menuItemId: number;
+	}
+
+	let { menuItem, open = $bindable(), menuItemId = $bindable() }: Props = $props();
 
 	const openMenuItem = (id: number) => {
 		menuItemId = id;
@@ -14,7 +18,7 @@
 
 {#if menuItem.isAvailable}
 	<div class="w-full relative max-w-lg text-left">
-		<button class="w-full text-left" on:click={() => openMenuItem(menuItem.menuItemId)}>
+		<button class="w-full text-left" onclick={() => openMenuItem(menuItem.menuItemId)}>
 			<Card.Root class="w-full relative max-w-lg p-4">
 				<div class="font-bold line-clamp-1">{menuItem.name}</div>
 				<div class="text-sm text-muted-foreground">R {menuItem.price.toFixed(2)}</div>

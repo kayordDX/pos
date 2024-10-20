@@ -2,7 +2,11 @@
 	import { Button } from "@kayord/ui";
 	import ViewIcon from "lucide-svelte/icons/eye";
 
-	export let id: number;
+	interface Props {
+		id: number;
+	}
+
+	let { id }: Props = $props();
 </script>
 
 <Button variant="outline" href={`/waiter/history/${id}`}>

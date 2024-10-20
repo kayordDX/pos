@@ -11,7 +11,7 @@
 	import { Control, Field, FieldErrors } from "@kayord/ui/formsnap";
 
 	const query = createTableGetAvailable({ outletId: $status?.outletId ?? 0 });
-	let dialogOpen = false;
+	let dialogOpen = $state(false);
 	let tableId: number = 0;
 
 	const selectTable = (id: number) => {
@@ -63,7 +63,7 @@
 	{#if $query.isSuccess}
 		<div class="flex flex-wrap gap-4 mt-4 w-full">
 			{#each $query.data as table}
-				<button class="text-start w-full md:max-w-md" on:click={() => selectTable(table.tableId)}>
+				<button class="text-start w-full md:max-w-md" onclick={() => selectTable(table.tableId)}>
 					<Card.Root class="p-5">
 						<div class="flex justify-between gap-2">
 							<h3>{table.name}</h3>

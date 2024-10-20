@@ -3,7 +3,7 @@
 	import { CalendarOffIcon, CalendarCheck2Icon } from "lucide-svelte";
 	import { status } from "$lib/stores/status";
 
-	let isChecking = false;
+	let isChecking = $state(false);
 
 	const checkStatus = async () => {
 		isChecking = true;

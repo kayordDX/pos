@@ -4,7 +4,7 @@
 	import { header } from "$lib/stores/header";
 </script>
 
-<button class="flex" on:click={header.toggleHeader}>
+<button class="flex" onclick={header.toggleHeader}>
 	<Badge variant="secondary" class="truncate">
 		{#if $header}
 			<Maximize2Icon class="size-4" />

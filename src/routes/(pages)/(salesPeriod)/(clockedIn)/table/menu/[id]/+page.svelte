@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from "svelte/legacy";
+
 	import { Input, Loader } from "@kayord/ui";
 	import { SearchIcon } from "lucide-svelte";
 	import {
@@ -11,7 +13,7 @@
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { page } from "$app/stores";
-	import { selection } from "$lib/stores/selection";
+	import { selection } from "$lib/stores/selection.svelte";
 	import { status } from "$lib/stores/status";
 	import PickMenu from "./PickMenu.svelte";
 	import PickCategory from "./PickCategory.svelte";
@@ -19,26 +21,23 @@
 	import { debounce } from "$lib/util";
 	import MenuItems from "./MenuItems.svelte";
 
-	let query = createMenuList({ outletId: $status?.outletId });
-	$: query = createMenuList({ outletId: $status?.outletId });
+	let query = $state(createMenuList({ outletId: $status?.outletId }));
 
-	let itemParams: MenuGetItemsGetMenuItemsParams = {
-		menuId: $selection.menuId,
+	let itemParams: MenuGetItemsGetMenuItemsParams = $state({
+		menuId: selection.value.menuId,
 		sectionId: 0,
-	};
+	});
 
-	let sectionParams: MenuGetSectionsGetMenusSectionsParams = {
-		menuId: $selection.menuId,
+	let sectionParams: MenuGetSectionsGetMenusSectionsParams = $state({
+		menuId: selection.value.menuId,
 		sectionId: 0,
-	};
+	});
 
 	const search = $page.url.searchParams.get("search");
-	$: itemParams.search = search;
-	$: $selection.menuId && setMenuId();
 
 	const setMenuId = () => {
-		sectionParams.menuId = $selection.menuId;
-		itemParams.menuId = $selection.menuId;
+		sectionParams.menuId = selection.value.menuId;
+		itemParams.menuId = selection.value.menuId;
 	};
 
 	const setSearchString = (event: Event) => {
@@ -49,25 +48,38 @@
 	};
 	const debouncedHandleInput = debounce(setSearchString, 500);
 
-	let itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
-	$: itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
+	let itemsQuery = $state(createMenuGetItemsGetMenuItems(itemParams));
 
-	let sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
-	$: sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
+	let sectionsQuery = $state(createMenuGetSectionsGetMenusSections(sectionParams));
 
 	const setMenuSelection = (menuId: number) => {
-		$selection.menuId = menuId;
-		sectionParams.menuId = $selection.menuId;
-		itemParams.menuId = $selection.menuId;
+		selection.value.menuId = menuId;
+		sectionParams.menuId = selection.value.menuId;
+		itemParams.menuId = selection.value.menuId;
 	};
 
 	const checkMenuSelection = () => {
-		if ($query && $selection.menuId == 0 && $query.data && ($query.data?.length ?? 0) >= 1) {
+		if ($query && selection.value.menuId == 0 && $query.data && ($query.data?.length ?? 0) >= 1) {
 			setMenuSelection($query.data[0]?.id ?? 0);
 		}
 	};
 
-	$: checkMenuSelection();
+	$effect(() => {
+		query = createMenuList({ outletId: $status?.outletId });
+		itemParams.search = search;
+	});
+	run(() => {
+		selection.value.menuId && setMenuId();
+	});
+	run(() => {
+		itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
+	});
+	run(() => {
+		sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
+	});
+	run(() => {
+		checkMenuSelection();
+	});
 </script>
 
 <div class="flex justify-center flex-col mb-12 mt-2 items-center">
