@@ -44,6 +44,9 @@
 			recheckHaloLoading = true;
 			const result = await $recheckHaloPayment.mutateAsync({ data: { tableBookingId: bookingId } });
 			toast.info(`${result.checked} Halo payment checked`);
+			if (result.checked > 0) {
+				refetch();
+			}
 		} catch (error) {
 			toast.error(getError(error).message);
 		} finally {
