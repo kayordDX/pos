@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { run } from "svelte/legacy";
-
 	import { Input, Loader } from "@kayord/ui";
 	import { SearchIcon } from "lucide-svelte";
 	import {
@@ -68,16 +66,16 @@
 		query = createMenuList({ outletId: $status?.outletId });
 		itemParams.search = search;
 	});
-	run(() => {
+	$effect(() => {
 		selection.value.menuId && setMenuId();
 	});
-	run(() => {
+	$effect(() => {
 		itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
 	});
-	run(() => {
+	$effect(() => {
 		sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
 	});
-	run(() => {
+	$effect(() => {
 		checkMenuSelection();
 	});
 </script>
