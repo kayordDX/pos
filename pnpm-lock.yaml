@@ -12,8 +12,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@kayord/ui':
-        specifier: ^0.10.2
-        version: 0.10.2(@tanstack/svelte-table@9.0.0-alpha.10(svelte@5.0.5))(lucide-svelte@0.453.0(svelte@5.0.5))(svelte@5.0.5)(sveltekit-superforms@2.20.0(@sveltejs/kit@2.7.2(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(@types/json-schema@7.0.15)(svelte@5.0.5)(typescript@5.6.3))(tailwindcss@3.4.14)(zod@3.23.8)
+        specifier: ^0.11.0
+        version: 0.11.0(@tanstack/svelte-table@9.0.0-alpha.10(svelte@5.0.5))(lucide-svelte@0.453.0(svelte@5.0.5))(svelte@5.0.5)(sveltekit-superforms@2.20.0(@sveltejs/kit@2.7.2(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(@types/json-schema@7.0.15)(svelte@5.0.5)(typescript@5.6.3))(tailwindcss@3.4.14)(zod@3.23.8)
       '@microsoft/signalr':
         specifier: ^8.0.7
         version: 8.0.7
@@ -922,12 +922,12 @@ packages:
   '@kayord/tw-plugin@1.0.2':
     resolution: {integrity: sha512-ut5znLn7cb65280bhvDbuirde/pT4ys3N1A+irIi9w2KR8rlbeFOwkByYnv/KBAzHPoRp2uZ6eynIUv4Imi08A==}
 
-  '@kayord/ui@0.10.2':
-    resolution: {integrity: sha512-OEq0tms0pLoTT4DmASlfQEBhqi7LR0Hr0vsRfUMg+rV+1KnKE/4Az/ZZSm94+fWNlgPIjSlE++v4+dpJ0Sq3Kg==}
+  '@kayord/ui@0.11.0':
+    resolution: {integrity: sha512-ltXw8wV0GT+wV/TlX50u785RnmDPwxNJ4iVDZRsKC4qPU2/cIIL2VrtnoAIsbEUtQfbnxI8YQuaqz2W86403NQ==}
     peerDependencies:
       '@tanstack/svelte-table': ^9.0.0-alpha.10
       lucide-svelte: '>= 0.400.0 < 1.0.0'
-      svelte: ^4.0.0 || ^5.0.0-next.1
+      svelte: ^4.0.0 || ^5.0.0
       sveltekit-superforms: ^2.15.1
       zod: ^3.23.8
 
@@ -2972,8 +2972,8 @@ packages:
   tabbable@6.2.0:
     resolution: {integrity: sha512-Cat63mxsVJlzYvN51JmVXIgNoUokrIaT2zLclCXjRd8boZ0004U4KCs/sToJ75C6sdlByWxpYnb5Boif1VSFew==}
 
-  tailwind-merge@2.5.3:
-    resolution: {integrity: sha512-d9ZolCAIzom1nf/5p4LdD5zvjmgSxY0BGgdSvmXIoMYAiPdAW/dSpP7joCDYFY7r/HkEa2qmPtkgsu0xjQeQtw==}
+  tailwind-merge@2.5.4:
+    resolution: {integrity: sha512-0q8cfZHMu9nuYP/b5Shb7Y7Sh1B7Nnl5GqNr1U+n2p6+mybvRtayrQ+0042Z5byvTA8ihjlP8Odo8/VnHbZu4Q==}
 
   tailwind-variants@0.2.1:
     resolution: {integrity: sha512-2xmhAf4UIc3PijOUcJPA1LP4AbxhpcHuHM2C26xM0k81r0maAO6uoUSHl3APmvHZcY5cZCY/bYuJdfFa4eGoaw==}
@@ -4029,7 +4029,7 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  '@kayord/ui@0.10.2(@tanstack/svelte-table@9.0.0-alpha.10(svelte@5.0.5))(lucide-svelte@0.453.0(svelte@5.0.5))(svelte@5.0.5)(sveltekit-superforms@2.20.0(@sveltejs/kit@2.7.2(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(@types/json-schema@7.0.15)(svelte@5.0.5)(typescript@5.6.3))(tailwindcss@3.4.14)(zod@3.23.8)':
+  '@kayord/ui@0.11.0(@tanstack/svelte-table@9.0.0-alpha.10(svelte@5.0.5))(lucide-svelte@0.453.0(svelte@5.0.5))(svelte@5.0.5)(sveltekit-superforms@2.20.0(@sveltejs/kit@2.7.2(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(@types/json-schema@7.0.15)(svelte@5.0.5)(typescript@5.6.3))(tailwindcss@3.4.14)(zod@3.23.8)':
     dependencies:
       '@internationalized/date': 3.5.6
       '@tanstack/svelte-table': 9.0.0-alpha.10(svelte@5.0.5)
@@ -4044,7 +4044,7 @@ snapshots:
       svelte: 5.0.5
       svelte-sonner: 0.3.28(svelte@5.0.5)
       sveltekit-superforms: 2.20.0(@sveltejs/kit@2.7.2(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(svelte@5.0.5)(vite@5.4.9(@types/node@22.7.8)))(@types/json-schema@7.0.15)(svelte@5.0.5)(typescript@5.6.3)
-      tailwind-merge: 2.5.3
+      tailwind-merge: 2.5.4
       tailwind-variants: 0.2.1(tailwindcss@3.4.14)
       vaul-svelte: 0.3.2(svelte@5.0.5)
       zod: 3.23.8
@@ -6450,11 +6450,11 @@ snapshots:
 
   tabbable@6.2.0: {}
 
-  tailwind-merge@2.5.3: {}
+  tailwind-merge@2.5.4: {}
 
   tailwind-variants@0.2.1(tailwindcss@3.4.14):
     dependencies:
-      tailwind-merge: 2.5.3
+      tailwind-merge: 2.5.4
       tailwindcss: 3.4.14
 
   tailwindcss@3.4.14:
