@@ -12,6 +12,7 @@
 	import { requestNotificationPermission } from "$lib/util";
 	import { onMount } from "svelte";
 	import { selection } from "$lib/stores/selection.svelte";
+	import { hub } from "$lib/stores/hub.svelte";
 
 	const query = createOutletList();
 
@@ -143,6 +144,16 @@
 					<Button on:click={requestNotificationPermission}>Request Access</Button>
 				{/if}
 				Notification Access
+			</li>
+
+			<li class="flex gap-2 items-center">
+				8.
+				{#if hub.state == "Connected"}
+					<CheckCircleIcon class="text-green-400" />
+				{:else}
+					<CircleXIcon class="text-red-400" />
+				{/if}
+				SignalR: {hub.state}
 			</li>
 		</ul>
 	</Card.Content>

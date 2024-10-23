@@ -11,11 +11,23 @@
 	import type { Snippet } from "svelte";
 	import { session } from "$lib/firebase.svelte";
 	let { children }: { children?: Snippet } = $props();
+	import { hub } from "$lib/stores/hub.svelte";
 
 	$effect(() => {
 		if (session.user) {
 			status.getStatus();
 		}
+	});
+
+	const receiveMessage = (message: string) => {
+		console.log(message);
+	};
+
+	$effect(() => {
+		hub.on("ReceiveMessage", receiveMessage);
+		return () => {
+			hub.off("ReceiveMessage", receiveMessage);
+		};
 	});
 
 	const queryClient = new QueryClient({
