@@ -2,7 +2,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
 	import Error from "$lib/components/Error.svelte";
-	import { payment } from "$lib/stores/payment";
+	import { payment } from "$lib/stores/payment.svelte";
 	import { Avatar, Badge, Button, Card, Loader } from "@kayord/ui";
 	import { onMount } from "svelte";
 	import { createPayStatus } from "$lib/api";
@@ -13,8 +13,8 @@
 
 	let a: HTMLAnchorElement | undefined = $state();
 	onMount(() => {
-		if (a && $payment.url) {
-			a.href = $payment.url;
+		if (a && payment.url) {
+			a.href = payment.url;
 			a.click();
 		}
 	});

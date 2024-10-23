@@ -6,7 +6,7 @@
 	import { page } from "$app/stores";
 	import { client, createPayManualPayment, createOutletGetPaymentType } from "$lib/api";
 	import { goto } from "$app/navigation";
-	import { payment } from "$lib/stores/payment";
+	import { payment } from "$lib/stores/payment.svelte";
 	import { onMount } from "svelte";
 	import { status } from "$lib/stores/status.svelte";
 
