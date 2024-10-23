@@ -2,7 +2,7 @@
 	import Menu from "./Menu.svelte";
 	import { goto } from "$app/navigation";
 	import { session } from "$lib/firebase.svelte";
-	import { header } from "$lib/stores/header";
+	import { header } from "$lib/stores/header.svelte";
 	import { page } from "$app/stores";
 	import { slide } from "svelte/transition";
 	import type { Snippet } from "svelte";
@@ -22,7 +22,7 @@
 	);
 </script>
 
-{#if $header || !hideHeaderPages}
+{#if header.value || !hideHeaderPages}
 	<div
 		class={cn(
 			"bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary",
