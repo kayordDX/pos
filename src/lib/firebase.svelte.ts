@@ -11,7 +11,7 @@ import { getMessaging, getToken } from "firebase/messaging";
 import { PUBLIC_VAPID_KEY } from "$env/static/public";
 
 import { client } from "./api";
-import { writable } from "svelte/store";
+import { onDestroy } from "svelte";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAoHwOFNJ0_ag0Ly4YZzGzdW_n5_NjC2uE",
@@ -73,30 +73,37 @@ export const logout = async () => {
 	await signOut(auth);
 };
 
-export const isLoadingSession = writable<boolean>(true);
-
 const createSession = () => {
-	let unsubscribe: () => void;
+	let isLoadingSession = $state(true);
+	let user = $state<User | null>(null);
+	// let unsubscribe: () => void;
 
 	if (!auth || !globalThis.window) {
 		console.warn("Auth is not initialized or not in browser");
-		const { subscribe } = writable<User | null>(null);
-		return {
-			subscribe,
-		};
+		user = null;
 	}
 
-	const { subscribe } = writable(auth?.currentUser ?? null, (set) => {
-		unsubscribe = onIdTokenChanged(auth, (user) => {
-			isLoadingSession.set(false);
-			set(user);
+	$effect.root(() => {
+		const unsubscribe = onIdTokenChanged(auth, (u) => {
+			isLoadingSession = false;
+			user = u;
 		});
 
-		return () => unsubscribe();
+		return () => {
+			unsubscribe();
+		};
 	});
 
 	return {
-		subscribe,
+		get user() {
+			return user;
+		},
+		set user(value) {
+			user = value;
+		},
+		get isLoadingSession() {
+			return isLoadingSession;
+		},
 	};
 };
 

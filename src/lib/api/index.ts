@@ -1,2 +1,2 @@
 export * from "./generated/index";
-export * from "./client";
+export * from "./client.svelte";

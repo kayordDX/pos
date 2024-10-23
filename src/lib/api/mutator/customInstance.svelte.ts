@@ -1,7 +1,6 @@
-import { get } from "svelte/store";
 import { getError, isValidationError } from "$lib/types";
 import { PUBLIC_API_URL } from "$env/static/public";
-import { session } from "$lib/firebase";
+import { session } from "$lib/firebase.svelte";
 import qs from "qs";
 
 export const customInstance = async <T>({
@@ -27,9 +26,9 @@ export const customInstance = async <T>({
 		}
 	}
 
-	const token = (await get(session)?.getIdToken()) ?? "";
+	const token = (await session.user?.getIdToken()) ?? "";
 	if (headers == undefined) {
-		if (get(session) != undefined) {
+		if (session.user != undefined) {
 			headers = {
 				Authorization: `Bearer ${token}`,
 			};

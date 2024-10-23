@@ -15,7 +15,6 @@ const createStatus = () => {
 	});
 
 	const getStatus = async () => {
-		$inspect("getting status");
 		const { data } = await client.GET("/user/getStatus", { fetch });
 		if (data) {
 			value = data;

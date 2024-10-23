@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from "svelte";
-	import { app, subscribeToPushNotifications } from "$lib/firebase";
+	import { app, subscribeToPushNotifications } from "$lib/firebase.svelte";
 	import { requestNotificationPermission } from "$lib/util";
 	import { getMessaging, onMessage } from "firebase/messaging";
 	let notificationPermission: boolean | undefined = undefined;

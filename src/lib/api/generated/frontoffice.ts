@@ -18,8 +18,8 @@ import type {
 	TableOrderFrontOfficeParams,
 	TableOrderFrontOfficeResponse,
 } from "./api.schemas";
-import { customInstance } from "../mutator/customInstance";
-import type { ErrorType } from "../mutator/customInstance";
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType } from "../mutator/customInstance.svelte";
 
 export const tableOrderFrontOffice = (params?: TableOrderFrontOfficeParams) => {
 	return customInstance<TableOrderFrontOfficeResponse>({

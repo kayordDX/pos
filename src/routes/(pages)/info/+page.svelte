@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { copy } from "$lib/actions/copy";
-	import { session } from "$lib/firebase";
+	import { session } from "$lib/firebase.svelte";
 	import { Button, Card, Loader } from "@kayord/ui";
 	import { ClipboardCopyIcon } from "lucide-svelte";
 
@@ -9,7 +9,7 @@
 	$effect(() => {
 		const getToken = async () => {
 			console.log("run");
-			token = await $session?.getIdToken();
+			token = await session.user?.getIdToken();
 		};
 		getToken();
 	});

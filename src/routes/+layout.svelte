@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { ModeWatcher } from "@kayord/ui/mode-watcher";
-	import { Header } from "$lib/components/Header";
 	import "../app.pcss";
 	import { Toaster } from "@kayord/ui";
 	import { browser } from "$app/environment";
@@ -10,11 +9,11 @@
 	import { Notification } from "$lib/components/Notification";
 	import { status } from "$lib/stores/status.svelte";
 	import type { Snippet } from "svelte";
-	import { session } from "$lib/firebase";
+	import { session } from "$lib/firebase.svelte";
 	let { children }: { children?: Snippet } = $props();
 
 	$effect(() => {
-		if ($session) {
+		if (session.user) {
 			status.getStatus();
 		}
 	});

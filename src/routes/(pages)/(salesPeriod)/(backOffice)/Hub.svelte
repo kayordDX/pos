@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { PUBLIC_API_URL } from "$env/static/public";
-	import { session } from "$lib/firebase";
+	import { session } from "$lib/firebase.svelte";
 	import { notification } from "$lib/stores/notify.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import * as signalR from "@microsoft/signalr";
@@ -21,7 +21,7 @@
 	const divisions = $derived(divisionIds ? divisionIds.split(",").map(Number) : []);
 
 	const createHubConnection = async () => {
-		const token = await $session?.getIdToken();
+		const token = await session.user?.getIdToken();
 		const connection = new signalR.HubConnectionBuilder()
 			.withUrl(`${PUBLIC_API_URL}/hub`, {
 				accessTokenFactory: () => token ?? "",

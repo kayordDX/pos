@@ -14,8 +14,8 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type { EntitiesExtra, InternalErrorResponse } from "./api.schemas";
-import { customInstance } from "../mutator/customInstance";
-import type { ErrorType } from "../mutator/customInstance";
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType } from "../mutator/customInstance.svelte";
 
 export const extraGetAll = () => {
 	return customInstance<EntitiesExtra[]>({ url: `/extra/all`, method: "GET" });

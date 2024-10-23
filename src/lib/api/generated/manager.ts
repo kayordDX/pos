@@ -18,8 +18,8 @@ import type {
 	ManagerOrderViewParams,
 	ManagerOrderViewResponse,
 } from "./api.schemas";
-import { customInstance } from "../mutator/customInstance";
-import type { ErrorType } from "../mutator/customInstance";
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType } from "../mutator/customInstance.svelte";
 
 export const managerOrderView = (params: ManagerOrderViewParams) => {
 	return customInstance<ManagerOrderViewResponse[]>({

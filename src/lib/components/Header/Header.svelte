@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Menu from "./Menu.svelte";
 	import { goto } from "$app/navigation";
-	import { session } from "$lib/firebase";
+	import { session } from "$lib/firebase.svelte";
 	import { header } from "$lib/stores/header";
 	import { page } from "$app/stores";
 	import { slide } from "svelte/transition";
@@ -45,7 +45,7 @@
 			{/if}
 		</span>
 		<div class="flex gap-2">
-			{#if $session}
+			{#if session.user}
 				<Menu />
 			{/if}
 		</div>

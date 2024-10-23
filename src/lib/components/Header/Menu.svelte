@@ -3,7 +3,7 @@
 	import { LogOutIcon, MoonIcon, SunIcon, WrenchIcon, NetworkIcon } from "lucide-svelte";
 	import { getInitials } from "$lib/util";
 	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
-	import { logout, session } from "$lib/firebase";
+	import { logout, session } from "$lib/firebase.svelte";
 	import { networkInformationStore } from "$lib/stores/network";
 </script>
 
@@ -11,9 +11,9 @@
 	<DropdownMenu.Trigger>
 		<div class="relative">
 			<Avatar.Root>
-				<Avatar.Image src={$session?.photoURL} alt="profile" />
+				<Avatar.Image src={session.user?.photoURL} alt="profile" />
 				<Avatar.Fallback class="bg-primary text-primary-foreground">
-					{getInitials($session?.displayName ?? "")}
+					{getInitials(session.user?.displayName ?? "")}
 				</Avatar.Fallback>
 			</Avatar.Root>
 			<div
@@ -22,7 +22,7 @@
 		</div>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Label>{$session?.displayName ?? "My Account"}</DropdownMenu.Label>
+		<DropdownMenu.Label>{session.user?.displayName ?? "My Account"}</DropdownMenu.Label>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Group>
 			<DropdownMenu.Item href="/setup">

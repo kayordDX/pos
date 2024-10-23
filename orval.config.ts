@@ -13,7 +13,7 @@ export default defineConfig({
 			clean: true,
 			override: {
 				mutator: {
-					path: "../mutator/customInstance.ts",
+					path: "../mutator/customInstance.svelte.ts",
 					name: "customInstance",
 				},
 				query: {

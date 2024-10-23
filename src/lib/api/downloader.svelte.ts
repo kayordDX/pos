@@ -1,9 +1,8 @@
-import { session } from "$lib/firebase";
-import { get } from "svelte/store";
+import { session } from "$lib/firebase.svelte";
 import { PUBLIC_API_URL } from "$env/static/public";
 
 export const downloadPdf = async (bookingId: number) => {
-	const token = (await get(session)?.getIdToken()) ?? "";
+	const token = (await session.user?.getIdToken()) ?? "";
 	const url = `/bill/download/${bookingId}`;
 	let fullUrl = `${PUBLIC_API_URL}${url}`;
 

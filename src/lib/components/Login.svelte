@@ -2,7 +2,7 @@
 	import { Button, Card } from "@kayord/ui";
 	import { toast } from "@kayord/ui";
 	import GoogleSvg from "$lib/SVG/GoogleSVG.svelte";
-	import { signInGoogle } from "$lib/firebase";
+	import { signInGoogle } from "$lib/firebase.svelte";
 
 	let isLoading = $state(false);
 

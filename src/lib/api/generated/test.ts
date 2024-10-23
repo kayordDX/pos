@@ -14,8 +14,8 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type { BillTableTotal, InternalErrorResponse, ServicesWhatsappStatus } from "./api.schemas";
-import { customInstance } from "../mutator/customInstance";
-import type { ErrorType } from "../mutator/customInstance";
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType } from "../mutator/customInstance.svelte";
 
 export const test = () => {
 	return customInstance<boolean>({ url: `/test`, method: "GET" });

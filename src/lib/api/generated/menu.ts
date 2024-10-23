@@ -31,8 +31,8 @@ import type {
 	MenuListParams,
 	MenuUpdateRequest,
 } from "./api.schemas";
-import { customInstance } from "../mutator/customInstance";
-import type { ErrorType, BodyType } from "../mutator/customInstance";
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 export const menuUpdate = (menuId: number, menuUpdateRequest: BodyType<MenuUpdateRequest>) => {
 	return customInstance<EntitiesMenu>({

@@ -24,8 +24,8 @@ import type {
 	OutletCreateRequest,
 	OutletUpdateRequest,
 } from "./api.schemas";
-import { customInstance } from "../mutator/customInstance";
-import type { ErrorType, BodyType } from "../mutator/customInstance";
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 export const outletUpdate = (id: number, outletUpdateRequest: BodyType<OutletUpdateRequest>) => {
 	return customInstance<EntitiesOutlet>({
