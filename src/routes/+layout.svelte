@@ -8,7 +8,7 @@
 	import AuthCheck from "$lib/components/Check/AuthCheck.svelte";
 	import OutletCheck from "$lib/components/Check/OutletCheck.svelte";
 	import { Notification } from "$lib/components/Notification";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import type { Snippet } from "svelte";
 	import { session } from "$lib/firebase";
 	let { children }: { children?: Snippet } = $props();

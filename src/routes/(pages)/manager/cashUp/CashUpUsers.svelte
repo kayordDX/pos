@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { createCashUpUserGet } from "$lib/api";
 	import { Loader } from "@kayord/ui";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
 	import CashUpUser from "./CashUpUser.svelte";
 
-	let query = createCashUpUserGet($status.outletId);
+	let query = createCashUpUserGet(status.value.outletId);
 </script>
 
 {#if $query.isPending}

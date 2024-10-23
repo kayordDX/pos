@@ -3,7 +3,7 @@
 	import { Button } from "@kayord/ui";
 	import { createSalesPeriodCreate } from "$lib/api";
 	import { goto } from "$app/navigation";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 
 	let name: string = $state("");
 
@@ -12,7 +12,7 @@
 	const openSalesPeriod = async () => {
 		try {
 			await $mutation.mutateAsync({
-				data: { outletId: $status?.outletId ?? 0, name: name },
+				data: { outletId: status.value?.outletId ?? 0, name: name },
 			});
 			await status.getStatus();
 			toast.success("Successfully opened sales period");

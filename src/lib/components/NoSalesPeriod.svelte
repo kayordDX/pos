@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Card, toast } from "@kayord/ui";
 	import { CalendarOffIcon, CalendarCheck2Icon } from "lucide-svelte";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 
 	let isChecking = $state(false);
 
@@ -9,7 +9,7 @@
 		isChecking = true;
 		await status.getStatus();
 		isChecking = false;
-		if ($status.salesPeriodId == 0) {
+		if (status.value.salesPeriodId == 0) {
 			toast.error("No active sales period");
 		}
 	};

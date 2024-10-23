@@ -12,14 +12,14 @@
 	import { getError } from "$lib/types";
 	import { page } from "$app/stores";
 	import { selection } from "$lib/stores/selection.svelte";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import PickMenu from "./PickMenu.svelte";
 	import PickCategory from "./PickCategory.svelte";
 	import CategoriesList from "./CategoriesList.svelte";
 	import { debounce } from "$lib/util";
 	import MenuItems from "./MenuItems.svelte";
 
-	let query = $state(createMenuList({ outletId: $status?.outletId }));
+	let query = $state(createMenuList({ outletId: status.value?.outletId }));
 
 	let itemParams: MenuGetItemsGetMenuItemsParams = $state({
 		menuId: selection.value.menuId,
@@ -63,7 +63,7 @@
 	};
 
 	$effect(() => {
-		query = createMenuList({ outletId: $status?.outletId });
+		query = createMenuList({ outletId: status.value?.outletId });
 		itemParams.search = search;
 	});
 	$effect(() => {

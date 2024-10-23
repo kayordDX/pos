@@ -3,7 +3,7 @@
 	import { DataTable, Input } from "@kayord/ui";
 	import { stringToFDate } from "$lib/util";
 	import View from "./user/[userId]/[cashUpUserId]/View.svelte";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 
 	import {
 		type ColumnDef,
@@ -17,11 +17,11 @@
 
 	let billId = $state<number>();
 
-	let query = createTableBookingPeriodHistory($status.salesPeriodId, { tableBookingId: 0 });
+	let query = createTableBookingPeriodHistory(status.value.salesPeriodId, { tableBookingId: 0 });
 	let data = $state<TableBookingHistoryResponse[]>([]);
 
 	$effect(() => {
-		query = createTableBookingPeriodHistory($status.salesPeriodId, {
+		query = createTableBookingPeriodHistory(status.value.salesPeriodId, {
 			tableBookingId: billId ?? 0,
 		});
 		data = $query.data ?? [];

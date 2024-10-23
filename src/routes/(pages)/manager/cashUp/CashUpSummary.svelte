@@ -3,10 +3,10 @@
 	import { createSalesPeriodCashUp } from "$lib/api";
 	import { Card, Loader } from "@kayord/ui";
 	import { getError } from "$lib/types";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 
 	const cashUpQuery = createSalesPeriodCashUp({
-		salesPeriodId: $status?.salesPeriodId ?? 0,
+		salesPeriodId: status.value?.salesPeriodId ?? 0,
 		userId: "",
 	});
 </script>

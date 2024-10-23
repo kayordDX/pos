@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import { createCashUpUserCreate, createCashUpUserItemType } from "$lib/api";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { Alert, Button, Drawer, Form, Input, Select } from "@kayord/ui";
 	import { MessageCircleWarningIcon, PlusIcon } from "lucide-svelte";
 	import { zod } from "sveltekit-superforms/adapters";
@@ -31,7 +31,7 @@
 			data: {
 				cashUpUserId: cashUpUserId,
 				cashUpUserItemTypeId: data.cashUpUserItemTypeId,
-				outletId: $status.outletId,
+				outletId: status.value.outletId,
 				userId: $page.params.Id ?? "",
 				value: data.value,
 			},

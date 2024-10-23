@@ -9,7 +9,7 @@
 	import Items from "./Items.svelte";
 	import Adjustment from "./Adjustment.svelte";
 	import PaymentTypeIcon from "$lib/components/PaymentTypeIcon/PaymentTypeIcon.svelte";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import EditPayment from "./EditPayment.svelte";
 	import BillOptions from "./BillOptions.svelte";
 	import { WalletCardsIcon, DoorOpenIcon, RotateCcwIcon } from "lucide-svelte";
@@ -56,7 +56,7 @@
 
 	let adjustmentOpen = $state(false);
 
-	const isManager = $derived($status.roles.includes("Manager"));
+	const isManager = $derived(status.value.roles.includes("Manager"));
 	const showAdjustment = $derived(!isReadOnly || (isManager && !data.isCashedUp));
 
 	let showDetail = $state(false);

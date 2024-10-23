@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import { createCashUpUserClose, createCashUpUserDetail } from "$lib/api";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
 	import { Avatar, Button, Card, Loader, Separator } from "@kayord/ui";
@@ -12,7 +12,7 @@
 	import { goto } from "$app/navigation";
 	import CashUpItemManual from "./CashUpItemManual.svelte";
 
-	const query = createCashUpUserDetail($page.params.Id ?? "", $status.outletId, {
+	const query = createCashUpUserDetail($page.params.Id ?? "", status.value.outletId, {
 		cashUpUserId: Number($page.params.cashUpUserId ?? 0),
 	});
 
@@ -21,7 +21,7 @@
 	const cashUpClose = async () => {
 		try {
 			await $mutation.mutateAsync({
-				data: { outletId: $status.outletId, userId: $page.params.Id ?? "" },
+				data: { outletId: status.value.outletId, userId: $page.params.Id ?? "" },
 			});
 			await goto("/manager/cashUp");
 		} catch (error) {}

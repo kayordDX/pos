@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createOutletGetPaymentType, createTableBookingPaymentEdit } from "$lib/api";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import { Button, Drawer, Form, Select, toast, Input } from "@kayord/ui";
 	import { PencilIcon } from "lucide-svelte";
@@ -18,7 +18,7 @@
 	let { refetch, paymentId, paymentTypeId, amount }: Props = $props();
 	let open = $state(false);
 
-	const paymentTypeQuery = createOutletGetPaymentType($status?.outletId ?? 0);
+	const paymentTypeQuery = createOutletGetPaymentType(status.value?.outletId ?? 0);
 
 	const mutation = createTableBookingPaymentEdit();
 

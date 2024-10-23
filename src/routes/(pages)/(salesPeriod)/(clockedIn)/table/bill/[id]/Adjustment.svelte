@@ -7,7 +7,7 @@
 	import { Field, Control, FieldErrors } from "@kayord/ui/formsnap";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { MessageCircleWarningIcon, SquareDotIcon } from "lucide-svelte";
 
 	interface Props {
@@ -52,7 +52,7 @@
 
 	const { form: formData, enhance } = form;
 
-	let query = $derived(createAdjustmentGetAll($status.outletId, { query: { enabled: open } }));
+	let query = $derived(createAdjustmentGetAll(status.value.outletId, { query: { enabled: open } }));
 </script>
 
 <Drawer.Root bind:open>

@@ -6,7 +6,7 @@
 	import { client, createOutletList } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { networkInformationStore } from "$lib/stores/network";
 	import { CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon } from "lucide-svelte";
 	import { requestNotificationPermission } from "$lib/util";
@@ -39,7 +39,7 @@
 		}
 	};
 
-	const form = superForm(defaults({ outletId: $status.outletId }, zod(schema)), {
+	const form = superForm(defaults({ outletId: status.value.outletId }, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
 		onUpdate({ form }) {

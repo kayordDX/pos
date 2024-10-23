@@ -2,7 +2,7 @@
 	import { PUBLIC_API_URL } from "$env/static/public";
 	import { session } from "$lib/firebase";
 	import { notification } from "$lib/stores/notify.svelte";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import * as signalR from "@microsoft/signalr";
 
 	interface SoundEvent {
@@ -44,7 +44,7 @@
 				.start()
 				.then(function () {
 					connectionRef
-						?.invoke("JoinGroup", `outlet:${$status?.outletId}`)
+						?.invoke("JoinGroup", `outlet:${status.value?.outletId}`)
 						.catch((err) => console.error(err));
 					connectionRef?.on("PlaySound", (e: SoundEvent) => {
 						console.log("PlaySound", e);

@@ -4,13 +4,13 @@
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { createTableBookingCreate, createTableGetAvailable } from "$lib/api";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { z } from "zod";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { Control, Field, FieldErrors } from "@kayord/ui/formsnap";
 
-	const query = createTableGetAvailable({ outletId: $status?.outletId ?? 0 });
+	const query = createTableGetAvailable({ outletId: status.value?.outletId ?? 0 });
 	let dialogOpen = $state(false);
 	let tableId: number = 0;
 
@@ -29,7 +29,7 @@
 		await $mutate.mutateAsync({
 			data: {
 				bookingName: data.bookingName,
-				salesPeriodId: $status?.salesPeriodId ?? 0,
+				salesPeriodId: status.value?.salesPeriodId ?? 0,
 				tableId: tableId,
 			},
 		});

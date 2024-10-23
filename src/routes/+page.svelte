@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Loader } from "@kayord/ui";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { goto } from "$app/navigation";
 	import { Header } from "$lib/components/Header";
 
@@ -8,16 +8,16 @@
 
 	const redirect = async () => {
 		if (
-			$status.roles.length == 0 ||
-			($status.roles.length == 1 && $status.roles.includes("Guest"))
+			status.value.roles.length == 0 ||
+			(status.value.roles.length == 1 && status.value.roles.includes("Guest"))
 		) {
 			await goto("/guest");
-		} else if ($status.roles.length == 1) {
-			if ($status.roles.includes("Waiter")) {
+		} else if (status.value.roles.length == 1) {
+			if (status.value.roles.includes("Waiter")) {
 				await goto("/waiter");
-			} else if ($status.roles.includes("Chef")) {
+			} else if (status.value.roles.includes("Chef")) {
 				await goto("/kitchen");
-			} else if ($status.roles.includes("Manager")) {
+			} else if (status.value.roles.includes("Manager")) {
 				await goto("/manager");
 			}
 		}
@@ -34,22 +34,22 @@
 {:else}
 	<Header />
 	<div class="m-8 flex gap-4 flex-wrap">
-		{#if $status.roles.includes("Waiter")}
+		{#if status.value.roles.includes("Waiter")}
 			<div class="flex flex-col">
 				<Button href="/waiter">Waiter</Button>
 			</div>
 		{/if}
-		{#if $status.roles.includes("Bar")}
+		{#if status.value.roles.includes("Bar")}
 			<div class="flex flex-col">
 				<Button href="/bar">Bar</Button>
 			</div>
 		{/if}
-		{#if $status.roles.includes("Chef")}
+		{#if status.value.roles.includes("Chef")}
 			<div class="flex flex-col">
 				<Button href="/kitchen">Kitchen</Button>
 			</div>
 		{/if}
-		{#if $status.roles.includes("Manager")}
+		{#if status.value.roles.includes("Manager")}
 			<div class="flex flex-col">
 				<Button href="/manager">Manager</Button>
 			</div>

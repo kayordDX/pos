@@ -1,0 +1,46 @@
+import * as signalR from "@microsoft/signalr";
+import { session } from "$lib/firebase";
+const createHub = () => {
+	let connectionRef = $state<signalR.HubConnection>();
+
+	const createHubConnection = async () => {
+		const token = await $session?.getIdToken();
+		const connection = new signalR.HubConnectionBuilder()
+			.withUrl(`${PUBLIC_API_URL}/hub`, {
+				accessTokenFactory: () => token ?? "",
+				withCredentials: false,
+			})
+			.withAutomaticReconnect()
+			.configureLogging(signalR.LogLevel.None)
+			.build();
+		connectionRef = connection;
+	};
+
+	let value = $state<Status>({
+		clockedIn: false,
+		outletId: 0,
+		salesPeriodId: 0,
+		salesPeriod: undefined,
+		roles: [],
+		isNotReady: true,
+	});
+
+	const getStatus = async () => {
+		$inspect("getting status");
+		const { data } = await client.GET("/user/getStatus", { fetch });
+		if (data) {
+			value = data;
+		}
+	};
+	return {
+		get value() {
+			return value;
+		},
+		set value(newValue) {
+			value = newValue;
+		},
+		getStatus,
+	};
+};
+
+export const status = createStatus();

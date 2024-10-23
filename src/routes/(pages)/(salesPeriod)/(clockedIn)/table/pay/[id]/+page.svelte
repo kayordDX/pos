@@ -8,13 +8,13 @@
 	import { goto } from "$app/navigation";
 	import { payment } from "$lib/stores/payment";
 	import { onMount } from "svelte";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 
 	let url: string | undefined;
 	let reference: string | undefined;
 	let linkLoading = false;
 
-	const paymentTypeQuery = createOutletGetPaymentType($status?.outletId ?? 0);
+	const paymentTypeQuery = createOutletGetPaymentType(status.value?.outletId ?? 0);
 
 	const schema = z.object({
 		amount: z.coerce.number().min(1, { message: "You need an amount of bigger than 1" }),

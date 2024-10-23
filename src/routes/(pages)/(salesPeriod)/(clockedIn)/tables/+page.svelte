@@ -5,10 +5,10 @@
 
 	import { Card, Loader, Badge, Avatar } from "@kayord/ui";
 	import { getError } from "$lib/types";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { getInitials } from "$lib/util";
 
-	const query = createTableGetMyBooked({ myBooking: false, outletId: $status?.outletId ?? 0 });
+	const query = createTableGetMyBooked({ myBooking: false, outletId: status.value?.outletId ?? 0 });
 </script>
 
 <div class="m-8">

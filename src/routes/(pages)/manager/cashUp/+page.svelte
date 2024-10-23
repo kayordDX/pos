@@ -1,20 +1,20 @@
 <script>
 	import { createCashUpUserGet, createSalesPeriodClose } from "$lib/api";
 	import { Button, Card, Loader, toast } from "@kayord/ui";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
 	import CashUpUser from "./CashUpUser.svelte";
 	import { CalendarClockIcon, CheckIcon } from "lucide-svelte";
 	import { goto } from "$app/navigation";
 
-	const query = createCashUpUserGet($status.outletId);
+	const query = createCashUpUserGet(status.value.outletId);
 
 	const mutation = createSalesPeriodClose();
 
 	const closeSalesPeriod = async () => {
 		try {
-			await $mutation.mutateAsync({ data: { salesPeriodId: $status.salesPeriodId } });
+			await $mutation.mutateAsync({ data: { salesPeriodId: status.value.salesPeriodId } });
 			await status.getStatus();
 			await goto("/manager");
 		} catch (ex) {
@@ -46,7 +46,7 @@
 					</div>
 				</Card.Header>
 			</Card.Root>
-			{#if $status.salesPeriodId > 0}
+			{#if status.value.salesPeriodId > 0}
 				<Card.Root class="m-4 p-2">
 					<Button class="w-full" onclick={closeSalesPeriod}>
 						<CalendarClockIcon class="size-5 mr-2" />

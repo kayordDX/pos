@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Card, toast } from "@kayord/ui";
 	import { ClockIcon, TimerIcon, TimerOffIcon } from "lucide-svelte";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 	import { createClockClockIn } from "$lib/api";
 	import { getError } from "$lib/types";
 
@@ -10,7 +10,7 @@
 	const clockIn = async () => {
 		try {
 			await $mutation.mutateAsync({
-				data: { outletId: $status?.outletId ?? 0 },
+				data: { outletId: status.value?.outletId ?? 0 },
 			});
 			await status.getStatus();
 			toast.info("Successfully Clocked in User");

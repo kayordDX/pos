@@ -6,13 +6,13 @@
 	import HistoryIcon from "lucide-svelte/icons/history";
 	import { createTableGetMyBooked } from "$lib/api";
 	import Orders from "./Orders.svelte";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 
-	const query = createTableGetMyBooked({ myBooking: true, outletId: $status?.outletId ?? 0 });
+	const query = createTableGetMyBooked({ myBooking: true, outletId: status.value?.outletId ?? 0 });
 </script>
 
 <div class="m-2">
-	{#if !$status?.salesPeriod}
+	{#if !status.value?.salesPeriod}
 		<Card.Root>
 			<Card.Header class="flex flex-row items-center gap-4">
 				<CalendarOffIcon />
@@ -26,7 +26,7 @@
 		</Card.Root>
 	{/if}
 
-	{#if $status?.salesPeriod}
+	{#if status.value?.salesPeriod}
 		<h1>Actions</h1>
 		<p class="text-muted-foreground">Book a table or view tables managed by other users</p>
 		<div class="flex items-center gap-2 my-2 flex-wrap">

@@ -13,14 +13,14 @@
 		getPaginationRowModel,
 		renderComponent,
 	} from "@tanstack/svelte-table";
-	import { status } from "$lib/stores/status";
+	import { status } from "$lib/stores/status.svelte";
 
 	let billId = $state<number>();
 
 	let query = createTableBookingHistoryUser($page.params.userId ?? "", {
 		tableBookingId: 0,
 		cashUpUserId: 0,
-		outletId: $status.outletId,
+		outletId: status.value.outletId,
 	});
 	let data = $state<TableBookingHistoryResponse[]>([]);
 
@@ -28,7 +28,7 @@
 		query = createTableBookingHistoryUser($page.params.userId ?? "", {
 			tableBookingId: billId ?? 0,
 			cashUpUserId: Number($page.params.cashUpUserId ?? 0),
-			outletId: $status.outletId,
+			outletId: status.value.outletId,
 		});
 		data = $query.data ?? [];
 	});
