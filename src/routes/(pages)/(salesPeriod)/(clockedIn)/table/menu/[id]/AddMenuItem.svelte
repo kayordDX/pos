@@ -129,21 +129,29 @@
 					{#each optionGroup.optionGroup.options as option}
 						{@const checked = $formData.options.includes(option.optionId)}
 						<div class="p-1 flex items-center gap-2">
-							<Control let:attrs>
-								<Checkbox
-									class="rounded-[4px] w-4 h-4"
-									{...attrs}
-									{checked}
-									onCheckedChange={(v) => {
-										if (v) {
-											addOption(option.optionId);
-										} else {
-											removeOption(option.optionId);
-										}
-									}}
-								/>
-								<input hidden type="checkbox" name={attrs.name} value={option.optionId} {checked} />
-								<Label>{option.name} - R{option.price.toFixed(2)}</Label>
+							<Control>
+								{#snippet children({ props })}
+									<Checkbox
+										class="rounded-[4px] w-4 h-4"
+										{...props}
+										{checked}
+										onCheckedChange={(checked) => {
+											if (checked) {
+												addOption(option.optionId);
+											} else {
+												removeOption(option.optionId);
+											}
+										}}
+									/>
+									<input
+										hidden
+										type="checkbox"
+										name={props.name}
+										value={option.optionId}
+										{checked}
+									/>
+									<Label>{option.name} - R{option.price.toFixed(2)}</Label>
+								{/snippet}
 							</Control>
 						</div>
 					{/each}
@@ -161,21 +169,23 @@
 					{#each extraGroup.extraGroup.extras as extra}
 						{@const checked = $formData.extras.includes(extra.extraId)}
 						<div class="p-1 flex items-center gap-2">
-							<Control let:attrs>
-								<Checkbox
-									class="rounded-[4px]"
-									{...attrs}
-									{checked}
-									onCheckedChange={(v) => {
-										if (v) {
-											addExtra(extra.extraId);
-										} else {
-											removeExtra(extra.extraId);
-										}
-									}}
-								/>
-								<input hidden type="checkbox" name={attrs.name} value={extra.extraId} {checked} />
-								<Label>{extra.name} - R{extra.price.toFixed(2)}</Label>
+							<Control>
+								{#snippet children({ props })}
+									<Checkbox
+										class="rounded-[4px]"
+										{...props}
+										{checked}
+										onCheckedChange={(v) => {
+											if (v) {
+												addExtra(extra.extraId);
+											} else {
+												removeExtra(extra.extraId);
+											}
+										}}
+									/>
+									<input hidden type="checkbox" name={props.name} value={extra.extraId} {checked} />
+									<Label>{extra.name} - R{extra.price.toFixed(2)}</Label>
+								{/snippet}
 							</Control>
 						</div>
 					{/each}
@@ -185,9 +195,11 @@
 		</div>
 		<SpecialExtra bind:currentExtras />
 		<Field {form} name="note">
-			<Control let:attrs>
-				<Form.Label>Special instructions</Form.Label>
-				<Textarea {...attrs} bind:value={$formData.note} tabindex={-1} />
+			<Control>
+				{#snippet children({ props })}
+					<Form.Label>Special instructions</Form.Label>
+					<Textarea {...props} bind:value={$formData.note} tabindex={-1} />
+				{/snippet}
 			</Control>
 			<FieldErrors />
 		</Field>

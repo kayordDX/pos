@@ -18,18 +18,10 @@
 
 	let { refetch, userId }: Props = $props();
 
-	const items = [
-		{ value: "apple", label: "Apple" },
-		{ value: "banana", label: "Banana" },
-		{ value: "blueberry", label: "Blueberry" },
-		{ value: "grapes", label: "Grapes" },
-		{ value: "pineapple", label: "Pineapple" },
-	];
-
 	let open = $state(false);
 
 	export const schema = z.object({
-		roleId: z.string().min(1, { message: "Please select Role" }),
+		roleId: z.number().min(1, { message: "Please select Role" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -51,6 +43,10 @@
 		},
 	});
 	const { form: formData, enhance } = form;
+
+	const roleSelect = $derived(
+		$rolesQuery.data?.find((i) => i.roleId === $formData.roleId)?.name ?? "Select Role"
+	);
 </script>
 
 <Drawer.Root bind:open>
@@ -68,23 +64,19 @@
 			</Drawer.Header>
 			<div class="w-full p-4">
 				<Form.Field {form} name="roleId">
-					<Form.Control let:attrs>
-						<Form.Label>Role</Form.Label>
-						<Select.Root
-							onSelectedChange={(v) => {
-								v && ($formData.roleId = String(v.value));
-							}}
-						>
-							<Select.Trigger {...attrs}>
-								<Select.Value placeholder="Select type" />
-							</Select.Trigger>
-							<Select.Content>
-								{#each $rolesQuery.data ?? [] as item}
-									<Select.Item value={item.roleId} label={item.name}>{item.name}</Select.Item>
-								{/each}
-							</Select.Content>
-						</Select.Root>
-						<input hidden bind:value={$formData.roleId} name={attrs.name} />
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Role</Form.Label>
+							<Select.Root type="single" name={props.name} bind:value={$formData.roleId}>
+								<Select.Trigger {...props}>{roleSelect}</Select.Trigger>
+								<Select.Content>
+									{#each $rolesQuery.data ?? [] as item}
+										<Select.Item value={item.roleId} label={item.name}>{item.name}</Select.Item>
+									{/each}
+								</Select.Content>
+							</Select.Root>
+							<input hidden bind:value={$formData.roleId} name={props.name} />
+						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>

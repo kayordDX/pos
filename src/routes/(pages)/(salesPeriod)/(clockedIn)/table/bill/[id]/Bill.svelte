@@ -183,7 +183,7 @@
 						class="w-full"
 						disabled={$closeTableMut.isPending}
 						variant="destructive"
-						on:click={closeTable}
+						onclick={closeTable}
 					>
 						<DoorOpenIcon class="size-4 mr-2" />
 						Close Table

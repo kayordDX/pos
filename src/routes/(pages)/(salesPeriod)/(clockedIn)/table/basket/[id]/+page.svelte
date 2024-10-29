@@ -88,21 +88,29 @@
 					{refetch}
 				>
 					<div class="p-1 flex items-center gap-2">
-						<Control let:attrs>
-							<Checkbox
-								class="rounded-[4px]"
-								{...attrs}
-								{checked}
-								onCheckedChange={(v) => {
-									if (v) {
-										addItem(item.orderItemId);
-									} else {
-										removeItem(item.orderItemId);
-									}
-								}}
-							/>
-							<input hidden type="checkbox" name={attrs.name} value={item.orderItemId} {checked} />
-							<Label class="font-bold">{item.menuItem.name}</Label>
+						<Control>
+							{#snippet children({ props })}
+								<Checkbox
+									class="rounded-[4px]"
+									{...props}
+									{checked}
+									onCheckedChange={(v) => {
+										if (v) {
+											addItem(item.orderItemId);
+										} else {
+											removeItem(item.orderItemId);
+										}
+									}}
+								/>
+								<input
+									hidden
+									type="checkbox"
+									name={props.name}
+									value={item.orderItemId}
+									{checked}
+								/>
+								<Label class="font-bold">{item.menuItem.name}</Label>
+							{/snippet}
 						</Control>
 					</div>
 				</BasketItem>
@@ -122,7 +130,7 @@
 						Send Selected to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" />
 					</Button>
 				{:else}
-					<Button on:click={sendAllToKitchen} class="w-full">
+					<Button onclick={sendAllToKitchen} class="w-full">
 						Send All to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" />
 					</Button>
 				{/if}

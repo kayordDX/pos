@@ -35,7 +35,7 @@
 			</div>
 		</Card.Content>
 		<Card.Footer>
-			<Button class="w-full" variant="secondary" on:click={login} disabled={isLoading}>
+			<Button class="w-full" variant="secondary" onclick={login} disabled={isLoading}>
 				<GoogleSvg class="w-5 h-5 mr-2 fill-white" />
 				{isLoading ? "Signing in..." : "Google"}
 			</Button>

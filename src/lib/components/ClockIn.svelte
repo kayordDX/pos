@@ -30,7 +30,7 @@
 			</div>
 		</Card.Header>
 		<Card.Footer>
-			<Button class="mt-4" on:click={clockIn} disabled={$mutation.isPending}>
+			<Button class="mt-4" onclick={clockIn} disabled={$mutation.isPending}>
 				<ClockIcon class="mr-2 h-5 w-5" /> Clock In
 			</Button>
 		</Card.Footer>

@@ -92,7 +92,7 @@
 				<Input
 					type="search"
 					placeholder="Search..."
-					on:input={(value) => debouncedHandleInput(value)}
+					oninput={(value) => debouncedHandleInput(value)}
 					value={search}
 					class="pl-8"
 				/>

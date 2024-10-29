@@ -52,7 +52,13 @@
 
 	const { form: formData, enhance } = form;
 
-	let query = $derived(createAdjustmentGetAll(status.value.outletId, { query: { enabled: open } }));
+	const query = $derived(
+		createAdjustmentGetAll(status.value.outletId, { query: { enabled: open } })
+	);
+	const typeSelect = $derived(
+		$query.data?.find((i) => i.adjustmentTypeId === $formData.adjustmentTypeId)?.name ??
+			"Select adjustment type"
+	);
 </script>
 
 <Drawer.Root bind:open>
@@ -71,42 +77,42 @@
 			</Drawer.Header>
 			<div class="flex flex-col gap-5 p-4 pt-0">
 				<Field {form} name="adjustmentTypeId">
-					<Control let:attrs>
-						<Form.Label>Type</Form.Label>
-						<Select.Root
-							selected={{
-								value: $formData.adjustmentTypeId,
-								label: $query.data?.find((i) => i.adjustmentTypeId === $formData.adjustmentTypeId)
-									?.name,
-							}}
-							onSelectedChange={(v) => {
-								v && ($formData.adjustmentTypeId = v.value);
-							}}
-						>
-							<Select.Trigger {...attrs}>
-								<Select.Value placeholder="Select adjustment type" />
-							</Select.Trigger>
-							<Select.Content>
-								{#each $query.data ?? [] as result}
-									<Select.Item value={result.adjustmentTypeId}>{result.name}</Select.Item>
-								{/each}
-							</Select.Content>
-						</Select.Root>
-						<input hidden bind:value={$formData.adjustmentTypeId} name={attrs.name} />
+					<Control>
+						{#snippet children({ props })}
+							<Form.Label>Type</Form.Label>
+							<Select.Root
+								type="single"
+								onValueChange={(v: number) => {
+									v && ($formData.adjustmentTypeId = v);
+								}}
+							>
+								<Select.Trigger {...props}>
+									{typeSelect}
+								</Select.Trigger>
+								<Select.Content>
+									{#each $query.data ?? [] as result}
+										<Select.Item value={result.adjustmentTypeId}>{result.name}</Select.Item>
+									{/each}
+								</Select.Content>
+							</Select.Root>
+							<input hidden bind:value={$formData.adjustmentTypeId} name={props.name} />
+						{/snippet}
 					</Control>
 					<FieldErrors class="text-destructive text-sm" />
 				</Field>
 				<Field {form} name="amount">
-					<Control let:attrs>
-						<Form.Label>Amount</Form.Label>
-						<Input
-							{...attrs}
-							bind:value={$formData.amount}
-							tabindex={0}
-							type="number"
-							step="0.01"
-							on:focus={(e) => e.currentTarget.select()}
-						/>
+					<Control>
+						{#snippet children({ props })}
+							<Form.Label>Amount</Form.Label>
+							<Input
+								{...props}
+								bind:value={$formData.amount}
+								tabindex={0}
+								type="number"
+								step="0.01"
+								onfocus={(e) => e.currentTarget.select()}
+							/>
+						{/snippet}
 					</Control>
 					<FieldErrors class="text-destructive text-sm" />
 				</Field>
@@ -120,9 +126,11 @@
 					</Alert.Description>
 				</Alert.Root>
 				<Field {form} name="note">
-					<Control let:attrs>
-						<Form.Label>Note</Form.Label>
-						<Textarea {...attrs} bind:value={$formData.note} tabindex={0} />
+					<Control>
+						{#snippet children({ props })}
+							<Form.Label>Note</Form.Label>
+							<Textarea {...props} bind:value={$formData.note} tabindex={0} />
+						{/snippet}
 					</Control>
 					<FieldErrors class="text-destructive text-sm" />
 				</Field>

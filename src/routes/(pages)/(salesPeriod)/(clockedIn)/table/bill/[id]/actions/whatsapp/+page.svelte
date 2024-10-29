@@ -80,21 +80,21 @@
 				class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2 overflow-y-scroll"
 			>
 				<Field {form} name="name">
-					<Control let:attrs>
+					<Control>
 						<Form.Label>Name</Form.Label>
 						<Input bind:value={$formData.name} />
 					</Control>
 					<FieldErrors class="text-sm text-destructive" />
 				</Field>
 				<Field {form} name="phoneNumber">
-					<Control let:attrs>
+					<Control>
 						<Form.Label>Phone Number</Form.Label>
 						<Input bind:value={$formData.phoneNumber} />
 					</Control>
 					<FieldErrors class="text-sm text-destructive" />
 				</Field>
 				<Field {form} name="countryCode">
-					<Control let:attrs>
+					<Control>
 						<Form.Label>Country Code</Form.Label>
 						<Input bind:value={$formData.countryCode} />
 					</Control>

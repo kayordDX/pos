@@ -18,7 +18,7 @@
 		options: Array<DTOOrderItemOptionDTO>;
 		extras: Array<DTOOrderItemExtraDTO>;
 		refetch: () => any;
-		children?: import('svelte').Snippet;
+		children?: import("svelte").Snippet;
 	}
 
 	let {
@@ -29,7 +29,7 @@
 		options,
 		extras,
 		refetch,
-		children
+		children,
 	}: Props = $props();
 
 	const removeItem = createTableOrderRemoveItem();
@@ -86,10 +86,10 @@
 	</div>
 	<div class="flex items-center gap-2 mr-1">
 		<div class="font-bold mr-2">R {price.toFixed(2)}</div>
-		<Button variant="outline" on:click={copy} size="icon">
+		<Button variant="outline" onclick={copy} size="icon">
 			<CopyIcon class="h-4 w-4" />
 		</Button>
-		<Button variant="destructive" on:click={remove} size="icon">
+		<Button variant="destructive" onclick={remove} size="icon">
 			<TrashIcon class="h-4 w-4" />
 		</Button>
 	</div>

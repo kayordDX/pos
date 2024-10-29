@@ -98,7 +98,7 @@
 			</Card.Content>
 			<Card.Footer class="flex flex-col gap-2">
 				{#if Number($page.params.cashUpUserId ?? 0) == 0}
-					<Button class="w-full" on:click={cashUpClose}>
+					<Button class="w-full" onclick={cashUpClose}>
 						<BookUpIcon class="size-4 mr-2" /> Cash Up
 					</Button>
 				{/if}

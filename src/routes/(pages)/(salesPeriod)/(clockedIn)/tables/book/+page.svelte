@@ -90,7 +90,7 @@
 					{/if}
 
 					<Field {form} name="bookingName">
-						<Control let:attrs>
+						<Control>
 							<Form.Label>Booking Name</Form.Label>
 							<Input bind:value={$formData.bookingName} />
 						</Control>

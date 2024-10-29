@@ -97,20 +97,19 @@
 					<Drawer.Footer>
 						{#if isHistory}
 							<Drawer.Close>
-								<Button on:click={() => setStatus(7, item.orderItemId)} class="w-full"
+								<Button onclick={() => setStatus(7, item.orderItemId)} class="w-full"
 									>Recall Item
 								</Button>
 							</Drawer.Close>
 						{:else}
 							<Drawer.Close>
-								<Button on:click={() => setStatus(5, item.orderItemId)} class="w-full">Ready</Button
-								>
+								<Button onclick={() => setStatus(5, item.orderItemId)} class="w-full">Ready</Button>
 							</Drawer.Close>
 						{/if}
 						<Drawer.Close>
 							<Button
 								variant="destructive"
-								on:click={() => setStatus(4, item.orderItemId)}
+								onclick={() => setStatus(4, item.orderItemId)}
 								class="w-full">Cancel Order</Button
 							>
 						</Drawer.Close>

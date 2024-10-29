@@ -87,7 +87,7 @@
 					{item.orderReceivedFormatted}
 				</Badge>
 			</div>
-			<Button on:click={() => completeItem(item.orderItemId, 6)} disabled={completeItemBusy}>
+			<Button onclick={() => completeItem(item.orderItemId, 6)} disabled={completeItemBusy}>
 				Done
 				{#if completeItemBusy}
 					<Loader class="size-5" />

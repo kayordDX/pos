@@ -5,6 +5,7 @@
 	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
 	import { logout, session } from "$lib/firebase.svelte";
 	import { networkInformationStore } from "$lib/stores/network";
+	import { goto } from "$app/navigation";
 </script>
 
 <DropdownMenu.Root>
@@ -25,13 +26,13 @@
 		<DropdownMenu.Label>{session.user?.displayName ?? "My Account"}</DropdownMenu.Label>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Group>
-			<DropdownMenu.Item href="/setup">
+			<DropdownMenu.Item onclick={() => goto("/setup")}>
 				<WrenchIcon class="mr-2 h-4 w-4" />Setup Device
 			</DropdownMenu.Item>
-			<DropdownMenu.Item href="/network">
+			<DropdownMenu.Item onclick={() => goto("/network")}>
 				<NetworkIcon class="mr-2 h-4 w-4" />Network Information
 			</DropdownMenu.Item>
-			<DropdownMenu.Item on:click={toggleMode}>
+			<DropdownMenu.Item onclick={toggleMode}>
 				{#if $mode == "light"}
 					<SunIcon class="mr-2 h-4 w-4" />
 				{:else}
@@ -41,7 +42,7 @@
 			</DropdownMenu.Item>
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
-		<DropdownMenu.Item on:click={logout}>
+		<DropdownMenu.Item onclick={logout}>
 			<LogOutIcon class="mr-2 h-4 w-4" />
 			<span>Log out</span>
 		</DropdownMenu.Item>

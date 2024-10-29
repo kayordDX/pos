@@ -25,7 +25,7 @@
 			</div>
 		</Card.Header>
 		<Card.Footer>
-			<Button on:click={checkStatus} disabled={isChecking}>
+			<Button onclick={checkStatus} disabled={isChecking}>
 				<CalendarCheck2Icon class="h-5 w-5 mr-2" />Check
 			</Button>
 		</Card.Footer>

@@ -72,7 +72,7 @@
 					<div class="text-lg">R{$query.data.value?.amount.toFixed(2)}</div>
 				</div>
 
-				<Button class="my-4" on:click={() => $query.refetch()} variant="outline">
+				<Button class="my-4" onclick={() => $query.refetch()} variant="outline">
 					{#if $query.isFetching}
 						<Loader class="size-5" />
 						Checking Payment Status...
@@ -110,6 +110,6 @@
 	</Card.Content>
 	<Card.Footer class="flex flex-col gap-2">
 		<Button href={url} variant="secondary" class="w-full">Retry Payment</Button>
-		<Button on:click={cancelPayment} variant="destructive" class="w-full">Cancel Payment</Button>
+		<Button onclick={cancelPayment} variant="destructive" class="w-full">Cancel Payment</Button>
 	</Card.Footer>
 </Card.Root>

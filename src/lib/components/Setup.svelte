@@ -74,6 +74,10 @@
 		const audio = new Audio("/sounds/notification.mp3");
 		audio.play();
 	};
+
+	const outletList = $derived(
+		$query.data?.find((i) => i.id === $formData.outletId)?.name ?? "Select outlet to link to device"
+	);
 </script>
 
 <Card.Root class="p-5 m-5">
@@ -141,7 +145,7 @@
 					<CheckCircleIcon class="text-green-400" />
 				{:else}
 					<CircleXIcon class="text-red-400" />
-					<Button on:click={requestNotificationPermission}>Request Access</Button>
+					<Button onclick={requestNotificationPermission}>Request Access</Button>
 				{/if}
 				Notification Access
 			</li>
@@ -166,27 +170,26 @@
 	<Card.Content>
 		<form method="POST" use:enhance>
 			<Form.Field {form} name="outletId">
-				<Form.Control let:attrs>
-					<Form.Label>Outlet</Form.Label>
-					<Select.Root
-						selected={{
-							value: $formData.outletId,
-							label: $query.data?.find((i) => i.id === $formData.outletId)?.name,
-						}}
-						onSelectedChange={(v) => {
-							v && ($formData.outletId = v.value);
-						}}
-					>
-						<Select.Trigger {...attrs}>
-							<Select.Value placeholder="Select outlet to link to device" />
-						</Select.Trigger>
-						<Select.Content>
-							{#each $query.data ?? [] as outlet}
-								<Select.Item value={outlet.id}>{outlet.name}</Select.Item>
-							{/each}
-						</Select.Content>
-					</Select.Root>
-					<input hidden bind:value={$formData.outletId} name={attrs.name} />
+				<Form.Control>
+					{#snippet children({ props })}
+						<Form.Label>Outlet</Form.Label>
+						<Select.Root
+							type="single"
+							onValueChange={(v: number) => {
+								v && ($formData.outletId = v);
+							}}
+						>
+							<Select.Trigger {...props}>
+								{outletList}
+							</Select.Trigger>
+							<Select.Content>
+								{#each $query.data ?? [] as outlet}
+									<Select.Item value={outlet.id}>{outlet.name}</Select.Item>
+								{/each}
+							</Select.Content>
+						</Select.Root>
+						<input hidden bind:value={$formData.outletId} name={props.name} />
+					{/snippet}
 				</Form.Control>
 				<Form.Description>The current outlet this device is linked to.</Form.Description>
 				<Form.FieldErrors />

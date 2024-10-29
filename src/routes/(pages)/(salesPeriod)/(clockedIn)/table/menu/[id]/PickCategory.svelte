@@ -77,11 +77,11 @@
 			</CategoriesList>
 		</div>
 		<Drawer.Footer>
-			<Drawer.Close asChild let:builder>
-				<Button builders={[builder]} variant="outline">Close</Button>
+			<Drawer.Close>
+				<Button variant="outline">Close</Button>
 			</Drawer.Close>
-			<Drawer.Close asChild let:builder>
-				<Button builders={[builder]} variant="secondary" on:click={clear}>Clear</Button>
+			<Drawer.Close>
+				<Button variant="secondary" onclick={clear}>Clear</Button>
 			</Drawer.Close>
 		</Drawer.Footer>
 	</Drawer.Content>

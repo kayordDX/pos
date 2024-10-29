@@ -25,7 +25,7 @@
 				variant="outline"
 				size="icon"
 				class="s-10 shrink-0 rounded-full"
-				on:click={decrement}
+				onclick={decrement}
 				disabled={value <= 1}
 			>
 				<MinusIcon class="h-4 w-4" />
@@ -34,7 +34,7 @@
 			<div class="flex-1 text-center">
 				<div class="text-3xl font-bold tracking-tighter">{value}</div>
 			</div>
-			<Button variant="outline" size="icon" class="s-10 shrink-0 rounded-full" on:click={increment}>
+			<Button variant="outline" size="icon" class="s-10 shrink-0 rounded-full" onclick={increment}>
 				<PlusIcon class="h-4 w-4" />
 				<span class="sr-only">Increase</span>
 			</Button>

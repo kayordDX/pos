@@ -89,6 +89,11 @@
 
 	const total = Number($page.url.searchParams.get("total") ?? "0").toFixed(2);
 	const balance = Number($page.url.searchParams.get("balance") ?? "0").toFixed(2);
+
+	const paymentTypeSelect = $derived(
+		$paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
+			?.paymentTypeName ?? "Select payment type"
+	);
 </script>
 
 <form method="POST" use:enhance>
@@ -99,45 +104,44 @@
 				<Card.Description>Balance: <Badge>R {balance}</Badge></Card.Description>
 			</div>
 			<Form.Field {form} name="amount">
-				<Form.Control let:attrs>
-					<Form.Label>Amount</Form.Label>
-					<Input
-						{...attrs}
-						type="number"
-						step="0.01"
-						bind:value={$formData.amount}
-						on:focus={(e) => e.currentTarget.select()}
-					/>
+				<Form.Control>
+					{#snippet children({ props })}
+						<Form.Label>Amount</Form.Label>
+						<Input
+							{...props}
+							type="number"
+							step="0.01"
+							bind:value={$formData.amount}
+							onfocus={(e) => e.currentTarget.select()}
+						/>
+					{/snippet}
 				</Form.Control>
 				<Form.Description>Enter amount to pay</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 			<Form.Field {form} name="paymentTypeId">
-				<Form.Control let:attrs>
-					<Form.Label>Payment Type</Form.Label>
-					<Select.Root
-						selected={{
-							value: $formData.paymentTypeId,
-							label: $paymentTypeQuery.data?.find(
-								(i) => i.paymentTypeId === $formData.paymentTypeId
-							)?.paymentTypeName,
-						}}
-						onSelectedChange={(v) => {
-							v && ($formData.paymentTypeId = v.value);
-						}}
-					>
-						<Select.Trigger {...attrs}>
-							<Select.Value placeholder="Select payment type" />
-						</Select.Trigger>
-						<Select.Content>
-							{#each $paymentTypeQuery.data ?? [] as paymentType}
-								<Select.Item value={paymentType.paymentTypeId}
-									>{paymentType.paymentTypeName}</Select.Item
-								>
-							{/each}
-						</Select.Content>
-					</Select.Root>
-					<input hidden bind:value={$formData.paymentTypeId} name={attrs.name} />
+				<Form.Control>
+					{#snippet children({ props })}
+						<Form.Label>Payment Type</Form.Label>
+						<Select.Root
+							type="single"
+							onValueChange={(v: number) => {
+								v && ($formData.paymentTypeId = v);
+							}}
+						>
+							<Select.Trigger {...props}>
+								{paymentTypeSelect}
+							</Select.Trigger>
+							<Select.Content>
+								{#each $paymentTypeQuery.data ?? [] as paymentType}
+									<Select.Item value={paymentType.paymentTypeId}
+										>{paymentType.paymentTypeName}</Select.Item
+									>
+								{/each}
+							</Select.Content>
+						</Select.Root>
+						<input hidden bind:value={$formData.paymentTypeId} name={props.name} />
+					{/snippet}
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>

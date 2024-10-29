@@ -81,7 +81,7 @@
 										</Drawer.Header>
 										<Drawer.Footer>
 											<Drawer.Close>
-												<Button class="w-full" on:click={() => readyAll(group.orderGroupId, 5)}
+												<Button class="w-full" onclick={() => readyAll(group.orderGroupId, 5)}
 													>Ready All</Button
 												>
 											</Drawer.Close>

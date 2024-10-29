@@ -11,4 +11,4 @@
 	};
 </script>
 
-<Button on:click={setNotification}>Notification Test</Button>
+<Button onclick={setNotification}>Notification Test</Button>

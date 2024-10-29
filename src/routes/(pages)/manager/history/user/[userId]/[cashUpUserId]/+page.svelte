@@ -1,18 +1,16 @@
 <script lang="ts">
 	import { createTableBookingHistoryUser, type TableBookingHistoryResponse } from "$lib/api";
-	import { DataTable, Input } from "@kayord/ui";
+	import { DataTable, Input, renderComponent, createSvelteTable } from "@kayord/ui";
 	import { stringToFDate } from "$lib/util";
 	import View from "./View.svelte";
 	import { page } from "$app/stores";
 	import {
 		type ColumnDef,
-		createTable,
 		getCoreRowModel,
 		type Updater,
 		type PaginationState,
 		getPaginationRowModel,
-		renderComponent,
-	} from "@tanstack/svelte-table";
+	} from "@tanstack/table-core";
 	import { status } from "$lib/stores/status.svelte";
 
 	let billId = $state<number>();
@@ -75,7 +73,7 @@
 		} else pagination = updater;
 	};
 
-	const table = createTable({
+	const table = createSvelteTable({
 		columns,
 		get data() {
 			return data;

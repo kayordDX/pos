@@ -33,6 +33,6 @@
 	</Card.Content>
 	<Card.Footer class="gap-2">
 		<Button variant="secondary" href="/manager">Cancel</Button>
-		<Button on:click={openSalesPeriod}>Open</Button>
+		<Button onclick={openSalesPeriod}>Open</Button>
 	</Card.Footer>
 </Card.Root>

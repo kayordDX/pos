@@ -50,6 +50,10 @@
 		},
 	});
 	const { form: formData, enhance } = form;
+
+	const typeSelect = $derived(
+		$query.data?.find((i) => i.id === $formData.cashUpUserItemTypeId)?.itemType ?? "Select type"
+	);
 </script>
 
 <Drawer.Root bind:open>
@@ -66,40 +70,41 @@
 			</Drawer.Header>
 			<div class="m-4">
 				<Form.Field {form} name="cashUpUserItemTypeId">
-					<Form.Control let:attrs>
-						<Form.Label>Type</Form.Label>
-						<Select.Root
-							selected={{
-								value: $formData.cashUpUserItemTypeId,
-								label: $query.data?.find((i) => i.id === $formData.cashUpUserItemTypeId)?.itemType,
-							}}
-							onSelectedChange={(v) => {
-								v && ($formData.cashUpUserItemTypeId = v.value);
-							}}
-						>
-							<Select.Trigger {...attrs}>
-								<Select.Value placeholder="Select type" />
-							</Select.Trigger>
-							<Select.Content>
-								{#each $query.data ?? [] as item}
-									<Select.Item value={item.id}>{item.itemType}</Select.Item>
-								{/each}
-							</Select.Content>
-						</Select.Root>
-						<input hidden bind:value={$formData.cashUpUserItemTypeId} name={attrs.name} />
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Type</Form.Label>
+							<Select.Root
+								type="single"
+								onValueChange={(v: number) => {
+									v && ($formData.cashUpUserItemTypeId = v);
+								}}
+							>
+								<Select.Trigger {...props}>
+									{typeSelect}
+								</Select.Trigger>
+								<Select.Content>
+									{#each $query.data ?? [] as item}
+										<Select.Item value={item.id}>{item.itemType}</Select.Item>
+									{/each}
+								</Select.Content>
+							</Select.Root>
+							<input hidden bind:value={$formData.cashUpUserItemTypeId} name={props.name} />
+						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
 				<Form.Field {form} name="value">
-					<Form.Control let:attrs>
-						<Form.Label>Value</Form.Label>
-						<Input
-							{...attrs}
-							type="number"
-							step="0.01"
-							bind:value={$formData.value}
-							on:focus={(e) => e.currentTarget.select()}
-						/>
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Value</Form.Label>
+							<Input
+								{...props}
+								type="number"
+								step="0.01"
+								bind:value={$formData.value}
+								onfocus={(e) => e.currentTarget.select()}
+							/>
+						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>

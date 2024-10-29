@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { createUserUnassignedUsers, type UserUserResponse } from "$lib/api";
-	import { DataTable } from "@kayord/ui";
+	import { DataTable, renderComponent, createSvelteTable } from "@kayord/ui";
 	import {
 		type ColumnDef,
-		createTable,
 		getCoreRowModel,
 		type Updater,
 		type PaginationState,
 		getPaginationRowModel,
-		renderComponent,
-	} from "@tanstack/svelte-table";
+	} from "@tanstack/table-core";
 	import Current from "../Current.svelte";
 	import Avatar from "../Avatar.svelte";
 	import AddRole from "../AddRole.svelte";
@@ -78,7 +76,7 @@
 		rowCount = $query.data?.totalCount ?? 0;
 	});
 
-	const table = createTable({
+	const table = createSvelteTable({
 		columns,
 		get data() {
 			return data;

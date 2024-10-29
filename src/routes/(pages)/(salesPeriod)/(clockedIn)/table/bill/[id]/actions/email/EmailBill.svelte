@@ -65,14 +65,14 @@
 				class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2 overflow-y-scroll"
 			>
 				<Field {form} name="name">
-					<Control let:attrs>
+					<Control>
 						<Form.Label>Name</Form.Label>
 						<Input bind:value={$formData.name} />
 					</Control>
 					<FieldErrors class="text-sm text-destructive" />
 				</Field>
 				<Field {form} name="email">
-					<Control let:attrs>
+					<Control>
 						<Form.Label>Email</Form.Label>
 						<Input type="email" bind:value={$formData.email} />
 					</Control>

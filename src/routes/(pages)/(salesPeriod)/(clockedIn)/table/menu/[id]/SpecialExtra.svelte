@@ -29,7 +29,7 @@
 </script>
 
 <div>
-	<Button variant="secondary" on:click={() => (specialExtraOpen = true)}>
+	<Button variant="secondary" onclick={() => (specialExtraOpen = true)}>
 		<CirclePlusIcon class="size-4 mr-2" /> More Extras
 	</Button>
 	<div class="mt-2 flex flex-wrap gap-2">

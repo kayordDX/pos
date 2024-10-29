@@ -2,8 +2,13 @@
 	import type { SVGAttributes } from "svelte/elements";
 	import { cn } from "@kayord/ui/utils";
 	type $$Props = SVGAttributes<SVGElement>;
-	let className: $$Props["class"] = undefined;
-	export { className as class };
+	interface Props {
+		class?: $$Props["class"];
+		[key: string]: any
+	}
+
+	let { class: className = undefined, ...rest }: Props = $props();
+	
 </script>
 
 <svg
@@ -11,7 +16,7 @@
 	viewBox="0 0 24 24"
 	xmlns="http://www.w3.org/2000/svg"
 	class={cn(className)}
-	{...$$restProps}
+	{...rest}
 >
 	<title>Google</title>
 	<path

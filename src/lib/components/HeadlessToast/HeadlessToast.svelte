@@ -27,12 +27,7 @@
 		{/if}
 		{message}
 	</div>
-	<Button
-		variant="outline"
-		size="icon"
-		on:click={closeToast}
-		class="absolute top-1 right-1 h-6 w-6"
-	>
+	<Button variant="outline" size="icon" onclick={closeToast} class="absolute top-1 right-1 h-6 w-6">
 		<XIcon class="h-4 w-4" />
 	</Button>
 </div>

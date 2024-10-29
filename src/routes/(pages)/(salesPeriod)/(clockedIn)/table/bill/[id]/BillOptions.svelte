@@ -9,7 +9,7 @@
 	let { bookingId }: Props = $props();
 </script>
 
-<Button class="w-full" on:click={() => (dialogOpen = true)}>
+<Button class="w-full" onclick={() => (dialogOpen = true)}>
 	<ReceiptTextIcon class="size-4 mr-2" />
 	Bill
 </Button>
