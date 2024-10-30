@@ -99,7 +99,7 @@
 		<Sidebar.Trigger />
 	{/snippet}
 
-	<Sidebar.Provider style="--sidebar-width: 3rem; --sidebar-width-mobile: 3rem;">
+	<Sidebar.Provider>
 		<AdminSidebar />
 		<main class="w-full">
 			<Header class="z-20 border-none" hideHeader leftHeader={sidebarTrigger} />

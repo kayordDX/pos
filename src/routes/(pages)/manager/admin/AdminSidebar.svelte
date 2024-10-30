@@ -29,23 +29,24 @@
 </script>
 
 <Sidebar.Root>
-	<Sidebar.Header>
+	<Sidebar.Header class="bg-secondary h-14 flex items-center justify-center">
 		<Sidebar.Menu>
 			<Sidebar.MenuItem class="flex items-center justify-center">
-				<button class="flex items-center bg-background rounded-full" onclick={() => goto("/")}>
+				<button class="flex items-center rounded-full" onclick={() => goto("/")}>
 					<img src="/logo.svg" alt="kayord-logo" class="h-8" />
+					ayord.Pos
 				</button>
 			</Sidebar.MenuItem>
 		</Sidebar.Menu>
 	</Sidebar.Header>
-	<Sidebar.Content>
+	<Sidebar.Content class="bg-background">
 		<Sidebar.Group />
 		<Sidebar.GroupContent>
 			<Sidebar.Menu class="gap-3">
 				{#each menuItems as item (item.href)}
-					<Sidebar.MenuItem class="p-1">
+					<Sidebar.MenuItem class="p-2">
 						<Sidebar.MenuButton
-							class={`flex flex-row items-center justify-center rounded-full size-10 ${activeItem?.title === item.title ? "bg-primary text-primary-foreground" : ""}`}
+							class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
 							tooltipContentProps={{
 								hidden: false,
 							}}
@@ -58,7 +59,10 @@
 							{#snippet tooltipContent()}
 								{item.title}
 							{/snippet}
-							<item.icon class="!size-6" />
+							{#if item.icon}
+								<item.icon class="!size-6" />
+							{/if}
+							<span>{item.title}</span>
 						</Sidebar.MenuButton>
 					</Sidebar.MenuItem>
 				{/each}
