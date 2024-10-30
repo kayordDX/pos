@@ -63,7 +63,7 @@
 </script>
 
 <Card.Root class="overflow-hidden m-2 mb-12">
-	<Card.Header class="flex flex-col bg-muted/50 p-4">
+	<Card.Header class="flex flex-col bg-muted/30 dark:bg-background/30 p-4">
 		<div class="flex flex-row w-full justify-between">
 			<div class="flex flex-col">
 				<Card.Title class="group flex items-center gap-2 text-lg">
@@ -168,7 +168,7 @@
 			</div>
 		{/if}
 	</Card.Content>
-	<Card.Footer class="flex flex-col items-center border-t bg-muted/50 p-4">
+	<Card.Footer class="flex flex-col items-center border-t p-4 bg-muted/30 dark:bg-background/30">
 		<div class="flex flex-col gap-2 w-full">
 			{#if isManager && showAdjustment}
 				<Adjustment tableBookingId={bookingId} bind:open={adjustmentOpen} {refetch} />
