@@ -41,7 +41,7 @@
 
 <AuthCheck>
 	<Toaster />
-	<ModeWatcher />
+	<ModeWatcher defaultMode="dark" track={false} />
 	<Notification />
 	<QueryClientProvider client={queryClient}>
 		<OutletCheck>
