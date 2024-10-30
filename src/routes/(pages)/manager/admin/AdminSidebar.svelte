@@ -42,11 +42,11 @@
 	<Sidebar.Content class="bg-background">
 		<Sidebar.Group />
 		<Sidebar.GroupContent>
-			<Sidebar.Menu class="gap-3">
+			<Sidebar.Menu>
 				{#each menuItems as item (item.href)}
-					<Sidebar.MenuItem class="p-2">
+					<Sidebar.MenuItem>
 						<Sidebar.MenuButton
-							class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground"
+							class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-none"
 							tooltipContentProps={{
 								hidden: false,
 							}}
