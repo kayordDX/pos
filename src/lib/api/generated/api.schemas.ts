@@ -156,6 +156,7 @@ export interface BillEmailBillRequest {
 }
 
 export interface BillPrintBillRequest {
+	lineCharacters: number;
 	outletId: number;
 	printerId: number;
 	tableBookingId: number;
@@ -748,6 +749,7 @@ export interface PrinterPrinterStatus {
 	isOutdated: boolean;
 	/** @nullable */
 	lastException?: string | null;
+	lineCharacters: number;
 	name: string;
 	outletId: number;
 	printerId: number;

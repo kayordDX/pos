@@ -2609,6 +2609,8 @@ export interface components {
             name: string;
             /** Format: int32 */
             outletId: number;
+            /** Format: int32 */
+            lineCharacters: number;
         };
         ESCPOS_NETPrinterStatusEventArgs: components["schemas"]["SystemEventArgs"] & {
             isWaitingForOnlineRecovery?: boolean | null;
@@ -3059,6 +3061,8 @@ export interface components {
             outletId: number;
             /** Format: int32 */
             printerId: number;
+            /** Format: int32 */
+            lineCharacters: number;
         };
         BillEmailBillRequest: {
             /** Format: int32 */

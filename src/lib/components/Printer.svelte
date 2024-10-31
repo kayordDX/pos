@@ -28,6 +28,7 @@
 					outletId: printer.outletId,
 					printerId: printer.printerId,
 					tableBookingId: Number($page.params.id),
+					lineCharacters: printer.lineCharacters,
 				},
 			});
 			toast.info("Printing Bill");

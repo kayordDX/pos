@@ -9112,7 +9112,8 @@
           "dateUpdatedFormatted",
           "printerId",
           "name",
-          "outletId"
+          "outletId",
+          "lineCharacters"
         ],
         "properties": {
           "dateUpdated": {
@@ -9145,6 +9146,10 @@
             "type": "string"
           },
           "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lineCharacters": {
             "type": "integer",
             "format": "int32"
           }
@@ -10729,7 +10734,8 @@
         "required": [
           "tableBookingId",
           "outletId",
-          "printerId"
+          "printerId",
+          "lineCharacters"
         ],
         "properties": {
           "tableBookingId": {
@@ -10741,6 +10747,10 @@
             "format": "int32"
           },
           "printerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lineCharacters": {
             "type": "integer",
             "format": "int32"
           }
