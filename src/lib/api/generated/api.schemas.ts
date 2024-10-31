@@ -604,6 +604,58 @@ export interface PayManualPaymentRequest {
 	tableBookingId: number;
 }
 
+export interface PayPayConfigCreateRequest {
+	merchantId: string;
+	outletId: number;
+	/**
+	 * @minLength 1
+	 */
+	xApiKey: string;
+}
+
+export interface PayPayConfigDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface PayPayConfigGetRequest {
+	[key: string]: unknown;
+}
+
+export interface EntitiesAuditableEntity {
+	created: string;
+	/** @nullable */
+	createdBy?: string | null;
+	/** @nullable */
+	lastModified?: string | null;
+	/** @nullable */
+	lastModifiedBy?: string | null;
+}
+
+export type EntitiesHaloConfigAllOf = {
+	id: number;
+	isEnabled: boolean;
+	iv: string;
+	merchantId: string;
+	outletId: number;
+	xApiKey: string;
+};
+
+export type EntitiesHaloConfig = EntitiesAuditableEntity & EntitiesHaloConfigAllOf;
+
+export interface PayPayConfigSetActiveRequest {
+	/**
+	 * @minimum 0
+	 * @exclusiveMinimum
+	 */
+	id: number;
+	isEnabled: boolean;
+	outletId: number;
+}
+
+export interface PayPayConfigTestConfigRequest {
+	id: number;
+}
+
 export interface PayStatusRequest {
 	[key: string]: unknown;
 }
@@ -775,6 +827,8 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
+
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -805,8 +859,6 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
-
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: unknown;
@@ -1202,6 +1254,13 @@ export interface EntitiesExtra {
 	price: number;
 }
 
+export interface EntitiesMenuItemOptionGroup {
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+	optionGroup: EntitiesOptionGroup;
+	optionGroupId: number;
+}
+
 export interface EntitiesOptionGroup {
 	maxSelections: number;
 	/** @nullable */
@@ -1221,14 +1280,6 @@ export interface EntitiesOption {
 	orderItemOptions?: EntitiesOrderItemOption[] | null;
 	positionId: number;
 	price: number;
-}
-
-export interface EntitiesOrderItemOption {
-	option: EntitiesOption;
-	optionId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemId: number;
-	orderItemOptionId: number;
 }
 
 export interface EntitiesDivision {
@@ -1290,13 +1341,6 @@ export interface EntitiesMenuItem {
 	tags?: EntitiesTag[] | null;
 }
 
-export interface EntitiesMenuItemOptionGroup {
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-	optionGroup: EntitiesOptionGroup;
-	optionGroupId: number;
-}
-
 export interface EntitiesMenuSection {
 	menu: EntitiesMenu;
 	menuId: number;
@@ -1342,6 +1386,14 @@ export interface EntitiesOrderItem {
 	orderUpdated: string;
 	tableBooking: EntitiesTableBooking;
 	tableBookingId: number;
+}
+
+export interface EntitiesOrderItemOption {
+	option: EntitiesOption;
+	optionId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemId: number;
+	orderItemOptionId: number;
 }
 
 export interface EntitiesOrderGroup {
@@ -1482,29 +1534,6 @@ export interface TableOrderOfficeOrderBasedBackMenuItemDTO {
 export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
 	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
 
-export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
-	divisionId: number;
-	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
-	/** @nullable */
-	note?: string | null;
-	/** @nullable */
-	orderGroupId?: number | null;
-	/** @nullable */
-	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
-	orderItemId: number;
-	/** @nullable */
-	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
-	orderItemStatus: TableOrderOfficeOrderBasedBackOrderItemStatusDTO;
-	orderItemStatusId: number;
-	orderReceived: string;
-	orderReceivedFormatted: string;
-	orderUpdated: string;
-	orderUpdatedFormatted: string;
-	/** @nullable */
-	tableBooking?: TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking;
-	tableBookingId: number;
-}
-
 export interface TableOrderOfficeOrderBasedBackSectionDTO {
 	name: string;
 }
@@ -1622,6 +1651,29 @@ export interface DTOOrderItemOptionDTO {
 	optionId: number;
 	orderItemId: number;
 	orderItemOptionId: number;
+}
+
+export interface TableOrderOfficeOrderBasedBackOrderItemDTO {
+	divisionId: number;
+	menuItem: TableOrderOfficeOrderBasedBackMenuItemDTO;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	orderGroupId?: number | null;
+	/** @nullable */
+	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
+	orderItemId: number;
+	/** @nullable */
+	orderItemOptions?: DTOOrderItemOptionDTO[] | null;
+	orderItemStatus: TableOrderOfficeOrderBasedBackOrderItemStatusDTO;
+	orderItemStatusId: number;
+	orderReceived: string;
+	orderReceivedFormatted: string;
+	orderUpdated: string;
+	orderUpdatedFormatted: string;
+	/** @nullable */
+	tableBooking?: TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking;
+	tableBookingId: number;
 }
 
 export interface TableOrderOfficeOrderItemStatusDTO {

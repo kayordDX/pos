@@ -1,7 +1,13 @@
 <script>
 	import { goto } from "$app/navigation";
 	import { Sidebar } from "@kayord/ui";
-	import { PrinterIcon, MessageCircleIcon, UserRoundSearchIcon, UsersIcon } from "lucide-svelte";
+	import {
+		PrinterIcon,
+		MessageCircleIcon,
+		UserRoundSearchIcon,
+		UsersIcon,
+		NfcIcon,
+	} from "lucide-svelte";
 	const menuItems = [
 		{
 			title: "Admin",
@@ -22,6 +28,11 @@
 			title: "Whatsapp",
 			href: "/manager/admin/whatsapp",
 			icon: MessageCircleIcon,
+		},
+		{
+			title: "Halo",
+			href: "/manager/admin/halo",
+			icon: NfcIcon,
 		},
 	];
 
