@@ -175,6 +175,7 @@
 						<Form.Label>Outlet</Form.Label>
 						<Select.Root
 							type="single"
+							allowDeselect={false}
 							onValueChange={(v: number) => {
 								v && ($formData.outletId = v);
 							}}

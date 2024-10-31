@@ -97,6 +97,7 @@
 							</Form.Field>
 							<Select.Root
 								type="single"
+								allowDeselect={false}
 								onValueChange={(v: number) => {
 									v && ($formData.paymentTypeId = v);
 								}}

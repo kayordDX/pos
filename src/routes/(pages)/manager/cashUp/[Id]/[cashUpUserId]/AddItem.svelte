@@ -75,6 +75,7 @@
 							<Form.Label>Type</Form.Label>
 							<Select.Root
 								type="single"
+								allowDeselect={false}
 								onValueChange={(v: number) => {
 									v && ($formData.cashUpUserItemTypeId = v);
 								}}

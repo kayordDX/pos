@@ -67,7 +67,12 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Role</Form.Label>
-							<Select.Root type="single" name={props.name} bind:value={$formData.roleId}>
+							<Select.Root
+								type="single"
+								allowDeselect={false}
+								name={props.name}
+								bind:value={$formData.roleId}
+							>
 								<Select.Trigger {...props}>{roleSelect}</Select.Trigger>
 								<Select.Content>
 									{#each $rolesQuery.data ?? [] as item}
