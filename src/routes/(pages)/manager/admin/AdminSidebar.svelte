@@ -1,6 +1,8 @@
-<script>
+<script lang="ts">
 	import { goto } from "$app/navigation";
 	import { Sidebar } from "@kayord/ui";
+	const sidebar = Sidebar.useSidebar();
+
 	import {
 		PrinterIcon,
 		MessageCircleIcon,
@@ -53,17 +55,21 @@
 	<Sidebar.Content class="bg-background">
 		<Sidebar.Group />
 		<Sidebar.GroupContent>
-			<Sidebar.Menu>
+			<Sidebar.Menu class="px-2">
 				{#each menuItems as item (item.href)}
 					<Sidebar.MenuItem>
 						<Sidebar.MenuButton
-							class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-none"
+							class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-sm"
 							tooltipContentProps={{
 								hidden: false,
 							}}
 							onclick={() => {
+								console.log("clicked", item.title, open);
 								activeItem = item;
 								goto(item.href);
+								if (sidebar.isMobile) {
+									sidebar.setOpenMobile(false);
+								}
 							}}
 							isActive={activeItem?.title === item.title}
 						>
@@ -81,5 +87,5 @@
 		</Sidebar.GroupContent>
 		<Sidebar.Group />
 	</Sidebar.Content>
-	<Sidebar.Footer />
+	<Sidebar.Footer class="bg-secondary" />
 </Sidebar.Root>

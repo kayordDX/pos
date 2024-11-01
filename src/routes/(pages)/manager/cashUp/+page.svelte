@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { createCashUpUserGet, createSalesPeriodClose } from "$lib/api";
 	import { Button, Card, Loader, toast } from "@kayord/ui";
 	import { status } from "$lib/stores/status.svelte";
