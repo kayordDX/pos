@@ -22,9 +22,12 @@
 
 	let query = $state(createMenuList({ outletId: status.value?.outletId }));
 
+	let search = $state<string | undefined>(undefined);
+
 	const itemParams: MenuGetItemsGetMenuItemsParams = $derived({
 		menuId: menu.value.menuId,
 		sectionId: menuSection.sectionId,
+		search: search,
 	});
 
 	const sectionParams: MenuGetSectionsGetMenusSectionsParams = $derived({
@@ -32,13 +35,11 @@
 		sectionId: menuSection.sectionId,
 	});
 
-	const search = $page.url.searchParams.get("search");
-
 	const setSearchString = (event: Event) => {
 		const target = event.target as HTMLInputElement;
 		$page.url.searchParams.set("search", target.value);
+		search = target.value;
 		history.replaceState(history.state, "", $page.url);
-		itemParams.search = target.value;
 	};
 	const debouncedHandleInput = debounce(setSearchString, 500);
 
@@ -48,8 +49,6 @@
 
 	const setMenuSelection = (menuId: number) => {
 		menu.value.menuId = menuId;
-		sectionParams.menuId = menu.value.menuId;
-		itemParams.menuId = menu.value.menuId;
 	};
 
 	const checkMenuSelection = () => {
@@ -60,7 +59,6 @@
 
 	$effect(() => {
 		query = createMenuList({ outletId: status.value?.outletId });
-		itemParams.search = search;
 	});
 
 	$effect(() => {
