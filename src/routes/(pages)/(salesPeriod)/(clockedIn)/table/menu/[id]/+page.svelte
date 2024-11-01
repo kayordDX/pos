@@ -11,32 +11,28 @@
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { page } from "$app/stores";
-	import { selection } from "$lib/stores/selection.svelte";
+	import { menu } from "$lib/stores/menu.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import PickMenu from "./PickMenu.svelte";
 	import PickCategory from "./PickCategory.svelte";
 	import CategoriesList from "./CategoriesList.svelte";
 	import { debounce } from "$lib/util";
 	import MenuItems from "./MenuItems.svelte";
+	import { menuSection } from "$lib/stores/menuSection.svelte";
 
 	let query = $state(createMenuList({ outletId: status.value?.outletId }));
 
-	let itemParams: MenuGetItemsGetMenuItemsParams = $state({
-		menuId: selection.value.menuId,
-		sectionId: 0,
+	const itemParams: MenuGetItemsGetMenuItemsParams = $derived({
+		menuId: menu.value.menuId,
+		sectionId: menuSection.sectionId,
 	});
 
-	let sectionParams: MenuGetSectionsGetMenusSectionsParams = $state({
-		menuId: selection.value.menuId,
-		sectionId: 0,
+	const sectionParams: MenuGetSectionsGetMenusSectionsParams = $derived({
+		menuId: menu.value.menuId,
+		sectionId: menuSection.sectionId,
 	});
 
 	const search = $page.url.searchParams.get("search");
-
-	const setMenuId = () => {
-		sectionParams.menuId = selection.value.menuId;
-		itemParams.menuId = selection.value.menuId;
-	};
 
 	const setSearchString = (event: Event) => {
 		const target = event.target as HTMLInputElement;
@@ -51,13 +47,13 @@
 	let sectionsQuery = $state(createMenuGetSectionsGetMenusSections(sectionParams));
 
 	const setMenuSelection = (menuId: number) => {
-		selection.value.menuId = menuId;
-		sectionParams.menuId = selection.value.menuId;
-		itemParams.menuId = selection.value.menuId;
+		menu.value.menuId = menuId;
+		sectionParams.menuId = menu.value.menuId;
+		itemParams.menuId = menu.value.menuId;
 	};
 
 	const checkMenuSelection = () => {
-		if ($query && selection.value.menuId == 0 && $query.data && ($query.data?.length ?? 0) >= 1) {
+		if ($query && menu.value.menuId == 0 && $query.data && ($query.data?.length ?? 0) >= 1) {
 			setMenuSelection($query.data[0]?.id ?? 0);
 		}
 	};
@@ -66,9 +62,7 @@
 		query = createMenuList({ outletId: status.value?.outletId });
 		itemParams.search = search;
 	});
-	$effect(() => {
-		selection.value.menuId && setMenuId();
-	});
+
 	$effect(() => {
 		itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
 	});
@@ -98,7 +92,7 @@
 				/>
 			</div>
 			<PickMenu data={$query.data} />
-			<PickCategory sections={$sectionsQuery.data} bind:itemParams bind:sectionParams />
+			<PickCategory sections={$sectionsQuery.data} />
 		</div>
 
 		<div class="flex gap-2 flex-wrap items-center w-full">
@@ -107,12 +101,7 @@
 					<Loader />
 				</div>
 			{/if}
-			<CategoriesList
-				sections={$sectionsQuery.data}
-				bind:itemParams
-				bind:sectionParams
-				class="mt-1"
-			/>
+			<CategoriesList sections={$sectionsQuery.data} class="mt-1" />
 		</div>
 	</div>
 

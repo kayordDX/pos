@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, DropdownMenu } from "@kayord/ui";
 	import { SquareMenuIcon } from "lucide-svelte";
-	import { selection } from "$lib/stores/selection.svelte";
+	import { menu } from "$lib/stores/menu.svelte";
 	import type { EntitiesMenu } from "$lib/api";
 
 	interface Props {
@@ -11,16 +11,16 @@
 	let { menus }: Props = $props();
 
 	const setMenu = (menuId: number) => {
-		selection.value.menuId = menuId;
+		menu.value.menuId = menuId;
 	};
 
-	if (selection.value.menuId == 0) {
+	if (menu.value.menuId == 0) {
 		if (menus.length > 0 && menus[0]) {
 			setMenu(menus[0].id);
 		}
 	}
 
-	let value = $state(selection.value.menuId.toString());
+	let value = $state(menu.value.menuId.toString());
 </script>
 
 <DropdownMenu.Root>

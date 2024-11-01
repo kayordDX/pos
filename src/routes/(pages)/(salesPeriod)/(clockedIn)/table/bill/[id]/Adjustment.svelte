@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createAdjustmentCreate, createAdjustmentGetAll } from "$lib/api";
-	import { Alert, Button, Drawer, Form, Input, Select, Textarea } from "@kayord/ui";
+	import { Alert, Button, Dialog, Form, Input, Select, Textarea } from "@kayord/ui";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
@@ -61,20 +61,21 @@
 	);
 </script>
 
-<Drawer.Root bind:open>
-	<Drawer.Trigger>
+<Dialog.Root bind:open>
+	<Dialog.Trigger>
 		<Button class="w-full" variant="secondary">
 			<SquareDotIcon class="size-4 mr-2" /> Manual Adjustment
 		</Button>
-	</Drawer.Trigger>
-	<Drawer.Content class="fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full">
+	</Dialog.Trigger>
+	<!-- fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full -->
+	<Dialog.Content class="max-h-[98%] overflow-auto">
 		<form use:enhance method="POST">
-			<Drawer.Header>
-				<Drawer.Title>Make Adjustment</Drawer.Title>
-				<Drawer.Description>
+			<Dialog.Header class="mb-4">
+				<Dialog.Title>Make Adjustment</Dialog.Title>
+				<Dialog.Description>
 					This will apply a discount or change the price of the bill
-				</Drawer.Description>
-			</Drawer.Header>
+				</Dialog.Description>
+			</Dialog.Header>
 			<div class="flex flex-col gap-5 p-4 pt-0">
 				<Field {form} name="adjustmentTypeId">
 					<Control>
@@ -136,12 +137,12 @@
 					<FieldErrors class="text-destructive text-sm" />
 				</Field>
 			</div>
-			<Drawer.Footer>
+			<Dialog.Footer class="sm:flex-col gap-2">
 				{#if $mutation.isError}
 					<Error message={getError($mutation.error).message} />
 				{/if}
 				<Button type="submit">Add</Button>
-			</Drawer.Footer>
+			</Dialog.Footer>
 		</form>
-	</Drawer.Content>
-</Drawer.Root>
+	</Dialog.Content>
+</Dialog.Root>

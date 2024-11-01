@@ -11,7 +11,7 @@
 	import { CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon } from "lucide-svelte";
 	import { requestNotificationPermission } from "$lib/util";
 	import { onMount } from "svelte";
-	import { selection } from "$lib/stores/selection.svelte";
+	import { menu } from "$lib/stores/menu.svelte";
 	import { hub } from "$lib/stores/hub.svelte";
 
 	const query = createOutletList();
@@ -28,7 +28,7 @@
 			});
 			if (response.ok) {
 				toast.info("Successfully updated outlet");
-				selection.value = { menuId: 0 };
+				menu.value = { menuId: 0 };
 				await status.getStatus();
 				await goto("/", { replaceState: true, invalidateAll: true });
 			} else {

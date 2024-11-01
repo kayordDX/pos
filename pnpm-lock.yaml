@@ -12,8 +12,8 @@ importers:
         specifier: ^1.0.2
         version: 1.0.2
       '@kayord/ui':
-        specifier: ^0.12.9
-        version: 0.12.9(@tanstack/table-core@8.20.5)(lucide-svelte@0.454.0(svelte@5.1.9))(svelte@5.1.9)(sveltekit-superforms@2.20.0(@sveltejs/kit@2.7.3(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(@types/json-schema@7.0.15)(svelte@5.1.9)(typescript@5.6.3))(tailwindcss@3.4.14)(zod@3.23.8)
+        specifier: ^0.12.10
+        version: 0.12.10(@tanstack/table-core@8.20.5)(lucide-svelte@0.454.0(svelte@5.1.9))(svelte@5.1.9)(sveltekit-superforms@2.20.0(@sveltejs/kit@2.7.3(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(@types/json-schema@7.0.15)(svelte@5.1.9)(typescript@5.6.3))(tailwindcss@3.4.14)(zod@3.23.8)
       '@microsoft/signalr':
         specifier: ^8.0.7
         version: 8.0.7
@@ -102,8 +102,8 @@ importers:
         specifier: ^3.4.14
         version: 3.4.14
       tslib:
-        specifier: ^2.8.0
-        version: 2.8.0
+        specifier: ^2.8.1
+        version: 2.8.1
       typescript:
         specifier: ^5.6.3
         version: 5.6.3
@@ -791,8 +791,8 @@ packages:
   '@kayord/tw-plugin@1.0.2':
     resolution: {integrity: sha512-ut5znLn7cb65280bhvDbuirde/pT4ys3N1A+irIi9w2KR8rlbeFOwkByYnv/KBAzHPoRp2uZ6eynIUv4Imi08A==}
 
-  '@kayord/ui@0.12.9':
-    resolution: {integrity: sha512-bZa2ijGt5cXvgWw0nHhGgg2w0YRj0mg+KImyCbRma4zxqlKh5cSNbEG8SNW2ao+RlX6N4DRQbdHKni4N2CmIHA==}
+  '@kayord/ui@0.12.10':
+    resolution: {integrity: sha512-39VjOGORpdHrAJqZBQOZSaY7mJL8DG7Tzyxd5NMVl1ntZoqcOIYVk05gW1CcyUgG/742QwvtpTm/8ZxdbG8GGQ==}
     peerDependencies:
       '@tanstack/table-core': ^8.20.5
       lucide-svelte: '>= 0.400.0 < 1.0.0'
@@ -1358,8 +1358,8 @@ packages:
     peerDependencies:
       svelte: ^5.0.0-next.1
 
-  bits-ui@1.0.0-next.33:
-    resolution: {integrity: sha512-f+WF0qMgF19caW7H3Xe1nBzSCoaj8q4GY5vhsR4w2HMXuSSlLfXbn1DxB/6rCU6DYye2AoAVJXKgSRn3MksFGA==}
+  bits-ui@1.0.0-next.34:
+    resolution: {integrity: sha512-oyEP7RZUqXXqaEv4UOe6/13JuPS5To19siFG8X6wG0PMn7Li4RinXFDkRoEGbDokptuuy3uMuZyOZ2vCSAfKVQ==}
     engines: {node: '>=18', pnpm: '>=8.7.0'}
     peerDependencies:
       svelte: ^5.0.0-next.1
@@ -2916,8 +2916,8 @@ packages:
   tslib@2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
 
-  tslib@2.8.0:
-    resolution: {integrity: sha512-jWVzBLplnCmoaTr13V9dYbiQ99wvZRd0vNWaDRg+aVYRcjDF3nDksxFDE/+fkXnKhpnUUkmx5pK/v8mCtLVqZA==}
+  tslib@2.8.1:
+    resolution: {integrity: sha512-oJFu94HQb+KVduSUQL7wnpmqnfmLsOA/nAh6b6EH0wCEoK0/mPeXU6c3wKDV83MkOuHPRHtSXKKU99IBazS/2w==}
 
   type-check@0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
@@ -3403,7 +3403,7 @@ snapshots:
       '@firebase/app-compat': 0.2.45
       '@firebase/component': 0.6.10
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
 
@@ -3416,7 +3416,7 @@ snapshots:
       '@firebase/installations': 0.6.10(@firebase/app@0.10.15)
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/app-check-compat@0.3.16(@firebase/app-compat@0.2.45)(@firebase/app@0.10.15)':
     dependencies:
@@ -3426,7 +3426,7 @@ snapshots:
       '@firebase/component': 0.6.10
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
 
@@ -3440,7 +3440,7 @@ snapshots:
       '@firebase/component': 0.6.10
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/app-compat@0.2.45':
     dependencies:
@@ -3448,7 +3448,7 @@ snapshots:
       '@firebase/component': 0.6.10
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/app-types@0.9.2': {}
 
@@ -3458,7 +3458,7 @@ snapshots:
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
       idb: 7.1.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/auth-compat@0.5.15(@firebase/app-compat@0.2.45)(@firebase/app-types@0.9.2)(@firebase/app@0.10.15)':
     dependencies:
@@ -3467,7 +3467,7 @@ snapshots:
       '@firebase/auth-types': 0.12.2(@firebase/app-types@0.9.2)(@firebase/util@1.10.1)
       '@firebase/component': 0.6.10
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
       - '@firebase/app-types'
@@ -3486,12 +3486,12 @@ snapshots:
       '@firebase/component': 0.6.10
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/component@0.6.10':
     dependencies:
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/data-connect@0.1.1(@firebase/app@0.10.15)':
     dependencies:
@@ -3500,7 +3500,7 @@ snapshots:
       '@firebase/component': 0.6.10
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/database-compat@2.0.0':
     dependencies:
@@ -3509,7 +3509,7 @@ snapshots:
       '@firebase/database-types': 1.0.6
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/database-types@1.0.6':
     dependencies:
@@ -3524,7 +3524,7 @@ snapshots:
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
       faye-websocket: 0.11.4
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/firestore-compat@0.3.39(@firebase/app-compat@0.2.45)(@firebase/app-types@0.9.2)(@firebase/app@0.10.15)':
     dependencies:
@@ -3533,7 +3533,7 @@ snapshots:
       '@firebase/firestore': 4.7.4(@firebase/app@0.10.15)
       '@firebase/firestore-types': 3.0.2(@firebase/app-types@0.9.2)(@firebase/util@1.10.1)
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
       - '@firebase/app-types'
@@ -3552,7 +3552,7 @@ snapshots:
       '@firebase/webchannel-wrapper': 1.0.2
       '@grpc/grpc-js': 1.9.15
       '@grpc/proto-loader': 0.7.13
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/functions-compat@0.3.15(@firebase/app-compat@0.2.45)(@firebase/app@0.10.15)':
     dependencies:
@@ -3561,7 +3561,7 @@ snapshots:
       '@firebase/functions': 0.11.9(@firebase/app@0.10.15)
       '@firebase/functions-types': 0.6.2
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
 
@@ -3575,7 +3575,7 @@ snapshots:
       '@firebase/component': 0.6.10
       '@firebase/messaging-interop-types': 0.2.2
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/installations-compat@0.2.10(@firebase/app-compat@0.2.45)(@firebase/app-types@0.9.2)(@firebase/app@0.10.15)':
     dependencies:
@@ -3584,7 +3584,7 @@ snapshots:
       '@firebase/installations': 0.6.10(@firebase/app@0.10.15)
       '@firebase/installations-types': 0.5.2(@firebase/app-types@0.9.2)
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
       - '@firebase/app-types'
@@ -3599,11 +3599,11 @@ snapshots:
       '@firebase/component': 0.6.10
       '@firebase/util': 1.10.1
       idb: 7.1.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/logger@0.4.3':
     dependencies:
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/messaging-compat@0.2.13(@firebase/app-compat@0.2.45)(@firebase/app@0.10.15)':
     dependencies:
@@ -3611,7 +3611,7 @@ snapshots:
       '@firebase/component': 0.6.10
       '@firebase/messaging': 0.12.13(@firebase/app@0.10.15)
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
 
@@ -3625,7 +3625,7 @@ snapshots:
       '@firebase/messaging-interop-types': 0.2.2
       '@firebase/util': 1.10.1
       idb: 7.1.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/performance-compat@0.2.10(@firebase/app-compat@0.2.45)(@firebase/app@0.10.15)':
     dependencies:
@@ -3635,7 +3635,7 @@ snapshots:
       '@firebase/performance': 0.6.10(@firebase/app@0.10.15)
       '@firebase/performance-types': 0.2.2
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
 
@@ -3648,7 +3648,7 @@ snapshots:
       '@firebase/installations': 0.6.10(@firebase/app@0.10.15)
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/remote-config-compat@0.2.10(@firebase/app-compat@0.2.45)(@firebase/app@0.10.15)':
     dependencies:
@@ -3658,7 +3658,7 @@ snapshots:
       '@firebase/remote-config': 0.4.10(@firebase/app@0.10.15)
       '@firebase/remote-config-types': 0.3.2
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
 
@@ -3671,7 +3671,7 @@ snapshots:
       '@firebase/installations': 0.6.10(@firebase/app@0.10.15)
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/storage-compat@0.3.13(@firebase/app-compat@0.2.45)(@firebase/app-types@0.9.2)(@firebase/app@0.10.15)':
     dependencies:
@@ -3680,7 +3680,7 @@ snapshots:
       '@firebase/storage': 0.13.3(@firebase/app@0.10.15)
       '@firebase/storage-types': 0.8.2(@firebase/app-types@0.9.2)(@firebase/util@1.10.1)
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - '@firebase/app'
       - '@firebase/app-types'
@@ -3695,11 +3695,11 @@ snapshots:
       '@firebase/app': 0.10.15
       '@firebase/component': 0.6.10
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/util@1.10.1':
     dependencies:
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/vertexai@1.0.0(@firebase/app-types@0.9.2)(@firebase/app@0.10.15)':
     dependencies:
@@ -3709,7 +3709,7 @@ snapshots:
       '@firebase/component': 0.6.10
       '@firebase/logger': 0.4.3
       '@firebase/util': 1.10.1
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@firebase/webchannel-wrapper@1.0.2': {}
 
@@ -3827,11 +3827,11 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  '@kayord/ui@0.12.9(@tanstack/table-core@8.20.5)(lucide-svelte@0.454.0(svelte@5.1.9))(svelte@5.1.9)(sveltekit-superforms@2.20.0(@sveltejs/kit@2.7.3(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(@types/json-schema@7.0.15)(svelte@5.1.9)(typescript@5.6.3))(tailwindcss@3.4.14)(zod@3.23.8)':
+  '@kayord/ui@0.12.10(@tanstack/table-core@8.20.5)(lucide-svelte@0.454.0(svelte@5.1.9))(svelte@5.1.9)(sveltekit-superforms@2.20.0(@sveltejs/kit@2.7.3(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(@types/json-schema@7.0.15)(svelte@5.1.9)(typescript@5.6.3))(tailwindcss@3.4.14)(zod@3.23.8)':
     dependencies:
       '@internationalized/date': 3.5.6
       '@tanstack/table-core': 8.20.5
-      bits-ui: 1.0.0-next.33(svelte@5.1.9)
+      bits-ui: 1.0.0-next.34(svelte@5.1.9)
       clsx: 2.1.1
       embla-carousel-svelte: 8.3.1(svelte@5.1.9)
       formsnap: 2.0.0-next.1(svelte@5.1.9)(sveltekit-superforms@2.20.0(@sveltejs/kit@2.7.3(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(@types/json-schema@7.0.15)(svelte@5.1.9)(typescript@5.6.3))
@@ -4094,7 +4094,7 @@ snapshots:
       fast-memoize: 2.5.2
       immer: 9.0.21
       lodash: 4.17.21
-      tslib: 2.8.0
+      tslib: 2.8.1
       urijs: 1.19.11
 
   '@stoplight/json@3.21.7':
@@ -4132,7 +4132,7 @@ snapshots:
       nimma: 0.2.2
       pony-cause: 1.1.1
       simple-eval: 1.0.0
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - encoding
 
@@ -4141,7 +4141,7 @@ snapshots:
       '@stoplight/json': 3.21.7
       '@stoplight/spectral-core': 1.19.1
       '@types/json-schema': 7.0.15
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - encoding
 
@@ -4157,7 +4157,7 @@ snapshots:
       ajv-errors: 3.0.0(ajv@8.17.1)
       ajv-formats: 2.1.1(ajv@8.17.1)
       lodash: 4.17.21
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - encoding
 
@@ -4166,7 +4166,7 @@ snapshots:
       '@stoplight/json': 3.21.7
       '@stoplight/types': 14.1.1
       '@stoplight/yaml': 4.3.0
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@stoplight/spectral-ref-resolver@1.0.4':
     dependencies:
@@ -4174,7 +4174,7 @@ snapshots:
       '@stoplight/json-ref-resolver': 3.1.6
       '@stoplight/spectral-runtime': 1.1.2
       dependency-graph: 0.11.0
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - encoding
 
@@ -4194,7 +4194,7 @@ snapshots:
       json-schema-traverse: 1.0.0
       leven: 3.1.0
       lodash: 4.17.21
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - encoding
 
@@ -4206,7 +4206,7 @@ snapshots:
       abort-controller: 3.0.0
       lodash: 4.17.21
       node-fetch: 2.7.0
-      tslib: 2.8.0
+      tslib: 2.8.1
     transitivePeerDependencies:
       - encoding
 
@@ -4237,7 +4237,7 @@ snapshots:
       '@stoplight/ordered-object-literal': 1.0.5
       '@stoplight/types': 14.1.1
       '@stoplight/yaml-ast-parser': 0.0.50
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@sveltejs/adapter-static@3.0.6(@sveltejs/kit@2.7.3(@sveltejs/vite-plugin-svelte@4.0.0(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))(svelte@5.1.9)(vite@5.4.10(@types/node@22.8.6)))':
     dependencies:
@@ -4285,7 +4285,7 @@ snapshots:
 
   '@swc/helpers@0.5.13':
     dependencies:
-      tslib: 2.8.0
+      tslib: 2.8.1
 
   '@tanstack/query-core@5.59.16': {}
 
@@ -4567,7 +4567,7 @@ snapshots:
       svelte: 5.1.9
       svelte-toolbelt: 0.4.4(svelte@5.1.9)
 
-  bits-ui@1.0.0-next.33(svelte@5.1.9):
+  bits-ui@1.0.0-next.34(svelte@5.1.9):
     dependencies:
       '@floating-ui/core': 1.6.8
       '@floating-ui/dom': 1.6.12
@@ -6313,7 +6313,7 @@ snapshots:
   tslib@2.4.0:
     optional: true
 
-  tslib@2.8.0: {}
+  tslib@2.8.1: {}
 
   type-check@0.4.0:
     dependencies:

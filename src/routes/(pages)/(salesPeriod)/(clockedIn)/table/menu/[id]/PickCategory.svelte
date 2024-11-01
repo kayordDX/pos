@@ -1,34 +1,29 @@
 <script lang="ts">
-	import type {
-		MenuGetItemsGetMenuItemsParams,
-		MenuGetSectionsGetMenusSectionsParams,
-		MenuGetSectionsResponse,
-	} from "$lib/api";
+	import type { MenuGetSectionsResponse } from "$lib/api";
 	import { Button, Card, Drawer } from "@kayord/ui";
 	import { FilterIcon } from "lucide-svelte";
 	import CategoriesList from "./CategoriesList.svelte";
 	import { cn } from "@kayord/ui/utils";
+	import { menuSection } from "$lib/stores/menuSection.svelte";
 
 	let open = $state(false);
 
 	interface Props {
 		sections: MenuGetSectionsResponse | undefined;
-		sectionParams: MenuGetSectionsGetMenusSectionsParams;
-		itemParams: MenuGetItemsGetMenuItemsParams;
 	}
 
-	let { sections, sectionParams = $bindable(), itemParams = $bindable() }: Props = $props();
+	let { sections }: Props = $props();
 
-	let hasFilter = $derived(itemParams.sectionId > 0);
+	let hasFilter = $derived(menuSection.sectionId > 0);
 
 	const clear = () => {
-		sectionParams.sectionId = 0;
-		itemParams.sectionId = 0;
+		console.log("clearing");
+		menuSection.sectionId = 0;
 	};
 
 	const setSection = (sectionId: number) => {
-		sectionParams.sectionId = sectionId;
-		itemParams.sectionId = sectionId;
+		console.log("setting", sectionId);
+		menuSection.sectionId = sectionId;
 	};
 
 	const checkEmptySections = () => {
@@ -61,28 +56,29 @@
 			<Drawer.Description>Choose the category to filter on</Drawer.Description>
 		</Drawer.Header>
 		<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] px-4">
-			<CategoriesList {sections} bind:itemParams bind:sectionParams>
+			<CategoriesList {sections}>
 				{#each sections?.sections ?? [] as section, i}
 					{@const extraClass =
-						section.menuSectionId == sectionParams.sectionId
+						section.menuSectionId == menuSection.sectionId
 							? "bg-primary text-primary-foreground"
 							: ""}
-
-					<button onclick={() => setSection(section.menuSectionId)} class="w-full">
-						<Card.Root class={cn("p-2 w-full", extraClass)}>
-							{section.name}
-						</Card.Root>
-					</button>
+					<Button
+						onclick={() => setSection(section.menuSectionId)}
+						class={cn("p-2 w-full", extraClass)}
+						variant="outline"
+					>
+						{section.name}
+					</Button>
 				{/each}
+				<Button
+					variant="secondary"
+					class="w-full"
+					onclick={() => {
+						clear();
+						open = false;
+					}}>Close & Clear</Button
+				>
 			</CategoriesList>
 		</div>
-		<Drawer.Footer>
-			<Drawer.Close>
-				<Button variant="outline">Close</Button>
-			</Drawer.Close>
-			<Drawer.Close>
-				<Button variant="secondary" onclick={clear}>Clear</Button>
-			</Drawer.Close>
-		</Drawer.Footer>
 	</Drawer.Content>
 </Drawer.Root>

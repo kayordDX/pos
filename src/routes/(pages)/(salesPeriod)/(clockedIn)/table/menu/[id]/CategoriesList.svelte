@@ -1,41 +1,28 @@
 <script lang="ts">
-	import type {
-		MenuGetItemsGetMenuItemsParams,
-		MenuGetSectionsGetMenusSectionsParams,
-		MenuGetSectionsResponse,
-	} from "$lib/api";
-	import { Breadcrumb, Card } from "@kayord/ui";
+	import type { MenuGetSectionsResponse } from "$lib/api";
+	import { menuSection } from "$lib/stores/menuSection.svelte";
+	import { Breadcrumb } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
 	import type { HTMLAttributes } from "svelte/elements";
 
 	const setSection = (sectionId: number) => {
-		sectionParams.sectionId = sectionId;
-		itemParams.sectionId = sectionId;
+		menuSection.sectionId = sectionId;
 	};
 
 	type ClassNameProp = HTMLAttributes<HTMLElement>;
 
 	interface Props {
 		sections: MenuGetSectionsResponse | undefined;
-		sectionParams: MenuGetSectionsGetMenusSectionsParams;
-		itemParams: MenuGetItemsGetMenuItemsParams;
 		class?: ClassNameProp["class"];
-		children?: import('svelte').Snippet;
+		children?: import("svelte").Snippet;
 	}
 
-	let {
-		sections,
-		sectionParams = $bindable(),
-		itemParams = $bindable(),
-		class: className = undefined,
-		children
-	}: Props = $props();
-	
+	let { sections, class: className = undefined, children }: Props = $props();
 </script>
 
 <div class="w-full flex flex-col gap-2 items-center">
 	{#if sections != null}
-		{#if sectionParams.sectionId > 0}
+		{#if menuSection.sectionId > 0}
 			<Breadcrumb.Root class={cn(className)}>
 				<Breadcrumb.List>
 					<Breadcrumb.Item>
