@@ -73,7 +73,7 @@
 </script>
 
 <div class="flex justify-center flex-col mb-12 mt-2 items-center">
-	<div class="flex flex-col w-full sticky top-0 z-50 bg-background p-1">
+	<div class="flex flex-col w-full sticky top-0 z-10 bg-background p-1">
 		<div class="flex w-full justify-center gap-2 px-2">
 			<div class="relative flex items-center max-w-2xl w-full">
 				{#if $itemsQuery.isFetching}
