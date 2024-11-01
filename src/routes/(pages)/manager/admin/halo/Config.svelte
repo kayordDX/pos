@@ -76,7 +76,7 @@
 </script>
 
 <Card.Root class="p-4 data-[enabled=true]:border-primary" data-enabled={config.isEnabled}>
-	<div class="flex justify-between items-center gap-2">
+	<div class="flex flex-col sm:flex-row justify-between items-center gap-2">
 		<div
 			class={`h-14 w-14 rounded-full flex items-center justify-center ${config.isEnabled ? "bg-primary" : "bg-secondary"}`}
 		>
@@ -97,14 +97,20 @@
 			</div>
 		</div>
 
-		<div class="flex flex-col gap-2">
+		<div class="flex flex-col gap-2 w-full sm:w-fit">
 			{#if !config.isEnabled}
-				<Button size="sm" variant="destructive" onclick={deleteConfig} disabled={isDeleting}>
+				<Button
+					size="sm"
+					variant="destructive"
+					class="w-full"
+					onclick={deleteConfig}
+					disabled={isDeleting}
+				>
 					<Trash2Icon />
 					Delete
 				</Button>
 			{/if}
-			<Button size="sm" disabled={isActivating} onclick={setActive}>
+			<Button size="sm" disabled={isActivating} class="w-full" onclick={setActive}>
 				{#if config.isEnabled}
 					<XIcon />
 				{:else}
@@ -112,7 +118,7 @@
 				{/if}
 				{config.isEnabled ? "Deactivate" : "Activate"}
 			</Button>
-			<Button size="sm" variant="outline" onclick={testConfig} disabled={isTesting}>
+			<Button size="sm" variant="outline" class="w-full" onclick={testConfig} disabled={isTesting}>
 				<TestTubeDiagonalIcon />
 				Test
 			</Button>
