@@ -125,9 +125,9 @@
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
-		const fv = table.getColumn("name")?.getFilterValue() as undefined | string;
+		const fv = table.getColumn("email")?.getFilterValue() as undefined | string;
 		if (fv) {
-			qb.containsCaseInsensitive("name", fv);
+			qb.containsCaseInsensitive("email", fv);
 		}
 		const rv = table.getColumn("roles")?.getFilterValue() as undefined | string;
 		if (rv) {
@@ -136,13 +136,13 @@
 		filters = qb.build();
 	});
 
-	let searchName = $state("");
-	const debounced = new Debounced(() => searchName, 500);
+	let searchEmail = $state("");
+	const debounced = new Debounced(() => searchEmail, 500);
 
 	watch(
 		() => debounced.current,
 		() => {
-			table.getColumn("name")?.setFilterValue(debounced.current);
+			table.getColumn("email")?.setFilterValue(debounced.current);
 		}
 	);
 </script>
@@ -150,12 +150,12 @@
 {#snippet header()}
 	<div class="flex gap-2">
 		<Input
-			bind:value={searchName}
-			placeholder="Search Name..."
+			bind:value={searchEmail}
+			placeholder="Search Email..."
 			class="h-8 w-[150px] lg:w-[250px]"
 		/>
 		<Filter column={nameCol} title="Role" options={roles} />
-		<FilterReset {table} cb={() => (searchName = "")} />
+		<FilterReset {table} cb={() => (searchEmail = "")} />
 	</div>
 {/snippet}
 
