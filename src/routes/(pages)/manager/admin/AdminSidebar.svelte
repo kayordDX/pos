@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { page } from "$app/stores";
 	import { Sidebar } from "@kayord/ui";
 	const sidebar = Sidebar.useSidebar();
 
@@ -10,6 +11,7 @@
 		UsersIcon,
 		NfcIcon,
 	} from "lucide-svelte";
+
 	const menuItems = [
 		{
 			title: "Admin",
@@ -38,7 +40,14 @@
 		},
 	];
 
-	let activeItem = $state(menuItems[0]);
+	let activeItem = $derived.by(() => {
+		for (const item of menuItems) {
+			if ($page.route.id?.endsWith(item.href)) {
+				return item;
+			}
+		}
+		return menuItems[0];
+	});
 </script>
 
 <Sidebar.Root>
@@ -64,8 +73,6 @@
 								hidden: false,
 							}}
 							onclick={() => {
-								console.log("clicked", item.title, open);
-								activeItem = item;
 								goto(item.href);
 								if (sidebar.isMobile) {
 									sidebar.setOpenMobile(false);
