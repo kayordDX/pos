@@ -129,9 +129,15 @@
 		if (fv) {
 			qb.containsCaseInsensitive("email", fv);
 		}
-		const rv = table.getColumn("roles")?.getFilterValue() as undefined | string;
+		const rv = table.getColumn("roles")?.getFilterValue() as undefined | Array<string>;
 		if (rv) {
-			qb.and().contains("roles", rv);
+			if (fv) {
+				qb.and();
+			}
+			for (let i = 0; i < rv.length; i++) {
+				if (i > 0) qb.and();
+				qb.contains("roles", rv[i] ?? "");
+			}
 		}
 		filters = qb.build();
 	});
