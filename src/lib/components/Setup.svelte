@@ -70,6 +70,15 @@
 		await getServiceWorker();
 	});
 
+	const testNotification = () => {
+		navigator.serviceWorker.ready.then((registration) => {
+			registration.showNotification("Test Notification", {
+				body: "The very interesting detail that the test entails",
+				icon: "/logo.svg",
+			});
+		});
+	};
+
 	const playSound = () => {
 		const audio = new Audio("/sounds/notification.mp3");
 		audio.play();
@@ -148,6 +157,7 @@
 					<Button onclick={requestNotificationPermission}>Request Access</Button>
 				{/if}
 				Notification Access
+				<Button onclick={testNotification}>Test Notification</Button>
 			</li>
 
 			<li class="flex gap-2 items-center">

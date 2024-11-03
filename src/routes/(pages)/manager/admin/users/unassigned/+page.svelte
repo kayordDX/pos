@@ -1,17 +1,22 @@
 <script lang="ts">
 	import { createUserUnassignedUsers, type UserUserResponse } from "$lib/api";
-	import { DataTable, renderComponent, createSvelteTable } from "@kayord/ui";
+	import { DataTable, renderComponent, createSvelteTable, Input } from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
 		type Updater,
 		type PaginationState,
+		type ColumnFiltersState,
 		getPaginationRowModel,
+		getFilteredRowModel,
 	} from "@tanstack/table-core";
 	import Current from "../Current.svelte";
 	import Avatar from "../Avatar.svelte";
 	import AddRole from "../AddRole.svelte";
 	import RemoveRole from "../RemoveRole.svelte";
+	import FilterReset from "../FilterReset.svelte";
+	import { Debounced, watch } from "runed";
+	import QueryBuilder from "fluent-querykit";
 
 	const columns: ColumnDef<UserUserResponse>[] = [
 		{
@@ -66,12 +71,15 @@
 		} else pagination = updater;
 	};
 
+	let columnFilters = $state<ColumnFiltersState>([]);
+	let filters = $state("");
+
 	let query = createUserUnassignedUsers();
 	let data = $state<UserUserResponse[]>([]);
 	let rowCount = $state($query.data?.totalCount ?? 0);
 
 	$effect(() => {
-		query = createUserUnassignedUsers({ page: pagination.pageIndex + 1, pageSize: 10 });
+		query = createUserUnassignedUsers({ page: pagination.pageIndex + 1, pageSize: 10, filters });
 		data = $query.data?.items ?? [];
 		rowCount = $query.data?.totalCount ?? 0;
 	});
@@ -82,11 +90,23 @@
 			return data;
 		},
 		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		onColumnFiltersChange: (updater) => {
+			if (typeof updater === "function") {
+				columnFilters = updater(columnFilters);
+			} else {
+				columnFilters = updater;
+			}
+		},
 		manualPagination: true,
+		manualFiltering: true,
 		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			get pagination() {
 				return pagination;
+			},
+			get columnFilters() {
+				return columnFilters;
 			},
 		},
 		get rowCount() {
@@ -95,13 +115,48 @@
 		onPaginationChange: setPagination,
 		enableRowSelection: false,
 	});
+
+	let searchName = $state("");
+	const debounced = new Debounced(() => searchName, 500);
+
+	watch(
+		() => debounced.current,
+		() => {
+			table.getColumn("name")?.setFilterValue(debounced.current);
+		}
+	);
+
+	$effect(() => {
+		const qb = new QueryBuilder(false, false);
+		const fv = table.getColumn("name")?.getFilterValue() as undefined | string;
+		if (fv) {
+			qb.containsCaseInsensitive("name", fv);
+		}
+		const rv = table.getColumn("roles")?.getFilterValue() as undefined | string;
+		if (rv) {
+			qb.and().contains("roles", rv);
+		}
+		filters = qb.build();
+	});
 </script>
+
+{#snippet header()}
+	<div class="flex gap-2">
+		<Input
+			bind:value={searchName}
+			placeholder="Search Name..."
+			class="h-8 w-[150px] lg:w-[250px]"
+		/>
+		<FilterReset {table} cb={() => (searchName = "")} />
+	</div>
+{/snippet}
 
 <div class="m-4">
 	<h2>Unassigned Users</h2>
 	<DataTable
 		{table}
 		{columns}
+		{header}
 		isLoading={$query.isPending}
 		noDataMessage="No unassigned users for outlet"
 	/>
