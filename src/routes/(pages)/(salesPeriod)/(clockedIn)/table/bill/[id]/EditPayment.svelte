@@ -2,7 +2,7 @@
 	import { createOutletGetPaymentType, createTableBookingPaymentEdit } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
-	import { Button, Dialog, Form, Select, toast, Input } from "@kayord/ui";
+	import { Button, Drawer, Form, Select, toast, Input } from "@kayord/ui";
 	import { PencilIcon } from "lucide-svelte";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
@@ -62,18 +62,18 @@
 	);
 </script>
 
-<Dialog.Root bind:open>
-	<Dialog.Trigger>
+<Drawer.Root bind:open>
+	<Drawer.Trigger>
 		<Button class="size-6" variant="secondary" size="icon">
 			<PencilIcon class="size-3 text-secondary-foreground" />
 		</Button>
-	</Dialog.Trigger>
-	<Dialog.Content class="max-h-[98%] overflow-auto">
+	</Drawer.Trigger>
+	<Drawer.Content>
 		<form method="POST" use:enhance>
-			<Dialog.Header>
-				<Dialog.Title>Change Payment Type</Dialog.Title>
-				<Dialog.Description>This will change payment to different type</Dialog.Description>
-			</Dialog.Header>
+			<Drawer.Header>
+				<Drawer.Title>Change Payment Type</Drawer.Title>
+				<Drawer.Description>This will change payment to different type</Drawer.Description>
+			</Drawer.Header>
 			<div class="m-4">
 				<Form.Field {form} name="paymentTypeId">
 					<Form.Control>
@@ -121,10 +121,10 @@
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
-			<Dialog.Footer class="sm:flex-col gap-2">
+			<Drawer.Footer class="sm:flex-col gap-2">
 				<Form.Button type="submit">Update</Form.Button>
-				<Dialog.Close>Cancel</Dialog.Close>
-			</Dialog.Footer>
+				<Drawer.Close>Cancel</Drawer.Close>
+			</Drawer.Footer>
 		</form>
-	</Dialog.Content>
-</Dialog.Root>
+	</Drawer.Content>
+</Drawer.Root>

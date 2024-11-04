@@ -2,7 +2,7 @@
 	import { page } from "$app/stores";
 	import { createCashUpUserCreate, createCashUpUserItemType } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Alert, Button, Dialog, Form, Input, Select } from "@kayord/ui";
+	import { Alert, Button, Drawer, Form, Input, Select } from "@kayord/ui";
 	import { MessageCircleWarningIcon, PlusIcon } from "lucide-svelte";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
@@ -56,18 +56,18 @@
 	);
 </script>
 
-<Dialog.Root bind:open>
-	<Dialog.Trigger>
+<Drawer.Root bind:open>
+	<Drawer.Trigger>
 		<Button class="p-86 p-4" variant="secondary">
 			<PlusIcon class="size-4 mr-2 hidden sm:block" /> Add Cash Up Item
 		</Button>
-	</Dialog.Trigger>
-	<Dialog.Content class="max-h-[98%] overflow-auto">
+	</Drawer.Trigger>
+	<Drawer.Content class="">
 		<form method="POST" use:enhance>
-			<Dialog.Header>
-				<Dialog.Title>Add Cash Up Item</Dialog.Title>
-				<Dialog.Description>This will add additional items to user cash up.</Dialog.Description>
-			</Dialog.Header>
+			<Drawer.Header>
+				<Drawer.Title>Add Cash Up Item</Drawer.Title>
+				<Drawer.Description>This will add additional items to user cash up.</Drawer.Description>
+			</Drawer.Header>
 			<div class="m-4">
 				<Form.Field {form} name="cashUpUserItemTypeId">
 					<Form.Control>
@@ -119,10 +119,10 @@
 					</Alert.Description>
 				</Alert.Root>
 			</div>
-			<Dialog.Footer class="sm:flex-col gap-2">
+			<Drawer.Footer class="sm:flex-col gap-2">
 				<Form.Button type="submit">Add</Form.Button>
-				<Dialog.Close>Cancel</Dialog.Close>
-			</Dialog.Footer>
+				<Drawer.Close>Cancel</Drawer.Close>
+			</Drawer.Footer>
 		</form>
-	</Dialog.Content>
-</Dialog.Root>
+	</Drawer.Content>
+</Drawer.Root>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Dialog, Select, Form } from "@kayord/ui";
+	import { Button, Drawer, Select, Form } from "@kayord/ui";
 	import { PlusIcon } from "lucide-svelte";
 	import { createUserAddUserOutletRole, createRoleGetAll } from "$lib/api";
 	import { z } from "zod";
@@ -49,19 +49,19 @@
 	);
 </script>
 
-<Dialog.Root bind:open>
-	<Dialog.Trigger>
+<Drawer.Root bind:open>
+	<Drawer.Trigger>
 		<Button disabled={false} size="sm">
 			Add
 			<PlusIcon class=" ml-2 size-3" />
 		</Button>
-	</Dialog.Trigger>
-	<Dialog.Content>
+	</Drawer.Trigger>
+	<Drawer.Content>
 		<form method="POST" use:enhance>
-			<Dialog.Header>
-				<Dialog.Title>Add new Role</Dialog.Title>
-				<Dialog.Description>Choose role</Dialog.Description>
-			</Dialog.Header>
+			<Drawer.Header>
+				<Drawer.Title>Add new Role</Drawer.Title>
+				<Drawer.Description>Choose role</Drawer.Description>
+			</Drawer.Header>
 			<div class="w-full p-4">
 				<Form.Field {form} name="roleId">
 					<Form.Control>
@@ -86,13 +86,13 @@
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
-			<Dialog.Footer>
+			<Drawer.Footer>
 				{#if $mutation.isError}
 					<Error message={getError($mutation.error).message} />
 				{/if}
 				<Form.Button type="submit" disabled={$mutation.isPending}>Add Role</Form.Button>
-				<Dialog.Close>Cancel</Dialog.Close>
-			</Dialog.Footer>
+				<Drawer.Close>Cancel</Drawer.Close>
+			</Drawer.Footer>
 		</form>
-	</Dialog.Content>
-</Dialog.Root>
+	</Drawer.Content>
+</Drawer.Root>
