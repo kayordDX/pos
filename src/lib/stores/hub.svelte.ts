@@ -93,4 +93,16 @@ const createHub = async () => {
 	};
 };
 
-export const hub = await createHub();
+// export const hub = await createHub();
+
+const on = (methodName: string, method: (...args: any[]) => void) => {};
+
+const off = (methodName: string, method: (...args: any[]) => void) => {};
+
+export const hub = {
+	get state() {
+		return HubConnectionState.Disconnected;
+	},
+	on,
+	off,
+};
