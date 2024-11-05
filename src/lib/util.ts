@@ -17,27 +17,13 @@ export const getInitials = (string: string) => {
 	return initials;
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export function debounce<T extends (...args: any[]) => any>(
-	callback: T,
-	wait: number,
-	immediate?: boolean
-): (...args: Parameters<T>) => void {
-	let timeout: NodeJS.Timeout | undefined;
-
-	return function (this: ThisParameterType<T>, ...args: Parameters<T>): void {
-		const later = () => {
-			timeout = undefined;
-			if (!immediate) callback.apply(this, args);
-		};
-
-		const callNow = immediate && timeout === undefined;
-		clearTimeout(timeout);
-		timeout = setTimeout(later, wait);
-
-		if (callNow) callback.apply(this, args);
+export const debounce = (fn: Function, ms = 300) => {
+	let timeoutId: ReturnType<typeof setTimeout>;
+	return function (this: any, ...args: any[]) {
+		clearTimeout(timeoutId);
+		timeoutId = setTimeout(() => fn.apply(this, args), ms);
 	};
-}
+};
 
 export const requestNotificationPermission = async () => {
 	const permission = await Notification.requestPermission();

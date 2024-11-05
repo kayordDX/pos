@@ -16,7 +16,8 @@
 	import Filter from "./Filter.svelte";
 	import { QueryBuilder } from "fluent-querykit";
 	import FilterReset from "./FilterReset.svelte";
-	import { Debounced, watch } from "runed";
+	import FilterBar from "./FilterBar.svelte";
+	import { debounce } from "$lib/util";
 
 	const columns: ColumnDef<UserUserResponse>[] = [
 		{
@@ -143,30 +144,25 @@
 		filters = qb.build();
 	});
 
-	let searchEmail = $state("");
-	const debounced = new Debounced(() => searchEmail, 500);
-
-	watch(
-		() => debounced.current,
-		() => {
-			table.getColumn("email")?.setFilterValue(debounced.current);
-		}
-	);
+	const col = $derived(table.getColumn("email"));
+	const debouncedCb = debounce((value: string) => col?.setFilterValue(value), 300);
 </script>
 
 {#snippet header()}
 	<div class="flex gap-2">
 		<Input
-			bind:value={searchEmail}
+			value={col?.getFilterValue()}
+			onchange={(e) => debouncedCb(e.currentTarget.value)}
+			oninput={(e) => debouncedCb(e.currentTarget.value)}
 			placeholder="Search Email..."
 			class="h-8 w-[150px] lg:w-[250px]"
 		/>
 		<Filter column={nameCol} title="Role" options={roles} />
-		<FilterReset {table} cb={() => (searchEmail = "")} />
+		<FilterReset {table} />
 	</div>
 {/snippet}
 
-<div class="m-4">
+<div class="m-2">
 	<h2>Users</h2>
 	<DataTable
 		{table}

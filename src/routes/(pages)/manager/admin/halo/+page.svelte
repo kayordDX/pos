@@ -9,7 +9,7 @@
 	const query = createPayPayConfigGet(status.value.outletId);
 </script>
 
-<Card.Root class="m-4">
+<Card.Root class="m-2">
 	<Card.Header>
 		<Card.Title>Halo Config</Card.Title>
 		<Card.Description>All available halo configuration for outlet</Card.Description>

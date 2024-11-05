@@ -151,7 +151,7 @@
 	</div>
 {/snippet}
 
-<div class="m-4">
+<div class="m-2">
 	<h2>Unassigned Users</h2>
 	<DataTable
 		{table}
