@@ -14,7 +14,7 @@
 
 	const menuItems = [
 		{
-			title: "Admin",
+			title: "Printers",
 			href: "/manager/admin",
 			icon: PrinterIcon,
 		},
