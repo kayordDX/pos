@@ -115,13 +115,14 @@
 	const nameCol = $derived(table.getColumn("roles")!);
 
 	const rolesQuery = createRoleGetAll();
-	const roles =
+	const roles = $derived(
 		$rolesQuery.data?.map((role) => {
 			return {
 				label: role.name,
 				value: role.name,
 			};
-		}) ?? [];
+		}) ?? []
+	);
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
