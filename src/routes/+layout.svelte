@@ -24,10 +24,26 @@
 	};
 
 	$effect(() => {
-		hub.on("ReceiveMessage", receiveMessage);
+		hub.init();
 		return () => {
-			hub.off("ReceiveMessage", receiveMessage);
+			hub.disconnect();
 		};
+	});
+
+	$effect(() => {
+		if (hub.state == "Connected") {
+			if (status.value.outletId > 0) {
+				hub.connection?.invoke("JoinGroup", `outlet:${status.value.outletId}`);
+				return () => {
+					hub.connection?.invoke("LeaveGroup", `outlet:${status.value.outletId}`);
+				};
+			}
+
+			hub.on("ReceiveMessage", receiveMessage);
+			return () => {
+				hub.off("ReceiveMessage", receiveMessage);
+			};
+		}
 	});
 
 	const queryClient = new QueryClient({

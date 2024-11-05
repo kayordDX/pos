@@ -27,9 +27,11 @@
 	};
 
 	$effect(() => {
-		hub.on("PlaySound", playSound);
-		return () => {
-			hub.off("PlaySound", playSound);
-		};
+		if (hub.state == "Connected") {
+			hub.on("PlaySound", playSound);
+			return () => {
+				hub.off("PlaySound", playSound);
+			};
+		}
 	});
 </script>
