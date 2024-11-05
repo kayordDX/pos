@@ -76,6 +76,7 @@ export const logout = async () => {
 const createSession = () => {
 	let isLoadingSession = $state(true);
 	let user = $state<User | null>(null);
+	let idToken = $state<string>();
 	// let unsubscribe: () => void;
 
 	if (!auth || !globalThis.window) {
@@ -87,6 +88,7 @@ const createSession = () => {
 		const unsubscribe = onIdTokenChanged(auth, (u) => {
 			isLoadingSession = false;
 			user = u;
+			u?.getIdToken().then((t) => (idToken = t));
 		});
 
 		return () => {
@@ -103,6 +105,9 @@ const createSession = () => {
 		},
 		get isLoadingSession() {
 			return isLoadingSession;
+		},
+		get idToken() {
+			return idToken;
 		},
 	};
 };
