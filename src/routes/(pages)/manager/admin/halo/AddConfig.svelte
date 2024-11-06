@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createPayPayConfigCreate } from "$lib/api";
-	import { Button, Drawer, Form, Input, toast } from "@kayord/ui";
+	import { Button, Dialog, Form, Input, toast } from "@kayord/ui";
 	import { PlusIcon } from "lucide-svelte";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
@@ -54,18 +54,18 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<Drawer.Root bind:open>
-	<Drawer.Trigger class="w-full">
+<Dialog.Root bind:open>
+	<Dialog.Trigger class="w-full">
 		<Button class="w-full">
 			<PlusIcon class="mr-2 size-4" />Add Config
 		</Button>
-	</Drawer.Trigger>
-	<Drawer.Content>
+	</Dialog.Trigger>
+	<Dialog.Content>
 		<form method="POST" use:enhance>
-			<Drawer.Header>
-				<Drawer.Title>Create new Halo Config</Drawer.Title>
-				<Drawer.Description>Complete form to add new halo config</Drawer.Description>
-			</Drawer.Header>
+			<Dialog.Header>
+				<Dialog.Title>Create new Halo Config</Dialog.Title>
+				<Dialog.Description>Complete form to add new halo config</Dialog.Description>
+			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
 				<Form.Field {form} name="merchantId">
 					<Form.Control>
@@ -92,10 +92,10 @@
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
-			<Drawer.Footer>
+			<Dialog.Footer>
 				<Button type="submit">Submit</Button>
-				<Drawer.Close>Cancel</Drawer.Close>
-			</Drawer.Footer>
+				<Dialog.Close>Cancel</Dialog.Close>
+			</Dialog.Footer>
 		</form>
-	</Drawer.Content>
-</Drawer.Root>
+	</Dialog.Content>
+</Dialog.Root>

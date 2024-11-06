@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Badge, Button, Card, Drawer, Form, Input, Label, Loader } from "@kayord/ui";
+	import { Badge, Button, Card, Dialog, Form, Input, Label, Loader } from "@kayord/ui";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
@@ -76,14 +76,15 @@
 		</div>
 	{/if}
 
-	<Drawer.Root bind:open={dialogOpen}>
-		<Drawer.Trigger />
-		<Drawer.Content class="fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full">
+	<Dialog.Root bind:open={dialogOpen}>
+		<Dialog.Trigger />
+		<!-- fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full -->
+		<Dialog.Content class="max-h-[98%] overflow-scroll">
 			<form use:enhance method="POST">
-				<Drawer.Header>
-					<Drawer.Title>Book Table</Drawer.Title>
-					<Drawer.Description>This will book the table and assign it to you</Drawer.Description>
-				</Drawer.Header>
+				<Dialog.Header>
+					<Dialog.Title>Book Table</Dialog.Title>
+					<Dialog.Description>This will book the table and assign it to you</Dialog.Description>
+				</Dialog.Header>
 				<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
 					{#if $mutate.isPending}
 						<Loader />
@@ -98,10 +99,10 @@
 					</Field>
 				</div>
 
-				<Drawer.Footer>
+				<Dialog.Footer>
 					<Button type="submit">Make Booking</Button>
-				</Drawer.Footer>
+				</Dialog.Footer>
 			</form>
-		</Drawer.Content>
-	</Drawer.Root>
+		</Dialog.Content>
+	</Dialog.Root>
 </div>
