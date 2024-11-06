@@ -9,6 +9,7 @@
 	} from "$lib/api";
 	import { CopyIcon, TrashIcon } from "lucide-svelte";
 	import ItemCount from "./ItemCount.svelte";
+	import type { Snippet } from "svelte";
 
 	interface Props {
 		id: number;
@@ -18,7 +19,7 @@
 		options: Array<DTOOrderItemOptionDTO>;
 		extras: Array<DTOOrderItemExtraDTO>;
 		refetch: () => any;
-		children?: import("svelte").Snippet;
+		children?: Snippet;
 	}
 
 	let {

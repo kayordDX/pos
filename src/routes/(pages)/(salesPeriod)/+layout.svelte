@@ -1,7 +1,8 @@
 <script lang="ts">
 	import SalesPeriodCheck from "$lib/components/Check/SalesPeriodCheck.svelte";
+	import type { Snippet } from "svelte";
 	interface Props {
-		children?: import('svelte').Snippet;
+		children?: Snippet;
 	}
 
 	let { children }: Props = $props();

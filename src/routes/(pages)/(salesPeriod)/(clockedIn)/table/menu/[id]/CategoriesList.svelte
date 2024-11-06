@@ -3,6 +3,7 @@
 	import { menuSection } from "$lib/stores/menuSection.svelte";
 	import { Breadcrumb } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
+	import type { Snippet } from "svelte";
 	import type { HTMLAttributes } from "svelte/elements";
 
 	const setSection = (sectionId: number) => {
@@ -14,7 +15,7 @@
 	interface Props {
 		sections: MenuGetSectionsResponse | undefined;
 		class?: ClassNameProp["class"];
-		children?: import("svelte").Snippet;
+		children?: Snippet;
 	}
 
 	let { sections, class: className = undefined, children }: Props = $props();

@@ -2,8 +2,9 @@
 	import { session } from "$lib/firebase.svelte";
 	import { Loader } from "@kayord/ui";
 	import Login from "../Login.svelte";
+	import type { Snippet } from "svelte";
 	interface Props {
-		children?: import("svelte").Snippet;
+		children?: Snippet;
 	}
 
 	let { children }: Props = $props();

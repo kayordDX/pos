@@ -2,8 +2,9 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { Loader } from "@kayord/ui";
 	import Setup from "../Setup.svelte";
+	import type { Snippet } from "svelte";
 	interface Props {
-		children?: import("svelte").Snippet;
+		children?: Snippet;
 	}
 
 	let { children }: Props = $props();

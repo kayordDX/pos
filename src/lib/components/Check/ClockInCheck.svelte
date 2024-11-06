@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { status } from "$lib/stores/status.svelte";
+	import type { Snippet } from "svelte";
 	import Clocked from "../ClockIn.svelte";
 	interface Props {
-		children?: import("svelte").Snippet;
+		children?: Snippet;
 	}
 
 	let { children }: Props = $props();

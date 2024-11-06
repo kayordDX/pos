@@ -8,8 +8,8 @@
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"lint": "prettier --plugin-search-dir . --check . && eslint .",
-		"format": "prettier --plugin-search-dir . --write .",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
 		"api": "curl http://localhost:5117/swagger/v1/swagger.json > swagger.json && orval && ./orval.bash && npx openapi-typescript http://localhost:5117/swagger/v1/swagger.json -o ./src/lib/api/generated/client/schema.d.ts"
 	},
 	"devDependencies": {
