@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { page } from "$app/stores";
-	import type { PrinterPrinterStatus } from "$lib/api";
+	import type { DTOPrinterDTO } from "$lib/api";
 	import { createBillPrintBill } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Badge, Button, Card, Switch, Table, toast } from "@kayord/ui";
-	import { PrinterIcon } from "lucide-svelte";
+	import { Button, Card, Switch, Table, toast, Avatar } from "@kayord/ui";
+	import { PrinterIcon, CheckIcon, XIcon } from "lucide-svelte";
 
 	interface Props {
-		printer: PrinterPrinterStatus;
+		printer: DTOPrinterDTO;
 		canPrint: boolean;
 		refetch: () => void;
 	}
@@ -23,133 +22,71 @@
 
 	const printBill = async () => {
 		try {
-			await $mutation.mutateAsync({
-				data: {
-					outletId: printer.outletId,
-					printerId: printer.printerId,
-					tableBookingId: Number($page.params.id),
-					lineCharacters: printer.lineCharacters,
-				},
-			});
+			// TODO: Fix print bill.
+			// await $mutation.mutateAsync({
+			// 	data: {
+			// 		outletId: printer.outletId,
+			// 		printerId: printer.printerId,
+			// 		tableBookingId: Number($page.params.id),
+			// 		lineCharacters: printer.lineCharacters,
+			// 	},
+			// });
 			toast.info("Printing Bill");
 		} catch (err) {
 			toast.error(getError(err).message);
 		}
 	};
-
-	const isOnline = $derived(printer.printerStatusEventArgs?.isPrinterOnline ?? false);
 </script>
 
 <Card.Root>
 	<Card.Header class="flex flex-row items-start bg-muted/50 p-4">
 		<div class="grid gap-0.5 w-full">
-			<Card.Title>{printer.name}</Card.Title>
-			<Card.Description>
-				{#if printer.isOutdated}
-					<Badge variant="destructive">Last update was longer than 10 minutes ago</Badge>
-				{:else}
-					<Badge onclick={refetch}>Updated: {printer.dateUpdatedFormatted}</Badge>
-				{/if}
-			</Card.Description>
+			<div class="flex items-center gap-2">
+				<Avatar.Root>
+					<Avatar.Fallback>
+						{#if printer.isEnabled}
+							<CheckIcon />
+						{:else}
+							<XIcon />
+						{/if}
+					</Avatar.Fallback>
+				</Avatar.Root>
+				<Card.Title>{printer.printerName}</Card.Title>
+			</div>
 		</div>
 		<div><Switch bind:checked={showDetail} /></div>
 	</Card.Header>
-	<Card.Content>
-		<div class="rounded-md border mt-4">
-			<Table.Root>
-				<Table.Body>
-					<Table.Row>
-						<Table.Cell>Online</Table.Cell>
-						<Table.Cell class="text-right">
-							{boolToText(isOnline)}
-						</Table.Cell>
-					</Table.Row>
-					<Table.Row>
-						<Table.Cell>Errors</Table.Cell>
-						<Table.Cell class="text-right">
-							{boolToText(printer.printerStatusEventArgs?.isInErrorState)}
-						</Table.Cell>
-					</Table.Row>
-					{#if showDetail}
+	{#if showDetail}
+		<Card.Content>
+			<div class="rounded-md mt-4">
+				<Table.Root>
+					<Table.Body>
 						<Table.Row>
-							<Table.Cell>Printer Id</Table.Cell>
-							<Table.Cell class="text-right">{printer.printerId}</Table.Cell>
-						</Table.Row>
-
-						<Table.Row>
-							<Table.Cell>Cover Open</Table.Cell>
+							<Table.Cell>IP Address</Table.Cell>
 							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.isCoverOpen)}
+								{printer.ipAddress}
 							</Table.Cell>
 						</Table.Row>
 						<Table.Row>
-							<Table.Cell>Paper Low</Table.Cell>
+							<Table.Cell>Port</Table.Cell>
 							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.isPaperLow)}
+								{printer.port}
 							</Table.Cell>
 						</Table.Row>
 						<Table.Row>
-							<Table.Cell>Paper Out</Table.Cell>
+							<Table.Cell>Lines Characters</Table.Cell>
 							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.isPaperOut)}
+								{printer.lineCharacters}
 							</Table.Cell>
 						</Table.Row>
-						<Table.Row>
-							<Table.Cell>Paper Currently Feeding</Table.Cell>
-							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.isPaperCurrentlyFeeding)}
-							</Table.Cell>
-						</Table.Row>
-						<Table.Row>
-							<Table.Cell>Paper Feed Button Pushed</Table.Cell>
-							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.isPaperFeedButtonPushed)}
-							</Table.Cell>
-						</Table.Row>
-						<Table.Row>
-							<Table.Cell>Waiting For Online Recovery</Table.Cell>
-							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.isWaitingForOnlineRecovery)}
-							</Table.Cell>
-						</Table.Row>
-						<Table.Row>
-							<Table.Cell>Cash Drawer Open</Table.Cell>
-							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.isCashDrawerOpen)}
-							</Table.Cell>
-						</Table.Row>
-						<Table.Row>
-							<Table.Cell>Did Recoverable Error Occur</Table.Cell>
-							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.didRecoverableErrorOccur)}
-							</Table.Cell>
-						</Table.Row>
-						<Table.Row>
-							<Table.Cell>Did Unrecoverable Error Occur</Table.Cell>
-							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.didUnrecoverableErrorOccur)}
-							</Table.Cell>
-						</Table.Row>
-						<Table.Row>
-							<Table.Cell>Did Auto Cutter Error Occur</Table.Cell>
-							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.didAutocutterErrorOccur)}
-							</Table.Cell>
-						</Table.Row>
-						<Table.Row>
-							<Table.Cell>Did Recoverable Non Auto Cutter Error Occur</Table.Cell>
-							<Table.Cell class="text-right">
-								{boolToText(printer.printerStatusEventArgs?.didRecoverableNonAutocutterErrorOccur)}
-							</Table.Cell>
-						</Table.Row>
-					{/if}
-				</Table.Body>
-			</Table.Root>
-		</div>
-	</Card.Content>
+					</Table.Body>
+				</Table.Root>
+			</div>
+		</Card.Content>
+	{/if}
 	{#if canPrint}
 		<Card.Footer>
-			<Button class="w-full" onclick={printBill} disabled={!isOnline || printer.isOutdated}>
+			<Button class="w-full" onclick={printBill}>
 				<PrinterIcon class="size-4 mr-2" />
 				Print
 			</Button>

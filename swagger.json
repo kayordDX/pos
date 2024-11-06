@@ -2571,7 +2571,7 @@
         ]
       }
     },
-    "/printer/list/{outletId}": {
+    "/printer/{outletId}": {
       "get": {
         "tags": [
           "Printer"
@@ -2596,8 +2596,72 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/PrinterPrinterStatus"
+                    "$ref": "#/components/schemas/DTOPrinterDTO"
                   }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/printer": {
+      "put": {
+        "tags": [
+          "Printer"
+        ],
+        "operationId": "PrinterEdit",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrinterEditRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOPrinterDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
                 }
               }
             }
@@ -2612,7 +2676,121 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Printer"
+        ],
+        "operationId": "PrinterCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrinterCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOPrinterDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/printer/{id}": {
+      "delete": {
+        "tags": [
+          "Printer"
+        ],
+        "operationId": "PrinterDelete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/pay/status/{reference}": {
@@ -7099,30 +7277,64 @@
         }
       },
       "EntitiesUser": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntitiesAuditableEntity"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "userId",
+              "email",
+              "image",
+              "name",
+              "isActive"
+            ],
+            "properties": {
+              "userId": {
+                "type": "string"
+              },
+              "email": {
+                "type": "string"
+              },
+              "image": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "isActive": {
+                "type": "boolean"
+              }
+            }
+          }
+        ]
+      },
+      "EntitiesAuditableEntity": {
         "type": "object",
+        "x-abstract": true,
         "additionalProperties": false,
         "required": [
-          "userId",
-          "email",
-          "image",
-          "name",
-          "isActive"
+          "created"
         ],
         "properties": {
-          "userId": {
-            "type": "string"
+          "created": {
+            "type": "string",
+            "format": "date-time"
           },
-          "email": {
-            "type": "string"
+          "createdBy": {
+            "type": "string",
+            "nullable": true
           },
-          "image": {
-            "type": "string"
+          "lastModified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           },
-          "name": {
-            "type": "string"
-          },
-          "isActive": {
-            "type": "boolean"
+          "lastModifiedBy": {
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -9103,49 +9315,115 @@
           }
         }
       },
-      "PrinterPrinterStatus": {
+      "DTOPrinterDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "dateUpdated",
-          "isOutdated",
-          "dateUpdatedFormatted",
-          "printerId",
-          "name",
+          "id",
           "outletId",
-          "lineCharacters"
+          "printerName",
+          "ipAddress",
+          "port",
+          "lineCharacters",
+          "isEnabled"
         ],
         "properties": {
-          "dateUpdated": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "isOutdated": {
-            "type": "boolean"
-          },
-          "dateUpdatedFormatted": {
-            "type": "string"
-          },
-          "printerStatusEventArgs": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/ESCPOS_NETPrinterStatusEventArgs"
-              }
-            ]
-          },
-          "lastException": {
-            "type": "string",
-            "nullable": true
-          },
-          "printerId": {
+          "id": {
             "type": "integer",
             "format": "int32"
           },
-          "name": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "printerName": {
             "type": "string"
           },
+          "ipAddress": {
+            "type": "string"
+          },
+          "port": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lineCharacters": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PrinterListRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PrinterEditRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "printerName",
+          "ipAddress",
+          "port",
+          "lineCharacters",
+          "isEnabled"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "minLength": 1,
+            "nullable": false
+          },
+          "printerName": {
+            "type": "string"
+          },
+          "ipAddress": {
+            "type": "string"
+          },
+          "port": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "lineCharacters": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "PrinterDeleteRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "PrinterCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "outletId",
+          "printerName",
+          "ipAddress",
+          "port",
+          "lineCharacters"
+        ],
+        "properties": {
           "outletId": {
+            "type": "integer",
+            "format": "int32",
+            "minLength": 1,
+            "nullable": false
+          },
+          "printerName": {
+            "type": "string"
+          },
+          "ipAddress": {
+            "type": "string"
+          },
+          "port": {
             "type": "integer",
             "format": "int32"
           },
@@ -9154,79 +9432,6 @@
             "format": "int32"
           }
         }
-      },
-      "ESCPOS_NETPrinterStatusEventArgs": {
-        "allOf": [
-          {
-            "$ref": "#/components/schemas/SystemEventArgs"
-          },
-          {
-            "type": "object",
-            "additionalProperties": false,
-            "properties": {
-              "isWaitingForOnlineRecovery": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "isPaperCurrentlyFeeding": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "isPaperFeedButtonPushed": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "isPrinterOnline": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "isCashDrawerOpen": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "isCoverOpen": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "isPaperLow": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "isPaperOut": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "isInErrorState": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "didRecoverableErrorOccur": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "didUnrecoverableErrorOccur": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "didAutocutterErrorOccur": {
-                "type": "boolean",
-                "nullable": true
-              },
-              "didRecoverableNonAutocutterErrorOccur": {
-                "type": "boolean",
-                "nullable": true
-              }
-            }
-          }
-        ]
-      },
-      "SystemEventArgs": {
-        "type": "object",
-        "additionalProperties": false
-      },
-      "PrinterListRequest": {
-        "type": "object",
-        "additionalProperties": false
       },
       "CommonWrapperResultOfStatusResultDto": {
         "allOf": [
@@ -9423,33 +9628,6 @@
             }
           }
         ]
-      },
-      "EntitiesAuditableEntity": {
-        "type": "object",
-        "x-abstract": true,
-        "additionalProperties": false,
-        "required": [
-          "created"
-        ],
-        "properties": {
-          "created": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "createdBy": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastModified": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "lastModifiedBy": {
-            "type": "string",
-            "nullable": true
-          }
-        }
       },
       "PayPayConfigGetRequest": {
         "type": "object",

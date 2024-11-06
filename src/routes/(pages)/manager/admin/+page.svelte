@@ -1,15 +1,16 @@
 <script lang="ts">
 	import { createPrinterList } from "$lib/api";
-	import { Alert, Card } from "@kayord/ui";
+	import { Alert, Card, Button } from "@kayord/ui";
 	import TriangleAlertIcon from "lucide-svelte/icons/triangle-alert";
 	import { status } from "$lib/stores/status.svelte";
 	import Printer from "$lib/components/Printer.svelte";
+	import AddPrinter from "./printers/AddPrinter.svelte";
 	const query = createPrinterList(status.value.outletId);
 </script>
 
 <Card.Root class="m-2">
 	<Card.Header>
-		<Card.Title>Available Printers</Card.Title>
+		<Card.Title>Outlet Printers</Card.Title>
 		<Card.Description>Printers that can be used in outlet</Card.Description>
 	</Card.Header>
 	<Card.Content>
@@ -27,4 +28,7 @@
 			</div>
 		{/if}
 	</Card.Content>
+	<Card.Footer>
+		<AddPrinter refetch={$query.refetch} />
+	</Card.Footer>
 </Card.Root>
