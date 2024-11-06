@@ -1,5 +1,16 @@
 <script lang="ts">
-	import { Badge, Button, Card, Form, Input, Select, toast } from "@kayord/ui";
+	import {
+		Badge,
+		Button,
+		Card,
+		Form,
+		Input,
+		Select,
+		toast,
+		Popover,
+		Command,
+		buttonVariants,
+	} from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
@@ -9,6 +20,8 @@
 	import { payment } from "$lib/stores/payment.svelte";
 	import { onMount } from "svelte";
 	import { status } from "$lib/stores/status.svelte";
+	import { CheckIcon, ChevronsUpDownIcon } from "lucide-svelte";
+	import { cn } from "@kayord/ui/utils";
 
 	let url: string | undefined;
 	let reference: string | undefined;
@@ -94,6 +107,8 @@
 		$paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
 			?.paymentTypeName ?? "Select payment type"
 	);
+
+	let isPaymentTypeOpen = $state(false);
 </script>
 
 <form method="POST" use:enhance>
@@ -119,7 +134,59 @@
 				<Form.Description>Enter amount to pay</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
-			<Form.Field {form} name="paymentTypeId">
+			<Popover.Root bind:open={isPaymentTypeOpen}>
+				<Form.Field {form} name="paymentTypeId">
+					<Form.Control>
+						{#snippet children({ props })}
+							<div class="flex flex-col gap-3">
+								<Form.Label>Payment Type</Form.Label>
+								<Popover.Trigger
+									class={cn(
+										buttonVariants({ variant: "outline" }),
+										" justify-between",
+										!$formData.paymentTypeId && "text-muted-foreground"
+									)}
+									role="combobox"
+									{...props}
+								>
+									{$paymentTypeQuery.data?.find((f) => f.paymentTypeId === $formData.paymentTypeId)
+										?.paymentTypeName ?? "Select language"}
+									<ChevronsUpDownIcon class="ml-2 size-4 shrink-0 opacity-50" />
+								</Popover.Trigger>
+								<input hidden value={$formData.paymentTypeId} name={props.name} />
+							</div>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Popover.Content class="p-0">
+					<Command.Root>
+						<Command.Input autofocus placeholder="Search language..." class="h-9" />
+						<Command.Empty>No language found.</Command.Empty>
+						<Command.Group>
+							{#each $paymentTypeQuery.data ?? [] as paymentType}
+								<Command.Item
+									value={paymentType.paymentTypeName}
+									onSelect={() => {
+										$formData.paymentTypeId = paymentType.paymentTypeId;
+										isPaymentTypeOpen = false;
+									}}
+								>
+									{paymentType.paymentTypeName}
+									<CheckIcon
+										class={cn(
+											"ml-auto size-4",
+											paymentType.paymentTypeId !== $formData.paymentTypeId && "text-transparent"
+										)}
+									/>
+								</Command.Item>
+							{/each}
+						</Command.Group>
+					</Command.Root>
+				</Popover.Content>
+			</Popover.Root>
+
+			<!-- <Form.Field {form} name="paymentTypeId">
 				<Form.Control>
 					{#snippet children({ props })}
 						<Form.Label>Payment Type</Form.Label>
@@ -145,7 +212,7 @@
 					{/snippet}
 				</Form.Control>
 				<Form.FieldErrors />
-			</Form.Field>
+			</Form.Field> -->
 		</Card.Header>
 		<Card.Footer class="flex flex-col gap-2">
 			<Button class="w-full" type="submit">Pay</Button>
