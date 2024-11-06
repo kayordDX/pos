@@ -43,9 +43,9 @@
 	};
 	const debouncedHandleInput = debounce(setSearchString, 500);
 
-	let itemsQuery = $state(createMenuGetItemsGetMenuItems(itemParams));
+	let itemsQuery = $derived(createMenuGetItemsGetMenuItems(itemParams));
 
-	let sectionsQuery = $state(createMenuGetSectionsGetMenusSections(sectionParams));
+	let sectionsQuery = $derived(createMenuGetSectionsGetMenusSections(sectionParams));
 
 	const setMenuSelection = (menuId: number) => {
 		menu.value.menuId = menuId;
@@ -61,12 +61,6 @@
 		query = createMenuList({ outletId: status.value?.outletId });
 	});
 
-	$effect(() => {
-		itemsQuery = createMenuGetItemsGetMenuItems(itemParams);
-	});
-	$effect(() => {
-		sectionsQuery = createMenuGetSectionsGetMenusSections(sectionParams);
-	});
 	$effect(() => {
 		checkMenuSelection();
 	});
