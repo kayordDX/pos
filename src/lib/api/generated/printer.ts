@@ -22,10 +22,74 @@ import type {
 	InternalErrorResponse,
 	PrinterCreateRequest,
 	PrinterEditRequest,
+	PrinterTestRequest,
 } from "./api.schemas";
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
+export const printerTest = (printerTestRequest: BodyType<PrinterTestRequest>) => {
+	return customInstance<boolean>({
+		url: `/printer/test`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: printerTestRequest,
+	});
+};
+
+export const getPrinterTestMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof printerTest>>,
+		TError,
+		{ data: BodyType<PrinterTestRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof printerTest>>,
+	TError,
+	{ data: BodyType<PrinterTestRequest> },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof printerTest>>,
+		{ data: BodyType<PrinterTestRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return printerTest(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type PrinterTestMutationResult = NonNullable<Awaited<ReturnType<typeof printerTest>>>;
+export type PrinterTestMutationBody = BodyType<PrinterTestRequest>;
+export type PrinterTestMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createPrinterTest = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof printerTest>>,
+		TError,
+		{ data: BodyType<PrinterTestRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof printerTest>>,
+	TError,
+	{ data: BodyType<PrinterTestRequest> },
+	TContext
+> => {
+	const mutationOptions = getPrinterTestMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const printerList = (outletId: number) => {
 	return customInstance<DTOPrinterDTO[]>({ url: `/printer/${outletId}`, method: "GET" });
 };

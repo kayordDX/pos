@@ -5,7 +5,10 @@
 	import { status } from "$lib/stores/status.svelte";
 	import Printer from "$lib/components/Printer.svelte";
 	import AddPrinter from "./printers/AddPrinter.svelte";
+	import { PlusIcon } from "lucide-svelte";
 	const query = createPrinterList(status.value.outletId);
+
+	let open = $state(false);
 </script>
 
 <Card.Root class="m-2">
@@ -23,12 +26,16 @@
 		{:else}
 			<div class="flex flex-col gap-4">
 				{#each $query.data ?? [] as printer}
-					<Printer {printer} refetch={$query.refetch} canPrint={false} />
+					<Printer {printer} refetch={$query.refetch} canPrint={false} isAdmin={true} />
 				{/each}
 			</div>
 		{/if}
 	</Card.Content>
 	<Card.Footer>
-		<AddPrinter refetch={$query.refetch} />
+		<Button class="w-full" onclick={() => (open = true)}>
+			<PlusIcon class="mr-2 size-4" />Add Printer
+		</Button>
 	</Card.Footer>
 </Card.Root>
+
+<AddPrinter refetch={$query.refetch} bind:open />

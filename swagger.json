@@ -2571,6 +2571,67 @@
         ]
       }
     },
+    "/printer/test": {
+      "post": {
+        "tags": [
+          "Printer"
+        ],
+        "operationId": "PrinterTest",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PrinterTestRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/printer/{outletId}": {
       "get": {
         "tags": [
@@ -9315,12 +9376,28 @@
           }
         }
       },
+      "PrinterTestRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "printerId"
+        ],
+        "properties": {
+          "printerId": {
+            "type": "integer",
+            "format": "int32",
+            "minLength": 1,
+            "nullable": false
+          }
+        }
+      },
       "DTOPrinterDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
           "id",
           "outletId",
+          "deviceId",
           "printerName",
           "ipAddress",
           "port",
@@ -9333,6 +9410,10 @@
             "format": "int32"
           },
           "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deviceId": {
             "type": "integer",
             "format": "int32"
           },
@@ -9368,7 +9449,8 @@
           "ipAddress",
           "port",
           "lineCharacters",
-          "isEnabled"
+          "isEnabled",
+          "deviceId"
         ],
         "properties": {
           "id": {
@@ -9393,6 +9475,10 @@
           },
           "isEnabled": {
             "type": "boolean"
+          },
+          "deviceId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -9405,6 +9491,7 @@
         "additionalProperties": false,
         "required": [
           "outletId",
+          "deviceId",
           "printerName",
           "ipAddress",
           "port",
@@ -9416,6 +9503,10 @@
             "format": "int32",
             "minLength": 1,
             "nullable": false
+          },
+          "deviceId": {
+            "type": "integer",
+            "format": "int32"
           },
           "printerName": {
             "type": "string"
@@ -10911,24 +11002,14 @@
         "additionalProperties": false,
         "required": [
           "tableBookingId",
-          "outletId",
-          "printerId",
-          "lineCharacters"
+          "printerId"
         ],
         "properties": {
           "tableBookingId": {
             "type": "integer",
             "format": "int32"
           },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          },
           "printerId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "lineCharacters": {
             "type": "integer",
             "format": "int32"
           }

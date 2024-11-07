@@ -156,8 +156,6 @@ export interface BillEmailBillRequest {
 }
 
 export interface BillPrintBillRequest {
-	lineCharacters: number;
-	outletId: number;
 	printerId: number;
 	tableBookingId: number;
 }
@@ -689,6 +687,7 @@ export type CommonWrapperResultOfStatusResultDto = CommonWrapperResult &
 	CommonWrapperResultOfStatusResultDtoAllOf;
 
 export interface PrinterCreateRequest {
+	deviceId: number;
 	ipAddress: string;
 	lineCharacters: number;
 	/**
@@ -704,6 +703,7 @@ export interface PrinterDeleteRequest {
 }
 
 export interface PrinterEditRequest {
+	deviceId: number;
 	/**
 	 * @minLength 1
 	 */
@@ -720,6 +720,7 @@ export interface PrinterListRequest {
 }
 
 export interface DTOPrinterDTO {
+	deviceId: number;
 	id: number;
 	ipAddress: string;
 	isEnabled: boolean;
@@ -727,6 +728,13 @@ export interface DTOPrinterDTO {
 	outletId: number;
 	port: number;
 	printerName: string;
+}
+
+export interface PrinterTestRequest {
+	/**
+	 * @minLength 1
+	 */
+	printerId: number;
 }
 
 export interface EntitiesRole {

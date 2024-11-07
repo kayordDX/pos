@@ -772,6 +772,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/printer/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["PrinterTest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/printer/{outletId}": {
         parameters: {
             query?: never;
@@ -2637,11 +2653,17 @@ export interface components {
             /** Format: int32 */
             outletId?: number | null;
         };
+        PrinterTestRequest: {
+            /** Format: int32 */
+            printerId: number;
+        };
         DTOPrinterDTO: {
             /** Format: int32 */
             id: number;
             /** Format: int32 */
             outletId: number;
+            /** Format: int32 */
+            deviceId: number;
             printerName: string;
             ipAddress: string;
             /** Format: int32 */
@@ -2661,11 +2683,15 @@ export interface components {
             /** Format: int32 */
             lineCharacters: number;
             isEnabled: boolean;
+            /** Format: int32 */
+            deviceId: number;
         };
         PrinterDeleteRequest: Record<string, never>;
         PrinterCreateRequest: {
             /** Format: int32 */
             outletId: number;
+            /** Format: int32 */
+            deviceId: number;
             printerName: string;
             ipAddress: string;
             /** Format: int32 */
@@ -3094,11 +3120,7 @@ export interface components {
             /** Format: int32 */
             tableBookingId: number;
             /** Format: int32 */
-            outletId: number;
-            /** Format: int32 */
             printerId: number;
-            /** Format: int32 */
-            lineCharacters: number;
         };
         BillEmailBillRequest: {
             /** Format: int32 */
@@ -5006,6 +5028,55 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesRole"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PrinterTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrinterTestRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */
