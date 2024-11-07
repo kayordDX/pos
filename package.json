@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@kayord/tw-plugin": "^1.0.3",
-		"@kayord/ui": "^0.12.18",
+		"@kayord/ui": "^0.12.19",
 		"@microsoft/signalr": "^8.0.7",
 		"@sveltejs/adapter-static": "^3.0.6",
 		"@sveltejs/kit": "^2.8.0",
