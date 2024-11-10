@@ -772,7 +772,23 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/printer/list/{outletId}": {
+    "/printer/test": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["PrinterTest"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/printer/{outletId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -783,6 +799,38 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/printer": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["PrinterEdit"];
+        post: operations["PrinterCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/printer/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["PrinterDelete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2025,12 +2073,20 @@ export interface components {
             cashUpUser?: components["schemas"]["EntitiesCashUpUser"] | null;
             payments?: components["schemas"]["EntitiesPayment"][] | null;
         };
-        EntitiesUser: {
+        EntitiesUser: components["schemas"]["EntitiesAuditableEntity"] & {
             userId: string;
             email: string;
             image: string;
             name: string;
             isActive: boolean;
+        };
+        EntitiesAuditableEntity: {
+            /** Format: date-time */
+            created: string;
+            createdBy?: string | null;
+            /** Format: date-time */
+            lastModified?: string | null;
+            lastModifiedBy?: string | null;
         };
         EntitiesOrderItem: {
             /** Format: int32 */
@@ -2597,38 +2653,52 @@ export interface components {
             /** Format: int32 */
             outletId?: number | null;
         };
-        PrinterPrinterStatus: {
-            /** Format: date-time */
-            dateUpdated: string;
-            isOutdated: boolean;
-            dateUpdatedFormatted: string;
-            printerStatusEventArgs?: components["schemas"]["ESCPOS_NETPrinterStatusEventArgs"] | null;
-            lastException?: string | null;
+        PrinterTestRequest: {
             /** Format: int32 */
             printerId: number;
-            name: string;
+        };
+        DTOPrinterDTO: {
+            /** Format: int32 */
+            id: number;
             /** Format: int32 */
             outletId: number;
             /** Format: int32 */
+            deviceId: number;
+            printerName: string;
+            ipAddress: string;
+            /** Format: int32 */
+            port: number;
+            /** Format: int32 */
+            lineCharacters: number;
+            isEnabled: boolean;
+        };
+        PrinterListRequest: Record<string, never>;
+        PrinterEditRequest: {
+            /** Format: int32 */
+            id: number;
+            printerName: string;
+            ipAddress: string;
+            /** Format: int32 */
+            port: number;
+            /** Format: int32 */
+            lineCharacters: number;
+            isEnabled: boolean;
+            /** Format: int32 */
+            deviceId: number;
+        };
+        PrinterDeleteRequest: Record<string, never>;
+        PrinterCreateRequest: {
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            deviceId: number;
+            printerName: string;
+            ipAddress: string;
+            /** Format: int32 */
+            port: number;
+            /** Format: int32 */
             lineCharacters: number;
         };
-        ESCPOS_NETPrinterStatusEventArgs: components["schemas"]["SystemEventArgs"] & {
-            isWaitingForOnlineRecovery?: boolean | null;
-            isPaperCurrentlyFeeding?: boolean | null;
-            isPaperFeedButtonPushed?: boolean | null;
-            isPrinterOnline?: boolean | null;
-            isCashDrawerOpen?: boolean | null;
-            isCoverOpen?: boolean | null;
-            isPaperLow?: boolean | null;
-            isPaperOut?: boolean | null;
-            isInErrorState?: boolean | null;
-            didRecoverableErrorOccur?: boolean | null;
-            didUnrecoverableErrorOccur?: boolean | null;
-            didAutocutterErrorOccur?: boolean | null;
-            didRecoverableNonAutocutterErrorOccur?: boolean | null;
-        };
-        SystemEventArgs: Record<string, never>;
-        PrinterListRequest: Record<string, never>;
         CommonWrapperResultOfStatusResultDto: components["schemas"]["CommonWrapperResult"] & {
             value?: components["schemas"]["PayDtoStatusResultDto"] | null;
         };
@@ -2680,14 +2750,6 @@ export interface components {
             isEnabled: boolean;
             /** Format: byte */
             iv: string;
-        };
-        EntitiesAuditableEntity: {
-            /** Format: date-time */
-            created: string;
-            createdBy?: string | null;
-            /** Format: date-time */
-            lastModified?: string | null;
-            lastModifiedBy?: string | null;
         };
         PayPayConfigGetRequest: Record<string, never>;
         PayPayConfigDeleteRequest: Record<string, never>;
@@ -3058,11 +3120,7 @@ export interface components {
             /** Format: int32 */
             tableBookingId: number;
             /** Format: int32 */
-            outletId: number;
-            /** Format: int32 */
             printerId: number;
-            /** Format: int32 */
-            lineCharacters: number;
         };
         BillEmailBillRequest: {
             /** Format: int32 */
@@ -4990,6 +5048,55 @@ export interface operations {
             };
         };
     };
+    PrinterTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrinterTestRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": boolean;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     PrinterList: {
         parameters: {
             query?: never;
@@ -5007,8 +5114,152 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["PrinterPrinterStatus"][];
+                    "application/json": components["schemas"]["DTOPrinterDTO"][];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PrinterEdit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrinterEditRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOPrinterDTO"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PrinterCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["PrinterCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOPrinterDTO"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    PrinterDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {

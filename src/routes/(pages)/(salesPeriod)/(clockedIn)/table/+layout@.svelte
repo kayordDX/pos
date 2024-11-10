@@ -12,19 +12,11 @@
 
 	let id = Number($page.params.id ?? "0");
 
-	let query = createTableBookingGet(id, {
-		query: { enabled: id > 0 },
-	});
-
-	const loadBookingDetails = () => {
-		query = createTableBookingGet(id, {
+	let query = $derived(
+		createTableBookingGet(id, {
 			query: { enabled: id > 0 },
-		});
-	};
-
-	$effect(() => {
-		if (id > 0) loadBookingDetails();
-	});
+		})
+	);
 </script>
 
 <Header>

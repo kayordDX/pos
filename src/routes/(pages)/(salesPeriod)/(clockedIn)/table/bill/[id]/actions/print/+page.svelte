@@ -5,6 +5,8 @@
 	import { status } from "$lib/stores/status.svelte";
 	import Printer from "$lib/components/Printer.svelte";
 	const query = createPrinterList(status.value.outletId);
+
+	const enabledPrinters = $derived(($query.data ?? []).filter((x) => x.isEnabled == true));
 </script>
 
 <Card.Root class="m-4">
@@ -21,7 +23,7 @@
 			</Alert.Root>
 		{:else}
 			<div class="flex flex-col gap-4">
-				{#each $query.data ?? [] as printer}
+				{#each enabledPrinters as printer}
 					<Printer {printer} refetch={$query.refetch} canPrint={true} />
 				{/each}
 			</div>

@@ -156,8 +156,6 @@ export interface BillEmailBillRequest {
 }
 
 export interface BillPrintBillRequest {
-	lineCharacters: number;
-	outletId: number;
 	printerId: number;
 	tableBookingId: number;
 }
@@ -622,16 +620,6 @@ export interface PayPayConfigGetRequest {
 	[key: string]: unknown;
 }
 
-export interface EntitiesAuditableEntity {
-	created: string;
-	/** @nullable */
-	createdBy?: string | null;
-	/** @nullable */
-	lastModified?: string | null;
-	/** @nullable */
-	lastModifiedBy?: string | null;
-}
-
 export type EntitiesHaloConfigAllOf = {
 	id: number;
 	isEnabled: boolean;
@@ -698,63 +686,55 @@ export type CommonWrapperResultOfStatusResultDtoAllOf = {
 export type CommonWrapperResultOfStatusResultDto = CommonWrapperResult &
 	CommonWrapperResultOfStatusResultDtoAllOf;
 
+export interface PrinterCreateRequest {
+	deviceId: number;
+	ipAddress: string;
+	lineCharacters: number;
+	/**
+	 * @minLength 1
+	 */
+	outletId: number;
+	port: number;
+	printerName: string;
+}
+
+export interface PrinterDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface PrinterEditRequest {
+	deviceId: number;
+	/**
+	 * @minLength 1
+	 */
+	id: number;
+	ipAddress: string;
+	isEnabled: boolean;
+	lineCharacters: number;
+	port: number;
+	printerName: string;
+}
+
 export interface PrinterListRequest {
 	[key: string]: unknown;
 }
 
-export interface SystemEventArgs {
-	[key: string]: unknown;
+export interface DTOPrinterDTO {
+	deviceId: number;
+	id: number;
+	ipAddress: string;
+	isEnabled: boolean;
+	lineCharacters: number;
+	outletId: number;
+	port: number;
+	printerName: string;
 }
 
-export type ESCPOSNETPrinterStatusEventArgsAllOf = {
-	/** @nullable */
-	didAutocutterErrorOccur?: boolean | null;
-	/** @nullable */
-	didRecoverableErrorOccur?: boolean | null;
-	/** @nullable */
-	didRecoverableNonAutocutterErrorOccur?: boolean | null;
-	/** @nullable */
-	didUnrecoverableErrorOccur?: boolean | null;
-	/** @nullable */
-	isCashDrawerOpen?: boolean | null;
-	/** @nullable */
-	isCoverOpen?: boolean | null;
-	/** @nullable */
-	isInErrorState?: boolean | null;
-	/** @nullable */
-	isPaperCurrentlyFeeding?: boolean | null;
-	/** @nullable */
-	isPaperFeedButtonPushed?: boolean | null;
-	/** @nullable */
-	isPaperLow?: boolean | null;
-	/** @nullable */
-	isPaperOut?: boolean | null;
-	/** @nullable */
-	isPrinterOnline?: boolean | null;
-	/** @nullable */
-	isWaitingForOnlineRecovery?: boolean | null;
-};
-
-export type ESCPOSNETPrinterStatusEventArgs = SystemEventArgs &
-	ESCPOSNETPrinterStatusEventArgsAllOf;
-
-/**
- * @nullable
- */
-export type PrinterPrinterStatusPrinterStatusEventArgs = ESCPOSNETPrinterStatusEventArgs | null;
-
-export interface PrinterPrinterStatus {
-	dateUpdated: string;
-	dateUpdatedFormatted: string;
-	isOutdated: boolean;
-	/** @nullable */
-	lastException?: string | null;
-	lineCharacters: number;
-	name: string;
-	outletId: number;
+export interface PrinterTestRequest {
+	/**
+	 * @minLength 1
+	 */
 	printerId: number;
-	/** @nullable */
-	printerStatusEventArgs?: PrinterPrinterStatusPrinterStatusEventArgs;
 }
 
 export interface EntitiesRole {
@@ -1256,13 +1236,6 @@ export interface EntitiesExtra {
 	price: number;
 }
 
-export interface EntitiesMenuItemOptionGroup {
-	menuItem: EntitiesMenuItem;
-	menuItemId: number;
-	optionGroup: EntitiesOptionGroup;
-	optionGroupId: number;
-}
-
 export interface EntitiesOptionGroup {
 	maxSelections: number;
 	/** @nullable */
@@ -1282,6 +1255,14 @@ export interface EntitiesOption {
 	orderItemOptions?: EntitiesOrderItemOption[] | null;
 	positionId: number;
 	price: number;
+}
+
+export interface EntitiesOrderItemOption {
+	option: EntitiesOption;
+	optionId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemId: number;
+	orderItemOptionId: number;
 }
 
 export interface EntitiesDivision {
@@ -1343,6 +1324,13 @@ export interface EntitiesMenuItem {
 	tags?: EntitiesTag[] | null;
 }
 
+export interface EntitiesMenuItemOptionGroup {
+	menuItem: EntitiesMenuItem;
+	menuItemId: number;
+	optionGroup: EntitiesOptionGroup;
+	optionGroupId: number;
+}
+
 export interface EntitiesMenuSection {
 	menu: EntitiesMenu;
 	menuId: number;
@@ -1390,27 +1378,31 @@ export interface EntitiesOrderItem {
 	tableBookingId: number;
 }
 
-export interface EntitiesOrderItemOption {
-	option: EntitiesOption;
-	optionId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemId: number;
-	orderItemOptionId: number;
-}
-
 export interface EntitiesOrderGroup {
 	orderGroupId: number;
 	/** @nullable */
 	orderItems?: EntitiesOrderItem[] | null;
 }
 
-export interface EntitiesUser {
+export interface EntitiesAuditableEntity {
+	created: string;
+	/** @nullable */
+	createdBy?: string | null;
+	/** @nullable */
+	lastModified?: string | null;
+	/** @nullable */
+	lastModifiedBy?: string | null;
+}
+
+export type EntitiesUserAllOf = {
 	email: string;
 	image: string;
 	isActive: boolean;
 	name: string;
 	userId: string;
-}
+};
+
+export type EntitiesUser = EntitiesAuditableEntity & EntitiesUserAllOf;
 
 /**
  * @nullable
