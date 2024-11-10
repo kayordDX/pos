@@ -74,15 +74,11 @@
 	let columnFilters = $state<ColumnFiltersState>([]);
 	let filters = $state("");
 
-	let query = createUserUnassignedUsers();
-	let data = $state<UserUserResponse[]>([]);
-	let rowCount = $state($query.data?.totalCount ?? 0);
-
-	$effect(() => {
-		query = createUserUnassignedUsers({ page: pagination.pageIndex + 1, pageSize: 10, filters });
-		data = $query.data?.items ?? [];
-		rowCount = $query.data?.totalCount ?? 0;
-	});
+	let query = $derived(
+		createUserUnassignedUsers({ page: pagination.pageIndex + 1, pageSize: 10, filters })
+	);
+	let data = $derived($query.data?.items ?? []);
+	let rowCount = $derived($query.data?.totalCount ?? 0);
 
 	const table = createSvelteTable({
 		columns,

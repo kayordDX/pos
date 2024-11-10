@@ -15,21 +15,14 @@
 
 	let billId = $state<number>();
 
-	let query = createTableBookingHistoryUser($page.params.userId ?? "", {
-		tableBookingId: 0,
-		cashUpUserId: 0,
-		outletId: status.value.outletId,
-	});
-	let data = $state<TableBookingHistoryResponse[]>([]);
-
-	$effect(() => {
-		query = createTableBookingHistoryUser($page.params.userId ?? "", {
+	let query = $derived(
+		createTableBookingHistoryUser($page.params.userId ?? "", {
 			tableBookingId: billId ?? 0,
 			cashUpUserId: Number($page.params.cashUpUserId ?? 0),
 			outletId: status.value.outletId,
-		});
-		data = $query.data ?? [];
-	});
+		})
+	);
+	let data = $derived($query.data ?? []);
 
 	const columns: ColumnDef<TableBookingHistoryResponse>[] = [
 		{
