@@ -66,20 +66,18 @@
 
 	let columnFilters = $state<ColumnFiltersState>([]);
 
-	let query = createUserUsers();
-	let data = $state<UserUserResponse[]>([]);
-	let rowCount = $state($query.data?.totalCount ?? 0);
 	let filters = $state("");
 
-	$effect(() => {
-		query = createUserUsers({
+	let query = $derived(
+		createUserUsers({
 			page: pagination.pageIndex + 1,
 			pageSize: 10,
 			filters,
-		});
-		data = $query.data?.items ?? [];
-		rowCount = $query.data?.totalCount ?? 0;
-	});
+		})
+	);
+
+	let data = $derived($query.data?.items ?? []);
+	let rowCount = $derived($query.data?.totalCount ?? 0);
 
 	const table = createSvelteTable({
 		columns,

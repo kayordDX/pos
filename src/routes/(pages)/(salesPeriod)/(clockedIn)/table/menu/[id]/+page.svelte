@@ -20,7 +20,7 @@
 	import MenuItems from "./MenuItems.svelte";
 	import { menuSection } from "$lib/stores/menuSection.svelte";
 
-	let query = $state(createMenuList({ outletId: status.value?.outletId }));
+	let query = $derived(createMenuList({ outletId: status.value?.outletId }));
 
 	let search = $state<string | undefined>(undefined);
 
@@ -56,10 +56,6 @@
 			setMenuSelection($query.data[0]?.id ?? 0);
 		}
 	};
-
-	$effect(() => {
-		query = createMenuList({ outletId: status.value?.outletId });
-	});
 
 	$effect(() => {
 		checkMenuSelection();
