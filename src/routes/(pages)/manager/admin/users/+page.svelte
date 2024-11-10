@@ -68,7 +68,7 @@
 
 	let filters = $state("");
 
-	let query = $derived(
+	const query = $derived(
 		createUserUsers({
 			page: pagination.pageIndex + 1,
 			pageSize: 10,

@@ -10,9 +10,9 @@
 	const billActive = $derived($page.route.id?.includes("bill") ?? false);
 	const basketActive = $derived($page.route.id?.includes("basket") ?? false);
 
-	let id = Number($page.params.id ?? "0");
+	let id = $derived(Number($page.params.id ?? "0"));
 
-	let query = $derived(
+	const query = $derived(
 		createTableBookingGet(id, {
 			query: { enabled: id > 0 },
 		})

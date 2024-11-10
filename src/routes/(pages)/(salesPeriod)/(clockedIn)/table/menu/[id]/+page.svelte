@@ -20,7 +20,7 @@
 	import MenuItems from "./MenuItems.svelte";
 	import { menuSection } from "$lib/stores/menuSection.svelte";
 
-	let query = $derived(createMenuList({ outletId: status.value?.outletId }));
+	const query = $derived(createMenuList({ outletId: status.value?.outletId }));
 
 	let search = $state<string | undefined>(undefined);
 

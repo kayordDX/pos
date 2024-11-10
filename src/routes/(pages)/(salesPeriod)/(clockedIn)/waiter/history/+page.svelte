@@ -14,8 +14,8 @@
 
 	let billId = $state<number>();
 
-	let query = $derived(createTableBookingHistory({ tableBookingId: billId ?? 0 }));
-	let data = $derived($query.data ?? []);
+	const query = $derived(createTableBookingHistory({ tableBookingId: billId ?? 0 }));
+	const data = $derived($query.data ?? []);
 
 	const columns: ColumnDef<TableBookingHistoryResponse>[] = [
 		{

@@ -15,7 +15,7 @@
 
 	let billId = $state<number>();
 
-	let query = $derived(
+	const query = $derived(
 		createTableBookingHistoryUser($page.params.userId ?? "", {
 			tableBookingId: billId ?? 0,
 			cashUpUserId: Number($page.params.cashUpUserId ?? 0),

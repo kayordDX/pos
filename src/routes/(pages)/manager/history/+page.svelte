@@ -15,7 +15,7 @@
 
 	let billId = $state<number>();
 
-	let query = $derived(
+	const query = $derived(
 		createTableBookingPeriodHistory(status.value.salesPeriodId, { tableBookingId: billId ?? 0 })
 	);
 	let data = $derived($query.data ?? []);

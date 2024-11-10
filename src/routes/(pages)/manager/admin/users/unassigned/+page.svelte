@@ -74,7 +74,7 @@
 	let columnFilters = $state<ColumnFiltersState>([]);
 	let filters = $state("");
 
-	let query = $derived(
+	const query = $derived(
 		createUserUnassignedUsers({ page: pagination.pageIndex + 1, pageSize: 10, filters })
 	);
 	let data = $derived($query.data?.items ?? []);
