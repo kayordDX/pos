@@ -15,15 +15,10 @@
 
 	let billId = $state<number>();
 
-	let query = createTableBookingPeriodHistory(status.value.salesPeriodId, { tableBookingId: 0 });
-	let data = $state<TableBookingHistoryResponse[]>([]);
-
-	$effect(() => {
-		query = createTableBookingPeriodHistory(status.value.salesPeriodId, {
-			tableBookingId: billId ?? 0,
-		});
-		data = $query.data ?? [];
-	});
+	let query = $derived(
+		createTableBookingPeriodHistory(status.value.salesPeriodId, { tableBookingId: billId ?? 0 })
+	);
+	let data = $derived($query.data ?? []);
 
 	const columns: ColumnDef<TableBookingHistoryResponse>[] = [
 		{
