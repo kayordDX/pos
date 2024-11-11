@@ -75,6 +75,7 @@
 		}
 	};
 
+	// svelte-ignore state_referenced_locally
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
