@@ -17,6 +17,7 @@ export * from "./printer";
 export * from "./pay";
 export * from "./outlet";
 export * from "./notification";
+export * from "./menuitem";
 export * from "./menu";
 export * from "./manager";
 export * from "./extra";

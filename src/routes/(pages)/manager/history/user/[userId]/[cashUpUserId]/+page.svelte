@@ -94,4 +94,10 @@
 	</div>
 </div>
 
-<DataTable {table} {columns} isLoading={$query.isPending} noDataMessage="No history available" />
+<DataTable
+	{table}
+	{columns}
+	isLoading={$query.isPending}
+	headerClass="pb-2"
+	noDataMessage="No history available"
+/>

@@ -10,6 +10,7 @@
 		UserRoundSearchIcon,
 		UsersIcon,
 		NfcIcon,
+		NotebookTextIcon,
 	} from "lucide-svelte";
 
 	const menuItems = [
@@ -37,6 +38,11 @@
 			title: "Halo",
 			href: "/manager/admin/halo",
 			icon: NfcIcon,
+		},
+		{
+			title: "Menus Items",
+			href: "/manager/admin/menuItems",
+			icon: NotebookTextIcon,
 		},
 	];
 

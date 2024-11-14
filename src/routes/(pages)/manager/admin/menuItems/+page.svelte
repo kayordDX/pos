@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { createUserUnassignedUsers, type UserUserResponse } from "$lib/api";
-	import { DataTable, renderComponent, createSvelteTable, Input } from "@kayord/ui";
+	import { createMenuItemGetAll, type MenuItemMenuItemAdminDTO } from "$lib/api";
+	import { createSvelteTable, DataTable, Input, renderComponent } from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -10,57 +10,57 @@
 		getPaginationRowModel,
 		getFilteredRowModel,
 	} from "@tanstack/table-core";
-	import Current from "../Current.svelte";
-	import Avatar from "../Avatar.svelte";
-	import AddRole from "../AddRole.svelte";
-	import RemoveRole from "../RemoveRole.svelte";
-	import FilterReset from "../FilterReset.svelte";
-	import { Debounced, watch } from "runed";
+	import Price from "./Price.svelte";
+	import IsEnabled from "./IsEnabled.svelte";
+	import Actions from "./Actions.svelte";
+	import FilterReset from "$lib/components/FilterReset.svelte";
+	import { debounce } from "$lib/util";
 	import QueryBuilder from "fluent-querykit";
 
-	const columns: ColumnDef<UserUserResponse>[] = [
-		{
-			accessorKey: "image",
-			header: "Image",
-			cell: (item) =>
-				renderComponent(Avatar, {
-					name: item.row.original.name,
-					image: item.row.original.image,
-				}),
-		},
+	const columns: ColumnDef<MenuItemMenuItemAdminDTO>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
+			size: 1000,
 		},
 		{
-			header: "Email",
-			accessorKey: "email",
+			header: "Description",
+			accessorKey: "description",
+			size: 1000,
 		},
 		{
-			accessorKey: "isCurrent",
-			header: "Current",
+			header: "Price",
+			accessorKey: "price",
 			cell: (item) =>
-				renderComponent(Current, {
-					isCurrent: Boolean(item.getValue()),
+				renderComponent(Price, {
+					price: Number(item.getValue()),
 				}),
 		},
 		{
-			header: "Roles",
-			accessorKey: "roles",
+			header: "Available",
+			accessorKey: "isAvailable",
 			cell: (item) =>
-				renderComponent(AddRole, {
-					userId: item.row.original.userId,
+				renderComponent(IsEnabled, {
+					isEnabled: item.getValue<boolean>(),
+				}),
+		},
+		{
+			header: "Enabled",
+			accessorKey: "isEnabled",
+			cell: (item) =>
+				renderComponent(IsEnabled, {
+					isEnabled: item.getValue<boolean>(),
+				}),
+		},
+		{
+			header: "",
+			accessorKey: "menuItemId",
+			cell: (item) =>
+				renderComponent(Actions, {
+					menuItemId: item.getValue<number>(),
 					refetch: $query.refetch,
 				}),
-		},
-		{
-			header: "Reject",
-			accessorKey: "roles",
-			cell: (item) =>
-				renderComponent(RemoveRole, {
-					userId: item.row.original.userId,
-					refetch: $query.refetch,
-				}),
+			size: 10,
 		},
 	];
 
@@ -75,7 +75,11 @@
 	let filters = $state("");
 
 	const query = $derived(
-		createUserUnassignedUsers({ page: pagination.pageIndex + 1, pageSize: 10, filters })
+		createMenuItemGetAll({
+			page: pagination.pageIndex + 1,
+			pageSize: 10,
+			filters,
+		})
 	);
 	let data = $derived($query.data?.items ?? []);
 	let rowCount = $derived($query.data?.totalCount ?? 0);
@@ -112,25 +116,14 @@
 		enableRowSelection: false,
 	});
 
-	let searchEmail = $state("");
-	const debounced = new Debounced(() => searchEmail, 500);
-
-	watch(
-		() => debounced.current,
-		() => {
-			table.getColumn("email")?.setFilterValue(debounced.current);
-		}
-	);
+	const col = $derived(table.getColumn("name"));
+	const debouncedCb = debounce((value: string) => col?.setFilterValue(value), 300);
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
-		const fv = table.getColumn("email")?.getFilterValue() as undefined | string;
+		const fv = table.getColumn("name")?.getFilterValue() as undefined | string;
 		if (fv) {
-			qb.containsCaseInsensitive("email", fv);
-		}
-		const rv = table.getColumn("roles")?.getFilterValue() as undefined | string;
-		if (rv) {
-			qb.and().contains("roles", rv);
+			qb.containsCaseInsensitive("name", fv);
 		}
 		filters = qb.build();
 	});
@@ -139,22 +132,25 @@
 {#snippet header()}
 	<div class="flex gap-2">
 		<Input
-			bind:value={searchEmail}
-			placeholder="Search Email..."
+			value={col?.getFilterValue()}
+			onchange={(e) => debouncedCb(e.currentTarget.value)}
+			oninput={(e) => debouncedCb(e.currentTarget.value)}
+			placeholder="Search Menu Item..."
 			class="h-8 w-[150px] lg:w-[250px]"
 		/>
-		<FilterReset {table} cb={() => (searchEmail = "")} />
+		<!-- <Filter column={nameCol} title="Role" options={roles} /> -->
+		<FilterReset {table} />
 	</div>
 {/snippet}
 
 <div class="m-2">
-	<h2>Unassigned Users</h2>
+	<h2>Menu Items</h2>
 	<DataTable
 		{table}
 		{columns}
 		{header}
 		headerClass="pb-2"
 		isLoading={$query.isPending}
-		noDataMessage="No unassigned users for outlet"
+		noDataMessage="No menu items"
 	/>
 </div>

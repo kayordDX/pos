@@ -3803,6 +3803,80 @@
         ]
       }
     },
+    "/menuItem": {
+      "get": {
+        "tags": [
+          "Menuitem"
+        ],
+        "operationId": "MenuItemGetAll",
+        "parameters": [
+          {
+            "name": "sorts",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfMenuItemAdminDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/menu/{menuId}": {
       "put": {
         "tags": [
@@ -9947,6 +10021,225 @@
           }
         }
       },
+      "CommonModelsPaginatedListOfMenuItemAdminDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageNumber",
+          "totalPages",
+          "totalCount",
+          "hasPreviousPage",
+          "hasNextPage"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MenuItemMenuItemAdminDTO"
+            }
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "MenuItemMenuItemAdminDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "menuSectionId",
+          "name",
+          "description",
+          "price",
+          "position",
+          "divisionId",
+          "menuItemOptionGroups",
+          "menuItemExtraGroups",
+          "isAvailable",
+          "isEnabled",
+          "stockPrice"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuItemOptionGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DTOMenuItemOptionGroupDTO"
+            }
+          },
+          "menuItemExtraGroups": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DTOMenuItemExtraGroupDTO"
+            }
+          },
+          "isAvailable": {
+            "type": "boolean"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          },
+          "stockPrice": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "DTOMenuItemOptionGroupDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "optionGroupId",
+          "optionGroup"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "optionGroup": {
+            "$ref": "#/components/schemas/DTOOptionGroupDTO"
+          }
+        }
+      },
+      "DTOOptionGroupDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "optionGroupId",
+          "name",
+          "minSelections",
+          "maxSelections",
+          "options"
+        ],
+        "properties": {
+          "optionGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "minSelections": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "maxSelections": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "options": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DTOOptionDTO"
+            }
+          }
+        }
+      },
+      "DTOMenuItemExtraGroupDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuItemId",
+          "extraGroupId",
+          "extraGroup"
+        ],
+        "properties": {
+          "menuItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "extraGroup": {
+            "$ref": "#/components/schemas/DTOExtraGroupDTO"
+          }
+        }
+      },
+      "DTOExtraGroupDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "extraGroupId",
+          "name",
+          "extras"
+        ],
+        "properties": {
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "extras": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DTOExtraDTO"
+            }
+          }
+        }
+      },
+      "MenuItemGetAllRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommonModelsQueryModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
       "MenuUpdateRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -10192,108 +10485,6 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/DTOMenuItemExtraGroupDTO"
-            }
-          }
-        }
-      },
-      "DTOMenuItemOptionGroupDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "menuItemId",
-          "optionGroupId",
-          "optionGroup"
-        ],
-        "properties": {
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "optionGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "optionGroup": {
-            "$ref": "#/components/schemas/DTOOptionGroupDTO"
-          }
-        }
-      },
-      "DTOOptionGroupDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "optionGroupId",
-          "name",
-          "minSelections",
-          "maxSelections",
-          "options"
-        ],
-        "properties": {
-          "optionGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "minSelections": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "maxSelections": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "options": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DTOOptionDTO"
-            }
-          }
-        }
-      },
-      "DTOMenuItemExtraGroupDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "menuItemId",
-          "extraGroupId",
-          "extraGroup"
-        ],
-        "properties": {
-          "menuItemId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "extraGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "extraGroup": {
-            "$ref": "#/components/schemas/DTOExtraGroupDTO"
-          }
-        }
-      },
-      "DTOExtraGroupDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "extraGroupId",
-          "name",
-          "extras"
-        ],
-        "properties": {
-          "extraGroupId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "extras": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/DTOExtraDTO"
             }
           }
         }

@@ -16,7 +16,6 @@
 	import Filter from "./Filter.svelte";
 	import { QueryBuilder } from "fluent-querykit";
 	import FilterReset from "./FilterReset.svelte";
-	import FilterBar from "./FilterBar.svelte";
 	import { debounce } from "$lib/util";
 
 	const columns: ColumnDef<UserUserResponse>[] = [
@@ -163,6 +162,7 @@
 <div class="m-2">
 	<h2>Users</h2>
 	<DataTable
+		headerClass="pb-2"
 		{table}
 		{columns}
 		{header}
