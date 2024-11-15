@@ -2841,7 +2841,10 @@ export interface components {
             /** Format: int32 */
             menuItemId: number;
             /** Format: int32 */
+            menuId: number;
+            /** Format: int32 */
             menuSectionId: number;
+            menuSection: components["schemas"]["MenuItemMenuSectionAdminDTO"];
             name: string;
             description: string;
             /** Format: decimal */
@@ -2856,6 +2859,23 @@ export interface components {
             isEnabled: boolean;
             /** Format: decimal */
             stockPrice: number;
+        };
+        MenuItemMenuSectionAdminDTO: {
+            /** Format: int32 */
+            menuSectionId: number;
+            name?: string | null;
+            /** Format: int32 */
+            menuId: number;
+            menu: components["schemas"]["MenuItemMenuAdminDTO"];
+        };
+        MenuItemMenuAdminDTO: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            position: number;
         };
         DTOMenuItemOptionGroupDTO: {
             /** Format: int32 */

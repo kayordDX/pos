@@ -40,6 +40,11 @@
 			icon: NfcIcon,
 		},
 		{
+			title: "Menus",
+			href: "/manager/admin/menus",
+			icon: NotebookTextIcon,
+		},
+		{
 			title: "Menus Items",
 			href: "/manager/admin/menuItems",
 			icon: NotebookTextIcon,
@@ -52,7 +57,7 @@
 				return item;
 			}
 		}
-		return menuItems[0];
+		return;
 	});
 </script>
 

@@ -10064,7 +10064,9 @@
         "additionalProperties": false,
         "required": [
           "menuItemId",
+          "menuId",
           "menuSectionId",
+          "menuSection",
           "name",
           "description",
           "price",
@@ -10081,9 +10083,16 @@
             "type": "integer",
             "format": "int32"
           },
+          "menuId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "menuSectionId": {
             "type": "integer",
             "format": "int32"
+          },
+          "menuSection": {
+            "$ref": "#/components/schemas/MenuItemMenuSectionAdminDTO"
           },
           "name": {
             "type": "string"
@@ -10124,6 +10133,59 @@
           "stockPrice": {
             "type": "number",
             "format": "decimal"
+          }
+        }
+      },
+      "MenuItemMenuSectionAdminDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuSectionId",
+          "menuId",
+          "menu"
+        ],
+        "properties": {
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "menuId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menu": {
+            "$ref": "#/components/schemas/MenuItemMenuAdminDTO"
+          }
+        }
+      },
+      "MenuItemMenuAdminDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "outletId",
+          "position"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "position": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

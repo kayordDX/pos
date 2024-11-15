@@ -535,14 +535,31 @@ export interface DTOMenuItemOptionGroupDTO {
 	optionGroupId: number;
 }
 
+export interface MenuItemMenuAdminDTO {
+	id: number;
+	name: string;
+	outletId: number;
+	position: number;
+}
+
+export interface MenuItemMenuSectionAdminDTO {
+	menu: MenuItemMenuAdminDTO;
+	menuId: number;
+	menuSectionId: number;
+	/** @nullable */
+	name?: string | null;
+}
+
 export interface MenuItemMenuItemAdminDTO {
 	description: string;
 	divisionId: number;
 	isAvailable: boolean;
 	isEnabled: boolean;
+	menuId: number;
 	menuItemExtraGroups: DTOMenuItemExtraGroupDTO[];
 	menuItemId: number;
 	menuItemOptionGroups: DTOMenuItemOptionGroupDTO[];
+	menuSection: MenuItemMenuSectionAdminDTO;
 	menuSectionId: number;
 	name: string;
 	position: number;

@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { createMenuItemGetAll, type MenuItemMenuItemAdminDTO } from "$lib/api";
+	import { createMenuItemGetAll, createMenuList, type MenuItemMenuItemAdminDTO } from "$lib/api";
+	import { status } from "$lib/stores/status.svelte";
 	import { createSvelteTable, DataTable, Input, renderComponent } from "@kayord/ui";
 	import {
 		type ColumnDef,
@@ -16,6 +17,7 @@
 	import FilterReset from "$lib/components/FilterReset.svelte";
 	import { debounce } from "$lib/util";
 	import QueryBuilder from "fluent-querykit";
+	import MenuFilter from "./MenuFilter.svelte";
 
 	const columns: ColumnDef<MenuItemMenuItemAdminDTO>[] = [
 		{
@@ -53,6 +55,15 @@
 				}),
 		},
 		{
+			header: "Menu",
+			accessorKey: "menuSection.menu.name",
+		},
+		{
+			header: "Menu",
+			accessorKey: "menuSection.menuId",
+			id: "menuId",
+		},
+		{
 			header: "",
 			accessorKey: "menuItemId",
 			cell: (item) =>
@@ -84,6 +95,8 @@
 	let data = $derived($query.data?.items ?? []);
 	let rowCount = $derived($query.data?.totalCount ?? 0);
 
+	$inspect(data);
+
 	const table = createSvelteTable({
 		columns,
 		get data() {
@@ -108,6 +121,9 @@
 			get columnFilters() {
 				return columnFilters;
 			},
+			get columnVisibility() {
+				return { menuId: false };
+			},
 		},
 		get rowCount() {
 			return rowCount;
@@ -119,14 +135,42 @@
 	const col = $derived(table.getColumn("name"));
 	const debouncedCb = debounce((value: string) => col?.setFilterValue(value), 300);
 
+	let qb = $state(new QueryBuilder(false, false));
+
+	$inspect(qb);
+
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
 		const fv = table.getColumn("name")?.getFilterValue() as undefined | string;
 		if (fv) {
 			qb.containsCaseInsensitive("name", fv);
 		}
+
+		const rv = menuCol?.getFilterValue() as undefined | Array<string>;
+		console.log("rv", rv);
+		if (rv) {
+			if (fv) {
+				qb.and();
+			}
+			for (let i = 0; i < rv.length; i++) {
+				if (i > 0) qb.or();
+				qb.equals("menuSection.menuId", rv[i] ?? "");
+			}
+		}
+
 		filters = qb.build();
 	});
+
+	const menuCol = $derived(table.getColumn("menuId")!);
+	const queryMenu = createMenuList({ outletId: status.value.outletId });
+	const menus = $derived(
+		$queryMenu.data?.map((m) => {
+			return {
+				label: m.name,
+				value: m.id.toString(),
+			};
+		}) ?? []
+	);
 </script>
 
 {#snippet header()}
@@ -138,7 +182,7 @@
 			placeholder="Search Menu Item..."
 			class="h-8 w-[150px] lg:w-[250px]"
 		/>
-		<!-- <Filter column={nameCol} title="Role" options={roles} /> -->
+		<MenuFilter column={menuCol} title="Menu" options={menus} />
 		<FilterReset {table} />
 	</div>
 {/snippet}
