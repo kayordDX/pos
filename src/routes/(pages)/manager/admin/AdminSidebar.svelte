@@ -11,6 +11,7 @@
 		UsersIcon,
 		NfcIcon,
 		NotebookTextIcon,
+		SquareMenuIcon,
 	} from "lucide-svelte";
 
 	const menuItems = [
@@ -42,7 +43,7 @@
 		{
 			title: "Menus",
 			href: "/manager/admin/menus",
-			icon: NotebookTextIcon,
+			icon: SquareMenuIcon,
 		},
 		{
 			title: "Menus Items",

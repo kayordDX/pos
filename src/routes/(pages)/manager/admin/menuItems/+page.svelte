@@ -95,8 +95,6 @@
 	let data = $derived($query.data?.items ?? []);
 	let rowCount = $derived($query.data?.totalCount ?? 0);
 
-	$inspect(data);
-
 	const table = createSvelteTable({
 		columns,
 		get data() {
@@ -134,10 +132,6 @@
 
 	const col = $derived(table.getColumn("name"));
 	const debouncedCb = debounce((value: string) => col?.setFilterValue(value), 300);
-
-	let qb = $state(new QueryBuilder(false, false));
-
-	$inspect(qb);
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);

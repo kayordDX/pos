@@ -23,10 +23,6 @@ export type ManagerOrderViewParams = {
 	divisionIds: number[];
 };
 
-export type MenuListParams = {
-	outletId: number;
-};
-
 export type MenuGetItemGetMenuItemsParams = {
 	id: number;
 };
@@ -44,6 +40,10 @@ export type MenuGetOutletMenuGetOutletMenusParams = {
 export type MenuGetSectionsGetMenusSectionsParams = {
 	menuId: number;
 	sectionId: number;
+};
+
+export type MenuListParams = {
+	outletId: number;
 };
 
 export type MenuItemGetAllParams = {
@@ -401,6 +401,7 @@ export interface ManagerOrderViewResponse {
 export interface MenuCreateRequest {
 	name: string;
 	outletId: number;
+	position: number;
 }
 
 export interface MenuGetRequest {
@@ -503,6 +504,7 @@ export interface MenuUpdateRequest {
 	 * @minLength 1
 	 */
 	name: string;
+	position: number;
 }
 
 export type MenuItemGetAllRequestAllOf = { [key: string]: unknown };
@@ -1012,19 +1014,6 @@ export interface TableBookingGetRequest {
 	[key: string]: unknown;
 }
 
-export interface TableBookingGetResponse {
-	bookingDate: string;
-	bookingName: string;
-	/** @nullable */
-	closeDate?: string | null;
-	id: number;
-	salesPeriodId: number;
-	table: ManagerOrderViewTableDTO;
-	tableId: number;
-	user: DTOUserDTO;
-	userId: string;
-}
-
 export interface TableBookingHistoryRequest {
 	[key: string]: unknown;
 }
@@ -1058,6 +1047,19 @@ export interface ManagerOrderViewTableDTO {
 	/** @nullable */
 	section?: ManagerOrderViewTableDTOSection;
 	tableId: number;
+}
+
+export interface TableBookingGetResponse {
+	bookingDate: string;
+	bookingName: string;
+	/** @nullable */
+	closeDate?: string | null;
+	id: number;
+	salesPeriodId: number;
+	table: ManagerOrderViewTableDTO;
+	tableId: number;
+	user: DTOUserDTO;
+	userId: string;
 }
 
 export interface TableBookingHistoryResponse {
@@ -1168,6 +1170,11 @@ export type EntitiesCashUpUserItemTypePaymentType = EntitiesPaymentType | null;
  */
 export type EntitiesCashUpUserItemTypeCashupConfig = EntitiesCashUpConfig | null;
 
+/**
+ * @nullable
+ */
+export type EntitiesCashUpUserItemTypeAdjustmentType = EntitiesAdjustmentType | null;
+
 export interface EntitiesCashUpUserItemType {
 	/** @nullable */
 	adjustmentType?: EntitiesCashUpUserItemTypeAdjustmentType;
@@ -1224,11 +1231,6 @@ export interface EntitiesAdjustmentType {
 	name: string;
 }
 
-/**
- * @nullable
- */
-export type EntitiesCashUpUserItemTypeAdjustmentType = EntitiesAdjustmentType | null;
-
 export interface EntitiesAdjustment {
 	adjustmentId: number;
 	adjustmentType: EntitiesAdjustmentType;
@@ -1252,14 +1254,6 @@ export interface EntitiesOrderItemStatus {
 	orderItemStatusId: number;
 	priority: number;
 	status: string;
-}
-
-export interface EntitiesOrderItemExtra {
-	extra: EntitiesExtra;
-	extraId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemExtraId: number;
-	orderItemId: number;
 }
 
 export interface EntitiesMenuItemExtraGroup {
@@ -1286,6 +1280,14 @@ export interface EntitiesExtra {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	positionId: number;
 	price: number;
+}
+
+export interface EntitiesOrderItemExtra {
+	extra: EntitiesExtra;
+	extraId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemExtraId: number;
+	orderItemId: number;
 }
 
 export interface EntitiesOrderItemOption {
@@ -1339,7 +1341,34 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
-export interface EntitiesMenu {
+export type EntitiesMenu = EntitiesAuditableEntity & EntitiesMenuAllOf;
+
+/**
+ * @nullable
+ */
+export type EntitiesMenuSectionAllOfParent = EntitiesMenuSection | null;
+
+export type EntitiesMenuSectionAllOf = {
+	menu: EntitiesMenu;
+	menuId: number;
+	/** @nullable */
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	parent?: EntitiesMenuSectionAllOfParent;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
+};
+
+export type EntitiesMenuSection = EntitiesAuditableEntity & EntitiesMenuSectionAllOf;
+
+export type EntitiesMenuAllOf = {
 	id: number;
 	/** @nullable */
 	menuSections?: EntitiesMenuSection[] | null;
@@ -1347,22 +1376,17 @@ export interface EntitiesMenu {
 	outlet: EntitiesOutlet;
 	outletId: number;
 	position: number;
-}
+};
 
 /**
  * @nullable
  */
-export type EntitiesMenuSectionParent = EntitiesMenuSection | null;
+export type EntitiesMenuItemAllOfDivision = EntitiesDivision | null;
 
-/**
- * @nullable
- */
-export type EntitiesMenuItemDivision = EntitiesDivision | null;
-
-export interface EntitiesMenuItem {
+export type EntitiesMenuItemAllOf = {
 	description: string;
 	/** @nullable */
-	division?: EntitiesMenuItemDivision;
+	division?: EntitiesMenuItemAllOfDivision;
 	/** @nullable */
 	divisionId?: number | null;
 	isAvailable: boolean;
@@ -1381,25 +1405,7 @@ export interface EntitiesMenuItem {
 	stockPrice: number;
 	/** @nullable */
 	tags?: EntitiesTag[] | null;
-}
-
-export interface EntitiesMenuSection {
-	menu: EntitiesMenu;
-	menuId: number;
-	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	parent?: EntitiesMenuSectionParent;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
-}
+};
 
 export interface EntitiesOrderGroup {
 	orderGroupId: number;
@@ -1421,6 +1427,8 @@ export interface EntitiesAuditableEntity {
 	/** @nullable */
 	lastModifiedBy?: string | null;
 }
+
+export type EntitiesMenuItem = EntitiesAuditableEntity & EntitiesMenuItemAllOf;
 
 export type EntitiesUserAllOf = {
 	email: string;
