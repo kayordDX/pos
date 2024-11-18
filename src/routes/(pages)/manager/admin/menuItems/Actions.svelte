@@ -1,21 +1,30 @@
 <script lang="ts">
-	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
+	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
 	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
 	import EditMenuItem from "./EditMenuItem.svelte";
+	import { createMenuItemDelete, type MenuItemMenuItemAdminDTO } from "$lib/api";
+	import { getError } from "$lib/types";
 
 	interface Props {
 		refetch: () => void;
-		menuItemId: number;
+		menuItem: MenuItemMenuItemAdminDTO;
 	}
 
-	let { menuItemId, refetch }: Props = $props();
+	let { menuItem, refetch }: Props = $props();
 
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
 
+	const deleteMutation = createMenuItemDelete();
 	const deleteMenuItem = async () => {
-		console.log("deleteting ", menuItemId);
-		refetch();
+		deleteOpen = false;
+		try {
+			await $deleteMutation.mutateAsync({ id: menuItem.menuItemId });
+			refetch();
+			toast.message("Menu Item Deleted");
+		} catch (error) {
+			toast.error(getError(error).message);
+		}
 	};
 </script>
 
@@ -54,4 +63,4 @@
 	</AlertDialog.Content>
 </AlertDialog.Root>
 
-<EditMenuItem {refetch} bind:open={editOpen} />
+<EditMenuItem {refetch} bind:open={editOpen} {menuItem} />

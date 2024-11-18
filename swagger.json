@@ -3804,6 +3804,55 @@
       }
     },
     "/menuItem": {
+      "put": {
+        "tags": [
+          "Menuitem"
+        ],
+        "operationId": "MenuItemUpdate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItemUpdateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesMenuItem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
       "get": {
         "tags": [
           "Menuitem"
@@ -3858,6 +3907,114 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Menuitem"
+        ],
+        "operationId": "MenuItemCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MenuItemCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesMenuItem"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/menuItem/{id}": {
+      "delete": {
+        "tags": [
+          "Menuitem"
+        ],
+        "operationId": "MenuItemDelete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesMenuSection"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "500": {
             "description": "Server Error",
@@ -4600,6 +4757,47 @@
                   "type": "array",
                   "items": {
                     "$ref": "#/components/schemas/EntitiesExtra"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/division": {
+      "get": {
+        "tags": [
+          "Division"
+        ],
+        "operationId": "DivisionGetAll",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntitiesDivision"
                   }
                 }
               }
@@ -7898,6 +8096,7 @@
             "additionalProperties": false,
             "required": [
               "menuSectionId",
+              "name",
               "menu",
               "menuId"
             ],
@@ -7907,8 +8106,7 @@
                 "format": "int32"
               },
               "name": {
-                "type": "string",
-                "nullable": true
+                "type": "string"
               },
               "menu": {
                 "$ref": "#/components/schemas/EntitiesMenu"
@@ -10250,6 +10448,60 @@
           }
         }
       },
+      "MenuItemUpdateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "menuSectionId",
+          "name",
+          "description",
+          "price",
+          "positionId",
+          "isAvailable",
+          "isEnabled",
+          "stockPrice"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "positionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isAvailable": {
+            "type": "boolean"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          },
+          "stockPrice": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
       "CommonModelsPaginatedListOfMenuItemAdminDTO": {
         "type": "object",
         "additionalProperties": false,
@@ -10530,6 +10782,59 @@
             "additionalProperties": false
           }
         ]
+      },
+      "MenuItemDeleteRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "MenuItemCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "menuSectionId",
+          "name",
+          "description",
+          "price",
+          "positionId",
+          "isAvailable",
+          "isEnabled",
+          "stockPrice"
+        ],
+        "properties": {
+          "menuSectionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "positionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isAvailable": {
+            "type": "boolean"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          },
+          "stockPrice": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
       },
       "MenuUpdateRequest": {
         "type": "object",

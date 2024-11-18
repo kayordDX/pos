@@ -1116,9 +1116,25 @@ export interface paths {
             cookie?: never;
         };
         get: operations["MenuItemGetAll"];
+        put: operations["MenuItemUpdate"];
+        post: operations["MenuItemCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/menuItem/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["MenuItemDelete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1292,6 +1308,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["ExtraGetAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/division": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DivisionGetAll"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2209,7 +2241,7 @@ export interface components {
         EntitiesMenuSection: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
             menuSectionId: number;
-            name?: string | null;
+            name: string;
             menu: components["schemas"]["EntitiesMenu"];
             /** Format: int32 */
             menuId: number;
@@ -2874,6 +2906,24 @@ export interface components {
         NotificationAddUserRequest: {
             token: string;
         };
+        MenuItemUpdateRequest: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            menuSectionId: number;
+            name: string;
+            description: string;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            positionId: number;
+            /** Format: int32 */
+            divisionId?: number | null;
+            isAvailable: boolean;
+            isEnabled: boolean;
+            /** Format: decimal */
+            stockPrice: number;
+        };
         CommonModelsPaginatedListOfMenuItemAdminDTO: {
             items: components["schemas"]["MenuItemMenuItemAdminDTO"][];
             /** Format: int32 */
@@ -2956,6 +3006,23 @@ export interface components {
             extras: components["schemas"]["DTOExtraDTO"][];
         };
         MenuItemGetAllRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        MenuItemDeleteRequest: Record<string, never>;
+        MenuItemCreateRequest: {
+            /** Format: int32 */
+            menuSectionId: number;
+            name: string;
+            description: string;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            positionId: number;
+            /** Format: int32 */
+            divisionId?: number | null;
+            isAvailable: boolean;
+            isEnabled: boolean;
+            /** Format: decimal */
+            stockPrice: number;
+        };
         MenuUpdateRequest: {
             /** Format: int32 */
             id: number;
@@ -6190,6 +6257,133 @@ export interface operations {
             };
         };
     };
+    MenuItemUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MenuItemUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenuItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuItemCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MenuItemCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenuItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuItemDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenuSection"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     MenuList: {
         parameters: {
             query: {
@@ -6735,6 +6929,42 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesExtra"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    DivisionGetAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesDivision"][];
                 };
             };
             /** @description Unauthorized */

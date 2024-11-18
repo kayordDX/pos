@@ -7,9 +7,11 @@
 		getCoreRowModel,
 		type Updater,
 		type PaginationState,
+		type SortingState,
 		type ColumnFiltersState,
 		getPaginationRowModel,
 		getFilteredRowModel,
+		getSortedRowModel,
 	} from "@tanstack/table-core";
 	import Price from "./Price.svelte";
 	import IsEnabled from "./IsEnabled.svelte";
@@ -59,21 +61,24 @@
 		{
 			header: "Menu",
 			accessorKey: "menuSection.menu.name",
+			enableSorting: false,
 		},
 		{
 			header: "Menu",
 			accessorKey: "menuSection.menuId",
 			id: "menuId",
+			enableSorting: false,
 		},
 		{
 			header: "",
 			accessorKey: "menuItemId",
 			cell: (item) =>
 				renderComponent(Actions, {
-					menuItemId: item.getValue<number>(),
+					menuItem: item.row.original,
 					refetch: $query.refetch,
 				}),
 			size: 10,
+			enableSorting: false,
 		},
 	];
 
@@ -84,14 +89,24 @@
 		} else pagination = updater;
 	};
 
+	let sorting: SortingState = $state([]);
+	const setSorting = (updater: Updater<SortingState>) => {
+		if (updater instanceof Function) {
+			sorting = updater(sorting);
+		} else sorting = updater;
+	};
+
 	let columnFilters = $state<ColumnFiltersState>([]);
 	let filters = $state("");
+
+	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id}`).join(","));
 
 	const query = $derived(
 		createMenuItemGetAll({
 			page: pagination.pageIndex + 1,
 			pageSize: 10,
 			filters,
+			sorts,
 		})
 	);
 	let data = $derived($query.data?.items ?? []);
@@ -113,10 +128,15 @@
 		},
 		manualPagination: true,
 		manualFiltering: true,
+		manualSorting: true,
+		getSortedRowModel: getSortedRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			get pagination() {
 				return pagination;
+			},
+			get sorting() {
+				return sorting;
 			},
 			get columnFilters() {
 				return columnFilters;
@@ -129,6 +149,7 @@
 			return rowCount;
 		},
 		onPaginationChange: setPagination,
+		onSortingChange: setSorting,
 		enableRowSelection: false,
 	});
 

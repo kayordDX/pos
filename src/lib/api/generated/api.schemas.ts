@@ -530,6 +530,23 @@ export interface MenuUpdateRequest {
 	position: number;
 }
 
+export interface MenuItemCreateRequest {
+	description: string;
+	/** @nullable */
+	divisionId?: number | null;
+	isAvailable: boolean;
+	isEnabled: boolean;
+	menuSectionId: number;
+	name: string;
+	positionId: number;
+	price: number;
+	stockPrice: number;
+}
+
+export interface MenuItemDeleteRequest {
+	[key: string]: unknown;
+}
+
 export type MenuItemGetAllRequestAllOf = { [key: string]: unknown };
 
 export type MenuItemGetAllRequest = CommonModelsQueryModel & MenuItemGetAllRequestAllOf;
@@ -599,6 +616,20 @@ export interface CommonModelsPaginatedListOfMenuItemAdminDTO {
 	pageNumber: number;
 	totalCount: number;
 	totalPages: number;
+}
+
+export interface MenuItemUpdateRequest {
+	description: string;
+	/** @nullable */
+	divisionId?: number | null;
+	id: number;
+	isAvailable: boolean;
+	isEnabled: boolean;
+	menuSectionId: number;
+	name: string;
+	positionId: number;
+	price: number;
+	stockPrice: number;
 }
 
 export interface NotificationAddUserRequest {
@@ -1369,8 +1400,7 @@ export type EntitiesMenuSectionAllOf = {
 	/** @nullable */
 	menuItems?: EntitiesMenuItem[] | null;
 	menuSectionId: number;
-	/** @nullable */
-	name?: string | null;
+	name: string;
 	/** @nullable */
 	parent?: EntitiesMenuSectionAllOfParent;
 	/** @nullable */

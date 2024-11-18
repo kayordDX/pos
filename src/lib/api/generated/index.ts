@@ -22,6 +22,7 @@ export * from "./menu";
 export * from "./menusection";
 export * from "./manager";
 export * from "./extra";
+export * from "./division";
 export * from "./clock";
 export * from "./cashup";
 export * from "./business";

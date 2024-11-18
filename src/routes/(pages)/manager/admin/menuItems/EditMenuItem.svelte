@@ -7,10 +7,11 @@
 	import { z } from "zod";
 	import { status } from "$lib/stores/status.svelte";
 	import {
-		createMenuUpdate,
-		createMenuCreate,
+		createMenuItemUpdate,
+		createMenuItemCreate,
 		createMenuList,
 		createMenuGetSectionsGetMenusSections,
+		createDivisionGetAll,
 	} from "$lib/api";
 
 	interface Props {
@@ -22,17 +23,18 @@
 
 	const isEdit = $derived(menuItem != null);
 
-	const editMutation = createMenuUpdate();
-	const createMutation = createMenuCreate();
+	const editMutation = createMenuItemUpdate();
+	const createMutation = createMenuItemCreate();
 
 	const schema = z.object({
 		name: z.string().min(1, { message: "Name is Required" }),
-		menuId: z.number(),
-		menuSectionId: z.number(),
+		menuId: z.coerce.number(),
+		menuSectionId: z.coerce.number(),
+		divisionId: z.coerce.number(),
 		description: z.string().min(1, { message: "Description is Required" }),
 		price: z.number(),
 		stockPrice: z.number(),
-		IsEnabled: z.boolean(),
+		isEnabled: z.boolean(),
 		isAvailable: z.boolean(),
 		positionId: z.number(),
 	});
@@ -42,14 +44,35 @@
 		try {
 			open = false;
 			if (isEdit) {
-				// await $editMutation.mutateAsync({
-				// 	data: { id: menuItem?.id ?? 0, name: data.name, position: data.position },
-				// });
+				await $editMutation.mutateAsync({
+					data: {
+						id: menuItem?.menuItemId ?? 0,
+						name: data.name,
+						menuSectionId: data.menuSectionId,
+						divisionId: data.divisionId,
+						description: data.description,
+						price: data.price,
+						stockPrice: data.stockPrice,
+						isEnabled: data.isEnabled,
+						isAvailable: data.isAvailable,
+						positionId: data.positionId,
+					},
+				});
 				toast.info("Edited Menu");
 			} else {
-				// await $createMutation.mutateAsync({
-				// 	data: { name: data.name, outletId: status.value.outletId, position: data.position },
-				// });
+				await $createMutation.mutateAsync({
+					data: {
+						name: data.name,
+						menuSectionId: data.menuSectionId,
+						divisionId: data.divisionId,
+						description: data.description,
+						price: data.price,
+						stockPrice: data.stockPrice,
+						isEnabled: data.isEnabled,
+						isAvailable: data.isAvailable,
+						positionId: data.positionId,
+					},
+				});
 				toast.info("Added Menu");
 			}
 			refetch();
@@ -59,14 +82,23 @@
 	};
 
 	const defaultValues = $derived({
-		name: menuItem?.name,
-		position: menuItem?.position,
+		name: menuItem?.name ?? "",
+		menuId: menuItem?.menuSection.menuId ?? 0,
+		menuSectionId: menuItem?.menuSectionId ?? 0,
+		divisionId: menuItem?.divisionId ?? 0,
+		description: menuItem?.description ?? "",
+		price: menuItem?.price ?? 0,
+		stockPrice: menuItem?.stockPrice ?? 0,
+		isEnabled: menuItem?.isEnabled ?? true,
+		isAvailable: menuItem?.isAvailable ?? true,
+		positionId: menuItem?.position ?? 0,
 	});
 
 	// svelte-ignore state_referenced_locally
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		resetForm: false,
 		onUpdate({ form }) {
 			if (form.valid) {
 				updateMenu(form.data);
@@ -77,7 +109,7 @@
 	const { form: formData, enhance, reset } = form;
 
 	$effect(() => {
-		if (open == true) {
+		if (open == true && isEdit) {
 			reset({ data: defaultValues });
 		}
 	});
@@ -111,9 +143,24 @@
 		);
 	});
 
+	const divisionQuery = createDivisionGetAll();
+	const divisionList = $derived.by(() => {
+		return (
+			$divisionQuery.data?.map((m) => {
+				return {
+					label: m.divisionName,
+					value: m.divisionId.toString(),
+				};
+			}) ?? []
+		);
+	});
+
 	const menuValue = $derived(menuList.find((i) => i.value == $formData.menuId.toString())?.label);
 	const sectionValue = $derived(
 		sectionList.find((i) => i.value == $formData.menuSectionId.toString())?.label
+	);
+	const divisionValue = $derived(
+		divisionList.find((i) => i.value == $formData.divisionId.toString())?.label
 	);
 </script>
 
@@ -130,9 +177,14 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Menu</Form.Label>
-							<Select.Root type="single" name="menuId" bind:value={$formData.menuId}>
+							<Select.Root
+								type="single"
+								name="menuId"
+								bind:value={$formData.menuId}
+								allowDeselect={false}
+							>
 								<Select.Trigger {...props}>
-									{menuValue ? menuValue : "Select a menuId"}
+									{menuValue ? menuValue : "Select Menu"}
 								</Select.Trigger>
 								<Select.Content>
 									{#each menuList as menu}
@@ -148,13 +200,41 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Section</Form.Label>
-							<Select.Root type="single" name="menuSectionId" bind:value={$formData.menuSectionId}>
+							<Select.Root
+								type="single"
+								name="menuSectionId"
+								bind:value={$formData.menuSectionId}
+								allowDeselect={false}
+							>
 								<Select.Trigger {...props}>
-									{sectionValue ? sectionValue : "Select a Section"}
+									{sectionValue ? sectionValue : "Select Section"}
 								</Select.Trigger>
 								<Select.Content>
 									{#each sectionList as section}
 										<Select.Item value={section.value}>{section.label}</Select.Item>
+									{/each}
+								</Select.Content>
+							</Select.Root>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Form.Field {form} name="divisionId">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Division</Form.Label>
+							<Select.Root
+								type="single"
+								name="divisionId"
+								bind:value={$formData.divisionId}
+								allowDeselect={false}
+							>
+								<Select.Trigger {...props}>
+									{divisionValue ? divisionValue : "Select Division"}
+								</Select.Trigger>
+								<Select.Content>
+									{#each divisionList as division}
+										<Select.Item value={division.value}>{division.label}</Select.Item>
 									{/each}
 								</Select.Content>
 							</Select.Root>
@@ -198,11 +278,11 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<Form.Field {form} name="IsEnabled">
+				<Form.Field {form} name="isEnabled">
 					<Form.Control>
 						{#snippet children({ props })}
 							<div class="flex items-center gap-2">
-								<Checkbox {...props} bind:checked={$formData.IsEnabled} />
+								<Checkbox {...props} bind:checked={$formData.isEnabled} />
 								<Form.Label>Enabled</Form.Label>
 							</div>
 						{/snippet}
@@ -216,6 +296,15 @@
 								<Checkbox {...props} bind:checked={$formData.isAvailable} />
 								<Form.Label>Available</Form.Label>
 							</div>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Form.Field {form} name="positionId">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Position</Form.Label>
+							<Input {...props} type="number" step="1" bind:value={$formData.positionId} />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
