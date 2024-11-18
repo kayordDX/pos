@@ -19,6 +19,7 @@ export * from "./outlet";
 export * from "./notification";
 export * from "./menuitem";
 export * from "./menu";
+export * from "./menusection";
 export * from "./manager";
 export * from "./extra";
 export * from "./clock";

@@ -19,6 +19,14 @@
 		<EditMenu refetch={$query.refetch} bind:open={addOpen} />
 	</div>
 	<div class="flex flex-col gap-2 mt-2">
+		{#if $query.data?.length == 0}
+			<Card.Root>
+				<Card.Header class="pb-6">
+					<Card.Title>No Sections</Card.Title>
+					<Card.Description>There are currently no sections in this menu</Card.Description>
+				</Card.Header>
+			</Card.Root>
+		{/if}
 		{#each $query.data ?? [] as menu}
 			<Card.Root class="p-2 flex items-center justify-between">
 				{menu.name}

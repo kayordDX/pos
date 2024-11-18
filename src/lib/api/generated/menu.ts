@@ -509,3 +509,61 @@ export function createMenuGet<
 
 	return query;
 }
+
+export const menuDelete = (id: number) => {
+	return customInstance<unknown>({ url: `/menu/${id}`, method: "DELETE" });
+};
+
+export const getMenuDeleteMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof menuDelete>>,
+		TError,
+		{ id: number },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof menuDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const { mutation: mutationOptions } = options ?? {};
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuDelete>>, { id: number }> = (
+		props
+	) => {
+		const { id } = props ?? {};
+
+		return menuDelete(id);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type MenuDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof menuDelete>>>;
+
+export type MenuDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createMenuDelete = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof menuDelete>>,
+		TError,
+		{ id: number },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof menuDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationOptions = getMenuDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};

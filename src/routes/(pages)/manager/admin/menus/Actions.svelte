@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import type { EntitiesMenu } from "$lib/api";
-	import { Button, DropdownMenu } from "@kayord/ui";
+	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
 	import { EllipsisVerticalIcon, EqualIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
 	import EditMenu from "./EditMenu.svelte";
+	import { createMenuDelete } from "$lib/api";
+	import { getError } from "$lib/types";
 
 	interface Props {
 		refetch: () => void;
@@ -14,6 +16,18 @@
 
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
+
+	const deleteMutation = createMenuDelete();
+	const deleteMenu = async () => {
+		deleteOpen = false;
+		try {
+			await $deleteMutation.mutateAsync({ id: menu.id });
+			refetch();
+			toast.message("Menu Deleted");
+		} catch (error) {
+			toast.error(getError(error).message);
+		}
+	};
 </script>
 
 <DropdownMenu.Root>
@@ -32,3 +46,20 @@
 </DropdownMenu.Root>
 
 <EditMenu {refetch} bind:open={editOpen} {menu} />
+
+<AlertDialog.Root bind:open={deleteOpen}>
+	<AlertDialog.Content>
+		<AlertDialog.Header>
+			<AlertDialog.Title>Delete Menu?</AlertDialog.Title>
+			<AlertDialog.Description>
+				This will delete menu only if it does not contain any sections.
+			</AlertDialog.Description>
+		</AlertDialog.Header>
+		<AlertDialog.Footer>
+			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+			<AlertDialog.Action class="bg-destructive text-destructive-foreground" onclick={deleteMenu}>
+				Delete
+			</AlertDialog.Action>
+		</AlertDialog.Footer>
+	</AlertDialog.Content>
+</AlertDialog.Root>

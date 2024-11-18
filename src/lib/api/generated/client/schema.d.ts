@@ -1140,6 +1140,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/menuSection": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["MenuSectionsUpdate"];
+        post: operations["MenuSectionsCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/menuSection/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["MenuSectionsDelete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/menu/sections": {
         parameters: {
             query?: never;
@@ -1215,6 +1247,22 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/menu/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["MenuDelete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2915,6 +2963,21 @@ export interface components {
             /** Format: int32 */
             position: number;
         };
+        MenuSectionsUpdateRequest: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            positionId?: number | null;
+        };
+        MenuSectionsDeleteRequest: Record<string, never>;
+        MenuSectionsCreateRequest: {
+            name: string;
+            /** Format: int32 */
+            menuId: number;
+            /** Format: int32 */
+            positionId?: number | null;
+        };
         MenuGetSectionsResponse: {
             sections?: components["schemas"]["DTOMenuSectionDTO"][] | null;
             parents?: components["schemas"]["DTOMenuSectionDTO"][] | null;
@@ -2922,12 +2985,14 @@ export interface components {
         DTOMenuSectionDTO: {
             /** Format: int32 */
             menuSectionId: number;
-            name?: string | null;
+            name: string;
             /** Format: int32 */
             menuId: number;
             /** Format: int32 */
             parentId?: number | null;
             parent?: components["schemas"]["DTOMenuSectionParentDTO"] | null;
+            /** Format: int32 */
+            positionId?: number | null;
         };
         DTOMenuSectionParentDTO: {
             /** Format: int32 */
@@ -2982,6 +3047,7 @@ export interface components {
         MenuGetItemRequest: Record<string, never>;
         MenuListRequest: Record<string, never>;
         MenuGetRequest: Record<string, never>;
+        MenuDeleteRequest: Record<string, never>;
         MenuCreateRequest: {
             /** Format: int32 */
             outletId: number;
@@ -6251,6 +6317,133 @@ export interface operations {
             };
         };
     };
+    MenuSectionsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MenuSectionsUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenuSection"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuSectionsCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["MenuSectionsCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenuSection"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuSectionsDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesMenuSection"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     MenuGetSectionsGetMenusSections: {
         parameters: {
             query: {
@@ -6417,6 +6610,54 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesMenu"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    MenuDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */
