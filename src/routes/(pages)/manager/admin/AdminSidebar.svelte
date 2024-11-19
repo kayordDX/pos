@@ -109,16 +109,14 @@
 						<Collapsible.Root class="group/collapsible">
 							<Sidebar.MenuItem>
 								<Collapsible.Trigger>
-									{#snippet child({ props })}
-										<Sidebar.MenuButton {...props}>
-											{#if item.icon}
-												<item.icon class="!size-6" />
-											{/if}
-											{item.title}
-											<Plus class="ml-auto group-data-[state=open]/collapsible:hidden" />
-											<Minus class="ml-auto group-data-[state=closed]/collapsible:hidden" />
-										</Sidebar.MenuButton>
-									{/snippet}
+									<Sidebar.MenuButton>
+										{#if item.icon}
+											<item.icon class="!size-6" />
+										{/if}
+										{item.title}
+										<Plus class="ml-auto group-data-[state=open]/collapsible:hidden" />
+										<Minus class="ml-auto group-data-[state=closed]/collapsible:hidden" />
+									</Sidebar.MenuButton>
 								</Collapsible.Trigger>
 								{#if item.items?.length}
 									<Collapsible.Content>
@@ -177,5 +175,7 @@
 		</Sidebar.GroupContent>
 		<Sidebar.Group />
 	</Sidebar.Content>
-	<Sidebar.Footer class="bg-secondary" />
+	<Sidebar.Footer class="bg-secondary text-sm text-muted-foreground">
+		Powered by Kayord
+	</Sidebar.Footer>
 </Sidebar.Root>
