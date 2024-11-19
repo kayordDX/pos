@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { page } from "$app/stores";
-	import { Sidebar } from "@kayord/ui";
+	import { Collapsible, Sidebar } from "@kayord/ui";
 	const sidebar = Sidebar.useSidebar();
 
 	import {
@@ -12,6 +12,11 @@
 		NfcIcon,
 		NotebookTextIcon,
 		SquareMenuIcon,
+		Plus,
+		Minus,
+		BookCopyIcon,
+		CirclePlusIcon,
+		ToggleRightIcon,
 	} from "lucide-svelte";
 
 	const menuItems = [
@@ -41,19 +46,41 @@
 			icon: NfcIcon,
 		},
 		{
-			title: "Menus",
-			href: "/manager/admin/menus",
-			icon: SquareMenuIcon,
-		},
-		{
-			title: "Menus Items",
-			href: "/manager/admin/menuItems",
-			icon: NotebookTextIcon,
+			title: "Menu",
+			href: "",
+			icon: BookCopyIcon,
+			items: [
+				{
+					title: "Menus Items",
+					href: "/manager/admin/menuItems",
+					icon: NotebookTextIcon,
+				},
+				{
+					title: "Menus",
+					href: "/manager/admin/menus",
+					icon: SquareMenuIcon,
+				},
+				// {
+				// 	title: "Extras",
+				// 	href: "/manager/admin/extras",
+				// 	icon: CirclePlusIcon,
+				// },
+				// {
+				// 	title: "Options",
+				// 	href: "/manager/admin/options",
+				// 	icon: ToggleRightIcon,
+				// },
+			],
 		},
 	];
 
 	let activeItem = $derived.by(() => {
 		for (const item of menuItems) {
+			for (const subItem of item.items ?? []) {
+				if ($page.route.id?.endsWith(subItem.href)) {
+					return subItem;
+				}
+			}
 			if ($page.route.id?.endsWith(item.href)) {
 				return item;
 			}
@@ -78,29 +105,73 @@
 		<Sidebar.GroupContent>
 			<Sidebar.Menu class="px-2">
 				{#each menuItems as item (item.href)}
-					<Sidebar.MenuItem>
-						<Sidebar.MenuButton
-							class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-sm"
-							tooltipContentProps={{
-								hidden: false,
-							}}
-							onclick={() => {
-								goto(item.href);
-								if (sidebar.isMobile) {
-									sidebar.setOpenMobile(false);
-								}
-							}}
-							isActive={activeItem?.title === item.title}
-						>
-							{#snippet tooltipContent()}
-								{item.title}
-							{/snippet}
-							{#if item.icon}
-								<item.icon class="!size-6" />
-							{/if}
-							<span>{item.title}</span>
-						</Sidebar.MenuButton>
-					</Sidebar.MenuItem>
+					{#if (item.items?.length ?? 0) > 0}
+						<Collapsible.Root class="group/collapsible">
+							<Sidebar.MenuItem>
+								<Collapsible.Trigger>
+									{#snippet child({ props })}
+										<Sidebar.MenuButton {...props}>
+											{#if item.icon}
+												<item.icon class="!size-6" />
+											{/if}
+											{item.title}
+											<Plus class="ml-auto group-data-[state=open]/collapsible:hidden" />
+											<Minus class="ml-auto group-data-[state=closed]/collapsible:hidden" />
+										</Sidebar.MenuButton>
+									{/snippet}
+								</Collapsible.Trigger>
+								{#if item.items?.length}
+									<Collapsible.Content>
+										<Sidebar.MenuSub>
+											{#each item.items as subItem (subItem.title)}
+												<Sidebar.MenuSubItem>
+													<Sidebar.MenuSubButton
+														class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-sm cursor-pointer"
+														onclick={() => {
+															goto(subItem.href);
+															if (sidebar.isMobile) {
+																sidebar.setOpenMobile(false);
+															}
+														}}
+														isActive={activeItem?.title === subItem.title}
+													>
+														{#if subItem.icon}
+															<subItem.icon class="!size-6" />
+														{/if}
+														<span>{subItem.title}</span>
+													</Sidebar.MenuSubButton>
+												</Sidebar.MenuSubItem>
+											{/each}
+										</Sidebar.MenuSub>
+									</Collapsible.Content>
+								{/if}
+							</Sidebar.MenuItem>
+						</Collapsible.Root>
+					{:else}
+						<Sidebar.MenuItem>
+							<Sidebar.MenuButton
+								class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-sm"
+								tooltipContentProps={{
+									hidden: false,
+								}}
+								onclick={() => {
+									goto(item.href);
+									if (sidebar.isMobile) {
+										sidebar.setOpenMobile(false);
+									}
+								}}
+								isActive={activeItem?.title === item.title}
+							>
+								{#snippet tooltipContent()}
+									{item.title}
+								{/snippet}
+								{#if item.icon}
+									<item.icon class="!size-6" />
+								{/if}
+								<span>{item.title}</span>
+							</Sidebar.MenuButton>
+						</Sidebar.MenuItem>
+					{/if}
 				{/each}
 			</Sidebar.Menu>
 		</Sidebar.GroupContent>
