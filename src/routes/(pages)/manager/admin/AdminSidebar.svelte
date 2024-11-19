@@ -108,7 +108,7 @@
 					{#if (item.items?.length ?? 0) > 0}
 						<Collapsible.Root class="group/collapsible">
 							<Sidebar.MenuItem>
-								<Collapsible.Trigger>
+								<Collapsible.Trigger class="w-full flex items-center justify-between">
 									<Sidebar.MenuButton>
 										{#if item.icon}
 											<item.icon class="!size-6" />
