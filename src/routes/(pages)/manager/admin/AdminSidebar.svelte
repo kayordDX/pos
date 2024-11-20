@@ -60,28 +60,29 @@
 					href: "/manager/admin/menus",
 					icon: SquareMenuIcon,
 				},
-				// {
-				// 	title: "Extras",
-				// 	href: "/manager/admin/extras",
-				// 	icon: CirclePlusIcon,
-				// },
-				// {
-				// 	title: "Options",
-				// 	href: "/manager/admin/options",
-				// 	icon: ToggleRightIcon,
-				// },
+				{
+					title: "Extras",
+					href: "/manager/admin/extras",
+					icon: CirclePlusIcon,
+				},
+				{
+					title: "Options",
+					href: "/manager/admin/options",
+					icon: ToggleRightIcon,
+				},
 			],
 		},
 	];
 
 	let activeItem = $derived.by(() => {
+		const routeId = $page.route.id?.replaceAll("/[Id]", "");
 		for (const item of menuItems) {
 			for (const subItem of item.items ?? []) {
-				if ($page.route.id?.endsWith(subItem.href)) {
+				if (routeId?.endsWith(subItem.href)) {
 					return subItem;
 				}
 			}
-			if ($page.route.id?.endsWith(item.href)) {
+			if (routeId?.endsWith(item.href)) {
 				return item;
 			}
 		}

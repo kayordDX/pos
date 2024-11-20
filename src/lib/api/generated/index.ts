@@ -16,6 +16,7 @@ export * from "./role";
 export * from "./printer";
 export * from "./pay";
 export * from "./outlet";
+export * from "./option";
 export * from "./notification";
 export * from "./menuitem";
 export * from "./menu";

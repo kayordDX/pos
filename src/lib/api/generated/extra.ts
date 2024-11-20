@@ -14,9 +14,114 @@ import type {
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
-import type { EntitiesExtra, InternalErrorResponse } from "./api.schemas";
+import type {
+	DTOExtraDTO,
+	DTOExtraGroupAdminDTO,
+	EntitiesExtra,
+	InternalErrorResponse,
+} from "./api.schemas";
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType } from "../mutator/customInstance.svelte";
+
+export const extraItems = (id: number) => {
+	return customInstance<DTOExtraDTO[]>({ url: `/extra/${id}`, method: "GET" });
+};
+
+export const getExtraItemsQueryKey = (id: number) => {
+	return [`/extra/${id}`] as const;
+};
+
+export const getExtraItemsQueryOptions = <
+	TData = Awaited<ReturnType<typeof extraItems>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData>>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getExtraItemsQueryKey(id);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraItems>>> = () => extraItems(id);
+
+	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof extraItems>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type ExtraItemsQueryResult = NonNullable<Awaited<ReturnType<typeof extraItems>>>;
+export type ExtraItemsQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createExtraItems<
+	TData = Awaited<ReturnType<typeof extraItems>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData>>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+	const queryOptions = getExtraItemsQueryOptions(id, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const extraGroup = () => {
+	return customInstance<DTOExtraGroupAdminDTO[]>({ url: `/extra`, method: "GET" });
+};
+
+export const getExtraGroupQueryKey = () => {
+	return [`/extra`] as const;
+};
+
+export const getExtraGroupQueryOptions = <
+	TData = Awaited<ReturnType<typeof extraGroup>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData>>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getExtraGroupQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGroup>>> = () => extraGroup();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof extraGroup>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData> };
+};
+
+export type ExtraGroupQueryResult = NonNullable<Awaited<ReturnType<typeof extraGroup>>>;
+export type ExtraGroupQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createExtraGroup<
+	TData = Awaited<ReturnType<typeof extraGroup>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData>>;
+}): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData> } {
+	const queryOptions = getExtraGroupQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
 
 export const extraGetAll = () => {
 	return customInstance<EntitiesExtra[]>({ url: `/extra/all`, method: "GET" });

@@ -1028,6 +1028,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/option/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["OptionItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/option": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["OptionGroup"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/notification/user": {
         parameters: {
             query?: never;
@@ -1292,6 +1324,38 @@ export interface paths {
             cookie?: never;
         };
         get: operations["ManagerOrderView"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/extra/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExtraItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/extra": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExtraGroup"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1927,6 +1991,8 @@ export interface components {
             /** Format: decimal */
             price: number;
             /** Format: int32 */
+            positionId: number;
+            /** Format: int32 */
             optionGroupId: number;
             optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
         };
@@ -1934,6 +2000,10 @@ export interface components {
             /** Format: int32 */
             optionGroupId: number;
             name: string;
+            /** Format: int32 */
+            minSelections: number;
+            /** Format: int32 */
+            maxSelections: number;
         };
         DTOOrderItemExtraDTO: {
             /** Format: int32 */
@@ -2297,6 +2367,8 @@ export interface components {
             maxSelections: number;
             options: components["schemas"]["EntitiesOption"][];
             menuItemOptionGroups?: components["schemas"]["EntitiesMenuItemOptionGroup"][] | null;
+            /** Format: int32 */
+            outletId: number;
         };
         EntitiesOption: {
             /** Format: int32 */
@@ -2310,6 +2382,8 @@ export interface components {
             optionGroupId: number;
             optionGroup: components["schemas"]["EntitiesOptionGroup"];
             orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
+            /** Format: int32 */
+            outletId: number;
         };
         EntitiesOrderItemOption: {
             /** Format: int32 */
@@ -2335,6 +2409,8 @@ export interface components {
             name: string;
             extras: components["schemas"]["EntitiesExtra"][];
             menuItemExtraGroups?: components["schemas"]["EntitiesMenuItemExtraGroup"][] | null;
+            /** Format: int32 */
+            outletId: number;
         };
         EntitiesExtra: {
             /** Format: int32 */
@@ -2348,6 +2424,8 @@ export interface components {
             extraGroupId: number;
             extraGroup: components["schemas"]["EntitiesExtraGroup"];
             orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
+            /** Format: int32 */
+            outletId: number;
         };
         EntitiesOrderItemExtra: {
             /** Format: int32 */
@@ -2891,6 +2969,7 @@ export interface components {
             /** Format: int32 */
             businessId: number;
         };
+        OptionItemsRequest: Record<string, never>;
         NotificationUserRequest: {
             message: string;
             userId: string;
@@ -3187,6 +3266,13 @@ export interface components {
             status: string;
         };
         ManagerOrderViewRequest: Record<string, never>;
+        ExtraItemsRequest: Record<string, never>;
+        DTOExtraGroupAdminDTO: {
+            /** Format: int32 */
+            extraGroupId: number;
+            name: string;
+            isGlobal: boolean;
+        };
         ClockListRequest: Record<string, never>;
         EntitiesClock: {
             /** Format: int32 */
@@ -6048,6 +6134,80 @@ export interface operations {
             };
         };
     };
+    OptionItems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOOptionDTO"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    OptionGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOOptionGroupBasicDTO"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     NotificationUser: {
         parameters: {
             query?: never;
@@ -6893,6 +7053,80 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ManagerOrderViewResponse"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraItems: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOExtraDTO"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOExtraGroupAdminDTO"][];
                 };
             };
             /** @description Unauthorized */
