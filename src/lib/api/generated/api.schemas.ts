@@ -337,6 +337,52 @@ export interface ClockListRequest {
 	[key: string]: unknown;
 }
 
+export interface ExtraCreateRequest {
+	extraGroupId: number;
+	name: string;
+	outletId: number;
+	positionId: number;
+	price: number;
+}
+
+export interface ExtraDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface DTOExtraGroupAdminDTO {
+	extraGroupId: number;
+	isGlobal: boolean;
+	name: string;
+}
+
+export interface ExtraGroupCreateRequest {
+	isGlobal: boolean;
+	name: string;
+}
+
+export interface ExtraGroupDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface ExtraGroupUpdateRequest {
+	extraGroupId: number;
+	isGlobal: boolean;
+	name: string;
+}
+
+export interface ExtraItemsRequest {
+	[key: string]: unknown;
+}
+
+export interface ExtraUpdateRequest {
+	extraGroupId: number;
+	extraId: number;
+	name: string;
+	outletId: number;
+	positionId: number;
+	price: number;
+}
+
 export interface ManagerOrderViewRequest {
 	[key: string]: unknown;
 }
@@ -534,13 +580,14 @@ export interface MenuItemCreateRequest {
 	description: string;
 	/** @nullable */
 	divisionId?: number | null;
+	/** @nullable */
+	extraGroupIds?: number[] | null;
 	isAvailable: boolean;
 	isEnabled: boolean;
 	menuSectionId: number;
 	name: string;
 	positionId: number;
 	price: number;
-	stockPrice: number;
 }
 
 export interface MenuItemDeleteRequest {
@@ -622,6 +669,8 @@ export interface MenuItemUpdateRequest {
 	description: string;
 	/** @nullable */
 	divisionId?: number | null;
+	/** @nullable */
+	extraGroupIds?: number[] | null;
 	id: number;
 	isAvailable: boolean;
 	isEnabled: boolean;
@@ -629,7 +678,6 @@ export interface MenuItemUpdateRequest {
 	name: string;
 	positionId: number;
 	price: number;
-	stockPrice: number;
 }
 
 export interface NotificationAddUserRequest {
@@ -649,6 +697,10 @@ export interface NotificationTestNewRequest {
 export interface NotificationUserRequest {
 	message: string;
 	userId: string;
+}
+
+export interface OptionItemsRequest {
+	[key: string]: unknown;
 }
 
 export interface OutletCreateRequest {
@@ -917,6 +969,8 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
+
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -947,8 +1001,6 @@ export interface EntitiesCashUp {
 	tableCount: number;
 	userId: string;
 }
-
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
 
 export interface SalesPeriodGetRequest {
 	[key: string]: unknown;
@@ -1331,6 +1383,7 @@ export interface EntitiesExtraGroup {
 	/** @nullable */
 	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
 	name: string;
+	outletId: number;
 }
 
 export interface EntitiesExtra {
@@ -1340,8 +1393,17 @@ export interface EntitiesExtra {
 	name: string;
 	/** @nullable */
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
+	outletId: number;
 	positionId: number;
 	price: number;
+}
+
+export interface EntitiesOrderItemOption {
+	option: EntitiesOption;
+	optionId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemId: number;
+	orderItemOptionId: number;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -1359,6 +1421,7 @@ export interface EntitiesOptionGroup {
 	name: string;
 	optionGroupId: number;
 	options: EntitiesOption[];
+	outletId: number;
 }
 
 export interface EntitiesOption {
@@ -1368,6 +1431,7 @@ export interface EntitiesOption {
 	optionId: number;
 	/** @nullable */
 	orderItemOptions?: EntitiesOrderItemOption[] | null;
+	outletId: number;
 	positionId: number;
 	price: number;
 }
@@ -1387,29 +1451,24 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 }
 
+export type EntitiesMenuSection = EntitiesAuditableEntity & EntitiesMenuSectionAllOf;
+
+export type EntitiesMenuAllOf = {
+	id: number;
+	/** @nullable */
+	menuSections?: EntitiesMenuSection[] | null;
+	name: string;
+	outlet: EntitiesOutlet;
+	outletId: number;
+	position: number;
+};
+
 export type EntitiesMenu = EntitiesAuditableEntity & EntitiesMenuAllOf;
 
 /**
  * @nullable
  */
 export type EntitiesMenuSectionAllOfParent = EntitiesMenuSection | null;
-
-export type EntitiesMenuSectionAllOf = {
-	menu: EntitiesMenu;
-	menuId: number;
-	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	name: string;
-	/** @nullable */
-	parent?: EntitiesMenuSectionAllOfParent;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
-};
 
 /**
  * @nullable
@@ -1442,6 +1501,23 @@ export type EntitiesMenuItemAllOf = {
 
 export type EntitiesMenuItem = EntitiesAuditableEntity & EntitiesMenuItemAllOf;
 
+export type EntitiesMenuSectionAllOf = {
+	menu: EntitiesMenu;
+	menuId: number;
+	/** @nullable */
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	name: string;
+	/** @nullable */
+	parent?: EntitiesMenuSectionAllOfParent;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
+};
+
 /**
  * @nullable
  */
@@ -1471,14 +1547,6 @@ export interface EntitiesOrderItem {
 	tableBookingId: number;
 }
 
-export interface EntitiesOrderItemOption {
-	option: EntitiesOption;
-	optionId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemId: number;
-	orderItemOptionId: number;
-}
-
 export interface EntitiesOrderGroup {
 	orderGroupId: number;
 	/** @nullable */
@@ -1494,18 +1562,6 @@ export interface EntitiesAuditableEntity {
 	/** @nullable */
 	lastModifiedBy?: string | null;
 }
-
-export type EntitiesMenuSection = EntitiesAuditableEntity & EntitiesMenuSectionAllOf;
-
-export type EntitiesMenuAllOf = {
-	id: number;
-	/** @nullable */
-	menuSections?: EntitiesMenuSection[] | null;
-	name: string;
-	outlet: EntitiesOutlet;
-	outletId: number;
-	position: number;
-};
 
 export type EntitiesUserAllOf = {
 	email: string;
@@ -1764,6 +1820,8 @@ export interface DTOOrderItemExtraDTO {
 }
 
 export interface DTOOptionGroupBasicDTO {
+	maxSelections: number;
+	minSelections: number;
 	name: string;
 	optionGroupId: number;
 }
@@ -1773,6 +1831,7 @@ export interface DTOOptionDTO {
 	optionGroup: DTOOptionGroupBasicDTO;
 	optionGroupId: number;
 	optionId: number;
+	positionId: number;
 	price: number;
 }
 
