@@ -1332,6 +1332,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/extra": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExtraGroup"];
+        put: operations["ExtraUpdate"];
+        post: operations["ExtraCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/extra/{id}": {
         parameters: {
             query?: never;
@@ -1342,23 +1358,39 @@ export interface paths {
         get: operations["ExtraItems"];
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["ExtraDelete"];
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/extra": {
+    "/extraGroup": {
         parameters: {
             query?: never;
             header?: never;
             path?: never;
             cookie?: never;
         };
-        get: operations["ExtraGroup"];
+        get?: never;
+        put: operations["ExtraGroupUpdate"];
+        post: operations["ExtraGroupCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/extraGroup{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["ExtraGroupDelete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -3000,8 +3032,7 @@ export interface components {
             divisionId?: number | null;
             isAvailable: boolean;
             isEnabled: boolean;
-            /** Format: decimal */
-            stockPrice: number;
+            extraGroupIds?: number[] | null;
         };
         CommonModelsPaginatedListOfMenuItemAdminDTO: {
             items: components["schemas"]["MenuItemMenuItemAdminDTO"][];
@@ -3099,8 +3130,7 @@ export interface components {
             divisionId?: number | null;
             isAvailable: boolean;
             isEnabled: boolean;
-            /** Format: decimal */
-            stockPrice: number;
+            extraGroupIds?: number[] | null;
         };
         MenuUpdateRequest: {
             /** Format: int32 */
@@ -3266,12 +3296,48 @@ export interface components {
             status: string;
         };
         ManagerOrderViewRequest: Record<string, never>;
+        ExtraUpdateRequest: {
+            /** Format: int32 */
+            extraId: number;
+            name: string;
+            /** Format: int32 */
+            positionId: number;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            extraGroupId: number;
+            /** Format: int32 */
+            outletId: number;
+        };
         ExtraItemsRequest: Record<string, never>;
+        ExtraGroupUpdateRequest: {
+            /** Format: int32 */
+            extraGroupId: number;
+            isGlobal: boolean;
+            name: string;
+        };
+        ExtraGroupDeleteRequest: Record<string, never>;
+        ExtraGroupCreateRequest: {
+            name: string;
+            isGlobal: boolean;
+        };
         DTOExtraGroupAdminDTO: {
             /** Format: int32 */
             extraGroupId: number;
             name: string;
             isGlobal: boolean;
+        };
+        ExtraDeleteRequest: Record<string, never>;
+        ExtraCreateRequest: {
+            name: string;
+            /** Format: int32 */
+            positionId: number;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            extraGroupId: number;
+            /** Format: int32 */
+            outletId: number;
         };
         ClockListRequest: Record<string, never>;
         EntitiesClock: {
@@ -7073,6 +7139,124 @@ export interface operations {
             };
         };
     };
+    ExtraGroup: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOExtraGroupAdminDTO"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExtraUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExtraCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     ExtraItems: {
         parameters: {
             query?: never;
@@ -7111,11 +7295,13 @@ export interface operations {
             };
         };
     };
-    ExtraGroup: {
+    ExtraDelete: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                id: number;
+            };
             cookie?: never;
         };
         requestBody?: never;
@@ -7126,7 +7312,138 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["DTOExtraGroupAdminDTO"][];
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraGroupUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExtraGroupUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraGroupCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ExtraGroupCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraGroupDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
                 };
             };
             /** @description Unauthorized */

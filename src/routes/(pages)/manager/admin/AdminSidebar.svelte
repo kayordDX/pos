@@ -65,11 +65,11 @@
 					href: "/manager/admin/extras",
 					icon: CirclePlusIcon,
 				},
-				{
-					title: "Options",
-					href: "/manager/admin/options",
-					icon: ToggleRightIcon,
-				},
+				// {
+				// 	title: "Options",
+				// 	href: "/manager/admin/options",
+				// 	icon: ToggleRightIcon,
+				// },
 			],
 		},
 	];

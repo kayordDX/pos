@@ -3,8 +3,9 @@
 	import type { DTOExtraGroupAdminDTO } from "$lib/api";
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
 	import { EllipsisVerticalIcon, EqualIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
-	import { createMenuDelete } from "$lib/api";
+	import { createExtraGroupDelete } from "$lib/api";
 	import { getError } from "$lib/types";
+	import EditExtraGroup from "./EditExtraGroup.svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -16,15 +17,16 @@
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
 
+	const deleteMutation = createExtraGroupDelete();
 	const deleteMenu = async () => {
-		// deleteOpen = false;
-		// try {
-		// 	await $deleteMutation.mutateAsync({ id: menu.id });
-		// 	refetch();
-		// 	toast.message("Menu Deleted");
-		// } catch (error) {
-		// 	toast.error(getError(error).message);
-		// }
+		deleteOpen = false;
+		try {
+			await $deleteMutation.mutateAsync({ id: extraGroup.extraGroupId });
+			refetch();
+			toast.message("Extra Group Deleted");
+		} catch (error) {
+			toast.error(getError(error).message);
+		}
 	};
 </script>
 
@@ -43,7 +45,7 @@
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
-<!-- <EditMenu {refetch} bind:open={editOpen} {menu} /> -->
+<EditExtraGroup {refetch} bind:open={editOpen} {extraGroup} />
 
 <AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>

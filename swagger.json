@@ -4835,6 +4835,147 @@
         ]
       }
     },
+    "/extra": {
+      "put": {
+        "tags": [
+          "Extra"
+        ],
+        "operationId": "ExtraUpdate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExtraUpdateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Extra"
+        ],
+        "operationId": "ExtraGroup",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DTOExtraGroupAdminDTO"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Extra"
+        ],
+        "operationId": "ExtraCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExtraCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/extra/{id}": {
       "get": {
         "tags": [
@@ -4885,25 +5026,194 @@
             "JWTBearerAuth": []
           }
         ]
-      }
-    },
-    "/extra": {
-      "get": {
+      },
+      "delete": {
         "tags": [
           "Extra"
         ],
-        "operationId": "ExtraGroup",
+        "operationId": "ExtraDelete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
             "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/DTOExtraGroupAdminDTO"
-                  }
+                  "$ref": "#/components/schemas/InternalErrorResponse"
                 }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/extraGroup": {
+      "put": {
+        "tags": [
+          "Extragroup"
+        ],
+        "operationId": "ExtraGroupUpdate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExtraGroupUpdateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Extragroup"
+        ],
+        "operationId": "ExtraGroupCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ExtraGroupCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/extraGroup{id}": {
+      "delete": {
+        "tags": [
+          "Extragroup{Id}"
+        ],
+        "operationId": "ExtraGroupDelete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
               }
             }
           },
@@ -10684,8 +10994,7 @@
           "price",
           "positionId",
           "isAvailable",
-          "isEnabled",
-          "stockPrice"
+          "isEnabled"
         ],
         "properties": {
           "id": {
@@ -10721,9 +11030,13 @@
           "isEnabled": {
             "type": "boolean"
           },
-          "stockPrice": {
-            "type": "number",
-            "format": "decimal"
+          "extraGroupIds": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         }
       },
@@ -11022,8 +11335,7 @@
           "price",
           "positionId",
           "isAvailable",
-          "isEnabled",
-          "stockPrice"
+          "isEnabled"
         ],
         "properties": {
           "menuSectionId": {
@@ -11055,9 +11367,13 @@
           "isEnabled": {
             "type": "boolean"
           },
-          "stockPrice": {
-            "type": "number",
-            "format": "decimal"
+          "extraGroupIds": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         }
       },
@@ -11621,9 +11937,87 @@
         "type": "object",
         "additionalProperties": false
       },
+      "ExtraUpdateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "extraId",
+          "name",
+          "positionId",
+          "price",
+          "extraGroupId",
+          "outletId"
+        ],
+        "properties": {
+          "extraId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "positionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "ExtraItemsRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "ExtraGroupUpdateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "extraGroupId",
+          "isGlobal",
+          "name"
+        ],
+        "properties": {
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "isGlobal": {
+            "type": "boolean"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ExtraGroupDeleteRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ExtraGroupCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "isGlobal"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "isGlobal": {
+            "type": "boolean"
+          }
+        }
       },
       "DTOExtraGroupAdminDTO": {
         "type": "object",
@@ -11643,6 +12037,42 @@
           },
           "isGlobal": {
             "type": "boolean"
+          }
+        }
+      },
+      "ExtraDeleteRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "ExtraCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "positionId",
+          "price",
+          "extraGroupId",
+          "outletId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "positionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "extraGroupId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

@@ -1,8 +1,9 @@
 <script lang="ts">
-	import { createExtraGroup, extraGroup } from "$lib/api";
+	import { createExtraGroup } from "$lib/api";
 	import { Button, Card, Tooltip } from "@kayord/ui";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "lucide-svelte";
+	import EditExtraGroup from "./EditExtraGroup.svelte";
 
 	const query = createExtraGroup();
 	let addOpen = $state(false);
@@ -14,7 +15,7 @@
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
-		<!-- <EditMenu refetch={$query.refetch} bind:open={addOpen} /> -->
+		<EditExtraGroup refetch={$query.refetch} bind:open={addOpen} />
 	</div>
 
 	<div class="flex flex-col gap-2 mt-4">

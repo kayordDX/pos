@@ -13,6 +13,7 @@
 		createMenuGetSectionsGetMenusSections,
 		createDivisionGetAll,
 	} from "$lib/api";
+	import Extras from "./Extras.svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -33,10 +34,10 @@
 		divisionId: z.coerce.number(),
 		description: z.string().min(1, { message: "Description is Required" }),
 		price: z.number(),
-		stockPrice: z.number(),
 		isEnabled: z.boolean(),
 		isAvailable: z.boolean(),
 		positionId: z.number(),
+		extraGroupIds: z.array(z.number()),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -52,10 +53,10 @@
 						divisionId: data.divisionId,
 						description: data.description,
 						price: data.price,
-						stockPrice: data.stockPrice,
 						isEnabled: data.isEnabled,
 						isAvailable: data.isAvailable,
 						positionId: data.positionId,
+						extraGroupIds: data.extraGroupIds,
 					},
 				});
 				toast.info("Edited Menu");
@@ -67,10 +68,10 @@
 						divisionId: data.divisionId,
 						description: data.description,
 						price: data.price,
-						stockPrice: data.stockPrice,
 						isEnabled: data.isEnabled,
 						isAvailable: data.isAvailable,
 						positionId: data.positionId,
+						extraGroupIds: data.extraGroupIds,
 					},
 				});
 				toast.info("Added Menu");
@@ -92,6 +93,7 @@
 		isEnabled: menuItem?.isEnabled ?? true,
 		isAvailable: menuItem?.isAvailable ?? true,
 		positionId: menuItem?.position ?? 0,
+		extraGroupIds: menuItem?.menuItemExtraGroups.map((i) => i.extraGroupId) ?? new Array<number>(),
 	});
 
 	// svelte-ignore state_referenced_locally
@@ -269,15 +271,6 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<Form.Field {form} name="stockPrice">
-					<Form.Control>
-						{#snippet children({ props })}
-							<Form.Label>Stock Price</Form.Label>
-							<Input {...props} type="number" step="0.01" bind:value={$formData.stockPrice} />
-						{/snippet}
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
 				<Form.Field {form} name="isEnabled">
 					<Form.Control>
 						{#snippet children({ props })}
@@ -309,6 +302,7 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
+				<Extras bind:extras={$formData.extraGroupIds} />
 			</div>
 			<Dialog.Footer class="gap-2">
 				<Button type="submit">Submit</Button>

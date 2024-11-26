@@ -6,8 +6,6 @@
 
 	const query = createOptionGroup();
 	let addOpen = $state(false);
-
-	$inspect($query.data);
 </script>
 
 <div class="m-2">

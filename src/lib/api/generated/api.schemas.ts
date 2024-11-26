@@ -337,7 +337,34 @@ export interface ClockListRequest {
 	[key: string]: unknown;
 }
 
+export interface ExtraCreateRequest {
+	extraGroupId: number;
+	name: string;
+	outletId: number;
+	positionId: number;
+	price: number;
+}
+
+export interface ExtraDeleteRequest {
+	[key: string]: unknown;
+}
+
 export interface DTOExtraGroupAdminDTO {
+	extraGroupId: number;
+	isGlobal: boolean;
+	name: string;
+}
+
+export interface ExtraGroupCreateRequest {
+	isGlobal: boolean;
+	name: string;
+}
+
+export interface ExtraGroupDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface ExtraGroupUpdateRequest {
 	extraGroupId: number;
 	isGlobal: boolean;
 	name: string;
@@ -345,6 +372,15 @@ export interface DTOExtraGroupAdminDTO {
 
 export interface ExtraItemsRequest {
 	[key: string]: unknown;
+}
+
+export interface ExtraUpdateRequest {
+	extraGroupId: number;
+	extraId: number;
+	name: string;
+	outletId: number;
+	positionId: number;
+	price: number;
 }
 
 export interface ManagerOrderViewRequest {
@@ -544,13 +580,14 @@ export interface MenuItemCreateRequest {
 	description: string;
 	/** @nullable */
 	divisionId?: number | null;
+	/** @nullable */
+	extraGroupIds?: number[] | null;
 	isAvailable: boolean;
 	isEnabled: boolean;
 	menuSectionId: number;
 	name: string;
 	positionId: number;
 	price: number;
-	stockPrice: number;
 }
 
 export interface MenuItemDeleteRequest {
@@ -632,6 +669,8 @@ export interface MenuItemUpdateRequest {
 	description: string;
 	/** @nullable */
 	divisionId?: number | null;
+	/** @nullable */
+	extraGroupIds?: number[] | null;
 	id: number;
 	isAvailable: boolean;
 	isEnabled: boolean;
@@ -639,7 +678,6 @@ export interface MenuItemUpdateRequest {
 	name: string;
 	positionId: number;
 	price: number;
-	stockPrice: number;
 }
 
 export interface NotificationAddUserRequest {
