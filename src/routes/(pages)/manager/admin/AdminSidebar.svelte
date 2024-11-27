@@ -51,7 +51,7 @@
 			icon: BookCopyIcon,
 			items: [
 				{
-					title: "Menus Items",
+					title: "Menu Items",
 					href: "/manager/admin/menuItems",
 					icon: NotebookTextIcon,
 				},
