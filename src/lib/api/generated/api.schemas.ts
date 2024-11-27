@@ -699,8 +699,46 @@ export interface NotificationUserRequest {
 	userId: string;
 }
 
+export interface OptionCreateRequest {
+	name: string;
+	optionGroupId: number;
+	outletId: number;
+	positionId: number;
+	price: number;
+}
+
+export interface OptionDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface OptionGroupCreateRequest {
+	maxSelections: number;
+	minSelections: number;
+	name: string;
+	outletId: number;
+}
+
+export interface OptionGroupDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface OptionGroupUpdateRequest {
+	maxSelections: number;
+	minSelections: number;
+	name: string;
+	optionGroupId: number;
+}
+
 export interface OptionItemsRequest {
 	[key: string]: unknown;
+}
+
+export interface OptionUpdateRequest {
+	name: string;
+	optionGroupId: number;
+	optionId: number;
+	positionId: number;
+	price: number;
 }
 
 export interface OutletCreateRequest {
@@ -1398,14 +1436,6 @@ export interface EntitiesExtra {
 	price: number;
 }
 
-export interface EntitiesOrderItemOption {
-	option: EntitiesOption;
-	optionId: number;
-	orderItem: EntitiesOrderItem;
-	orderItemId: number;
-	orderItemOptionId: number;
-}
-
 export interface EntitiesMenuItemOptionGroup {
 	menuItem: EntitiesMenuItem;
 	menuItemId: number;
@@ -1436,6 +1466,14 @@ export interface EntitiesOption {
 	price: number;
 }
 
+export interface EntitiesOrderItemOption {
+	option: EntitiesOption;
+	optionId: number;
+	orderItem: EntitiesOrderItem;
+	orderItemId: number;
+	orderItemOptionId: number;
+}
+
 export interface EntitiesDivision {
 	divisionId: number;
 	divisionName: string;
@@ -1450,8 +1488,6 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	count: number;
 	text: string;
 }
-
-export type EntitiesMenuSection = EntitiesAuditableEntity & EntitiesMenuSectionAllOf;
 
 export type EntitiesMenuAllOf = {
 	id: number;
@@ -1469,6 +1505,25 @@ export type EntitiesMenu = EntitiesAuditableEntity & EntitiesMenuAllOf;
  * @nullable
  */
 export type EntitiesMenuSectionAllOfParent = EntitiesMenuSection | null;
+
+export type EntitiesMenuSectionAllOf = {
+	menu: EntitiesMenu;
+	menuId: number;
+	/** @nullable */
+	menuItems?: EntitiesMenuItem[] | null;
+	menuSectionId: number;
+	name: string;
+	/** @nullable */
+	parent?: EntitiesMenuSectionAllOfParent;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
+};
+
+export type EntitiesMenuSection = EntitiesAuditableEntity & EntitiesMenuSectionAllOf;
 
 /**
  * @nullable
@@ -1497,25 +1552,6 @@ export type EntitiesMenuItemAllOf = {
 	stockPrice: number;
 	/** @nullable */
 	tags?: EntitiesTag[] | null;
-};
-
-export type EntitiesMenuItem = EntitiesAuditableEntity & EntitiesMenuItemAllOf;
-
-export type EntitiesMenuSectionAllOf = {
-	menu: EntitiesMenu;
-	menuId: number;
-	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-	menuSectionId: number;
-	name: string;
-	/** @nullable */
-	parent?: EntitiesMenuSectionAllOfParent;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
 };
 
 /**
@@ -1562,6 +1598,8 @@ export interface EntitiesAuditableEntity {
 	/** @nullable */
 	lastModifiedBy?: string | null;
 }
+
+export type EntitiesMenuItem = EntitiesAuditableEntity & EntitiesMenuItemAllOf;
 
 export type EntitiesUserAllOf = {
 	email: string;

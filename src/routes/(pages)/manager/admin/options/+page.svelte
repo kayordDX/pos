@@ -3,6 +3,7 @@
 	import { Badge, Button, Card, Tooltip } from "@kayord/ui";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "lucide-svelte";
+	import EditOptionGroup from "./EditOptionGroup.svelte";
 
 	const query = createOptionGroup();
 	let addOpen = $state(false);
@@ -14,7 +15,8 @@
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
-		<!-- <EditMenu refetch={$query.refetch} bind:open={addOpen} /> -->
+
+		<EditOptionGroup refetch={$query.refetch} bind:open={addOpen} />
 	</div>
 	<div class="flex flex-col gap-2 mt-4">
 		{#each $query.data ?? [] as optionGroup}

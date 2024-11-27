@@ -2,39 +2,39 @@
 	import { arrayUnique } from "$lib/util";
 	import { Badge, Button, Card, Command } from "@kayord/ui";
 	import { CirclePlusIcon, CircleXIcon } from "lucide-svelte";
-	import { createExtraGroup } from "$lib/api";
+	import { createOptionGroup } from "$lib/api";
 
-	const query = createExtraGroup();
+	const query = createOptionGroup();
 
 	let specialExtraOpen = $state(false);
 	interface Props {
-		extras?: Array<number>;
+		options?: Array<number>;
 	}
 
-	let { extras = $bindable([]) }: Props = $props();
+	let { options = $bindable([]) }: Props = $props();
 
 	const selectItem = (id: number) => {
-		extras.push(id);
-		extras = arrayUnique(extras);
+		options.push(id);
+		options = arrayUnique(options);
 		specialExtraOpen = false;
 	};
 
 	const removeItem = (id: number) => {
-		extras = extras.filter((s) => s !== id);
+		options = options.filter((s) => s !== id);
 	};
 
 	const getItem = (id: number) => {
-		return $query.data?.find((s) => s.extraGroupId === id);
+		return $query.data?.find((s) => s.optionGroupId === id);
 	};
 </script>
 
 <Card.Root class="bg-background p-2">
 	<div>
 		<Button variant="secondary" onclick={() => (specialExtraOpen = true)}>
-			<CirclePlusIcon class="size-4" /> Extra Groups
+			<CirclePlusIcon class="size-4" /> Option Groups
 		</Button>
 		<div class="mt-2 flex flex-wrap gap-2">
-			{#each extras as current}
+			{#each options as current}
 				<button
 					onclick={(e) => {
 						removeItem(current);
@@ -55,17 +55,15 @@
 	<Command.Input placeholder="Type a command or search..." />
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
-		<Command.Group heading="Extras Groups">
-			{#each $query.data ?? [] as extraGroup}
-				<Command.Item onSelect={() => selectItem(extraGroup.extraGroupId)}>
+		<Command.Group heading="Option Groups">
+			{#each $query.data ?? [] as optionGroup}
+				<Command.Item onSelect={() => selectItem(optionGroup.optionGroupId)}>
 					<div class="flex w-full items-center flex-row justify-between">
 						<div class="whitespace-nowrap overflow-hidden text-ellipsis">
-							{extraGroup.name.replace(/[^a-zA-Z0-9 -]*/g, "")}
+							{optionGroup.name.replace(/[^a-zA-Z0-9 -]*/g, "")}
 						</div>
 						<div class="flex flex-shrink-0 text-xs ml-2">
-							<div
-								class={`size-3 ${extraGroup.isGlobal ? "bg-primary animate-pulse" : "bg-secondary"} rounded-full`}
-							></div>
+							({optionGroup.minSelections}-{optionGroup.maxSelections})
 						</div>
 					</div>
 				</Command.Item>

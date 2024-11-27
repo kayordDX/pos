@@ -4,6 +4,7 @@
 	import { Badge, Button, Card } from "@kayord/ui";
 	import { PlusIcon } from "lucide-svelte";
 	import Actions from "./Actions.svelte";
+	import EditOption from "./EditOption.svelte";
 
 	const query = createOptionItems(Number($page.params.Id));
 	let addOpen = $state(false);
@@ -17,9 +18,17 @@
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
-		<!-- <EditMenu refetch={$query.refetch} bind:open={addOpen} /> -->
+		<EditOption refetch={$query.refetch} bind:open={addOpen} />
 	</div>
 	<div class="flex flex-col gap-2 mt-4">
+		{#if $query.data?.length == 0}
+			<Card.Root>
+				<Card.Header class="pb-6">
+					<Card.Title>No Options</Card.Title>
+					<Card.Description>There are currently no options in this group</Card.Description>
+				</Card.Header>
+			</Card.Root>
+		{/if}
 		{#each $query.data ?? [] as option}
 			<Card.Root class="p-2 flex items-center justify-between">
 				<div class="flex flex-col gap-1 pl-2">

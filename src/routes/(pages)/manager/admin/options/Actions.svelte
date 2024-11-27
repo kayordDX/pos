@@ -9,8 +9,9 @@
 		PencilIcon,
 		Trash2Icon,
 	} from "lucide-svelte";
-	import { createMenuDelete } from "$lib/api";
+	import { createOptionGroupDelete } from "$lib/api";
 	import { getError } from "$lib/types";
+	import EditOptionGroup from "./EditOptionGroup.svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -22,15 +23,16 @@
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
 
+	const deleteMutation = createOptionGroupDelete();
 	const deleteMenu = async () => {
-		// deleteOpen = false;
-		// try {
-		// 	await $deleteMutation.mutateAsync({ id: menu.id });
-		// 	refetch();
-		// 	toast.message("Menu Deleted");
-		// } catch (error) {
-		// 	toast.error(getError(error).message);
-		// }
+		deleteOpen = false;
+		try {
+			await $deleteMutation.mutateAsync({ id: optionGroup.optionGroupId });
+			refetch();
+			toast.message("Option Group Deleted");
+		} catch (error) {
+			toast.error(getError(error).message);
+		}
 	};
 </script>
 
@@ -49,7 +51,7 @@
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
-<!-- <EditMenu {refetch} bind:open={editOpen} {menu} /> -->
+<EditOptionGroup {refetch} bind:open={editOpen} {optionGroup} />
 
 <AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>

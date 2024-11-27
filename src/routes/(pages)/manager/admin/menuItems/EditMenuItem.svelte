@@ -1,7 +1,17 @@
 <script lang="ts">
 	import type { MenuItemMenuItemAdminDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Checkbox, Dialog, Form, Input, Select, toast } from "@kayord/ui";
+	import {
+		Button,
+		Checkbox,
+		Collapsible,
+		Dialog,
+		Form,
+		Input,
+		Select,
+		Tabs,
+		toast,
+	} from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
@@ -12,8 +22,11 @@
 		createMenuList,
 		createMenuGetSectionsGetMenusSections,
 		createDivisionGetAll,
+		optionGroup,
 	} from "$lib/api";
 	import Extras from "./Extras.svelte";
+	import Options from "./Options.svelte";
+	import { ChevronsUpDownIcon } from "lucide-svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -38,6 +51,7 @@
 		isAvailable: z.boolean(),
 		positionId: z.number(),
 		extraGroupIds: z.array(z.number()),
+		optionGroupIds: z.array(z.number()),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -94,6 +108,8 @@
 		isAvailable: menuItem?.isAvailable ?? true,
 		positionId: menuItem?.position ?? 0,
 		extraGroupIds: menuItem?.menuItemExtraGroups.map((i) => i.extraGroupId) ?? new Array<number>(),
+		optionGroupIds:
+			menuItem?.menuItemOptionGroups.map((i) => i.optionGroupId) ?? new Array<number>(),
 	});
 
 	// svelte-ignore state_referenced_locally
@@ -302,7 +318,17 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<Extras bind:extras={$formData.extraGroupIds} />
+				<Collapsible.Root>
+					<Collapsible.Trigger class="w-full flex items-center justify-between">
+						Extra's and Options <ChevronsUpDownIcon class="size-4" />
+					</Collapsible.Trigger>
+					<Collapsible.Content>
+						<div class="flex flex-col gap-2 pt-2">
+							<Extras bind:extras={$formData.extraGroupIds} />
+							<Options bind:options={$formData.optionGroupIds} />
+						</div>
+					</Collapsible.Content>
+				</Collapsible.Root>
 			</div>
 			<Dialog.Footer class="gap-2">
 				<Button type="submit">Submit</Button>
