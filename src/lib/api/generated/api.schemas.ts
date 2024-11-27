@@ -586,6 +586,8 @@ export interface MenuItemCreateRequest {
 	isEnabled: boolean;
 	menuSectionId: number;
 	name: string;
+	/** @nullable */
+	optionGroupIds?: number[] | null;
 	positionId: number;
 	price: number;
 }
@@ -676,6 +678,8 @@ export interface MenuItemUpdateRequest {
 	isEnabled: boolean;
 	menuSectionId: number;
 	name: string;
+	/** @nullable */
+	optionGroupIds?: number[] | null;
 	positionId: number;
 	price: number;
 }

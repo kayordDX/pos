@@ -71,6 +71,7 @@
 						isAvailable: data.isAvailable,
 						positionId: data.positionId,
 						extraGroupIds: data.extraGroupIds,
+						optionGroupIds: data.optionGroupIds,
 					},
 				});
 				toast.info("Edited Menu");
@@ -86,6 +87,7 @@
 						isAvailable: data.isAvailable,
 						positionId: data.positionId,
 						extraGroupIds: data.extraGroupIds,
+						optionGroupIds: data.optionGroupIds,
 					},
 				});
 				toast.info("Added Menu");

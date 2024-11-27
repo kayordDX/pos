@@ -3107,6 +3107,7 @@ export interface components {
             isAvailable: boolean;
             isEnabled: boolean;
             extraGroupIds?: number[] | null;
+            optionGroupIds?: number[] | null;
         };
         CommonModelsPaginatedListOfMenuItemAdminDTO: {
             items: components["schemas"]["MenuItemMenuItemAdminDTO"][];
@@ -3205,6 +3206,7 @@ export interface components {
             isAvailable: boolean;
             isEnabled: boolean;
             extraGroupIds?: number[] | null;
+            optionGroupIds?: number[] | null;
         };
         MenuUpdateRequest: {
             /** Format: int32 */

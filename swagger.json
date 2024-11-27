@@ -11483,6 +11483,14 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          "optionGroupIds": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
           }
         }
       },
@@ -11814,6 +11822,14 @@
             "type": "boolean"
           },
           "extraGroupIds": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          "optionGroupIds": {
             "type": "array",
             "nullable": true,
             "items": {
