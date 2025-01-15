@@ -17,23 +17,25 @@
 	<Popover.Content>
 		<div class="mb-2">Item Height</div>
 		<Slider
-			value={[backOffice.value.itemHeight]}
+			type="single"
+			value={backOffice.value.itemHeight}
 			min={300}
 			max={1000}
 			step={10}
 			onValueChange={(v) => {
-				backOffice.value.itemHeight = v[0] ?? 500;
+				backOffice.value.itemHeight = v ?? 500;
 			}}
 		/>
 
 		<div class="my-2">Font</div>
 		<Slider
-			value={[backOffice.value.fontSize]}
+			type="single"
+			value={backOffice.value.fontSize}
 			min={500}
 			max={2000}
 			step={10}
 			onValueChange={(v) => {
-				backOffice.value.fontSize = v[0] ?? 1000;
+				backOffice.value.fontSize = v ?? 1000;
 			}}
 		/>
 		<Button class="w-full mt-4" onclick={reset}>Reset</Button>
