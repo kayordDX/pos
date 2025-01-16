@@ -14,14 +14,14 @@
 	interface Props {
 		isHistory?: boolean;
 		type?: "kitchen" | "backOffice" | "bar";
-		divisionIds?: string;
+		roleIds?: string;
 	}
 
-	let { isHistory = false, type = "kitchen", divisionIds }: Props = $props();
+	let { isHistory = false, type = "kitchen", roleIds }: Props = $props();
 
 	const query = createTableOrderOfficeOrderBasedBack(
 		{
-			divisionIds: divisionIds,
+			roleIds,
 			complete: isHistory,
 		},
 		{ query: { refetchInterval: 40000 } }
@@ -78,7 +78,7 @@
 				<ToggleHeader />
 			</div>
 		</div>
-		<Hub refetch={$query.refetch} {divisionIds} />
+		<Hub refetch={$query.refetch} {roleIds} />
 
 		<Masonry
 			items={$query.data?.orderGroups ?? []}
@@ -89,7 +89,7 @@
 			idKey="orderGroupId"
 		>
 			{#snippet itemChild(item)}
-				<Group group={item} refetch={$query.refetch} {isHistory} {divisionIds} />
+				<Group group={item} refetch={$query.refetch} {isHistory} {roleIds} />
 			{/snippet}
 		</Masonry>
 	{/if}

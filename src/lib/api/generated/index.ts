@@ -30,4 +30,5 @@ export * from "./clock";
 export * from "./cashup";
 export * from "./business";
 export * from "./bill";
+export * from "./ai";
 export * from "./adjustment";

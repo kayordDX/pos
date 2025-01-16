@@ -2,4 +2,4 @@
 	import BackOffice from "../BackOffice.svelte";
 </script>
 
-<BackOffice divisionIds="1,3" />
+<BackOffice roleIds="3" />

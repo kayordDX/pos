@@ -958,7 +958,7 @@
         "operationId": "TableOrderFrontOffice",
         "parameters": [
           {
-            "name": "divisionIds",
+            "name": "roleIds",
             "in": "query",
             "schema": {
               "type": "string",
@@ -1006,7 +1006,7 @@
         "operationId": "TableOrderBackOffice",
         "parameters": [
           {
-            "name": "divisionIds",
+            "name": "roleIds",
             "in": "query",
             "schema": {
               "type": "string",
@@ -1054,7 +1054,7 @@
         "operationId": "TableOrderOfficeOrderBasedBack",
         "parameters": [
           {
-            "name": "divisionIds",
+            "name": "roleIds",
             "in": "query",
             "schema": {
               "type": "string",
@@ -5103,21 +5103,12 @@
         "operationId": "ManagerOrderView",
         "parameters": [
           {
-            "name": "divisionIds",
+            "name": "roleIds",
             "in": "query",
-            "style": "form",
-            "explode": true,
-            "required": true,
             "schema": {
-              "type": "array",
-              "items": {
-                "type": "integer",
-                "format": "int32"
-              }
-            },
-            "example": [
-              0
-            ]
+              "type": "string",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -6599,6 +6590,57 @@
         ]
       }
     },
+    "/ai/generate": {
+      "post": {
+        "tags": [
+          "Ai"
+        ],
+        "operationId": "Generate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GenerateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesAIGenerateResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/adjustment/{outletId}": {
       "get": {
         "tags": [
@@ -7468,7 +7510,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "divisionIds": {
+          "roleIds": {
             "type": "string",
             "nullable": true
           }
@@ -9066,7 +9108,9 @@
         "additionalProperties": false,
         "required": [
           "divisionId",
-          "divisionName"
+          "divisionName",
+          "outletId",
+          "divisionTypeId"
         ],
         "properties": {
           "divisionId": {
@@ -9075,6 +9119,14 @@
           },
           "divisionName": {
             "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionTypeId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -13035,6 +13087,106 @@
       "BillDownloadBillRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "ServicesAIGenerateResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "candidates",
+          "modelVersion"
+        ],
+        "properties": {
+          "candidates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServicesAICandidate"
+            }
+          },
+          "usageMetadata": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ServicesAIUsageMetadata"
+              }
+            ]
+          },
+          "modelVersion": {
+            "type": "string"
+          }
+        }
+      },
+      "ServicesAICandidate": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "content"
+        ],
+        "properties": {
+          "content": {
+            "$ref": "#/components/schemas/ServicesAIContent"
+          }
+        }
+      },
+      "ServicesAIContent": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "parts",
+          "role"
+        ],
+        "properties": {
+          "parts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ServicesAIPart"
+            }
+          },
+          "role": {
+            "type": "string"
+          }
+        }
+      },
+      "ServicesAIPart": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "text"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          }
+        }
+      },
+      "ServicesAIUsageMetadata": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "promptTokenCount",
+          "totalTokenCount"
+        ],
+        "properties": {
+          "promptTokenCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalTokenCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "GenerateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "prompt"
+        ],
+        "properties": {
+          "prompt": {
+            "type": "string"
+          }
+        }
       },
       "AdjustmentGetAllRequest": {
         "type": "object",

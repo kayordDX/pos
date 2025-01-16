@@ -1700,6 +1700,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/ai/generate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["Generate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/adjustment/{outletId}": {
         parameters: {
             query?: never;
@@ -1951,7 +1967,7 @@ export interface components {
             orderGroupId: number;
             /** Format: int32 */
             orderItemStatusId: number;
-            divisionIds?: string | null;
+            roleIds?: string | null;
         };
         TableOrderSendToKitchenResponse: {
             isSuccess: boolean;
@@ -2412,6 +2428,10 @@ export interface components {
             /** Format: int32 */
             divisionId: number;
             divisionName: string;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            divisionTypeId: number;
         };
         EntitiesMenuItemOptionGroup: {
             /** Format: int32 */
@@ -3562,6 +3582,30 @@ export interface components {
             name: string;
         };
         BillDownloadBillRequest: Record<string, never>;
+        ServicesAIGenerateResponse: {
+            candidates: components["schemas"]["ServicesAICandidate"][];
+            usageMetadata?: components["schemas"]["ServicesAIUsageMetadata"] | null;
+            modelVersion: string;
+        };
+        ServicesAICandidate: {
+            content: components["schemas"]["ServicesAIContent"];
+        };
+        ServicesAIContent: {
+            parts: components["schemas"]["ServicesAIPart"][];
+            role: string;
+        };
+        ServicesAIPart: {
+            text: string;
+        };
+        ServicesAIUsageMetadata: {
+            /** Format: int32 */
+            promptTokenCount: number;
+            /** Format: int32 */
+            totalTokenCount: number;
+        };
+        GenerateRequest: {
+            prompt: string;
+        };
         AdjustmentGetAllRequest: Record<string, never>;
         AdjustmentCreateRequest: {
             /** Format: int32 */
@@ -4318,7 +4362,7 @@ export interface operations {
     TableOrderFrontOffice: {
         parameters: {
             query?: {
-                divisionIds?: string | null;
+                roleIds?: string | null;
             };
             header?: never;
             path?: never;
@@ -4356,7 +4400,7 @@ export interface operations {
     TableOrderBackOffice: {
         parameters: {
             query?: {
-                divisionIds?: string | null;
+                roleIds?: string | null;
             };
             header?: never;
             path?: never;
@@ -4394,7 +4438,7 @@ export interface operations {
     TableOrderOfficeOrderBasedBack: {
         parameters: {
             query: {
-                divisionIds?: string | null;
+                roleIds?: string | null;
                 complete: boolean;
             };
             header?: never;
@@ -7436,11 +7480,8 @@ export interface operations {
     };
     ManagerOrderView: {
         parameters: {
-            query: {
-                /** @example [
-                 *       0
-                 *     ] */
-                divisionIds: number[];
+            query?: {
+                roleIds?: string | null;
             };
             header?: never;
             path?: never;
@@ -8591,6 +8632,46 @@ export interface operations {
                 content: {
                     "text/plain": unknown;
                     "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    Generate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["GenerateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ServicesAIGenerateResponse"];
                 };
             };
             /** @description Unauthorized */
