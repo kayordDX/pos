@@ -10,13 +10,16 @@
 		UserRoundSearchIcon,
 		UsersIcon,
 		NfcIcon,
-		NotebookTextIcon,
+		NotebookTabsIcon,
 		SquareMenuIcon,
 		Plus,
 		Minus,
 		BookCopyIcon,
 		CirclePlusIcon,
 		ToggleRightIcon,
+		NotebookTextIcon,
+		BookDownIcon,
+		BookOpenTextIcon,
 	} from "lucide-svelte";
 
 	const menuItems = [
@@ -69,6 +72,23 @@
 					title: "Options",
 					href: "/manager/admin/options",
 					icon: ToggleRightIcon,
+				},
+			],
+		},
+		{
+			title: "Stock",
+			href: "stock",
+			icon: BookOpenTextIcon,
+			items: [
+				{
+					title: "Stock Items",
+					href: "/manager/admin/stock",
+					icon: NotebookTabsIcon,
+				},
+				{
+					title: "Orders",
+					href: "/manager/admin/stock/orders",
+					icon: BookDownIcon,
 				},
 			],
 		},

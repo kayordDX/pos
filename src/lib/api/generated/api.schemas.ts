@@ -78,6 +78,14 @@ export type SectionListParams = {
 	outletId: number;
 };
 
+export type StockGetAllGetMenuItemsParams = {
+	outletId: number;
+	sorts?: string | null;
+	filters?: string | null;
+	page?: number | null;
+	pageSize?: number | null;
+};
+
 export type TableGetAvailableParams = {
 	outletId: number;
 };
@@ -500,20 +508,6 @@ export interface MenuGetItemRequest {
 	[key: string]: unknown;
 }
 
-export interface DTOMenuItemDTO {
-	menuItemId: number;
-	menuSectionId: number;
-	name: string;
-	description: string;
-	price: number;
-	position: number;
-	/** @nullable */
-	tags?: EntitiesTag[] | null;
-	divisionId: number;
-	menuItemOptionGroups: DTOMenuItemOptionGroupDTO[];
-	menuItemExtraGroups: DTOMenuItemExtraGroupDTO[];
-}
-
 export interface MenuGetItemsRequest {
 	[key: string]: unknown;
 }
@@ -658,6 +652,20 @@ export interface DTOMenuItemOptionGroupDTO {
 	menuItemId: number;
 	optionGroupId: number;
 	optionGroup: DTOOptionGroupDTO;
+}
+
+export interface DTOMenuItemDTO {
+	menuItemId: number;
+	menuSectionId: number;
+	name: string;
+	description: string;
+	price: number;
+	position: number;
+	/** @nullable */
+	tags?: EntitiesTag[] | null;
+	divisionId: number;
+	menuItemOptionGroups: DTOMenuItemOptionGroupDTO[];
+	menuItemExtraGroups: DTOMenuItemExtraGroupDTO[];
 }
 
 export interface MenuItemMenuAdminDTO {
@@ -1045,6 +1053,8 @@ export type SalesPeriodCashUpCashUpAllOf = {
 	userCashUps: SalesPeriodCashUpUserCashUp[];
 };
 
+export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
+
 export interface SalesPeriodCloseRequest {
 	salesPeriodId: number;
 }
@@ -1076,8 +1086,6 @@ export interface EntitiesCashUp {
 	signOffDate?: string | null;
 }
 
-export type SalesPeriodCashUpCashUp = EntitiesCashUp & SalesPeriodCashUpCashUpAllOf;
-
 export interface SalesPeriodGetRequest {
 	[key: string]: unknown;
 }
@@ -1108,6 +1116,49 @@ export interface SectionUpdateRequest {
 	 * @minLength 1
 	 */
 	name: string;
+}
+
+export type StockGetAllRequestAllOf = { [key: string]: unknown };
+
+export type StockGetAllRequest = CommonModelsQueryModel & StockGetAllRequestAllOf;
+
+export interface DTOStockLocationDTO {
+	id: number;
+	name: string;
+	addressId: number;
+	outletId: number;
+}
+
+export interface DTOStockItemDTO {
+	stockLocation: DTOStockLocationDTO;
+	threshold: number;
+	actual: number;
+}
+
+export interface DTOUnitDTO {
+	id: number;
+	name: string;
+}
+
+export interface DTOStockDTO {
+	id: number;
+	outletId: number;
+	name: string;
+	unitId: number;
+	unit: DTOUnitDTO;
+	stockCategoryId: number;
+	/** @nullable */
+	stockItems?: DTOStockItemDTO[] | null;
+	totalActual: number;
+}
+
+export interface CommonModelsPaginatedListOfStockDTO {
+	items: DTOStockDTO[];
+	pageNumber: number;
+	totalPages: number;
+	totalCount: number;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
 }
 
 export interface TableCreateRequest {
@@ -1438,14 +1489,6 @@ export interface EntitiesOrderItemStatus {
 	priority: number;
 }
 
-export interface EntitiesOrderItemExtra {
-	orderItemExtraId: number;
-	orderItemId: number;
-	orderItem: EntitiesOrderItem;
-	extraId: number;
-	extra: EntitiesExtra;
-}
-
 export interface EntitiesMenuItemExtraGroup {
 	menuItemId: number;
 	extraGroupId: number;
@@ -1472,6 +1515,14 @@ export interface EntitiesExtra {
 	/** @nullable */
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	outletId: number;
+}
+
+export interface EntitiesOrderItemExtra {
+	orderItemExtraId: number;
+	orderItemId: number;
+	orderItem: EntitiesOrderItem;
+	extraId: number;
+	extra: EntitiesExtra;
 }
 
 export interface EntitiesMenuItemOptionGroup {
@@ -1529,16 +1580,6 @@ export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	count: number;
 }
 
-export type EntitiesMenuAllOf = {
-	id: number;
-	name: string;
-	outletId: number;
-	position: number;
-	outlet: EntitiesOutlet;
-	/** @nullable */
-	menuSections?: EntitiesMenuSection[] | null;
-};
-
 export type EntitiesMenu = EntitiesAuditableEntity & EntitiesMenuAllOf;
 
 /**
@@ -1564,6 +1605,16 @@ export type EntitiesMenuSectionAllOf = {
 };
 
 export type EntitiesMenuSection = EntitiesAuditableEntity & EntitiesMenuSectionAllOf;
+
+export type EntitiesMenuAllOf = {
+	id: number;
+	name: string;
+	outletId: number;
+	position: number;
+	outlet: EntitiesOutlet;
+	/** @nullable */
+	menuSections?: EntitiesMenuSection[] | null;
+};
 
 /**
  * @nullable
@@ -1769,12 +1820,6 @@ export interface TableOrderOfficeOrderBasedBackMenuItemDTO {
 	divisionId: number;
 }
 
-/**
- * @nullable
- */
-export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
-	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
-
 export interface TableOrderOfficeOrderBasedBackSectionDTO {
 	name: string;
 }
@@ -1792,6 +1837,23 @@ export interface TableOrderOfficeOrderBasedBackTableDTO {
 	/** @nullable */
 	section?: TableOrderOfficeOrderBasedBackTableDTOSection;
 }
+
+export interface TableOrderOfficeOrderBasedBackTableBookingDTO {
+	id: number;
+	tableId: number;
+	table: TableOrderOfficeOrderBasedBackTableDTO;
+	bookingName: string;
+	bookingDate: string;
+	/** @nullable */
+	closeDate?: string | null;
+	user: DTOUserDTO;
+}
+
+/**
+ * @nullable
+ */
+export type TableOrderOfficeOrderBasedBackOrderItemDTOTableBooking =
+	TableOrderOfficeOrderBasedBackTableBookingDTO | null;
 
 /**
  * @nullable
@@ -1840,17 +1902,6 @@ export interface DTOUserDTO {
 	image: string;
 	name: string;
 	isActive: boolean;
-}
-
-export interface TableOrderOfficeOrderBasedBackTableBookingDTO {
-	id: number;
-	tableId: number;
-	table: TableOrderOfficeOrderBasedBackTableDTO;
-	bookingName: string;
-	bookingDate: string;
-	/** @nullable */
-	closeDate?: string | null;
-	user: DTOUserDTO;
 }
 
 export interface DTOExtraGroupBasicDTO {

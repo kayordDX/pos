@@ -10,6 +10,7 @@ export * from "./backoffice";
 export * from "./ordergroup";
 export * from "./tablebooking";
 export * from "./table";
+export * from "./stock";
 export * from "./section";
 export * from "./salesperiod";
 export * from "./role";

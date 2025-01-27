@@ -628,6 +628,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["StockGetAllGetMenuItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/section/{sectionId}": {
         parameters: {
             query?: never;
@@ -2801,6 +2817,54 @@ export interface components {
             /** Format: int32 */
             capacity: number;
         };
+        CommonModelsPaginatedListOfStockDTO: {
+            items: components["schemas"]["DTOStockDTO"][];
+            /** Format: int32 */
+            pageNumber: number;
+            /** Format: int32 */
+            totalPages: number;
+            /** Format: int32 */
+            totalCount: number;
+            hasPreviousPage: boolean;
+            hasNextPage: boolean;
+        };
+        DTOStockDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            name: string;
+            /** Format: int32 */
+            unitId: number;
+            unit: components["schemas"]["DTOUnitDTO"];
+            /** Format: int32 */
+            stockCategoryId: number;
+            stockItems?: components["schemas"]["DTOStockItemDTO"][] | null;
+            /** Format: decimal */
+            totalActual: number;
+        };
+        DTOUnitDTO: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        DTOStockItemDTO: {
+            stockLocation: components["schemas"]["DTOStockLocationDTO"];
+            /** Format: decimal */
+            threshold: number;
+            /** Format: decimal */
+            actual: number;
+        };
+        DTOStockLocationDTO: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            addressId: number;
+            /** Format: int32 */
+            outletId: number;
+        };
+        StockGetAllRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         SectionUpdateRequest: {
             /** Format: int32 */
             id: number;
@@ -5087,6 +5151,48 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockGetAllGetMenuItems: {
+        parameters: {
+            query: {
+                outletId: number;
+                sorts?: string | null;
+                filters?: string | null;
+                page?: number | null;
+                pageSize?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfStockDTO"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
