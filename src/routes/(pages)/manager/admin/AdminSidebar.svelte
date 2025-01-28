@@ -77,7 +77,7 @@
 		},
 		{
 			title: "Stock",
-			href: "stock",
+			href: "",
 			icon: BookOpenTextIcon,
 			items: [
 				{
@@ -102,7 +102,7 @@
 					return subItem;
 				}
 			}
-			if (routeId?.endsWith(item.href)) {
+			if (item.href.length > 0 && routeId?.endsWith(item.href)) {
 				return item;
 			}
 		}
@@ -125,7 +125,7 @@
 		<Sidebar.Group />
 		<Sidebar.GroupContent>
 			<Sidebar.Menu class="px-2">
-				{#each menuItems as item (item.href)}
+				{#each menuItems as item (item.title)}
 					{#if (item.items?.length ?? 0) > 0}
 						<Collapsible.Root class="group/collapsible">
 							<Sidebar.MenuItem>

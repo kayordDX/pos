@@ -38,7 +38,7 @@
 		},
 		{
 			header: "",
-			accessorKey: "menuItemId",
+			accessorKey: "id",
 			cell: (item) =>
 				renderComponent(Actions, {
 					menuItem: item.row.original,
@@ -110,7 +110,7 @@
 				return columnFilters;
 			},
 			get columnVisibility() {
-				return { menuId: false };
+				return { id: false };
 			},
 		},
 		get rowCount() {
@@ -146,7 +146,7 @@
 		filters = qb.build();
 	});
 
-	const menuCol = $derived(table.getColumn("menuId")!);
+	const menuCol = $derived(table.getColumn("id")!);
 
 	let addOpen = $state(false);
 </script>
