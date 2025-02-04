@@ -200,7 +200,9 @@
 							<Select.Root
 								type="single"
 								name="menuId"
-								bind:value={$formData.menuId}
+								bind:value={
+									() => $formData.menuId.toString(), (v) => ($formData.menuId = Number(v))
+								}
 								allowDeselect={false}
 							>
 								<Select.Trigger {...props}>
@@ -223,7 +225,10 @@
 							<Select.Root
 								type="single"
 								name="menuSectionId"
-								bind:value={$formData.menuSectionId}
+								bind:value={
+									() => $formData.menuSectionId.toString(),
+									(v) => ($formData.menuSectionId = Number(v))
+								}
 								allowDeselect={false}
 							>
 								<Select.Trigger {...props}>
@@ -246,7 +251,9 @@
 							<Select.Root
 								type="single"
 								name="divisionId"
-								bind:value={$formData.divisionId}
+								bind:value={
+									() => $formData.divisionId.toString(), (v) => ($formData.divisionId = Number(v))
+								}
 								allowDeselect={false}
 							>
 								<Select.Trigger {...props}>

@@ -71,12 +71,16 @@
 								type="single"
 								allowDeselect={false}
 								name={props.name}
-								bind:value={$formData.roleId}
+								bind:value={
+									() => $formData.roleId.toString(), (v) => ($formData.roleId = Number(v))
+								}
 							>
 								<Select.Trigger {...props}>{roleSelect}</Select.Trigger>
 								<Select.Content>
 									{#each $rolesQuery.data ?? [] as item}
-										<Select.Item value={item.roleId} label={item.name}>{item.name}</Select.Item>
+										<Select.Item value={item.roleId.toString()} label={item.name}
+											>{item.name}</Select.Item
+										>
 									{/each}
 								</Select.Content>
 							</Select.Root>

@@ -676,22 +676,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/stock/location": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["StockLocationGetAll"];
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/stock": {
         parameters: {
             query?: never;
@@ -700,6 +684,22 @@ export interface paths {
             cookie?: never;
         };
         get: operations["StockGetAllGetMenuItems"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/stock/division": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["StockDivisionGetAll"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2891,32 +2891,11 @@ export interface components {
             contactNumber: string;
             email: string;
             /** Format: int32 */
-            stockLocationId: number;
-            stockLocation: components["schemas"]["EntitiesStockLocation"];
+            divisionId: number;
+            division: components["schemas"]["EntitiesDivision"];
             /** Format: int32 */
             supplierPlatformId?: number | null;
             supplierPlatform?: components["schemas"]["EntitiesSupplierPlatform"] | null;
-        };
-        EntitiesStockLocation: {
-            /** Format: int32 */
-            id: number;
-            name: string;
-            /** Format: int32 */
-            addressId: number;
-            address: components["schemas"]["EntitiesAddress"];
-            /** Format: int32 */
-            outletId: number;
-            outlet: components["schemas"]["EntitiesOutlet"];
-        };
-        EntitiesAddress: {
-            /** Format: int32 */
-            id: number;
-            name: string;
-            houseNr: string;
-            streetName: string;
-            suburb: string;
-            province: string;
-            postalCode: string;
         };
         EntitiesSupplierPlatform: {
             /** Format: int32 */
@@ -2935,8 +2914,8 @@ export interface components {
             stockOrderStatusId: number;
             stockOrderStatus: components["schemas"]["EntitiesStockOrderStatus"];
             /** Format: int32 */
-            stockLocationId: number;
-            stockLocation: components["schemas"]["EntitiesStockLocation"];
+            divisionId: number;
+            division: components["schemas"]["EntitiesDivision"];
             /** Format: date-time */
             orderDate: string;
             /** Format: int32 */
@@ -2954,25 +2933,13 @@ export interface components {
             stockOrderId: number;
             stockOrder: components["schemas"]["EntitiesStockOrder"];
             /** Format: int32 */
-            stockItemId: number;
-            stockItem: components["schemas"]["EntitiesStockItem"];
+            stockId: number;
+            stock: components["schemas"]["EntitiesStock"];
             orderNumber: string;
             /** Format: decimal */
             actual: number;
             /** Format: decimal */
             price: number;
-        };
-        EntitiesStockItem: {
-            /** Format: int32 */
-            stockId: number;
-            stock: components["schemas"]["EntitiesStock"];
-            /** Format: int32 */
-            stockLocationId: number;
-            stockLocation: components["schemas"]["EntitiesStockLocation"];
-            /** Format: decimal */
-            threshold: number;
-            /** Format: decimal */
-            actual: number;
         };
         EntitiesStock: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
@@ -2998,12 +2965,26 @@ export interface components {
             id: number;
             name: string;
         };
+        EntitiesStockItem: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            stockId: number;
+            stock: components["schemas"]["EntitiesStock"];
+            /** Format: int32 */
+            divisionId: number;
+            division: components["schemas"]["EntitiesDivision"];
+            /** Format: decimal */
+            threshold: number;
+            /** Format: decimal */
+            actual: number;
+        };
         StockOrderUpdateRequest: {
             /** Format: int32 */
             id: number;
             orderNumber: string;
             /** Format: int32 */
-            stockLocationId: number;
+            divisionId: number;
             /** Format: int32 */
             supplierId: number;
         };
@@ -3025,11 +3006,10 @@ export interface components {
             outletId: number;
             orderNumber: string;
             /** Format: int32 */
-            stockLocationId: number;
+            divisionId: number;
             /** Format: int32 */
             supplierId: number;
         };
-        StockLocationGetAllRequest: Record<string, never>;
         CommonModelsPaginatedListOfStockDTO: {
             items: components["schemas"]["DTOStockDTO"][];
             /** Format: int32 */
@@ -3062,22 +3042,19 @@ export interface components {
             name: string;
         };
         DTOStockItemDTO: {
-            stockLocation: components["schemas"]["DTOStockLocationDTO"];
+            division: components["schemas"]["ManagerOrderViewDivisionDTO"];
             /** Format: decimal */
             threshold: number;
             /** Format: decimal */
             actual: number;
         };
-        DTOStockLocationDTO: {
+        ManagerOrderViewDivisionDTO: {
             /** Format: int32 */
-            id: number;
+            divisionId: number;
             name: string;
-            /** Format: int32 */
-            addressId: number;
-            /** Format: int32 */
-            outletId: number;
         };
         StockGetAllRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        StockDivisionGetAllRequest: Record<string, never>;
         SectionUpdateRequest: {
             /** Format: int32 */
             id: number;
@@ -5593,44 +5570,6 @@ export interface operations {
             };
         };
     };
-    StockLocationGetAll: {
-        parameters: {
-            query: {
-                outletId: number;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["EntitiesStockLocation"][];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["InternalErrorResponse"];
-                };
-            };
-        };
-    };
     StockGetAllGetMenuItems: {
         parameters: {
             query: {
@@ -5653,6 +5592,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CommonModelsPaginatedListOfStockDTO"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockDivisionGetAll: {
+        parameters: {
+            query: {
+                outletId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesDivision"][];
                 };
             };
             /** @description Unauthorized */

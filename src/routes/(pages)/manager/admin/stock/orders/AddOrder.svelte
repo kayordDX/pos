@@ -9,7 +9,7 @@
 		createStockOrderCreate,
 		createStockOrderUpdate,
 		createSupplierGetAll,
-		createStockLocationGetAll,
+		createStockDivisionGetAll,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 
@@ -26,19 +26,19 @@
 	const createMutation = createStockOrderCreate();
 
 	const suppliersQuery = createSupplierGetAll({ outletId: status.value.outletId });
-	const stockLocationQuery = createStockLocationGetAll({ outletId: status.value.outletId });
+	const divisionQuery = createStockDivisionGetAll({ outletId: status.value.outletId });
 	const suppliers = $derived($suppliersQuery.data ?? []);
-	const stockLocations = $derived($stockLocationQuery.data ?? []);
+	const divisions = $derived($divisionQuery.data ?? []);
 	const supplierSelect = $derived(
 		suppliers.find((i) => i.id === $formData.supplierId)?.name ?? "Select Supplier"
 	);
-	const stockLocationSelect = $derived(
-		stockLocations.find((i) => i.id === $formData.stockLocationId)?.name ?? "Select Stock Location"
+	const divisionSelect = $derived(
+		divisions.find((i) => i.divisionId === $formData.divisionId)?.divisionName ?? "Select Division"
 	);
 
 	const schema = z.object({
 		orderNumber: z.string().min(1, { message: "Order Number is Required" }),
-		stockLocationId: z.number().min(1, { message: "Stock Location is Required" }),
+		divisionId: z.number().min(1, { message: "Division is Required" }),
 		supplierId: z.number().min(1, { message: "Supplier is Required" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
@@ -51,7 +51,7 @@
 					data: {
 						id: order?.id ?? 0,
 						orderNumber: data.orderNumber,
-						stockLocationId: data.stockLocationId,
+						divisionId: data.divisionId,
 						supplierId: data.supplierId,
 					},
 				});
@@ -61,7 +61,7 @@
 					data: {
 						orderNumber: data.orderNumber,
 						outletId: status.value.outletId,
-						stockLocationId: data.stockLocationId,
+						divisionId: data.divisionId,
 						supplierId: data.supplierId,
 					},
 				});
@@ -75,7 +75,7 @@
 
 	const defaultValues = $derived({
 		orderNumber: order?.orderNumber,
-		stockLocationId: order?.stockLocationId,
+		divisionId: order?.divisionId,
 		supplierId: order?.supplierId,
 	});
 
@@ -116,23 +116,25 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<Form.Field {form} name="stockLocationId">
+				<Form.Field {form} name="divisionId">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Stock Location</Form.Label>
+							<Form.Label>Division</Form.Label>
 							<Select.Root
 								type="single"
 								allowDeselect={false}
-								onValueChange={(v: number) => {
-									v && ($formData.stockLocationId = v);
+								onValueChange={(v: string) => {
+									v && ($formData.divisionId = Number(v));
 								}}
 							>
 								<Select.Trigger {...props}>
-									{stockLocationSelect}
+									{divisionSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each stockLocations ?? [] as result}
-										<Select.Item value={result.id}>{result.name}</Select.Item>
+									{#each divisions ?? [] as result}
+										<Select.Item value={result.divisionId.toString()}
+											>{result.divisionName}</Select.Item
+										>
 									{/each}
 								</Select.Content>
 							</Select.Root>
@@ -147,8 +149,8 @@
 							<Select.Root
 								type="single"
 								allowDeselect={false}
-								onValueChange={(v: number) => {
-									v && ($formData.supplierId = v);
+								onValueChange={(v: string) => {
+									v && ($formData.supplierId = Number(v));
 								}}
 							>
 								<Select.Trigger {...props}>
@@ -156,7 +158,7 @@
 								</Select.Trigger>
 								<Select.Content>
 									{#each suppliers ?? [] as result}
-										<Select.Item value={result.id}>{result.name}</Select.Item>
+										<Select.Item value={result.id.toString()}>{result.name}</Select.Item>
 									{/each}
 								</Select.Content>
 							</Select.Root>
