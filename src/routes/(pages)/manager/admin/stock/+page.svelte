@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createStockGetAllGetMenuItems, type DTOStockDTO } from "$lib/api";
+	import { createStockGetAll, type DTOStockDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Button, createSvelteTable, DataTable, Input, renderComponent } from "@kayord/ui";
 	import {
@@ -69,7 +69,7 @@
 	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id}`).join(","));
 
 	const query = $derived(
-		createStockGetAllGetMenuItems({
+		createStockGetAll({
 			page: pagination.pageIndex + 1,
 			pageSize: 10,
 			filters,

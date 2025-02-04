@@ -20,12 +20,13 @@ import type {
 import type {
 	CommonModelsPaginatedListOfStockDTO,
 	CommonModelsPaginatedListOfStockOrder,
+	DTOStockOrderDTO,
 	EntitiesDivision,
 	EntitiesStockOrder,
 	ErrorResponse,
 	InternalErrorResponse,
 	StockDivisionGetAllParams,
-	StockGetAllGetMenuItemsParams,
+	StockGetAllParams,
 	StockOrderCreateRequest,
 	StockOrderGetAllParams,
 	StockOrderUpdateRequest,
@@ -235,6 +236,59 @@ export const createStockOrderCreate = <
 
 	return createMutation(mutationOptions);
 };
+export const stockOrderGet = (id: number) => {
+	return customInstance<DTOStockOrderDTO>({ url: `/stock/order/${id}`, method: "GET" });
+};
+
+export const getStockOrderGetQueryKey = (id: number) => {
+	return [`/stock/order/${id}`] as const;
+};
+
+export const getStockOrderGetQueryOptions = <
+	TData = Awaited<ReturnType<typeof stockOrderGet>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockOrderGet>>, TError, TData>>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getStockOrderGetQueryKey(id);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof stockOrderGet>>> = () => stockOrderGet(id);
+
+	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof stockOrderGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type StockOrderGetQueryResult = NonNullable<Awaited<ReturnType<typeof stockOrderGet>>>;
+export type StockOrderGetQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createStockOrderGet<
+	TData = Awaited<ReturnType<typeof stockOrderGet>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockOrderGet>>, TError, TData>>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getStockOrderGetQueryOptions(id, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const stockOrderDelete = (id: number) => {
 	return customInstance<unknown>({ url: `/stock/order/${id}`, method: "DELETE" });
 };
@@ -300,7 +354,7 @@ export const createStockOrderDelete = <
 
 	return createMutation(mutationOptions);
 };
-export const stockGetAllGetMenuItems = (params: StockGetAllGetMenuItemsParams) => {
+export const stockGetAll = (params: StockGetAllParams) => {
 	return customInstance<CommonModelsPaginatedListOfStockDTO>({
 		url: `/stock`,
 		method: "GET",
@@ -308,52 +362,45 @@ export const stockGetAllGetMenuItems = (params: StockGetAllGetMenuItemsParams) =
 	});
 };
 
-export const getStockGetAllGetMenuItemsQueryKey = (params: StockGetAllGetMenuItemsParams) => {
+export const getStockGetAllQueryKey = (params: StockGetAllParams) => {
 	return [`/stock`, ...(params ? [params] : [])] as const;
 };
 
-export const getStockGetAllGetMenuItemsQueryOptions = <
-	TData = Awaited<ReturnType<typeof stockGetAllGetMenuItems>>,
+export const getStockGetAllQueryOptions = <
+	TData = Awaited<ReturnType<typeof stockGetAll>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params: StockGetAllGetMenuItemsParams,
+	params: StockGetAllParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof stockGetAllGetMenuItems>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockGetAll>>, TError, TData>>;
 	}
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getStockGetAllGetMenuItemsQueryKey(params);
+	const queryKey = queryOptions?.queryKey ?? getStockGetAllQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof stockGetAllGetMenuItems>>> = () =>
-		stockGetAllGetMenuItems(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof stockGetAll>>> = () => stockGetAll(params);
 
 	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof stockGetAllGetMenuItems>>,
+		Awaited<ReturnType<typeof stockGetAll>>,
 		TError,
 		TData
 	> & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type StockGetAllGetMenuItemsQueryResult = NonNullable<
-	Awaited<ReturnType<typeof stockGetAllGetMenuItems>>
->;
-export type StockGetAllGetMenuItemsQueryError = ErrorType<void | InternalErrorResponse>;
+export type StockGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof stockGetAll>>>;
+export type StockGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createStockGetAllGetMenuItems<
-	TData = Awaited<ReturnType<typeof stockGetAllGetMenuItems>>,
+export function createStockGetAll<
+	TData = Awaited<ReturnType<typeof stockGetAll>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params: StockGetAllGetMenuItemsParams,
+	params: StockGetAllParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof stockGetAllGetMenuItems>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockGetAll>>, TError, TData>>;
 	}
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getStockGetAllGetMenuItemsQueryOptions(params, options);
+	const queryOptions = getStockGetAllQueryOptions(params, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

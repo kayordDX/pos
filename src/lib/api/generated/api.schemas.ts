@@ -1259,7 +1259,6 @@ export type EntitiesStockOrderItemAllOf = {
 	stockOrder: EntitiesStockOrder;
 	stockId: number;
 	stock: EntitiesStock;
-	orderNumber: string;
 	actual: number;
 	price: number;
 };
@@ -1269,7 +1268,7 @@ export type EntitiesStockOrderItem = EntitiesAuditableEntity &
 	Required<
 		Pick<
 			EntitiesAuditableEntity & EntitiesStockOrderItemAllOf,
-			"stockOrderId" | "stockOrder" | "stockId" | "stock" | "orderNumber" | "actual" | "price"
+			"stockOrderId" | "stockOrder" | "stockId" | "stock" | "actual" | "price"
 		>
 	>;
 
@@ -1338,6 +1337,69 @@ export type StockOrderGetAllRequestAllOf = { [key: string]: unknown };
 
 export type StockOrderGetAllRequest = CommonModelsQueryModel & StockOrderGetAllRequestAllOf;
 
+export interface DTOStockOrderDTO {
+	id: number;
+	outletId: number;
+	orderNumber: string;
+	stockOrderStatusId: number;
+	stockOrderStatus: DTOStockOrderStatusDTO;
+	divisionId: number;
+	division: ManagerOrderViewDivisionDTO;
+	orderDate: string;
+	supplierId: number;
+	supplier: DTOSupplierDTO;
+	/** @nullable */
+	stockOrderItems?: DTOStockOrderItemDTO[] | null;
+}
+
+export interface DTOStockOrderStatusDTO {
+	id: number;
+	name: string;
+}
+
+export interface ManagerOrderViewDivisionDTO {
+	divisionId: number;
+	divisionName: string;
+}
+
+export interface DTOSupplierDTO {
+	id: number;
+	outletId: number;
+	name: string;
+	contactName: string;
+	contactNumber: string;
+	email: string;
+	divisionId: number;
+	division: ManagerOrderViewDivisionDTO;
+}
+
+export interface DTOStockOrderItemDTO {
+	stockOrderId: number;
+	stockId: number;
+	stock: DTOStockBasicDTO;
+	actual: number;
+	price: number;
+}
+
+export interface DTOStockBasicDTO {
+	id: number;
+	outletId: number;
+	name: string;
+	unitId: number;
+	unit: DTOUnitDTO;
+	stockCategoryId: number;
+	totalActual: number;
+}
+
+export interface DTOUnitDTO {
+	id: number;
+	name: string;
+}
+
+export interface StockOrderGetRequest {
+	[key: string]: unknown;
+}
+
 export interface StockOrderDeleteRequest {
 	[key: string]: unknown;
 }
@@ -1370,20 +1432,10 @@ export interface DTOStockDTO {
 	totalActual: number;
 }
 
-export interface DTOUnitDTO {
-	id: number;
-	name: string;
-}
-
 export interface DTOStockItemDTO {
 	division: ManagerOrderViewDivisionDTO;
 	threshold: number;
 	actual: number;
-}
-
-export interface ManagerOrderViewDivisionDTO {
-	divisionId: number;
-	name: string;
 }
 
 export type StockGetAllRequestAllOf = { [key: string]: unknown };
@@ -2447,7 +2499,7 @@ export type StockOrderGetAllParams = {
 	pageSize?: number | null;
 };
 
-export type StockGetAllGetMenuItemsParams = {
+export type StockGetAllParams = {
 	outletId: number;
 	sorts?: string | null;
 	filters?: string | null;

@@ -667,7 +667,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get?: never;
+        get: operations["StockOrderGet"];
         put?: never;
         post?: never;
         delete: operations["StockOrderDelete"];
@@ -683,7 +683,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        get: operations["StockGetAllGetMenuItems"];
+        get: operations["StockGetAll"];
         put?: never;
         post?: never;
         delete?: never;
@@ -2935,7 +2935,6 @@ export interface components {
             /** Format: int32 */
             stockId: number;
             stock: components["schemas"]["EntitiesStock"];
-            orderNumber: string;
             /** Format: decimal */
             actual: number;
             /** Format: decimal */
@@ -3000,6 +2999,79 @@ export interface components {
             hasNextPage: boolean;
         };
         StockOrderGetAllRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        DTOStockOrderDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            orderNumber: string;
+            /** Format: int32 */
+            stockOrderStatusId: number;
+            stockOrderStatus: components["schemas"]["DTOStockOrderStatusDTO"];
+            /** Format: int32 */
+            divisionId: number;
+            division: components["schemas"]["ManagerOrderViewDivisionDTO"];
+            /** Format: date-time */
+            orderDate: string;
+            /** Format: int32 */
+            supplierId: number;
+            supplier: components["schemas"]["DTOSupplierDTO"];
+            stockOrderItems?: components["schemas"]["DTOStockOrderItemDTO"][] | null;
+        };
+        DTOStockOrderStatusDTO: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        ManagerOrderViewDivisionDTO: {
+            /** Format: int32 */
+            divisionId: number;
+            divisionName: string;
+        };
+        DTOSupplierDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            name: string;
+            contactName: string;
+            contactNumber: string;
+            email: string;
+            /** Format: int32 */
+            divisionId: number;
+            division: components["schemas"]["ManagerOrderViewDivisionDTO"];
+        };
+        DTOStockOrderItemDTO: {
+            /** Format: int32 */
+            stockOrderId: number;
+            /** Format: int32 */
+            stockId: number;
+            stock: components["schemas"]["DTOStockBasicDTO"];
+            /** Format: decimal */
+            actual: number;
+            /** Format: decimal */
+            price: number;
+        };
+        DTOStockBasicDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            name: string;
+            /** Format: int32 */
+            unitId: number;
+            unit: components["schemas"]["DTOUnitDTO"];
+            /** Format: int32 */
+            stockCategoryId: number;
+            /** Format: decimal */
+            totalActual: number;
+        };
+        DTOUnitDTO: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        StockOrderGetRequest: Record<string, never>;
         StockOrderDeleteRequest: Record<string, never>;
         StockOrderCreateRequest: {
             /** Format: int32 */
@@ -3036,22 +3108,12 @@ export interface components {
             /** Format: decimal */
             totalActual: number;
         };
-        DTOUnitDTO: {
-            /** Format: int32 */
-            id: number;
-            name: string;
-        };
         DTOStockItemDTO: {
             division: components["schemas"]["ManagerOrderViewDivisionDTO"];
             /** Format: decimal */
             threshold: number;
             /** Format: decimal */
             actual: number;
-        };
-        ManagerOrderViewDivisionDTO: {
-            /** Format: int32 */
-            divisionId: number;
-            name: string;
         };
         StockGetAllRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         StockDivisionGetAllRequest: Record<string, never>;
@@ -5522,6 +5584,44 @@ export interface operations {
             };
         };
     };
+    StockOrderGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOStockOrderDTO"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     StockOrderDelete: {
         parameters: {
             query?: never;
@@ -5570,7 +5670,7 @@ export interface operations {
             };
         };
     };
-    StockGetAllGetMenuItems: {
+    StockGetAll: {
         parameters: {
             query: {
                 outletId: number;

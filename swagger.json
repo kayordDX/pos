@@ -2208,6 +2208,53 @@
       }
     },
     "/stock/order/{id}": {
+      "get": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockOrderGet",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DTOStockOrderDTO"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
       "delete": {
         "tags": [
           "Stock"
@@ -2272,7 +2319,7 @@
         "tags": [
           "Stock"
         ],
-        "operationId": "StockGetAllGetMenuItems",
+        "operationId": "StockGetAll",
         "parameters": [
           {
             "name": "outletId",
@@ -11008,7 +11055,6 @@
               "stockOrder",
               "stockId",
               "stock",
-              "orderNumber",
               "actual",
               "price"
             ],
@@ -11026,9 +11072,6 @@
               },
               "stock": {
                 "$ref": "#/components/schemas/EntitiesStock"
-              },
-              "orderNumber": {
-                "type": "string"
               },
               "actual": {
                 "type": "number",
@@ -11249,6 +11292,238 @@
           }
         ]
       },
+      "DTOStockOrderDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "outletId",
+          "orderNumber",
+          "stockOrderStatusId",
+          "stockOrderStatus",
+          "divisionId",
+          "division",
+          "orderDate",
+          "supplierId",
+          "supplier"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderNumber": {
+            "type": "string"
+          },
+          "stockOrderStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockOrderStatus": {
+            "$ref": "#/components/schemas/DTOStockOrderStatusDTO"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "division": {
+            "$ref": "#/components/schemas/ManagerOrderViewDivisionDTO"
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "supplierId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "supplier": {
+            "$ref": "#/components/schemas/DTOSupplierDTO"
+          },
+          "stockOrderItems": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "$ref": "#/components/schemas/DTOStockOrderItemDTO"
+            }
+          }
+        }
+      },
+      "DTOStockOrderStatusDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "ManagerOrderViewDivisionDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "divisionId",
+          "divisionName"
+        ],
+        "properties": {
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionName": {
+            "type": "string"
+          }
+        }
+      },
+      "DTOSupplierDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "outletId",
+          "name",
+          "contactName",
+          "contactNumber",
+          "email",
+          "divisionId",
+          "division"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "contactName": {
+            "type": "string"
+          },
+          "contactNumber": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "division": {
+            "$ref": "#/components/schemas/ManagerOrderViewDivisionDTO"
+          }
+        }
+      },
+      "DTOStockOrderItemDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stockOrderId",
+          "stockId",
+          "stock",
+          "actual",
+          "price"
+        ],
+        "properties": {
+          "stockOrderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stock": {
+            "$ref": "#/components/schemas/DTOStockBasicDTO"
+          },
+          "actual": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "price": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "DTOStockBasicDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "outletId",
+          "name",
+          "unitId",
+          "unit",
+          "stockCategoryId",
+          "totalActual"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "unitId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unit": {
+            "$ref": "#/components/schemas/DTOUnitDTO"
+          },
+          "stockCategoryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalActual": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "DTOUnitDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "StockOrderGetRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "StockOrderDeleteRequest": {
         "type": "object",
         "additionalProperties": false
@@ -11366,23 +11641,6 @@
           }
         }
       },
-      "DTOUnitDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "name"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          }
-        }
-      },
       "DTOStockItemDTO": {
         "type": "object",
         "additionalProperties": false,
@@ -11402,23 +11660,6 @@
           "actual": {
             "type": "number",
             "format": "decimal"
-          }
-        }
-      },
-      "ManagerOrderViewDivisionDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "divisionId",
-          "name"
-        ],
-        "properties": {
-          "divisionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
           }
         }
       },
