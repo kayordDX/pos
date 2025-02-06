@@ -15,12 +15,17 @@
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
-	import { createStockOrderCreate, createStockOrderUpdate, createStockGetAll } from "$lib/api";
+	import {
+		createStockOrderItemCreate,
+		createStockOrderItemUpdate,
+		createStockGetAll,
+	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { cn } from "@kayord/ui/utils";
 	import { Check, ChevronsUpDown } from "lucide-svelte";
 	import { tick } from "svelte";
 	import QueryBuilder from "fluent-querykit";
+	import { page } from "$app/state";
 
 	interface Props {
 		refetch: () => void;
@@ -31,8 +36,8 @@
 
 	const isEdit = $derived(orderItem != null);
 
-	const editMutation = createStockOrderUpdate();
-	const createMutation = createStockOrderCreate();
+	const editMutation = createStockOrderItemUpdate();
+	const createMutation = createStockOrderItemCreate();
 
 	const schema = z.object({
 		stockId: z.number().min(1, { message: "Stock is Required" }),
@@ -55,14 +60,14 @@
 				// });
 				toast.info("Edited Order Item");
 			} else {
-				// await $createMutation.mutateAsync({
-				// 	data: {
-				// 		orderNumber: data.orderNumber,
-				// 		outletId: status.value.outletId,
-				// 		divisionId: data.divisionId,
-				// 		supplierId: data.supplierId,
-				// 	},
-				// });
+				await $createMutation.mutateAsync({
+					data: {
+						stockOrderId: Number(page.params.Id),
+						stockId: data.stockId,
+						actual: data.actual,
+						price: data.price,
+					},
+				});
 				toast.info("Added Order Item");
 			}
 			refetch();
@@ -112,9 +117,11 @@
 	);
 
 	const stockList = $derived($stockQuery.data?.items ?? []);
-	const stockSelect = $derived(
-		stockList.find((f) => f.id === $formData.stockId)?.name ?? "Select Stock"
-	);
+	const stockSelect = $derived.by(() => {
+		const sl = stockList.find((f) => f.id === $formData.stockId);
+		if (sl == null) return "Select Stock";
+		return `${sl.name} - (${sl.unit.name})`;
+	});
 
 	function closeAndFocusTrigger() {
 		stockOpen = false;
@@ -174,14 +181,15 @@
 								<Command.Empty>No Stock found.</Command.Empty>
 								<Command.Group>
 									{#each stockList as s (s.id)}
+										{@const value = `${s.name} - (${s.unit.name})`}
 										<Command.Item
-											value={s.name}
+											{value}
 											onSelect={() => {
 												$formData.stockId = s.id;
 												closeAndFocusTrigger();
 											}}
 										>
-											{s.name}
+											{value}
 											<Check
 												class={cn("ml-auto", s.id !== $formData.stockId && "text-transparent")}
 											/>

@@ -644,6 +644,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock/orderItem": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["StockOrderItemUpdate"];
+        post: operations["StockOrderItemCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/stock/order": {
         parameters: {
             query?: never;
@@ -2904,6 +2920,18 @@ export interface components {
             url?: string | null;
         };
         SupplierGetAllRequest: Record<string, never>;
+        EntitiesStockOrderItem: components["schemas"]["EntitiesAuditableEntity"] & {
+            /** Format: int32 */
+            stockOrderId: number;
+            stockOrder: components["schemas"]["EntitiesStockOrder"];
+            /** Format: int32 */
+            stockId: number;
+            stock: components["schemas"]["EntitiesStock"];
+            /** Format: decimal */
+            actual: number;
+            /** Format: decimal */
+            price: number;
+        };
         EntitiesStockOrder: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
             id: number;
@@ -2927,18 +2955,6 @@ export interface components {
             /** Format: int32 */
             id: number;
             name: string;
-        };
-        EntitiesStockOrderItem: components["schemas"]["EntitiesAuditableEntity"] & {
-            /** Format: int32 */
-            stockOrderId: number;
-            stockOrder: components["schemas"]["EntitiesStockOrder"];
-            /** Format: int32 */
-            stockId: number;
-            stock: components["schemas"]["EntitiesStock"];
-            /** Format: decimal */
-            actual: number;
-            /** Format: decimal */
-            price: number;
         };
         EntitiesStock: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
@@ -2977,6 +2993,26 @@ export interface components {
             threshold: number;
             /** Format: decimal */
             actual: number;
+        };
+        StockOrderItemUpdateRequest: {
+            /** Format: int32 */
+            stockOrderId: number;
+            /** Format: int32 */
+            stockId: number;
+            /** Format: decimal */
+            actual: number;
+            /** Format: decimal */
+            price: number;
+        };
+        StockOrderItemCreateRequest: {
+            /** Format: int32 */
+            stockOrderId: number;
+            /** Format: int32 */
+            stockId: number;
+            /** Format: decimal */
+            actual: number;
+            /** Format: decimal */
+            price: number;
         };
         StockOrderUpdateRequest: {
             /** Format: int32 */
@@ -5433,6 +5469,86 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesSupplier"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockOrderItemUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockOrderItemUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockOrderItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockOrderItemCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockOrderItemCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockOrder"];
                 };
             };
             /** @description Unauthorized */

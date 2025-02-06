@@ -30,11 +30,13 @@
 			header: "Unit",
 			accessorKey: "unit.name",
 			size: 1000,
+			enableSorting: false,
 		},
 		{
 			header: "Total",
 			accessorKey: "totalActual",
 			size: 1000,
+			enableSorting: false,
 		},
 		{
 			header: "",

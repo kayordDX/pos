@@ -1,5 +1,13 @@
 <script lang="ts">
-	import { Button, createSvelteTable, DataTable } from "@kayord/ui";
+	import {
+		Badge,
+		Button,
+		createSvelteTable,
+		DataTable,
+		renderComponent,
+		renderSnippet,
+	} from "@kayord/ui";
+	import Actions from "./Actions.svelte";
 
 	import AddOrder from "./AddOrder.svelte";
 
@@ -29,6 +37,7 @@
 		{
 			header: "Status",
 			accessorKey: "stockOrderStatus.name",
+			cell: (item) => renderSnippet(statusCol, item.row.original.stockOrderStatus.name ?? ""),
 			size: 1000,
 		},
 		{
@@ -36,17 +45,17 @@
 			accessorKey: "supplier.name",
 			size: 1000,
 		},
-		// {
-		// 	header: "",
-		// 	accessorKey: "menuItemId",
-		// 	cell: (item) =>
-		// 		renderComponent(Actions, {
-		// 			menuItem: item.row.original,
-		// 			refetch: $query.refetch,
-		// 		}),
-		// 	size: 10,
-		// 	enableSorting: false,
-		// },
+		{
+			header: "",
+			accessorKey: "menuItemId",
+			cell: (item) =>
+				renderComponent(Actions, {
+					stockOrder: item.row.original,
+					refetch: $query.refetch,
+				}),
+			size: 10,
+			enableSorting: false,
+		},
 	];
 
 	let pagination: PaginationState = $state({ pageIndex: 0, pageSize: 10 });
@@ -66,7 +75,10 @@
 	let columnFilters = $state<ColumnFiltersState>([]);
 	let filters = $state("");
 
-	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id}`).join(","));
+	// Replacing _ with . to fix sorting issue
+	const sorts = $derived(
+		sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id.replaceAll("_", ".")}`).join(",")
+	);
 
 	const query = $derived(
 		createStockOrderGetAll({
@@ -122,6 +134,10 @@
 		enableRowSelection: false,
 	});
 </script>
+
+{#snippet statusCol(status: string)}
+	<Badge>{status}</Badge>
+{/snippet}
 
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">

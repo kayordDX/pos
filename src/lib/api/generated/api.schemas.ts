@@ -1212,6 +1212,24 @@ export interface SupplierGetAllRequest {
 	[key: string]: unknown;
 }
 
+export type EntitiesStockOrderItemAllOf = {
+	stockOrderId: number;
+	stockOrder: EntitiesStockOrder;
+	stockId: number;
+	stock: EntitiesStock;
+	actual: number;
+	price: number;
+};
+
+export type EntitiesStockOrderItem = EntitiesAuditableEntity &
+	EntitiesStockOrderItemAllOf &
+	Required<
+		Pick<
+			EntitiesAuditableEntity & EntitiesStockOrderItemAllOf,
+			"stockOrderId" | "stockOrder" | "stockId" | "stock" | "actual" | "price"
+		>
+	>;
+
 export type EntitiesStockOrderAllOf = {
 	id: number;
 	outletId: number;
@@ -1254,24 +1272,6 @@ export type EntitiesStockOrderStatus = EntitiesAuditableEntity &
 	EntitiesStockOrderStatusAllOf &
 	Required<Pick<EntitiesAuditableEntity & EntitiesStockOrderStatusAllOf, "id" | "name">>;
 
-export type EntitiesStockOrderItemAllOf = {
-	stockOrderId: number;
-	stockOrder: EntitiesStockOrder;
-	stockId: number;
-	stock: EntitiesStock;
-	actual: number;
-	price: number;
-};
-
-export type EntitiesStockOrderItem = EntitiesAuditableEntity &
-	EntitiesStockOrderItemAllOf &
-	Required<
-		Pick<
-			EntitiesAuditableEntity & EntitiesStockOrderItemAllOf,
-			"stockOrderId" | "stockOrder" | "stockId" | "stock" | "actual" | "price"
-		>
-	>;
-
 export type EntitiesStockAllOf = {
 	id: number;
 	outletId: number;
@@ -1311,6 +1311,20 @@ export interface EntitiesStockItem {
 	division: EntitiesDivision;
 	threshold: number;
 	actual: number;
+}
+
+export interface StockOrderItemUpdateRequest {
+	stockOrderId: number;
+	stockId: number;
+	actual: number;
+	price: number;
+}
+
+export interface StockOrderItemCreateRequest {
+	stockOrderId: number;
+	stockId: number;
+	actual: number;
+	price: number;
 }
 
 export interface StockOrderUpdateRequest {

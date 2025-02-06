@@ -23,17 +23,164 @@ import type {
 	DTOStockOrderDTO,
 	EntitiesDivision,
 	EntitiesStockOrder,
+	EntitiesStockOrderItem,
 	ErrorResponse,
 	InternalErrorResponse,
 	StockDivisionGetAllParams,
 	StockGetAllParams,
 	StockOrderCreateRequest,
 	StockOrderGetAllParams,
+	StockOrderItemCreateRequest,
+	StockOrderItemUpdateRequest,
 	StockOrderUpdateRequest,
 } from "./api.schemas";
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
+export const stockOrderItemUpdate = (
+	stockOrderItemUpdateRequest: BodyType<StockOrderItemUpdateRequest>
+) => {
+	return customInstance<EntitiesStockOrderItem>({
+		url: `/stock/orderItem`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: stockOrderItemUpdateRequest,
+	});
+};
+
+export const getStockOrderItemUpdateMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockOrderItemUpdate>>,
+		TError,
+		{ data: BodyType<StockOrderItemUpdateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockOrderItemUpdate>>,
+	TError,
+	{ data: BodyType<StockOrderItemUpdateRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockOrderItemUpdate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockOrderItemUpdate>>,
+		{ data: BodyType<StockOrderItemUpdateRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockOrderItemUpdate(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockOrderItemUpdateMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockOrderItemUpdate>>
+>;
+export type StockOrderItemUpdateMutationBody = BodyType<StockOrderItemUpdateRequest>;
+export type StockOrderItemUpdateMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createStockOrderItemUpdate = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockOrderItemUpdate>>,
+		TError,
+		{ data: BodyType<StockOrderItemUpdateRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof stockOrderItemUpdate>>,
+	TError,
+	{ data: BodyType<StockOrderItemUpdateRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockOrderItemUpdateMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const stockOrderItemCreate = (
+	stockOrderItemCreateRequest: BodyType<StockOrderItemCreateRequest>
+) => {
+	return customInstance<EntitiesStockOrder>({
+		url: `/stock/orderItem`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: stockOrderItemCreateRequest,
+	});
+};
+
+export const getStockOrderItemCreateMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockOrderItemCreate>>,
+		TError,
+		{ data: BodyType<StockOrderItemCreateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockOrderItemCreate>>,
+	TError,
+	{ data: BodyType<StockOrderItemCreateRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockOrderItemCreate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockOrderItemCreate>>,
+		{ data: BodyType<StockOrderItemCreateRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockOrderItemCreate(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockOrderItemCreateMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockOrderItemCreate>>
+>;
+export type StockOrderItemCreateMutationBody = BodyType<StockOrderItemCreateRequest>;
+export type StockOrderItemCreateMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createStockOrderItemCreate = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockOrderItemCreate>>,
+		TError,
+		{ data: BodyType<StockOrderItemCreateRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof stockOrderItemCreate>>,
+	TError,
+	{ data: BodyType<StockOrderItemCreateRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockOrderItemCreateMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const stockOrderUpdate = (stockOrderUpdateRequest: BodyType<StockOrderUpdateRequest>) => {
 	return customInstance<EntitiesStockOrder>({
 		url: `/stock/order`,

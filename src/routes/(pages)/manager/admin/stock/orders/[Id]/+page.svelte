@@ -5,6 +5,7 @@
 	import { Alert, Badge, Button, Card, Loader, Table } from "@kayord/ui";
 	import { PlusIcon } from "lucide-svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
+	import Actions from "./Actions.svelte";
 
 	const query = createStockOrderGet(Number(page.params.Id));
 
@@ -27,10 +28,14 @@
 <div class="m-2">
 	<Loader isLoading={$query.isPending} />
 	{#if $query.data}
-		<div class="border-2 border-secondary p-2 rounded-md flex justify-between items-center">
+		<div
+			class="border-2 border-secondary p-2 rounded-md flex justify-between items-center bg-secondary text-secondary-foreground"
+		>
 			<div class="flex flex-col">
 				<h2 class="font-bold">Order: {$query.data.orderNumber}</h2>
-				<Badge>{$query.data.stockOrderStatus.name}</Badge>
+				<div>
+					<Badge>{$query.data.stockOrderStatus.name}</Badge>
+				</div>
 			</div>
 			<div class="flex flex-col">
 				<div>
@@ -50,21 +55,30 @@
 			<Table.Root class="mt-2">
 				<Table.Header>
 					<Table.Row>
-						<Table.Head class="w-[100px]">Invoice</Table.Head>
-						<Table.Head>Status</Table.Head>
-						<Table.Head>Method</Table.Head>
-						<Table.Head class="text-right">Amount</Table.Head>
+						<Table.Head>Stock</Table.Head>
+						<Table.Head>Actual</Table.Head>
+						<Table.Head>Price</Table.Head>
+						<Table.Head class="w-[40px]"></Table.Head>
 					</Table.Row>
 				</Table.Header>
 				<Table.Body>
-					<Table.Row>
-						<Table.Cell class="font-medium">INV001</Table.Cell>
-						<Table.Cell>Paid</Table.Cell>
-						<Table.Cell>Credit Card</Table.Cell>
-						<Table.Cell class="text-right">$250.00</Table.Cell>
-					</Table.Row>
+					{#each $query.data?.stockOrderItems ?? [] as item}
+						<Table.Row>
+							<Table.Cell>{item.stock.name}</Table.Cell>
+							<Table.Cell>{item.actual}</Table.Cell>
+							<Table.Cell>{item.price}</Table.Cell>
+							<Table.Cell class="w-[40px] py-0">
+								<Actions {item} refetch={$query.refetch} />
+							</Table.Cell>
+						</Table.Row>
+					{/each}
 				</Table.Body>
 			</Table.Root>
+		{:else if !$query.isPending}
+			<Alert.Root class="border-dashed">
+				<Alert.Title>No Items</Alert.Title>
+				<Alert.Description>Select Add Item to add new Items to Order</Alert.Description>
+			</Alert.Root>
 		{/if}
 	{:else}
 		{@render errorMessage("An error occurred while fetching order items")}
