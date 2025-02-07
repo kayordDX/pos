@@ -1,17 +1,7 @@
 <script lang="ts">
 	import type { EntitiesStockOrderItem } from "$lib/api";
 	import { getError } from "$lib/types";
-	import {
-		Button,
-		buttonVariants,
-		Command,
-		Dialog,
-		Form,
-		Input,
-		Popover,
-		Select,
-		toast,
-	} from "@kayord/ui";
+	import { Button, Combobox, Dialog, Form, Input, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
@@ -21,9 +11,6 @@
 		createStockGetAll,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { cn } from "@kayord/ui/utils";
-	import { Check, ChevronsUpDown } from "lucide-svelte";
-	import { tick } from "svelte";
 	import QueryBuilder from "fluent-querykit";
 	import { page } from "$app/state";
 
@@ -101,10 +88,6 @@
 		}
 	});
 
-	let stockOpen = $state(false);
-
-	let triggerRef = $state<HTMLButtonElement>(null!);
-
 	let filters = $state("");
 	const stockQuery = $derived(
 		createStockGetAll({
@@ -117,20 +100,11 @@
 	);
 
 	const stockList = $derived($stockQuery.data?.items ?? []);
-	const stockSelect = $derived.by(() => {
-		const sl = stockList.find((f) => f.id === $formData.stockId);
-		if (sl == null) return "Select Stock";
-		return `${sl.name} - (${sl.unit.name})`;
-	});
-
-	function closeAndFocusTrigger() {
-		stockOpen = false;
-		tick().then(() => {
-			triggerRef.focus();
-		});
-	}
 
 	let stockSearch = $state("");
+	$effect(() => {
+		console.log("what", stockSearch);
+	});
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
@@ -139,6 +113,10 @@
 		}
 		filters = qb.build();
 	});
+
+	const stockListSelect = $derived(
+		stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unit.name})` }))
+	);
 </script>
 
 <Dialog.Root bind:open>
@@ -150,55 +128,18 @@
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
 				<Form.Field {form} name="stockId" class="flex flex-col">
-					<Popover.Root bind:open={stockOpen}>
-						<Form.Control>
-							{#snippet children({ props })}
-								<Form.Label>Stock</Form.Label>
-								<Popover.Trigger
-									bind:ref={triggerRef}
-									class={cn(
-										buttonVariants({ variant: "outline" }),
-										"w-full justify-between",
-										!$formData.stockId && "text-muted-foreground"
-									)}
-									role="combobox"
-									{...props}
-								>
-									{stockSelect}
-									<ChevronsUpDown class="opacity-50" />
-								</Popover.Trigger>
-								<input hidden value={$formData.stockId} name={props.name} />
-							{/snippet}
-						</Form.Control>
-						<Popover.Content class="p-0">
-							<Command.Root shouldFilter={false}>
-								<Command.Input
-									autofocus
-									placeholder="Search Stock..."
-									class="h-9"
-									bind:value={stockSearch}
-								/>
-								<Command.Empty>No Stock found.</Command.Empty>
-								<Command.Group>
-									{#each stockList as s (s.id)}
-										{@const value = `${s.name} - (${s.unit.name})`}
-										<Command.Item
-											{value}
-											onSelect={() => {
-												$formData.stockId = s.id;
-												closeAndFocusTrigger();
-											}}
-										>
-											{value}
-											<Check
-												class={cn("ml-auto", s.id !== $formData.stockId && "text-transparent")}
-											/>
-										</Command.Item>
-									{/each}
-								</Command.Group>
-							</Command.Root>
-						</Popover.Content>
-					</Popover.Root>
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Stock</Form.Label>
+							<Combobox
+								bind:value={$formData.stockId}
+								items={stockListSelect}
+								bind:search={stockSearch}
+								shouldFilter={false}
+								{...props}
+							/>
+						{/snippet}
+					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
 
