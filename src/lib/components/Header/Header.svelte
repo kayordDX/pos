@@ -18,7 +18,9 @@
 	let { children, class: className, hideHeader = false, leftHeader }: Props = $props();
 
 	const hideHeaderPages = $derived(
-		($page.route.id?.includes("kitchen") ?? false) || ($page.route.id?.includes("bar") ?? false)
+		($page.route.id?.includes("kitchen") ?? false) ||
+			($page.route.id?.includes("bar") ?? false) ||
+			($page.route.id?.includes("pizza") ?? false)
 	);
 </script>
 

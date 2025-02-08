@@ -19,6 +19,8 @@
 				await goto("/kitchen");
 			} else if (status.value.roles.includes("Manager")) {
 				await goto("/manager");
+			} else if (status.value.roles.includes("Pizza")) {
+				await goto("/pizza");
 			}
 		}
 		init = true;
@@ -47,6 +49,11 @@
 		{#if status.value.roles.includes("Chef")}
 			<div class="flex flex-col">
 				<Button href="/kitchen">Kitchen</Button>
+			</div>
+		{/if}
+		{#if status.value.roles.includes("Pizza")}
+			<div class="flex flex-col">
+				<Button href="/pizza">Pizza</Button>
 			</div>
 		{/if}
 		{#if status.value.roles.includes("Manager")}
