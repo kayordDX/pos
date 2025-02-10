@@ -2928,6 +2928,11 @@ export interface components {
             stockId: number;
             stock: components["schemas"]["EntitiesStock"];
             /** Format: decimal */
+            orderAmount: number;
+            /** Format: int32 */
+            stockOrderItemStatusId: number;
+            stockOrderItemStatus: components["schemas"]["EntitiesStockOrderItemStatus"];
+            /** Format: decimal */
             actual: number;
             /** Format: decimal */
             price: number;
@@ -2994,6 +2999,11 @@ export interface components {
             /** Format: decimal */
             actual: number;
         };
+        EntitiesStockOrderItemStatus: components["schemas"]["EntitiesAuditableEntity"] & {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
         StockOrderItemUpdateRequest: {
             /** Format: int32 */
             stockOrderId: number;
@@ -3010,7 +3020,7 @@ export interface components {
             /** Format: int32 */
             stockId: number;
             /** Format: decimal */
-            actual: number;
+            orderAmount: number;
             /** Format: decimal */
             price: number;
         };
@@ -3084,6 +3094,11 @@ export interface components {
             stockId: number;
             stock: components["schemas"]["DTOStockBasicDTO"];
             /** Format: decimal */
+            orderAmount: number;
+            /** Format: int32 */
+            stockOrderItemStatusId: number;
+            stockOrderItemStatus: components["schemas"]["DTOStockOrderItemStatusDTO"];
+            /** Format: decimal */
             actual: number;
             /** Format: decimal */
             price: number;
@@ -3103,6 +3118,11 @@ export interface components {
             totalActual: number;
         };
         DTOUnitDTO: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        DTOStockOrderItemStatusDTO: {
             /** Format: int32 */
             id: number;
             name: string;

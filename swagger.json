@@ -11063,6 +11063,9 @@
               "stockOrder",
               "stockId",
               "stock",
+              "orderAmount",
+              "stockOrderItemStatusId",
+              "stockOrderItemStatus",
               "actual",
               "price"
             ],
@@ -11080,6 +11083,17 @@
               },
               "stock": {
                 "$ref": "#/components/schemas/EntitiesStock"
+              },
+              "orderAmount": {
+                "type": "number",
+                "format": "decimal"
+              },
+              "stockOrderItemStatusId": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "stockOrderItemStatus": {
+                "$ref": "#/components/schemas/EntitiesStockOrderItemStatus"
               },
               "actual": {
                 "type": "number",
@@ -11314,6 +11328,30 @@
           }
         }
       },
+      "EntitiesStockOrderItemStatus": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntitiesAuditableEntity"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      },
       "StockOrderItemUpdateRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -11348,7 +11386,7 @@
         "required": [
           "stockOrderId",
           "stockId",
-          "actual",
+          "orderAmount",
           "price"
         ],
         "properties": {
@@ -11360,7 +11398,7 @@
             "type": "integer",
             "format": "int32"
           },
-          "actual": {
+          "orderAmount": {
             "type": "number",
             "format": "decimal"
           },
@@ -11593,6 +11631,9 @@
           "stockOrderId",
           "stockId",
           "stock",
+          "orderAmount",
+          "stockOrderItemStatusId",
+          "stockOrderItemStatus",
           "actual",
           "price"
         ],
@@ -11607,6 +11648,17 @@
           },
           "stock": {
             "$ref": "#/components/schemas/DTOStockBasicDTO"
+          },
+          "orderAmount": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "stockOrderItemStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockOrderItemStatus": {
+            "$ref": "#/components/schemas/DTOStockOrderItemStatusDTO"
           },
           "actual": {
             "type": "number",
@@ -11660,6 +11712,23 @@
         }
       },
       "DTOUnitDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "DTOStockOrderItemStatusDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [

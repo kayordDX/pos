@@ -1217,6 +1217,9 @@ export type EntitiesStockOrderItemAllOf = {
 	stockOrder: EntitiesStockOrder;
 	stockId: number;
 	stock: EntitiesStock;
+	orderAmount: number;
+	stockOrderItemStatusId: number;
+	stockOrderItemStatus: EntitiesStockOrderItemStatus;
 	actual: number;
 	price: number;
 };
@@ -1226,7 +1229,15 @@ export type EntitiesStockOrderItem = EntitiesAuditableEntity &
 	Required<
 		Pick<
 			EntitiesAuditableEntity & EntitiesStockOrderItemAllOf,
-			"stockOrderId" | "stockOrder" | "stockId" | "stock" | "actual" | "price"
+			| "stockOrderId"
+			| "stockOrder"
+			| "stockId"
+			| "stock"
+			| "orderAmount"
+			| "stockOrderItemStatusId"
+			| "stockOrderItemStatus"
+			| "actual"
+			| "price"
 		>
 	>;
 
@@ -1313,6 +1324,15 @@ export interface EntitiesStockItem {
 	actual: number;
 }
 
+export type EntitiesStockOrderItemStatusAllOf = {
+	id: number;
+	name: string;
+};
+
+export type EntitiesStockOrderItemStatus = EntitiesAuditableEntity &
+	EntitiesStockOrderItemStatusAllOf &
+	Required<Pick<EntitiesAuditableEntity & EntitiesStockOrderItemStatusAllOf, "id" | "name">>;
+
 export interface StockOrderItemUpdateRequest {
 	stockOrderId: number;
 	stockId: number;
@@ -1323,7 +1343,7 @@ export interface StockOrderItemUpdateRequest {
 export interface StockOrderItemCreateRequest {
 	stockOrderId: number;
 	stockId: number;
-	actual: number;
+	orderAmount: number;
 	price: number;
 }
 
@@ -1391,6 +1411,9 @@ export interface DTOStockOrderItemDTO {
 	stockOrderId: number;
 	stockId: number;
 	stock: DTOStockBasicDTO;
+	orderAmount: number;
+	stockOrderItemStatusId: number;
+	stockOrderItemStatus: DTOStockOrderItemStatusDTO;
 	actual: number;
 	price: number;
 }
@@ -1406,6 +1429,11 @@ export interface DTOStockBasicDTO {
 }
 
 export interface DTOUnitDTO {
+	id: number;
+	name: string;
+}
+
+export interface DTOStockOrderItemStatusDTO {
 	id: number;
 	name: string;
 }
