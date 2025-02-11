@@ -11,18 +11,12 @@
 		DataTable,
 		Loader,
 		renderComponent,
-		Table,
+		toast,
 	} from "@kayord/ui";
-	import { PlusIcon } from "lucide-svelte";
+	import { NotebookPenIcon, PlusIcon } from "lucide-svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
 	import Actions from "./Actions.svelte";
-	import {
-		getCoreRowModel,
-		getSortedRowModel,
-		type ColumnDef,
-		type SortingState,
-		type Updater,
-	} from "@tanstack/table-core";
+	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
 
 	const query = createStockOrderGet(Number(page.params.Id));
 
@@ -69,14 +63,36 @@
 
 	let data = $derived($query.data?.stockOrderItems ?? []);
 
+	let rowSelection: RowSelectionState = $state({});
+
 	const table = createShadTable({
 		columns,
+		getRowId: (row) => row.stockId.toString(),
 		get data() {
 			return data;
 		},
-		enableRowSelection: false,
+		state: {
+			get rowSelection() {
+				return rowSelection;
+			},
+		},
+		enableRowSelection: true,
 		enablePaging: false,
+		onRowSelectionChange: (updater) => {
+			if (updater instanceof Function) {
+				rowSelection = updater(rowSelection);
+			} else rowSelection = updater;
+		},
 	});
+
+	const updateSelected = async () => {
+		try {
+			$query.refetch();
+			toast.info(`Updated ${Object.keys(rowSelection).length} order items`);
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
+	};
 </script>
 
 {#snippet addOrderItem()}
@@ -115,7 +131,15 @@
 				</div>
 			</div>
 
-			<div class="flex justify-end m-2">
+			<div class="flex justify-between m-2">
+				<div>
+					{#if Object.keys(rowSelection).length > 0}
+						<Button size="sm" onclick={updateSelected}>
+							<NotebookPenIcon />
+							Update Selected
+						</Button>
+					{/if}
+				</div>
 				{@render addOrderItem()}
 			</div>
 		</Card.Root>
@@ -133,6 +157,11 @@
 	{#if $query.error}
 		{@render errorMessage(getError($query.error).message)}
 	{/if}
-
+	{#if Object.keys(rowSelection).length > 0}
+		<Button size="sm" class="mt-2" onclick={updateSelected}>
+			<NotebookPenIcon />
+			Update Selected
+		</Button>
+	{/if}
 	<AddOrderItem bind:open={addOrderItemOpen} refetch={$query.refetch} />
 </div>

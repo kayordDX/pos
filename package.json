@@ -14,7 +14,7 @@
 	},
 	"devDependencies": {
 		"@kayord/tw-plugin": "^1.0.3",
-		"@kayord/ui": "^0.13.18",
+		"@kayord/ui": "^0.13.19",
 		"@microsoft/signalr": "^8.0.7",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/kit": "^2.17.1",
@@ -26,7 +26,7 @@
 		"@typescript-eslint/eslint-plugin": "^8.24.0",
 		"@typescript-eslint/parser": "^8.24.0",
 		"autoprefixer": "^10.4.20",
-		"eslint": "^9.20.0",
+		"eslint": "^9.20.1",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^2.46.1",
 		"firebase": "^11.3.0",

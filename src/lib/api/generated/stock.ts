@@ -21,6 +21,7 @@ import type {
 	CommonModelsPaginatedListOfStockDTO,
 	CommonModelsPaginatedListOfStockOrder,
 	DTOStockOrderDTO,
+	DTOStockOrderItemStatusDTO,
 	EntitiesDivision,
 	EntitiesStockOrder,
 	EntitiesStockOrderItem,
@@ -31,12 +32,85 @@ import type {
 	StockOrderCreateRequest,
 	StockOrderGetAllParams,
 	StockOrderItemCreateRequest,
+	StockOrderItemUpdateBulkRequest,
 	StockOrderItemUpdateRequest,
 	StockOrderUpdateRequest,
 } from "./api.schemas";
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
+export const stockOrderItemUpdateBulk = (
+	stockOrderItemUpdateBulkRequest: BodyType<StockOrderItemUpdateBulkRequest>
+) => {
+	return customInstance<unknown>({
+		url: `/stock/orderItem/bulk`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: stockOrderItemUpdateBulkRequest,
+	});
+};
+
+export const getStockOrderItemUpdateBulkMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockOrderItemUpdateBulk>>,
+		TError,
+		{ data: BodyType<StockOrderItemUpdateBulkRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockOrderItemUpdateBulk>>,
+	TError,
+	{ data: BodyType<StockOrderItemUpdateBulkRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockOrderItemUpdateBulk"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockOrderItemUpdateBulk>>,
+		{ data: BodyType<StockOrderItemUpdateBulkRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockOrderItemUpdateBulk(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockOrderItemUpdateBulkMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockOrderItemUpdateBulk>>
+>;
+export type StockOrderItemUpdateBulkMutationBody = BodyType<StockOrderItemUpdateBulkRequest>;
+export type StockOrderItemUpdateBulkMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createStockOrderItemUpdateBulk = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockOrderItemUpdateBulk>>,
+		TError,
+		{ data: BodyType<StockOrderItemUpdateBulkRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof stockOrderItemUpdateBulk>>,
+	TError,
+	{ data: BodyType<StockOrderItemUpdateBulkRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockOrderItemUpdateBulkMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const stockOrderItemUpdate = (
 	stockOrderItemUpdateRequest: BodyType<StockOrderItemUpdateRequest>
 ) => {
@@ -181,6 +255,63 @@ export const createStockOrderItemCreate = <
 
 	return createMutation(mutationOptions);
 };
+export const stockOrderItemStatus = () => {
+	return customInstance<DTOStockOrderItemStatusDTO[]>({
+		url: `/stock/orderItem/status`,
+		method: "GET",
+	});
+};
+
+export const getStockOrderItemStatusQueryKey = () => {
+	return [`/stock/orderItem/status`] as const;
+};
+
+export const getStockOrderItemStatusQueryOptions = <
+	TData = Awaited<ReturnType<typeof stockOrderItemStatus>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<typeof stockOrderItemStatus>>, TError, TData>
+	>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getStockOrderItemStatusQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof stockOrderItemStatus>>> = () =>
+		stockOrderItemStatus();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof stockOrderItemStatus>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type StockOrderItemStatusQueryResult = NonNullable<
+	Awaited<ReturnType<typeof stockOrderItemStatus>>
+>;
+export type StockOrderItemStatusQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createStockOrderItemStatus<
+	TData = Awaited<ReturnType<typeof stockOrderItemStatus>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<typeof stockOrderItemStatus>>, TError, TData>
+	>;
+}): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getStockOrderItemStatusQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const stockOrderItemDelete = (stockId: number, stockOrderId: number) => {
 	return customInstance<unknown>({
 		url: `/stock/orderItem/${stockId}/${stockOrderId}`,

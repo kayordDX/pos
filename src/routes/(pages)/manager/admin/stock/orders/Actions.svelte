@@ -38,8 +38,8 @@
 		<DropdownMenu.Item onclick={() => goto(`/manager/admin/stock/orders/${stockOrder.id}`)}
 			><ViewIcon /> View</DropdownMenu.Item
 		>
-		<!-- <DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>
-		<DropdownMenu.Item onclick={() => (deleteOpen = true)}><Trash2Icon /> Delete</DropdownMenu.Item> -->
+		<!-- <DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item> -->
+		<!-- <DropdownMenu.Item onclick={() => (deleteOpen = true)}><Trash2Icon /> Delete</DropdownMenu.Item> -->
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 

@@ -3,6 +3,7 @@
 	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
 	import { createStockOrderItemDelete, type DTOStockOrderItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
+	import AddOrderItem from "./AddOrderItem.svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -42,10 +43,8 @@
 <AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
-			<AlertDialog.Title>Delete Menu Item?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete the menu item and all its configured options.
-			</AlertDialog.Description>
+			<AlertDialog.Title>Delete Order Item?</AlertDialog.Title>
+			<AlertDialog.Description>This will delete the order item.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
@@ -61,3 +60,5 @@
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>
+
+<AddOrderItem bind:open={editOpen} {refetch} orderItem={item} />

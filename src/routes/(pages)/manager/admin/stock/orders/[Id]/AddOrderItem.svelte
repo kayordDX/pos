@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { EntitiesStockOrderItem } from "$lib/api";
+	import type { DTOStockOrderItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Combobox, Dialog, Form, Input, toast } from "@kayord/ui";
+	import { Button, Combobox, Dialog, Form, Input, Select, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
@@ -9,6 +9,7 @@
 		createStockOrderItemCreate,
 		createStockOrderItemUpdate,
 		createStockGetAll,
+		createStockOrderItemStatus,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import QueryBuilder from "fluent-querykit";
@@ -17,7 +18,7 @@
 	interface Props {
 		refetch: () => void;
 		open: boolean;
-		orderItem?: EntitiesStockOrderItem;
+		orderItem?: DTOStockOrderItemDTO;
 	}
 	let { refetch, open = $bindable(false), orderItem }: Props = $props();
 
@@ -26,10 +27,16 @@
 	const editMutation = createStockOrderItemUpdate();
 	const createMutation = createStockOrderItemCreate();
 
+	const itemStatusQuery = createStockOrderItemStatus();
+	const itemStatus = $derived($itemStatusQuery.data ?? []);
+
+	const itemStatusValue = $derived(itemStatus.find((i) => i.id == $formData.statusId)?.name);
+
 	const schema = z.object({
 		stockId: z.number().min(1, { message: "Stock is Required" }),
 		orderAmount: z.coerce.number().min(1, { message: "Order Amount is Required" }),
 		price: z.coerce.number().min(1, { message: "Price is Required" }),
+		statusId: z.number().min(1, { message: "Status is Required" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -67,6 +74,7 @@
 		stockId: orderItem?.stockId,
 		orderAmount: orderItem?.orderAmount,
 		price: orderItem?.price,
+		statusId: orderItem?.stockId ?? 1,
 	});
 
 	// svelte-ignore state_referenced_locally
@@ -102,9 +110,6 @@
 	const stockList = $derived($stockQuery.data?.items ?? []);
 
 	let stockSearch = $state("");
-	$effect(() => {
-		console.log("what", stockSearch);
-	});
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
@@ -161,6 +166,33 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
+				{#if isEdit}
+					<Form.Field {form} name="statusId">
+						<Form.Control>
+							{#snippet children({ props })}
+								<Form.Label>Status</Form.Label>
+								<Select.Root
+									type="single"
+									name="itemStatusId"
+									bind:value={
+										() => $formData.statusId.toString(), (v) => ($formData.statusId = Number(v))
+									}
+									allowDeselect={false}
+								>
+									<Select.Trigger {...props}>
+										{itemStatusValue ? itemStatusValue : "Select Status"}
+									</Select.Trigger>
+									<Select.Content>
+										{#each itemStatus as status}
+											<Select.Item value={status.id.toString()}>{status.name}</Select.Item>
+										{/each}
+									</Select.Content>
+								</Select.Root>
+							{/snippet}
+						</Form.Control>
+						<Form.FieldErrors />
+					</Form.Field>
+				{/if}
 			</div>
 			<Dialog.Footer class="gap-2">
 				<Button type="submit">Submit</Button>

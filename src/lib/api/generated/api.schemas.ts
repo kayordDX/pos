@@ -1212,6 +1212,13 @@ export interface SupplierGetAllRequest {
 	[key: string]: unknown;
 }
 
+export interface StockOrderItemUpdateBulkRequest {
+	stockOrderId: number;
+	/** @nullable */
+	stockIds?: number[] | null;
+	stockOrderItemStatusId: number;
+}
+
 export type EntitiesStockOrderItemAllOf = {
 	stockOrderId: number;
 	stockOrder: EntitiesStockOrder;
@@ -1338,6 +1345,12 @@ export interface StockOrderItemUpdateRequest {
 	stockId: number;
 	actual: number;
 	price: number;
+	stockOrderItemStatusId: number;
+}
+
+export interface DTOStockOrderItemStatusDTO {
+	id: number;
+	name: string;
 }
 
 export interface StockOrderItemDeleteRequest {
@@ -1433,11 +1446,6 @@ export interface DTOStockBasicDTO {
 }
 
 export interface DTOUnitDTO {
-	id: number;
-	name: string;
-}
-
-export interface DTOStockOrderItemStatusDTO {
 	id: number;
 	name: string;
 }
