@@ -1,6 +1,10 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import { createStockOrderGet, type DTOStockOrderItemDTO } from "$lib/api";
+	import {
+		createStockOrderGet,
+		createStockOrderItemUpdateBulk,
+		type DTOStockOrderItemDTO,
+	} from "$lib/api";
 	import { getError } from "$lib/types";
 	import {
 		Alert,
@@ -13,7 +17,7 @@
 		renderComponent,
 		toast,
 	} from "@kayord/ui";
-	import { NotebookPenIcon, PlusIcon } from "lucide-svelte";
+	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "lucide-svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
@@ -85,8 +89,18 @@
 		},
 	});
 
-	const updateSelected = async () => {
+	const bulkEditMutation = createStockOrderItemUpdateBulk();
+
+	const updateSelected = async (isCancel: boolean) => {
 		try {
+			const stockIds: Array<number> = Object.keys(rowSelection).map((i) => Number(i));
+			await $bulkEditMutation.mutateAsync({
+				data: {
+					stockOrderId: Number(page.params.Id),
+					stockIds,
+					stockOrderItemStatusId: isCancel ? 3 : 2,
+				},
+			});
 			$query.refetch();
 			toast.info(`Updated ${Object.keys(rowSelection).length} order items`);
 		} catch (err) {
@@ -132,11 +146,15 @@
 			</div>
 
 			<div class="flex justify-between m-2">
-				<div>
+				<div class="flex gap-2">
 					{#if Object.keys(rowSelection).length > 0}
-						<Button size="sm" onclick={updateSelected}>
+						<Button size="sm" onclick={() => updateSelected(false)}>
 							<NotebookPenIcon />
-							Update Selected
+							Mark as Done
+						</Button>
+						<Button size="sm" variant="destructive" onclick={() => updateSelected(true)}>
+							<BookXIcon />
+							Mark as Cancelled
 						</Button>
 					{/if}
 				</div>
@@ -158,10 +176,18 @@
 		{@render errorMessage(getError($query.error).message)}
 	{/if}
 	{#if Object.keys(rowSelection).length > 0}
-		<Button size="sm" class="mt-2" onclick={updateSelected}>
-			<NotebookPenIcon />
-			Update Selected
-		</Button>
+		<div class="flex gap-2 mt-2">
+			{#if Object.keys(rowSelection).length > 0}
+				<Button size="sm" onclick={() => updateSelected(false)}>
+					<NotebookPenIcon />
+					Mark as Done
+				</Button>
+				<Button size="sm" variant="destructive" onclick={() => updateSelected(true)}>
+					<BookXIcon />
+					Mark as Cancelled
+				</Button>
+			{/if}
+		</div>
 	{/if}
 	<AddOrderItem bind:open={addOrderItemOpen} refetch={$query.refetch} />
 </div>

@@ -3065,6 +3065,8 @@ export interface components {
             /** Format: int32 */
             stockId: number;
             /** Format: decimal */
+            orderAmount: number;
+            /** Format: decimal */
             actual: number;
             /** Format: decimal */
             price: number;

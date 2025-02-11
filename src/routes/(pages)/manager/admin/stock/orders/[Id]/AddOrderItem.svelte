@@ -34,8 +34,9 @@
 
 	const schema = z.object({
 		stockId: z.number().min(1, { message: "Stock is Required" }),
-		orderAmount: z.coerce.number().min(1, { message: "Order Amount is Required" }),
-		price: z.coerce.number().min(1, { message: "Price is Required" }),
+		orderAmount: z.coerce.number().min(0, { message: "Order Amount is Required" }),
+		actual: z.coerce.number().min(0, { message: "Actual is Required" }),
+		price: z.coerce.number().min(0, { message: "Price is Required" }),
 		statusId: z.number().min(1, { message: "Status is Required" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
@@ -44,14 +45,16 @@
 		try {
 			open = false;
 			if (isEdit) {
-				// await $editMutation.mutateAsync({
-				// 	data: {
-				// 		id: order?.id ?? 0,
-				// 		orderNumber: data.orderNumber,
-				// 		divisionId: data.divisionId,
-				// 		supplierId: data.supplierId,
-				// 	},
-				// });
+				await $editMutation.mutateAsync({
+					data: {
+						stockId: data.stockId,
+						stockOrderId: Number(page.params.Id),
+						orderAmount: data.orderAmount,
+						actual: data.actual,
+						price: data.price,
+						stockOrderItemStatusId: data.statusId,
+					},
+				});
 				toast.info("Edited Order Item");
 			} else {
 				await $createMutation.mutateAsync({
@@ -73,8 +76,9 @@
 	const defaultValues = $derived({
 		stockId: orderItem?.stockId,
 		orderAmount: orderItem?.orderAmount,
+		actual: orderItem?.actual ?? 0,
 		price: orderItem?.price,
-		statusId: orderItem?.stockId ?? 1,
+		statusId: orderItem?.stockOrderItemStatusId ?? 1,
 	});
 
 	// svelte-ignore state_referenced_locally
@@ -132,21 +136,25 @@
 				<Dialog.Description>Complete form to {isEdit ? "Edit" : "Add"} order</Dialog.Description>
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
-				<Form.Field {form} name="stockId" class="flex flex-col">
-					<Form.Control>
-						{#snippet children({ props })}
-							<Form.Label>Stock</Form.Label>
-							<Combobox
-								bind:value={$formData.stockId}
-								items={stockListSelect}
-								bind:search={stockSearch}
-								shouldFilter={false}
-								{...props}
-							/>
-						{/snippet}
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
+				{#if isEdit}
+					{orderItem?.stock.name}
+				{:else}
+					<Form.Field {form} name="stockId" class="flex flex-col">
+						<Form.Control>
+							{#snippet children({ props })}
+								<Form.Label>Stock</Form.Label>
+								<Combobox
+									bind:value={$formData.stockId}
+									items={stockListSelect}
+									bind:search={stockSearch}
+									shouldFilter={false}
+									{...props}
+								/>
+							{/snippet}
+						</Form.Control>
+						<Form.FieldErrors />
+					</Form.Field>
+				{/if}
 
 				<Form.Field {form} name="orderAmount">
 					<Form.Control>
@@ -157,6 +165,19 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
+
+				{#if isEdit}
+					<Form.Field {form} name="actual">
+						<Form.Control>
+							{#snippet children({ props })}
+								<Form.Label>Actual</Form.Label>
+								<Input {...props} bind:value={$formData.actual} type="number" step="0.01" />
+							{/snippet}
+						</Form.Control>
+						<Form.FieldErrors />
+					</Form.Field>
+				{/if}
+
 				<Form.Field {form} name="price">
 					<Form.Control>
 						{#snippet children({ props })}

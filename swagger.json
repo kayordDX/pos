@@ -11546,6 +11546,7 @@
         "required": [
           "stockOrderId",
           "stockId",
+          "orderAmount",
           "actual",
           "price",
           "stockOrderItemStatusId"
@@ -11558,6 +11559,10 @@
           "stockId": {
             "type": "integer",
             "format": "int32"
+          },
+          "orderAmount": {
+            "type": "number",
+            "format": "decimal"
           },
           "actual": {
             "type": "number",

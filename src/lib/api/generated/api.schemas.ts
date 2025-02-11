@@ -1343,6 +1343,7 @@ export type EntitiesStockOrderItemStatus = EntitiesAuditableEntity &
 export interface StockOrderItemUpdateRequest {
 	stockOrderId: number;
 	stockId: number;
+	orderAmount: number;
 	actual: number;
 	price: number;
 	stockOrderItemStatusId: number;
