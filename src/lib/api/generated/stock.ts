@@ -181,6 +181,76 @@ export const createStockOrderItemCreate = <
 
 	return createMutation(mutationOptions);
 };
+export const stockOrderItemDelete = (stockId: number, stockOrderId: number) => {
+	return customInstance<unknown>({
+		url: `/stock/orderItem/${stockId}/${stockOrderId}`,
+		method: "DELETE",
+	});
+};
+
+export const getStockOrderItemDeleteMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockOrderItemDelete>>,
+		TError,
+		{ stockId: number; stockOrderId: number },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockOrderItemDelete>>,
+	TError,
+	{ stockId: number; stockOrderId: number },
+	TContext
+> => {
+	const mutationKey = ["stockOrderItemDelete"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockOrderItemDelete>>,
+		{ stockId: number; stockOrderId: number }
+	> = (props) => {
+		const { stockId, stockOrderId } = props ?? {};
+
+		return stockOrderItemDelete(stockId, stockOrderId);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockOrderItemDeleteMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockOrderItemDelete>>
+>;
+
+export type StockOrderItemDeleteMutationError = ErrorType<
+	ErrorResponse | void | InternalErrorResponse
+>;
+
+export const createStockOrderItemDelete = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockOrderItemDelete>>,
+		TError,
+		{ stockId: number; stockOrderId: number },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof stockOrderItemDelete>>,
+	TError,
+	{ stockId: number; stockOrderId: number },
+	TContext
+> => {
+	const mutationOptions = getStockOrderItemDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const stockOrderUpdate = (stockOrderUpdateRequest: BodyType<StockOrderUpdateRequest>) => {
 	return customInstance<EntitiesStockOrder>({
 		url: `/stock/order`,

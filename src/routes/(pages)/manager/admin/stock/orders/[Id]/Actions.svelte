@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
 	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
-	import { createMenuItemDelete, type DTOStockOrderItemDTO } from "$lib/api";
+	import { createStockOrderItemDelete, type DTOStockOrderItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
 
 	interface Props {
@@ -14,11 +14,11 @@
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
 
-	const deleteMutation = createMenuItemDelete();
+	const deleteMutation = createStockOrderItemDelete();
 	const deleteMenuItem = async () => {
 		deleteOpen = false;
 		try {
-			// await $deleteMutation.mutateAsync({ id: menuItem.menuItemId });
+			await $deleteMutation.mutateAsync({ stockId: item.stockId, stockOrderId: item.stockOrderId });
 			refetch();
 			toast.message("Stock Item Deleted");
 		} catch (error) {

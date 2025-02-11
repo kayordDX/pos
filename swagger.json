@@ -2116,6 +2116,75 @@
         ]
       }
     },
+    "/stock/orderItem/{stockId}/{stockOrderId}": {
+      "delete": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockOrderItemDelete",
+        "parameters": [
+          {
+            "name": "stockId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "stockOrderId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/stock/order": {
       "put": {
         "tags": [
@@ -11379,6 +11448,10 @@
             "format": "decimal"
           }
         }
+      },
+      "StockOrderItemDeleteRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "StockOrderItemCreateRequest": {
         "type": "object",

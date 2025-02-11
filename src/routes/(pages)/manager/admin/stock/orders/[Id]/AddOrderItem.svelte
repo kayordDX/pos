@@ -28,7 +28,7 @@
 
 	const schema = z.object({
 		stockId: z.number().min(1, { message: "Stock is Required" }),
-		actual: z.coerce.number().min(1, { message: "Actual is Required" }),
+		orderAmount: z.coerce.number().min(1, { message: "Order Amount is Required" }),
 		price: z.coerce.number().min(1, { message: "Price is Required" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
@@ -51,7 +51,7 @@
 					data: {
 						stockOrderId: Number(page.params.Id),
 						stockId: data.stockId,
-						actual: data.actual,
+						orderAmount: data.orderAmount,
 						price: data.price,
 					},
 				});
@@ -65,7 +65,7 @@
 
 	const defaultValues = $derived({
 		stockId: orderItem?.stockId,
-		actual: orderItem?.actual,
+		orderAmount: orderItem?.orderAmount,
 		price: orderItem?.price,
 	});
 
@@ -143,11 +143,11 @@
 					<Form.FieldErrors />
 				</Form.Field>
 
-				<Form.Field {form} name="actual">
+				<Form.Field {form} name="orderAmount">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Actual</Form.Label>
-							<Input {...props} bind:value={$formData.actual} type="number" step="0.01" />
+							<Form.Label>Order Amount</Form.Label>
+							<Input {...props} bind:value={$formData.orderAmount} type="number" step="0.01" />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />

@@ -1340,6 +1340,10 @@ export interface StockOrderItemUpdateRequest {
 	price: number;
 }
 
+export interface StockOrderItemDeleteRequest {
+	[key: string]: unknown;
+}
+
 export interface StockOrderItemCreateRequest {
 	stockOrderId: number;
 	stockId: number;

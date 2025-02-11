@@ -7,9 +7,10 @@
 		Badge,
 		Button,
 		Card,
-		createSvelteTable,
+		createShadTable,
 		DataTable,
 		Loader,
+		renderComponent,
 		Table,
 	} from "@kayord/ui";
 	import { PlusIcon } from "lucide-svelte";
@@ -53,31 +54,28 @@
 			accessorKey: "stockOrderItemStatus.name",
 			size: 1000,
 		},
+		{
+			header: "",
+			accessorKey: "id",
+			enableSorting: false,
+			cell: (item) =>
+				renderComponent(Actions, {
+					item: item.row.original,
+					refetch: $query.refetch,
+				}),
+			size: 10,
+		},
 	];
 
 	let data = $derived($query.data?.stockOrderItems ?? []);
 
-	let sorting: SortingState = $state([]);
-	const setSorting = (updater: Updater<SortingState>) => {
-		if (updater instanceof Function) {
-			sorting = updater(sorting);
-		} else sorting = updater;
-	};
-
-	const table = createSvelteTable({
+	const table = createShadTable({
 		columns,
 		get data() {
 			return data;
 		},
-		state: {
-			get sorting() {
-				return sorting;
-			},
-		},
 		enableRowSelection: false,
-		getCoreRowModel: getCoreRowModel(),
-		onSortingChange: setSorting,
-		getSortedRowModel: getSortedRowModel(),
+		enablePaging: false,
 	});
 </script>
 
@@ -97,28 +95,30 @@
 <div class="m-2">
 	<Loader isLoading={$query.isPending} />
 	{#if $query.data}
-		<div
-			class="border-2 border-secondary p-2 rounded-md flex justify-between items-center bg-secondary text-secondary-foreground"
-		>
-			<div class="flex flex-col">
-				<h2 class="font-bold">Order: {$query.data.orderNumber}</h2>
-				<div>
-					<Badge>{$query.data.stockOrderStatus.name}</Badge>
+		<Card.Root class="bg-secondary">
+			<div
+				class="border-2 border-secondary p-2 rounded-md flex justify-between items-center bg-background/60 text-secondary-foreground"
+			>
+				<div class="flex flex-col">
+					<h2 class="font-bold">Order: {$query.data.orderNumber}</h2>
+					<div>
+						<Badge>{$query.data.stockOrderStatus.name}</Badge>
+					</div>
+				</div>
+				<div class="flex flex-col">
+					<div>
+						Division: {$query.data.division.divisionName}
+					</div>
+					<div>
+						Supplier: {$query.data.supplier.name}
+					</div>
 				</div>
 			</div>
-			<div class="flex flex-col">
-				<div>
-					Division: {$query.data.division.divisionName}
-				</div>
-				<div>
-					Supplier: {$query.data.supplier.name}
-				</div>
-			</div>
-		</div>
 
-		<div class="flex justify-end m-2">
-			{@render addOrderItem()}
-		</div>
+			<div class="flex justify-end m-2">
+				{@render addOrderItem()}
+			</div>
+		</Card.Root>
 
 		<DataTable
 			{table}
@@ -127,40 +127,6 @@
 			isLoading={$query.isPending}
 			noDataMessage="No order items"
 		/>
-
-		{#if ($query.data?.stockOrderItems?.length ?? 0) > 0}
-			<Table.Root class="mt-2">
-				<Table.Header>
-					<Table.Row>
-						<Table.Head>Stock</Table.Head>
-						<Table.Head>Status</Table.Head>
-						<Table.Head>Ordered Amount</Table.Head>
-						<Table.Head>Actual</Table.Head>
-						<Table.Head>Price</Table.Head>
-						<Table.Head class="w-[40px]"></Table.Head>
-					</Table.Row>
-				</Table.Header>
-				<Table.Body>
-					{#each $query.data?.stockOrderItems ?? [] as item}
-						<Table.Row>
-							<Table.Cell>{item.stock.name}</Table.Cell>
-							<Table.Cell>{item.stockOrderItemStatus.name}</Table.Cell>
-							<Table.Cell>{item.orderAmount}</Table.Cell>
-							<Table.Cell>{item.actual}</Table.Cell>
-							<Table.Cell>{item.price}</Table.Cell>
-							<Table.Cell class="w-[40px] py-0">
-								<Actions {item} refetch={$query.refetch} />
-							</Table.Cell>
-						</Table.Row>
-					{/each}
-				</Table.Body>
-			</Table.Root>
-		{:else if !$query.isPending}
-			<Alert.Root class="border-dashed">
-				<Alert.Title>No Items</Alert.Title>
-				<Alert.Description>Select Add Item to add new Items to Order</Alert.Description>
-			</Alert.Root>
-		{/if}
 	{:else if !$query.isPending}
 		{@render errorMessage("An error occurred while fetching order items")}
 	{/if}
