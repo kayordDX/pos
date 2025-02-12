@@ -15,6 +15,7 @@
 		DataTable,
 		Loader,
 		renderComponent,
+		renderSnippet,
 		toast,
 	} from "@kayord/ui";
 	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "lucide-svelte";
@@ -51,6 +52,7 @@
 			header: "Status",
 			accessorKey: "stockOrderItemStatus.name",
 			size: 1000,
+			cell: (item) => renderSnippet(status, item.row.original),
 		},
 		{
 			header: "",
@@ -108,6 +110,24 @@
 		}
 	};
 </script>
+
+{#snippet status(item: DTOStockOrderItemDTO)}
+	{@const variant =
+		item.stockOrderItemStatusId === 1
+			? "default"
+			: item.stockOrderItemStatusId === 2
+				? "secondary"
+				: "ghost"}
+	{@const isPartial = item.orderAmount > item.actual && item.actual > 0}
+	<Badge {variant}>
+		{item.stockOrderItemStatus.name}
+		{#if isPartial}
+			<span class="text-xs ml-1">
+				({item.actual}/{item.orderAmount})
+			</span>
+		{/if}
+	</Badge>
+{/snippet}
 
 {#snippet addOrderItem()}
 	<Button size="sm" onclick={() => (addOrderItemOpen = true)}>

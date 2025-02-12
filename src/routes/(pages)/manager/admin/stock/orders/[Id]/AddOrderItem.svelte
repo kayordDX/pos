@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { DTOStockOrderItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Combobox, Dialog, Form, Input, Select, toast } from "@kayord/ui";
+	import { Button, Card, Combobox, Dialog, Form, Input, Select, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
@@ -34,11 +34,12 @@
 
 	const schema = z.object({
 		stockId: z.number().min(1, { message: "Stock is Required" }),
-		orderAmount: z.coerce.number().min(0, { message: "Order Amount is Required" }),
+		orderAmount: z.coerce.number().gt(0, { message: "Order Amount is Required" }),
 		actual: z.coerce.number().min(0, { message: "Actual is Required" }),
-		price: z.coerce.number().min(0, { message: "Price is Required" }),
+		price: z.coerce.number().gt(0, { message: "Price is Required" }),
 		statusId: z.number().min(1, { message: "Status is Required" }),
 	});
+
 	type FormSchema = z.infer<typeof schema>;
 
 	const updateMenu = async (data: FormSchema) => {
@@ -86,17 +87,19 @@
 		SPA: true,
 		validators: zod(schema),
 		onUpdate({ form }) {
+			console.log(form);
 			if (form.valid) {
 				updateMenu(form.data);
 			}
 		},
 	});
 
-	const { form: formData, enhance, reset } = form;
+	const { form: formData, enhance, reset, validateForm } = form;
 
 	$effect(() => {
 		if (open == true) {
 			reset({ data: defaultValues });
+			validateForm({ update: true });
 		}
 	});
 
@@ -137,7 +140,9 @@
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
 				{#if isEdit}
-					{orderItem?.stock.name}
+					<Card.Root class="p-2">
+						{orderItem?.stock.name}
+					</Card.Root>
 				{:else}
 					<Form.Field {form} name="stockId" class="flex flex-col">
 						<Form.Control>
@@ -156,15 +161,27 @@
 					</Form.Field>
 				{/if}
 
-				<Form.Field {form} name="orderAmount">
-					<Form.Control>
-						{#snippet children({ props })}
-							<Form.Label>Order Amount</Form.Label>
-							<Input {...props} bind:value={$formData.orderAmount} type="number" step="0.01" />
-						{/snippet}
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
+				{#if isEdit}
+					<Form.Field {form} name="orderAmount">
+						<Form.Control>
+							{#snippet children({ props })}
+								<Form.Label>Order Amount</Form.Label>
+								<Input {...props} bind:value={$formData.orderAmount} type="number" step="0.01" />
+							{/snippet}
+						</Form.Control>
+						<Form.FieldErrors />
+					</Form.Field>
+				{:else}
+					<Form.Field {form} name="orderAmount">
+						<Form.Control>
+							{#snippet children({ props })}
+								<Form.Label>Order Amount</Form.Label>
+								<Input {...props} bind:value={$formData.orderAmount} type="number" step="0.01" />
+							{/snippet}
+						</Form.Control>
+						<Form.FieldErrors />
+					</Form.Field>
+				{/if}
 
 				{#if isEdit}
 					<Form.Field {form} name="actual">

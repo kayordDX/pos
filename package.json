@@ -20,7 +20,7 @@
 		"@sveltejs/kit": "^2.17.1",
 		"@sveltejs/vite-plugin-svelte": "^5.0.3",
 		"@tanstack/svelte-query": "^5.66.0",
-		"@tanstack/table-core": "^8.20.5",
+		"@tanstack/table-core": "^8.21.2",
 		"@types/qrcode": "^1.5.5",
 		"@types/qs": "^6.9.18",
 		"@typescript-eslint/eslint-plugin": "^8.24.0",
@@ -29,7 +29,7 @@
 		"eslint": "^9.20.1",
 		"eslint-config-prettier": "^10.0.1",
 		"eslint-plugin-svelte": "^2.46.1",
-		"firebase": "^11.3.0",
+		"firebase": "^11.3.1",
 		"fluent-querykit": "^0.0.6",
 		"lucide-svelte": "^0.475.0",
 		"openapi-fetch": "^0.13.4",
@@ -49,8 +49,8 @@
 		"tslib": "^2.8.1",
 		"typescript": "^5.7.3",
 		"vite": "^6.1.0",
-		"zod": "^3.24.1"
+		"zod": "^3.24.2"
 	},
 	"type": "module",
-	"packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387"
+	"packageManager": "pnpm@10.3.0+sha512.ee592eda8815a8a293c206bb0917c4bb0ff274c50def7cbc17be05ec641fc2d1b02490ce660061356bd0d126a4d7eb2ec8830e6959fb8a447571c631d5a2442d"
 }
