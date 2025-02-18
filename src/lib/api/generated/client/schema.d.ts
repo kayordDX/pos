@@ -652,9 +652,25 @@ export interface paths {
             cookie?: never;
         };
         get: operations["SupplierGetAll"];
+        put: operations["SupplierUpdate"];
+        post: operations["SupplierCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/supplier/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
         put?: never;
         post?: never;
-        delete?: never;
+        delete: operations["SupplierDelete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -2998,6 +3014,26 @@ export interface components {
             /** Format: int32 */
             capacity: number;
         };
+        SupplierUpdateRequest: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            contactName: string;
+            contactNumber: string;
+            email: string;
+        };
+        DTOSupplierDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            name: string;
+            contactName: string;
+            contactNumber: string;
+            email: string;
+        };
+        SupplierGetAllRequest: Record<string, never>;
+        SupplierDeleteRequest: Record<string, never>;
         EntitiesSupplier: {
             /** Format: int32 */
             id: number;
@@ -3007,20 +3043,15 @@ export interface components {
             contactName: string;
             contactNumber: string;
             email: string;
-            /** Format: int32 */
-            divisionId: number;
-            division: components["schemas"]["EntitiesDivision"];
-            /** Format: int32 */
-            supplierPlatformId?: number | null;
-            supplierPlatform?: components["schemas"]["EntitiesSupplierPlatform"] | null;
         };
-        EntitiesSupplierPlatform: {
+        SupplierCreateRequest: {
             /** Format: int32 */
-            id: number;
+            outletId: number;
             name: string;
-            url?: string | null;
+            contactName: string;
+            contactNumber: string;
+            email: string;
         };
-        SupplierGetAllRequest: Record<string, never>;
         StockUpdateRequest: {
             /** Format: int32 */
             id: number;
@@ -3193,19 +3224,6 @@ export interface components {
             /** Format: int32 */
             divisionId: number;
             divisionName: string;
-        };
-        DTOSupplierDTO: {
-            /** Format: int32 */
-            id: number;
-            /** Format: int32 */
-            outletId: number;
-            name: string;
-            contactName: string;
-            contactNumber: string;
-            email: string;
-            /** Format: int32 */
-            divisionId: number;
-            division: components["schemas"]["ManagerOrderViewDivisionDTO"];
         };
         DTOStockOrderItemDTO: {
             /** Format: int32 */
@@ -5654,7 +5672,136 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["EntitiesSupplier"][];
+                    "application/json": components["schemas"]["DTOSupplierDTO"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SupplierUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SupplierUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SupplierCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["SupplierCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesSupplier"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SupplierDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */

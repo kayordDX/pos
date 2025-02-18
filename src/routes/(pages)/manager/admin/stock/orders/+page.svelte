@@ -142,6 +142,7 @@
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">
 		<div class="flex gap-2 items-center">
+			<h2>Orders</h2>
 			<AddOrder bind:open={addOrderOpen} refetch={$query.refetch} />
 		</div>
 		<div class="flex gap-2 items-center">
@@ -153,7 +154,6 @@
 {/snippet}
 
 <div class="m-2">
-	<h2>Orders</h2>
 	<DataTable
 		{table}
 		{columns}

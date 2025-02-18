@@ -1186,10 +1186,30 @@ export interface TableCreateRequest {
 	capacity: number;
 }
 
-/**
- * @nullable
- */
-export type EntitiesSupplierSupplierPlatform = EntitiesSupplierPlatform | null;
+export interface SupplierUpdateRequest {
+	id: number;
+	name: string;
+	contactName: string;
+	contactNumber: string;
+	email: string;
+}
+
+export interface DTOSupplierDTO {
+	id: number;
+	outletId: number;
+	name: string;
+	contactName: string;
+	contactNumber: string;
+	email: string;
+}
+
+export interface SupplierGetAllRequest {
+	[key: string]: unknown;
+}
+
+export interface SupplierDeleteRequest {
+	[key: string]: unknown;
+}
 
 export interface EntitiesSupplier {
 	id: number;
@@ -1198,23 +1218,14 @@ export interface EntitiesSupplier {
 	contactName: string;
 	contactNumber: string;
 	email: string;
-	divisionId: number;
-	division: EntitiesDivision;
-	/** @nullable */
-	supplierPlatformId?: number | null;
-	/** @nullable */
-	supplierPlatform?: EntitiesSupplierSupplierPlatform;
 }
 
-export interface EntitiesSupplierPlatform {
-	id: number;
+export interface SupplierCreateRequest {
+	outletId: number;
 	name: string;
-	/** @nullable */
-	url?: string | null;
-}
-
-export interface SupplierGetAllRequest {
-	[key: string]: unknown;
+	contactName: string;
+	contactNumber: string;
+	email: string;
 }
 
 export interface StockUpdateRequest {
@@ -1418,17 +1429,6 @@ export interface DTOStockOrderStatusDTO {
 export interface ManagerOrderViewDivisionDTO {
 	divisionId: number;
 	divisionName: string;
-}
-
-export interface DTOSupplierDTO {
-	id: number;
-	outletId: number;
-	name: string;
-	contactName: string;
-	contactNumber: string;
-	email: string;
-	divisionId: number;
-	division: ManagerOrderViewDivisionDTO;
 }
 
 export interface DTOStockOrderItemDTO {

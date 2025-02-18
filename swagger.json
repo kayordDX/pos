@@ -2006,6 +2006,56 @@
       }
     },
     "/supplier": {
+      "put": {
+        "tags": [
+          "Supplier"
+        ],
+        "operationId": "SupplierUpdate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupplierUpdateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
       "get": {
         "tags": [
           "Supplier"
@@ -2030,7 +2080,7 @@
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/EntitiesSupplier"
+                    "$ref": "#/components/schemas/DTOSupplierDTO"
                   }
                 }
               }
@@ -2038,6 +2088,115 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Supplier"
+        ],
+        "operationId": "SupplierCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SupplierCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesSupplier"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/supplier/{id}": {
+      "delete": {
+        "tags": [
+          "Supplier"
+        ],
+        "operationId": "SupplierDelete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
           },
           "500": {
             "description": "Server Error",
@@ -11400,7 +11559,36 @@
           }
         }
       },
-      "EntitiesSupplier": {
+      "SupplierUpdateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "contactName",
+          "contactNumber",
+          "email"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "contactName": {
+            "type": "string"
+          },
+          "contactNumber": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "DTOSupplierDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -11409,9 +11597,7 @@
           "name",
           "contactName",
           "contactNumber",
-          "email",
-          "divisionId",
-          "division"
+          "email"
         ],
         "properties": {
           "id": {
@@ -11433,53 +11619,79 @@
           },
           "email": {
             "type": "string"
-          },
-          "divisionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "division": {
-            "$ref": "#/components/schemas/EntitiesDivision"
-          },
-          "supplierPlatformId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "supplierPlatform": {
-            "nullable": true,
-            "oneOf": [
-              {
-                "$ref": "#/components/schemas/EntitiesSupplierPlatform"
-              }
-            ]
-          }
-        }
-      },
-      "EntitiesSupplierPlatform": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "name"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "url": {
-            "type": "string",
-            "nullable": true
           }
         }
       },
       "SupplierGetAllRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "SupplierDeleteRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "EntitiesSupplier": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "outletId",
+          "name",
+          "contactName",
+          "contactNumber",
+          "email"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "contactName": {
+            "type": "string"
+          },
+          "contactNumber": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "SupplierCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "outletId",
+          "name",
+          "contactName",
+          "contactNumber",
+          "email"
+        ],
+        "properties": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "contactName": {
+            "type": "string"
+          },
+          "contactNumber": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
       },
       "StockUpdateRequest": {
         "type": "object",
@@ -12071,49 +12283,6 @@
           },
           "divisionName": {
             "type": "string"
-          }
-        }
-      },
-      "DTOSupplierDTO": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "outletId",
-          "name",
-          "contactName",
-          "contactNumber",
-          "email",
-          "divisionId",
-          "division"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "name": {
-            "type": "string"
-          },
-          "contactName": {
-            "type": "string"
-          },
-          "contactNumber": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "divisionId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "division": {
-            "$ref": "#/components/schemas/ManagerOrderViewDivisionDTO"
           }
         }
       },

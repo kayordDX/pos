@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { createStockItemsGetAll, type StockItemsGetAllResponse } from "$lib/api";
-	import { createShadTable, DataTable, Dialog } from "@kayord/ui";
+	import { createShadTable, DataTable, Dialog, renderComponent } from "@kayord/ui";
 	import type { ColumnDef } from "@tanstack/table-core";
+	import StockItemActions from "./StockItemActions.svelte";
 
 	interface Props {
 		open: boolean;
@@ -30,6 +31,16 @@
 			accessorKey: "actual",
 			size: 1000,
 		},
+		{
+			header: "",
+			accessorKey: "name",
+			cell: (item) =>
+				renderComponent(StockItemActions, {
+					refetch: $query.refetch,
+				}),
+			size: 10,
+			enableSorting: false,
+		},
 	];
 
 	const table = createShadTable({
@@ -57,7 +68,7 @@
 				{columns}
 				{header}
 				headerClass="pb-2"
-				isLoading={false}
+				isLoading={$query.isPending}
 				noDataMessage="No stock items"
 			/>
 		</div>

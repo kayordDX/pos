@@ -87,7 +87,6 @@
 		SPA: true,
 		validators: zod(schema),
 		onUpdate({ form }) {
-			console.log(form);
 			if (form.valid) {
 				updateMenu(form.data);
 			}
@@ -127,7 +126,7 @@
 	});
 
 	const stockListSelect = $derived(
-		stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unit.name})` }))
+		stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unitName})` }))
 	);
 </script>
 
