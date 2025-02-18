@@ -1,0 +1,65 @@
+<script lang="ts">
+	import { createStockItemsGetAll, type StockItemsGetAllResponse } from "$lib/api";
+	import { createShadTable, DataTable, Dialog } from "@kayord/ui";
+	import type { ColumnDef } from "@tanstack/table-core";
+
+	interface Props {
+		open: boolean;
+		id: number;
+		stockName: string;
+	}
+
+	let { open = $bindable(false), id, stockName }: Props = $props();
+
+	const query = createStockItemsGetAll({ id: id });
+	const data = $derived($query.data ?? []);
+
+	const columns: ColumnDef<StockItemsGetAllResponse>[] = [
+		{
+			header: "Division",
+			accessorKey: "divisionName",
+			size: 1000,
+		},
+		{
+			header: "Threshold",
+			accessorKey: "threshold",
+			size: 1000,
+		},
+		{
+			header: "Actual",
+			accessorKey: "actual",
+			size: 1000,
+		},
+	];
+
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+		enablePaging: false,
+	});
+</script>
+
+{#snippet header()}
+	<Dialog.Header class="p-0">
+		<Dialog.Title>{stockName}</Dialog.Title>
+		<Dialog.Description>Stock Availability</Dialog.Description>
+	</Dialog.Header>
+{/snippet}
+
+<Dialog.Root bind:open>
+	<Dialog.Content class="max-h-[98%]  max-w-3xl overflow-scroll p-2">
+		<div class="flex flex-col gap-4 p-0 mt-0">
+			<DataTable
+				{table}
+				{columns}
+				{header}
+				headerClass="pb-2"
+				isLoading={false}
+				noDataMessage="No stock items"
+			/>
+		</div>
+	</Dialog.Content>
+</Dialog.Root>

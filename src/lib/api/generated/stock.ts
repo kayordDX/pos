@@ -18,7 +18,7 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 import type {
-	CommonModelsPaginatedListOfStockDTO,
+	CommonModelsPaginatedListOfResponse,
 	CommonModelsPaginatedListOfStockOrder,
 	DTOStockOrderDTO,
 	DTOStockOrderItemStatusDTO,
@@ -30,6 +30,8 @@ import type {
 	StockCreateRequest,
 	StockDivisionGetAllParams,
 	StockGetAllParams,
+	StockItemsGetAllParams,
+	StockItemsGetAllResponse,
 	StockOrderCreateRequest,
 	StockOrderGetAllParams,
 	StockOrderItemCreateRequest,
@@ -110,7 +112,7 @@ export const createStockUpdate = <
 	return createMutation(mutationOptions);
 };
 export const stockGetAll = (params: StockGetAllParams) => {
-	return customInstance<CommonModelsPaginatedListOfStockDTO>({
+	return customInstance<CommonModelsPaginatedListOfResponse>({
 		url: `/stock`,
 		method: "GET",
 		params,
@@ -897,6 +899,64 @@ export const createStockOrderDelete = <
 
 	return createMutation(mutationOptions);
 };
+export const stockItemsGetAll = (params: StockItemsGetAllParams) => {
+	return customInstance<StockItemsGetAllResponse[]>({ url: `/stock/items`, method: "GET", params });
+};
+
+export const getStockItemsGetAllQueryKey = (params: StockItemsGetAllParams) => {
+	return [`/stock/items`, ...(params ? [params] : [])] as const;
+};
+
+export const getStockItemsGetAllQueryOptions = <
+	TData = Awaited<ReturnType<typeof stockItemsGetAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: StockItemsGetAllParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof stockItemsGetAll>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getStockItemsGetAllQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof stockItemsGetAll>>> = () =>
+		stockItemsGetAll(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof stockItemsGetAll>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type StockItemsGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof stockItemsGetAll>>>;
+export type StockItemsGetAllQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createStockItemsGetAll<
+	TData = Awaited<ReturnType<typeof stockItemsGetAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: StockItemsGetAllParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof stockItemsGetAll>>, TError, TData>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getStockItemsGetAllQueryOptions(params, options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const stockDivisionGetAll = (params: StockDivisionGetAllParams) => {
 	return customInstance<EntitiesDivision[]>({ url: `/stock/division`, method: "GET", params });
 };
@@ -956,3 +1016,66 @@ export function createStockDivisionGetAll<
 
 	return query;
 }
+
+export const stockDelete = (id: number) => {
+	return customInstance<unknown>({ url: `/stock/${id}`, method: "DELETE" });
+};
+
+export const getStockDeleteMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockDelete>>,
+		TError,
+		{ id: number },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationKey = ["stockDelete"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof stockDelete>>, { id: number }> = (
+		props
+	) => {
+		const { id } = props ?? {};
+
+		return stockDelete(id);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof stockDelete>>>;
+
+export type StockDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createStockDelete = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockDelete>>,
+		TError,
+		{ id: number },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof stockDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationOptions = getStockDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};

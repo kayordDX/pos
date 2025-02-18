@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
 	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
-	import { createMenuItemDelete, type DTOStockDTO } from "$lib/api";
+	import { createStockDelete, type StockGetAllResponse } from "$lib/api";
 	import { getError } from "$lib/types";
 	import AddStock from "./AddStock.svelte";
 
 	interface Props {
 		refetch: () => void;
-		stock?: DTOStockDTO;
+		stock?: StockGetAllResponse;
 	}
 
 	let { stock, refetch }: Props = $props();
@@ -15,11 +15,11 @@
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
 
-	const deleteMutation = createMenuItemDelete();
+	const deleteMutation = createStockDelete();
 	const deleteMenuItem = async () => {
 		deleteOpen = false;
 		try {
-			// await $deleteMutation.mutateAsync({ id: menuItem.menuItemId });
+			await $deleteMutation.mutateAsync({ id: stock?.id ?? 0 });
 			refetch();
 			toast.message("Stock Item Deleted");
 		} catch (error) {

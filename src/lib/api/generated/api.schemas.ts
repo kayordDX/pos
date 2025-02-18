@@ -1472,8 +1472,22 @@ export interface StockOrderCreateRequest {
 	supplierId: number;
 }
 
-export interface CommonModelsPaginatedListOfStockDTO {
-	items: DTOStockDTO[];
+export interface StockItemsGetAllResponse {
+	id: number;
+	stockId: number;
+	stockName: string;
+	divisionId: number;
+	divisionName: string;
+	threshold: number;
+	actual: number;
+}
+
+export interface StockItemsGetAllRequest {
+	[key: string]: unknown;
+}
+
+export interface CommonModelsPaginatedListOfResponse {
+	items: StockGetAllResponse[];
 	pageNumber: number;
 	totalPages: number;
 	totalCount: number;
@@ -1481,22 +1495,14 @@ export interface CommonModelsPaginatedListOfStockDTO {
 	hasNextPage: boolean;
 }
 
-export interface DTOStockDTO {
+export interface StockGetAllResponse {
 	id: number;
 	outletId: number;
 	name: string;
 	unitId: number;
-	unit: DTOUnitDTO;
+	unitName: string;
 	stockCategoryId: number;
-	/** @nullable */
-	stockItems?: DTOStockItemDTO[] | null;
 	totalActual: number;
-}
-
-export interface DTOStockItemDTO {
-	division: ManagerOrderViewDivisionDTO;
-	threshold: number;
-	actual: number;
 }
 
 export type StockGetAllRequestAllOf = { [key: string]: unknown };
@@ -1504,6 +1510,10 @@ export type StockGetAllRequestAllOf = { [key: string]: unknown };
 export type StockGetAllRequest = CommonModelsQueryModel & StockGetAllRequestAllOf;
 
 export interface StockDivisionGetAllRequest {
+	[key: string]: unknown;
+}
+
+export interface StockDeleteRequest {
 	[key: string]: unknown;
 }
 
@@ -2572,6 +2582,10 @@ export type StockOrderGetAllParams = {
 	filters?: string | null;
 	page?: number | null;
 	pageSize?: number | null;
+};
+
+export type StockItemsGetAllParams = {
+	id: number;
 };
 
 export type StockDivisionGetAllParams = {

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createStockGetAll, type DTOStockDTO } from "$lib/api";
+	import { createStockGetAll, type StockGetAllResponse } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Button, createSvelteTable, DataTable, Input, renderComponent } from "@kayord/ui";
 	import {
@@ -18,9 +18,10 @@
 	import QueryBuilder from "fluent-querykit";
 	import { PlusIcon } from "lucide-svelte";
 	import Actions from "./Actions.svelte";
+	import Total from "./Total.svelte";
 	import AddStock from "./AddStock.svelte";
 
-	const columns: ColumnDef<DTOStockDTO>[] = [
+	const columns: ColumnDef<StockGetAllResponse>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
@@ -28,13 +29,17 @@
 		},
 		{
 			header: "Unit",
-			accessorKey: "unit.name",
+			accessorKey: "unitName",
 			size: 1000,
 			enableSorting: false,
 		},
 		{
 			header: "Total",
 			accessorKey: "totalActual",
+			cell: (item) =>
+				renderComponent(Total, {
+					stock: item.row.original,
+				}),
 			size: 1000,
 			enableSorting: false,
 		},

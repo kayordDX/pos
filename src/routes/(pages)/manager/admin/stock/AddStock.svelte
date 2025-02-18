@@ -3,7 +3,7 @@
 		createUnitsGetAll,
 		createStockCreate,
 		createStockUpdate,
-		type DTOStockDTO,
+		type StockGetAllResponse,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
@@ -15,7 +15,7 @@
 	interface Props {
 		refetch: () => void;
 		open: boolean;
-		stock?: DTOStockDTO;
+		stock?: StockGetAllResponse;
 	}
 	let { refetch, open = $bindable(false), stock }: Props = $props();
 
