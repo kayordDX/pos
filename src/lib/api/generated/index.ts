@@ -3,6 +3,7 @@
 export * from "./whatsapp";
 export * from "./api.schemas";
 export * from "./user";
+export * from "./unit";
 export * from "./test";
 export * from "./order";
 export * from "./frontoffice";

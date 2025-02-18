@@ -211,6 +211,11 @@ export interface UserAddUserOutletRoleRequest {
 	roleId: number;
 }
 
+export interface EntitiesUnit {
+	id: number;
+	name: string;
+}
+
 export interface BillTableTotal {
 	total: number;
 	totalPayments: number;
@@ -1212,6 +1217,12 @@ export interface SupplierGetAllRequest {
 	[key: string]: unknown;
 }
 
+export interface StockUpdateRequest {
+	id: number;
+	name: string;
+	unitId: number;
+}
+
 export interface StockOrderItemUpdateBulkRequest {
 	stockOrderId: number;
 	/** @nullable */
@@ -1310,11 +1321,6 @@ export type EntitiesStock = EntitiesAuditableEntity &
 			"id" | "outletId" | "name" | "unitId" | "unit" | "stockCategoryId" | "stockCategory"
 		>
 	>;
-
-export interface EntitiesUnit {
-	id: number;
-	name: string;
-}
 
 export interface EntitiesStockCategory {
 	id: number;
@@ -1499,6 +1505,12 @@ export type StockGetAllRequest = CommonModelsQueryModel & StockGetAllRequestAllO
 
 export interface StockDivisionGetAllRequest {
 	[key: string]: unknown;
+}
+
+export interface StockCreateRequest {
+	outletId: number;
+	name: string;
+	unitId: number;
 }
 
 export interface SectionUpdateRequest {
@@ -2546,7 +2558,7 @@ export type SupplierGetAllParams = {
 	outletId: number;
 };
 
-export type StockOrderGetAllParams = {
+export type StockGetAllParams = {
 	outletId: number;
 	sorts?: string | null;
 	filters?: string | null;
@@ -2554,7 +2566,7 @@ export type StockOrderGetAllParams = {
 	pageSize?: number | null;
 };
 
-export type StockGetAllParams = {
+export type StockOrderGetAllParams = {
 	outletId: number;
 	sorts?: string | null;
 	filters?: string | null;

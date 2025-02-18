@@ -196,6 +196,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/unit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UnitsGetAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/test": {
         parameters: {
             query?: never;
@@ -644,6 +660,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["StockGetAll"];
+        put: operations["StockUpdate"];
+        post: operations["StockCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/stock/orderItem/bulk": {
         parameters: {
             query?: never;
@@ -735,22 +767,6 @@ export interface paths {
         put?: never;
         post?: never;
         delete: operations["StockOrderDelete"];
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
-    "/stock": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get: operations["StockGetAll"];
-        put?: never;
-        post?: never;
-        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -2078,6 +2094,11 @@ export interface components {
             /** Format: int32 */
             roleId: number;
         };
+        EntitiesUnit: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
         BillTableTotal: {
             /** Format: decimal */
             total: number;
@@ -2968,6 +2989,13 @@ export interface components {
             url?: string | null;
         };
         SupplierGetAllRequest: Record<string, never>;
+        StockUpdateRequest: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            unitId: number;
+        };
         StockOrderItemUpdateBulkRequest: {
             /** Format: int32 */
             stockOrderId: number;
@@ -3029,11 +3057,6 @@ export interface components {
             stockCategoryId: number;
             stockCategory: components["schemas"]["EntitiesStockCategory"];
             stockItems?: components["schemas"]["EntitiesStockItem"][] | null;
-        };
-        EntitiesUnit: {
-            /** Format: int32 */
-            id: number;
-            name: string;
         };
         EntitiesStockCategory: {
             /** Format: int32 */
@@ -3233,6 +3256,13 @@ export interface components {
         };
         StockGetAllRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         StockDivisionGetAllRequest: Record<string, never>;
+        StockCreateRequest: {
+            /** Format: int32 */
+            outletId: number;
+            name: string;
+            /** Format: int32 */
+            unitId: number;
+        };
         SectionUpdateRequest: {
             /** Format: int32 */
             id: number;
@@ -4518,6 +4548,42 @@ export interface operations {
             };
         };
     };
+    UnitsGetAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesUnit"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     Test: {
         parameters: {
             query?: never;
@@ -5569,6 +5635,129 @@ export interface operations {
             };
         };
     };
+    StockGetAll: {
+        parameters: {
+            query: {
+                outletId: number;
+                sorts?: string | null;
+                filters?: string | null;
+                page?: number | null;
+                pageSize?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfStockDTO"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockOrder"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     StockOrderItemUpdateBulk: {
         parameters: {
             query?: never;
@@ -5972,48 +6161,6 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["InternalErrorResponse"];
-                };
-            };
-        };
-    };
-    StockGetAll: {
-        parameters: {
-            query: {
-                outletId: number;
-                sorts?: string | null;
-                filters?: string | null;
-                page?: number | null;
-                pageSize?: number | null;
-            };
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["CommonModelsPaginatedListOfStockDTO"];
                 };
             };
             /** @description Unauthorized */

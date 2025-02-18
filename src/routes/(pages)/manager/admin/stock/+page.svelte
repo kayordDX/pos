@@ -17,8 +17,8 @@
 	import { debounce } from "$lib/util";
 	import QueryBuilder from "fluent-querykit";
 	import { PlusIcon } from "lucide-svelte";
-	import Price from "./Price.svelte";
 	import Actions from "./Actions.svelte";
+	import AddStock from "./AddStock.svelte";
 
 	const columns: ColumnDef<DTOStockDTO>[] = [
 		{
@@ -40,10 +40,10 @@
 		},
 		{
 			header: "",
-			accessorKey: "id",
+			accessorKey: "name",
 			cell: (item) =>
 				renderComponent(Actions, {
-					menuItem: item.row.original,
+					stock: item.row.original,
 					refetch: $query.refetch,
 				}),
 			size: 10,
@@ -111,9 +111,6 @@
 			get columnFilters() {
 				return columnFilters;
 			},
-			get columnVisibility() {
-				return { id: false };
-			},
 		},
 		get rowCount() {
 			return rowCount;
@@ -134,7 +131,6 @@
 		}
 
 		const rv = menuCol?.getFilterValue() as undefined | Array<string>;
-		console.log("rv", rv);
 		if (rv) {
 			if (fv) {
 				qb.and();
@@ -148,7 +144,7 @@
 		filters = qb.build();
 	});
 
-	const menuCol = $derived(table.getColumn("id")!);
+	const menuCol = $derived(table.getColumn("name")!);
 
 	let addOpen = $state(false);
 </script>
@@ -173,6 +169,8 @@
 		</div>
 	</div>
 {/snippet}
+
+<AddStock refetch={$query.refetch} bind:open={addOpen} />
 
 <div class="m-2">
 	<h2>Stock Items</h2>

@@ -3,13 +3,14 @@
 	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
 	import { createMenuItemDelete, type DTOStockDTO } from "$lib/api";
 	import { getError } from "$lib/types";
+	import AddStock from "./AddStock.svelte";
 
 	interface Props {
 		refetch: () => void;
-		menuItem: DTOStockDTO;
+		stock?: DTOStockDTO;
 	}
 
-	let { menuItem, refetch }: Props = $props();
+	let { stock, refetch }: Props = $props();
 
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
@@ -39,12 +40,14 @@
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
+<AddStock {refetch} bind:open={editOpen} {stock} />
+
 <AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
-			<AlertDialog.Title>Delete Menu Item?</AlertDialog.Title>
+			<AlertDialog.Title>Delete Stock Item?</AlertDialog.Title>
 			<AlertDialog.Description>
-				This will delete the menu item and all its configured options.
+				This will delete the stock item and all its stock in all division.
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
