@@ -17,12 +17,10 @@
 	let hasFilter = $derived(menuSection.sectionId > 0);
 
 	const clear = () => {
-		console.log("clearing");
 		menuSection.sectionId = 0;
 	};
 
 	const setSection = (sectionId: number) => {
-		console.log("setting", sectionId);
 		menuSection.sectionId = sectionId;
 	};
 

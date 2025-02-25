@@ -164,7 +164,6 @@
 		}
 
 		const rv = menuCol?.getFilterValue() as undefined | Array<string>;
-		console.log("rv", rv);
 		if (rv) {
 			if (fv) {
 				qb.and();

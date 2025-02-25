@@ -14,7 +14,6 @@
 		if (savedTodos) {
 			todos = JSON.parse(savedTodos);
 		}
-		console.log(savedTodos);
 	});
 
 	$effect(() => {

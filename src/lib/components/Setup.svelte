@@ -35,7 +35,6 @@
 				toast.error("Could not set outlet");
 			}
 		} catch (err) {
-			console.log(err);
 			toast.error(getError(err).message);
 		}
 	};

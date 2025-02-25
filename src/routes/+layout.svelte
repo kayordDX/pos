@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { ModeWatcher } from "@kayord/ui/mode-watcher";
-	import "../app.pcss";
+	import "../app.css";
 	import { Toaster } from "@kayord/ui";
 	import { browser } from "$app/environment";
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
