@@ -21,6 +21,7 @@
 		BookOpenTextIcon,
 		WarehouseIcon,
 		StoreIcon,
+		Move3DIcon,
 	} from "lucide-svelte";
 
 	const menuItems = [
@@ -95,6 +96,11 @@
 					title: "Suppliers",
 					href: "/manager/admin/suppliers",
 					icon: StoreIcon,
+				},
+				{
+					title: "Allocate",
+					href: "/manager/admin/allocate",
+					icon: Move3DIcon,
 				},
 			],
 		},
