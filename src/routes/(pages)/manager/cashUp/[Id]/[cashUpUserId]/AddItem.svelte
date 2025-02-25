@@ -121,7 +121,7 @@
 			</div>
 			<Dialog.Footer class="sm:flex-col gap-2">
 				<Form.Button type="submit">Add</Form.Button>
-				<Dialog.Close>Cancel</Dialog.Close>
+				<Dialog.Close type="reset">Cancel</Dialog.Close>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>

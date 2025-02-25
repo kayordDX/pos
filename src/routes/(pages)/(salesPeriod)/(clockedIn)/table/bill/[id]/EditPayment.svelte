@@ -123,7 +123,6 @@
 			</div>
 			<Dialog.Footer class="sm:flex-col gap-2">
 				<Form.Button type="submit">Update</Form.Button>
-				<Dialog.Close>Cancel</Dialog.Close>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>

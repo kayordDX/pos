@@ -92,9 +92,9 @@
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
-			<Dialog.Footer>
+			<Dialog.Footer class="sm:flex-col gap-2">
 				<Button type="submit">Submit</Button>
-				<Dialog.Close>Cancel</Dialog.Close>
+				<Dialog.Close type="reset">Cancel</Dialog.Close>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>
