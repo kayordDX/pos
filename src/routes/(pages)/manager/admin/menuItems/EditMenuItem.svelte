@@ -118,6 +118,7 @@
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		id: `menu-item-${menuItem?.menuItemId ?? 0}`,
 		resetForm: false,
 		onUpdate({ form }) {
 			if (form.valid) {

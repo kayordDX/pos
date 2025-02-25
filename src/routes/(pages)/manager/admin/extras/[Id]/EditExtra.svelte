@@ -71,6 +71,7 @@
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		id: `extra-item-${extra?.extraId ?? 0}`,
 		onUpdate({ form }) {
 			if (form.valid) {
 				updateExtra(form.data);

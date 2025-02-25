@@ -36,6 +36,7 @@
 	const form = superForm(defaults({}, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		id: `add-role-${userId}`,
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);
