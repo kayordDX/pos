@@ -86,6 +86,7 @@
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		id: `order-item-${orderItem?.stockId ?? 0}-${orderItem?.stockOrderId ?? 0}`,
 		onUpdate({ form }) {
 			if (form.valid) {
 				updateMenu(form.data);

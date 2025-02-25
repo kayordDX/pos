@@ -2959,6 +2959,56 @@
       }
     },
     "/stock/items": {
+      "put": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockItemsUpdate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockItemsUpdateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
       "get": {
         "tags": [
           "Stock"
@@ -12422,6 +12472,39 @@
           "supplierId": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "StockItemsUpdateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "divisionId",
+          "stockId",
+          "actual",
+          "threshold"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "actual": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "threshold": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },

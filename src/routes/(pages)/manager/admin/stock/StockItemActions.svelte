@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
-	import { createStockDelete, type StockGetAllResponse } from "$lib/api";
-	import { getError } from "$lib/types";
-	import AddStock from "./AddStock.svelte";
+	import { Button, DropdownMenu } from "@kayord/ui";
+	import { EllipsisVerticalIcon, PencilIcon } from "lucide-svelte";
+	import { type StockItemsGetAllResponse } from "$lib/api";
+	import EditStockItem from "./EditStockItem.svelte";
 
 	interface Props {
+		parentRefetch: () => void;
 		refetch: () => void;
-		// stock?: StockGetAllResponse;
+		stockItem: StockItemsGetAllResponse;
 	}
 
-	let { refetch }: Props = $props();
+	let { refetch, stockItem, parentRefetch }: Props = $props();
 
 	let editOpen = $state(false);
 </script>
@@ -26,4 +26,4 @@
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
-<!-- <AddStock {refetch} bind:open={editOpen} {stock} /> -->
+<EditStockItem {refetch} bind:open={editOpen} {stockItem} {parentRefetch} />

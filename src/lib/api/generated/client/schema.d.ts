@@ -796,7 +796,7 @@ export interface paths {
             cookie?: never;
         };
         get: operations["StockItemsGetAll"];
-        put?: never;
+        put: operations["StockItemsUpdate"];
         post?: never;
         delete?: never;
         options?: never;
@@ -3270,6 +3270,18 @@ export interface components {
             divisionId: number;
             /** Format: int32 */
             supplierId: number;
+        };
+        StockItemsUpdateRequest: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            divisionId: number;
+            /** Format: int32 */
+            stockId: number;
+            /** Format: decimal */
+            actual: number;
+            /** Format: decimal */
+            threshold: number;
         };
         StockItemsGetAllResponse: {
             /** Format: int32 */
@@ -6386,6 +6398,47 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["StockItemsGetAllResponse"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockItemsUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockItemsUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "text/plain": unknown;
+                    "application/json": unknown;
                 };
             };
             /** @description Unauthorized */

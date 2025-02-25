@@ -6,9 +6,10 @@
 
 	interface Props {
 		stock: StockGetAllResponse;
+		refetch: () => void;
 	}
 
-	let { stock }: Props = $props();
+	let { stock, refetch }: Props = $props();
 
 	let isOpen = $state(false);
 </script>
@@ -16,4 +17,4 @@
 <Button size="sm" variant="ghost" onclick={() => (isOpen = true)}>
 	<Badge variant="secondary">{stock.totalActual}</Badge><SettingsIcon />
 </Button>
-<StockItems bind:open={isOpen} id={stock.id} stockName={stock.name} />
+<StockItems bind:open={isOpen} id={stock.id} stockName={stock.name} {refetch} />

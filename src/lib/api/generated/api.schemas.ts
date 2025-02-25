@@ -1472,6 +1472,14 @@ export interface StockOrderCreateRequest {
 	supplierId: number;
 }
 
+export interface StockItemsUpdateRequest {
+	id: number;
+	divisionId: number;
+	stockId: number;
+	actual: number;
+	threshold: number;
+}
+
 export interface StockItemsGetAllResponse {
 	id: number;
 	stockId: number;

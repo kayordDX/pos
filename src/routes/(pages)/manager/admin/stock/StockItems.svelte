@@ -8,9 +8,10 @@
 		open: boolean;
 		id: number;
 		stockName: string;
+		refetch: () => void;
 	}
 
-	let { open = $bindable(false), id, stockName }: Props = $props();
+	let { open = $bindable(false), id, stockName, refetch }: Props = $props();
 
 	const query = createStockItemsGetAll({ id: id });
 	const data = $derived($query.data ?? []);
@@ -37,6 +38,8 @@
 			cell: (item) =>
 				renderComponent(StockItemActions, {
 					refetch: $query.refetch,
+					parentRefetch: refetch,
+					stockItem: item.row.original,
 				}),
 			size: 10,
 			enableSorting: false,

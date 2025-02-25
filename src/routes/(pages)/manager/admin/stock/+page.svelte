@@ -39,6 +39,7 @@
 			cell: (item) =>
 				renderComponent(Total, {
 					stock: item.row.original,
+					refetch: $query.refetch,
 				}),
 			size: 1000,
 			enableSorting: false,
