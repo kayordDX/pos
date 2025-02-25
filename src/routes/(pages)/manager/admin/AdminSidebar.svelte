@@ -161,7 +161,9 @@
 														isActive={activeItem?.title === subItem.title}
 													>
 														{#if subItem.icon}
-															<subItem.icon class="!size-6" />
+															<subItem.icon
+																class={`!size-6 ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`}
+															/>
 														{/if}
 														<span>{subItem.title}</span>
 													</Sidebar.MenuSubButton>
