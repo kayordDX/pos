@@ -91,11 +91,14 @@
 				</Form.Field>
 			</div>
 			<Dialog.Footer>
-				{#if $mutation.isError}
-					<Error message={getError($mutation.error).message} />
-				{/if}
-				<Form.Button type="submit" disabled={$mutation.isPending}>Add Role</Form.Button>
-				<Dialog.Close>Cancel</Dialog.Close>
+				<div class="flex flex-col gap-2 w-full">
+					{#if $mutation.isError}
+						<Error message={getError($mutation.error).message} />
+					{/if}
+					<Form.Button type="submit" class="w-full" disabled={$mutation.isPending}>
+						Add Role
+					</Form.Button>
+				</div>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>
