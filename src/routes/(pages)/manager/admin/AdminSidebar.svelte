@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { Collapsible, Sidebar } from "@kayord/ui";
 	const sidebar = Sidebar.useSidebar();
 
@@ -107,7 +107,7 @@
 	];
 
 	let activeItem = $derived.by(() => {
-		const routeId = $page.route.id?.replaceAll("/[Id]", "");
+		const routeId = page.route.id?.replaceAll("/[Id]", "");
 		for (const item of menuItems) {
 			for (const subItem of item.items ?? []) {
 				if (routeId?.endsWith(subItem.href)) {
