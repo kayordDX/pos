@@ -10,11 +10,11 @@
 	let hasNotification = $state(false);
 </script>
 
-<Button
+<!-- <Button
 	class={`bg-background text-primary hover:text-primary-foreground ${hasNotification ? "animate-pulse" : ""}`}
 >
 	<InboxIcon />
-</Button>
+</Button> -->
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger>

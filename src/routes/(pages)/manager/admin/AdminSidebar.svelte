@@ -97,11 +97,11 @@
 					href: "/manager/admin/suppliers",
 					icon: StoreIcon,
 				},
-				{
-					title: "Allocate",
-					href: "/manager/admin/allocate",
-					icon: Move3DIcon,
-				},
+				// {
+				// 	title: "Allocate",
+				// 	href: "/manager/admin/allocate",
+				// 	icon: Move3DIcon,
+				// },
 			],
 		},
 	];
