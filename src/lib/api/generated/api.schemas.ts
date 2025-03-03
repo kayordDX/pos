@@ -2279,6 +2279,10 @@ export interface ExtraCreateRequest {
 	outletId: number;
 }
 
+export interface DivisionGetAllRequest {
+	[key: string]: unknown;
+}
+
 export interface ClockListRequest {
 	[key: string]: unknown;
 }
@@ -2657,6 +2661,10 @@ export type MenuGetItemGetMenuItemsParams = {
 
 export type ManagerOrderViewParams = {
 	roleIds?: string | null;
+};
+
+export type DivisionGetAllParams = {
+	outletId: number;
 };
 
 export type ClockListParams = {

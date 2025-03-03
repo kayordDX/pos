@@ -3967,6 +3967,7 @@ export interface components {
             /** Format: int32 */
             outletId: number;
         };
+        DivisionGetAllRequest: Record<string, never>;
         ClockListRequest: Record<string, never>;
         EntitiesClock: {
             /** Format: int32 */
@@ -9325,7 +9326,9 @@ export interface operations {
     };
     DivisionGetAll: {
         parameters: {
-            query?: never;
+            query: {
+                outletId: number;
+            };
             header?: never;
             path?: never;
             cookie?: never;

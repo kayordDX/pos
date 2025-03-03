@@ -13,7 +13,7 @@
 
 	interface Props {
 		isHistory?: boolean;
-		type?: "kitchen" | "backOffice" | "bar";
+		type?: "kitchen" | "backOffice" | "bar" | "pizza";
 		roleIds?: string;
 	}
 

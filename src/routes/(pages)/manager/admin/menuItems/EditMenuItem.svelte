@@ -164,7 +164,7 @@
 		);
 	});
 
-	const divisionQuery = createDivisionGetAll();
+	const divisionQuery = createDivisionGetAll({ outletId: status.value.outletId });
 	const divisionList = $derived.by(() => {
 		return (
 			$divisionQuery.data?.map((m) => {

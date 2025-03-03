@@ -2,4 +2,4 @@
 	import BackOffice from "../../BackOffice.svelte";
 </script>
 
-<BackOffice type="pizza" isHistory={true} divisionIds="5" />
+<BackOffice type="pizza" isHistory={true} roleIds="6" />

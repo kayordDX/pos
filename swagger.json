@@ -6804,6 +6804,17 @@
           "Division"
         ],
         "operationId": "DivisionGetAll",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -14878,6 +14889,10 @@
             "format": "int32"
           }
         }
+      },
+      "DivisionGetAllRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "ClockListRequest": {
         "type": "object",
