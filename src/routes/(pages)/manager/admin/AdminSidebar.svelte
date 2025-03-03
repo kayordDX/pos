@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { Collapsible, Sidebar } from "@kayord/ui";
 	const sidebar = Sidebar.useSidebar();
 
@@ -10,13 +10,18 @@
 		UserRoundSearchIcon,
 		UsersIcon,
 		NfcIcon,
-		NotebookTextIcon,
 		SquareMenuIcon,
 		Plus,
 		Minus,
 		BookCopyIcon,
 		CirclePlusIcon,
 		ToggleRightIcon,
+		NotebookTextIcon,
+		BookDownIcon,
+		BookOpenTextIcon,
+		WarehouseIcon,
+		StoreIcon,
+		Move3DIcon,
 	} from "lucide-svelte";
 
 	const menuItems = [
@@ -72,17 +77,44 @@
 				},
 			],
 		},
+		{
+			title: "Stock",
+			href: "",
+			icon: BookOpenTextIcon,
+			items: [
+				{
+					title: "Stock Items",
+					href: "/manager/admin/stock",
+					icon: WarehouseIcon,
+				},
+				{
+					title: "Orders",
+					href: "/manager/admin/stock/orders",
+					icon: BookDownIcon,
+				},
+				{
+					title: "Suppliers",
+					href: "/manager/admin/suppliers",
+					icon: StoreIcon,
+				},
+				// {
+				// 	title: "Allocate",
+				// 	href: "/manager/admin/allocate",
+				// 	icon: Move3DIcon,
+				// },
+			],
+		},
 	];
 
 	let activeItem = $derived.by(() => {
-		const routeId = $page.route.id?.replaceAll("/[Id]", "");
+		const routeId = page.route.id?.replaceAll("/[Id]", "");
 		for (const item of menuItems) {
 			for (const subItem of item.items ?? []) {
 				if (routeId?.endsWith(subItem.href)) {
 					return subItem;
 				}
 			}
-			if (routeId?.endsWith(item.href)) {
+			if (item.href.length > 0 && routeId?.endsWith(item.href)) {
 				return item;
 			}
 		}
@@ -105,7 +137,7 @@
 		<Sidebar.Group />
 		<Sidebar.GroupContent>
 			<Sidebar.Menu class="px-2">
-				{#each menuItems as item (item.href)}
+				{#each menuItems as item (item.title)}
 					{#if (item.items?.length ?? 0) > 0}
 						<Collapsible.Root class="group/collapsible">
 							<Sidebar.MenuItem>
@@ -135,7 +167,9 @@
 														isActive={activeItem?.title === subItem.title}
 													>
 														{#if subItem.icon}
-															<subItem.icon class="!size-6" />
+															<subItem.icon
+																class={`!size-6 ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`}
+															/>
 														{/if}
 														<span>{subItem.title}</span>
 													</Sidebar.MenuSubButton>

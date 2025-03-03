@@ -55,6 +55,7 @@
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		id: `sections-${section?.menuSectionId ?? 0}`,
 		onUpdate({ form }) {
 			if (form.valid) {
 				updateMenuSection(form.data);

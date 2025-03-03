@@ -13,14 +13,14 @@
 		group: TableOrderOfficeOrderBasedBackOrderGroupDTO;
 		refetch: () => void;
 		isHistory?: boolean;
-		divisionIds?: string;
+		roleIds?: string;
 	}
-	let { group, refetch, isHistory = false, divisionIds }: Props = $props();
+	let { group, refetch, isHistory = false, roleIds }: Props = $props();
 
 	const mutation = createTableOrderUpdateGroupOrder();
 	const readyAll = async (id: number, statusId: number) => {
 		await $mutation.mutateAsync({
-			data: { orderItemStatusId: statusId, orderGroupId: id, divisionIds },
+			data: { orderItemStatusId: statusId, orderGroupId: id, roleIds },
 		});
 		refetch();
 	};

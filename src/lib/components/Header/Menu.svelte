@@ -1,12 +1,20 @@
 <script lang="ts">
-	import { Avatar, DropdownMenu } from "@kayord/ui";
-	import { LogOutIcon, MoonIcon, SunIcon, WrenchIcon, NetworkIcon } from "lucide-svelte";
+	import { Avatar, Badge, Button, DropdownMenu } from "@kayord/ui";
+	import { LogOutIcon, MoonIcon, SunIcon, WrenchIcon, NetworkIcon, InboxIcon } from "lucide-svelte";
 	import { getInitials } from "$lib/util";
 	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
 	import { logout, session } from "$lib/firebase.svelte";
 	import { networkInformationStore } from "$lib/stores/network";
 	import { goto } from "$app/navigation";
+
+	let hasNotification = $state(false);
 </script>
+
+<!-- <Button
+	class={`bg-background text-primary hover:text-primary-foreground ${hasNotification ? "animate-pulse" : ""}`}
+>
+	<InboxIcon />
+</Button> -->
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger>

@@ -76,8 +76,8 @@
 							<Select.Root
 								type="single"
 								allowDeselect={false}
-								onValueChange={(v: number) => {
-									v && ($formData.cashUpUserItemTypeId = v);
+								onValueChange={(v: string) => {
+									v && ($formData.cashUpUserItemTypeId = Number(v));
 								}}
 							>
 								<Select.Trigger {...props}>
@@ -85,7 +85,7 @@
 								</Select.Trigger>
 								<Select.Content>
 									{#each $query.data ?? [] as item}
-										<Select.Item value={item.id}>{item.itemType}</Select.Item>
+										<Select.Item value={item.id.toString()}>{item.itemType}</Select.Item>
 									{/each}
 								</Select.Content>
 							</Select.Root>
@@ -121,7 +121,7 @@
 			</div>
 			<Dialog.Footer class="sm:flex-col gap-2">
 				<Form.Button type="submit">Add</Form.Button>
-				<Dialog.Close>Cancel</Dialog.Close>
+				<Dialog.Close type="reset">Cancel</Dialog.Close>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>

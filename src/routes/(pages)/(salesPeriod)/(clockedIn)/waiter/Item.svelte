@@ -33,7 +33,7 @@
 			completeItemBusy = true;
 			await $mutation.mutateAsync({ data: { orderItemIds: [id], orderItemStatusId: statusId } });
 		} catch (e) {
-			console.log(e);
+			console.error(e);
 		} finally {
 			completeItemBusy = false;
 			refetch();

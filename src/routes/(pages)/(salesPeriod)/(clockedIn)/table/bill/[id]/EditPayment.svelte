@@ -98,8 +98,8 @@
 							<Select.Root
 								type="single"
 								allowDeselect={false}
-								onValueChange={(v: number) => {
-									v && ($formData.paymentTypeId = v);
+								onValueChange={(v: string) => {
+									v && ($formData.paymentTypeId = Number(v));
 								}}
 							>
 								<Select.Trigger {...props}>
@@ -108,7 +108,7 @@
 								<Select.Content>
 									{#each $paymentTypeQuery.data ?? [] as paymentType}
 										{#if paymentType.canEdit}
-											<Select.Item value={paymentType.paymentTypeId}>
+											<Select.Item value={paymentType.paymentTypeId.toString()}>
 												{paymentType.paymentTypeName}
 											</Select.Item>
 										{/if}
@@ -123,7 +123,6 @@
 			</div>
 			<Dialog.Footer class="sm:flex-col gap-2">
 				<Form.Button type="submit">Update</Form.Button>
-				<Dialog.Close>Cancel</Dialog.Close>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>

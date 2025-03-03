@@ -55,6 +55,7 @@
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		id: `menu-${menu?.id ?? 0}`,
 		onUpdate({ form }) {
 			if (form.valid) {
 				updateMenu(form.data);

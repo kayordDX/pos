@@ -36,6 +36,7 @@
 	const form = superForm(defaults({}, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		id: `add-role-${userId}`,
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);
@@ -71,12 +72,16 @@
 								type="single"
 								allowDeselect={false}
 								name={props.name}
-								bind:value={$formData.roleId}
+								bind:value={
+									() => $formData.roleId.toString(), (v) => ($formData.roleId = Number(v))
+								}
 							>
 								<Select.Trigger {...props}>{roleSelect}</Select.Trigger>
 								<Select.Content>
 									{#each $rolesQuery.data ?? [] as item}
-										<Select.Item value={item.roleId} label={item.name}>{item.name}</Select.Item>
+										<Select.Item value={item.roleId.toString()} label={item.name}
+											>{item.name}</Select.Item
+										>
 									{/each}
 								</Select.Content>
 							</Select.Root>
@@ -87,11 +92,14 @@
 				</Form.Field>
 			</div>
 			<Dialog.Footer>
-				{#if $mutation.isError}
-					<Error message={getError($mutation.error).message} />
-				{/if}
-				<Form.Button type="submit" disabled={$mutation.isPending}>Add Role</Form.Button>
-				<Dialog.Close>Cancel</Dialog.Close>
+				<div class="flex flex-col gap-2 w-full">
+					{#if $mutation.isError}
+						<Error message={getError($mutation.error).message} />
+					{/if}
+					<Form.Button type="submit" class="w-full" disabled={$mutation.isPending}>
+						Add Role
+					</Form.Button>
+				</div>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>

@@ -20,7 +20,7 @@
 					});
 				});
 			} catch (err) {
-				console.log("failed: ", err);
+				console.error("failed: ", err);
 			}
 		} else {
 			await requestNotificationPermission();

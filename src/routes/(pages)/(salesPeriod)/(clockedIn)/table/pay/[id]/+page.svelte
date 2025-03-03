@@ -126,8 +126,8 @@
 						<Select.Root
 							type="single"
 							allowDeselect={false}
-							onValueChange={(v: number) => {
-								v && ($formData.paymentTypeId = v);
+							onValueChange={(v: string) => {
+								v && ($formData.paymentTypeId = Number(v));
 							}}
 						>
 							<Select.Trigger {...props}>
@@ -135,7 +135,7 @@
 							</Select.Trigger>
 							<Select.Content>
 								{#each $paymentTypeQuery.data ?? [] as paymentType}
-									<Select.Item value={paymentType.paymentTypeId}
+									<Select.Item value={paymentType.paymentTypeId.toString()}
 										>{paymentType.paymentTypeName}</Select.Item
 									>
 								{/each}

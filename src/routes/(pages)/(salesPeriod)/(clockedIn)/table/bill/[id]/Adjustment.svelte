@@ -84,8 +84,8 @@
 							<Select.Root
 								type="single"
 								allowDeselect={false}
-								onValueChange={(v: number) => {
-									v && ($formData.adjustmentTypeId = v);
+								onValueChange={(v: string) => {
+									v && ($formData.adjustmentTypeId = Number(v));
 								}}
 							>
 								<Select.Trigger {...props}>
@@ -93,7 +93,9 @@
 								</Select.Trigger>
 								<Select.Content>
 									{#each $query.data ?? [] as result}
-										<Select.Item value={result.adjustmentTypeId}>{result.name}</Select.Item>
+										<Select.Item value={result.adjustmentTypeId.toString()}
+											>{result.name}</Select.Item
+										>
 									{/each}
 								</Select.Content>
 							</Select.Root>

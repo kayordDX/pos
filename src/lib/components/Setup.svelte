@@ -35,7 +35,6 @@
 				toast.error("Could not set outlet");
 			}
 		} catch (err) {
-			console.log(err);
 			toast.error(getError(err).message);
 		}
 	};
@@ -186,8 +185,8 @@
 						<Select.Root
 							type="single"
 							allowDeselect={false}
-							onValueChange={(v: number) => {
-								v && ($formData.outletId = v);
+							onValueChange={(v: string) => {
+								v && ($formData.outletId = Number(v));
 							}}
 						>
 							<Select.Trigger {...props}>
@@ -195,7 +194,7 @@
 							</Select.Trigger>
 							<Select.Content>
 								{#each $query.data ?? [] as outlet}
-									<Select.Item value={outlet.id}>{outlet.name}</Select.Item>
+									<Select.Item value={outlet.id.toString()}>{outlet.name}</Select.Item>
 								{/each}
 							</Select.Content>
 						</Select.Root>
