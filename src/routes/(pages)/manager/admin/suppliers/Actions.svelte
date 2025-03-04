@@ -21,7 +21,7 @@
 		try {
 			await $deleteMutation.mutateAsync({ id: supplier?.id ?? 0 });
 			refetch();
-			toast.message("Stock Item Deleted");
+			toast.message("Supplier Deleted");
 		} catch (error) {
 			toast.error(getError(error).message);
 		}
