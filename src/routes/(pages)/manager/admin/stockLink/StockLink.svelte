@@ -1,17 +1,11 @@
 <script lang="ts">
-	import {
-		type MenuItemMenuItemAdminDTO,
-		createStockLinkGetAll,
-		createStockLinkGet,
-		type StockLinkGetAllResponse,
-	} from "$lib/api";
+	import { createStockLinkGetAll, type StockLinkGetAllResponse } from "$lib/api";
 	import { LinkType } from "$lib/types";
 	import { Button, createShadTable, DataTable, Dialog, renderComponent } from "@kayord/ui";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Actions from "./Actions.svelte";
 	import { LinkIcon } from "lucide-svelte";
 	import AddLinkStock from "./AddLinkStock.svelte";
-	import MenuItem from "../../../(salesPeriod)/(clockedIn)/table/menu/[id]/MenuItem.svelte";
 
 	interface Props {
 		open: boolean;
@@ -21,7 +15,10 @@
 	let { open = $bindable(false), id, linkType }: Props = $props();
 	let linkOpen = $state(false);
 
-	const query = createStockLinkGetAll({ id: 2, linkType: linkType }, { query: { enabled: false } });
+	const query = createStockLinkGetAll(
+		{ id: id, linkType: linkType },
+		{ query: { enabled: false } }
+	);
 	const data = $derived($query.data ?? []);
 
 	$effect(() => {
@@ -78,7 +75,7 @@
 		</Button>
 	</Dialog.Header>
 {/snippet}
-<AddLinkStock bind:open={linkOpen} id={1} linkType={LinkType.MenuItem} />
+<AddLinkStock bind:open={linkOpen} {id} linkType={LinkType.MenuItem} refetch={$query.refetch} />
 
 <Dialog.Root bind:open>
 	<Dialog.Content class="max-h-[98%] max-w-3xl overflow-scroll">
