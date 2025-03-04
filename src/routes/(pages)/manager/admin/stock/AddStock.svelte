@@ -7,7 +7,7 @@
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
-	import { Button, Dialog, Form, Input, Select, toast } from "@kayord/ui";
+	import { Button, Checkbox, Dialog, Form, Input, Select, toast } from "@kayord/ui";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
@@ -27,6 +27,7 @@
 	const schema = z.object({
 		name: z.string().min(1, { message: "Stock Name is Required" }),
 		unitId: z.number().min(1, { message: "Unit is Required" }),
+		hasVat: z.boolean(),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -43,6 +44,7 @@
 						id: stock?.id ?? 0,
 						name: data.name,
 						unitId: data.unitId,
+						hasVat: data.hasVat,
 					},
 				});
 				toast.info("Edited Stock");
@@ -52,6 +54,7 @@
 						name: data.name,
 						unitId: data.unitId,
 						outletId: status.value.outletId,
+						hasVat: data.hasVat,
 					},
 				});
 				toast.info("Added Stock");
@@ -65,6 +68,7 @@
 	const defaultValues = $derived({
 		name: stock?.name,
 		unitId: stock?.unitId,
+		hasVat: stock?.hasVat ?? true,
 	});
 
 	// svelte-ignore state_referenced_locally
@@ -130,6 +134,17 @@
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors class="text-destructive text-sm" />
+				</Form.Field>
+				<Form.Field {form} name="hasVat">
+					<Form.Control>
+						{#snippet children({ props })}
+							<div class="flex items-center gap-2">
+								<Checkbox {...props} bind:checked={$formData.hasVat} />
+								<Form.Label>VAT</Form.Label>
+							</div>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
 				</Form.Field>
 			</div>
 			<Dialog.Footer class="gap-2">

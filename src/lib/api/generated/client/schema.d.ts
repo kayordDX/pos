@@ -3122,6 +3122,7 @@ export interface components {
             name: string;
             /** Format: int32 */
             unitId: number;
+            hasVat: boolean;
         };
         StockOrderItemUpdateBulkRequest: {
             /** Format: int32 */
@@ -3413,6 +3414,7 @@ export interface components {
             stockCategoryId: number;
             /** Format: decimal */
             totalActual: number;
+            hasVat: boolean;
         };
         StockGetAllRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         StockDivisionGetAllRequest: Record<string, never>;
@@ -3423,6 +3425,7 @@ export interface components {
             name: string;
             /** Format: int32 */
             unitId: number;
+            hasVat: boolean;
         };
         SectionUpdateRequest: {
             /** Format: int32 */

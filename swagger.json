@@ -12023,7 +12023,8 @@
         "required": [
           "id",
           "name",
-          "unitId"
+          "unitId",
+          "hasVat"
         ],
         "properties": {
           "id": {
@@ -12036,6 +12037,9 @@
           "unitId": {
             "type": "integer",
             "format": "int32"
+          },
+          "hasVat": {
+            "type": "boolean"
           }
         }
       },
@@ -12967,7 +12971,8 @@
           "unitId",
           "unitName",
           "stockCategoryId",
-          "totalActual"
+          "totalActual",
+          "hasVat"
         ],
         "properties": {
           "id": {
@@ -12995,6 +13000,9 @@
           "totalActual": {
             "type": "number",
             "format": "decimal"
+          },
+          "hasVat": {
+            "type": "boolean"
           }
         }
       },
@@ -13023,7 +13031,8 @@
         "required": [
           "outletId",
           "name",
-          "unitId"
+          "unitId",
+          "hasVat"
         ],
         "properties": {
           "outletId": {
@@ -13036,6 +13045,9 @@
           "unitId": {
             "type": "integer",
             "format": "int32"
+          },
+          "hasVat": {
+            "type": "boolean"
           }
         }
       },

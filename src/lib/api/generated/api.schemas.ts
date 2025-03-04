@@ -1194,6 +1194,7 @@ export interface StockUpdateRequest {
 	id: number;
 	name: string;
 	unitId: number;
+	hasVat: boolean;
 }
 
 export interface StockOrderItemUpdateBulkRequest {
@@ -1469,6 +1470,7 @@ export interface StockGetAllResponse {
 	unitName: string;
 	stockCategoryId: number;
 	totalActual: number;
+	hasVat: boolean;
 }
 
 export type StockGetAllRequestAllOf = { [key: string]: unknown };
@@ -1487,6 +1489,7 @@ export interface StockCreateRequest {
 	outletId: number;
 	name: string;
 	unitId: number;
+	hasVat: boolean;
 }
 
 export interface SectionUpdateRequest {
