@@ -2,7 +2,7 @@
 	import { createStockGetAll, createStockLinkAdd } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError, LinkType } from "$lib/types";
-	import { Button, Combobox, Dialog, Form, Select, toast } from "@kayord/ui";
+	import { Button, Combobox, Dialog, Form, toast } from "@kayord/ui";
 	import QueryBuilder from "fluent-querykit";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
@@ -90,7 +90,7 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%] overflow-scroll">
+	<Dialog.Content class="max-h-[98%] overflow-scroll flex-col z-60">
 		<form method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>Link Stock</Dialog.Title>
@@ -106,6 +106,7 @@
 								items={stockListSelect}
 								bind:search={stockSearch}
 								shouldFilter={false}
+								popoverClass="z-70"
 								{...props}
 							/>
 						{/snippet}
@@ -113,9 +114,10 @@
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
-			<Dialog.Footer class="gap-2">
-				<Button type="submit">Link</Button>
-				<Button variant="outline" onclick={() => (open = false)}>Cancel</Button>
+			<Dialog.Footer>
+				<div class="gap-2 flex flex-col w-full">
+					<Button type="submit">Link</Button>
+				</div>
 			</Dialog.Footer>
 		</form>
 	</Dialog.Content>

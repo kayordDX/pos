@@ -2,10 +2,17 @@
 	import { goto } from "$app/navigation";
 	import type { DTOExtraDTO } from "$lib/api";
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, EqualIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
+	import {
+		BookOpenTextIcon,
+		EllipsisVerticalIcon,
+		EqualIcon,
+		PencilIcon,
+		Trash2Icon,
+	} from "lucide-svelte";
 	import { createExtraDelete } from "$lib/api";
-	import { getError } from "$lib/types";
+	import { getError, LinkType } from "$lib/types";
 	import EditExtra from "./EditExtra.svelte";
+	import StockLink from "../../stockLink/StockLink.svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -16,6 +23,7 @@
 
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
+	let stockLinkOpen = $state(false);
 
 	const deleteMutation = createExtraDelete();
 	const deleteMenu = async () => {
@@ -39,6 +47,9 @@
 	<DropdownMenu.Content>
 		<DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>
 		<DropdownMenu.Item onclick={() => (deleteOpen = true)}><Trash2Icon /> Delete</DropdownMenu.Item>
+		<DropdownMenu.Item onclick={() => (stockLinkOpen = true)}>
+			<BookOpenTextIcon /> Link Stock
+		</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
@@ -58,3 +69,5 @@
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>
+
+<StockLink bind:open={stockLinkOpen} id={extra.extraId} linkType={LinkType.Extra} />

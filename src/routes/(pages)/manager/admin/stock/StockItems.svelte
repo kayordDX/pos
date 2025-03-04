@@ -13,8 +13,14 @@
 
 	let { open = $bindable(false), id, stockName, refetch }: Props = $props();
 
-	const query = createStockItemsGetAll({ id: id });
+	const query = createStockItemsGetAll({ id: id }, { query: { enabled: false } });
 	const data = $derived($query.data ?? []);
+
+	$effect(() => {
+		if (open) {
+			$query.refetch();
+		}
+	});
 
 	const columns: ColumnDef<StockItemsGetAllResponse>[] = [
 		{
@@ -52,7 +58,6 @@
 			return data;
 		},
 		enableRowSelection: false,
-		enablePaging: false,
 	});
 </script>
 

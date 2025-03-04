@@ -13,8 +13,14 @@
 	}
 	let { open = $bindable(false), stock }: Props = $props();
 
-	const query = createStockLinkGet(stock?.id ?? 0);
+	const query = createStockLinkGet(stock?.id ?? 0, { query: { enabled: false } });
 	const data = $derived($query.data ?? []);
+
+	$effect(() => {
+		if (open) {
+			$query.refetch();
+		}
+	});
 
 	const columns: ColumnDef<StockLinkGetResponse>[] = [
 		{
@@ -41,7 +47,6 @@
 			return data;
 		},
 		enableRowSelection: false,
-		enablePaging: false,
 	});
 </script>
 

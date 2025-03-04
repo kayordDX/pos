@@ -186,6 +186,6 @@
 		{header}
 		headerClass="pb-2"
 		isLoading={$query.isPending}
-		noDataMessage="No menu items"
+		noDataMessage="No stock items"
 	/>
 </div>

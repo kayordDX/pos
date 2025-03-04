@@ -59,7 +59,6 @@
 			return data;
 		},
 		enableRowSelection: false,
-		enablePaging: false,
 	});
 </script>
 
@@ -75,7 +74,7 @@
 		</Button>
 	</Dialog.Header>
 {/snippet}
-<AddLinkStock bind:open={linkOpen} {id} linkType={LinkType.MenuItem} refetch={$query.refetch} />
+<AddLinkStock bind:open={linkOpen} {id} {linkType} refetch={$query.refetch} />
 
 <Dialog.Root bind:open>
 	<Dialog.Content class="max-h-[98%] max-w-3xl overflow-scroll">
