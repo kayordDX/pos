@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
+	import { CableIcon, EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
 	import { createStockDelete, type StockGetAllResponse } from "$lib/api";
 	import { getError } from "$lib/types";
 	import AddStock from "./AddStock.svelte";
+	import LinkedItems from "./LinkedItems.svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -14,6 +15,7 @@
 
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
+	let linkedOpen = $state(false);
 
 	const deleteMutation = createStockDelete();
 	const deleteMenuItem = async () => {
@@ -37,10 +39,14 @@
 	<DropdownMenu.Content>
 		<DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>
 		<DropdownMenu.Item onclick={() => (deleteOpen = true)}><Trash2Icon /> Delete</DropdownMenu.Item>
+		<DropdownMenu.Item onclick={() => (linkedOpen = true)}>
+			<CableIcon /> Linked Items
+		</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
 <AddStock {refetch} bind:open={editOpen} {stock} />
+<LinkedItems bind:open={linkedOpen} {stock} />
 
 <AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>

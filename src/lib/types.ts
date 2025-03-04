@@ -123,3 +123,9 @@ export const getError = (inputError: ApiError): ErrorGeneric => {
 	}
 	return error;
 };
+
+export const enum LinkType {
+	MenuItem,
+	Extra,
+	Option,
+}

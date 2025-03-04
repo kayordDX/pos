@@ -1,0 +1,96 @@
+<script lang="ts">
+	import {
+		type MenuItemMenuItemAdminDTO,
+		createStockLinkGetAll,
+		createStockLinkGet,
+		type StockLinkGetAllResponse,
+	} from "$lib/api";
+	import { LinkType } from "$lib/types";
+	import { Button, createShadTable, DataTable, Dialog, renderComponent } from "@kayord/ui";
+	import type { ColumnDef } from "@tanstack/table-core";
+	import Actions from "./Actions.svelte";
+	import { LinkIcon } from "lucide-svelte";
+	import AddLinkStock from "./AddLinkStock.svelte";
+	import MenuItem from "../../../(salesPeriod)/(clockedIn)/table/menu/[id]/MenuItem.svelte";
+
+	interface Props {
+		open: boolean;
+		id: number;
+		linkType: LinkType;
+	}
+	let { open = $bindable(false), id, linkType }: Props = $props();
+	let linkOpen = $state(false);
+
+	const query = createStockLinkGetAll({ id: 2, linkType: linkType }, { query: { enabled: false } });
+	const data = $derived($query.data ?? []);
+
+	$effect(() => {
+		if (open) {
+			$query.refetch();
+		}
+	});
+
+	const columns: ColumnDef<StockLinkGetAllResponse>[] = [
+		{
+			header: "Name",
+			accessorKey: "name",
+			size: 1000,
+		},
+		{
+			header: "Unit",
+			accessorKey: "unitName",
+			size: 1000,
+		},
+		{
+			header: "",
+			accessorKey: "name",
+			cell: (item) =>
+				renderComponent(Actions, {
+					refetch: $query.refetch,
+					id: item.row.original.id,
+					stockId: item.row.original.stockId,
+					linkType: linkType,
+				}),
+			size: 10,
+			enableSorting: false,
+		},
+	];
+
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+		enablePaging: false,
+	});
+</script>
+
+{#snippet header()}
+	<Dialog.Header class="pr-6 flex-row w-full justify-between">
+		<div>
+			<Dialog.Title>Stock</Dialog.Title>
+			<Dialog.Description>Linked Stock Items</Dialog.Description>
+		</div>
+		<Button onclick={() => (linkOpen = true)}>
+			<LinkIcon />
+			Link Stock
+		</Button>
+	</Dialog.Header>
+{/snippet}
+<AddLinkStock bind:open={linkOpen} id={1} linkType={LinkType.MenuItem} />
+
+<Dialog.Root bind:open>
+	<Dialog.Content class="max-h-[98%] max-w-3xl overflow-scroll">
+		<div class="flex flex-col gap-4 p-0 mt-0">
+			<DataTable
+				{table}
+				{columns}
+				{header}
+				headerClass="pb-2"
+				isLoading={$query.isPending}
+				noDataMessage="No linked items"
+			/>
+		</div>
+	</Dialog.Content>
+</Dialog.Root>
