@@ -34,19 +34,27 @@
 			size: 1000,
 		},
 		{
+			header: "Quantity",
+			accessorKey: "quantity",
+			size: 1000,
+		},
+		{
 			header: "Unit",
 			accessorKey: "unitName",
 			size: 1000,
 		},
 		{
 			header: "",
-			accessorKey: "name",
+			accessorKey: "id",
 			cell: (item) =>
 				renderComponent(Actions, {
 					refetch: $query.refetch,
 					id: item.row.original.id,
 					stockId: item.row.original.stockId,
+					quantity: item.row.original.quantity,
 					linkType: linkType,
+					stockName: item.row.original.name,
+					unitName: item.row.original.unitName,
 				}),
 			size: 10,
 			enableSorting: false,

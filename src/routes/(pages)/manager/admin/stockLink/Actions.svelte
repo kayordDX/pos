@@ -1,18 +1,23 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, UnlinkIcon } from "lucide-svelte";
+	import { EllipsisVerticalIcon, PencilIcon, UnlinkIcon } from "lucide-svelte";
 	import { createStockLinkDelete } from "$lib/api";
 	import { getError, LinkType } from "$lib/types";
+	import AddLinkStock from "./AddLinkStock.svelte";
 	interface Props {
 		refetch: () => void;
 		id: number;
 		stockId: number;
+		quantity: number;
 		linkType: LinkType;
+		stockName: string;
+		unitName: string;
 	}
 
-	let { id, stockId, linkType, refetch }: Props = $props();
+	let { id, stockId, linkType, refetch, quantity, stockName, unitName }: Props = $props();
 
 	let deleteOpen = $state(false);
+	let linkOpen = $state(false);
 
 	const deleteMutation = createStockLinkDelete();
 	const deleteMenuItem = async () => {
@@ -34,6 +39,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
+		<DropdownMenu.Item onclick={() => (linkOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>
 		<DropdownMenu.Item onclick={() => (deleteOpen = true)}><UnlinkIcon /> Unlink</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
@@ -60,3 +66,14 @@
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>
+
+<AddLinkStock
+	bind:open={linkOpen}
+	{id}
+	{linkType}
+	{refetch}
+	{stockId}
+	{quantity}
+	{stockName}
+	{unitName}
+/>

@@ -1395,12 +1395,23 @@ export interface StockOrderCreateRequest {
 	supplierId: number;
 }
 
+export interface StockLinkUpdateRequest {
+	/**
+	 * @minLength 1
+	 */
+	id: number;
+	stockId: number;
+	quantity: number;
+	linkType: number;
+}
+
 export interface StockLinkGetAllResponse {
 	id: number;
 	stockId: number;
 	name: string;
 	unitId: number;
 	unitName: string;
+	quantity: number;
 }
 
 export interface StockLinkGetAllRequest {
@@ -1412,6 +1423,7 @@ export interface StockLinkGetResponse {
 	/** @nullable */
 	description?: string | null;
 	type: string;
+	quantity: number;
 }
 
 export interface StockLinkGetRequest {
@@ -1428,6 +1440,7 @@ export interface StockLinkAddRequest {
 	 */
 	id: number;
 	stockId: number;
+	quantity: number;
 	linkType: number;
 }
 

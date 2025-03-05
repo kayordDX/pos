@@ -2958,6 +2958,128 @@
         ]
       }
     },
+    "/stock/link": {
+      "put": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockLinkUpdate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockLinkUpdateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockLinkAdd",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockLinkAddRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {}
+              },
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/stock/link/all": {
       "get": {
         "tags": [
@@ -3116,68 +3238,6 @@
             }
           }
         ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "text/plain": {
-                "schema": {}
-              },
-              "application/json": {
-                "schema": {}
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "400": {
-            "description": "Bad Request",
-            "content": {
-              "application/problem+json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWTBearerAuth": []
-          }
-        ]
-      }
-    },
-    "/stock/link": {
-      "post": {
-        "tags": [
-          "Stock"
-        ],
-        "operationId": "StockLinkAdd",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StockLinkAddRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
         "responses": {
           "200": {
             "description": "Success",
@@ -12757,6 +12817,36 @@
           }
         }
       },
+      "StockLinkUpdateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "stockId",
+          "quantity",
+          "linkType"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "minLength": 1,
+            "nullable": false
+          },
+          "stockId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "linkType": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "StockLinkGetAllResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -12765,7 +12855,8 @@
           "stockId",
           "name",
           "unitId",
-          "unitName"
+          "unitName",
+          "quantity"
         ],
         "properties": {
           "id": {
@@ -12785,6 +12876,10 @@
           },
           "unitName": {
             "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -12797,7 +12892,8 @@
         "additionalProperties": false,
         "required": [
           "name",
-          "type"
+          "type",
+          "quantity"
         ],
         "properties": {
           "name": {
@@ -12809,6 +12905,10 @@
           },
           "type": {
             "type": "string"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -12826,6 +12926,7 @@
         "required": [
           "id",
           "stockId",
+          "quantity",
           "linkType"
         ],
         "properties": {
@@ -12838,6 +12939,10 @@
           "stockId": {
             "type": "integer",
             "format": "int32"
+          },
+          "quantity": {
+            "type": "number",
+            "format": "decimal"
           },
           "linkType": {
             "type": "integer",

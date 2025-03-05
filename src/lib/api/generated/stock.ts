@@ -38,6 +38,7 @@ import type {
 	StockLinkGetAllParams,
 	StockLinkGetAllResponse,
 	StockLinkGetResponse,
+	StockLinkUpdateRequest,
 	StockOrderCreateRequest,
 	StockOrderGetAllParams,
 	StockOrderItemCreateRequest,
@@ -906,6 +907,144 @@ export const createStockOrderDelete = <
 
 	return createMutation(mutationOptions);
 };
+export const stockLinkUpdate = (stockLinkUpdateRequest: BodyType<StockLinkUpdateRequest>) => {
+	return customInstance<unknown>({
+		url: `/stock/link`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: stockLinkUpdateRequest,
+	});
+};
+
+export const getStockLinkUpdateMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockLinkUpdate>>,
+		TError,
+		{ data: BodyType<StockLinkUpdateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockLinkUpdate>>,
+	TError,
+	{ data: BodyType<StockLinkUpdateRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockLinkUpdate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockLinkUpdate>>,
+		{ data: BodyType<StockLinkUpdateRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockLinkUpdate(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockLinkUpdateMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockLinkUpdate>>
+>;
+export type StockLinkUpdateMutationBody = BodyType<StockLinkUpdateRequest>;
+export type StockLinkUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createStockLinkUpdate = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockLinkUpdate>>,
+		TError,
+		{ data: BodyType<StockLinkUpdateRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof stockLinkUpdate>>,
+	TError,
+	{ data: BodyType<StockLinkUpdateRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockLinkUpdateMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const stockLinkAdd = (stockLinkAddRequest: BodyType<StockLinkAddRequest>) => {
+	return customInstance<unknown>({
+		url: `/stock/link`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: stockLinkAddRequest,
+	});
+};
+
+export const getStockLinkAddMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockLinkAdd>>,
+		TError,
+		{ data: BodyType<StockLinkAddRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockLinkAdd>>,
+	TError,
+	{ data: BodyType<StockLinkAddRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockLinkAdd"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockLinkAdd>>,
+		{ data: BodyType<StockLinkAddRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockLinkAdd(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockLinkAddMutationResult = NonNullable<Awaited<ReturnType<typeof stockLinkAdd>>>;
+export type StockLinkAddMutationBody = BodyType<StockLinkAddRequest>;
+export type StockLinkAddMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createStockLinkAdd = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockLinkAdd>>,
+		TError,
+		{ data: BodyType<StockLinkAddRequest> },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof stockLinkAdd>>,
+	TError,
+	{ data: BodyType<StockLinkAddRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockLinkAddMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
 export const stockLinkGetAll = (params: StockLinkGetAllParams) => {
 	return customInstance<StockLinkGetAllResponse[]>({
 		url: `/stock/link/all`,
@@ -1083,74 +1222,6 @@ export const createStockLinkDelete = <
 	TContext
 > => {
 	const mutationOptions = getStockLinkDeleteMutationOptions(options);
-
-	return createMutation(mutationOptions);
-};
-export const stockLinkAdd = (stockLinkAddRequest: BodyType<StockLinkAddRequest>) => {
-	return customInstance<unknown>({
-		url: `/stock/link`,
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		data: stockLinkAddRequest,
-	});
-};
-
-export const getStockLinkAddMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof stockLinkAdd>>,
-		TError,
-		{ data: BodyType<StockLinkAddRequest> },
-		TContext
-	>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof stockLinkAdd>>,
-	TError,
-	{ data: BodyType<StockLinkAddRequest> },
-	TContext
-> => {
-	const mutationKey = ["stockLinkAdd"];
-	const { mutation: mutationOptions } = options
-		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey } };
-
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof stockLinkAdd>>,
-		{ data: BodyType<StockLinkAddRequest> }
-	> = (props) => {
-		const { data } = props ?? {};
-
-		return stockLinkAdd(data);
-	};
-
-	return { mutationFn, ...mutationOptions };
-};
-
-export type StockLinkAddMutationResult = NonNullable<Awaited<ReturnType<typeof stockLinkAdd>>>;
-export type StockLinkAddMutationBody = BodyType<StockLinkAddRequest>;
-export type StockLinkAddMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
-
-export const createStockLinkAdd = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof stockLinkAdd>>,
-		TError,
-		{ data: BodyType<StockLinkAddRequest> },
-		TContext
-	>;
-}): CreateMutationResult<
-	Awaited<ReturnType<typeof stockLinkAdd>>,
-	TError,
-	{ data: BodyType<StockLinkAddRequest> },
-	TContext
-> => {
-	const mutationOptions = getStockLinkAddMutationOptions(options);
 
 	return createMutation(mutationOptions);
 };

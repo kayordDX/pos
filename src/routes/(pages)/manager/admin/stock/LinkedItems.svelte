@@ -34,6 +34,11 @@
 			size: 1000,
 		},
 		{
+			header: "Quantity",
+			accessorKey: "quantity",
+			size: 1000,
+		},
+		{
 			header: "Type",
 			accessorKey: "type",
 			size: 1000,
