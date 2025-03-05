@@ -85,7 +85,7 @@
 <AddLinkStock bind:open={linkOpen} {id} {linkType} refetch={$query.refetch} />
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%] max-w-3xl overflow-scroll">
+	<Dialog.Content class="max-h-[98%] max-w-3xl overflow-auto">
 		<div class="flex flex-col gap-4 p-0 mt-0">
 			<DataTable
 				{table}

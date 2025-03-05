@@ -62,7 +62,7 @@
 			<PlusIcon class="size-4 mr-2 hidden sm:block" /> Add Cash Up Item
 		</Button>
 	</Dialog.Trigger>
-	<Dialog.Content class="max-h-[98%] overflow-scroll">
+	<Dialog.Content class="max-h-[98%] overflow-auto">
 		<form method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>Add Cash Up Item</Dialog.Title>

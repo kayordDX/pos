@@ -68,7 +68,7 @@
 		</Button>
 	</Dialog.Trigger>
 	<!-- fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full -->
-	<Dialog.Content class="max-h-[98%] overflow-scroll">
+	<Dialog.Content class="max-h-[98%] overflow-auto">
 		<form use:enhance method="POST">
 			<Dialog.Header class="mb-4">
 				<Dialog.Title>Make Adjustment</Dialog.Title>

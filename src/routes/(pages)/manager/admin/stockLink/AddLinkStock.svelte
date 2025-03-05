@@ -133,7 +133,7 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%] overflow-scroll flex-col z-60">
+	<Dialog.Content class="max-h-[98%] overflow-auto flex-col z-60">
 		<form method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>Link Stock</Dialog.Title>

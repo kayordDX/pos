@@ -79,7 +79,7 @@
 	<Dialog.Root bind:open={dialogOpen}>
 		<Dialog.Trigger />
 		<!-- fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full -->
-		<Dialog.Content class="max-h-[98%] overflow-scroll">
+		<Dialog.Content class="max-h-[98%] overflow-auto">
 			<form use:enhance method="POST">
 				<Dialog.Header>
 					<Dialog.Title>Book Table</Dialog.Title>

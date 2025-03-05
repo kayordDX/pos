@@ -22,7 +22,7 @@
 
 <Dialog.Root bind:open>
 	<!-- fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full -->
-	<Dialog.Content class="max-h-[96%] overflow-scroll">
+	<Dialog.Content class="max-h-[96%] overflow-auto">
 		<!-- mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 -->
 		<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4">
 			{#if $query.isPending}

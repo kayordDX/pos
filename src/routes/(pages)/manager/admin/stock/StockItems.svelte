@@ -69,7 +69,7 @@
 {/snippet}
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%]  max-w-3xl overflow-scroll p-2">
+	<Dialog.Content class="max-h-[98%]  max-w-3xl overflow-auto p-2">
 		<div class="flex flex-col gap-4 p-0 mt-0">
 			<DataTable
 				{table}
