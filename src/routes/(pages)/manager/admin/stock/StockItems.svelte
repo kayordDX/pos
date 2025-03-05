@@ -13,7 +13,7 @@
 
 	let { open = $bindable(false), id, stockName, refetch }: Props = $props();
 
-	const query = createStockItemsGetAll({ id: id }, { query: { enabled: false } });
+	const query = $derived(createStockItemsGetAll({ id }, { query: { enabled: false } }));
 	const data = $derived($query.data ?? []);
 
 	$effect(() => {
@@ -40,7 +40,7 @@
 		},
 		{
 			header: "",
-			accessorKey: "name",
+			accessorKey: "id",
 			cell: (item) =>
 				renderComponent(StockItemActions, {
 					refetch: $query.refetch,

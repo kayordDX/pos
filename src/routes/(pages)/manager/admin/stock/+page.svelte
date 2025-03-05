@@ -35,7 +35,7 @@
 		},
 		{
 			header: "Total",
-			accessorKey: "totalActual",
+			accessorKey: "id",
 			cell: (item) =>
 				renderComponent(Total, {
 					stock: item.row.original,
