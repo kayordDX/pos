@@ -171,7 +171,7 @@
 								bind:value={$formData.quantity}
 								tabindex={0}
 								type="number"
-								step="1"
+								step="any"
 								onfocus={(e) => e.currentTarget.select()}
 							/>
 						{/snippet}

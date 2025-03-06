@@ -166,7 +166,7 @@
 						<Form.Control>
 							{#snippet children({ props })}
 								<Form.Label>Order Amount</Form.Label>
-								<Input {...props} bind:value={$formData.orderAmount} type="number" step="0.01" />
+								<Input {...props} bind:value={$formData.orderAmount} type="number" step="any" />
 							{/snippet}
 						</Form.Control>
 						<Form.FieldErrors />
@@ -176,7 +176,7 @@
 						<Form.Control>
 							{#snippet children({ props })}
 								<Form.Label>Order Amount</Form.Label>
-								<Input {...props} bind:value={$formData.orderAmount} type="number" step="0.01" />
+								<Input {...props} bind:value={$formData.orderAmount} type="number" step="any" />
 							{/snippet}
 						</Form.Control>
 						<Form.FieldErrors />
@@ -188,7 +188,7 @@
 						<Form.Control>
 							{#snippet children({ props })}
 								<Form.Label>Actual</Form.Label>
-								<Input {...props} bind:value={$formData.actual} type="number" step="0.01" />
+								<Input {...props} bind:value={$formData.actual} type="number" step="any" />
 							{/snippet}
 						</Form.Control>
 						<Form.FieldErrors />
