@@ -117,7 +117,7 @@
 			? "default"
 			: item.stockOrderItemStatusId === 2
 				? "secondary"
-				: "ghost"}
+				: "outline"}
 	{@const isPartial = item.orderAmount > item.actual && item.actual > 0}
 	<Badge {variant}>
 		{item.stockOrderItemStatus.name}

@@ -98,7 +98,7 @@ export interface UserGetStatusResponse {
 	salesPeriodId: number;
 	/** @nullable */
 	salesPeriod?: UserGetStatusResponseSalesPeriod;
-	roles: string[];
+	roles: UserGetStatusRoleDTO[];
 }
 
 export interface EntitiesSalesPeriod {
@@ -189,6 +189,12 @@ export interface EntitiesPaymentType {
 	/** @nullable */
 	outletPaymentTypes?: EntitiesOutletPaymentType[] | null;
 	canEdit: boolean;
+}
+
+export interface UserGetStatusRoleDTO {
+	id: number;
+	roleName: string;
+	appRoleName: string;
 }
 
 export interface UserGetRolesRequest {

@@ -61,7 +61,7 @@
 	{:else if type == "Extra"}
 		<Badge variant="secondary">{type}</Badge>
 	{:else}
-		<Badge variant="ghost">{type}</Badge>
+		<Badge variant="outline">{type}</Badge>
 	{/if}
 {/snippet}
 

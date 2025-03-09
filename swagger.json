@@ -8572,7 +8572,7 @@
           "roles": {
             "type": "array",
             "items": {
-              "type": "string"
+              "$ref": "#/components/schemas/UserGetStatusRoleDTO"
             }
           }
         }
@@ -8875,6 +8875,27 @@
           },
           "canEdit": {
             "type": "boolean"
+          }
+        }
+      },
+      "UserGetStatusRoleDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "roleName",
+          "appRoleName"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "roleName": {
+            "type": "string"
+          },
+          "appRoleName": {
+            "type": "string"
           }
         }
       },

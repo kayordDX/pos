@@ -14,6 +14,11 @@ const createStatus = () => {
 		isNotReady: true,
 	});
 
+	const hasRole = (role: string) => {
+		const appRoles = value.roles.map((r) => r.appRoleName);
+		return appRoles.includes(role);
+	};
+
 	const getStatus = async () => {
 		const { data } = await client.GET("/user/getStatus", { fetch });
 		if (data) {
@@ -28,6 +33,7 @@ const createStatus = () => {
 			value = newValue;
 		},
 		getStatus,
+		hasRole,
 	};
 };
 

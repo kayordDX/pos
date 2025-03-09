@@ -13,11 +13,10 @@
 
 	interface Props {
 		isHistory?: boolean;
-		type?: "kitchen" | "backOffice" | "bar" | "pizza";
 		roleIds?: string;
 	}
 
-	let { isHistory = false, type = "kitchen", roleIds }: Props = $props();
+	let { isHistory = false, roleIds }: Props = $props();
 
 	const query = createTableOrderOfficeOrderBasedBack(
 		{
@@ -53,7 +52,7 @@
 			<div>
 				{#if isHistory}
 					<div>
-						<a href={`/${type}`}><Badge>{capitalizeFirstLetter(type)}</Badge></a>
+						<a href={`/backOffice${roleIds ? "/" + roleIds : ""}`}><Badge>Live View</Badge></a>
 					</div>
 				{:else}
 					<Badge>{$query.data.pendingOrders} pending order(s)</Badge>
@@ -64,7 +63,7 @@
 			<div class="flex gap-1 items-center">
 				<div>
 					{#if !isHistory}
-						<a href={`/${type}/history`}>
+						<a href={`/backOffice${roleIds ? "/" + roleIds : ""}/history`}>
 							<Badge variant="secondary" class="truncate">History</Badge>
 						</a>
 					{/if}

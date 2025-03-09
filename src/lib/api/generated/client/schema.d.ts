@@ -2102,7 +2102,7 @@ export interface components {
             /** Format: int32 */
             salesPeriodId: number;
             salesPeriod?: components["schemas"]["EntitiesSalesPeriod"] | null;
-            roles: string[];
+            roles: components["schemas"]["UserGetStatusRoleDTO"][];
         };
         EntitiesSalesPeriod: {
             /** Format: int32 */
@@ -2187,6 +2187,12 @@ export interface components {
             discountPercentage: number;
             outletPaymentTypes?: components["schemas"]["EntitiesOutletPaymentType"][] | null;
             canEdit: boolean;
+        };
+        UserGetStatusRoleDTO: {
+            /** Format: int32 */
+            id: number;
+            roleName: string;
+            appRoleName: string;
         };
         UserGetRolesRequest: Record<string, never>;
         EntitiesUserOutlet: {

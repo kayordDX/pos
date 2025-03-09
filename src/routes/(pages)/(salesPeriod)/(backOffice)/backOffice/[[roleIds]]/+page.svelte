@@ -1,5 +1,6 @@
 <script lang="ts">
+	import { page } from "$app/state";
 	import BackOffice from "../../BackOffice.svelte";
 </script>
 
-<BackOffice type="backOffice" isHistory={true} />
+<BackOffice roleIds={page.params.roleIds} />

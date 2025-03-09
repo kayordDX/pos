@@ -56,7 +56,7 @@
 
 	let adjustmentOpen = $state(false);
 
-	const isManager = $derived(status.value.roles.includes("Manager"));
+	const isManager = $derived(status.hasRole("manager"));
 	const showAdjustment = $derived(!isReadOnly || (isManager && !data.isCashedUp));
 
 	let showDetail = $state(false);

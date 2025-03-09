@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Loader } from "@kayord/ui";
+	import { Button, Card, Loader } from "@kayord/ui";
 	import { status } from "$lib/stores/status.svelte";
 	import { goto } from "$app/navigation";
 	import { Header } from "$lib/components/Header";
@@ -9,22 +9,20 @@
 	const redirect = async () => {
 		if (
 			status.value.roles.length == 0 ||
-			(status.value.roles.length == 1 && status.value.roles.includes("Guest"))
+			(status.value.roles.length == 1 && status.hasRole("guest"))
 		) {
 			await goto("/guest");
 		} else if (status.value.roles.length == 1) {
-			if (status.value.roles.includes("Waiter")) {
+			if (status.hasRole("front")) {
 				await goto("/waiter");
-			} else if (status.value.roles.includes("Chef")) {
-				await goto("/kitchen");
-			} else if (status.value.roles.includes("Manager")) {
+			} else if (status.hasRole("manager")) {
 				await goto("/manager");
-			} else if (status.value.roles.includes("Pizza")) {
-				await goto("/pizza");
 			}
 		}
 		init = true;
 	};
+
+	const backRoles = $derived(status.value.roles.filter((r) => r.appRoleName == "back"));
 
 	$effect(() => {
 		redirect();
@@ -35,30 +33,24 @@
 	<Loader />
 {:else}
 	<Header />
-	<div class="m-8 flex gap-4 flex-wrap">
-		{#if status.value.roles.includes("Waiter")}
-			<div class="flex flex-col">
-				<Button href="/waiter">Waiter</Button>
+	<div class="flex flex-col gap-4 m-4">
+		{#if status.hasRole("front")}
+			<div class="border-1 border-muted p-2 border-dashed rounded-md">
+				<Button class="w-full" href="/waiter">Waiter</Button>
 			</div>
 		{/if}
-		{#if status.value.roles.includes("Bar")}
-			<div class="flex flex-col">
-				<Button href="/bar">Bar</Button>
+		{#if status.hasRole("back")}
+			<div class="border-1 border-muted p-2 border-dashed rounded-md flex flex-col gap-2">
+				{#each backRoles as backRole}
+					<Button href={`/backOffice/${backRole.id}`} class="w-full" variant="secondary">
+						{backRole.roleName}
+					</Button>
+				{/each}
 			</div>
 		{/if}
-		{#if status.value.roles.includes("Chef")}
-			<div class="flex flex-col">
-				<Button href="/kitchen">Kitchen</Button>
-			</div>
-		{/if}
-		{#if status.value.roles.includes("Pizza")}
-			<div class="flex flex-col">
-				<Button href="/pizza">Pizza</Button>
-			</div>
-		{/if}
-		{#if status.value.roles.includes("Manager")}
-			<div class="flex flex-col">
-				<Button href="/manager">Manager</Button>
+		{#if status.hasRole("manager")}
+			<div class="border-1 border-muted p-2 border-dashed rounded-md">
+				<Button href="/manager" class="w-full" variant="destructive">Manager</Button>
 			</div>
 		{/if}
 	</div>
