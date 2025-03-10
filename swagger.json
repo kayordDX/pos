@@ -4061,12 +4061,23 @@
         }
       }
     },
-    "/role": {
+    "/role/{outletId}": {
       "get": {
         "tags": [
           "Role"
         ],
         "operationId": "RoleGetAll",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
         "responses": {
           "200": {
             "description": "Success",
@@ -13609,6 +13620,10 @@
             "type": "string"
           }
         }
+      },
+      "RoleGetAllRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "PrinterTestRequest": {
         "type": "object",

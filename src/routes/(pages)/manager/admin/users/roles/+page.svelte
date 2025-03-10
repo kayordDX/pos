@@ -1,28 +1,10 @@
 <script lang="ts">
-	import {
-		createRoleGetAll,
-		createUserUsers,
-		type EntitiesRole,
-		type UserUserResponse,
-	} from "$lib/api";
-	import {
-		DataTable,
-		renderComponent,
-		createSvelteTable,
-		Input,
-		createShadTable,
-	} from "@kayord/ui";
-	import {
-		type ColumnDef,
-		getCoreRowModel,
-		type Updater,
-		type PaginationState,
-		type ColumnFiltersState,
-		getPaginationRowModel,
-		getFilteredRowModel,
-	} from "@tanstack/table-core";
+	import { createRoleGetAll, type EntitiesRole } from "$lib/api";
+	import { status } from "$lib/stores/status.svelte";
+	import { Badge, DataTable, createShadTable, renderSnippet } from "@kayord/ui";
+	import { type ColumnDef } from "@tanstack/table-core";
 
-	const query = createRoleGetAll();
+	const query = createRoleGetAll(status.value.outletId);
 
 	const columns: ColumnDef<EntitiesRole>[] = [
 		{
@@ -30,8 +12,13 @@
 			accessorKey: "name",
 		},
 		{
-			header: "Email",
-			accessorKey: "email",
+			header: "Description",
+			accessorKey: "description",
+		},
+		{
+			header: "Role Type",
+			accessorKey: "roleType.name",
+			cell: (item) => renderSnippet(roleType, item.getValue<string>()),
 		},
 	];
 
@@ -45,6 +32,21 @@
 		enableRowSelection: false,
 	});
 </script>
+
+{#snippet roleType(roleType: string)}
+	{#if roleType === "manager"}
+		<Badge variant="destructive">{roleType}</Badge>
+	{/if}
+	{#if roleType === "guest"}
+		<Badge variant="outline">{roleType}</Badge>
+	{/if}
+	{#if roleType === "front"}
+		<Badge variant="default">{roleType}</Badge>
+	{/if}
+	{#if roleType === "back"}
+		<Badge variant="secondary">{roleType}</Badge>
+	{/if}
+{/snippet}
 
 <!-- {#snippet header()}
 	<div class="flex gap-2">

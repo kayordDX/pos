@@ -17,6 +17,7 @@
 	import { QueryBuilder } from "fluent-querykit";
 	import FilterReset from "./FilterReset.svelte";
 	import { debounce } from "$lib/util";
+	import { status } from "$lib/stores/status.svelte";
 
 	const columns: ColumnDef<UserUserResponse>[] = [
 		{
@@ -112,7 +113,7 @@
 
 	const nameCol = $derived(table.getColumn("roles")!);
 
-	const rolesQuery = createRoleGetAll();
+	const rolesQuery = createRoleGetAll(status.value.outletId);
 	const roles = $derived(
 		$rolesQuery.data?.map((role) => {
 			return {

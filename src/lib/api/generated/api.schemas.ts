@@ -1658,6 +1658,10 @@ export interface EntitiesRoleType {
 	description: string;
 }
 
+export interface RoleGetAllRequest {
+	[key: string]: unknown;
+}
+
 export interface PrinterTestRequest {
 	/**
 	 * @minLength 1

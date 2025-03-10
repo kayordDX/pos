@@ -91,27 +91,30 @@ export const createRoleCreate = <
 
 	return createMutation(mutationOptions);
 };
-export const roleGetAll = () => {
-	return customInstance<EntitiesRole[]>({ url: `/role`, method: "GET" });
+export const roleGetAll = (outletId: number) => {
+	return customInstance<EntitiesRole[]>({ url: `/role/${outletId}`, method: "GET" });
 };
 
-export const getRoleGetAllQueryKey = () => {
-	return [`/role`] as const;
+export const getRoleGetAllQueryKey = (outletId: number) => {
+	return [`/role/${outletId}`] as const;
 };
 
 export const getRoleGetAllQueryOptions = <
 	TData = Awaited<ReturnType<typeof roleGetAll>>,
 	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
-	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof roleGetAll>>, TError, TData>>;
-}) => {
+>(
+	outletId: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof roleGetAll>>, TError, TData>>;
+	}
+) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getRoleGetAllQueryKey();
+	const queryKey = queryOptions?.queryKey ?? getRoleGetAllQueryKey(outletId);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof roleGetAll>>> = () => roleGetAll();
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof roleGetAll>>> = () => roleGetAll(outletId);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+	return { queryKey, queryFn, enabled: !!outletId, ...queryOptions } as CreateQueryOptions<
 		Awaited<ReturnType<typeof roleGetAll>>,
 		TError,
 		TData
@@ -124,10 +127,13 @@ export type RoleGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 export function createRoleGetAll<
 	TData = Awaited<ReturnType<typeof roleGetAll>>,
 	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
-	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof roleGetAll>>, TError, TData>>;
-}): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getRoleGetAllQueryOptions(options);
+>(
+	outletId: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof roleGetAll>>, TError, TData>>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getRoleGetAllQueryOptions(outletId, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

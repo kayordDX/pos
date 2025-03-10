@@ -1028,7 +1028,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/role": {
+    "/role/{outletId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -3568,6 +3568,7 @@ export interface components {
             isBackOffice: boolean;
             description: string;
         };
+        RoleGetAllRequest: Record<string, never>;
         PrinterTestRequest: {
             /** Format: int32 */
             printerId: number;
@@ -7301,7 +7302,9 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                outletId: number;
+            };
             cookie?: never;
         };
         requestBody?: never;

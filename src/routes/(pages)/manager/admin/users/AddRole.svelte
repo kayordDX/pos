@@ -7,9 +7,10 @@
 	import { zod } from "sveltekit-superforms/adapters";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
+	import { status } from "$lib/stores/status.svelte";
 
 	const mutation = createUserAddUserOutletRole();
-	const rolesQuery = createRoleGetAll();
+	const rolesQuery = createRoleGetAll(status.value.outletId);
 
 	interface Props {
 		userId: string;
