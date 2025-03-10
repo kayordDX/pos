@@ -15,7 +15,7 @@ const createStatus = () => {
 	});
 
 	const hasRole = (role: string) => {
-		const appRoles = value.roles.map((r) => r.appRoleName);
+		const appRoles = value.roles.map((r) => r.roleType);
 		return appRoles.includes(role);
 	};
 

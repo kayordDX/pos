@@ -8884,7 +8884,7 @@
         "required": [
           "id",
           "roleName",
-          "appRoleName"
+          "roleType"
         ],
         "properties": {
           "id": {
@@ -8894,7 +8894,7 @@
           "roleName": {
             "type": "string"
           },
-          "appRoleName": {
+          "roleType": {
             "type": "string"
           }
         }
@@ -13540,24 +13540,63 @@
         }
       },
       "EntitiesRole": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntitiesAuditableEntity"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "roleId",
+              "name",
+              "description",
+              "roleTypeId",
+              "roleType"
+            ],
+            "properties": {
+              "roleId": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "name": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "roleTypeId": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "roleType": {
+                "$ref": "#/components/schemas/EntitiesRoleType"
+              },
+              "outletId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              }
+            }
+          }
+        ]
+      },
+      "EntitiesRoleType": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "roleId",
+          "id",
           "name",
-          "description",
           "isFrontLine",
-          "isBackOffice"
+          "isBackOffice",
+          "description"
         ],
         "properties": {
-          "roleId": {
+          "id": {
             "type": "integer",
             "format": "int32"
           },
           "name": {
-            "type": "string"
-          },
-          "description": {
             "type": "string"
           },
           "isFrontLine": {
@@ -13566,10 +13605,8 @@
           "isBackOffice": {
             "type": "boolean"
           },
-          "outletId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
+          "description": {
+            "type": "string"
           }
         }
       },

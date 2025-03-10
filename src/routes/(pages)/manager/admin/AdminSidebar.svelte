@@ -22,6 +22,7 @@
 		WarehouseIcon,
 		StoreIcon,
 		Move3DIcon,
+		ShieldUserIcon,
 	} from "lucide-svelte";
 
 	const menuItems = [
@@ -32,13 +33,25 @@
 		},
 		{
 			title: "Users",
-			href: "/manager/admin/users",
-			icon: UsersIcon,
-		},
-		{
-			title: "Unassigned Users",
-			href: "/manager/admin/users/unassigned",
-			icon: UserRoundSearchIcon,
+			href: "",
+			icon: BookOpenTextIcon,
+			items: [
+				{
+					title: "Current Users",
+					href: "/manager/admin/users",
+					icon: UsersIcon,
+				},
+				{
+					title: "Unassigned Users",
+					href: "/manager/admin/users/unassigned",
+					icon: UserRoundSearchIcon,
+				},
+				{
+					title: "Roles",
+					href: "/manager/admin/users/roles",
+					icon: ShieldUserIcon,
+				},
+			],
 		},
 		{
 			title: "Whatsapp",

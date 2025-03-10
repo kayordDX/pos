@@ -2192,7 +2192,7 @@ export interface components {
             /** Format: int32 */
             id: number;
             roleName: string;
-            appRoleName: string;
+            roleType: string;
         };
         UserGetRolesRequest: Record<string, never>;
         EntitiesUserOutlet: {
@@ -3549,15 +3549,24 @@ export interface components {
             name: string;
             description: string;
         };
-        EntitiesRole: {
+        EntitiesRole: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
             roleId: number;
             name: string;
             description: string;
-            isFrontLine: boolean;
-            isBackOffice: boolean;
+            /** Format: int32 */
+            roleTypeId: number;
+            roleType: components["schemas"]["EntitiesRoleType"];
             /** Format: int32 */
             outletId?: number | null;
+        };
+        EntitiesRoleType: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            isFrontLine: boolean;
+            isBackOffice: boolean;
+            description: string;
         };
         PrinterTestRequest: {
             /** Format: int32 */

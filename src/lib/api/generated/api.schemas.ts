@@ -194,7 +194,7 @@ export interface EntitiesPaymentType {
 export interface UserGetStatusRoleDTO {
 	id: number;
 	roleName: string;
-	appRoleName: string;
+	roleType: string;
 }
 
 export interface UserGetRolesRequest {
@@ -1638,14 +1638,24 @@ export interface RoleCreateRequest {
 	description: string;
 }
 
-export interface EntitiesRole {
+export type EntitiesRoleAllOf = {
 	roleId: number;
 	name: string;
 	description: string;
-	isFrontLine: boolean;
-	isBackOffice: boolean;
+	roleTypeId: number;
+	roleType: EntitiesRoleType;
 	/** @nullable */
 	outletId?: number | null;
+};
+
+export type EntitiesRole = EntitiesAuditableEntity & EntitiesRoleAllOf;
+
+export interface EntitiesRoleType {
+	id: number;
+	name: string;
+	isFrontLine: boolean;
+	isBackOffice: boolean;
+	description: string;
 }
 
 export interface PrinterTestRequest {

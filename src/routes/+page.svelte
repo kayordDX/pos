@@ -22,7 +22,7 @@
 		init = true;
 	};
 
-	const backRoles = $derived(status.value.roles.filter((r) => r.appRoleName == "back"));
+	const backRoles = $derived(status.value.roles.filter((r) => r.roleType == "back"));
 
 	$effect(() => {
 		redirect();
