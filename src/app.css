@@ -1,6 +1,6 @@
 @import "tailwindcss";
 @source "../node_modules/@kayord/ui";
-@import "./tailwindcss-animate.css";
+@import "tw-animate-css";
 
 @custom-variant dark (&:where(.dark, .dark *));
 

@@ -23,6 +23,7 @@
 		StoreIcon,
 		Move3DIcon,
 		ShieldUserIcon,
+		ComponentIcon,
 	} from "lucide-svelte";
 
 	const menuItems = [
@@ -116,6 +117,11 @@
 				// 	icon: Move3DIcon,
 				// },
 			],
+		},
+		{
+			title: "Divisions",
+			href: "/manager/admin/divisions",
+			icon: ComponentIcon,
 		},
 	];
 
