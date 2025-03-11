@@ -135,18 +135,6 @@
 		if (fv) {
 			qb.containsCaseInsensitive("name", fv);
 		}
-
-		const rv = menuCol?.getFilterValue() as undefined | Array<string>;
-		if (rv) {
-			if (fv) {
-				qb.and();
-			}
-			for (let i = 0; i < rv.length; i++) {
-				if (i > 0) qb.or();
-				qb.equals("menuSection.menuId", rv[i] ?? "");
-			}
-		}
-
 		filters = qb.build();
 	});
 
