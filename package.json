@@ -13,7 +13,7 @@
 		"api": "curl http://localhost:5117/swagger/v1/swagger.json > swagger.json && orval && ./orval.bash && npx openapi-typescript http://localhost:5117/swagger/v1/swagger.json -o ./src/lib/api/generated/client/schema.d.ts"
 	},
 	"devDependencies": {
-		"@kayord/ui": "^0.14.13",
+		"@kayord/ui": "^0.14.14",
 		"@microsoft/signalr": "^8.0.7",
 		"@sveltejs/adapter-static": "^3.0.8",
 		"@sveltejs/kit": "^2.19.0",
