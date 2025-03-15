@@ -4,9 +4,9 @@
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import Bill from "../../../table/bill/[id]/Bill.svelte";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 
-	const query = createTableOrderGetBill({ tableBookingId: Number($page.params.id) });
+	const query = createTableOrderGetBill({ tableBookingId: Number(page.params.id) });
 </script>
 
 {#if $query.error}
@@ -18,10 +18,5 @@
 {/if}
 
 {#if $query.data}
-	<Bill
-		data={$query.data}
-		bookingId={Number($page.params.id)}
-		isReadOnly
-		refetch={$query.refetch}
-	/>
+	<Bill data={$query.data} bookingId={Number(page.params.id)} isReadOnly refetch={$query.refetch} />
 {/if}

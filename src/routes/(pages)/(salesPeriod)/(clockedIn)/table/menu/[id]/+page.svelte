@@ -10,7 +10,7 @@
 	} from "$lib/api";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { menu } from "$lib/stores/menu.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import PickMenu from "./PickMenu.svelte";
@@ -37,9 +37,9 @@
 
 	const setSearchString = (event: Event) => {
 		const target = event.target as HTMLInputElement;
-		$page.url.searchParams.set("search", target.value);
+		page.url.searchParams.set("search", target.value);
 		search = target.value;
-		history.replaceState(history.state, "", $page.url);
+		history.replaceState(history.state, "", page.url);
 	};
 	const debouncedHandleInput = debounce(setSearchString, 500);
 
@@ -101,6 +101,6 @@
 	{/if}
 
 	<div class="flex justify-center w-full">
-		<MenuItems data={$itemsQuery.data ?? []} tableBookingId={Number($page.params.id)} />
+		<MenuItems data={$itemsQuery.data ?? []} tableBookingId={Number(page.params.id)} />
 	</div>
 </div>

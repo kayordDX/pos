@@ -5,7 +5,7 @@
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { createBillEmailBill } from "$lib/api";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
 
@@ -31,7 +31,7 @@
 	const onSubmit = async (data: FormSchema) => {
 		try {
 			await $mutation.mutateAsync({
-				data: { email: data.email, name: data.name, tableBookingId: Number($page.params.id) },
+				data: { email: data.email, name: data.name, tableBookingId: Number(page.params.id) },
 			});
 			toast.info(`Sending email to ${data.email}`);
 			await goBack();

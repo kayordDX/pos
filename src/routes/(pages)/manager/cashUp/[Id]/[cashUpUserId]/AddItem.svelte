@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { createCashUpUserCreate, createCashUpUserItemType } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Alert, Button, Dialog, Form, Input, Select } from "@kayord/ui";
@@ -32,7 +32,7 @@
 				cashUpUserId: cashUpUserId,
 				cashUpUserItemTypeId: data.cashUpUserItemTypeId,
 				outletId: status.value.outletId,
-				userId: $page.params.Id ?? "",
+				userId: page.params.Id ?? "",
 				value: data.value,
 			},
 		});
@@ -58,7 +58,7 @@
 
 <Dialog.Root bind:open>
 	<Dialog.Trigger>
-		<Button class="p-86 p-4" variant="secondary">
+		<Button class="p-4" variant="secondary">
 			<PlusIcon class="size-4 mr-2 hidden sm:block" /> Add Cash Up Item
 		</Button>
 	</Dialog.Trigger>

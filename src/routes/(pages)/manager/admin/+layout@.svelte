@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { Header } from "$lib/components/Header";
 	import { Button, Sidebar } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
@@ -73,7 +73,7 @@
 							href={item.href}
 							variant="ghost"
 							size="icon"
-							class={$page.url.pathname === item.href
+							class={page.url.pathname === item.href
 								? cn(activeClass)
 								: "hover:bg-primary hover:text-primary-foreground"}
 						>

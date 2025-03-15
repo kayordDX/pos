@@ -1,16 +1,16 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "@lucide/svelte";
 	import { createTableBookingGet } from "$lib/api";
 	import { Header } from "$lib/components/Header";
 	import type { Snippet } from "svelte";
 	let { children }: { children?: Snippet } = $props();
 
-	const menuActive = $derived($page.route.id?.includes("menu") ?? false);
-	const billActive = $derived($page.route.id?.includes("bill") ?? false);
-	const basketActive = $derived($page.route.id?.includes("basket") ?? false);
+	const menuActive = $derived(page.route.id?.includes("menu") ?? false);
+	const billActive = $derived(page.route.id?.includes("bill") ?? false);
+	const basketActive = $derived(page.route.id?.includes("basket") ?? false);
 
-	let id = $derived(Number($page.params.id ?? "0"));
+	let id = $derived(Number(page.params.id ?? "0"));
 
 	const query = $derived(
 		createTableBookingGet(id, {
@@ -44,7 +44,7 @@
 			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
 			class:bg-background={menuActive}
 			class:!text-foreground={menuActive}
-			href={`/table/menu/${$page.params.id}`}
+			href={`/table/menu/${page.params.id}`}
 		>
 			<MenuIcon class="w-4 h-4 mr-2" /> <span class="text-sm">Menu</span>
 		</a>
@@ -52,7 +52,7 @@
 			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
 			class:bg-background={basketActive}
 			class:!text-foreground={basketActive}
-			href={`/table/basket/${$page.params.id}`}
+			href={`/table/basket/${page.params.id}`}
 		>
 			<ShoppingBasketIcon class="w-4 h-4 mr-2" />
 			<span class="text-sm">Basket</span>
@@ -61,7 +61,7 @@
 			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
 			class:bg-background={billActive}
 			class:!text-foreground={billActive}
-			href={`/table/bill/${$page.params.id}`}
+			href={`/table/bill/${page.params.id}`}
 		>
 			<ReceiptTextIcon class="w-4 h-4 mr-2" />
 			<span class="text-sm">Bill</span>

@@ -3,7 +3,7 @@
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { client, createPayManualPayment, createOutletGetPaymentType } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import { payment } from "$lib/stores/payment.svelte";
@@ -33,13 +33,13 @@
 
 		linkLoading = true;
 		const linkResult = await client.GET("/pay/getLink", {
-			params: { query: { amount: data.amount, tableBookingId: Number($page.params.id) } },
+			params: { query: { amount: data.amount, tableBookingId: Number(page.params.id) } },
 		});
 		if (linkResult.data?.value) {
 			url = linkResult.data.value.url;
 			reference = linkResult.data.value.reference;
 			payment.setUrl(url);
-			goto(`/table/pay/${$page.params.id}/${reference}?url=${url}`);
+			goto(`/table/pay/${page.params.id}/${reference}?url=${url}`);
 		} else {
 			toast.error("Could not start payment");
 		}
@@ -51,11 +51,11 @@
 		await $mutation.mutateAsync({
 			data: {
 				amount: manualData.amount,
-				tableBookingId: Number($page.params.id),
+				tableBookingId: Number(page.params.id),
 				paymentTypeId: manualData.paymentTypeId,
 			},
 		});
-		goto(`/table/bill/${$page.params.id}`);
+		goto(`/table/bill/${page.params.id}`);
 	};
 
 	const form = superForm(defaults(zod(schema)), {
@@ -87,8 +87,8 @@
 		}
 	});
 
-	const total = Number($page.url.searchParams.get("total") ?? "0").toFixed(2);
-	const balance = Number($page.url.searchParams.get("balance") ?? "0").toFixed(2);
+	const total = Number(page.url.searchParams.get("total") ?? "0").toFixed(2);
+	const balance = Number(page.url.searchParams.get("balance") ?? "0").toFixed(2);
 
 	const paymentTypeSelect = $derived(
 		$paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
@@ -149,7 +149,7 @@
 		</Card.Header>
 		<Card.Footer class="flex flex-col gap-2">
 			<Button class="w-full" type="submit">Pay</Button>
-			<Button class="w-full" href={`/table/bill/${$page.params.id}`} variant="outline">
+			<Button class="w-full" href={`/table/bill/${page.params.id}`} variant="outline">
 				Cancel
 			</Button>
 		</Card.Footer>

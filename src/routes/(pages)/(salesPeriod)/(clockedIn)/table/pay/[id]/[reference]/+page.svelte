@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import Error from "$lib/components/Error.svelte";
 	import { payment } from "$lib/stores/payment.svelte";
 	import { Avatar, Badge, Button, Card, Loader } from "@kayord/ui";
@@ -9,7 +9,7 @@
 	import { getError } from "$lib/types";
 	import { NfcIcon } from "@lucide/svelte";
 
-	const url = $page.url.searchParams.get("url");
+	const url = page.url.searchParams.get("url");
 
 	let a: HTMLAnchorElement | undefined = $state();
 	onMount(() => {
@@ -19,15 +19,14 @@
 		}
 	});
 
-	let reference = $page.params.reference ?? "";
-	const query = createPayStatus(reference, { query: { refetchInterval: 15000 } });
+	const query = createPayStatus(page.params.reference ?? "", { query: { refetchInterval: 15000 } });
 
 	const paymentDone = (amount: number) => {
-		goto(`/table/pay/${$page.params.id}/done?amount=${amount}`);
+		goto(`/table/pay/${page.params.id}/done?amount=${amount}`);
 	};
 
 	const cancelPayment = () => {
-		goto(`/table/bill/${$page.params.id}`);
+		goto(`/table/bill/${page.params.id}`);
 	};
 
 	const paymentCheck = () => {

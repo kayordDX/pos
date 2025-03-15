@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { createCashUpUserClose, createCashUpUserDetail } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
@@ -12,8 +12,8 @@
 	import { goto } from "$app/navigation";
 	import CashUpItemManual from "./CashUpItemManual.svelte";
 
-	const query = createCashUpUserDetail($page.params.Id ?? "", status.value.outletId, {
-		cashUpUserId: Number($page.params.cashUpUserId ?? 0),
+	const query = createCashUpUserDetail(page.params.Id ?? "", status.value.outletId, {
+		cashUpUserId: Number(page.params.cashUpUserId ?? 0),
 	});
 
 	const mutation = createCashUpUserClose();
@@ -21,7 +21,7 @@
 	const cashUpClose = async () => {
 		try {
 			await $mutation.mutateAsync({
-				data: { outletId: status.value.outletId, userId: $page.params.Id ?? "" },
+				data: { outletId: status.value.outletId, userId: page.params.Id ?? "" },
 			});
 			await goto("/manager/cashUp");
 		} catch (error) {}
@@ -60,7 +60,7 @@
 							<Card.Description>{$query.data.user.email}</Card.Description>
 						</div>
 					</div>
-					{#if Number($page.params.cashUpUserId ?? 0) == 0}
+					{#if Number(page.params.cashUpUserId ?? 0) == 0}
 						<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
 					{/if}
 				</div>
@@ -97,7 +97,7 @@
 				</div>
 			</Card.Content>
 			<Card.Footer class="flex flex-col gap-2">
-				{#if Number($page.params.cashUpUserId ?? 0) == 0}
+				{#if Number(page.params.cashUpUserId ?? 0) == 0}
 					<Button class="w-full" onclick={cashUpClose}>
 						<BookUpIcon class="size-4 mr-2" /> Cash Up
 					</Button>

@@ -1,10 +1,10 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { Avatar, Button, Card } from "@kayord/ui";
 	import { ShieldCheckIcon } from "@lucide/svelte";
 
-	const id = $page.params.id;
-	const amount = Number($page.url.searchParams.get("amount") ?? 0);
+	const id = $derived(page.params.id);
+	const amount = Number(page.url.searchParams.get("amount") ?? 0);
 </script>
 
 <Card.Root class="m-8">

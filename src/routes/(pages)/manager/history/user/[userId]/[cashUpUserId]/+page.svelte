@@ -3,7 +3,7 @@
 	import { DataTable, Input, renderComponent, createSvelteTable } from "@kayord/ui";
 	import { stringToFDate } from "$lib/util";
 	import View from "./View.svelte";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -16,9 +16,9 @@
 	let billId = $state<number>();
 
 	const query = $derived(
-		createTableBookingHistoryUser($page.params.userId ?? "", {
+		createTableBookingHistoryUser(page.params.userId ?? "", {
 			tableBookingId: billId ?? 0,
-			cashUpUserId: Number($page.params.cashUpUserId ?? 0),
+			cashUpUserId: Number(page.params.cashUpUserId ?? 0),
 			outletId: status.value.outletId,
 		})
 	);

@@ -6,7 +6,7 @@
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { createMenuSectionsCreate, createMenuSectionsUpdate } from "$lib/api";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 
 	interface Props {
 		refetch: () => void;
@@ -36,7 +36,7 @@
 				toast.info("Edited Menu");
 			} else {
 				await $createMutation.mutateAsync({
-					data: { menuId: Number($page.params.Id), name: data.name, positionId: data.position },
+					data: { menuId: Number(page.params.Id), name: data.name, positionId: data.position },
 				});
 				toast.info("Added Menu");
 			}

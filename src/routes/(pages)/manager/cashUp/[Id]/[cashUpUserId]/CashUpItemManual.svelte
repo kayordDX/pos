@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { createCashUpUserDelete, type DTOCashUpUserItemDTO } from "$lib/api";
 	import { Button } from "@kayord/ui";
 	import { Trash2Icon } from "@lucide/svelte";
@@ -13,7 +13,7 @@
 
 	let { item, refetch }: Props = $props();
 
-	const isCashedUp = $derived(Number($page.params.cashUpUserId ?? 0) > 0);
+	const isCashedUp = $derived(Number(page.params.cashUpUserId ?? 0) > 0);
 
 	const deleteItem = async () => {
 		await $mutation.mutateAsync({ id: item.id });

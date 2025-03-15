@@ -3,7 +3,7 @@
 	import { goto } from "$app/navigation";
 	import { session } from "$lib/firebase.svelte";
 	import { header } from "$lib/stores/header.svelte";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { slide } from "svelte/transition";
 	import type { Snippet } from "svelte";
 	import { cn } from "@kayord/ui/utils";
@@ -17,7 +17,7 @@
 
 	let { children, class: className, hideHeader = false, leftHeader }: Props = $props();
 
-	const hideHeaderPages = $derived($page.route.id?.includes("backOffice") ?? false);
+	const hideHeaderPages = $derived(page.route.id?.includes("backOffice") ?? false);
 </script>
 
 {#if header.value || !hideHeaderPages}

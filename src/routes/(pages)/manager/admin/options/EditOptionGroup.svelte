@@ -7,7 +7,6 @@
 	import { z } from "zod";
 	import { createOptionGroupCreate, createOptionGroupUpdate } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { page } from "$app/stores";
 
 	interface Props {
 		refetch: () => void;

@@ -14,7 +14,7 @@
 	} from "@lucide/svelte";
 	import AddPrinter from "../../routes/(pages)/manager/admin/printers/AddPrinter.svelte";
 	import DeletePrinter from "../../routes/(pages)/manager/admin/printers/DeletePrinter.svelte";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 
 	interface Props {
 		printer: DTOPrinterDTO;
@@ -42,7 +42,7 @@
 	const printBill = async () => {
 		try {
 			await $mutation.mutateAsync({
-				data: { tableBookingId: Number($page.params.id), printerId: printer.id },
+				data: { tableBookingId: Number(page.params.id), printerId: printer.id },
 			});
 			toast.info("Printing Bill");
 		} catch (err) {

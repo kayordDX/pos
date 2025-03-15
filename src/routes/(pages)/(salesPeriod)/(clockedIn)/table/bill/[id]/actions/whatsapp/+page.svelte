@@ -5,12 +5,12 @@
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { createBillWhatsappBill, createWhatsappStatus } from "$lib/api";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
 	import { CheckIcon, XIcon } from "@lucide/svelte";
 
-	const bookingId = Number($page.params.id);
+	const bookingId = Number(page.params.id);
 
 	const query = createWhatsappStatus();
 	const mutation = createBillWhatsappBill();
@@ -34,7 +34,7 @@
 					phoneNumber: data.phoneNumber,
 					countryCode: data.countryCode,
 					name: data.name,
-					tableBookingId: Number($page.params.id),
+					tableBookingId: Number(page.params.id),
 				},
 			});
 			toast.info(`Sending whatsapp to ${data.phoneNumber}`);

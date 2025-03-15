@@ -7,7 +7,7 @@
 	import { z } from "zod";
 	import { createOptionCreate, createOptionUpdate } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 
 	interface Props {
 		refetch: () => void;
@@ -38,7 +38,7 @@
 						name: data.name,
 						price: data.price,
 						positionId: data.position,
-						optionGroupId: Number($page.params.Id),
+						optionGroupId: Number(page.params.Id),
 					},
 				});
 				toast.info("Edited Extra");
@@ -48,7 +48,7 @@
 						name: data.name,
 						outletId: status.value.outletId,
 						positionId: data.position,
-						optionGroupId: Number($page.params.Id),
+						optionGroupId: Number(page.params.Id),
 						price: data.price,
 					},
 				});

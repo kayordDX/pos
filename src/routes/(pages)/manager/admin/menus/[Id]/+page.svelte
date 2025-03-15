@@ -4,10 +4,10 @@
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditSection from "./EditSection.svelte";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 
 	const query = createMenuGetSectionsGetMenusSections({
-		menuId: Number($page.params.Id),
+		menuId: Number(page.params.Id),
 		sectionId: 0,
 	});
 	let addOpen = $state(false);

@@ -9,14 +9,14 @@
 		createTableOrderUpdateOrderItem,
 	} from "$lib/api";
 	import { goto } from "$app/navigation";
-	import { page } from "$app/stores";
+	import { page } from "$app/state";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { schema, type FormSchema } from "./types";
 	import { Control, FieldErrors, Fieldset, Label } from "@kayord/ui/formsnap";
 	import { getError } from "$lib/types";
 
-	const query = createTableOrderGetBasket({ tableBookingId: Number($page.params.id) });
+	const query = createTableOrderGetBasket({ tableBookingId: Number(page.params.id) });
 
 	const refetch = async () => {
 		await $query.refetch();
@@ -54,10 +54,10 @@
 		try {
 			await $mutation.mutateAsync({
 				data: {
-					tableBookingId: Number($page.params.id),
+					tableBookingId: Number(page.params.id),
 				},
 			});
-			goto(`/table/menu/${$page.params.id}`);
+			goto(`/table/menu/${page.params.id}`);
 		} catch (err) {
 			toast.error(getError(err).message);
 		}
