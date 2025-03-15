@@ -2,7 +2,7 @@
 	import { goto } from "$app/navigation";
 	import type { DTOExtraGroupAdminDTO } from "$lib/api";
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, EqualIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
+	import { EllipsisVerticalIcon, EqualIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import { createExtraGroupDelete } from "$lib/api";
 	import { getError } from "$lib/types";
 	import EditExtraGroup from "./EditExtraGroup.svelte";

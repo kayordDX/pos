@@ -2,7 +2,7 @@
 	import { goto } from "$app/navigation";
 	import type { EntitiesMenu } from "$lib/api";
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, EqualIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
+	import { EllipsisVerticalIcon, EqualIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import EditMenu from "./EditMenu.svelte";
 	import { createMenuDelete } from "$lib/api";
 	import { getError } from "$lib/types";

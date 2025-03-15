@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card } from "@kayord/ui";
-	import { UserCheck2Icon } from "lucide-svelte";
+	import { UserCheck2Icon } from "@lucide/svelte";
 </script>
 
 <div class="m-2">

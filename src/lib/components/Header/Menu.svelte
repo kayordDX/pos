@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { Avatar, Badge, Button, DropdownMenu } from "@kayord/ui";
-	import { LogOutIcon, MoonIcon, SunIcon, WrenchIcon, NetworkIcon, InboxIcon } from "lucide-svelte";
+	import {
+		LogOutIcon,
+		MoonIcon,
+		SunIcon,
+		WrenchIcon,
+		NetworkIcon,
+		InboxIcon,
+	} from "@lucide/svelte";
 	import { getInitials } from "$lib/util";
 	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
 	import { logout, session } from "$lib/firebase.svelte";

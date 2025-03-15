@@ -8,7 +8,7 @@
 		ListCollapseIcon,
 		PencilIcon,
 		Trash2Icon,
-	} from "lucide-svelte";
+	} from "@lucide/svelte";
 	import { createOptionGroupDelete } from "$lib/api";
 	import { getError } from "$lib/types";
 	import EditOptionGroup from "./EditOptionGroup.svelte";

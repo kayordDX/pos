@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Alert } from "@kayord/ui";
-	import { AlertTriangleIcon } from "lucide-svelte";
+	import { AlertTriangleIcon } from "@lucide/svelte";
 
 	interface Props {
 		message?: string | undefined;

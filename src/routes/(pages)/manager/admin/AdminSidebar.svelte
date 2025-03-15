@@ -24,7 +24,7 @@
 		Move3DIcon,
 		ShieldUserIcon,
 		ComponentIcon,
-	} from "lucide-svelte";
+	} from "@lucide/svelte";
 
 	const menuItems = [
 		{

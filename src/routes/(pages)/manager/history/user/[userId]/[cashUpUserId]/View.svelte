@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button } from "@kayord/ui";
-	import ViewIcon from "lucide-svelte/icons/eye";
+	import ViewIcon from "@lucide/svelte/icons/eye";
 
 	interface Props {
 		id: number;

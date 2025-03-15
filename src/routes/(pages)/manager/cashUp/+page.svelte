@@ -5,7 +5,7 @@
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
 	import CashUpUser from "./CashUpUser.svelte";
-	import { CalendarClockIcon, CheckIcon } from "lucide-svelte";
+	import { CalendarClockIcon, CheckIcon } from "@lucide/svelte";
 	import { goto } from "$app/navigation";
 
 	const query = createCashUpUserGet(status.value.outletId);

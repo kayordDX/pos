@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge, Button, Popover, Slider } from "@kayord/ui";
-	import { Settings2Icon } from "lucide-svelte";
+	import { Settings2Icon } from "@lucide/svelte";
 	import { backOffice } from "$lib/stores/backOffice.svelte";
 
 	const reset = () => {

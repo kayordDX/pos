@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
+	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import EditSection from "./EditSection.svelte";
 	import type { DTOMenuSectionDTO } from "$lib/api";
 	import { createMenuSectionsDelete } from "$lib/api";

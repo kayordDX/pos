@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createEventDispatcher } from "svelte";
 	const dispatch = createEventDispatcher();
-	import { XIcon, InfoIcon, AlertTriangleIcon } from "lucide-svelte";
+	import { XIcon, InfoIcon, AlertTriangleIcon } from "@lucide/svelte";
 	import { Button } from "@kayord/ui";
 	interface Props {
 		message: string;

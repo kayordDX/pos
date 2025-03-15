@@ -2,7 +2,7 @@
 	import { createMenuList } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Button, Card } from "@kayord/ui";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditMenu from "./EditMenu.svelte";
 

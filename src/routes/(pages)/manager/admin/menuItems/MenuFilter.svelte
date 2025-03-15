@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData, TValue">
-	import { PlusCircle, Check } from "lucide-svelte";
+	import { PlusCircle, Check } from "@lucide/svelte";
 
 	import type { Column } from "@tanstack/table-core";
 	import type { Component } from "svelte";

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card } from "@kayord/ui";
-	import { MinusIcon, PlusIcon } from "lucide-svelte";
+	import { MinusIcon, PlusIcon } from "@lucide/svelte";
 
 	interface Props {
 		value: number;

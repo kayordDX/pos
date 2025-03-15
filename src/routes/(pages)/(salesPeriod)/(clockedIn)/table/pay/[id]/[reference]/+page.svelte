@@ -7,7 +7,7 @@
 	import { onMount } from "svelte";
 	import { createPayStatus } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { NfcIcon } from "lucide-svelte";
+	import { NfcIcon } from "@lucide/svelte";
 
 	const url = $page.url.searchParams.get("url");
 

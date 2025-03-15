@@ -1,7 +1,7 @@
 <script lang="ts" generics="T">
 	import { Button } from "@kayord/ui";
 	import { type Table } from "@tanstack/table-core";
-	import { XIcon } from "lucide-svelte";
+	import { XIcon } from "@lucide/svelte";
 
 	interface Props<T> {
 		table: Table<T>;

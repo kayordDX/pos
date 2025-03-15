@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, DropdownMenu } from "@kayord/ui";
-	import { SquareMenuIcon } from "lucide-svelte";
+	import { SquareMenuIcon } from "@lucide/svelte";
 	import { menu } from "$lib/stores/menu.svelte";
 	import type { EntitiesMenu } from "$lib/api";
 

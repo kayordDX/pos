@@ -2,8 +2,8 @@
 	import { Card, Button, Badge, Loader } from "@kayord/ui";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
-	import { NotebookIcon, Rows4Icon, CalendarOffIcon } from "lucide-svelte";
-	import HistoryIcon from "lucide-svelte/icons/history";
+	import { NotebookIcon, Rows4Icon, CalendarOffIcon } from "@lucide/svelte";
+	import HistoryIcon from "@lucide/svelte/icons/history";
 	import { createTableGetMyBooked } from "$lib/api";
 	import Orders from "./Orders.svelte";
 	import { status } from "$lib/stores/status.svelte";

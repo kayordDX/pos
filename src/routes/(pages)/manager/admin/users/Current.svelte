@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge } from "@kayord/ui";
-	import { CheckIcon, XIcon } from "lucide-svelte";
+	import { CheckIcon, XIcon } from "@lucide/svelte";
 
 	let { isCurrent }: { isCurrent: boolean } = $props();
 </script>

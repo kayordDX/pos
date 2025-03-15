@@ -20,7 +20,7 @@
 	import { debounce } from "$lib/util";
 	import QueryBuilder from "fluent-querykit";
 	import MenuFilter from "./MenuFilter.svelte";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	import EditMenuItem from "./EditMenuItem.svelte";
 
 	const columns: ColumnDef<MenuItemMenuItemAdminDTO>[] = [

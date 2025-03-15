@@ -11,7 +11,7 @@
 		UsersIcon,
 		ArrowLeftIcon,
 		MenuIcon,
-	} from "lucide-svelte";
+	} from "@lucide/svelte";
 	import type { Snippet } from "svelte";
 	import AdminSidebar from "./AdminSidebar.svelte";
 

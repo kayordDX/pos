@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge } from "@kayord/ui";
-	import { Maximize2Icon, Minimize2Icon } from "lucide-svelte";
+	import { Maximize2Icon, Minimize2Icon } from "@lucide/svelte";
 	import { header } from "$lib/stores/header.svelte";
 </script>
 

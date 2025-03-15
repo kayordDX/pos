@@ -5,7 +5,7 @@
 	} from "$lib/api";
 	import { getInitials } from "$lib/util";
 	import { Avatar, Badge, Button, Card, Dialog, Drawer, Popover, ScrollArea } from "@kayord/ui";
-	import { BellElectricIcon, EllipsisIcon } from "lucide-svelte";
+	import { BellElectricIcon, EllipsisIcon } from "@lucide/svelte";
 	import Item from "./Item.svelte";
 	import { backOffice } from "$lib/stores/backOffice.svelte";
 

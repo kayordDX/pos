@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createPrinterList } from "$lib/api";
 	import { Alert, Card } from "@kayord/ui";
-	import TriangleAlertIcon from "lucide-svelte/icons/triangle-alert";
+	import TriangleAlertIcon from "@lucide/svelte/icons/triangle-alert";
 	import { status } from "$lib/stores/status.svelte";
 	import Printer from "$lib/components/Printer.svelte";
 	const query = createPrinterList(status.value.outletId);

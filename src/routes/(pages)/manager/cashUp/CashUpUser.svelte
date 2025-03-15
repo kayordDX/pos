@@ -3,7 +3,7 @@
 	import Error from "$lib/components/Error.svelte";
 	import { getInitials } from "$lib/util";
 	import { Avatar, Button, Card } from "@kayord/ui";
-	import { ReceiptTextIcon, WalletCardsIcon } from "lucide-svelte";
+	import { ReceiptTextIcon, WalletCardsIcon } from "@lucide/svelte";
 
 	let { cash }: { cash: CashUpUserGetItems } = $props();
 

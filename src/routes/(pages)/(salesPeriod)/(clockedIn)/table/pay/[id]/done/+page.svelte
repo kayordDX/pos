@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/stores";
 	import { Avatar, Button, Card } from "@kayord/ui";
-	import { ShieldCheckIcon } from "lucide-svelte";
+	import { ShieldCheckIcon } from "@lucide/svelte";
 
 	const id = $page.params.id;
 	const amount = Number($page.url.searchParams.get("amount") ?? 0);

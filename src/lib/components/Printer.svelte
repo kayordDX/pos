@@ -11,7 +11,7 @@
 		PencilIcon,
 		TestTubeIcon,
 		Trash,
-	} from "lucide-svelte";
+	} from "@lucide/svelte";
 	import AddPrinter from "../../routes/(pages)/manager/admin/printers/AddPrinter.svelte";
 	import DeletePrinter from "../../routes/(pages)/manager/admin/printers/DeletePrinter.svelte";
 	import { page } from "$app/stores";

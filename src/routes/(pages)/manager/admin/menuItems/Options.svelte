@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { arrayUnique } from "$lib/util";
 	import { Badge, Button, Card, Command } from "@kayord/ui";
-	import { CirclePlusIcon, CircleXIcon } from "lucide-svelte";
+	import { CirclePlusIcon, CircleXIcon } from "@lucide/svelte";
 	import { createOptionGroup } from "$lib/api";
 
 	const query = createOptionGroup();

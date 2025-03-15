@@ -18,7 +18,7 @@
 		renderSnippet,
 		toast,
 	} from "@kayord/ui";
-	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "lucide-svelte";
+	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";

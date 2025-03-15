@@ -1,5 +1,5 @@
 <script lang="ts" generics="T">
-	import { XIcon } from "lucide-svelte";
+	import { XIcon } from "@lucide/svelte";
 
 	import type { Table } from "@tanstack/table-core";
 	import { Popover, Badge, Select, Input } from "@kayord/ui";

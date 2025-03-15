@@ -7,7 +7,7 @@
 		type DTOOrderItemExtraDTO,
 		type DTOOrderItemOptionDTO,
 	} from "$lib/api";
-	import { CopyIcon, TrashIcon } from "lucide-svelte";
+	import { CopyIcon, TrashIcon } from "@lucide/svelte";
 	import ItemCount from "./ItemCount.svelte";
 	import type { Snippet } from "svelte";
 

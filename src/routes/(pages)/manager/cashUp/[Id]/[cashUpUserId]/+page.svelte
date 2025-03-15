@@ -8,7 +8,7 @@
 	import { getInitials } from "$lib/util";
 	import CashUpItem from "./CashUpItem.svelte";
 	import AddItem from "./AddItem.svelte";
-	import { BookUpIcon } from "lucide-svelte";
+	import { BookUpIcon } from "@lucide/svelte";
 	import { goto } from "$app/navigation";
 	import CashUpItemManual from "./CashUpItemManual.svelte";
 

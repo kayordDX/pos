@@ -7,7 +7,7 @@
 		WalletCardsIcon,
 		MessageCircleIcon,
 		Settings2Icon,
-	} from "lucide-svelte";
+	} from "@lucide/svelte";
 </script>
 
 <div class="m-2">

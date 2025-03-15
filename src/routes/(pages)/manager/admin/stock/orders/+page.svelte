@@ -26,7 +26,7 @@
 		type SortingState,
 		type Updater,
 	} from "@tanstack/table-core";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 
 	const columns: ColumnDef<EntitiesStockOrder>[] = [
 		{

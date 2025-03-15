@@ -2,7 +2,7 @@
 	import { toCanvas } from "qrcode";
 	import { createWhatsappStatus, createWhatsappQrCode, createWhatsappRestart } from "$lib/api";
 	import { Button, Card, toast } from "@kayord/ui";
-	import { CheckIcon, XIcon } from "lucide-svelte";
+	import { CheckIcon, XIcon } from "@lucide/svelte";
 
 	const query = createWhatsappStatus();
 	const qrQuery = $derived(createWhatsappQrCode({ query: { enabled: false } }));

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { CableIcon, EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "lucide-svelte";
+	import { CableIcon, EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import { createStockDelete, type StockGetAllResponse } from "$lib/api";
 	import { getError } from "$lib/types";
 	import AddStock from "./AddStock.svelte";

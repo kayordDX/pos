@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createMenuGetSectionsGetMenusSections } from "$lib/api";
 	import { Button, Card } from "@kayord/ui";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditSection from "./EditSection.svelte";
 	import { page } from "$app/stores";

@@ -2,7 +2,7 @@
 	import { createOptionGroup } from "$lib/api";
 	import { Badge, Button, Card, Tooltip } from "@kayord/ui";
 	import Actions from "./Actions.svelte";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	import EditOptionGroup from "./EditOptionGroup.svelte";
 
 	const query = createOptionGroup();

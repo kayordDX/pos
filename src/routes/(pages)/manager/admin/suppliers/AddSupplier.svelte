@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge, Button, Dialog, Form, Input, Select, toast } from "@kayord/ui";
-	import { SettingsIcon, SigmaIcon } from "lucide-svelte";
+	import { SettingsIcon, SigmaIcon } from "@lucide/svelte";
 	import {
 		createStockDivisionGetAll,
 		createSupplierCreate,

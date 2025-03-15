@@ -4,7 +4,7 @@
 	import { Button, createShadTable, DataTable, Dialog, renderComponent } from "@kayord/ui";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Actions from "./Actions.svelte";
-	import { LinkIcon } from "lucide-svelte";
+	import { LinkIcon } from "@lucide/svelte";
 	import AddLinkStock from "./AddLinkStock.svelte";
 
 	interface Props {

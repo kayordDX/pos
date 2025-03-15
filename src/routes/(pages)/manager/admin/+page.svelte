@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { createPrinterList } from "$lib/api";
 	import { Alert, Card, Button } from "@kayord/ui";
-	import TriangleAlertIcon from "lucide-svelte/icons/triangle-alert";
+	import TriangleAlertIcon from "@lucide/svelte/icons/triangle-alert";
 	import { status } from "$lib/stores/status.svelte";
 	import Printer from "$lib/components/Printer.svelte";
 	import AddPrinter from "./printers/AddPrinter.svelte";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	const query = createPrinterList(status.value.outletId);
 
 	let open = $state(false);

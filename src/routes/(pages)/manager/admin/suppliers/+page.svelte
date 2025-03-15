@@ -4,7 +4,7 @@
 	import { Button, createShadTable, DataTable, renderComponent } from "@kayord/ui";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import AddSupplier from "./AddSupplier.svelte";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 
 	const query = createSupplierGetAll({ outletId: status.value.outletId });

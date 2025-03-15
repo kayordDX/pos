@@ -3,7 +3,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import { Button, Dialog, Form, Select, toast, Input } from "@kayord/ui";
-	import { PencilIcon } from "lucide-svelte";
+	import { PencilIcon } from "@lucide/svelte";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";

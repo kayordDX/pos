@@ -8,7 +8,7 @@
 	import { page } from "$app/stores";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
-	import { CheckIcon, XIcon } from "lucide-svelte";
+	import { CheckIcon, XIcon } from "@lucide/svelte";
 
 	const bookingId = Number($page.params.id);
 

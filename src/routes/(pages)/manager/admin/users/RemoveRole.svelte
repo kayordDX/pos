@@ -2,7 +2,7 @@
 	import { createUserRemoveUserOutlet } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { Button, toast } from "@kayord/ui";
-	import { XIcon } from "lucide-svelte";
+	import { XIcon } from "@lucide/svelte";
 
 	interface Props {
 		userId: string;

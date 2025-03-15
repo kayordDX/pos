@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon, ViewIcon } from "lucide-svelte";
+	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon, ViewIcon } from "@lucide/svelte";
 	import { createMenuItemDelete, type EntitiesStockOrder } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";

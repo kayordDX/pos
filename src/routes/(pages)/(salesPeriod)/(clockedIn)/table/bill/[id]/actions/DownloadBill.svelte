@@ -2,7 +2,7 @@
 	import { downloadPdf, downloadFile } from "$lib/api/downloader.svelte";
 	import { getError } from "$lib/types";
 	import { Button, Loader, toast } from "@kayord/ui";
-	import { DownloadIcon } from "lucide-svelte";
+	import { DownloadIcon } from "@lucide/svelte";
 
 	interface Props {
 		bookingId: number;

@@ -1,15 +1,53 @@
 <script lang="ts">
-	import { createExtraGroup } from "$lib/api";
-	import { Button, Card, Tooltip } from "@kayord/ui";
+	import { createExtraGroup, type DTOExtraGroupAdminDTO } from "$lib/api";
+	import {
+		Button,
+		createShadTable,
+		DataTable,
+		renderComponent,
+		renderSnippet,
+		Tooltip,
+	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	import EditExtraGroup from "./EditExtraGroup.svelte";
+	import type { ColumnDef } from "@tanstack/table-core";
 
 	const query = createExtraGroup();
 	let addOpen = $state(false);
+
+	const columns: ColumnDef<DTOExtraGroupAdminDTO>[] = [
+		{
+			header: "Name",
+			accessorKey: "name",
+			size: 10000,
+			cell: (item) => renderSnippet(extraGroup, item.row.original),
+		},
+		{
+			header: "",
+			accessorKey: "extraGroupId",
+			cell: (item) =>
+				renderComponent(Actions, {
+					extraGroup: item.row.original,
+					refetch: $query.refetch,
+				}),
+			size: 10,
+			enableSorting: false,
+		},
+	];
+
+	let data = $derived($query.data ?? []);
+
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+	});
 </script>
 
-<div class="m-2">
+{#snippet header()}
 	<div class="flex items-center justify-between">
 		<h1>Extra Groups</h1>
 		<Button onclick={() => (addOpen = true)}>
@@ -17,32 +55,36 @@
 		</Button>
 		<EditExtraGroup refetch={$query.refetch} bind:open={addOpen} />
 	</div>
+{/snippet}
 
-	<div class="flex flex-col gap-2 mt-4">
-		{#each $query.data ?? [] as extraGroup}
-			<Card.Root class="p-2 flex items-center justify-between">
-				<div class="flex items-center gap-2">
-					<Tooltip.Provider>
-						<Tooltip.Root>
-							<Tooltip.Trigger>
-								<div
-									class={`size-3 ${extraGroup.isGlobal ? "bg-primary animate-pulse" : "bg-secondary"} rounded-full`}
-								></div>
-							</Tooltip.Trigger>
-							<Tooltip.Content>
-								<p class="font-bold">Global Extra Group</p>
-								{#if extraGroup.isGlobal}
-									<p>Group is available to search on all menu items</p>
-								{:else}
-									<p>Group only available to specific menu items</p>
-								{/if}
-							</Tooltip.Content>
-						</Tooltip.Root>
-					</Tooltip.Provider>
-					{extraGroup.name}
-				</div>
-				<Actions refetch={$query.refetch} {extraGroup} />
-			</Card.Root>
-		{/each}
-	</div>
+<div class="m-2">
+	<DataTable
+		headerClass="pb-2"
+		{header}
+		{table}
+		{columns}
+		isLoading={$query.isPending}
+		noDataMessage="No roles for outlet"
+	/>
 </div>
+
+{#snippet extraGroup(extraGroup: DTOExtraGroupAdminDTO)}
+	<Tooltip.Provider>
+		<Tooltip.Root>
+			<Tooltip.Trigger>
+				<div
+					class={`size-3 ${extraGroup.isGlobal ? "bg-primary animate-pulse" : "bg-secondary"} rounded-full`}
+				></div>
+			</Tooltip.Trigger>
+			<Tooltip.Content>
+				<p class="font-bold">Global Extra Group</p>
+				{#if extraGroup.isGlobal}
+					<p>Group is available to search on all menu items</p>
+				{:else}
+					<p>Group only available to specific menu items</p>
+				{/if}
+			</Tooltip.Content>
+		</Tooltip.Root>
+	</Tooltip.Provider>
+	{extraGroup.name}
+{/snippet}

@@ -26,7 +26,7 @@
 	} from "$lib/api";
 	import Extras from "./Extras.svelte";
 	import Options from "./Options.svelte";
-	import { ChevronsUpDownIcon } from "lucide-svelte";
+	import { ChevronsUpDownIcon } from "@lucide/svelte";
 
 	interface Props {
 		refetch: () => void;

@@ -12,7 +12,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import EditPayment from "./EditPayment.svelte";
 	import BillOptions from "./BillOptions.svelte";
-	import { WalletCardsIcon, DoorOpenIcon, RotateCcwIcon } from "lucide-svelte";
+	import { WalletCardsIcon, DoorOpenIcon, RotateCcwIcon } from "@lucide/svelte";
 
 	interface Props {
 		data: TableOrderGetBillResponse;

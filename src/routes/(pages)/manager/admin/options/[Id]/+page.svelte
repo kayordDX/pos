@@ -2,7 +2,7 @@
 	import { page } from "$app/stores";
 	import { createOptionItems } from "$lib/api";
 	import { Badge, Button, Card } from "@kayord/ui";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditOption from "./EditOption.svelte";
 

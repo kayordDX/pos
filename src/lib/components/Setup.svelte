@@ -8,7 +8,7 @@
 	import { goto } from "$app/navigation";
 	import { status } from "$lib/stores/status.svelte";
 	import { networkInformationStore } from "$lib/stores/network";
-	import { CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon } from "lucide-svelte";
+	import { CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon } from "@lucide/svelte";
 	import { requestNotificationPermission } from "$lib/util";
 	import { onMount } from "svelte";
 	import { menu } from "$lib/stores/menu.svelte";

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { page } from "$app/stores";
-	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "lucide-svelte";
+	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "@lucide/svelte";
 	import { createTableBookingGet } from "$lib/api";
 	import { Header } from "$lib/components/Header";
 	import type { Snippet } from "svelte";

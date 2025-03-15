@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { CheckIcon, XIcon } from "lucide-svelte";
+	import { CheckIcon, XIcon } from "@lucide/svelte";
 
 	let { isEnabled }: { isEnabled: boolean } = $props();
 </script>

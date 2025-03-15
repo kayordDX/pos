@@ -8,7 +8,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import { Card, Button, toast } from "@kayord/ui";
-	import { CheckIcon, Trash2Icon, XIcon, TestTubeDiagonalIcon } from "lucide-svelte";
+	import { CheckIcon, Trash2Icon, XIcon, TestTubeDiagonalIcon } from "@lucide/svelte";
 
 	interface Props {
 		config: EntitiesHaloConfig;

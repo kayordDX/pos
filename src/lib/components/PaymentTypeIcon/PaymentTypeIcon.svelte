@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { BanknoteIcon, CreditCardIcon, NfcIcon, WalletCardsIcon } from "lucide-svelte";
+	import { BanknoteIcon, CreditCardIcon, NfcIcon, WalletCardsIcon } from "@lucide/svelte";
 
 	interface Props {
 		type: string;

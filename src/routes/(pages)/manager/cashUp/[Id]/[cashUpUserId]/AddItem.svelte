@@ -3,7 +3,7 @@
 	import { createCashUpUserCreate, createCashUpUserItemType } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Alert, Button, Dialog, Form, Input, Select } from "@kayord/ui";
-	import { MessageCircleWarningIcon, PlusIcon } from "lucide-svelte";
+	import { MessageCircleWarningIcon, PlusIcon } from "@lucide/svelte";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";

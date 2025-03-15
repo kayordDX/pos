@@ -9,7 +9,7 @@
 		ListCollapseIcon,
 		PencilIcon,
 		Trash2Icon,
-	} from "lucide-svelte";
+	} from "@lucide/svelte";
 	import { createOptionDelete } from "$lib/api";
 	import { getError, LinkType } from "$lib/types";
 	import EditOption from "./EditOption.svelte";

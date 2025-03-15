@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, DropdownMenu } from "@kayord/ui";
-	import { EllipsisVerticalIcon, PencilIcon } from "lucide-svelte";
+	import { EllipsisVerticalIcon, PencilIcon } from "@lucide/svelte";
 	import { type StockItemsGetAllResponse } from "$lib/api";
 	import EditStockItem from "./EditStockItem.svelte";
 

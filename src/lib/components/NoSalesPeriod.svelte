@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card, toast } from "@kayord/ui";
-	import { CalendarOffIcon, CalendarCheck2Icon } from "lucide-svelte";
+	import { CalendarOffIcon, CalendarCheck2Icon } from "@lucide/svelte";
 	import { status } from "$lib/stores/status.svelte";
 
 	let isChecking = $state(false);

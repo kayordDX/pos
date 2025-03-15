@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Dialog, Select, Form } from "@kayord/ui";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	import { createUserAddUserOutletRole, createRoleGetAll } from "$lib/api";
 	import { z } from "zod";
 	import { defaults, superForm } from "sveltekit-superforms";

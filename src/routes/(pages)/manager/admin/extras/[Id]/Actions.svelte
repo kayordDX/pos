@@ -8,7 +8,7 @@
 		EqualIcon,
 		PencilIcon,
 		Trash2Icon,
-	} from "lucide-svelte";
+	} from "@lucide/svelte";
 	import { createExtraDelete } from "$lib/api";
 	import { getError, LinkType } from "$lib/types";
 	import EditExtra from "./EditExtra.svelte";

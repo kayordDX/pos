@@ -2,7 +2,7 @@
 	import { copy } from "$lib/actions/copy";
 	import { session } from "$lib/firebase.svelte";
 	import { Button, Card, Loader } from "@kayord/ui";
-	import { ClipboardCopyIcon } from "lucide-svelte";
+	import { ClipboardCopyIcon } from "@lucide/svelte";
 </script>
 
 <div class="m-8 flex flex-col gap-2 items-baseline">

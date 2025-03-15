@@ -16,7 +16,7 @@
 	import FilterReset from "$lib/components/FilterReset.svelte";
 	import { debounce } from "$lib/util";
 	import QueryBuilder from "fluent-querykit";
-	import { PlusIcon } from "lucide-svelte";
+	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import Total from "./Total.svelte";
 	import AddStock from "./AddStock.svelte";

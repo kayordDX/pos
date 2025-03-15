@@ -2,7 +2,7 @@
 	import { Button, Checkbox, toast } from "@kayord/ui";
 	import BasketItem from "./BasketItem.svelte";
 	import EmptyBasket from "./EmptyBasket.svelte";
-	import { ChefHatIcon } from "lucide-svelte";
+	import { ChefHatIcon } from "@lucide/svelte";
 	import {
 		createTableOrderGetBasket,
 		createTableOrderSendToKitchen,

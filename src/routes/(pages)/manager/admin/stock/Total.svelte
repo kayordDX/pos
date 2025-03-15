@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Badge, Button } from "@kayord/ui";
-	import { SettingsIcon, SigmaIcon } from "lucide-svelte";
+	import { SettingsIcon, SigmaIcon } from "@lucide/svelte";
 	import StockItems from "./StockItems.svelte";
 	import type { StockGetAllResponse } from "$lib/api";
 

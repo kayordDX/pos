@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createPayPayConfigGet } from "$lib/api";
 	import { Alert, Card } from "@kayord/ui";
-	import { TriangleAlertIcon } from "lucide-svelte";
+	import { TriangleAlertIcon } from "@lucide/svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import Config from "./Config.svelte";
 	import AddConfig from "./AddConfig.svelte";

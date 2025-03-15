@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Input, Loader } from "@kayord/ui";
-	import { SearchIcon } from "lucide-svelte";
+	import { SearchIcon } from "@lucide/svelte";
 	import {
 		createMenuList,
 		createMenuGetSectionsGetMenusSections,

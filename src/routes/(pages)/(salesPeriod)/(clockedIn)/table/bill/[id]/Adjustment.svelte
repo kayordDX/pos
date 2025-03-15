@@ -8,7 +8,7 @@
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
-	import { MessageCircleWarningIcon, SquareDotIcon } from "lucide-svelte";
+	import { MessageCircleWarningIcon, SquareDotIcon } from "@lucide/svelte";
 
 	interface Props {
 		tableBookingId: number;

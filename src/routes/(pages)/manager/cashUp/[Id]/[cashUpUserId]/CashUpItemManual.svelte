@@ -2,7 +2,7 @@
 	import { page } from "$app/stores";
 	import { createCashUpUserDelete, type DTOCashUpUserItemDTO } from "$lib/api";
 	import { Button } from "@kayord/ui";
-	import { Trash2Icon } from "lucide-svelte";
+	import { Trash2Icon } from "@lucide/svelte";
 
 	const mutation = createCashUpUserDelete();
 
