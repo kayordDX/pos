@@ -71,16 +71,16 @@ export type UserUnassignedUsersRequestAllOf = { [key: string]: unknown };
 
 export type UserUnassignedUsersRequest = CommonModelsQueryModel & UserUnassignedUsersRequestAllOf;
 
+export interface UserRemoveUserOutletRoleRequest {
+	[key: string]: unknown;
+}
+
 export type ErrorResponseErrors = { [key: string]: string[] };
 
 export interface ErrorResponse {
 	statusCode: number;
 	message: string;
 	errors: ErrorResponseErrors;
-}
-
-export interface UserRemoveUserOutletRoleRequest {
-	[key: string]: unknown;
 }
 
 export interface UserRemoveUserOutletRequest {
@@ -220,6 +220,14 @@ export interface UserAddUserOutletRoleRequest {
 export interface EntitiesUnit {
 	id: number;
 	name: string;
+}
+
+export interface TestResult {
+	time: string;
+}
+
+export interface TestTokenResult {
+	token: string;
 }
 
 export interface BillTableTotal {
@@ -836,8 +844,9 @@ export interface EntitiesOrderItemStatus {
 	isCancelled: boolean;
 	isBillable: boolean;
 	isHistory: boolean;
-	notify: boolean;
+	isNotify: boolean;
 	priority: number;
+	isUpdateStock: boolean;
 }
 
 export interface EntitiesAdjustment {

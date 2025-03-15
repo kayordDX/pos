@@ -524,7 +524,7 @@ export function createMenuGet<
 }
 
 export const menuDelete = (id: number) => {
-	return customInstance<unknown>({ url: `/menu/${id}`, method: "DELETE" });
+	return customInstance<void>({ url: `/menu/${id}`, method: "DELETE" });
 };
 
 export const getMenuDeleteMutationOptions = <

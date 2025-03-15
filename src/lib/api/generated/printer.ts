@@ -289,7 +289,7 @@ export const createPrinterCreate = <
 	return createMutation(mutationOptions);
 };
 export const printerDelete = (id: number) => {
-	return customInstance<unknown>({ url: `/printer/${id}`, method: "DELETE" });
+	return customInstance<void>({ url: `/printer/${id}`, method: "DELETE" });
 };
 
 export const getPrinterDeleteMutationOptions = <

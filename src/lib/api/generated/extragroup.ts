@@ -23,7 +23,7 @@ import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 export const extraGroupUpdate = (extraGroupUpdateRequest: BodyType<ExtraGroupUpdateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/extraGroup`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -93,7 +93,7 @@ export const createExtraGroupUpdate = <
 	return createMutation(mutationOptions);
 };
 export const extraGroupCreate = (extraGroupCreateRequest: BodyType<ExtraGroupCreateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/extraGroup`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -159,6 +159,71 @@ export const createExtraGroupCreate = <
 	TContext
 > => {
 	const mutationOptions = getExtraGroupCreateMutationOptions(options);
+
+	return createMutation(mutationOptions);
+};
+export const extraGroupDelete = (id: number) => {
+	return customInstance<void>({ url: `/extraGroup/${id}`, method: "DELETE" });
+};
+
+export const getExtraGroupDeleteMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof extraGroupDelete>>,
+		TError,
+		{ id: number },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof extraGroupDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationKey = ["extraGroupDelete"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof extraGroupDelete>>,
+		{ id: number }
+	> = (props) => {
+		const { id } = props ?? {};
+
+		return extraGroupDelete(id);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type ExtraGroupDeleteMutationResult = NonNullable<
+	Awaited<ReturnType<typeof extraGroupDelete>>
+>;
+
+export type ExtraGroupDeleteMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createExtraGroupDelete = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof extraGroupDelete>>,
+		TError,
+		{ id: number },
+		TContext
+	>;
+}): CreateMutationResult<
+	Awaited<ReturnType<typeof extraGroupDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationOptions = getExtraGroupDeleteMutationOptions(options);
 
 	return createMutation(mutationOptions);
 };

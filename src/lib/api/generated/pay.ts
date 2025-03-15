@@ -168,7 +168,7 @@ export const createPayPayConfigTestConfig = <
 export const payPayConfigSetActive = (
 	payPayConfigSetActiveRequest: BodyType<PayPayConfigSetActiveRequest>
 ) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/pay/config/activate`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -294,7 +294,7 @@ export function createPayPayConfigGet<
 }
 
 export const payPayConfigDelete = (id: number) => {
-	return customInstance<unknown>({ url: `/pay/config/${id}`, method: "DELETE" });
+	return customInstance<void>({ url: `/pay/config/${id}`, method: "DELETE" });
 };
 
 export const getPayPayConfigDeleteMutationOptions = <

@@ -33,7 +33,7 @@ import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 export const optionUpdate = (optionUpdateRequest: BodyType<OptionUpdateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/option`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -148,7 +148,7 @@ export function createOptionGroup<
 }
 
 export const optionCreate = (optionCreateRequest: BodyType<OptionCreateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/option`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -269,7 +269,7 @@ export function createOptionItems<
 }
 
 export const optionDelete = (id: number) => {
-	return customInstance<unknown>({ url: `/option/${id}`, method: "DELETE" });
+	return customInstance<void>({ url: `/option/${id}`, method: "DELETE" });
 };
 
 export const getOptionDeleteMutationOptions = <
@@ -331,7 +331,7 @@ export const createOptionDelete = <
 	return createMutation(mutationOptions);
 };
 export const optionGroupUpdate = (optionGroupUpdateRequest: BodyType<OptionGroupUpdateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/option/group`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -401,7 +401,7 @@ export const createOptionGroupUpdate = <
 	return createMutation(mutationOptions);
 };
 export const optionGroupCreate = (optionGroupCreateRequest: BodyType<OptionGroupCreateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/option/group`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -471,7 +471,7 @@ export const createOptionGroupCreate = <
 	return createMutation(mutationOptions);
 };
 export const optionGroupDelete = (id: number) => {
-	return customInstance<unknown>({ url: `/option/group/${id}`, method: "DELETE" });
+	return customInstance<void>({ url: `/option/group/${id}`, method: "DELETE" });
 };
 
 export const getOptionGroupDeleteMutationOptions = <

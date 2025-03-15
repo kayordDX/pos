@@ -15,7 +15,13 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 
-import type { BillTableTotal, InternalErrorResponse, ServicesWhatsappStatus } from "./api.schemas";
+import type {
+	BillTableTotal,
+	InternalErrorResponse,
+	ServicesWhatsappStatus,
+	TestResult,
+	TestTokenResult,
+} from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType } from "../mutator/customInstance.svelte";
@@ -57,6 +63,100 @@ export function createTest<
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof test>>, TError, TData>>;
 }): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const queryOptions = getTestQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const testStockTest = () => {
+	return customInstance<TestResult>({ url: `/test/stock`, method: "GET" });
+};
+
+export const getTestStockTestQueryKey = () => {
+	return [`/test/stock`] as const;
+};
+
+export const getTestStockTestQueryOptions = <
+	TData = Awaited<ReturnType<typeof testStockTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testStockTest>>, TError, TData>>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTestStockTestQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof testStockTest>>> = () => testStockTest();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof testStockTest>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type TestStockTestQueryResult = NonNullable<Awaited<ReturnType<typeof testStockTest>>>;
+export type TestStockTestQueryError = ErrorType<InternalErrorResponse>;
+
+export function createTestStockTest<
+	TData = Awaited<ReturnType<typeof testStockTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testStockTest>>, TError, TData>>;
+}): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getTestStockTestQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const testTokenTest = () => {
+	return customInstance<TestTokenResult>({ url: `/test/token`, method: "GET" });
+};
+
+export const getTestTokenTestQueryKey = () => {
+	return [`/test/token`] as const;
+};
+
+export const getTestTokenTestQueryOptions = <
+	TData = Awaited<ReturnType<typeof testTokenTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testTokenTest>>, TError, TData>>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTestTokenTestQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof testTokenTest>>> = () => testTokenTest();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof testTokenTest>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type TestTokenTestQueryResult = NonNullable<Awaited<ReturnType<typeof testTokenTest>>>;
+export type TestTokenTestQueryError = ErrorType<InternalErrorResponse>;
+
+export function createTestTokenTest<
+	TData = Awaited<ReturnType<typeof testTokenTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testTokenTest>>, TError, TData>>;
+}): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getTestTokenTestQueryOptions(options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

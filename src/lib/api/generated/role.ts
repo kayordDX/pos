@@ -24,7 +24,7 @@ import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 export const roleCreate = (roleCreateRequest: BodyType<RoleCreateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/role/createRole`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },

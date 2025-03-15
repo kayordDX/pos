@@ -32,7 +32,7 @@ import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 export const supplierUpdate = (supplierUpdateRequest: BodyType<SupplierUpdateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/supplier`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -222,7 +222,7 @@ export const createSupplierCreate = <
 	return createMutation(mutationOptions);
 };
 export const supplierDelete = (id: number) => {
-	return customInstance<unknown>({ url: `/supplier/${id}`, method: "DELETE" });
+	return customInstance<void>({ url: `/supplier/${id}`, method: "DELETE" });
 };
 
 export const getSupplierDeleteMutationOptions = <

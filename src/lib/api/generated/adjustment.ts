@@ -89,7 +89,7 @@ export function createAdjustmentGetAll<
 }
 
 export const adjustmentCreate = (adjustmentCreateRequest: BodyType<AdjustmentCreateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/adjustment`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },

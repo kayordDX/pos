@@ -235,7 +235,7 @@ export const createBillEmailBill = <
 	return createMutation(mutationOptions);
 };
 export const billDownloadBill = (tableBookingId: number) => {
-	return customInstance<unknown>({ url: `/bill/download/${tableBookingId}`, method: "GET" });
+	return customInstance<void>({ url: `/bill/download/${tableBookingId}`, method: "GET" });
 };
 
 export const getBillDownloadBillQueryKey = (tableBookingId: number) => {

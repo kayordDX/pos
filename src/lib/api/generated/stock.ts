@@ -52,7 +52,7 @@ import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 export const stockUpdate = (stockUpdateRequest: BodyType<StockUpdateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/stock`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -247,7 +247,7 @@ export const createStockCreate = <
 export const stockOrderItemUpdateBulk = (
 	stockOrderItemUpdateBulkRequest: BodyType<StockOrderItemUpdateBulkRequest>
 ) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/stock/orderItem/bulk`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -518,7 +518,7 @@ export function createStockOrderItemStatus<
 }
 
 export const stockOrderItemDelete = (stockId: number, stockOrderId: number) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/stock/orderItem/${stockId}/${stockOrderId}`,
 		method: "DELETE",
 	});
@@ -843,7 +843,7 @@ export function createStockOrderGet<
 }
 
 export const stockOrderDelete = (id: number) => {
-	return customInstance<unknown>({ url: `/stock/order/${id}`, method: "DELETE" });
+	return customInstance<void>({ url: `/stock/order/${id}`, method: "DELETE" });
 };
 
 export const getStockOrderDeleteMutationOptions = <
@@ -908,7 +908,7 @@ export const createStockOrderDelete = <
 	return createMutation(mutationOptions);
 };
 export const stockLinkUpdate = (stockLinkUpdateRequest: BodyType<StockLinkUpdateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/stock/link`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -978,7 +978,7 @@ export const createStockLinkUpdate = <
 	return createMutation(mutationOptions);
 };
 export const stockLinkAdd = (stockLinkAddRequest: BodyType<StockLinkAddRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/stock/link`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -1158,7 +1158,7 @@ export function createStockLinkGet<
 }
 
 export const stockLinkDelete = (id: number, stockId: number, linkType: number) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/stock/link/${id}/${stockId}/${linkType}`,
 		method: "DELETE",
 	});
@@ -1226,7 +1226,7 @@ export const createStockLinkDelete = <
 	return createMutation(mutationOptions);
 };
 export const stockItemsUpdate = (stockItemsUpdateRequest: BodyType<StockItemsUpdateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/stock/items`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -1414,7 +1414,7 @@ export function createStockDivisionGetAll<
 }
 
 export const stockDelete = (id: number) => {
-	return customInstance<unknown>({ url: `/stock/${id}`, method: "DELETE" });
+	return customInstance<void>({ url: `/stock/${id}`, method: "DELETE" });
 };
 
 export const getStockDeleteMutationOptions = <

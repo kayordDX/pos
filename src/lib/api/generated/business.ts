@@ -78,7 +78,7 @@ export function createBusinessGetAll<
 }
 
 export const businessEdit = (businessEditRequest: BodyType<BusinessEditRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/business`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -146,7 +146,7 @@ export const createBusinessEdit = <
 	return createMutation(mutationOptions);
 };
 export const businessDelete = (businessDeleteRequest: BodyType<BusinessDeleteRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/business`,
 		method: "DELETE",
 		headers: { "Content-Type": "*/*" },

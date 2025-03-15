@@ -226,7 +226,7 @@ export function createUserUnassignedUsers<
 }
 
 export const userRemoveUserOutletRole = (userId: string, role: string) => {
-	return customInstance<unknown>({ url: `/user/role/${userId}/${role}`, method: "DELETE" });
+	return customInstance<void>({ url: `/user/role/${userId}/${role}`, method: "DELETE" });
 };
 
 export const getUserRemoveUserOutletRoleMutationOptions = <
@@ -293,7 +293,7 @@ export const createUserRemoveUserOutletRole = <
 	return createMutation(mutationOptions);
 };
 export const userRemoveUserOutlet = (userId: string) => {
-	return customInstance<unknown>({ url: `/user/outlet/${userId}`, method: "DELETE" });
+	return customInstance<void>({ url: `/user/outlet/${userId}`, method: "DELETE" });
 };
 
 export const getUserRemoveUserOutletMutationOptions = <
@@ -533,7 +533,7 @@ export const createUserAssignOutlet = <
 export const userAddUserOutletRole = (
 	userAddUserOutletRoleRequest: BodyType<UserAddUserOutletRoleRequest>
 ) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/user/role`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },

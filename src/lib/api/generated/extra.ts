@@ -32,7 +32,7 @@ import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 export const extraUpdate = (extraUpdateRequest: BodyType<ExtraUpdateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/extra`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
@@ -147,7 +147,7 @@ export function createExtraGroup<
 }
 
 export const extraCreate = (extraCreateRequest: BodyType<ExtraCreateRequest>) => {
-	return customInstance<unknown>({
+	return customInstance<void>({
 		url: `/extra`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
@@ -268,7 +268,7 @@ export function createExtraItems<
 }
 
 export const extraDelete = (id: number) => {
-	return customInstance<unknown>({ url: `/extra/${id}`, method: "DELETE" });
+	return customInstance<void>({ url: `/extra/${id}`, method: "DELETE" });
 };
 
 export const getExtraDeleteMutationOptions = <

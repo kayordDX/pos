@@ -228,6 +228,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/test/stock": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TestStockTest"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/test/token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["TestTokenTest"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/test/total": {
         parameters: {
             query?: never;
@@ -1684,7 +1716,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/extraGroup{id}": {
+    "/extraGroup/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2081,6 +2113,7 @@ export interface components {
         UserUsersRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         CommonModelsQueryModel: Record<string, never>;
         UserUnassignedUsersRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        UserRemoveUserOutletRoleRequest: Record<string, never>;
         ErrorResponse: {
             /**
              * Format: int32
@@ -2093,7 +2126,6 @@ export interface components {
                 [key: string]: string[];
             };
         };
-        UserRemoveUserOutletRoleRequest: Record<string, never>;
         UserRemoveUserOutletRequest: Record<string, never>;
         UserGetStatusResponse: {
             /** Format: int32 */
@@ -2216,6 +2248,13 @@ export interface components {
             /** Format: int32 */
             id: number;
             name: string;
+        };
+        TestResult: {
+            /** Format: duration */
+            time: string;
+        };
+        TestTokenResult: {
+            token: string;
         };
         BillTableTotal: {
             /** Format: decimal */
@@ -2815,9 +2854,10 @@ export interface components {
             isCancelled: boolean;
             isBillable: boolean;
             isHistory: boolean;
-            notify: boolean;
+            isNotify: boolean;
             /** Format: int32 */
             priority: number;
+            isUpdateStock: boolean;
         };
         EntitiesAdjustment: {
             /** Format: int32 */
@@ -4512,15 +4552,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -4560,15 +4597,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -4717,15 +4751,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -4797,6 +4828,64 @@ export interface operations {
                 };
                 content: {
                     "application/json": boolean;
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TestStockTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TestResult"];
+                };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TestTokenTest: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TestTokenResult"];
                 };
             };
             /** @description Server Error */
@@ -5845,15 +5934,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -5924,15 +6010,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -6016,15 +6099,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -6097,15 +6177,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -6253,15 +6330,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -6470,15 +6544,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -6520,15 +6591,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -6570,15 +6638,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -6706,15 +6771,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -6794,15 +6856,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -6871,15 +6930,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -7277,15 +7333,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -7532,15 +7585,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -7651,15 +7701,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -7737,15 +7784,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -8180,15 +8224,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -8221,15 +8262,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -8298,15 +8336,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -8348,15 +8383,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -8389,15 +8421,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -8428,15 +8457,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -9252,15 +9278,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -9376,15 +9399,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -9417,15 +9437,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -9494,15 +9511,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -9544,15 +9558,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -9585,15 +9596,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -9624,15 +9632,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -10138,15 +10143,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -10238,15 +10240,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Bad Request */
             400: {
@@ -10437,15 +10436,12 @@ export interface operations {
         };
         requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -10556,15 +10552,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "text/plain": unknown;
-                    "application/json": unknown;
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
