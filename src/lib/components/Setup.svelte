@@ -7,7 +7,7 @@
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
 	import { status } from "$lib/stores/status.svelte";
-	import { networkInformationStore } from "$lib/stores/network";
+	import { networkInformation } from "$lib/stores/network.svelte";
 	import { CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon } from "@lucide/svelte";
 	import { requestNotificationPermission } from "$lib/util";
 	import { onMount } from "svelte";
@@ -109,7 +109,7 @@
 			</li>
 			<li class="flex gap-2 items-center">
 				2.
-				{#if $networkInformationStore.state == "subscribed"}
+				{#if networkInformation.value.state == "subscribed"}
 					<CheckCircleIcon class="text-green-400" />
 				{:else}
 					<MessageCircleWarningIcon class="text-amber-400" />

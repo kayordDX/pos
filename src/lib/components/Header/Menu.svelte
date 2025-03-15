@@ -11,7 +11,7 @@
 	import { getInitials } from "$lib/util";
 	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
 	import { logout, session } from "$lib/firebase.svelte";
-	import { networkInformationStore } from "$lib/stores/network";
+	import { networkInformation } from "$lib/stores/network.svelte";
 	import { goto } from "$app/navigation";
 
 	let hasNotification = $state(false);
@@ -33,7 +33,7 @@
 				</Avatar.Fallback>
 			</Avatar.Root>
 			<div
-				class={`size-3 rounded-md absolute top-0 right-0 ${$networkInformationStore.connectivity == "online" ? "bg-green-400" : $networkInformationStore.connectivity == "offline" ? "bg-red-400 animate-pulse" : "bg-muted-foreground"}`}
+				class={`size-3 rounded-md absolute top-0 right-0 ${networkInformation.value.connectivity == "online" ? "bg-green-400" : networkInformation.value.connectivity == "offline" ? "bg-red-400 animate-pulse" : "bg-muted-foreground"}`}
 			></div>
 		</div>
 	</DropdownMenu.Trigger>
