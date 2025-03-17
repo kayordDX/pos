@@ -2790,6 +2790,7 @@ export interface components {
             orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
             /** Format: int32 */
             outletId: number;
+            isAvailable: boolean;
         };
         EntitiesOrderItemOption: {
             /** Format: int32 */
@@ -2832,6 +2833,7 @@ export interface components {
             orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
             /** Format: int32 */
             outletId: number;
+            isAvailable: boolean;
         };
         EntitiesOrderItemExtra: {
             /** Format: int32 */

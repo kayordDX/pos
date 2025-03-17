@@ -83,7 +83,7 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Actual</Form.Label>
-							<Input {...props} type="number" bind:value={$formData.actual} />
+							<Input {...props} type="number" bind:value={$formData.actual} step="any" />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
@@ -92,7 +92,7 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Threshold</Form.Label>
-							<Input {...props} type="number" bind:value={$formData.threshold} />
+							<Input {...props} type="number" bind:value={$formData.threshold} step="any" />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />

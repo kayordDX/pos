@@ -10608,7 +10608,8 @@
           "positionId",
           "optionGroupId",
           "optionGroup",
-          "outletId"
+          "outletId",
+          "isAvailable"
         ],
         "properties": {
           "optionId": {
@@ -10643,6 +10644,9 @@
           "outletId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         }
       },
@@ -10749,7 +10753,8 @@
           "price",
           "extraGroupId",
           "extraGroup",
-          "outletId"
+          "outletId",
+          "isAvailable"
         ],
         "properties": {
           "extraId": {
@@ -10784,6 +10789,9 @@
           "outletId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         }
       },
