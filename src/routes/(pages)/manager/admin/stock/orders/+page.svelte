@@ -37,7 +37,7 @@
 		{
 			header: "Status",
 			accessorKey: "stockOrderStatus.name",
-			cell: (item) => renderSnippet(statusCol, item.row.original.stockOrderStatus.name ?? ""),
+			cell: (item) => renderSnippet(statusCol, item.row.original),
 			size: 1000,
 		},
 		{
@@ -135,8 +135,14 @@
 	});
 </script>
 
-{#snippet statusCol(status: string)}
-	<Badge>{status}</Badge>
+{#snippet statusCol(stockOrder: EntitiesStockOrder)}
+	{@const v =
+		stockOrder.stockOrderStatusId == 1
+			? "secondary"
+			: stockOrder.stockOrderStatusId == 2
+				? "default"
+				: "outline"}
+	<Badge variant={v}>{stockOrder.stockOrderStatus.name}</Badge>
 {/snippet}
 
 {#snippet header()}
