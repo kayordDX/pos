@@ -202,7 +202,7 @@
 				class="h-8 w-[150px] lg:w-[250px]"
 			/>
 			<MenuFilter column={menuCol} title="Menu" options={menus} />
-			<FilterReset {table} />
+			<FilterReset {table} cb={() => debouncedCb("")} />
 		</div>
 		<div class="flex gap-2 items-center">
 			<Button size="sm" onclick={() => (addOpen = true)}>

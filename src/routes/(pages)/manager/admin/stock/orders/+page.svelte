@@ -27,6 +27,8 @@
 		type Updater,
 	} from "@tanstack/table-core";
 	import { PlusIcon } from "@lucide/svelte";
+	import Search from "$lib/components/Search.svelte";
+	import QueryBuilder from "fluent-querykit";
 
 	const columns: ColumnDef<EntitiesStockOrder>[] = [
 		{
@@ -133,6 +135,16 @@
 		onSortingChange: setSorting,
 		enableRowSelection: false,
 	});
+
+	let search = $state("");
+
+	$effect(() => {
+		const qb = new QueryBuilder(false, false);
+		if (search) {
+			qb.containsCaseInsensitive("orderNumber", search);
+		}
+		filters = qb.build();
+	});
 </script>
 
 {#snippet statusCol(stockOrder: EntitiesStockOrder)}
@@ -148,7 +160,10 @@
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">
 		<div class="flex gap-2 items-center">
-			<h2>Orders</h2>
+			<div class="flex flex-col gap-1">
+				<h2>Orders</h2>
+				<Search bind:search name="Orders" />
+			</div>
 			<AddOrder bind:open={addOrderOpen} refetch={$query.refetch} />
 		</div>
 		<div class="flex gap-2 items-center">

@@ -43,6 +43,7 @@
 	const onSubmit = async (data: FormSchema) => {
 		try {
 			open = false;
+			stockSearch = "";
 			if (isEdit) {
 				await $editMutation.mutateAsync({
 					data: {
@@ -132,7 +133,12 @@
 	);
 </script>
 
-<Dialog.Root bind:open>
+<Dialog.Root
+	bind:open
+	onOpenChange={(o) => {
+		if (o == false) stockSearch = "";
+	}}
+>
 	<Dialog.Content class="max-h-[98%] overflow-auto flex-col z-60">
 		<form method="POST" use:enhance>
 			<Dialog.Header>

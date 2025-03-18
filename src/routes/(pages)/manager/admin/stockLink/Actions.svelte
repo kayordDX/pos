@@ -67,13 +67,15 @@
 	</AlertDialog.Content>
 </AlertDialog.Root>
 
-<AddLinkStock
-	bind:open={linkOpen}
-	{id}
-	{linkType}
-	{refetch}
-	{stockId}
-	{quantity}
-	{stockName}
-	{unitName}
-/>
+{#if linkOpen}
+	<AddLinkStock
+		bind:open={linkOpen}
+		{id}
+		{linkType}
+		{refetch}
+		{stockId}
+		{quantity}
+		{stockName}
+		{unitName}
+	/>
+{/if}

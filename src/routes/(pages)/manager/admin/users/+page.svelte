@@ -156,7 +156,7 @@
 			class="h-8 w-[150px] lg:w-[250px]"
 		/>
 		<Filter column={nameCol} title="Role" options={roles} />
-		<FilterReset {table} />
+		<FilterReset {table} cb={() => debouncedCb("")} />
 	</div>
 {/snippet}
 

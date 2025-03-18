@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createStockGetAll, type StockGetAllResponse } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, createSvelteTable, DataTable, Input, renderComponent } from "@kayord/ui";
+	import { Button, createSvelteTable, DataTable, renderComponent } from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -13,13 +13,12 @@
 		getFilteredRowModel,
 		getSortedRowModel,
 	} from "@tanstack/table-core";
-	import FilterReset from "$lib/components/FilterReset.svelte";
-	import { debounce } from "$lib/util";
 	import QueryBuilder from "fluent-querykit";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import Total from "./Total.svelte";
 	import AddStock from "./AddStock.svelte";
+	import Search from "$lib/components/Search.svelte";
 
 	const columns: ColumnDef<StockGetAllResponse>[] = [
 		{
@@ -126,19 +125,14 @@
 		enableRowSelection: false,
 	});
 
-	const col = $derived(table.getColumn("name"));
-	const debouncedCb = debounce((value: string) => col?.setFilterValue(value), 300);
-
+	let search = $state("");
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
-		const fv = table.getColumn("name")?.getFilterValue() as undefined | string;
-		if (fv) {
-			qb.containsCaseInsensitive("name", fv);
+		if (search) {
+			qb.containsCaseInsensitive("name", search);
 		}
 		filters = qb.build();
 	});
-
-	const menuCol = $derived(table.getColumn("name")!);
 
 	let addOpen = $state(false);
 </script>
@@ -146,15 +140,7 @@
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">
 		<div class="flex gap-2 items-center">
-			<Input
-				value={col?.getFilterValue()}
-				onchange={(e) => debouncedCb(e.currentTarget.value)}
-				oninput={(e) => debouncedCb(e.currentTarget.value)}
-				placeholder="Search Stock Items..."
-				class="h-8 w-[150px] lg:w-[250px]"
-			/>
-
-			<FilterReset {table} />
+			<Search bind:search name="Orders" />
 		</div>
 		<div class="flex gap-2 items-center">
 			<Button size="sm" onclick={() => (addOpen = true)}>

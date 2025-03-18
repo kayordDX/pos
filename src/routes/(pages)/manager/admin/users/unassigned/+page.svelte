@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createUserUnassignedUsers, type UserUserResponse } from "$lib/api";
-	import { DataTable, renderComponent, createSvelteTable, Input } from "@kayord/ui";
+	import { DataTable, renderComponent, createSvelteTable } from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -14,9 +14,8 @@
 	import Avatar from "../Avatar.svelte";
 	import AddRole from "../AddRole.svelte";
 	import RemoveRole from "../RemoveRole.svelte";
-	import FilterReset from "../FilterReset.svelte";
-	import { Debounced, watch } from "runed";
 	import QueryBuilder from "fluent-querykit";
+	import Search from "$lib/components/Search.svelte";
 
 	const columns: ColumnDef<UserUserResponse>[] = [
 		{
@@ -113,24 +112,11 @@
 	});
 
 	let searchEmail = $state("");
-	const debounced = new Debounced(() => searchEmail, 500);
-
-	watch(
-		() => debounced.current,
-		() => {
-			table.getColumn("email")?.setFilterValue(debounced.current);
-		}
-	);
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
-		const fv = table.getColumn("email")?.getFilterValue() as undefined | string;
-		if (fv) {
-			qb.containsCaseInsensitive("email", fv);
-		}
-		const rv = table.getColumn("roles")?.getFilterValue() as undefined | string;
-		if (rv) {
-			qb.and().contains("roles", rv);
+		if (searchEmail) {
+			qb.containsCaseInsensitive("email", searchEmail);
 		}
 		filters = qb.build();
 	});
@@ -138,12 +124,7 @@
 
 {#snippet header()}
 	<div class="flex gap-2">
-		<Input
-			bind:value={searchEmail}
-			placeholder="Search Email..."
-			class="h-8 w-[150px] lg:w-[250px]"
-		/>
-		<FilterReset {table} cb={() => (searchEmail = "")} />
+		<Search bind:search={searchEmail} name="Email" />
 	</div>
 {/snippet}
 
