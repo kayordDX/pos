@@ -2595,6 +2595,75 @@
         ]
       }
     },
+    "/stock/orderItem/lastPrice": {
+      "get": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockOrderItemLastPrice",
+        "parameters": [
+          {
+            "name": "stockId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "stockOrderId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "number",
+                  "format": "decimal"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/stock/orderItem/{stockId}/{stockOrderId}": {
       "delete": {
         "tags": [
@@ -12321,6 +12390,10 @@
             "type": "string"
           }
         }
+      },
+      "StockOrderItemLastPriceRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "StockOrderItemDeleteRequest": {
         "type": "object",

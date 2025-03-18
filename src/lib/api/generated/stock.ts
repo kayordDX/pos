@@ -42,6 +42,7 @@ import type {
 	StockOrderCreateRequest,
 	StockOrderGetAllParams,
 	StockOrderItemCreateRequest,
+	StockOrderItemLastPriceParams,
 	StockOrderItemUpdateBulkRequest,
 	StockOrderItemUpdateRequest,
 	StockOrderUpdateRequest,
@@ -507,6 +508,68 @@ export function createStockOrderItemStatus<
 	>;
 }): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const queryOptions = getStockOrderItemStatusQueryOptions(options);
+
+	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const stockOrderItemLastPrice = (params: StockOrderItemLastPriceParams) => {
+	return customInstance<number>({ url: `/stock/orderItem/lastPrice`, method: "GET", params });
+};
+
+export const getStockOrderItemLastPriceQueryKey = (params: StockOrderItemLastPriceParams) => {
+	return [`/stock/orderItem/lastPrice`, ...(params ? [params] : [])] as const;
+};
+
+export const getStockOrderItemLastPriceQueryOptions = <
+	TData = Awaited<ReturnType<typeof stockOrderItemLastPrice>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: StockOrderItemLastPriceParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof stockOrderItemLastPrice>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getStockOrderItemLastPriceQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof stockOrderItemLastPrice>>> = () =>
+		stockOrderItemLastPrice(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof stockOrderItemLastPrice>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type StockOrderItemLastPriceQueryResult = NonNullable<
+	Awaited<ReturnType<typeof stockOrderItemLastPrice>>
+>;
+export type StockOrderItemLastPriceQueryError = ErrorType<
+	ErrorResponse | void | InternalErrorResponse
+>;
+
+export function createStockOrderItemLastPrice<
+	TData = Awaited<ReturnType<typeof stockOrderItemLastPrice>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: StockOrderItemLastPriceParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof stockOrderItemLastPrice>>, TError, TData>
+		>;
+	}
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getStockOrderItemLastPriceQueryOptions(params, options);
 
 	const query = createQuery(queryOptions) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

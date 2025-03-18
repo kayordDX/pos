@@ -772,6 +772,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock/orderItem/lastPrice": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["StockOrderItemLastPrice"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/stock/orderItem/{stockId}/{stockOrderId}": {
         parameters: {
             query?: never;
@@ -3278,6 +3294,7 @@ export interface components {
             id: number;
             name: string;
         };
+        StockOrderItemLastPriceRequest: Record<string, never>;
         StockOrderItemDeleteRequest: Record<string, never>;
         StockOrderItemCreateRequest: {
             /** Format: int32 */
@@ -6300,6 +6317,54 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DTOStockOrderItemStatusDTO"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockOrderItemLastPrice: {
+        parameters: {
+            query: {
+                stockId: number;
+                stockOrderId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": number;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */

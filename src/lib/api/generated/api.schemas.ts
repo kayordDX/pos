@@ -1311,6 +1311,10 @@ export interface DTOStockOrderItemStatusDTO {
 	name: string;
 }
 
+export interface StockOrderItemLastPriceRequest {
+	[key: string]: unknown;
+}
+
 export interface StockOrderItemDeleteRequest {
 	[key: string]: unknown;
 }
@@ -2582,6 +2586,11 @@ export type StockGetAllParams = {
 	filters?: string | null;
 	page?: number | null;
 	pageSize?: number | null;
+};
+
+export type StockOrderItemLastPriceParams = {
+	stockId: number;
+	stockOrderId: number;
 };
 
 export type StockOrderGetAllParams = {

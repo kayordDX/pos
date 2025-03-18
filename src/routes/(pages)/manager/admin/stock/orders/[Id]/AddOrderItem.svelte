@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { DTOStockOrderItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Card, Combobox, Dialog, Form, Input, Select, toast } from "@kayord/ui";
+	import { Button, Card, Combobox, Dialog, Form, Input, Select, Table, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
@@ -10,6 +10,7 @@
 		createStockOrderItemUpdate,
 		createStockGetAll,
 		createStockOrderItemStatus,
+		createStockOrderItemLastPrice,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import QueryBuilder from "fluent-querykit";
@@ -129,6 +130,21 @@
 	const stockListSelect = $derived(
 		stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unitName})` }))
 	);
+
+	const pricePerUnit = $derived(
+		isNaN($formData.price / $formData.orderAmount) ? 0 : $formData.price / $formData.orderAmount
+	);
+
+	const last = $derived(
+		createStockOrderItemLastPrice(
+			{
+				stockId: $formData.stockId ?? 0,
+				stockOrderId: Number(page.params.Id),
+			},
+			{ query: { enabled: ($formData.stockId ?? 0) > 0 } }
+		)
+	);
+	const lastPricePerUnit = $derived($last.data ?? 0);
 </script>
 
 <Dialog.Root bind:open>
@@ -203,6 +219,22 @@
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
+					<Table.Root>
+						<Table.Body>
+							<Table.Row class="border-none">
+								<Table.Cell class="text-sm text-muted-foreground p-1">
+									Current price per unit
+								</Table.Cell>
+								<Table.Cell class="text-right p-1">R {pricePerUnit.toFixed(2)}</Table.Cell>
+							</Table.Row>
+							<Table.Row>
+								<Table.Cell class="text-sm text-muted-foreground p-1">
+									Previous price per unit
+								</Table.Cell>
+								<Table.Cell class="text-right p-1">R {lastPricePerUnit.toFixed(2)}</Table.Cell>
+							</Table.Row>
+						</Table.Body>
+					</Table.Root>
 				</Form.Field>
 				{#if isEdit}
 					<Form.Field {form} name="statusId">
