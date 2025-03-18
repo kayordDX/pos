@@ -223,15 +223,15 @@
 						<Table.Body>
 							<Table.Row class="border-none">
 								<Table.Cell class="text-sm text-muted-foreground p-1">
-									Current price per unit
-								</Table.Cell>
-								<Table.Cell class="text-right p-1">R {pricePerUnit.toFixed(2)}</Table.Cell>
-							</Table.Row>
-							<Table.Row>
-								<Table.Cell class="text-sm text-muted-foreground p-1">
 									Previous price per unit
 								</Table.Cell>
 								<Table.Cell class="text-right p-1">R {lastPricePerUnit.toFixed(2)}</Table.Cell>
+							</Table.Row>
+							<Table.Row class="border-none">
+								<Table.Cell class="text-sm text-muted-foreground p-1">
+									Current price per unit
+								</Table.Cell>
+								<Table.Cell class="text-right p-1">R {pricePerUnit.toFixed(2)}</Table.Cell>
 							</Table.Row>
 						</Table.Body>
 					</Table.Root>
