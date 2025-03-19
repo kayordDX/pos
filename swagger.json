@@ -13541,7 +13541,8 @@
           "ipAddress",
           "port",
           "lineCharacters",
-          "isEnabled"
+          "isEnabled",
+          "isConnected"
         ],
         "properties": {
           "id": {
@@ -13571,6 +13572,9 @@
             "format": "int32"
           },
           "isEnabled": {
+            "type": "boolean"
+          },
+          "isConnected": {
             "type": "boolean"
           }
         }

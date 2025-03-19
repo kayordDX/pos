@@ -3646,6 +3646,7 @@ export interface components {
             /** Format: int32 */
             lineCharacters: number;
             isEnabled: boolean;
+            isConnected: boolean;
         };
         PrinterListRequest: Record<string, never>;
         PrinterEditRequest: {

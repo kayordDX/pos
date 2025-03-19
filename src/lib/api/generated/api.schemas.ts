@@ -1693,6 +1693,7 @@ export interface DTOPrinterDTO {
 	port: number;
 	lineCharacters: number;
 	isEnabled: boolean;
+	isConnected: boolean;
 }
 
 export interface PrinterListRequest {

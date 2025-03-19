@@ -2,7 +2,7 @@
 	import type { DTOPrinterDTO } from "$lib/api";
 	import { createBillPrintBill, createPrinterTest } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Card, Switch, Table, toast, Avatar, DropdownMenu } from "@kayord/ui";
+	import { Button, Card, Switch, Table, toast, Avatar, DropdownMenu, Tooltip } from "@kayord/ui";
 	import {
 		PrinterIcon,
 		CheckIcon,
@@ -11,6 +11,8 @@
 		PencilIcon,
 		TestTubeIcon,
 		Trash,
+		CloudUploadIcon,
+		CloudOffIcon,
 	} from "@lucide/svelte";
 	import AddPrinter from "../../routes/(pages)/manager/admin/printers/AddPrinter.svelte";
 	import DeletePrinter from "../../routes/(pages)/manager/admin/printers/DeletePrinter.svelte";
@@ -54,16 +56,30 @@
 	let deleteOpen = $state(false);
 </script>
 
-<Card.Root>
+<Card.Root class={`border-l-8 ${printer.isEnabled ? "border-l-primary" : "border-l-destructive"}`}>
 	<Card.Header class="flex flex-row items-start bg-muted/50 p-4">
 		<div class="flex items-center justify-between w-full">
 			<div class="flex items-center gap-2">
 				<Avatar.Root>
 					<Avatar.Fallback>
-						{#if printer.isEnabled}
-							<CheckIcon class="text-primary" />
+						{#if printer.isConnected}
+							<Tooltip.Provider>
+								<Tooltip.Root>
+									<Tooltip.Trigger><CloudUploadIcon class="text-primary" /></Tooltip.Trigger>
+									<Tooltip.Content>
+										<p>Printer is connected</p>
+									</Tooltip.Content>
+								</Tooltip.Root>
+							</Tooltip.Provider>
 						{:else}
-							<XIcon class="text-muted-foreground" />
+							<Tooltip.Provider>
+								<Tooltip.Root>
+									<Tooltip.Trigger><CloudOffIcon class="text-destructive" /></Tooltip.Trigger>
+									<Tooltip.Content>
+										<p>Printer currently not connected</p>
+									</Tooltip.Content>
+								</Tooltip.Root>
+							</Tooltip.Provider>
 						{/if}
 					</Avatar.Fallback>
 				</Avatar.Root>
