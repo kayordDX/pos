@@ -5,16 +5,23 @@
 	import { status } from "$lib/stores/status.svelte";
 	import Printer from "$lib/components/Printer.svelte";
 	import AddPrinter from "./printers/AddPrinter.svelte";
-	import { PlusIcon } from "@lucide/svelte";
+	import { PlusIcon, RefreshCwIcon } from "@lucide/svelte";
 	const query = createPrinterList(status.value.outletId);
 
 	let open = $state(false);
 </script>
 
 <Card.Root class="m-2">
-	<Card.Header>
-		<Card.Title>Outlet Printers</Card.Title>
-		<Card.Description>Printers that can be used in outlet</Card.Description>
+	<Card.Header class="flex flex-row items-center justify-between">
+		<div class="flex flex-col gap-1">
+			<Card.Title>Outlet Printers</Card.Title>
+			<Card.Description>Printers that can be used in outlet</Card.Description>
+		</div>
+		<div>
+			<Button variant="outline" disabled={$query.isPending} onclick={() => $query.refetch()}>
+				Refresh <RefreshCwIcon />
+			</Button>
+		</div>
 	</Card.Header>
 	<Card.Content>
 		{#if $query.data?.length === 0}
