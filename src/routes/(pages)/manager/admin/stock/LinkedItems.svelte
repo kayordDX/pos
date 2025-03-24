@@ -60,6 +60,8 @@
 		<Badge>{type}</Badge>
 	{:else if type == "Extra"}
 		<Badge variant="secondary">{type}</Badge>
+	{:else if type == "Bulk"}
+		<Badge variant="destructive">{type}</Badge>
 	{:else}
 		<Badge variant="outline">{type}</Badge>
 	{/if}

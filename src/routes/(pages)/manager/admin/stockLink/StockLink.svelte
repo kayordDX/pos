@@ -71,7 +71,11 @@
 	<Dialog.Header class="pr-6 flex-row w-full justify-between">
 		<div>
 			<Dialog.Title>Stock</Dialog.Title>
-			<Dialog.Description>Linked Stock Items</Dialog.Description>
+			{#if linkType === LinkType.Bulk}
+				<Dialog.Description>Bulk Stock increases quantity when actioned</Dialog.Description>
+			{:else}
+				<Dialog.Description>Linked Stock Items</Dialog.Description>
+			{/if}
 		</div>
 		<Button onclick={() => (linkOpen = true)}>
 			<LinkIcon />

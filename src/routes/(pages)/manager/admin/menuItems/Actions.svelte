@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { BookOpenTextIcon, EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
+	import {
+		BookOpenTextIcon,
+		EllipsisVerticalIcon,
+		PencilIcon,
+		SquareStackIcon,
+		Trash2Icon,
+	} from "@lucide/svelte";
 	import EditMenuItem from "./EditMenuItem.svelte";
 	import { createMenuItemDelete, type MenuItemMenuItemAdminDTO } from "$lib/api";
 	import { getError, LinkType } from "$lib/types";
@@ -16,6 +22,7 @@
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
 	let stockLinkOpen = $state(false);
+	let linkType = $state(LinkType.MenuItem);
 
 	const deleteMutation = createMenuItemDelete();
 	const deleteMenuItem = async () => {
@@ -39,8 +46,21 @@
 	<DropdownMenu.Content>
 		<DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>
 		<DropdownMenu.Item onclick={() => (deleteOpen = true)}><Trash2Icon /> Delete</DropdownMenu.Item>
-		<DropdownMenu.Item onclick={() => (stockLinkOpen = true)}>
+		<DropdownMenu.Item
+			onclick={() => {
+				linkType = LinkType.MenuItem;
+				stockLinkOpen = true;
+			}}
+		>
 			<BookOpenTextIcon /> Link Stock
+		</DropdownMenu.Item>
+		<DropdownMenu.Item
+			onclick={() => {
+				linkType = LinkType.Bulk;
+				stockLinkOpen = true;
+			}}
+		>
+			<SquareStackIcon /> Bulk Stock
 		</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
@@ -69,4 +89,6 @@
 </AlertDialog.Root>
 
 <EditMenuItem {refetch} bind:open={editOpen} {menuItem} />
-<StockLink bind:open={stockLinkOpen} id={menuItem.menuItemId} linkType={LinkType.MenuItem} />
+{#if stockLinkOpen}
+	<StockLink bind:open={stockLinkOpen} id={menuItem.menuItemId} {linkType} />
+{/if}

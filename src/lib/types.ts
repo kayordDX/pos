@@ -128,4 +128,5 @@ export const enum LinkType {
 	MenuItem,
 	Extra,
 	Option,
+	Bulk,
 }
