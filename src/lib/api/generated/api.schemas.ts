@@ -1311,6 +1311,11 @@ export interface DTOStockOrderItemStatusDTO {
 	name: string;
 }
 
+export interface StockOrderItemLastPriceResponse {
+	lastPrice: number;
+	totalAmount: number;
+}
+
 export interface StockOrderItemLastPriceRequest {
 	[key: string]: unknown;
 }

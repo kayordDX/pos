@@ -3294,6 +3294,12 @@ export interface components {
             id: number;
             name: string;
         };
+        StockOrderItemLastPriceResponse: {
+            /** Format: decimal */
+            lastPrice: number;
+            /** Format: decimal */
+            totalAmount: number;
+        };
         StockOrderItemLastPriceRequest: Record<string, never>;
         StockOrderItemDeleteRequest: Record<string, never>;
         StockOrderItemCreateRequest: {
@@ -6356,7 +6362,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": number;
+                    "application/json": components["schemas"]["StockOrderItemLastPriceResponse"];
                 };
             };
             /** @description Bad Request */

@@ -144,7 +144,7 @@
 			{ query: { enabled: ($formData.stockId ?? 0) > 0 } }
 		)
 	);
-	const lastPricePerUnit = $derived($last.data ?? 0);
+	const lastPriceData = $derived($last.data ?? { lastPrice: 0, totalAmount: 0 });
 </script>
 
 <Dialog.Root bind:open>
@@ -176,6 +176,15 @@
 						<Form.FieldErrors />
 					</Form.Field>
 				{/if}
+
+				<Table.Root>
+					<Table.Body>
+						<Table.Row class="border-none">
+							<Table.Cell class="text-sm text-muted-foreground p-1">Current Total Stock</Table.Cell>
+							<Table.Cell class="text-right p-1">{lastPriceData.totalAmount}</Table.Cell>
+						</Table.Row>
+					</Table.Body>
+				</Table.Root>
 
 				{#if isEdit}
 					<Form.Field {form} name="orderAmount">
@@ -225,7 +234,9 @@
 								<Table.Cell class="text-sm text-muted-foreground p-1">
 									Previous price per unit
 								</Table.Cell>
-								<Table.Cell class="text-right p-1">R {lastPricePerUnit.toFixed(2)}</Table.Cell>
+								<Table.Cell class="text-right p-1">
+									R {lastPriceData.lastPrice.toFixed(2)}
+								</Table.Cell>
 							</Table.Row>
 							<Table.Row class="border-none">
 								<Table.Cell class="text-sm text-muted-foreground p-1">

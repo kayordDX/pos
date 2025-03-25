@@ -2627,8 +2627,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "number",
-                  "format": "decimal"
+                  "$ref": "#/components/schemas/StockOrderItemLastPriceResponse"
                 }
               }
             }
@@ -12388,6 +12387,24 @@
           },
           "name": {
             "type": "string"
+          }
+        }
+      },
+      "StockOrderItemLastPriceResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "lastPrice",
+          "totalAmount"
+        ],
+        "properties": {
+          "lastPrice": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },

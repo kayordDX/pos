@@ -43,6 +43,7 @@ import type {
 	StockOrderGetAllParams,
 	StockOrderItemCreateRequest,
 	StockOrderItemLastPriceParams,
+	StockOrderItemLastPriceResponse,
 	StockOrderItemUpdateBulkRequest,
 	StockOrderItemUpdateRequest,
 	StockOrderUpdateRequest,
@@ -519,7 +520,11 @@ export function createStockOrderItemStatus<
 }
 
 export const stockOrderItemLastPrice = (params: StockOrderItemLastPriceParams) => {
-	return customInstance<number>({ url: `/stock/orderItem/lastPrice`, method: "GET", params });
+	return customInstance<StockOrderItemLastPriceResponse>({
+		url: `/stock/orderItem/lastPrice`,
+		method: "GET",
+		params,
+	});
 };
 
 export const getStockOrderItemLastPriceQueryKey = (params: StockOrderItemLastPriceParams) => {
