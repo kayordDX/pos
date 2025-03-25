@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createRoleGetAll, type EntitiesRole } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Badge, DataTable, createShadTable, renderSnippet } from "@kayord/ui";
+	import { Badge, DataTable, renderSnippet, ShadTable } from "@kayord/ui";
 	import { type ColumnDef } from "@tanstack/table-core";
 
 	const query = createRoleGetAll(status.value.outletId);
@@ -24,13 +24,15 @@
 
 	let data = $derived($query.data ?? []);
 
-	const table = createShadTable({
-		columns,
-		get data() {
-			return data;
-		},
-		enableRowSelection: false,
-	});
+	let tableState = $state(
+		new ShadTable({
+			columns,
+			get data() {
+				return data;
+			},
+			enableRowSelection: false,
+		})
+	);
 </script>
 
 {#snippet roleType(roleType: string)}
@@ -66,8 +68,7 @@
 	<h2>Roles</h2>
 	<DataTable
 		headerClass="pb-2"
-		{table}
-		{columns}
+		bind:tableState
 		isLoading={$query.isPending}
 		noDataMessage="No roles for outlet"
 	/>

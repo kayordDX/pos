@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createUserUnassignedUsers, type UserUserResponse } from "$lib/api";
-	import { DataTable, renderComponent, createSvelteTable } from "@kayord/ui";
+	import { DataTable, renderComponent, ShadTable } from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -79,37 +79,39 @@
 	let data = $derived($query.data?.items ?? []);
 	let rowCount = $derived($query.data?.totalCount ?? 0);
 
-	const table = createSvelteTable({
-		columns,
-		get data() {
-			return data;
-		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		onColumnFiltersChange: (updater) => {
-			if (typeof updater === "function") {
-				columnFilters = updater(columnFilters);
-			} else {
-				columnFilters = updater;
-			}
-		},
-		manualPagination: true,
-		manualFiltering: true,
-		getPaginationRowModel: getPaginationRowModel(),
-		state: {
-			get pagination() {
-				return pagination;
+	let tableState = $state(
+		new ShadTable({
+			columns,
+			get data() {
+				return data;
 			},
-			get columnFilters() {
-				return columnFilters;
+			getCoreRowModel: getCoreRowModel(),
+			getFilteredRowModel: getFilteredRowModel(),
+			onColumnFiltersChange: (updater) => {
+				if (typeof updater === "function") {
+					columnFilters = updater(columnFilters);
+				} else {
+					columnFilters = updater;
+				}
 			},
-		},
-		get rowCount() {
-			return rowCount;
-		},
-		onPaginationChange: setPagination,
-		enableRowSelection: false,
-	});
+			manualPagination: true,
+			manualFiltering: true,
+			getPaginationRowModel: getPaginationRowModel(),
+			state: {
+				get pagination() {
+					return pagination;
+				},
+				get columnFilters() {
+					return columnFilters;
+				},
+			},
+			get rowCount() {
+				return rowCount;
+			},
+			onPaginationChange: setPagination,
+			enableRowSelection: false,
+		})
+	);
 
 	let searchEmail = $state("");
 
@@ -131,8 +133,7 @@
 <div class="m-2">
 	<h2>Unassigned Users</h2>
 	<DataTable
-		{table}
-		{columns}
+		bind:tableState
 		{header}
 		headerClass="pb-2"
 		isLoading={$query.isPending}

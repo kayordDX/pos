@@ -1,12 +1,5 @@
 <script lang="ts">
-	import {
-		Badge,
-		Button,
-		createSvelteTable,
-		DataTable,
-		renderComponent,
-		renderSnippet,
-	} from "@kayord/ui";
+	import { Badge, Button, DataTable, renderComponent, renderSnippet, ShadTable } from "@kayord/ui";
 	import Actions from "./Actions.svelte";
 
 	import AddOrder from "./AddOrder.svelte";
@@ -95,46 +88,48 @@
 	let data = $derived($query.data?.items ?? []);
 	let rowCount = $derived($query.data?.totalCount ?? 0);
 
-	const table = createSvelteTable({
-		columns,
-		get data() {
-			return data;
-		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		onColumnFiltersChange: (updater) => {
-			if (typeof updater === "function") {
-				columnFilters = updater(columnFilters);
-			} else {
-				columnFilters = updater;
-			}
-		},
-		manualPagination: true,
-		manualFiltering: true,
-		manualSorting: true,
-		getSortedRowModel: getSortedRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		state: {
-			get pagination() {
-				return pagination;
+	let tableState = $state(
+		new ShadTable({
+			columns,
+			get data() {
+				return data;
 			},
-			get sorting() {
-				return sorting;
+			getCoreRowModel: getCoreRowModel(),
+			getFilteredRowModel: getFilteredRowModel(),
+			onColumnFiltersChange: (updater) => {
+				if (typeof updater === "function") {
+					columnFilters = updater(columnFilters);
+				} else {
+					columnFilters = updater;
+				}
 			},
-			get columnFilters() {
-				return columnFilters;
+			manualPagination: true,
+			manualFiltering: true,
+			manualSorting: true,
+			getSortedRowModel: getSortedRowModel(),
+			getPaginationRowModel: getPaginationRowModel(),
+			state: {
+				get pagination() {
+					return pagination;
+				},
+				get sorting() {
+					return sorting;
+				},
+				get columnFilters() {
+					return columnFilters;
+				},
+				get columnVisibility() {
+					return { menuId: false };
+				},
 			},
-			get columnVisibility() {
-				return { menuId: false };
+			get rowCount() {
+				return rowCount;
 			},
-		},
-		get rowCount() {
-			return rowCount;
-		},
-		onPaginationChange: setPagination,
-		onSortingChange: setSorting,
-		enableRowSelection: false,
-	});
+			onPaginationChange: setPagination,
+			onSortingChange: setSorting,
+			enableRowSelection: false,
+		})
+	);
 
 	let search = $state("");
 
@@ -176,8 +171,7 @@
 
 <div class="m-2">
 	<DataTable
-		{table}
-		{columns}
+		bind:tableState
 		{header}
 		headerClass="pb-2"
 		isLoading={$query.isPending}

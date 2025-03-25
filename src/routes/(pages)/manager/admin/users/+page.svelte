@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createRoleGetAll, createUserUsers, type UserUserResponse } from "$lib/api";
-	import { DataTable, renderComponent, createSvelteTable, Input } from "@kayord/ui";
+	import { DataTable, renderComponent, Input, ShadTable } from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -79,39 +79,41 @@
 	let data = $derived($query.data?.items ?? []);
 	let rowCount = $derived($query.data?.totalCount ?? 0);
 
-	const table = createSvelteTable({
-		columns,
-		get data() {
-			return data;
-		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		onColumnFiltersChange: (updater) => {
-			if (typeof updater === "function") {
-				columnFilters = updater(columnFilters);
-			} else {
-				columnFilters = updater;
-			}
-		},
-		manualPagination: true,
-		manualFiltering: true,
-		getPaginationRowModel: getPaginationRowModel(),
-		state: {
-			get pagination() {
-				return pagination;
+	let tableState = $state(
+		new ShadTable({
+			columns,
+			get data() {
+				return data;
 			},
-			get columnFilters() {
-				return columnFilters;
+			getCoreRowModel: getCoreRowModel(),
+			getFilteredRowModel: getFilteredRowModel(),
+			onColumnFiltersChange: (updater) => {
+				if (typeof updater === "function") {
+					columnFilters = updater(columnFilters);
+				} else {
+					columnFilters = updater;
+				}
 			},
-		},
-		get rowCount() {
-			return rowCount;
-		},
-		onPaginationChange: setPagination,
-		enableRowSelection: false,
-	});
+			manualPagination: true,
+			manualFiltering: true,
+			getPaginationRowModel: getPaginationRowModel(),
+			state: {
+				get pagination() {
+					return pagination;
+				},
+				get columnFilters() {
+					return columnFilters;
+				},
+			},
+			get rowCount() {
+				return rowCount;
+			},
+			onPaginationChange: setPagination,
+			enableRowSelection: false,
+		})
+	);
 
-	const nameCol = $derived(table.getColumn("roles")!);
+	const nameCol = $derived(tableState.table.getColumn("roles")!);
 
 	const rolesQuery = createRoleGetAll(status.value.outletId);
 	const roles = $derived(
@@ -125,11 +127,11 @@
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
-		const fv = table.getColumn("email")?.getFilterValue() as undefined | string;
+		const fv = tableState.table.getColumn("email")?.getFilterValue() as undefined | string;
 		if (fv) {
 			qb.containsCaseInsensitive("email", fv);
 		}
-		const rv = table.getColumn("roles")?.getFilterValue() as undefined | Array<string>;
+		const rv = tableState.table.getColumn("roles")?.getFilterValue() as undefined | Array<string>;
 		if (rv) {
 			if (fv) {
 				qb.and();
@@ -142,7 +144,7 @@
 		filters = qb.build();
 	});
 
-	const col = $derived(table.getColumn("email"));
+	const col = $derived(tableState.table.getColumn("email"));
 	const debouncedCb = debounce((value: string) => col?.setFilterValue(value), 300);
 </script>
 
@@ -156,7 +158,7 @@
 			class="h-8 w-[150px] lg:w-[250px]"
 		/>
 		<Filter column={nameCol} title="Role" options={roles} />
-		<FilterReset {table} cb={() => debouncedCb("")} />
+		<FilterReset table={tableState.table} cb={() => debouncedCb("")} />
 	</div>
 {/snippet}
 
@@ -164,8 +166,7 @@
 	<h2>Users</h2>
 	<DataTable
 		headerClass="pb-2"
-		{table}
-		{columns}
+		bind:tableState
 		{header}
 		isLoading={$query.isPending}
 		noDataMessage="No unassigned users for outlet"

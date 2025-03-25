@@ -4,10 +4,10 @@
 		Badge,
 		Button,
 		Card,
-		createShadTable,
 		DataTable,
 		renderComponent,
 		renderSnippet,
+		ShadTable,
 		Tooltip,
 	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
@@ -46,13 +46,15 @@
 
 	let data = $derived($query.data ?? []);
 
-	const table = createShadTable({
-		columns,
-		get data() {
-			return data;
-		},
-		enableRowSelection: false,
-	});
+	let tableState = $state(
+		new ShadTable({
+			columns,
+			get data() {
+				return data;
+			},
+			enableRowSelection: false,
+		})
+	);
 </script>
 
 {#snippet header()}
@@ -76,8 +78,7 @@
 	<DataTable
 		headerClass="pb-2"
 		{header}
-		{table}
-		{columns}
+		bind:tableState
 		isLoading={$query.isPending}
 		noDataMessage="No roles for outlet"
 	/>

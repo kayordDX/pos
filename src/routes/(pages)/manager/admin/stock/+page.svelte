@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createStockGetAll, type StockGetAllResponse } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, createSvelteTable, DataTable, renderComponent } from "@kayord/ui";
+	import { Button, DataTable, renderComponent, ShadTable } from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -87,43 +87,45 @@
 	let data = $derived($query.data?.items ?? []);
 	let rowCount = $derived($query.data?.totalCount ?? 0);
 
-	const table = createSvelteTable({
-		columns,
-		get data() {
-			return data;
-		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
-		onColumnFiltersChange: (updater) => {
-			if (typeof updater === "function") {
-				columnFilters = updater(columnFilters);
-			} else {
-				columnFilters = updater;
-			}
-		},
-		manualPagination: true,
-		manualFiltering: true,
-		manualSorting: true,
-		getSortedRowModel: getSortedRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		state: {
-			get pagination() {
-				return pagination;
+	let tableState = $state(
+		new ShadTable({
+			columns,
+			get data() {
+				return data;
 			},
-			get sorting() {
-				return sorting;
+			getCoreRowModel: getCoreRowModel(),
+			getFilteredRowModel: getFilteredRowModel(),
+			onColumnFiltersChange: (updater) => {
+				if (typeof updater === "function") {
+					columnFilters = updater(columnFilters);
+				} else {
+					columnFilters = updater;
+				}
 			},
-			get columnFilters() {
-				return columnFilters;
+			manualPagination: true,
+			manualFiltering: true,
+			manualSorting: true,
+			getSortedRowModel: getSortedRowModel(),
+			getPaginationRowModel: getPaginationRowModel(),
+			state: {
+				get pagination() {
+					return pagination;
+				},
+				get sorting() {
+					return sorting;
+				},
+				get columnFilters() {
+					return columnFilters;
+				},
 			},
-		},
-		get rowCount() {
-			return rowCount;
-		},
-		onPaginationChange: setPagination,
-		onSortingChange: setSorting,
-		enableRowSelection: false,
-	});
+			get rowCount() {
+				return rowCount;
+			},
+			onPaginationChange: setPagination,
+			onSortingChange: setSorting,
+			enableRowSelection: false,
+		})
+	);
 
 	let search = $state("");
 	$effect(() => {
@@ -155,8 +157,7 @@
 <div class="m-2">
 	<h2>Stock Items</h2>
 	<DataTable
-		{table}
-		{columns}
+		bind:tableState
 		{header}
 		headerClass="pb-2"
 		isLoading={$query.isPending}

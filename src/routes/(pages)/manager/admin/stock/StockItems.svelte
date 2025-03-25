@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createStockItemsGetAll, type StockItemsGetAllResponse } from "$lib/api";
-	import { createShadTable, DataTable, Dialog, renderComponent } from "@kayord/ui";
+	import { DataTable, Dialog, renderComponent, ShadTable } from "@kayord/ui";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import StockItemActions from "./StockItemActions.svelte";
 
@@ -52,13 +52,15 @@
 		},
 	];
 
-	const table = createShadTable({
-		columns,
-		get data() {
-			return data;
-		},
-		enableRowSelection: false,
-	});
+	let tableState = $state(
+		new ShadTable({
+			columns,
+			get data() {
+				return data;
+			},
+			enableRowSelection: false,
+		})
+	);
 </script>
 
 {#snippet header()}
@@ -72,8 +74,7 @@
 	<Dialog.Content class="max-h-[98%]  max-w-3xl overflow-auto p-2">
 		<div class="flex flex-col gap-4 p-0 mt-0">
 			<DataTable
-				{table}
-				{columns}
+				bind:tableState
 				{header}
 				headerClass="pb-2"
 				isLoading={$query.isPending}
