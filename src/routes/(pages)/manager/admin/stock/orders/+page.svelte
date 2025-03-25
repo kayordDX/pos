@@ -140,6 +140,12 @@
 		}
 		filters = qb.build();
 	});
+
+	$effect(() => {
+		if (pagination.pageIndex > tableState.table.getPageCount() - 1) {
+			pagination.pageIndex = 0;
+		}
+	});
 </script>
 
 {#snippet statusCol(stockOrder: EntitiesStockOrder)}

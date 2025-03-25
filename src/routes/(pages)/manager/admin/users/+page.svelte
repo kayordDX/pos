@@ -144,6 +144,12 @@
 		filters = qb.build();
 	});
 
+	$effect(() => {
+		if (pagination.pageIndex > tableState.table.getPageCount() - 1) {
+			pagination.pageIndex = 0;
+		}
+	});
+
 	const col = $derived(tableState.table.getColumn("email"));
 	const debouncedCb = debounce((value: string) => col?.setFilterValue(value), 300);
 </script>
