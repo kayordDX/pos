@@ -1,6 +1,9 @@
 <script lang="ts">
 	import type { EntitiesMenu } from "$lib/api";
 	import { Card } from "@kayord/ui";
+	import { menu } from "$lib/stores/menu.svelte";
+	import { menuSection } from "$lib/stores/menuSection.svelte";
+	import { cn } from "@kayord/ui/utils";
 
 	interface Props {
 		menus: EntitiesMenu[];
@@ -8,12 +11,10 @@
 	}
 	let { menus, open = $bindable(false) }: Props = $props();
 
-	import { menu } from "$lib/stores/menu.svelte";
-	import { cn } from "@kayord/ui/utils";
-
 	const setMenu = (menuId: number) => {
 		open = false;
 		menu.value.menuId = menuId;
+		menuSection.sectionId = 0;
 	};
 
 	if (menu.value.menuId == 0) {
