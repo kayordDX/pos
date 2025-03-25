@@ -159,7 +159,10 @@
 	const debouncedCb = debounce((value: string) => col?.setFilterValue(value), 300);
 
 	$effect(() => {
-		if (pagination.pageIndex > tableState.table.getPageCount() - 1) {
+		if (
+			tableState.table.getPageCount() > 0 &&
+			pagination.pageIndex > tableState.table.getPageCount() - 1
+		) {
 			pagination.pageIndex = 0;
 		}
 	});
