@@ -3,6 +3,7 @@ import {
 	getAuth,
 	GoogleAuthProvider,
 	onIdTokenChanged,
+	signInWithCustomToken,
 	signInWithPopup,
 	signOut,
 	type User,
@@ -67,6 +68,11 @@ export const signInGoogle = async () => {
 			userId: result.user.uid,
 		},
 	});
+};
+
+export const signInCustomToken = async (token: string) => {
+	const result = await signInWithCustomToken(auth, token);
+	return result;
 };
 
 export const logout = async () => {

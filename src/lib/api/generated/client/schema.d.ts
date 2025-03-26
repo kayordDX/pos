@@ -2036,6 +2036,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/admin/token": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["AdminToken"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/adjustment/{outletId}": {
         parameters: {
             query?: never;
@@ -4330,6 +4346,12 @@ export interface components {
         };
         GenerateRequest: {
             prompt: string;
+        };
+        AdminTokenResponse: {
+            token: string;
+        };
+        AdminTokenRequest: {
+            userId: string;
         };
         AdjustmentGetAllRequest: Record<string, never>;
         AdjustmentCreateRequest: {
@@ -10555,6 +10577,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["ServicesAIGenerateResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    AdminToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["AdminTokenRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["AdminTokenResponse"];
                 };
             };
             /** @description Unauthorized */

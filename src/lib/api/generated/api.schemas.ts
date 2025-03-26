@@ -2508,6 +2508,14 @@ export interface GenerateRequest {
 	prompt: string;
 }
 
+export interface AdminTokenResponse {
+	token: string;
+}
+
+export interface AdminTokenRequest {
+	userId: string;
+}
+
 export interface AdjustmentGetAllRequest {
 	[key: string]: unknown;
 }
