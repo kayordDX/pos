@@ -37,7 +37,9 @@
 			accessorKey: "id",
 			cell: (item) =>
 				renderComponent(Total, {
-					stock: item.row.original,
+					id: item.row.original.id,
+					name: item.row.original.name,
+					totalActual: item.row.original.totalActual,
 					refetch: $query.refetch,
 				}),
 			size: 1000,

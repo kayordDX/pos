@@ -12846,7 +12846,8 @@
           "name",
           "unitId",
           "unitName",
-          "quantity"
+          "quantity",
+          "totalActual"
         ],
         "properties": {
           "id": {
@@ -12868,6 +12869,10 @@
             "type": "string"
           },
           "quantity": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "totalActual": {
             "type": "number",
             "format": "decimal"
           }

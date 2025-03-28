@@ -6,6 +6,7 @@
 	import Actions from "./Actions.svelte";
 	import { LinkIcon } from "@lucide/svelte";
 	import AddLinkStock from "./AddLinkStock.svelte";
+	import Total from "../stock/Total.svelte";
 
 	interface Props {
 		open: boolean;
@@ -39,6 +40,19 @@
 			header: "Unit",
 			accessorKey: "unitName",
 			size: 1000,
+		},
+		{
+			header: "Total",
+			accessorKey: "id",
+			cell: (item) =>
+				renderComponent(Total, {
+					id: item.row.original.stockId,
+					name: item.row.original.name,
+					totalActual: item.row.original.totalActual,
+					refetch: $query.refetch,
+				}),
+			size: 1000,
+			enableSorting: false,
 		},
 		{
 			header: "",

@@ -3445,6 +3445,8 @@ export interface components {
             unitName: string;
             /** Format: decimal */
             quantity: number;
+            /** Format: decimal */
+            totalActual: number;
         };
         StockLinkGetAllRequest: Record<string, never>;
         StockLinkGetResponse: {

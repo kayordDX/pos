@@ -1438,6 +1438,7 @@ export interface StockLinkGetAllResponse {
 	unitId: number;
 	unitName: string;
 	quantity: number;
+	totalActual: number;
 }
 
 export interface StockLinkGetAllRequest {

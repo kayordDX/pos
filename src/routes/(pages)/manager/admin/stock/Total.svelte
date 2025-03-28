@@ -2,19 +2,20 @@
 	import { Badge, Button } from "@kayord/ui";
 	import { SettingsIcon, SigmaIcon } from "@lucide/svelte";
 	import StockItems from "./StockItems.svelte";
-	import type { StockGetAllResponse } from "$lib/api";
 
 	interface Props {
-		stock: StockGetAllResponse;
+		id: number;
+		name: string;
+		totalActual: number;
 		refetch: () => void;
 	}
 
-	let { stock, refetch }: Props = $props();
+	let { id, name, totalActual, refetch }: Props = $props();
 
 	let isOpen = $state(false);
 </script>
 
 <Button size="sm" variant="ghost" onclick={() => (isOpen = true)}>
-	<Badge variant="secondary">{stock.totalActual}</Badge><SettingsIcon />
+	<Badge variant="secondary">{totalActual}</Badge><SettingsIcon />
 </Button>
-<StockItems bind:open={isOpen} id={stock.id} stockName={stock.name} {refetch} />
+<StockItems bind:open={isOpen} {id} stockName={name} {refetch} />
