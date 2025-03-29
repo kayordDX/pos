@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createDivisionGetAll, type EntitiesDivision } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { DataTable, ShadTable } from "@kayord/ui";
+	import { DataTable, createShadTable } from "@kayord/ui";
 	import { type ColumnDef } from "@tanstack/table-core";
 
 	const query = createDivisionGetAll({ outletId: status.value.outletId });
@@ -15,22 +15,20 @@
 
 	let data = $derived($query.data ?? []);
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			get data() {
-				return data;
-			},
-			enableRowSelection: false,
-		})
-	);
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+	});
 </script>
 
 <div class="m-2">
 	<h2>Divisions</h2>
 	<DataTable
 		headerClass="pb-2"
-		bind:tableState
+		{table}
 		isLoading={$query.isPending}
 		noDataMessage="No roles for outlet"
 	/>

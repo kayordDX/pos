@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createTableBookingHistory, type TableBookingHistoryResponse } from "$lib/api";
-	import { Input, DataTable, renderComponent, ShadTable } from "@kayord/ui";
+	import { Input, DataTable, renderComponent, createShadTable } from "@kayord/ui";
 	import { stringToFDate } from "$lib/util";
 	import View from "./View.svelte";
 
@@ -59,23 +59,21 @@
 		} else pagination = updater;
 	};
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			get data() {
-				return data;
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		getCoreRowModel: getCoreRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		state: {
+			get pagination() {
+				return pagination;
 			},
-			getCoreRowModel: getCoreRowModel(),
-			getPaginationRowModel: getPaginationRowModel(),
-			state: {
-				get pagination() {
-					return pagination;
-				},
-			},
-			onPaginationChange: setPagination,
-			enableRowSelection: false,
-		})
-	);
+		},
+		onPaginationChange: setPagination,
+		enableRowSelection: false,
+	});
 </script>
 
 <div class="m-4 flex items-center justify-between">
@@ -90,7 +88,7 @@
 </div>
 
 <DataTable
-	bind:tableState
+	{table}
 	headerClass="pb-2"
 	isLoading={$query.isPending}
 	noDataMessage="No history available"

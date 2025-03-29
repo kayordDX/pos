@@ -4,7 +4,7 @@
 		type StockGetAllResponse,
 		type StockLinkGetResponse,
 	} from "$lib/api";
-	import { Badge, DataTable, Dialog, renderSnippet, ShadTable } from "@kayord/ui";
+	import { Badge, DataTable, Dialog, renderSnippet, createShadTable } from "@kayord/ui";
 	import type { ColumnDef } from "@tanstack/table-core";
 
 	interface Props {
@@ -46,15 +46,13 @@
 		},
 	];
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			get data() {
-				return data;
-			},
-			enableRowSelection: false,
-		})
-	);
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+	});
 </script>
 
 {#snippet linkedType(type: string)}
@@ -80,7 +78,7 @@
 	<Dialog.Content class="max-h-[98%] max-w-3xl overflow-auto p-2">
 		<div class="flex flex-col gap-4 p-0 mt-0">
 			<DataTable
-				bind:tableState
+				{table}
 				{header}
 				headerClass="pb-2"
 				isLoading={$query.isPending}

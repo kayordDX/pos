@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createSupplierGetAll, type DTOSupplierDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, DataTable, renderComponent, ShadTable } from "@kayord/ui";
+	import { Button, DataTable, renderComponent, createShadTable } from "@kayord/ui";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import AddSupplier from "./AddSupplier.svelte";
 	import { PlusIcon } from "@lucide/svelte";
@@ -45,16 +45,14 @@
 
 	let data = $derived($query.data ?? []);
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			get data() {
-				return data;
-			},
-			enableRowSelection: false,
-			enablePaging: false,
-		})
-	);
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+		enablePaging: false,
+	});
 
 	let isOpen = $state(false);
 </script>
@@ -76,7 +74,7 @@
 
 <div class="m-2">
 	<DataTable
-		bind:tableState
+		{table}
 		{header}
 		headerClass="pb-2"
 		isLoading={$query.isPending}

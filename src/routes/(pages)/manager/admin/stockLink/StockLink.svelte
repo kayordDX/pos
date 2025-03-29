@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createStockLinkGetAll, type StockLinkGetAllResponse } from "$lib/api";
 	import { LinkType } from "$lib/types";
-	import { Button, DataTable, Dialog, renderComponent, ShadTable } from "@kayord/ui";
+	import { Button, DataTable, Dialog, renderComponent, createShadTable } from "@kayord/ui";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Actions from "./Actions.svelte";
 	import { LinkIcon } from "@lucide/svelte";
@@ -72,15 +72,13 @@
 		},
 	];
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			get data() {
-				return data;
-			},
-			enableRowSelection: false,
-		})
-	);
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+	});
 </script>
 
 {#snippet header()}
@@ -105,7 +103,7 @@
 	<Dialog.Content class="max-h-[98%] max-w-3xl overflow-auto">
 		<div class="flex flex-col gap-4 p-0 mt-0">
 			<DataTable
-				bind:tableState
+				{table}
 				{header}
 				headerClass="pb-2"
 				isLoading={$query.isPending}

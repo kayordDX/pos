@@ -7,7 +7,7 @@
 		DataTable,
 		renderComponent,
 		renderSnippet,
-		ShadTable,
+		createShadTable,
 		Tooltip,
 	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
@@ -46,15 +46,13 @@
 
 	let data = $derived($query.data ?? []);
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			get data() {
-				return data;
-			},
-			enableRowSelection: false,
-		})
-	);
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+	});
 </script>
 
 {#snippet header()}
@@ -78,7 +76,7 @@
 	<DataTable
 		headerClass="pb-2"
 		{header}
-		bind:tableState
+		{table}
 		isLoading={$query.isPending}
 		noDataMessage="No roles for outlet"
 	/>

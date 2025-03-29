@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { page } from "$app/state";
 	import { createExtraItems, type DTOExtraDTO } from "$lib/api";
-	import { Button, DataTable, renderComponent, ShadTable } from "@kayord/ui";
+	import { Button, DataTable, renderComponent, createShadTable } from "@kayord/ui";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditExtra from "./EditExtra.svelte";
@@ -44,15 +44,13 @@
 
 	let data = $derived($query.data ?? []);
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			get data() {
-				return data;
-			},
-			enableRowSelection: false,
-		})
-	);
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+	});
 </script>
 
 {#snippet header()}
@@ -68,7 +66,7 @@
 <div class="m-2">
 	<DataTable
 		headerClass="pb-2"
-		bind:tableState
+		{table}
 		{header}
 		isLoading={$query.isPending}
 		noDataMessage="No roles for outlet"

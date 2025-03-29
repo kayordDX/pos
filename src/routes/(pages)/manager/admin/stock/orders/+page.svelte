@@ -1,5 +1,12 @@
 <script lang="ts">
-	import { Badge, Button, DataTable, renderComponent, renderSnippet, ShadTable } from "@kayord/ui";
+	import {
+		Badge,
+		Button,
+		DataTable,
+		renderComponent,
+		renderSnippet,
+		createShadTable,
+	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
 
 	import AddOrder from "./AddOrder.svelte";
@@ -88,48 +95,46 @@
 	let data = $derived($query.data?.items ?? []);
 	let rowCount = $derived($query.data?.totalCount ?? 0);
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			get data() {
-				return data;
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		onColumnFiltersChange: (updater) => {
+			if (typeof updater === "function") {
+				columnFilters = updater(columnFilters);
+			} else {
+				columnFilters = updater;
+			}
+		},
+		manualPagination: true,
+		manualFiltering: true,
+		manualSorting: true,
+		getSortedRowModel: getSortedRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		state: {
+			get pagination() {
+				return pagination;
 			},
-			getCoreRowModel: getCoreRowModel(),
-			getFilteredRowModel: getFilteredRowModel(),
-			onColumnFiltersChange: (updater) => {
-				if (typeof updater === "function") {
-					columnFilters = updater(columnFilters);
-				} else {
-					columnFilters = updater;
-				}
+			get sorting() {
+				return sorting;
 			},
-			manualPagination: true,
-			manualFiltering: true,
-			manualSorting: true,
-			getSortedRowModel: getSortedRowModel(),
-			getPaginationRowModel: getPaginationRowModel(),
-			state: {
-				get pagination() {
-					return pagination;
-				},
-				get sorting() {
-					return sorting;
-				},
-				get columnFilters() {
-					return columnFilters;
-				},
-				get columnVisibility() {
-					return { menuId: false };
-				},
+			get columnFilters() {
+				return columnFilters;
 			},
-			get rowCount() {
-				return rowCount;
+			get columnVisibility() {
+				return { menuId: false };
 			},
-			onPaginationChange: setPagination,
-			onSortingChange: setSorting,
-			enableRowSelection: false,
-		})
-	);
+		},
+		get rowCount() {
+			return rowCount;
+		},
+		onPaginationChange: setPagination,
+		onSortingChange: setSorting,
+		enableRowSelection: false,
+	});
 
 	let search = $state("");
 
@@ -142,10 +147,7 @@
 	});
 
 	$effect(() => {
-		if (
-			tableState.table.getPageCount() > 0 &&
-			pagination.pageIndex > tableState.table.getPageCount() - 1
-		) {
+		if (table.getPageCount() > 0 && pagination.pageIndex > table.getPageCount() - 1) {
 			pagination.pageIndex = 0;
 		}
 	});
@@ -180,7 +182,7 @@
 
 <div class="m-2">
 	<DataTable
-		bind:tableState
+		{table}
 		{header}
 		headerClass="pb-2"
 		isLoading={$query.isPending}

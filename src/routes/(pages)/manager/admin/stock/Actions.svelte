@@ -45,8 +45,12 @@
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
-<AddStock {refetch} bind:open={editOpen} {stock} />
-<LinkedItems bind:open={linkedOpen} {stock} />
+{#if editOpen}
+	<AddStock {refetch} bind:open={editOpen} {stock} />
+{/if}
+{#if linkedOpen}
+	<LinkedItems bind:open={linkedOpen} {stock} />
+{/if}
 
 <AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>

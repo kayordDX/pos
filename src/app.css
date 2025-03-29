@@ -122,13 +122,13 @@
 	/* Animations only doing opacity for now */
 	@keyframes enter {
 		from {
-			opacity: var(--tw-enter-opacity, 1);
+			opacity: 1;
 		}
 	}
 
 	@keyframes exit {
 		to {
-			opacity: var(--tw-exit-opacity, 1);
+			opacity: 0;
 		}
 	}
 }

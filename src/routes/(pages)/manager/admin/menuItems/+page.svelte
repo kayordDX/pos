@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createMenuItemGetAll, createMenuList, type MenuItemMenuItemAdminDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, DataTable, Input, renderComponent, ShadTable } from "@kayord/ui";
+	import { Button, DataTable, Input, renderComponent, createShadTable } from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -112,64 +112,59 @@
 	let data = $derived($query.data?.items ?? []);
 	let rowCount = $derived($query.data?.totalCount ?? 0);
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			get data() {
-				return data;
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		getCoreRowModel: getCoreRowModel(),
+		getFilteredRowModel: getFilteredRowModel(),
+		onColumnFiltersChange: (updater) => {
+			if (typeof updater === "function") {
+				columnFilters = updater(columnFilters);
+			} else {
+				columnFilters = updater;
+			}
+		},
+		manualPagination: true,
+		manualFiltering: false,
+		manualSorting: true,
+		getSortedRowModel: getSortedRowModel(),
+		getPaginationRowModel: getPaginationRowModel(),
+		state: {
+			get pagination() {
+				return pagination;
 			},
-			getCoreRowModel: getCoreRowModel(),
-			getFilteredRowModel: getFilteredRowModel(),
-			onColumnFiltersChange: (updater) => {
-				if (typeof updater === "function") {
-					columnFilters = updater(columnFilters);
-				} else {
-					columnFilters = updater;
-				}
+			get sorting() {
+				return sorting;
 			},
-			manualPagination: true,
-			manualFiltering: false,
-			manualSorting: true,
-			getSortedRowModel: getSortedRowModel(),
-			getPaginationRowModel: getPaginationRowModel(),
-			state: {
-				get pagination() {
-					return pagination;
-				},
-				get sorting() {
-					return sorting;
-				},
-				get columnFilters() {
-					return columnFilters;
-				},
-				get columnVisibility() {
-					return { menuId: false };
-				},
+			get columnFilters() {
+				return columnFilters;
 			},
-			get rowCount() {
-				return rowCount;
+			get columnVisibility() {
+				return { menuId: false };
 			},
-			onPaginationChange: setPagination,
-			onSortingChange: setSorting,
-			enableRowSelection: false,
-		})
-	);
+		},
+		get rowCount() {
+			return rowCount;
+		},
+		onPaginationChange: setPagination,
+		onSortingChange: setSorting,
+		enableRowSelection: false,
+	});
 
-	const col = $derived(tableState.table.getColumn("name"));
+	const col = $derived(table.getColumn("name"));
 	const debouncedCb = debounce((value: string) => col?.setFilterValue(value), 300);
 
 	$effect(() => {
-		if (
-			tableState.table.getPageCount() > 0 &&
-			pagination.pageIndex > tableState.table.getPageCount() - 1
-		) {
+		if (table.getPageCount() > 0 && pagination.pageIndex > table.getPageCount() - 1) {
 			pagination.pageIndex = 0;
 		}
 	});
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
-		const fv = tableState.table.getColumn("name")?.getFilterValue() as undefined | string;
+		const fv = table.getColumn("name")?.getFilterValue() as undefined | string;
 		if (fv) {
 			qb.containsCaseInsensitive("name", fv);
 		}
@@ -188,7 +183,7 @@
 		filters = qb.build();
 	});
 
-	const menuCol = $derived(tableState.table.getColumn("menuId")!);
+	const menuCol = $derived(table.getColumn("menuId")!);
 	const queryMenu = createMenuList({ outletId: status.value.outletId });
 	const menus = $derived(
 		$queryMenu.data?.map((m) => {
@@ -213,7 +208,7 @@
 				class="h-8 w-[150px] lg:w-[250px]"
 			/>
 			<MenuFilter column={menuCol} title="Menu" options={menus} />
-			<FilterReset table={tableState.table} cb={() => debouncedCb("")} />
+			<FilterReset {table} cb={() => debouncedCb("")} />
 		</div>
 		<div class="flex gap-2 items-center">
 			<Button size="sm" onclick={() => (addOpen = true)}>
@@ -227,7 +222,7 @@
 <div class="m-2">
 	<h2>Menu Items</h2>
 	<DataTable
-		bind:tableState
+		{table}
 		{header}
 		headerClass="pb-2"
 		isLoading={$query.isPending}

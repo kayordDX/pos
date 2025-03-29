@@ -88,7 +88,9 @@
 	</AlertDialog.Content>
 </AlertDialog.Root>
 
-<EditMenuItem {refetch} bind:open={editOpen} {menuItem} />
+{#if editOpen}
+	<EditMenuItem {refetch} bind:open={editOpen} {menuItem} />
+{/if}
 {#if stockLinkOpen}
 	<StockLink bind:open={stockLinkOpen} id={menuItem.menuItemId} {linkType} />
 {/if}

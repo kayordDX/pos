@@ -15,7 +15,7 @@
 		Loader,
 		renderComponent,
 		renderSnippet,
-		ShadTable,
+		createShadTable,
 		toast,
 	} from "@kayord/ui";
 	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
@@ -71,27 +71,25 @@
 
 	let rowSelection: RowSelectionState = $state({});
 
-	let tableState = $state(
-		new ShadTable({
-			columns,
-			getRowId: (row) => row.stockId.toString(),
-			get data() {
-				return data;
+	const table = createShadTable({
+		columns,
+		getRowId: (row) => row.stockId.toString(),
+		get data() {
+			return data;
+		},
+		state: {
+			get rowSelection() {
+				return rowSelection;
 			},
-			state: {
-				get rowSelection() {
-					return rowSelection;
-				},
-			},
-			enableRowSelection: true,
-			enablePaging: false,
-			onRowSelectionChange: (updater) => {
-				if (updater instanceof Function) {
-					rowSelection = updater(rowSelection);
-				} else rowSelection = updater;
-			},
-		})
-	);
+		},
+		enableRowSelection: true,
+		enablePaging: false,
+		onRowSelectionChange: (updater) => {
+			if (updater instanceof Function) {
+				rowSelection = updater(rowSelection);
+			} else rowSelection = updater;
+		},
+	});
 
 	const bulkEditMutation = createStockOrderItemUpdateBulk();
 
@@ -185,7 +183,7 @@
 		</Card.Root>
 
 		<DataTable
-			bind:tableState
+			{table}
 			headerClass="pb-2"
 			isLoading={$query.isPending}
 			noDataMessage="No order items"
