@@ -9,9 +9,9 @@
 	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
 
-	import AddOrder from "./AddOrder.svelte";
+	import AddAllocation from "./AddAllocation.svelte";
 
-	let addOrderOpen = $state(false);
+	let addAllocateOpen = $state(false);
 
 	import { createStockOrderGetAll, type EntitiesStockOrder } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
@@ -168,12 +168,12 @@
 		<div class="flex gap-2 items-center">
 			<div class="flex flex-col gap-1">
 				<h2>Allocate</h2>
-				<Search bind:search name="Orders" />
+				<Search bind:search name="Allocations" />
 			</div>
-			<AddOrder bind:open={addOrderOpen} refetch={$query.refetch} />
+			<AddAllocation bind:open={addAllocateOpen} refetch={$query.refetch} />
 		</div>
 		<div class="flex gap-2 items-center">
-			<Button size="sm" onclick={() => (addOrderOpen = true)}>
+			<Button size="sm" onclick={() => (addAllocateOpen = true)}>
 				<PlusIcon class="h-5 w-5" /> Add
 			</Button>
 		</div>

@@ -948,6 +948,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock/allocate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["StockAllocateGetAll"];
+        put?: never;
+        post: operations["StockAllocateCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/stock/allocate/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["StockAllocateGet"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/section/{sectionId}": {
         parameters: {
             query?: never;
@@ -3531,6 +3563,62 @@ export interface components {
             /** Format: int32 */
             unitId: number;
             hasVat: boolean;
+        };
+        CommonModelsPaginatedListOfStockAllocateDTO: {
+            items: components["schemas"]["DTOStockAllocateDTO"][];
+            /** Format: int32 */
+            pageNumber: number;
+            /** Format: int32 */
+            totalPages: number;
+            /** Format: int32 */
+            totalCount: number;
+            hasPreviousPage: boolean;
+            hasNextPage: boolean;
+        };
+        DTOStockAllocateDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            toOutletId: number;
+            comment: string;
+            /** Format: int32 */
+            stockAllocateStatusId: number;
+            stockAllocateStatus: components["schemas"]["DTOStockAllocateStatusDTO"];
+            /** Format: int32 */
+            fromDivisionId: number;
+            fromDivision: components["schemas"]["ManagerOrderViewDivisionDTO"];
+            /** Format: int32 */
+            toDivisionId: number;
+            toDivision: components["schemas"]["ManagerOrderViewDivisionDTO"];
+            assignedUserId: string;
+            assignedUser?: components["schemas"]["DTOUserDTO"] | null;
+            fromUserId: string;
+            fromUser?: components["schemas"]["DTOUserDTO"] | null;
+            /** Format: date-time */
+            created: string;
+            /** Format: date-time */
+            completed: string;
+        };
+        DTOStockAllocateStatusDTO: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        StockAllocateGetAllRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        StockAllocateGetRequest: Record<string, never>;
+        StockAllocateCreateRequest: {
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            toOutletId: number;
+            comment: string;
+            /** Format: int32 */
+            fromDivisionId: number;
+            /** Format: int32 */
+            toDivisionId: number;
+            assignedUserId: string;
         };
         SectionUpdateRequest: {
             /** Format: int32 */
@@ -7042,6 +7130,126 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockAllocateGetAll: {
+        parameters: {
+            query: {
+                outletId: number;
+                sorts?: string | null;
+                filters?: string | null;
+                page?: number | null;
+                pageSize?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfStockAllocateDTO"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockAllocateCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockAllocateCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockOrder"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockAllocateGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DTOStockAllocateDTO"];
                 };
             };
             /** @description Unauthorized */

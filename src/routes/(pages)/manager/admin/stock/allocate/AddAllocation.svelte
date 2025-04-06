@@ -1,7 +1,7 @@
 <script lang="ts">
-	import type { EntitiesStockOrder } from "$lib/api";
+	import type { DTOStockAllocateDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Dialog, Form, Input, Select, toast } from "@kayord/ui";
+	import { Button, Dialog, Form, Input, Label, Select, Switch, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
@@ -10,36 +10,40 @@
 		createStockOrderUpdate,
 		createSupplierGetAll,
 		createStockDivisionGetAll,
+		createStockAllocateCreate,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 
 	interface Props {
 		refetch: () => void;
 		open: boolean;
-		order?: EntitiesStockOrder;
+		allocate?: DTOStockAllocateDTO;
 	}
-	let { refetch, open = $bindable(false), order }: Props = $props();
+	let { refetch, open = $bindable(false), allocate }: Props = $props();
 
-	const isEdit = $derived(order != null);
+	const isEdit = $derived(allocate != null);
 
-	const editMutation = createStockOrderUpdate();
-	const createMutation = createStockOrderCreate();
+	// const editMutation = createStockAllocate();
+	const createMutation = createStockAllocateCreate();
 
 	const suppliersQuery = createSupplierGetAll({ outletId: status.value.outletId });
 	const divisionQuery = createStockDivisionGetAll({ outletId: status.value.outletId });
 	const suppliers = $derived($suppliersQuery.data ?? []);
 	const divisions = $derived($divisionQuery.data ?? []);
-	const supplierSelect = $derived(
-		suppliers.find((i) => i.id === $formData.supplierId)?.name ?? "Select Supplier"
-	);
+	// const supplierSelect = $derived(
+	// 	suppliers.find((i) => i.id === $formData.supplierId)?.name ?? "Select Supplier"
+	// );
 	const divisionSelect = $derived(
-		divisions.find((i) => i.divisionId === $formData.divisionId)?.divisionName ?? "Select Division"
+		divisions.find((i) => i.divisionId === $formData.fromDivisionId)?.divisionName ??
+			"Select Division"
 	);
 
 	const schema = z.object({
-		orderNumber: z.string().min(1, { message: "Order Number is Required" }),
-		divisionId: z.number().min(1, { message: "Division is Required" }),
-		supplierId: z.number().min(1, { message: "Supplier is Required" }),
+		comment: z.string().min(1, { message: "Comment is Required" }),
+		toOutletId: z.number().min(1, { message: "Outlet is Required" }),
+		fromDivisionId: z.number().min(1, { message: "Division is Required" }),
+		toDivisionId: z.number().min(1, { message: "Supplier is Required" }),
+		assignedUserId: z.string().min(1, { message: "Assigned User is Required" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -47,25 +51,27 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
-					data: {
-						id: order?.id ?? 0,
-						orderNumber: data.orderNumber,
-						divisionId: data.divisionId,
-						supplierId: data.supplierId,
-					},
-				});
-				toast.info("Edited Menu");
+				// await $editMutation.mutateAsync({
+				// 	data: {
+				// 		id: order?.id ?? 0,
+				// 		orderNumber: data.orderNumber,
+				// 		divisionId: data.divisionId,
+				// 		supplierId: data.supplierId,
+				// 	},
+				// });
+				toast.info("Edited Allocation");
 			} else {
 				await $createMutation.mutateAsync({
 					data: {
-						orderNumber: data.orderNumber,
+						comment: data.comment,
+						fromDivisionId: data.fromDivisionId,
+						toDivisionId: data.toDivisionId,
+						assignedUserId: data.assignedUserId,
+						toOutletId: data.toOutletId,
 						outletId: status.value.outletId,
-						divisionId: data.divisionId,
-						supplierId: data.supplierId,
 					},
 				});
-				toast.info("Added Menu");
+				toast.info("Added Allocation");
 			}
 			refetch();
 		} catch (err) {
@@ -74,9 +80,11 @@
 	};
 
 	const defaultValues = $derived({
-		orderNumber: order?.orderNumber,
-		divisionId: order?.divisionId,
-		supplierId: order?.supplierId,
+		comment: allocate?.comment,
+		toOutletId: allocate?.toOutletId ?? status.value.outletId,
+		fromDivisionId: allocate?.fromDivisionId,
+		toDivisionId: allocate?.toDivisionId,
+		assignedUserId: allocate?.assignedUserId,
 	});
 
 	// svelte-ignore state_referenced_locally
@@ -84,6 +92,7 @@
 		SPA: true,
 		validators: zod(schema),
 		onUpdate({ form }) {
+			console.log(form);
 			if (form.valid) {
 				updateMenu(form.data);
 			}
@@ -97,34 +106,38 @@
 			reset({ data: defaultValues });
 		}
 	});
+
+	let isDifferentOutlet = $state(false);
 </script>
 
 <Dialog.Root bind:open>
 	<Dialog.Content class="max-h-[98%] overflow-auto">
 		<form method="POST" use:enhance>
 			<Dialog.Header>
-				<Dialog.Title>{isEdit ? "Edit" : "Add"} Order</Dialog.Title>
-				<Dialog.Description>Complete form to {isEdit ? "Edit" : "Add"} order</Dialog.Description>
+				<Dialog.Title>{isEdit ? "Edit" : "Add"} Allocation</Dialog.Title>
+				<Dialog.Description
+					>Complete form to {isEdit ? "Edit" : "Add"} allocation
+				</Dialog.Description>
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
-				<Form.Field {form} name="orderNumber">
+				<Form.Field {form} name="comment">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Order Number</Form.Label>
-							<Input {...props} bind:value={$formData.orderNumber} />
+							<Form.Label>Comment</Form.Label>
+							<Input {...props} bind:value={$formData.comment} />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
-				<Form.Field {form} name="divisionId">
+				<Form.Field {form} name="fromDivisionId">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Division</Form.Label>
+							<Form.Label>From Division</Form.Label>
 							<Select.Root
 								type="single"
 								allowDeselect={false}
 								onValueChange={(v: string) => {
-									v && ($formData.divisionId = Number(v));
+									v && ($formData.fromDivisionId = Number(v));
 								}}
 							>
 								<Select.Trigger {...props}>
@@ -142,30 +155,10 @@
 					</Form.Control>
 					<Form.FieldErrors class="text-destructive text-sm" />
 				</Form.Field>
-				<Form.Field {form} name="supplierId">
-					<Form.Control>
-						{#snippet children({ props })}
-							<Form.Label>Supplier</Form.Label>
-							<Select.Root
-								type="single"
-								allowDeselect={false}
-								onValueChange={(v: string) => {
-									v && ($formData.supplierId = Number(v));
-								}}
-							>
-								<Select.Trigger {...props}>
-									{supplierSelect}
-								</Select.Trigger>
-								<Select.Content>
-									{#each suppliers ?? [] as result}
-										<Select.Item value={result.id.toString()}>{result.name}</Select.Item>
-									{/each}
-								</Select.Content>
-							</Select.Root>
-						{/snippet}
-					</Form.Control>
-					<Form.FieldErrors class="text-destructive text-sm" />
-				</Form.Field>
+				<div class="flex items-center space-x-2">
+					<Switch id="different-outlet" bind:checked={isDifferentOutlet} />
+					<Label for="different-outlet">Different Outlet</Label>
+				</div>
 			</div>
 			<Dialog.Footer class="gap-2">
 				<Button type="submit">Submit</Button>
