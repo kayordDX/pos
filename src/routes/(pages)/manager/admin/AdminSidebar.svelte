@@ -21,9 +21,9 @@
 		BookOpenTextIcon,
 		WarehouseIcon,
 		StoreIcon,
-		Move3DIcon,
 		ShieldUserIcon,
 		ComponentIcon,
+		PackageOpenIcon,
 	} from "@lucide/svelte";
 
 	const menuItems = [
@@ -111,11 +111,11 @@
 					href: "/manager/admin/suppliers",
 					icon: StoreIcon,
 				},
-				// {
-				// 	title: "Allocate",
-				// 	href: "/manager/admin/allocate",
-				// 	icon: Move3DIcon,
-				// },
+				{
+					title: "Allocate",
+					href: "/manager/admin/stock/allocate",
+					icon: PackageOpenIcon,
+				},
 			],
 		},
 		{
