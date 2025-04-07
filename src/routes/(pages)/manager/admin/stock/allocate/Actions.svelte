@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { Button, DropdownMenu } from "@kayord/ui";
 	import { EllipsisVerticalIcon, ViewIcon } from "@lucide/svelte";
-	import { type EntitiesStockOrder } from "$lib/api";
+	import { type DTOStockAllocateDTO } from "$lib/api";
 	import { goto } from "$app/navigation";
 
 	interface Props {
 		refetch: () => void;
-		stockOrder: EntitiesStockOrder;
+		stockAllocate: DTOStockAllocateDTO;
 	}
 
-	let { stockOrder, refetch }: Props = $props();
+	let { stockAllocate, refetch }: Props = $props();
 </script>
 
 <DropdownMenu.Root>
@@ -19,7 +19,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item onclick={() => goto(`/manager/admin/stock/allocate/${stockOrder.id}`)}>
+		<DropdownMenu.Item onclick={() => goto(`/manager/admin/stock/allocate/${stockAllocate.id}`)}>
 			<ViewIcon /> View
 		</DropdownMenu.Item>
 	</DropdownMenu.Content>

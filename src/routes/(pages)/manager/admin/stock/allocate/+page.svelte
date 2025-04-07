@@ -13,7 +13,7 @@
 
 	let addAllocateOpen = $state(false);
 
-	import { createStockOrderGetAll, type EntitiesStockOrder } from "$lib/api";
+	import { type DTOStockAllocateDTO, createStockAllocateGetAll } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import {
 		getCoreRowModel,
@@ -30,21 +30,34 @@
 	import Search from "$lib/components/Search.svelte";
 	import QueryBuilder from "fluent-querykit";
 
-	const columns: ColumnDef<EntitiesStockOrder>[] = [
+	const columns: ColumnDef<DTOStockAllocateDTO>[] = [
 		{
-			header: "Order Number",
-			accessorKey: "orderNumber",
+			header: "Comment",
+			accessorKey: "comment",
 			size: 1000,
 		},
 		{
 			header: "Status",
-			accessorKey: "stockOrderStatus.name",
+			accessorKey: "stockAllocateStatus.name",
 			cell: (item) => renderSnippet(statusCol, item.row.original),
 			size: 1000,
 		},
 		{
-			header: "Supplier",
-			accessorKey: "supplier.name",
+			header: "From",
+			accessorKey: "fromDivision.divisionName",
+			cell: (item) => renderSnippet(fromCol, item.row.original),
+
+			size: 1000,
+		},
+		{
+			header: "To",
+			accessorKey: "toDivision.divisionName",
+			cell: (item) => renderSnippet(toCol, item.row.original),
+			size: 1000,
+		},
+		{
+			header: "Assigned",
+			accessorKey: "assignedUser.name",
 			size: 1000,
 		},
 		{
@@ -52,7 +65,7 @@
 			accessorKey: "menuItemId",
 			cell: (item) =>
 				renderComponent(Actions, {
-					stockOrder: item.row.original,
+					stockAllocate: item.row.original,
 					refetch: $query.refetch,
 				}),
 			size: 10,
@@ -83,7 +96,7 @@
 	);
 
 	const query = $derived(
-		createStockOrderGetAll({
+		createStockAllocateGetAll({
 			page: pagination.pageIndex + 1,
 			pageSize: 10,
 			filters,
@@ -141,7 +154,7 @@
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
 		if (search) {
-			qb.containsCaseInsensitive("orderNumber", search);
+			qb.containsCaseInsensitive("comment", search);
 		}
 		filters = qb.build();
 	});
@@ -153,14 +166,30 @@
 	});
 </script>
 
-{#snippet statusCol(stockOrder: EntitiesStockOrder)}
+{#snippet statusCol(allocate: DTOStockAllocateDTO)}
 	{@const v =
-		stockOrder.stockOrderStatusId == 1
+		allocate.stockAllocateStatusId == 1
 			? "secondary"
-			: stockOrder.stockOrderStatusId == 2
+			: allocate.stockAllocateStatusId == 2
 				? "default"
 				: "outline"}
-	<Badge variant={v}>{stockOrder.stockOrderStatus.name}</Badge>
+	<Badge variant={v}>{allocate.stockAllocateStatus.name}</Badge>
+{/snippet}
+
+{#snippet fromCol(allocate: DTOStockAllocateDTO)}
+	{#if allocate.outletId == status.value.outletId}
+		{allocate.fromDivision.divisionName}
+	{:else}
+		{allocate.outlet.name} - {allocate.fromDivision.divisionName}
+	{/if}
+{/snippet}
+
+{#snippet toCol(allocate: DTOStockAllocateDTO)}
+	{#if allocate.outletId == status.value.outletId}
+		{allocate.toDivision.divisionName}
+	{:else}
+		{allocate.toOutlet.name} - {allocate.toDivision.divisionName}
+	{/if}
 {/snippet}
 
 {#snippet header()}

@@ -1554,7 +1554,9 @@ export type DTOStockAllocateDTOFromUser = DTOUserDTO | null;
 export interface DTOStockAllocateDTO {
 	id: number;
 	outletId: number;
+	outlet: DTOOutletDTOBasic;
 	toOutletId: number;
+	toOutlet: DTOOutletDTOBasic;
 	comment: string;
 	stockAllocateStatusId: number;
 	stockAllocateStatus: DTOStockAllocateStatusDTO;
@@ -1570,6 +1572,18 @@ export interface DTOStockAllocateDTO {
 	fromUser?: DTOStockAllocateDTOFromUser;
 	created: string;
 	completed: string;
+}
+
+export interface DTOOutletDTOBasic {
+	id: number;
+	name: string;
+	vatNumber: string;
+	/** @nullable */
+	address?: string | null;
+	/** @nullable */
+	company?: string | null;
+	/** @nullable */
+	registration?: string | null;
 }
 
 export interface DTOStockAllocateStatusDTO {

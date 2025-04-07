@@ -3612,8 +3612,10 @@ export interface components {
             id: number;
             /** Format: int32 */
             outletId: number;
+            outlet: components["schemas"]["DTOOutletDTOBasic"];
             /** Format: int32 */
             toOutletId: number;
+            toOutlet: components["schemas"]["DTOOutletDTOBasic"];
             comment: string;
             /** Format: int32 */
             stockAllocateStatusId: number;
@@ -3632,6 +3634,15 @@ export interface components {
             created: string;
             /** Format: date-time */
             completed: string;
+        };
+        DTOOutletDTOBasic: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            vatNumber: string;
+            address?: string | null;
+            company?: string | null;
+            registration?: string | null;
         };
         DTOStockAllocateStatusDTO: {
             /** Format: int32 */
