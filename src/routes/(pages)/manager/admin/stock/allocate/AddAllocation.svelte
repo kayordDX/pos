@@ -1,16 +1,15 @@
 <script lang="ts">
 	import type { DTOStockAllocateDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Dialog, Form, Input, Label, Select, Switch, toast } from "@kayord/ui";
+	import { Button, Dialog, Form, Input, Label, Select, Combobox, Switch, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import {
-		createStockOrderCreate,
-		createStockOrderUpdate,
-		createSupplierGetAll,
 		createStockDivisionGetAll,
 		createStockAllocateCreate,
+		createBusinessGetOutlets,
+		createDivisionGetUsers,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 
@@ -26,23 +25,18 @@
 	// const editMutation = createStockAllocate();
 	const createMutation = createStockAllocateCreate();
 
-	const suppliersQuery = createSupplierGetAll({ outletId: status.value.outletId });
-	const divisionQuery = createStockDivisionGetAll({ outletId: status.value.outletId });
-	const suppliers = $derived($suppliersQuery.data ?? []);
-	const divisions = $derived($divisionQuery.data ?? []);
-	// const supplierSelect = $derived(
-	// 	suppliers.find((i) => i.id === $formData.supplierId)?.name ?? "Select Supplier"
-	// );
-	const divisionSelect = $derived(
-		divisions.find((i) => i.divisionId === $formData.fromDivisionId)?.divisionName ??
-			"Select Division"
+	const outletsQuery = createBusinessGetOutlets(status.value.outletId);
+	const outlets = $derived($outletsQuery.data ?? []);
+
+	const outletSelect = $derived(
+		outlets.find((i) => i.id === $formData.toOutletId)?.name ?? "Select Outlet"
 	);
 
 	const schema = z.object({
 		comment: z.string().min(1, { message: "Comment is Required" }),
 		toOutletId: z.number().min(1, { message: "Outlet is Required" }),
-		fromDivisionId: z.number().min(1, { message: "Division is Required" }),
-		toDivisionId: z.number().min(1, { message: "Supplier is Required" }),
+		fromDivisionId: z.number().min(1, { message: "From Division is Required" }),
+		toDivisionId: z.number().min(1, { message: "To Division is Required" }),
 		assignedUserId: z.string().min(1, { message: "Assigned User is Required" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
@@ -108,6 +102,26 @@
 	});
 
 	let isDifferentOutlet = $state(false);
+
+	const fromDivisionQuery = createStockDivisionGetAll({ outletId: status.value.outletId });
+	const fromDivisions = $derived($fromDivisionQuery.data ?? []);
+	const fromDivisionSelect = $derived(
+		fromDivisions.find((i) => i.divisionId === $formData.fromDivisionId)?.divisionName ??
+			"Select Division"
+	);
+
+	const toDivisionQuery = $derived(createStockDivisionGetAll({ outletId: $formData.toOutletId }));
+	const toDivisions = $derived($toDivisionQuery.data ?? []);
+	const toDivisionSelect = $derived(
+		toDivisions.find((i) => i.divisionId === $formData.toDivisionId)?.divisionName ??
+			"Select Division"
+	);
+
+	const divisionUsersQuery = createDivisionGetUsers($formData.toOutletId);
+	const divisionUsers = $derived($divisionUsersQuery.data ?? []);
+	const divisionUserSelect = $derived(
+		divisionUsers.find((i) => i.userId === $formData.assignedUserId)?.name ?? "Select User"
+	);
 </script>
 
 <Dialog.Root bind:open>
@@ -129,6 +143,38 @@
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
+				<div class="flex items-center space-x-2">
+					<Switch id="different-outlet" bind:checked={isDifferentOutlet} />
+					<Label for="different-outlet">Different Outlet</Label>
+				</div>
+				{#if isDifferentOutlet}
+					<Form.Field {form} name="toOutletId">
+						<Form.Control>
+							{#snippet children({ props })}
+								<Form.Label>To Outlet</Form.Label>
+								<Select.Root
+									type="single"
+									allowDeselect={false}
+									onValueChange={(v: string) => {
+										v && ($formData.toOutletId = Number(v));
+									}}
+								>
+									<Select.Trigger {...props}>
+										{outletSelect}
+									</Select.Trigger>
+									<Select.Content>
+										{#each outlets ?? [] as result}
+											<Select.Item value={result.id.toString()}>
+												{result.name}
+											</Select.Item>
+										{/each}
+									</Select.Content>
+								</Select.Root>
+							{/snippet}
+						</Form.Control>
+						<Form.FieldErrors class="text-destructive text-sm" />
+					</Form.Field>
+				{/if}
 				<Form.Field {form} name="fromDivisionId">
 					<Form.Control>
 						{#snippet children({ props })}
@@ -141,13 +187,13 @@
 								}}
 							>
 								<Select.Trigger {...props}>
-									{divisionSelect}
+									{fromDivisionSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each divisions ?? [] as result}
-										<Select.Item value={result.divisionId.toString()}
-											>{result.divisionName}</Select.Item
-										>
+									{#each fromDivisions ?? [] as result}
+										<Select.Item value={result.divisionId.toString()}>
+											{result.divisionName}
+										</Select.Item>
 									{/each}
 								</Select.Content>
 							</Select.Root>
@@ -155,10 +201,46 @@
 					</Form.Control>
 					<Form.FieldErrors class="text-destructive text-sm" />
 				</Form.Field>
-				<div class="flex items-center space-x-2">
-					<Switch id="different-outlet" bind:checked={isDifferentOutlet} />
-					<Label for="different-outlet">Different Outlet</Label>
-				</div>
+				<Form.Field {form} name="toDivisionId">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>To Division</Form.Label>
+							<Select.Root
+								type="single"
+								allowDeselect={false}
+								onValueChange={(v: string) => {
+									v && ($formData.toDivisionId = Number(v));
+								}}
+							>
+								<Select.Trigger {...props}>
+									{toDivisionSelect}
+								</Select.Trigger>
+								<Select.Content>
+									{#each toDivisions ?? [] as result}
+										<Select.Item value={result.divisionId.toString()}>
+											{result.divisionName}
+										</Select.Item>
+									{/each}
+								</Select.Content>
+							</Select.Root>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors class="text-destructive text-sm" />
+				</Form.Field>
+				<Form.Field {form} name="assignedUserId">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Assigned User</Form.Label>
+							<Combobox
+								{...props}
+								bind:value={$formData.assignedUserId}
+								name="User"
+								items={divisionUsers.map((i) => ({ value: i.userId, label: i.name }))}
+							/>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors class="text-destructive text-sm" />
+				</Form.Field>
 			</div>
 			<Dialog.Footer class="gap-2">
 				<Button type="submit">Submit</Button>

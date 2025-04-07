@@ -2348,6 +2348,16 @@ export interface ExtraCreateRequest {
 	outletId: number;
 }
 
+export interface DivisionGetUsersResponse {
+	userId: string;
+	email: string;
+	name: string;
+}
+
+export interface DivisionGetUsersRequest {
+	[key: string]: unknown;
+}
+
 export interface DivisionGetAllRequest {
 	[key: string]: unknown;
 }
@@ -2483,6 +2493,10 @@ export interface CashUpUserCreateRequest {
 export interface CashUpUserCloseRequest {
 	outletId: number;
 	userId: string;
+}
+
+export interface BusinessGetOutletsRequest {
+	[key: string]: unknown;
 }
 
 export interface BusinessGetRequest {

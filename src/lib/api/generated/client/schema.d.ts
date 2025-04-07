@@ -1796,6 +1796,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/division/users/{divisionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DivisionGetUsers"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/division": {
         parameters: {
             query?: never;
@@ -1950,6 +1966,22 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["CashUpUserClose"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/business/outlets/{outletId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BusinessGetOutlets"];
+        put?: never;
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -4265,6 +4297,12 @@ export interface components {
             /** Format: int32 */
             outletId: number;
         };
+        DivisionGetUsersResponse: {
+            userId: string;
+            email: string;
+            name: string;
+        };
+        DivisionGetUsersRequest: Record<string, never>;
         DivisionGetAllRequest: Record<string, never>;
         ClockListRequest: Record<string, never>;
         EntitiesClock: {
@@ -4380,6 +4418,7 @@ export interface components {
             outletId: number;
             userId: string;
         };
+        BusinessGetOutletsRequest: Record<string, never>;
         BusinessGetRequest: Record<string, never>;
         BusinessEditRequest: {
             /** Format: int32 */
@@ -9999,6 +10038,44 @@ export interface operations {
             };
         };
     };
+    DivisionGetUsers: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                divisionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["DivisionGetUsersResponse"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     DivisionGetAll: {
         parameters: {
             query: {
@@ -10380,6 +10457,44 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CashUpUserDetailResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BusinessGetOutlets: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                outletId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesOutlet"][];
                 };
             };
             /** @description Unauthorized */

@@ -16,10 +16,77 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 
-import type { DivisionGetAllParams, EntitiesDivision, InternalErrorResponse } from "./api.schemas";
+import type {
+	DivisionGetAllParams,
+	DivisionGetUsersResponse,
+	EntitiesDivision,
+	InternalErrorResponse,
+} from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType } from "../mutator/customInstance.svelte";
+
+export const divisionGetUsers = (divisionId: number) => {
+	return customInstance<DivisionGetUsersResponse[]>({
+		url: `/division/users/${divisionId}`,
+		method: "GET",
+	});
+};
+
+export const getDivisionGetUsersQueryKey = (divisionId: number) => {
+	return [`/division/users/${divisionId}`] as const;
+};
+
+export const getDivisionGetUsersQueryOptions = <
+	TData = Awaited<ReturnType<typeof divisionGetUsers>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	divisionId: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof divisionGetUsers>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getDivisionGetUsersQueryKey(divisionId);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof divisionGetUsers>>> = () =>
+		divisionGetUsers(divisionId);
+
+	return { queryKey, queryFn, enabled: !!divisionId, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof divisionGetUsers>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type DivisionGetUsersQueryResult = NonNullable<Awaited<ReturnType<typeof divisionGetUsers>>>;
+export type DivisionGetUsersQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createDivisionGetUsers<
+	TData = Awaited<ReturnType<typeof divisionGetUsers>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	divisionId: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof divisionGetUsers>>, TError, TData>
+		>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getDivisionGetUsersQueryOptions(divisionId, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
 
 export const divisionGetAll = (params: DivisionGetAllParams) => {
 	return customInstance<EntitiesDivision[]>({ url: `/division`, method: "GET", params });

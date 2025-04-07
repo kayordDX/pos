@@ -7193,6 +7193,58 @@
         ]
       }
     },
+    "/division/users/{divisionId}": {
+      "get": {
+        "tags": [
+          "Division"
+        ],
+        "operationId": "DivisionGetUsers",
+        "parameters": [
+          {
+            "name": "divisionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DivisionGetUsersResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/division": {
       "get": {
         "tags": [
@@ -7710,6 +7762,58 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/CashUpUserDetailResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/business/outlets/{outletId}": {
+      "get": {
+        "tags": [
+          "Business"
+        ],
+        "operationId": "BusinessGetOutlets",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/EntitiesOutlet"
+                  }
                 }
               }
             }
@@ -15777,6 +15881,30 @@
           }
         }
       },
+      "DivisionGetUsersResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "email",
+          "name"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "DivisionGetUsersRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "DivisionGetAllRequest": {
         "type": "object",
         "additionalProperties": false
@@ -16156,6 +16284,10 @@
             "type": "string"
           }
         }
+      },
+      "BusinessGetOutletsRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "BusinessGetRequest": {
         "type": "object",

@@ -24,12 +24,74 @@ import type {
 	BusinessDeleteRequest,
 	BusinessEditRequest,
 	EntitiesBusiness,
+	EntitiesOutlet,
 	ErrorResponse,
 	InternalErrorResponse,
 } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
+
+export const businessGetOutlets = (outletId: number) => {
+	return customInstance<EntitiesOutlet[]>({ url: `/business/outlets/${outletId}`, method: "GET" });
+};
+
+export const getBusinessGetOutletsQueryKey = (outletId: number) => {
+	return [`/business/outlets/${outletId}`] as const;
+};
+
+export const getBusinessGetOutletsQueryOptions = <
+	TData = Awaited<ReturnType<typeof businessGetOutlets>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	outletId: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof businessGetOutlets>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getBusinessGetOutletsQueryKey(outletId);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGetOutlets>>> = () =>
+		businessGetOutlets(outletId);
+
+	return { queryKey, queryFn, enabled: !!outletId, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof businessGetOutlets>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type BusinessGetOutletsQueryResult = NonNullable<
+	Awaited<ReturnType<typeof businessGetOutlets>>
+>;
+export type BusinessGetOutletsQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createBusinessGetOutlets<
+	TData = Awaited<ReturnType<typeof businessGetOutlets>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	outletId: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof businessGetOutlets>>, TError, TData>
+		>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getBusinessGetOutletsQueryOptions(outletId, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
 
 export const businessGetAll = () => {
 	return customInstance<EntitiesBusiness[]>({ url: `/business`, method: "GET" });
