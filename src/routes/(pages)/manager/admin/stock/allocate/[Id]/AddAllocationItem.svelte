@@ -1,44 +1,36 @@
 <script lang="ts">
-	import type { DTOStockOrderItemDTO } from "$lib/api";
+	import type { DTOStockAllocateItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { Button, Card, Combobox, Dialog, Form, Input, Select, Table, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import {
-		createStockOrderItemCreate,
-		createStockOrderItemUpdate,
-		createStockGetAll,
-		createStockOrderItemStatus,
+		createStockAllocateItemCreate,
+		createStockAllocateItemUpdate,
+		createStockGetAllDivision,
 		createStockOrderItemLastPrice,
 	} from "$lib/api";
-	import { status } from "$lib/stores/status.svelte";
+
 	import QueryBuilder from "fluent-querykit";
 	import { page } from "$app/state";
 
 	interface Props {
 		refetch: () => void;
 		open: boolean;
-		orderItem?: DTOStockOrderItemDTO;
+		divisionId: number;
+		allocateItem?: DTOStockAllocateItemDTO;
 	}
-	let { refetch, open = $bindable(false), orderItem }: Props = $props();
+	let { refetch, open = $bindable(false), divisionId, allocateItem }: Props = $props();
 
-	const isEdit = $derived(orderItem != null);
+	const isEdit = $derived(allocateItem != null);
 
-	const editMutation = createStockOrderItemUpdate();
-	const createMutation = createStockOrderItemCreate();
-
-	const itemStatusQuery = createStockOrderItemStatus();
-	const itemStatus = $derived($itemStatusQuery.data ?? []);
-
-	const itemStatusValue = $derived(itemStatus.find((i) => i.id == $formData.statusId)?.name);
+	const editMutation = createStockAllocateItemUpdate();
+	const createMutation = createStockAllocateItemCreate();
 
 	const schema = z.object({
 		stockId: z.number().min(1, { message: "Stock is Required" }),
-		orderAmount: z.coerce.number().gt(0, { message: "Order Amount is Required" }),
 		actual: z.coerce.number().min(0, { message: "Actual is Required" }),
-		price: z.coerce.number().gt(0, { message: "Price is Required" }),
-		statusId: z.number().min(1, { message: "Status is Required" }),
 	});
 
 	type FormSchema = z.infer<typeof schema>;
@@ -49,22 +41,18 @@
 			if (isEdit) {
 				await $editMutation.mutateAsync({
 					data: {
+						id: allocateItem?.id ?? 0,
 						stockId: data.stockId,
-						stockOrderId: Number(page.params.Id),
-						orderAmount: data.orderAmount,
 						actual: data.actual,
-						price: data.price,
-						stockOrderItemStatusId: data.statusId,
 					},
 				});
 				toast.info("Edited Allocation Item");
 			} else {
 				await $createMutation.mutateAsync({
 					data: {
-						stockOrderId: Number(page.params.Id),
+						stockAllocateId: Number(page.params.Id),
 						stockId: data.stockId,
-						orderAmount: data.orderAmount,
-						price: data.price,
+						actual: data.actual,
 					},
 				});
 				toast.info("Added Allocation Item");
@@ -76,18 +64,15 @@
 	};
 
 	const defaultValues = $derived({
-		stockId: orderItem?.stockId,
-		orderAmount: orderItem?.orderAmount,
-		actual: orderItem?.actual ?? 0,
-		price: orderItem?.price,
-		statusId: orderItem?.stockOrderItemStatusId ?? 1,
+		stockId: allocateItem?.stockId,
+		actual: allocateItem?.actual ?? 0,
 	});
 
 	// svelte-ignore state_referenced_locally
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
-		id: `order-item-${orderItem?.stockId ?? 0}-${orderItem?.stockOrderId ?? 0}`,
+		id: `allocate-item-${allocateItem?.stockId ?? 0}-${allocateItem?.stockId ?? 0}`,
 		onUpdate({ form }) {
 			if (form.valid) {
 				updateMenu(form.data);
@@ -106,12 +91,12 @@
 
 	let filters = $state("");
 	const stockQuery = $derived(
-		createStockGetAll({
+		createStockGetAllDivision({
 			page: 1,
 			pageSize: 10,
 			filters,
 			sorts: "",
-			outletId: status.value.outletId,
+			divisionId: divisionId,
 		})
 	);
 
@@ -129,10 +114,6 @@
 
 	const stockListSelect = $derived(
 		stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unitName})` }))
-	);
-
-	const pricePerUnit = $derived(
-		isNaN($formData.price / $formData.orderAmount) ? 0 : $formData.price / $formData.orderAmount
 	);
 
 	const last = $derived(
@@ -159,7 +140,7 @@
 			<div class="flex flex-col gap-4 p-4">
 				{#if isEdit}
 					<Card.Root class="p-2">
-						{orderItem?.stock.name}
+						{allocateItem?.stock.name}
 					</Card.Root>
 				{:else}
 					<Form.Field {form} name="stockId" class="flex flex-col">

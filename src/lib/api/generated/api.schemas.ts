@@ -1493,7 +1493,47 @@ export interface StockItemsGetAllRequest {
 	[key: string]: unknown;
 }
 
+export interface StockItemsGetResponse {
+	id: number;
+	stockId: number;
+	stockName: string;
+	unitId: number;
+	unitName: string;
+	divisionId: number;
+	divisionName: string;
+	threshold: number;
+	actual: number;
+}
+
+export interface StockItemsGetRequest {
+	[key: string]: unknown;
+}
+
 export interface CommonModelsPaginatedListOfResponse {
+	items: StockGetAllDivisionResponse[];
+	pageNumber: number;
+	totalPages: number;
+	totalCount: number;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
+}
+
+export interface StockGetAllDivisionResponse {
+	id: number;
+	outletId: number;
+	name: string;
+	unitId: number;
+	unitName: string;
+	stockCategoryId: number;
+	totalActual: number;
+	hasVat: boolean;
+}
+
+export type StockGetAllDivisionRequestAllOf = { [key: string]: unknown };
+
+export type StockGetAllDivisionRequest = CommonModelsQueryModel & StockGetAllDivisionRequestAllOf;
+
+export interface CommonModelsPaginatedListOfResponse2 {
 	items: StockGetAllResponse[];
 	pageNumber: number;
 	totalPages: number;
@@ -1530,6 +1570,11 @@ export interface StockCreateRequest {
 	name: string;
 	unitId: number;
 	hasVat: boolean;
+}
+
+export interface StockAllocateUpdateRequest {
+	id: number;
+	stockAllocateStatusId: number;
 }
 
 export type EntitiesStockAllocateItemAllOf = {
@@ -1601,7 +1646,6 @@ export interface StockAllocateItemUpdateRequest {
 	id: number;
 	stockId: number;
 	actual: number;
-	stockAllocateItemStatusId: number;
 }
 
 export interface StockAllocateItemDeleteRequest {
@@ -1609,6 +1653,7 @@ export interface StockAllocateItemDeleteRequest {
 }
 
 export interface StockAllocateItemCreateRequest {
+	stockAllocateId: number;
 	stockId: number;
 	actual: number;
 }
@@ -2837,6 +2882,14 @@ export type StockLinkGetAllParams = {
 
 export type StockItemsGetAllParams = {
 	id: number;
+};
+
+export type StockGetAllDivisionParams = {
+	divisionId: number;
+	sorts?: string | null;
+	filters?: string | null;
+	page?: number | null;
+	pageSize?: number | null;
 };
 
 export type StockDivisionGetAllParams = {

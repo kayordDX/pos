@@ -2335,7 +2335,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse"
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse2"
                 }
               }
             }
@@ -3407,6 +3407,147 @@
         ]
       }
     },
+    "/stock/items/{stockId}/{divisionId}": {
+      "get": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockItemsGet",
+        "parameters": [
+          {
+            "name": "stockId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "divisionId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StockItemsGetResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/stock/division/list": {
+      "get": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockGetAllDivision",
+        "parameters": [
+          {
+            "name": "divisionId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sorts",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/stock/division": {
       "get": {
         "tags": [
@@ -3486,6 +3627,180 @@
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/stock/allocate": {
+      "put": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockAllocateUpdate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockAllocateUpdateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "get": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockAllocateGetAll",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "sorts",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfStockAllocateDTOBasic"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockAllocateCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockAllocateCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesStockOrder"
                 }
               }
             }
@@ -3638,138 +3953,6 @@
               "application/problem+json": {
                 "schema": {
                   "$ref": "#/components/schemas/ErrorResponse"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWTBearerAuth": []
-          }
-        ]
-      }
-    },
-    "/stock/allocate": {
-      "get": {
-        "tags": [
-          "Stock"
-        ],
-        "operationId": "StockAllocateGetAll",
-        "parameters": [
-          {
-            "name": "outletId",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          },
-          {
-            "name": "sorts",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            }
-          },
-          {
-            "name": "filters",
-            "in": "query",
-            "schema": {
-              "type": "string",
-              "nullable": true
-            }
-          },
-          {
-            "name": "page",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "nullable": true
-            }
-          },
-          {
-            "name": "pageSize",
-            "in": "query",
-            "schema": {
-              "type": "integer",
-              "format": "int32",
-              "nullable": true
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfStockAllocateDTOBasic"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          }
-        },
-        "security": [
-          {
-            "JWTBearerAuth": []
-          }
-        ]
-      },
-      "post": {
-        "tags": [
-          "Stock"
-        ],
-        "operationId": "StockAllocateCreate",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/StockAllocateCreateRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
-        "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntitiesStockOrder"
                 }
               }
             }
@@ -13460,7 +13643,155 @@
         "type": "object",
         "additionalProperties": false
       },
+      "StockItemsGetResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "stockId",
+          "stockName",
+          "unitId",
+          "unitName",
+          "divisionId",
+          "divisionName",
+          "threshold",
+          "actual"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockName": {
+            "type": "string"
+          },
+          "unitId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitName": {
+            "type": "string"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionName": {
+            "type": "string"
+          },
+          "threshold": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "actual": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "StockItemsGetRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "CommonModelsPaginatedListOfResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageNumber",
+          "totalPages",
+          "totalCount",
+          "hasPreviousPage",
+          "hasNextPage"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StockGetAllDivisionResponse"
+            }
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
+      "StockGetAllDivisionResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "outletId",
+          "name",
+          "unitId",
+          "unitName",
+          "stockCategoryId",
+          "totalActual",
+          "hasVat"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "unitId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "unitName": {
+            "type": "string"
+          },
+          "stockCategoryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalActual": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "hasVat": {
+            "type": "boolean"
+          }
+        }
+      },
+      "StockGetAllDivisionRequest": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommonModelsQueryModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
+      },
+      "CommonModelsPaginatedListOfResponse2": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -13585,6 +13916,24 @@
           },
           "hasVat": {
             "type": "boolean"
+          }
+        }
+      },
+      "StockAllocateUpdateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "stockAllocateStatusId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockAllocateStatusId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -13802,8 +14151,7 @@
         "required": [
           "id",
           "stockId",
-          "actual",
-          "stockAllocateItemStatusId"
+          "actual"
         ],
         "properties": {
           "id": {
@@ -13817,10 +14165,6 @@
           "actual": {
             "type": "number",
             "format": "decimal"
-          },
-          "stockAllocateItemStatusId": {
-            "type": "integer",
-            "format": "int32"
           }
         }
       },
@@ -13832,10 +14176,15 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
+          "stockAllocateId",
           "stockId",
           "actual"
         ],
         "properties": {
+          "stockAllocateId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "stockId": {
             "type": "integer",
             "format": "int32"

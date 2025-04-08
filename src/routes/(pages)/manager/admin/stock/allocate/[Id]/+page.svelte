@@ -2,7 +2,7 @@
 	import { page } from "$app/state";
 	import {
 		createStockAllocateGet,
-		createStockOrderItemUpdateBulk,
+		createStockAllocateUpdate,
 		type DTOStockAllocateItemDTO,
 	} from "$lib/api";
 	import { getError } from "$lib/types";
@@ -19,7 +19,7 @@
 		toast,
 		Table,
 	} from "@kayord/ui";
-	import { BookXIcon, MoveRightIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
+	import { MoveRightIcon, PlusIcon, WorkflowIcon } from "@lucide/svelte";
 	import AddAllocationItem from "./AddAllocationItem.svelte";
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
@@ -28,6 +28,19 @@
 
 	let addOrderItemOpen = $state(false);
 
+	const stockAllocateMutation = createStockAllocateUpdate();
+	const sendToApprover = async () => {
+		await $stockAllocateMutation.mutateAsync({
+			data: {
+				id: Number(page.params.Id),
+				stockAllocateStatusId: 2,
+			},
+		});
+		$query.refetch();
+	};
+
+	const canEdit = $derived($query.data?.stockAllocateStatusId === 1);
+
 	const columns: ColumnDef<DTOStockAllocateItemDTO>[] = [
 		{
 			header: "Stock",
@@ -35,18 +48,8 @@
 			size: 1000,
 		},
 		{
-			header: "Ordered Amount",
-			accessorKey: "orderAmount",
-			size: 1000,
-		},
-		{
-			header: "Actual",
+			header: "Allocate Actual",
 			accessorKey: "actual",
-			size: 1000,
-		},
-		{
-			header: "Price",
-			accessorKey: "price",
 			size: 1000,
 		},
 		{
@@ -61,8 +64,10 @@
 			enableSorting: false,
 			cell: (item) =>
 				renderComponent(Actions, {
+					canEdit: canEdit,
 					item: item.row.original,
 					refetch: $query.refetch,
+					divisionId: $query.data?.fromDivisionId ?? 0,
 				}),
 			size: 10,
 		},
@@ -91,25 +96,6 @@
 			} else rowSelection = updater;
 		},
 	});
-
-	const bulkEditMutation = createStockOrderItemUpdateBulk();
-
-	const updateSelected = async (isCancel: boolean) => {
-		try {
-			const stockIds: Array<number> = Object.keys(rowSelection).map((i) => Number(i));
-			await $bulkEditMutation.mutateAsync({
-				data: {
-					stockOrderId: Number(page.params.Id),
-					stockIds,
-					stockOrderItemStatusId: isCancel ? 3 : 2,
-				},
-			});
-			$query.refetch();
-			toast.info(`Updated ${Object.keys(rowSelection).length} order items`);
-		} catch (err) {
-			toast.error(getError(err).message);
-		}
-	};
 </script>
 
 {#snippet status(item: DTOStockAllocateItemDTO)}
@@ -144,6 +130,18 @@
 			<div
 				class="border-2 border-secondary p-2 gap-2 rounded-md flex-col justify-between items-center text-secondary-foreground"
 			>
+				<div class="flex items-center gap-2 justify-center">
+					<div class="bg-background/60 p-1 rounded-md">
+						<div class="font-bold">{$query.data.fromDivision.divisionName}</div>
+					</div>
+					<MoveRightIcon />
+					<div class="bg-background/60 p-1 rounded-md">
+						<div class="font-bold">{$query.data.toDivision.divisionName}</div>
+					</div>
+					<div class="bg-background/60 p-1 rounded-md">
+						<div class="font-bold">{$query.data.toOutlet.name}</div>
+					</div>
+				</div>
 				<div class="flex items-center gap-2 justify-between">
 					<div class="flex flex-col">
 						<h1 class="text-xl">{$query.data.comment}</h1>
@@ -154,26 +152,25 @@
 						<Badge variant="outline">Assigned: {$query.data.assignedUser?.name}</Badge>
 					</div>
 				</div>
-				<div class="flex gap-2 justify-between mt-1">
-					<div class="flex items-center gap-2">
-						<div class="bg-background/60 p-1 rounded-md">
-							<div class="font-bold">{$query.data.fromDivision.divisionName}</div>
-						</div>
-						<MoveRightIcon />
-						<div class="bg-background/60 p-1 rounded-md">
-							<div class="font-bold">{$query.data.toDivision.divisionName}</div>
-						</div>
-						<div class="bg-background/60 p-1 rounded-md">
-							<div class="font-bold">{$query.data.toOutlet.name}</div>
-						</div>
-					</div>
+			</div>
+		</Card.Root>
 
+		<div class="mt-2 flex items-center justify-between">
+			<div>
+				{#if canEdit}
+					<Button size="sm" variant="destructive" onclick={sendToApprover}>
+						<WorkflowIcon class="h-5 w-5" /> Send to Approver
+					</Button>
+				{/if}
+			</div>
+			<div>
+				{#if canEdit}
 					<Button size="sm" onclick={() => (addOrderItemOpen = true)}>
 						<PlusIcon class="h-5 w-5" /> Add Item
 					</Button>
-				</div>
+				{/if}
 			</div>
-		</Card.Root>
+		</div>
 
 		<DataTable
 			{table}
@@ -187,5 +184,9 @@
 	{#if $query.error}
 		{@render errorMessage(getError($query.error).message)}
 	{/if}
-	<AddAllocationItem bind:open={addOrderItemOpen} refetch={$query.refetch} />
+	<AddAllocationItem
+		bind:open={addOrderItemOpen}
+		refetch={$query.refetch}
+		divisionId={$query.data?.fromDivisionId ?? 0}
+	/>
 </div>
