@@ -21,7 +21,7 @@ import type {
 
 import type {
 	CommonModelsPaginatedListOfResponse,
-	CommonModelsPaginatedListOfStockAllocateDTO,
+	CommonModelsPaginatedListOfStockAllocateDTOBasic,
 	CommonModelsPaginatedListOfStockOrder,
 	DTOStockAllocateDTO,
 	DTOStockOrderDTO,
@@ -1602,7 +1602,7 @@ export const createStockDelete = <
 	return createMutation(mutationOptions, queryClient);
 };
 export const stockAllocateGetAll = (params: StockAllocateGetAllParams) => {
-	return customInstance<CommonModelsPaginatedListOfStockAllocateDTO>({
+	return customInstance<CommonModelsPaginatedListOfStockAllocateDTOBasic>({
 		url: `/stock/allocate`,
 		method: "GET",
 		params,

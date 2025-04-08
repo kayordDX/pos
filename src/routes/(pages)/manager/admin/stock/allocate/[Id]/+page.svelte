@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { page } from "$app/state";
 	import {
-		createStockOrderGet,
+		createStockAllocateGet,
 		createStockOrderItemUpdateBulk,
-		type DTOStockOrderItemDTO,
+		type DTOStockAllocateItemDTO,
 	} from "$lib/api";
 	import { getError } from "$lib/types";
 	import {
@@ -23,11 +23,11 @@
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
 
-	const query = createStockOrderGet(Number(page.params.Id));
+	const query = createStockAllocateGet(Number(page.params.Id));
 
 	let addOrderItemOpen = $state(false);
 
-	const columns: ColumnDef<DTOStockOrderItemDTO>[] = [
+	const columns: ColumnDef<DTOStockAllocateItemDTO>[] = [
 		{
 			header: "Stock",
 			accessorKey: "stock.name",
@@ -54,20 +54,20 @@
 			size: 1000,
 			cell: (item) => renderSnippet(status, item.row.original),
 		},
-		{
-			header: "",
-			accessorKey: "id",
-			enableSorting: false,
-			cell: (item) =>
-				renderComponent(Actions, {
-					item: item.row.original,
-					refetch: $query.refetch,
-				}),
-			size: 10,
-		},
+		// {
+		// 	header: "",
+		// 	accessorKey: "id",
+		// 	enableSorting: false,
+		// 	cell: (item) =>
+		// 		renderComponent(Actions, {
+		// 			item: item.row.original,
+		// 			refetch: $query.refetch,
+		// 		}),
+		// 	size: 10,
+		// },
 	];
 
-	let data = $derived($query.data?.stockOrderItems ?? []);
+	let data = $derived($query.data?.stockAllocateItems ?? []);
 
 	let rowSelection: RowSelectionState = $state({});
 
@@ -111,21 +111,15 @@
 	};
 </script>
 
-{#snippet status(item: DTOStockOrderItemDTO)}
+{#snippet status(item: DTOStockAllocateItemDTO)}
 	{@const variant =
-		item.stockOrderItemStatusId === 1
+		item.stockAllocateItemStatusId === 1
 			? "default"
-			: item.stockOrderItemStatusId === 2
+			: item.stockAllocateItemStatusId === 2
 				? "secondary"
 				: "outline"}
-	{@const isPartial = item.orderAmount > item.actual && item.actual > 0}
 	<Badge {variant}>
-		{item.stockOrderItemStatus.name}
-		{#if isPartial}
-			<span class="text-xs ml-1">
-				({item.actual}/{item.orderAmount})
-			</span>
-		{/if}
+		{item.stockAllocateItemStatus.name}
 	</Badge>
 {/snippet}
 
@@ -150,18 +144,22 @@
 				class="border-2 border-secondary p-2 rounded-md flex justify-between items-center bg-background/60 text-secondary-foreground"
 			>
 				<div class="flex flex-col">
-					<h2 class="font-bold">Order: {$query.data.orderNumber}</h2>
+					<h2 class="font-bold">Comment: {$query.data.comment}</h2>
 					<div>
-						<Badge>{$query.data.stockOrderStatus.name}</Badge>
+						<Badge>{$query.data.stockAllocateStatus.name}</Badge>
 					</div>
 				</div>
 				<div class="flex flex-col">
 					<div>
-						Division: {$query.data.division.divisionName}
+						Division: {$query.data.fromDivision.divisionName}
 					</div>
 					<div>
-						Supplier: {$query.data.supplier.name}
+						Division: {$query.data.toDivision.divisionName}
 					</div>
+					{$query.data.assignedUser?.name}
+					{$query.data.fromUser?.name}
+					{$query.data.outlet.name}
+					{$query.data.toOutlet.name}
 				</div>
 			</div>
 

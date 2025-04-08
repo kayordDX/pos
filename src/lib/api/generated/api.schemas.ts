@@ -1532,8 +1532,8 @@ export interface StockCreateRequest {
 	hasVat: boolean;
 }
 
-export interface CommonModelsPaginatedListOfStockAllocateDTO {
-	items: DTOStockAllocateDTO[];
+export interface CommonModelsPaginatedListOfStockAllocateDTOBasic {
+	items: DTOStockAllocateDTOBasic[];
 	pageNumber: number;
 	totalPages: number;
 	totalCount: number;
@@ -1544,14 +1544,14 @@ export interface CommonModelsPaginatedListOfStockAllocateDTO {
 /**
  * @nullable
  */
-export type DTOStockAllocateDTOAssignedUser = DTOUserDTO | null;
+export type DTOStockAllocateDTOBasicAssignedUser = DTOUserDTO | null;
 
 /**
  * @nullable
  */
-export type DTOStockAllocateDTOFromUser = DTOUserDTO | null;
+export type DTOStockAllocateDTOBasicFromUser = DTOUserDTO | null;
 
-export interface DTOStockAllocateDTO {
+export interface DTOStockAllocateDTOBasic {
 	id: number;
 	outletId: number;
 	outlet: DTOOutletDTOBasic;
@@ -1566,10 +1566,10 @@ export interface DTOStockAllocateDTO {
 	toDivision: ManagerOrderViewDivisionDTO;
 	assignedUserId: string;
 	/** @nullable */
-	assignedUser?: DTOStockAllocateDTOAssignedUser;
+	assignedUser?: DTOStockAllocateDTOBasicAssignedUser;
 	fromUserId: string;
 	/** @nullable */
-	fromUser?: DTOStockAllocateDTOFromUser;
+	fromUser?: DTOStockAllocateDTOBasicFromUser;
 	created: string;
 	completed: string;
 }
@@ -1594,6 +1594,49 @@ export interface DTOStockAllocateStatusDTO {
 export type StockAllocateGetAllRequestAllOf = { [key: string]: unknown };
 
 export type StockAllocateGetAllRequest = CommonModelsQueryModel & StockAllocateGetAllRequestAllOf;
+
+export type DTOStockAllocateDTOAllOf = {
+	/** @nullable */
+	stockAllocateItems?: DTOStockAllocateItemDTO[] | null;
+};
+
+export type DTOStockAllocateDTO = DTOStockAllocateDTOBasic & DTOStockAllocateDTOAllOf;
+
+export interface DTOStockAllocateItemDTO {
+	id: number;
+	stockId: number;
+	stock: DTOStockDTO;
+	divisionId: number;
+	division: ManagerOrderViewDivisionDTO;
+	allocateAmount: number;
+	actual: number;
+	stockAllocateItemStatusId: number;
+	stockAllocateItemStatus: DTOStockAllocateItemStatusDTO;
+	completed: string;
+}
+
+export interface DTOStockDTO {
+	id: number;
+	outletId: number;
+	name: string;
+	unitId: number;
+	unit: DTOUnitDTO;
+	stockCategoryId: number;
+	/** @nullable */
+	stockItems?: DTOStockItemDTO[] | null;
+	hasVat: boolean;
+}
+
+export interface DTOStockItemDTO {
+	division: ManagerOrderViewDivisionDTO;
+	threshold: number;
+	actual: number;
+}
+
+export interface DTOStockAllocateItemStatusDTO {
+	id: number;
+	name: string;
+}
 
 export interface StockAllocateGetRequest {
 	[key: string]: unknown;

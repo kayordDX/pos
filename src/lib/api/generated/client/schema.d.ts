@@ -3596,8 +3596,8 @@ export interface components {
             unitId: number;
             hasVat: boolean;
         };
-        CommonModelsPaginatedListOfStockAllocateDTO: {
-            items: components["schemas"]["DTOStockAllocateDTO"][];
+        CommonModelsPaginatedListOfStockAllocateDTOBasic: {
+            items: components["schemas"]["DTOStockAllocateDTOBasic"][];
             /** Format: int32 */
             pageNumber: number;
             /** Format: int32 */
@@ -3607,7 +3607,7 @@ export interface components {
             hasPreviousPage: boolean;
             hasNextPage: boolean;
         };
-        DTOStockAllocateDTO: {
+        DTOStockAllocateDTOBasic: {
             /** Format: int32 */
             id: number;
             /** Format: int32 */
@@ -3650,6 +3650,54 @@ export interface components {
             name: string;
         };
         StockAllocateGetAllRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        DTOStockAllocateDTO: components["schemas"]["DTOStockAllocateDTOBasic"] & {
+            stockAllocateItems?: components["schemas"]["DTOStockAllocateItemDTO"][] | null;
+        };
+        DTOStockAllocateItemDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            stockId: number;
+            stock: components["schemas"]["DTOStockDTO"];
+            /** Format: int32 */
+            divisionId: number;
+            division: components["schemas"]["ManagerOrderViewDivisionDTO"];
+            /** Format: decimal */
+            allocateAmount: number;
+            /** Format: decimal */
+            actual: number;
+            /** Format: int32 */
+            stockAllocateItemStatusId: number;
+            stockAllocateItemStatus: components["schemas"]["DTOStockAllocateItemStatusDTO"];
+            /** Format: date-time */
+            completed: string;
+        };
+        DTOStockDTO: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            name: string;
+            /** Format: int32 */
+            unitId: number;
+            unit: components["schemas"]["DTOUnitDTO"];
+            /** Format: int32 */
+            stockCategoryId: number;
+            stockItems?: components["schemas"]["DTOStockItemDTO"][] | null;
+            hasVat: boolean;
+        };
+        DTOStockItemDTO: {
+            division: components["schemas"]["ManagerOrderViewDivisionDTO"];
+            /** Format: decimal */
+            threshold: number;
+            /** Format: decimal */
+            actual: number;
+        };
+        DTOStockAllocateItemStatusDTO: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
         StockAllocateGetRequest: Record<string, never>;
         StockAllocateCreateRequest: {
             /** Format: int32 */
@@ -7221,7 +7269,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CommonModelsPaginatedListOfStockAllocateDTO"];
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfStockAllocateDTOBasic"];
                 };
             };
             /** @description Unauthorized */
