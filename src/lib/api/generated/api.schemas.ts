@@ -1532,6 +1532,87 @@ export interface StockCreateRequest {
 	hasVat: boolean;
 }
 
+export type EntitiesStockAllocateItemAllOf = {
+	id: number;
+	stockId: number;
+	stock: EntitiesStock;
+	actual: number;
+	stockAllocateItemStatusId: number;
+	stockAllocateItemStatus: EntitiesStockAllocateItemStatus;
+	completed: string;
+	stockAllocateId: number;
+	stockAllocate: EntitiesStockAllocate;
+};
+
+export type EntitiesStockAllocateItem = EntitiesAuditableEntity & EntitiesStockAllocateItemAllOf;
+
+export type EntitiesStockAllocateItemStatusAllOf = {
+	id: number;
+	name: string;
+};
+
+export type EntitiesStockAllocateItemStatus = EntitiesAuditableEntity &
+	EntitiesStockAllocateItemStatusAllOf;
+
+/**
+ * @nullable
+ */
+export type EntitiesStockAllocateAssignedUser = EntitiesUser | null;
+
+/**
+ * @nullable
+ */
+export type EntitiesStockAllocateFromUser = EntitiesUser | null;
+
+export interface EntitiesStockAllocate {
+	id: number;
+	outletId: number;
+	outlet: EntitiesOutlet;
+	toOutletId: number;
+	toOutlet: EntitiesOutlet;
+	comment: string;
+	stockAllocateStatusId: number;
+	stockAllocateStatus: EntitiesStockAllocateStatus;
+	fromDivisionId: number;
+	fromDivision: EntitiesDivision;
+	toDivisionId: number;
+	toDivision: EntitiesDivision;
+	assignedUserId: string;
+	/** @nullable */
+	assignedUser?: EntitiesStockAllocateAssignedUser;
+	fromUserId: string;
+	/** @nullable */
+	fromUser?: EntitiesStockAllocateFromUser;
+	created: string;
+	completed: string;
+	/** @nullable */
+	stockAllocateItems?: EntitiesStockAllocateItem[] | null;
+}
+
+export type EntitiesStockAllocateStatusAllOf = {
+	id: number;
+	name: string;
+};
+
+export type EntitiesStockAllocateStatus = EntitiesAuditableEntity &
+	EntitiesStockAllocateStatusAllOf;
+
+export interface StockAllocateItemUpdateRequest {
+	id: number;
+	stockId: number;
+	actual: number;
+	stockAllocateItemStatusId: number;
+}
+
+export interface StockAllocateItemDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface StockAllocateItemCreateRequest {
+	stockId: number;
+	actual: number;
+}
+
 export interface CommonModelsPaginatedListOfStockAllocateDTOBasic {
 	items: DTOStockAllocateDTOBasic[];
 	pageNumber: number;

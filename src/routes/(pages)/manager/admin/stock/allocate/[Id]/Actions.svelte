@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
 	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
-	import { createStockOrderItemDelete, type DTOStockOrderItemDTO } from "$lib/api";
+	import { createStockOrderItemDelete, type DTOStockAllocateItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import AddOrderItem from "./AddOrderItem.svelte";
+	import AddOrderItem from "./AddAllocationItem.svelte";
 
 	interface Props {
 		refetch: () => void;
-		item: DTOStockOrderItemDTO;
+		item: DTOStockAllocateItemDTO;
 	}
 
 	let { item, refetch }: Props = $props();

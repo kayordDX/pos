@@ -27,12 +27,15 @@ import type {
 	DTOStockOrderDTO,
 	DTOStockOrderItemStatusDTO,
 	EntitiesDivision,
+	EntitiesStockAllocateItem,
 	EntitiesStockOrder,
 	EntitiesStockOrderItem,
 	ErrorResponse,
 	InternalErrorResponse,
 	StockAllocateCreateRequest,
 	StockAllocateGetAllParams,
+	StockAllocateItemCreateRequest,
+	StockAllocateItemUpdateRequest,
 	StockCreateRequest,
 	StockDivisionGetAllParams,
 	StockGetAllParams,
@@ -1598,6 +1601,226 @@ export const createStockDelete = <
 	TContext
 > => {
 	const mutationOptions = getStockDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const stockAllocateItemUpdate = (
+	stockAllocateItemUpdateRequest: BodyType<StockAllocateItemUpdateRequest>
+) => {
+	return customInstance<EntitiesStockAllocateItem>({
+		url: `/stock/allocate/item`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: stockAllocateItemUpdateRequest,
+	});
+};
+
+export const getStockAllocateItemUpdateMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockAllocateItemUpdate>>,
+		TError,
+		{ data: BodyType<StockAllocateItemUpdateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockAllocateItemUpdate>>,
+	TError,
+	{ data: BodyType<StockAllocateItemUpdateRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockAllocateItemUpdate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockAllocateItemUpdate>>,
+		{ data: BodyType<StockAllocateItemUpdateRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockAllocateItemUpdate(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockAllocateItemUpdateMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockAllocateItemUpdate>>
+>;
+export type StockAllocateItemUpdateMutationBody = BodyType<StockAllocateItemUpdateRequest>;
+export type StockAllocateItemUpdateMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createStockAllocateItemUpdate = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof stockAllocateItemUpdate>>,
+			TError,
+			{ data: BodyType<StockAllocateItemUpdateRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof stockAllocateItemUpdate>>,
+	TError,
+	{ data: BodyType<StockAllocateItemUpdateRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockAllocateItemUpdateMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const stockAllocateItemCreate = (
+	stockAllocateItemCreateRequest: BodyType<StockAllocateItemCreateRequest>
+) => {
+	return customInstance<EntitiesStockOrder>({
+		url: `/stock/allocate/item`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: stockAllocateItemCreateRequest,
+	});
+};
+
+export const getStockAllocateItemCreateMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockAllocateItemCreate>>,
+		TError,
+		{ data: BodyType<StockAllocateItemCreateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockAllocateItemCreate>>,
+	TError,
+	{ data: BodyType<StockAllocateItemCreateRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockAllocateItemCreate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockAllocateItemCreate>>,
+		{ data: BodyType<StockAllocateItemCreateRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockAllocateItemCreate(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockAllocateItemCreateMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockAllocateItemCreate>>
+>;
+export type StockAllocateItemCreateMutationBody = BodyType<StockAllocateItemCreateRequest>;
+export type StockAllocateItemCreateMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createStockAllocateItemCreate = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof stockAllocateItemCreate>>,
+			TError,
+			{ data: BodyType<StockAllocateItemCreateRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof stockAllocateItemCreate>>,
+	TError,
+	{ data: BodyType<StockAllocateItemCreateRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockAllocateItemCreateMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const stockAllocateItemDelete = (id: number) => {
+	return customInstance<void>({ url: `/stock/allocate/item/${id}`, method: "DELETE" });
+};
+
+export const getStockAllocateItemDeleteMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockAllocateItemDelete>>,
+		TError,
+		{ id: number },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockAllocateItemDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationKey = ["stockAllocateItemDelete"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockAllocateItemDelete>>,
+		{ id: number }
+	> = (props) => {
+		const { id } = props ?? {};
+
+		return stockAllocateItemDelete(id);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockAllocateItemDeleteMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockAllocateItemDelete>>
+>;
+
+export type StockAllocateItemDeleteMutationError = ErrorType<
+	ErrorResponse | void | InternalErrorResponse
+>;
+
+export const createStockAllocateItemDelete = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof stockAllocateItemDelete>>,
+			TError,
+			{ id: number },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof stockAllocateItemDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationOptions = getStockAllocateItemDeleteMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };

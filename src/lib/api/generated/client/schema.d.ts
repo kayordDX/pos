@@ -948,6 +948,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock/allocate/item": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["StockAllocateItemUpdate"];
+        post: operations["StockAllocateItemCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/stock/allocate/item/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["StockAllocateItemDelete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/stock/allocate": {
         parameters: {
             query?: never;
@@ -3595,6 +3627,79 @@ export interface components {
             /** Format: int32 */
             unitId: number;
             hasVat: boolean;
+        };
+        EntitiesStockAllocateItem: components["schemas"]["EntitiesAuditableEntity"] & {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            stockId: number;
+            stock: components["schemas"]["EntitiesStock"];
+            /** Format: decimal */
+            actual: number;
+            /** Format: int32 */
+            stockAllocateItemStatusId: number;
+            stockAllocateItemStatus: components["schemas"]["EntitiesStockAllocateItemStatus"];
+            /** Format: date-time */
+            completed: string;
+            /** Format: int32 */
+            stockAllocateId: number;
+            stockAllocate: components["schemas"]["EntitiesStockAllocate"];
+        };
+        EntitiesStockAllocateItemStatus: components["schemas"]["EntitiesAuditableEntity"] & {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        EntitiesStockAllocate: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            outlet: components["schemas"]["EntitiesOutlet"];
+            /** Format: int32 */
+            toOutletId: number;
+            toOutlet: components["schemas"]["EntitiesOutlet"];
+            comment: string;
+            /** Format: int32 */
+            stockAllocateStatusId: number;
+            stockAllocateStatus: components["schemas"]["EntitiesStockAllocateStatus"];
+            /** Format: int32 */
+            fromDivisionId: number;
+            fromDivision: components["schemas"]["EntitiesDivision"];
+            /** Format: int32 */
+            toDivisionId: number;
+            toDivision: components["schemas"]["EntitiesDivision"];
+            assignedUserId: string;
+            assignedUser?: components["schemas"]["EntitiesUser"] | null;
+            fromUserId: string;
+            fromUser?: components["schemas"]["EntitiesUser"] | null;
+            /** Format: date-time */
+            created: string;
+            /** Format: date-time */
+            completed: string;
+            stockAllocateItems?: components["schemas"]["EntitiesStockAllocateItem"][] | null;
+        };
+        EntitiesStockAllocateStatus: components["schemas"]["EntitiesAuditableEntity"] & {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        StockAllocateItemUpdateRequest: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            stockId: number;
+            /** Format: decimal */
+            actual: number;
+            /** Format: int32 */
+            stockAllocateItemStatusId: number;
+        };
+        StockAllocateItemDeleteRequest: Record<string, never>;
+        StockAllocateItemCreateRequest: {
+            /** Format: int32 */
+            stockId: number;
+            /** Format: decimal */
+            actual: number;
         };
         CommonModelsPaginatedListOfStockAllocateDTOBasic: {
             items: components["schemas"]["DTOStockAllocateDTOBasic"][];
@@ -7204,6 +7309,131 @@ export interface operations {
         };
     };
     StockDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockAllocateItemUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockAllocateItemUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockAllocateItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockAllocateItemCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockAllocateItemCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockOrder"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockAllocateItemDelete: {
         parameters: {
             query?: never;
             header?: never;

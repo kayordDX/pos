@@ -17,9 +17,10 @@
 		renderSnippet,
 		createShadTable,
 		toast,
+		Table,
 	} from "@kayord/ui";
-	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
-	import AddOrderItem from "./AddOrderItem.svelte";
+	import { BookXIcon, MoveRightIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
+	import AddAllocationItem from "./AddAllocationItem.svelte";
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
 
@@ -54,17 +55,17 @@
 			size: 1000,
 			cell: (item) => renderSnippet(status, item.row.original),
 		},
-		// {
-		// 	header: "",
-		// 	accessorKey: "id",
-		// 	enableSorting: false,
-		// 	cell: (item) =>
-		// 		renderComponent(Actions, {
-		// 			item: item.row.original,
-		// 			refetch: $query.refetch,
-		// 		}),
-		// 	size: 10,
-		// },
+		{
+			header: "",
+			accessorKey: "id",
+			enableSorting: false,
+			cell: (item) =>
+				renderComponent(Actions, {
+					item: item.row.original,
+					refetch: $query.refetch,
+				}),
+			size: 10,
+		},
 	];
 
 	let data = $derived($query.data?.stockAllocateItems ?? []);
@@ -82,7 +83,7 @@
 				return rowSelection;
 			},
 		},
-		enableRowSelection: true,
+		enableRowSelection: false,
 		enablePaging: false,
 		onRowSelectionChange: (updater) => {
 			if (updater instanceof Function) {
@@ -141,42 +142,36 @@
 	{#if $query.data}
 		<Card.Root class="bg-secondary">
 			<div
-				class="border-2 border-secondary p-2 rounded-md flex justify-between items-center bg-background/60 text-secondary-foreground"
+				class="border-2 border-secondary p-2 gap-2 rounded-md flex-col justify-between items-center text-secondary-foreground"
 			>
-				<div class="flex flex-col">
-					<h2 class="font-bold">Comment: {$query.data.comment}</h2>
-					<div>
+				<div class="flex items-center gap-2 justify-between">
+					<div class="flex flex-col">
+						<h1 class="text-xl">{$query.data.comment}</h1>
 						<Badge>{$query.data.stockAllocateStatus.name}</Badge>
 					</div>
-				</div>
-				<div class="flex flex-col">
-					<div>
-						Division: {$query.data.fromDivision.divisionName}
+					<div class="flex flex-col gap-1">
+						<Badge variant="outline">Requested: {$query.data.fromUser?.name}</Badge>
+						<Badge variant="outline">Assigned: {$query.data.assignedUser?.name}</Badge>
 					</div>
-					<div>
-						Division: {$query.data.toDivision.divisionName}
-					</div>
-					{$query.data.assignedUser?.name}
-					{$query.data.fromUser?.name}
-					{$query.data.outlet.name}
-					{$query.data.toOutlet.name}
 				</div>
-			</div>
+				<div class="flex gap-2 justify-between mt-1">
+					<div class="flex items-center gap-2">
+						<div class="bg-background/60 p-1 rounded-md">
+							<div class="font-bold">{$query.data.fromDivision.divisionName}</div>
+						</div>
+						<MoveRightIcon />
+						<div class="bg-background/60 p-1 rounded-md">
+							<div class="font-bold">{$query.data.toDivision.divisionName}</div>
+						</div>
+						<div class="bg-background/60 p-1 rounded-md">
+							<div class="font-bold">{$query.data.toOutlet.name}</div>
+						</div>
+					</div>
 
-			<div class="flex justify-between m-2">
-				<div class="flex gap-2">
-					{#if Object.keys(rowSelection).length > 0}
-						<Button size="sm" onclick={() => updateSelected(false)}>
-							<NotebookPenIcon />
-							Mark as Done
-						</Button>
-						<Button size="sm" variant="destructive" onclick={() => updateSelected(true)}>
-							<BookXIcon />
-							Mark as Cancelled
-						</Button>
-					{/if}
+					<Button size="sm" onclick={() => (addOrderItemOpen = true)}>
+						<PlusIcon class="h-5 w-5" /> Add Item
+					</Button>
 				</div>
-				{@render addOrderItem()}
 			</div>
 		</Card.Root>
 
@@ -192,19 +187,5 @@
 	{#if $query.error}
 		{@render errorMessage(getError($query.error).message)}
 	{/if}
-	{#if Object.keys(rowSelection).length > 0}
-		<div class="flex gap-2 mt-2">
-			{#if Object.keys(rowSelection).length > 0}
-				<Button size="sm" onclick={() => updateSelected(false)}>
-					<NotebookPenIcon />
-					Mark as Done
-				</Button>
-				<Button size="sm" variant="destructive" onclick={() => updateSelected(true)}>
-					<BookXIcon />
-					Mark as Cancelled
-				</Button>
-			{/if}
-		</div>
-	{/if}
-	<AddOrderItem bind:open={addOrderItemOpen} refetch={$query.refetch} />
+	<AddAllocationItem bind:open={addOrderItemOpen} refetch={$query.refetch} />
 </div>

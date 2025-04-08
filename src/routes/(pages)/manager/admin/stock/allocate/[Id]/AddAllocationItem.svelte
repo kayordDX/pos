@@ -57,7 +57,7 @@
 						stockOrderItemStatusId: data.statusId,
 					},
 				});
-				toast.info("Edited Order Item");
+				toast.info("Edited Allocation Item");
 			} else {
 				await $createMutation.mutateAsync({
 					data: {
@@ -67,7 +67,7 @@
 						price: data.price,
 					},
 				});
-				toast.info("Added Order Item");
+				toast.info("Added Allocation Item");
 			}
 			refetch();
 		} catch (err) {
@@ -151,8 +151,10 @@
 	<Dialog.Content class="max-h-[98%] overflow-auto">
 		<form method="POST" use:enhance>
 			<Dialog.Header>
-				<Dialog.Title>{isEdit ? "Edit" : "Add"} Order Item</Dialog.Title>
-				<Dialog.Description>Complete form to {isEdit ? "Edit" : "Add"} order</Dialog.Description>
+				<Dialog.Title>{isEdit ? "Edit" : "Add"} Allocation Item</Dialog.Title>
+				<Dialog.Description
+					>Complete form to {isEdit ? "Edit" : "Add"} allocation</Dialog.Description
+				>
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
 				{#if isEdit}
@@ -186,94 +188,15 @@
 					</Table.Body>
 				</Table.Root>
 
-				{#if isEdit}
-					<Form.Field {form} name="orderAmount">
-						<Form.Control>
-							{#snippet children({ props })}
-								<Form.Label>Order Amount</Form.Label>
-								<Input {...props} bind:value={$formData.orderAmount} type="number" step="any" />
-							{/snippet}
-						</Form.Control>
-						<Form.FieldErrors />
-					</Form.Field>
-				{:else}
-					<Form.Field {form} name="orderAmount">
-						<Form.Control>
-							{#snippet children({ props })}
-								<Form.Label>Order Amount</Form.Label>
-								<Input {...props} bind:value={$formData.orderAmount} type="number" step="any" />
-							{/snippet}
-						</Form.Control>
-						<Form.FieldErrors />
-					</Form.Field>
-				{/if}
-
-				{#if isEdit}
-					<Form.Field {form} name="actual">
-						<Form.Control>
-							{#snippet children({ props })}
-								<Form.Label>Actual</Form.Label>
-								<Input {...props} bind:value={$formData.actual} type="number" step="any" />
-							{/snippet}
-						</Form.Control>
-						<Form.FieldErrors />
-					</Form.Field>
-				{/if}
-
-				<Form.Field {form} name="price">
+				<Form.Field {form} name="actual">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Price</Form.Label>
-							<Input {...props} bind:value={$formData.price} type="number" step="0.01" />
+							<Form.Label>Allocate Actual</Form.Label>
+							<Input {...props} bind:value={$formData.actual} type="number" step="any" />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
-					<Table.Root>
-						<Table.Body>
-							<Table.Row class="border-none">
-								<Table.Cell class="text-sm text-muted-foreground p-1">
-									Previous price per unit
-								</Table.Cell>
-								<Table.Cell class="text-right p-1">
-									R {lastPriceData.lastPrice.toFixed(2)}
-								</Table.Cell>
-							</Table.Row>
-							<Table.Row class="border-none">
-								<Table.Cell class="text-sm text-muted-foreground p-1">
-									Current price per unit
-								</Table.Cell>
-								<Table.Cell class="text-right p-1">R {pricePerUnit.toFixed(2)}</Table.Cell>
-							</Table.Row>
-						</Table.Body>
-					</Table.Root>
 				</Form.Field>
-				{#if isEdit}
-					<Form.Field {form} name="statusId">
-						<Form.Control>
-							{#snippet children({ props })}
-								<Form.Label>Status</Form.Label>
-								<Select.Root
-									type="single"
-									name="itemStatusId"
-									bind:value={
-										() => $formData.statusId.toString(), (v) => ($formData.statusId = Number(v))
-									}
-									allowDeselect={false}
-								>
-									<Select.Trigger {...props}>
-										{itemStatusValue ? itemStatusValue : "Select Status"}
-									</Select.Trigger>
-									<Select.Content>
-										{#each itemStatus as status}
-											<Select.Item value={status.id.toString()}>{status.name}</Select.Item>
-										{/each}
-									</Select.Content>
-								</Select.Root>
-							{/snippet}
-						</Form.Control>
-						<Form.FieldErrors />
-					</Form.Field>
-				{/if}
 			</div>
 			<Dialog.Footer class="gap-2">
 				<Button type="submit">Submit</Button>
