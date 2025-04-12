@@ -79,6 +79,7 @@
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
+		id: `printer-${printer?.id ?? 0}`,
 		onUpdate({ form }) {
 			if (form.valid) {
 				createPrinter(form.data);

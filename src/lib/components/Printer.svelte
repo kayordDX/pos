@@ -5,8 +5,6 @@
 	import { Button, Card, Switch, Table, toast, Avatar, DropdownMenu, Tooltip } from "@kayord/ui";
 	import {
 		PrinterIcon,
-		CheckIcon,
-		XIcon,
 		EllipsisVerticalIcon,
 		PencilIcon,
 		TestTubeIcon,
@@ -106,8 +104,12 @@
 						</DropdownMenu.Item>
 					</DropdownMenu.Content>
 				</DropdownMenu.Root>
-				<AddPrinter {refetch} bind:open {printer} />
-				<DeletePrinter {refetch} bind:deleteOpen printerId={printer.id} />
+				{#if open}
+					<AddPrinter {refetch} bind:open {printer} />
+				{/if}
+				{#if deleteOpen}
+					<DeletePrinter {refetch} bind:deleteOpen printerId={printer.id} />
+				{/if}
 			{/if}
 		</div>
 	</Card.Header>

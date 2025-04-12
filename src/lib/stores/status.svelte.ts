@@ -12,6 +12,7 @@ const createStatus = () => {
 		salesPeriod: undefined,
 		roles: [],
 		isNotReady: true,
+		hasNotification: false,
 	});
 
 	const hasRole = (role: string) => {
