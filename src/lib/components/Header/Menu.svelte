@@ -17,7 +17,7 @@
 </script>
 
 <Button
-	class={`bg-background text-primary hover:text-primary-foreground ${status.value.hasNotification ? "animate-pulse" : ""}`}
+	class={`bg-background/40 text-primary hover:text-primary-foreground ${status.value.hasNotification ? "animate-pulse bg-destructive text-primary-foreground" : ""}`}
 	href="/tasks"
 >
 	<InboxIcon />
