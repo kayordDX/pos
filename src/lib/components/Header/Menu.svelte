@@ -13,15 +13,15 @@
 	import { logout, session } from "$lib/firebase.svelte";
 	import { networkInformation } from "$lib/stores/network.svelte";
 	import { goto } from "$app/navigation";
-
-	let hasNotification = $state(false);
+	import { status } from "$lib/stores/status.svelte";
 </script>
 
-<!-- <Button
-	class={`bg-background text-primary hover:text-primary-foreground ${hasNotification ? "animate-pulse" : ""}`}
+<Button
+	class={`bg-background text-primary hover:text-primary-foreground ${status.value.hasNotification ? "animate-pulse" : ""}`}
+	href="/tasks"
 >
 	<InboxIcon />
-</Button> -->
+</Button>
 
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger>

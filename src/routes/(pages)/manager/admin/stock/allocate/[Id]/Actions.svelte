@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
-	import { createStockAllocateItemDelete, type DTOStockAllocateItemDTO } from "$lib/api";
+	import { BanIcon, EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
+	import {
+		createStockAllocateItemCancel,
+		createStockAllocateItemDelete,
+		type DTOStockAllocateItemDTO,
+	} from "$lib/api";
 	import { getError } from "$lib/types";
 	import AddOrderItem from "./AddAllocationItem.svelte";
 	import AddAllocationItem from "./AddAllocationItem.svelte";
@@ -19,12 +23,23 @@
 	let editOpen = $state(false);
 
 	const deleteMutation = createStockAllocateItemDelete();
-	const deleteMenuItem = async () => {
+	const deleteAllocateItem = async () => {
 		deleteOpen = false;
 		try {
 			await $deleteMutation.mutateAsync({ id: item.id });
 			refetch();
-			toast.message("Stock Item Deleted");
+			toast.message("Stock Allocation Item Deleted");
+		} catch (error) {
+			toast.error(getError(error).message);
+		}
+	};
+
+	const cancelMutation = createStockAllocateItemCancel();
+	const cancelAllocateItem = async () => {
+		try {
+			await $cancelMutation.mutateAsync({ data: { id: item.id } });
+			refetch();
+			toast.message("Stock Allocation Item Cancelled");
 		} catch (error) {
 			toast.error(getError(error).message);
 		}
@@ -46,21 +61,25 @@
 				<Trash2Icon /> Delete
 			</DropdownMenu.Item>
 		</DropdownMenu.Content>
+	{:else if item.stockAllocateItemStatusId == 2}
+		<Button variant="secondary" onclick={cancelAllocateItem}>
+			<BanIcon /> Cancel
+		</Button>
 	{/if}
 </DropdownMenu.Root>
 
 <AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
-			<AlertDialog.Title>Delete Order Item?</AlertDialog.Title>
-			<AlertDialog.Description>This will delete the order item.</AlertDialog.Description>
+			<AlertDialog.Title>Delete Allocation Item?</AlertDialog.Title>
+			<AlertDialog.Description>This will delete the allocation item.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 			<AlertDialog.Action
 				class="bg-destructive text-destructive-foreground"
 				onclick={() => {
-					deleteMenuItem();
+					deleteAllocateItem();
 					deleteOpen = false;
 				}}
 			>

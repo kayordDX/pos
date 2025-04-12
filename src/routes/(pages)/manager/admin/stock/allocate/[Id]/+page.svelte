@@ -23,6 +23,7 @@
 	import AddAllocationItem from "./AddAllocationItem.svelte";
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
+	import { stringToFDate } from "$lib/util";
 
 	const query = createStockAllocateGet(Number(page.params.Id));
 
@@ -57,6 +58,12 @@
 			accessorKey: "stockOrderItemStatus.name",
 			size: 1000,
 			cell: (item) => renderSnippet(status, item.row.original),
+		},
+		{
+			header: "Completed",
+			accessorFn: (item) => stringToFDate(item.completed),
+			// accessorKey: "completed",
+			size: 1000,
 		},
 		{
 			header: "",
@@ -131,14 +138,14 @@
 				class="border-2 border-secondary p-2 gap-2 rounded-md flex-col justify-between items-center text-secondary-foreground"
 			>
 				<div class="flex items-center gap-2 justify-center">
-					<div class="bg-background/60 p-1 rounded-md">
+					<div class="bg-background/60 py-1 px-2 rounded-md">
 						<div class="font-bold">{$query.data.fromDivision.divisionName}</div>
 					</div>
 					<MoveRightIcon />
-					<div class="bg-background/60 p-1 rounded-md">
+					<div class="bg-background/60 py-1 px-2 rounded-md">
 						<div class="font-bold">{$query.data.toDivision.divisionName}</div>
 					</div>
-					<div class="bg-background/60 p-1 rounded-md">
+					<div class="bg-background/60 py-1 px-2 rounded-md">
 						<div class="font-bold">{$query.data.toOutlet.name}</div>
 					</div>
 				</div>

@@ -100,6 +100,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user/tasks": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserTasks"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user/role/{userId}/{role}": {
         parameters: {
             query?: never;
@@ -1023,6 +1039,22 @@ export interface paths {
         put?: never;
         post?: never;
         delete: operations["StockAllocateItemDelete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/stock/allocate/item/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["StockAllocateItemCancel"];
+        post?: never;
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -2273,6 +2305,47 @@ export interface components {
         UserUsersRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         CommonModelsQueryModel: Record<string, never>;
         UserUnassignedUsersRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
+        CommonModelsPaginatedListOfResponse: {
+            items: components["schemas"]["UserTasksResponse"][];
+            /** Format: int32 */
+            pageNumber: number;
+            /** Format: int32 */
+            totalPages: number;
+            /** Format: int32 */
+            totalCount: number;
+            hasPreviousPage: boolean;
+            hasNextPage: boolean;
+        };
+        UserTasksResponse: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            outletId: number;
+            outlet: components["schemas"]["DTOOutletDTOBasic"];
+            name: string;
+            type: string;
+            status: string;
+            description: string;
+            assignedUserId: string;
+            assignedUser?: components["schemas"]["DTOUserDTO"] | null;
+        };
+        DTOOutletDTOBasic: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            vatNumber: string;
+            address?: string | null;
+            company?: string | null;
+            registration?: string | null;
+        };
+        DTOUserDTO: {
+            userId: string;
+            email: string;
+            image: string;
+            name: string;
+            isActive: boolean;
+        };
+        UserTasksRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         UserRemoveUserOutletRoleRequest: Record<string, never>;
         ErrorResponse: {
             /**
@@ -2295,6 +2368,7 @@ export interface components {
             salesPeriodId: number;
             salesPeriod?: components["schemas"]["EntitiesSalesPeriod"] | null;
             roles: components["schemas"]["UserGetStatusRoleDTO"][];
+            hasNotification: boolean;
         };
         EntitiesSalesPeriod: {
             /** Format: int32 */
@@ -2592,13 +2666,6 @@ export interface components {
             /** Format: int32 */
             extraGroupId: number;
             name: string;
-        };
-        DTOUserDTO: {
-            userId: string;
-            email: string;
-            image: string;
-            name: string;
-            isActive: boolean;
         };
         TableOrderFrontOfficeRequest: Record<string, never>;
         TableOrderBackOfficeResponse: {
@@ -3641,7 +3708,7 @@ export interface components {
             actual: number;
         };
         StockItemsGetRequest: Record<string, never>;
-        CommonModelsPaginatedListOfResponse: {
+        CommonModelsPaginatedListOfResponse2: {
             items: components["schemas"]["StockGetAllDivisionResponse"][];
             /** Format: int32 */
             pageNumber: number;
@@ -3668,7 +3735,7 @@ export interface components {
             hasVat: boolean;
         };
         StockGetAllDivisionRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
-        CommonModelsPaginatedListOfResponse2: {
+        CommonModelsPaginatedListOfResponse3: {
             items: components["schemas"]["StockGetAllResponse"][];
             /** Format: int32 */
             pageNumber: number;
@@ -3726,6 +3793,8 @@ export interface components {
             completed: string;
             /** Format: int32 */
             stockAllocateId: number;
+            assignedUserId: string;
+            assignedUser?: components["schemas"]["EntitiesUser"] | null;
             stockAllocate: components["schemas"]["EntitiesStockAllocate"];
         };
         EntitiesStockAllocateItemStatus: components["schemas"]["EntitiesAuditableEntity"] & {
@@ -3784,6 +3853,10 @@ export interface components {
             /** Format: decimal */
             actual: number;
         };
+        StockAllocateItemCancelRequest: {
+            /** Format: int32 */
+            id: number;
+        };
         CommonModelsPaginatedListOfStockAllocateDTOBasic: {
             items: components["schemas"]["DTOStockAllocateDTOBasic"][];
             /** Format: int32 */
@@ -3823,15 +3896,6 @@ export interface components {
             /** Format: date-time */
             completed: string;
         };
-        DTOOutletDTOBasic: {
-            /** Format: int32 */
-            id: number;
-            name: string;
-            vatNumber: string;
-            address?: string | null;
-            company?: string | null;
-            registration?: string | null;
-        };
         DTOStockAllocateStatusDTO: {
             /** Format: int32 */
             id: number;
@@ -3859,6 +3923,8 @@ export interface components {
             stockAllocateItemStatus: components["schemas"]["DTOStockAllocateItemStatusDTO"];
             /** Format: date-time */
             completed: string;
+            assignedUserId: string;
+            assignedUser?: components["schemas"]["DTOUserDTO"] | null;
         };
         DTOStockDTO: {
             /** Format: int32 */
@@ -4944,6 +5010,47 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["CommonModelsPaginatedListOfUserResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserTasks: {
+        parameters: {
+            query?: {
+                sorts?: string | null;
+                filters?: string | null;
+                page?: number | null;
+                pageSize?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfResponse"];
                 };
             };
             /** @description Unauthorized */
@@ -6489,7 +6596,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CommonModelsPaginatedListOfResponse2"];
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfResponse3"];
                 };
             };
             /** @description Unauthorized */
@@ -7413,7 +7520,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "application/json": components["schemas"]["CommonModelsPaginatedListOfResponse"];
+                    "application/json": components["schemas"]["CommonModelsPaginatedListOfResponse2"];
                 };
             };
             /** @description Unauthorized */
@@ -7742,6 +7849,46 @@ export interface operations {
                 };
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockAllocateItemCancel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockAllocateItemCancelRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockAllocateItem"];
                 };
             };
             /** @description Unauthorized */

@@ -71,6 +71,57 @@ export type UserUnassignedUsersRequestAllOf = { [key: string]: unknown };
 
 export type UserUnassignedUsersRequest = CommonModelsQueryModel & UserUnassignedUsersRequestAllOf;
 
+export interface CommonModelsPaginatedListOfResponse {
+	items: UserTasksResponse[];
+	pageNumber: number;
+	totalPages: number;
+	totalCount: number;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
+}
+
+/**
+ * @nullable
+ */
+export type UserTasksResponseAssignedUser = DTOUserDTO | null;
+
+export interface UserTasksResponse {
+	id: number;
+	outletId: number;
+	outlet: DTOOutletDTOBasic;
+	name: string;
+	type: string;
+	status: string;
+	description: string;
+	assignedUserId: string;
+	/** @nullable */
+	assignedUser?: UserTasksResponseAssignedUser;
+}
+
+export interface DTOOutletDTOBasic {
+	id: number;
+	name: string;
+	vatNumber: string;
+	/** @nullable */
+	address?: string | null;
+	/** @nullable */
+	company?: string | null;
+	/** @nullable */
+	registration?: string | null;
+}
+
+export interface DTOUserDTO {
+	userId: string;
+	email: string;
+	image: string;
+	name: string;
+	isActive: boolean;
+}
+
+export type UserTasksRequestAllOf = { [key: string]: unknown };
+
+export type UserTasksRequest = CommonModelsQueryModel & UserTasksRequestAllOf;
+
 export interface UserRemoveUserOutletRoleRequest {
 	[key: string]: unknown;
 }
@@ -99,6 +150,7 @@ export interface UserGetStatusResponse {
 	/** @nullable */
 	salesPeriod?: UserGetStatusResponseSalesPeriod;
 	roles: UserGetStatusRoleDTO[];
+	hasNotification: boolean;
 }
 
 export interface EntitiesSalesPeriod {
@@ -394,14 +446,6 @@ export interface DTOExtraDTO {
 export interface DTOExtraGroupBasicDTO {
 	extraGroupId: number;
 	name: string;
-}
-
-export interface DTOUserDTO {
-	userId: string;
-	email: string;
-	image: string;
-	name: string;
-	isActive: boolean;
 }
 
 export interface TableOrderFrontOfficeRequest {
@@ -1509,7 +1553,7 @@ export interface StockItemsGetRequest {
 	[key: string]: unknown;
 }
 
-export interface CommonModelsPaginatedListOfResponse {
+export interface CommonModelsPaginatedListOfResponse2 {
 	items: StockGetAllDivisionResponse[];
 	pageNumber: number;
 	totalPages: number;
@@ -1533,7 +1577,7 @@ export type StockGetAllDivisionRequestAllOf = { [key: string]: unknown };
 
 export type StockGetAllDivisionRequest = CommonModelsQueryModel & StockGetAllDivisionRequestAllOf;
 
-export interface CommonModelsPaginatedListOfResponse2 {
+export interface CommonModelsPaginatedListOfResponse3 {
 	items: StockGetAllResponse[];
 	pageNumber: number;
 	totalPages: number;
@@ -1577,6 +1621,11 @@ export interface StockAllocateUpdateRequest {
 	stockAllocateStatusId: number;
 }
 
+/**
+ * @nullable
+ */
+export type EntitiesStockAllocateItemAllOfAssignedUser = EntitiesUser | null;
+
 export type EntitiesStockAllocateItemAllOf = {
 	id: number;
 	stockId: number;
@@ -1586,6 +1635,9 @@ export type EntitiesStockAllocateItemAllOf = {
 	stockAllocateItemStatus: EntitiesStockAllocateItemStatus;
 	completed: string;
 	stockAllocateId: number;
+	assignedUserId: string;
+	/** @nullable */
+	assignedUser?: EntitiesStockAllocateItemAllOfAssignedUser;
 	stockAllocate: EntitiesStockAllocate;
 };
 
@@ -1658,6 +1710,10 @@ export interface StockAllocateItemCreateRequest {
 	actual: number;
 }
 
+export interface StockAllocateItemCancelRequest {
+	id: number;
+}
+
 export interface CommonModelsPaginatedListOfStockAllocateDTOBasic {
 	items: DTOStockAllocateDTOBasic[];
 	pageNumber: number;
@@ -1700,18 +1756,6 @@ export interface DTOStockAllocateDTOBasic {
 	completed: string;
 }
 
-export interface DTOOutletDTOBasic {
-	id: number;
-	name: string;
-	vatNumber: string;
-	/** @nullable */
-	address?: string | null;
-	/** @nullable */
-	company?: string | null;
-	/** @nullable */
-	registration?: string | null;
-}
-
 export interface DTOStockAllocateStatusDTO {
 	id: number;
 	name: string;
@@ -1728,6 +1772,11 @@ export type DTOStockAllocateDTOAllOf = {
 
 export type DTOStockAllocateDTO = DTOStockAllocateDTOBasic & DTOStockAllocateDTOAllOf;
 
+/**
+ * @nullable
+ */
+export type DTOStockAllocateItemDTOAssignedUser = DTOUserDTO | null;
+
 export interface DTOStockAllocateItemDTO {
 	id: number;
 	stockId: number;
@@ -1739,6 +1788,9 @@ export interface DTOStockAllocateItemDTO {
 	stockAllocateItemStatusId: number;
 	stockAllocateItemStatus: DTOStockAllocateItemStatusDTO;
 	completed: string;
+	assignedUserId: string;
+	/** @nullable */
+	assignedUser?: DTOStockAllocateItemDTOAssignedUser;
 }
 
 export interface DTOStockDTO {
@@ -2796,6 +2848,13 @@ export type UserUsersParams = {
 };
 
 export type UserUnassignedUsersParams = {
+	sorts?: string | null;
+	filters?: string | null;
+	page?: number | null;
+	pageSize?: number | null;
+};
+
+export type UserTasksParams = {
 	sorts?: string | null;
 	filters?: string | null;
 	page?: number | null;

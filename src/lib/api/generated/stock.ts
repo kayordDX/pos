@@ -20,8 +20,8 @@ import type {
 } from "@tanstack/svelte-query";
 
 import type {
-	CommonModelsPaginatedListOfResponse,
 	CommonModelsPaginatedListOfResponse2,
+	CommonModelsPaginatedListOfResponse3,
 	CommonModelsPaginatedListOfStockAllocateDTOBasic,
 	CommonModelsPaginatedListOfStockOrder,
 	DTOStockAllocateDTO,
@@ -35,6 +35,7 @@ import type {
 	InternalErrorResponse,
 	StockAllocateCreateRequest,
 	StockAllocateGetAllParams,
+	StockAllocateItemCancelRequest,
 	StockAllocateItemCreateRequest,
 	StockAllocateItemUpdateRequest,
 	StockAllocateUpdateRequest,
@@ -137,7 +138,7 @@ export const createStockUpdate = <
 	return createMutation(mutationOptions, queryClient);
 };
 export const stockGetAll = (params: StockGetAllParams) => {
-	return customInstance<CommonModelsPaginatedListOfResponse2>({
+	return customInstance<CommonModelsPaginatedListOfResponse3>({
 		url: `/stock`,
 		method: "GET",
 		params,
@@ -1546,7 +1547,7 @@ export function createStockItemsGet<
 }
 
 export const stockGetAllDivision = (params: StockGetAllDivisionParams) => {
-	return customInstance<CommonModelsPaginatedListOfResponse>({
+	return customInstance<CommonModelsPaginatedListOfResponse2>({
 		url: `/stock/division/list`,
 		method: "GET",
 		params,
@@ -2168,6 +2169,81 @@ export const createStockAllocateItemDelete = <
 	TContext
 > => {
 	const mutationOptions = getStockAllocateItemDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const stockAllocateItemCancel = (
+	stockAllocateItemCancelRequest: BodyType<StockAllocateItemCancelRequest>
+) => {
+	return customInstance<EntitiesStockAllocateItem>({
+		url: `/stock/allocate/item/cancel`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: stockAllocateItemCancelRequest,
+	});
+};
+
+export const getStockAllocateItemCancelMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockAllocateItemCancel>>,
+		TError,
+		{ data: BodyType<StockAllocateItemCancelRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockAllocateItemCancel>>,
+	TError,
+	{ data: BodyType<StockAllocateItemCancelRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockAllocateItemCancel"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockAllocateItemCancel>>,
+		{ data: BodyType<StockAllocateItemCancelRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockAllocateItemCancel(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockAllocateItemCancelMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockAllocateItemCancel>>
+>;
+export type StockAllocateItemCancelMutationBody = BodyType<StockAllocateItemCancelRequest>;
+export type StockAllocateItemCancelMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createStockAllocateItemCancel = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof stockAllocateItemCancel>>,
+			TError,
+			{ data: BodyType<StockAllocateItemCancelRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof stockAllocateItemCancel>>,
+	TError,
+	{ data: BodyType<StockAllocateItemCancelRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockAllocateItemCancelMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };

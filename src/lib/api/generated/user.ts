@@ -20,6 +20,7 @@ import type {
 } from "@tanstack/svelte-query";
 
 import type {
+	CommonModelsPaginatedListOfResponse,
 	CommonModelsPaginatedListOfUserResponse,
 	EntitiesUserOutlet,
 	ErrorResponse,
@@ -28,6 +29,7 @@ import type {
 	UserAssignOutletRequest,
 	UserGetRolesParams,
 	UserGetStatusResponse,
+	UserTasksParams,
 	UserUnassignedUsersParams,
 	UserUsersParams,
 	UserValidateRequest,
@@ -218,6 +220,64 @@ export function createUserUnassignedUsers<
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const queryOptions = getUserUnassignedUsersQueryOptions(params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const userTasks = (params?: UserTasksParams) => {
+	return customInstance<CommonModelsPaginatedListOfResponse>({
+		url: `/user/tasks`,
+		method: "GET",
+		params,
+	});
+};
+
+export const getUserTasksQueryKey = (params?: UserTasksParams) => {
+	return [`/user/tasks`, ...(params ? [params] : [])] as const;
+};
+
+export const getUserTasksQueryOptions = <
+	TData = Awaited<ReturnType<typeof userTasks>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params?: UserTasksParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userTasks>>, TError, TData>>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getUserTasksQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userTasks>>> = () => userTasks(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof userTasks>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type UserTasksQueryResult = NonNullable<Awaited<ReturnType<typeof userTasks>>>;
+export type UserTasksQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createUserTasks<
+	TData = Awaited<ReturnType<typeof userTasks>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params?: UserTasksParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userTasks>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getUserTasksQueryOptions(params, options);
 
 	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

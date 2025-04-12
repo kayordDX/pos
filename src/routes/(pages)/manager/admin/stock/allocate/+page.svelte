@@ -29,6 +29,7 @@
 	import { PlusIcon } from "@lucide/svelte";
 	import Search from "$lib/components/Search.svelte";
 	import QueryBuilder from "fluent-querykit";
+	import { stringToFDate } from "$lib/util";
 
 	const columns: ColumnDef<DTOStockAllocateDTO>[] = [
 		{
@@ -58,6 +59,11 @@
 		{
 			header: "Assigned",
 			accessorKey: "assignedUser.name",
+			size: 1000,
+		},
+		{
+			header: "Created",
+			accessorFn: (item) => stringToFDate(item.created),
 			size: 1000,
 		},
 		{
@@ -215,6 +221,6 @@
 		{header}
 		headerClass="pb-2"
 		isLoading={$query.isPending}
-		noDataMessage="No menu items"
+		noDataMessage="No allocations"
 	/>
 </div>
