@@ -1060,6 +1060,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock/allocate/item/action": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["StockAllocateItemAction"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/stock/allocate/{id}": {
         parameters: {
             query?: never;
@@ -3856,6 +3872,12 @@ export interface components {
         StockAllocateItemCancelRequest: {
             /** Format: int32 */
             id: number;
+        };
+        StockAllocateItemActionRequest: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            stockAllocateItemStatusId: number;
         };
         CommonModelsPaginatedListOfStockAllocateDTOBasic: {
             items: components["schemas"]["DTOStockAllocateDTOBasic"][];
@@ -7879,6 +7901,46 @@ export interface operations {
         requestBody: {
             content: {
                 "application/json": components["schemas"]["StockAllocateItemCancelRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockAllocateItem"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockAllocateItemAction: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockAllocateItemActionRequest"];
             };
         };
         responses: {

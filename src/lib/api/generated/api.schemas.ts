@@ -1714,6 +1714,11 @@ export interface StockAllocateItemCancelRequest {
 	id: number;
 }
 
+export interface StockAllocateItemActionRequest {
+	id: number;
+	stockAllocateItemStatusId: number;
+}
+
 export interface CommonModelsPaginatedListOfStockAllocateDTOBasic {
 	items: DTOStockAllocateDTOBasic[];
 	pageNumber: number;
