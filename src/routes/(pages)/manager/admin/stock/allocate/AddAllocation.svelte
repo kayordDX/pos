@@ -117,11 +117,8 @@
 			"Select Division"
 	);
 
-	const divisionUsersQuery = createDivisionGetUsers($formData.toOutletId);
+	const divisionUsersQuery = $derived(createDivisionGetUsers($formData.toDivisionId));
 	const divisionUsers = $derived($divisionUsersQuery.data ?? []);
-	const divisionUserSelect = $derived(
-		divisionUsers.find((i) => i.userId === $formData.assignedUserId)?.name ?? "Select User"
-	);
 </script>
 
 <Dialog.Root bind:open>
