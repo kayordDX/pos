@@ -112,15 +112,9 @@
 			: item.stockAllocateItemStatusId === 2
 				? "secondary"
 				: "outline"}
-	<Badge {variant}>
+	<Badge {variant} class="w-fit">
 		{item.stockAllocateItemStatus.name}
 	</Badge>
-{/snippet}
-
-{#snippet addOrderItem()}
-	<Button size="sm" onclick={() => (addOrderItemOpen = true)}>
-		<PlusIcon class="h-5 w-5" /> Add Item
-	</Button>
 {/snippet}
 
 {#snippet errorMessage(message: string)}
@@ -152,7 +146,7 @@
 				<div class="flex items-center gap-2 justify-between">
 					<div class="flex flex-col">
 						<h1 class="text-xl">{$query.data.comment}</h1>
-						<Badge>{$query.data.stockAllocateStatus.name}</Badge>
+						<Badge class="w-fit">{$query.data.stockAllocateStatus.name}</Badge>
 					</div>
 					<div class="flex flex-col gap-1">
 						<Badge variant="outline">Requested: {$query.data.fromUser?.name}</Badge>

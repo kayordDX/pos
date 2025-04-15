@@ -19,6 +19,17 @@
 		}
 	});
 
+	// Refresh Status Every 5 minutes
+	$effect(() => {
+		const interval = setInterval(
+			() => {
+				status.getStatus();
+			},
+			1000 * 60 * 5
+		);
+		return () => clearInterval(interval);
+	});
+
 	const receiveMessage = (message: string) => {
 		console.log(message);
 	};

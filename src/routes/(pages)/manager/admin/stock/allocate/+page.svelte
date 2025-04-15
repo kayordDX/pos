@@ -57,7 +57,12 @@
 			size: 1000,
 		},
 		{
-			header: "Assigned",
+			header: "Sent",
+			accessorKey: "fromUser.name",
+			size: 1000,
+		},
+		{
+			header: "Received",
 			accessorKey: "assignedUser.name",
 			size: 1000,
 		},

@@ -29,6 +29,7 @@
 	import { PlusIcon } from "@lucide/svelte";
 	import Search from "$lib/components/Search.svelte";
 	import QueryBuilder from "fluent-querykit";
+	import { stringToFDate } from "$lib/util";
 
 	const columns: ColumnDef<EntitiesStockOrder>[] = [
 		{
@@ -45,6 +46,11 @@
 		{
 			header: "Supplier",
 			accessorKey: "supplier.name",
+			size: 1000,
+		},
+		{
+			header: "Created",
+			accessorFn: (item) => stringToFDate(item.created),
 			size: 1000,
 		},
 		{

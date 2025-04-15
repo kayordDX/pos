@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { DTOStockAllocateItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Card, Combobox, Dialog, Form, Input, Select, Table, toast } from "@kayord/ui";
+	import { Button, Card, Combobox, Dialog, Form, Input, Table, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
@@ -9,7 +9,7 @@
 		createStockAllocateItemCreate,
 		createStockAllocateItemUpdate,
 		createStockGetAllDivision,
-		createStockOrderItemLastPrice,
+		createStockItemsGet,
 	} from "$lib/api";
 
 	import QueryBuilder from "fluent-querykit";
@@ -117,15 +117,11 @@
 	);
 
 	const last = $derived(
-		createStockOrderItemLastPrice(
-			{
-				stockId: $formData.stockId ?? 0,
-				stockOrderId: Number(page.params.Id),
-			},
-			{ query: { enabled: ($formData.stockId ?? 0) > 0 } }
-		)
+		createStockItemsGet($formData.stockId ?? 0, divisionId, {
+			query: { enabled: ($formData.stockId ?? 0) > 0 },
+		})
 	);
-	const lastPriceData = $derived($last.data ?? { lastPrice: 0, totalAmount: 0 });
+	const lastData = $derived($last.data);
 </script>
 
 <Dialog.Root bind:open>
@@ -163,8 +159,10 @@
 				<Table.Root>
 					<Table.Body>
 						<Table.Row class="border-none">
-							<Table.Cell class="text-sm text-muted-foreground p-1">Current Total Stock</Table.Cell>
-							<Table.Cell class="text-right p-1">{lastPriceData.totalAmount}</Table.Cell>
+							<Table.Cell class="text-sm text-muted-foreground p-1">
+								Current Division Stock
+							</Table.Cell>
+							<Table.Cell class="text-right p-1">{lastData?.actual ?? 0}</Table.Cell>
 						</Table.Row>
 					</Table.Body>
 				</Table.Root>
