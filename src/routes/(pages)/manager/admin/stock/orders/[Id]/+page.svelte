@@ -17,6 +17,7 @@
 		renderSnippet,
 		createShadTable,
 		toast,
+		sum,
 	} from "@kayord/ui";
 	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
@@ -26,6 +27,8 @@
 	const query = createStockOrderGet(Number(page.params.Id));
 
 	let addOrderItemOpen = $state(false);
+
+	let data = $derived($query.data?.stockOrderItems ?? []);
 
 	const columns: ColumnDef<DTOStockOrderItemDTO>[] = [
 		{
@@ -37,16 +40,19 @@
 			header: "Ordered Amount",
 			accessorKey: "orderAmount",
 			size: 1000,
+			footer: () => sum(data, "orderAmount"),
 		},
 		{
 			header: "Actual",
 			accessorKey: "actual",
 			size: 1000,
+			footer: () => sum(data, "actual"),
 		},
 		{
 			header: "Price",
 			accessorKey: "price",
 			size: 1000,
+			footer: () => sum(data, "price"),
 		},
 		{
 			header: "Status",
@@ -66,8 +72,6 @@
 			size: 10,
 		},
 	];
-
-	let data = $derived($query.data?.stockOrderItems ?? []);
 
 	let rowSelection: RowSelectionState = $state({});
 
