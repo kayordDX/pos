@@ -29,7 +29,7 @@
 
 <div class="m-2">
 	<div class="text-2xl mb-2">Tasks</div>
-	{#if $query.data?.items?.length === 0}
+	{#if ($query.data?.items?.length ?? 0) === 0}
 		<Alert.Root>
 			<CheckCheckIcon class="size-4" />
 			<Alert.Title>No tasks available</Alert.Title>

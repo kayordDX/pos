@@ -48,7 +48,7 @@
 				<NetworkIcon class="mr-2 h-4 w-4" />Network Information
 			</DropdownMenu.Item>
 			<DropdownMenu.Item onclick={toggleMode}>
-				{#if $mode == "light"}
+				{#if mode.current == "light"}
 					<SunIcon class="mr-2 h-4 w-4" />
 				{:else}
 					<MoonIcon class="mr-2 h-4 w-4" />
