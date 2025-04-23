@@ -96,6 +96,7 @@ export interface UserTasksResponse {
 	assignedUserId: string;
 	/** @nullable */
 	assignedUser?: UserTasksResponseAssignedUser;
+	lastModified: string;
 }
 
 export interface DTOOutletDTOBasic {
@@ -1516,7 +1517,6 @@ export interface StockLinkAddRequest {
 }
 
 export interface StockItemsUpdateRequest {
-	id: number;
 	divisionId: number;
 	stockId: number;
 	actual: number;

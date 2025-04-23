@@ -2344,6 +2344,8 @@ export interface components {
             description: string;
             assignedUserId: string;
             assignedUser?: components["schemas"]["DTOUserDTO"] | null;
+            /** Format: date-time */
+            lastModified: string;
         };
         DTOOutletDTOBasic: {
             /** Format: int32 */
@@ -3680,8 +3682,6 @@ export interface components {
             linkType: number;
         };
         StockItemsUpdateRequest: {
-            /** Format: int32 */
-            id: number;
             /** Format: int32 */
             divisionId: number;
             /** Format: int32 */
@@ -8281,6 +8281,13 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {

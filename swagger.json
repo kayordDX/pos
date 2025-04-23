@@ -4612,6 +4612,9 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -4622,7 +4625,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/salesPeriod/close": {
@@ -9258,7 +9266,8 @@
           "type",
           "status",
           "description",
-          "assignedUserId"
+          "assignedUserId",
+          "lastModified"
         ],
         "properties": {
           "id": {
@@ -9294,6 +9303,10 @@
                 "$ref": "#/components/schemas/DTOUserDTO"
               }
             ]
+          },
+          "lastModified": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -13881,17 +13894,12 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "id",
           "divisionId",
           "stockId",
           "actual",
           "threshold"
         ],
         "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
           "divisionId": {
             "type": "integer",
             "format": "int32"

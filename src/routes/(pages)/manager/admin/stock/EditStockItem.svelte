@@ -30,7 +30,6 @@
 				data: {
 					actual: data.actual,
 					threshold: data.threshold,
-					id: stockItem.id,
 					stockId: stockItem.stockId,
 					divisionId: stockItem.divisionId,
 				},

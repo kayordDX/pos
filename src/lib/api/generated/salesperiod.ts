@@ -164,7 +164,7 @@ export const salesPeriodCreate = (salesPeriodCreateRequest: BodyType<SalesPeriod
 };
 
 export const getSalesPeriodCreateMutationOptions = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -202,10 +202,12 @@ export type SalesPeriodCreateMutationResult = NonNullable<
 	Awaited<ReturnType<typeof salesPeriodCreate>>
 >;
 export type SalesPeriodCreateMutationBody = BodyType<SalesPeriodCreateRequest>;
-export type SalesPeriodCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type SalesPeriodCreateMutationError = ErrorType<
+	ErrorResponse | void | InternalErrorResponse
+>;
 
 export const createSalesPeriodCreate = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(
 	options?: {
