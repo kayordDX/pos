@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { TableOrderOfficeOrderItemDTO } from "$lib/api";
 	import { Badge, Button, Card, Drawer } from "@kayord/ui";
-	import { ConciergeBellIcon } from "@lucide/svelte";
+	import { CheckIcon, ConciergeBellIcon, Trash2Icon, XIcon } from "@lucide/svelte";
 	import { createTableOrderUpdateOrderItem } from "$lib/api";
 	let open = $state(false);
 
@@ -103,14 +103,23 @@
 							</Drawer.Close>
 						{:else}
 							<Drawer.Close>
-								<Button onclick={() => setStatus(5, item.orderItemId)} class="w-full">Ready</Button>
+								<Button onclick={() => setStatus(5, item.orderItemId)} class="w-full"
+									>Ready <CheckIcon /></Button
+								>
 							</Drawer.Close>
 						{/if}
 						<Drawer.Close>
 							<Button
 								variant="destructive"
 								onclick={() => setStatus(4, item.orderItemId)}
-								class="w-full">Cancel Order</Button
+								class="w-full">Cancel <XIcon /></Button
+							>
+						</Drawer.Close>
+						<Drawer.Close>
+							<Button
+								variant="destructive"
+								onclick={() => setStatus(8, item.orderItemId)}
+								class="w-full">Waste<Trash2Icon /></Button
 							>
 						</Drawer.Close>
 					</Drawer.Footer>
