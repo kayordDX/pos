@@ -30,6 +30,8 @@
 
 	let data = $derived($query.data?.stockOrderItems ?? []);
 
+	const showActions = $derived($query?.data?.stockOrderStatus.id != 3);
+
 	const columns: ColumnDef<DTOStockOrderItemDTO>[] = [
 		{
 			header: "Stock",
@@ -68,6 +70,7 @@
 				renderComponent(Actions, {
 					item: item.row.original,
 					refetch: $query.refetch,
+					showActions: showActions,
 				}),
 			size: 10,
 		},
@@ -134,9 +137,11 @@
 {/snippet}
 
 {#snippet addOrderItem()}
-	<Button size="sm" onclick={() => (addOrderItemOpen = true)}>
-		<PlusIcon class="h-5 w-5" /> Add Item
-	</Button>
+	{#if showActions}
+		<Button size="sm" onclick={() => (addOrderItemOpen = true)}>
+			<PlusIcon class="h-5 w-5" /> Add Item
+		</Button>
+	{/if}
 {/snippet}
 
 {#snippet errorMessage(message: string)}
@@ -171,7 +176,7 @@
 
 			<div class="flex justify-between m-2">
 				<div class="flex gap-2">
-					{#if Object.keys(rowSelection).length > 0}
+					{#if Object.keys(rowSelection).length > 0 && showActions}
 						<Button size="sm" onclick={() => updateSelected(false)}>
 							<NotebookPenIcon />
 							Mark as Done
@@ -198,7 +203,7 @@
 	{#if $query.error}
 		{@render errorMessage(getError($query.error).message)}
 	{/if}
-	{#if Object.keys(rowSelection).length > 0}
+	{#if Object.keys(rowSelection).length > 0 && showActions}
 		<div class="flex gap-2 mt-2">
 			{#if Object.keys(rowSelection).length > 0}
 				<Button size="sm" onclick={() => updateSelected(false)}>

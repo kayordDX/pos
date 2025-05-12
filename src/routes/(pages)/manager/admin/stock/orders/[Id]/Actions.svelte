@@ -8,9 +8,10 @@
 	interface Props {
 		refetch: () => void;
 		item: DTOStockOrderItemDTO;
+		showActions: boolean;
 	}
 
-	let { item, refetch }: Props = $props();
+	let { item, refetch, showActions }: Props = $props();
 
 	let deleteOpen = $state(false);
 	let editOpen = $state(false);
@@ -28,37 +29,41 @@
 	};
 </script>
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger>
-		<Button size="icon" variant="secondary">
-			<EllipsisVerticalIcon class="size-5" />
-		</Button>
-	</DropdownMenu.Trigger>
-	<DropdownMenu.Content>
-		<DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>
-		<DropdownMenu.Item onclick={() => (deleteOpen = true)}><Trash2Icon /> Delete</DropdownMenu.Item>
-	</DropdownMenu.Content>
-</DropdownMenu.Root>
-
-<AlertDialog.Root bind:open={deleteOpen}>
-	<AlertDialog.Content>
-		<AlertDialog.Header>
-			<AlertDialog.Title>Delete Order Item?</AlertDialog.Title>
-			<AlertDialog.Description>This will delete the order item.</AlertDialog.Description>
-		</AlertDialog.Header>
-		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action
-				class="bg-destructive text-destructive-foreground"
-				onclick={() => {
-					deleteMenuItem();
-					deleteOpen = false;
-				}}
+{#if showActions}
+	<DropdownMenu.Root>
+		<DropdownMenu.Trigger>
+			<Button size="icon" variant="secondary">
+				<EllipsisVerticalIcon class="size-5" />
+			</Button>
+		</DropdownMenu.Trigger>
+		<DropdownMenu.Content>
+			<DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>
+			<DropdownMenu.Item onclick={() => (deleteOpen = true)}
+				><Trash2Icon /> Delete</DropdownMenu.Item
 			>
-				Delete
-			</AlertDialog.Action>
-		</AlertDialog.Footer>
-	</AlertDialog.Content>
-</AlertDialog.Root>
+		</DropdownMenu.Content>
+	</DropdownMenu.Root>
 
-<AddOrderItem bind:open={editOpen} {refetch} orderItem={item} />
+	<AlertDialog.Root bind:open={deleteOpen}>
+		<AlertDialog.Content>
+			<AlertDialog.Header>
+				<AlertDialog.Title>Delete Order Item?</AlertDialog.Title>
+				<AlertDialog.Description>This will delete the order item.</AlertDialog.Description>
+			</AlertDialog.Header>
+			<AlertDialog.Footer>
+				<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+				<AlertDialog.Action
+					class="bg-destructive text-destructive-foreground"
+					onclick={() => {
+						deleteMenuItem();
+						deleteOpen = false;
+					}}
+				>
+					Delete
+				</AlertDialog.Action>
+			</AlertDialog.Footer>
+		</AlertDialog.Content>
+	</AlertDialog.Root>
+
+	<AddOrderItem bind:open={editOpen} {refetch} orderItem={item} />
+{/if}
