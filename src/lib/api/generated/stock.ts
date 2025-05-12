@@ -53,6 +53,7 @@ import type {
 	StockLinkGetAllResponse,
 	StockLinkGetResponse,
 	StockLinkUpdateRequest,
+	StockOrderCancelRequest,
 	StockOrderCreateRequest,
 	StockOrderGetAllParams,
 	StockOrderItemCreateRequest,
@@ -1020,6 +1021,79 @@ export const createStockOrderDelete = <
 	TContext
 > => {
 	const mutationOptions = getStockOrderDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const stockOrderCancel = (stockOrderCancelRequest: BodyType<StockOrderCancelRequest>) => {
+	return customInstance<void>({
+		url: `/stock/order/cancel`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: stockOrderCancelRequest,
+	});
+};
+
+export const getStockOrderCancelMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockOrderCancel>>,
+		TError,
+		{ data: BodyType<StockOrderCancelRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockOrderCancel>>,
+	TError,
+	{ data: BodyType<StockOrderCancelRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockOrderCancel"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockOrderCancel>>,
+		{ data: BodyType<StockOrderCancelRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockOrderCancel(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockOrderCancelMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockOrderCancel>>
+>;
+export type StockOrderCancelMutationBody = BodyType<StockOrderCancelRequest>;
+export type StockOrderCancelMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createStockOrderCancel = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof stockOrderCancel>>,
+			TError,
+			{ data: BodyType<StockOrderCancelRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof stockOrderCancel>>,
+	TError,
+	{ data: BodyType<StockOrderCancelRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockOrderCancelMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };

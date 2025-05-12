@@ -852,6 +852,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock/order/cancel": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["StockOrderCancel"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/stock/link": {
         parameters: {
             query?: never;
@@ -3105,6 +3121,7 @@ export interface components {
             /** Format: int32 */
             priority: number;
             isUpdateStock: boolean;
+            isUpdateStockReverse: boolean;
         };
         EntitiesAdjustment: {
             /** Format: int32 */
@@ -3636,6 +3653,10 @@ export interface components {
             divisionId: number;
             /** Format: int32 */
             supplierId: number;
+        };
+        StockOrderCancelRequest: {
+            /** Format: int32 */
+            id: number;
         };
         StockLinkUpdateRequest: {
             /** Format: int32 */
@@ -7144,6 +7165,53 @@ export interface operations {
             cookie?: never;
         };
         requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockOrderCancel: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockOrderCancelRequest"];
+            };
+        };
         responses: {
             /** @description No Content */
             204: {

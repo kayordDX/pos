@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon, ViewIcon } from "@lucide/svelte";
-	import { createMenuItemDelete, type EntitiesStockOrder } from "$lib/api";
+	import { EllipsisVerticalIcon, ShieldXIcon, ViewIcon } from "@lucide/svelte";
+	import { createStockOrderCancel, type EntitiesStockOrder } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
 
@@ -12,16 +12,17 @@
 
 	let { stockOrder, refetch }: Props = $props();
 
-	let deleteOpen = $state(false);
-	let editOpen = $state(false);
+	let cancelOpen = $state(false);
 
-	const deleteMutation = createMenuItemDelete();
-	const deleteMenuItem = async () => {
-		deleteOpen = false;
+	const showCancel = $derived(stockOrder.stockOrderStatus.id == 1);
+
+	const cancelMutation = createStockOrderCancel();
+	const cancelStockOrder = async () => {
+		cancelOpen = false;
 		try {
-			// await $deleteMutation.mutateAsync({ id: menuItem.menuItemId });
+			await $cancelMutation.mutateAsync({ data: { id: stockOrder.id } });
 			refetch();
-			toast.message("Stock Item Deleted");
+			toast.message("Stock Order Cancelled");
 		} catch (error) {
 			toast.error(getError(error).message);
 		}
@@ -35,20 +36,23 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item onclick={() => goto(`/manager/admin/stock/orders/${stockOrder.id}`)}
-			><ViewIcon /> View</DropdownMenu.Item
-		>
-		<!-- <DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item> -->
-		<!-- <DropdownMenu.Item onclick={() => (deleteOpen = true)}><Trash2Icon /> Delete</DropdownMenu.Item> -->
+		<DropdownMenu.Item onclick={() => goto(`/manager/admin/stock/orders/${stockOrder.id}`)}>
+			<ViewIcon /> View
+		</DropdownMenu.Item>
+		{#if showCancel}
+			<DropdownMenu.Item onclick={() => (cancelOpen = true)}>
+				<ShieldXIcon />Cancel
+			</DropdownMenu.Item>
+		{/if}
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
-<AlertDialog.Root bind:open={deleteOpen}>
+<AlertDialog.Root bind:open={cancelOpen}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
-			<AlertDialog.Title>Delete Menu Item?</AlertDialog.Title>
+			<AlertDialog.Title>Cancel Stock Order?</AlertDialog.Title>
 			<AlertDialog.Description>
-				This will delete the menu item and all its configured options.
+				This will cancel all stock order items and move this order to done
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
@@ -56,11 +60,11 @@
 			<AlertDialog.Action
 				class="bg-destructive text-destructive-foreground"
 				onclick={() => {
-					deleteMenuItem();
-					deleteOpen = false;
+					cancelStockOrder();
+					cancelOpen = false;
 				}}
 			>
-				Delete
+				Continue
 			</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>

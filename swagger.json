@@ -3088,6 +3088,60 @@
         ]
       }
     },
+    "/stock/order/cancel": {
+      "put": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockOrderCancel",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockOrderCancelRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/stock/link": {
       "put": {
         "tags": [
@@ -11905,7 +11959,8 @@
           "isHistory",
           "isNotify",
           "priority",
-          "isUpdateStock"
+          "isUpdateStock",
+          "isUpdateStockReverse"
         ],
         "properties": {
           "orderItemStatusId": {
@@ -11944,6 +11999,9 @@
             "format": "int32"
           },
           "isUpdateStock": {
+            "type": "boolean"
+          },
+          "isUpdateStockReverse": {
             "type": "boolean"
           }
         }
@@ -13749,6 +13807,21 @@
           "supplierId": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "StockOrderCancelRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
           }
         }
       },

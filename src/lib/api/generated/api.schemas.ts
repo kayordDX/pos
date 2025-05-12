@@ -894,6 +894,7 @@ export interface EntitiesOrderItemStatus {
 	isNotify: boolean;
 	priority: number;
 	isUpdateStock: boolean;
+	isUpdateStockReverse: boolean;
 }
 
 export interface EntitiesAdjustment {
@@ -1464,6 +1465,14 @@ export interface StockOrderCreateRequest {
 	orderNumber: string;
 	divisionId: number;
 	supplierId: number;
+}
+
+export interface StockOrderCancelRequest {
+	/**
+	 * @minimum 0
+	 * @exclusiveMinimum
+	 */
+	id: number;
 }
 
 export interface StockLinkUpdateRequest {
