@@ -108,20 +108,40 @@
 								>
 							</Drawer.Close>
 						{/if}
-						<Drawer.Close>
-							<Button
-								variant="destructive"
-								onclick={() => setStatus(4, item.orderItemId)}
-								class="w-full">Cancel <XIcon /></Button
-							>
-						</Drawer.Close>
-						<Drawer.Close>
-							<Button
-								variant="destructive"
-								onclick={() => setStatus(8, item.orderItemId)}
-								class="w-full">Waste<Trash2Icon /></Button
-							>
-						</Drawer.Close>
+						{#if isHistory}
+							<Drawer.Close>
+								<Button
+									variant="destructive"
+									onclick={() => setStatus(10, item.orderItemId)}
+									class="w-full">Cancel <XIcon /></Button
+								>
+							</Drawer.Close>
+						{:else}
+							<Drawer.Close>
+								<Button
+									variant="destructive"
+									onclick={() => setStatus(4, item.orderItemId)}
+									class="w-full">Cancel <XIcon /></Button
+								>
+							</Drawer.Close>
+						{/if}
+						{#if isHistory}
+							<Drawer.Close>
+								<Button
+									variant="destructive"
+									onclick={() => setStatus(9, item.orderItemId)}
+									class="w-full">Waste<Trash2Icon /></Button
+								>
+							</Drawer.Close>
+						{:else}
+							<Drawer.Close>
+								<Button
+									variant="destructive"
+									onclick={() => setStatus(8, item.orderItemId)}
+									class="w-full">Waste<Trash2Icon /></Button
+								>
+							</Drawer.Close>
+						{/if}
 					</Drawer.Footer>
 				</Drawer.Content>
 			</Drawer.Root>
