@@ -300,6 +300,7 @@ export interface TableOrderUpdateTableOrderRequest {
 
 export interface TableOrderUpdateOrderItemResponse {
 	isSuccess: boolean;
+	message: string;
 }
 
 export interface TableOrderUpdateOrderItemRequest {
@@ -320,6 +321,7 @@ export interface TableOrderUpdateGroupOrderRequest {
 
 export interface TableOrderSendToKitchenResponse {
 	isSuccess: boolean;
+	message: string;
 }
 
 export interface TableOrderSendToKitchenRequest {

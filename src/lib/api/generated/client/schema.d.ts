@@ -2543,6 +2543,7 @@ export interface components {
         };
         TableOrderUpdateOrderItemResponse: {
             isSuccess: boolean;
+            message: string;
         };
         TableOrderUpdateOrderItemRequest: {
             orderItemIds: number[];
@@ -2561,6 +2562,7 @@ export interface components {
         };
         TableOrderSendToKitchenResponse: {
             isSuccess: boolean;
+            message: string;
         };
         TableOrderSendToKitchenRequest: {
             /** Format: int32 */

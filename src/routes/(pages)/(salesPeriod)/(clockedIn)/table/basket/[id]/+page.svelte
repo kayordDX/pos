@@ -26,9 +26,12 @@
 
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			await $updateOrderItem.mutateAsync({
+			const result = await $updateOrderItem.mutateAsync({
 				data,
 			});
+			if (!result.isSuccess) {
+				toast.error(result.message);
+			}
 			refetch();
 		} catch (err) {
 			toast.error(getError(err).message);
@@ -52,12 +55,17 @@
 
 	const sendAllToKitchen = async () => {
 		try {
-			await $mutation.mutateAsync({
+			const result = await $mutation.mutateAsync({
 				data: {
 					tableBookingId: Number(page.params.id),
 				},
 			});
-			goto(`/table/menu/${page.params.id}`);
+			if (result.isSuccess) {
+				goto(`/table/menu/${page.params.id}`);
+			} else {
+				toast.error(result.message);
+				refetch();
+			}
 		} catch (err) {
 			toast.error(getError(err).message);
 		}

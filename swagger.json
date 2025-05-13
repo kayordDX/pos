@@ -9995,11 +9995,15 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "isSuccess"
+          "isSuccess",
+          "message"
         ],
         "properties": {
           "isSuccess": {
             "type": "boolean"
+          },
+          "message": {
+            "type": "string"
           }
         }
       },
@@ -10062,11 +10066,15 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "isSuccess"
+          "isSuccess",
+          "message"
         ],
         "properties": {
           "isSuccess": {
             "type": "boolean"
+          },
+          "message": {
+            "type": "string"
           }
         }
       },

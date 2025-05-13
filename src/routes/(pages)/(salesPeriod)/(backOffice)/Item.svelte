@@ -108,15 +108,7 @@
 								>
 							</Drawer.Close>
 						{/if}
-						{#if isHistory}
-							<Drawer.Close>
-								<Button
-									variant="destructive"
-									onclick={() => setStatus(10, item.orderItemId)}
-									class="w-full">Cancel <XIcon /></Button
-								>
-							</Drawer.Close>
-						{:else}
+						{#if !isHistory}
 							<Drawer.Close>
 								<Button
 									variant="destructive"
@@ -125,15 +117,7 @@
 								>
 							</Drawer.Close>
 						{/if}
-						{#if isHistory}
-							<Drawer.Close>
-								<Button
-									variant="destructive"
-									onclick={() => setStatus(9, item.orderItemId)}
-									class="w-full">Waste<Trash2Icon /></Button
-								>
-							</Drawer.Close>
-						{:else}
+						{#if !isHistory}
 							<Drawer.Close>
 								<Button
 									variant="destructive"
