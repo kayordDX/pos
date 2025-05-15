@@ -32,7 +32,7 @@
 		try {
 			await $deleteMutation.mutateAsync({ id: option.optionId });
 			refetch();
-			toast.message("Menu Deleted");
+			toast.message("Option Deleted");
 		} catch (error) {
 			toast.error(getError(error).message);
 		}

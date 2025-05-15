@@ -2667,6 +2667,7 @@ export interface components {
             /** Format: int32 */
             optionGroupId: number;
             optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
+            isAvailable: boolean;
         };
         DTOOptionGroupBasicDTO: {
             /** Format: int32 */
@@ -2697,6 +2698,7 @@ export interface components {
             /** Format: int32 */
             extraGroupId: number;
             extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
+            isAvailable: boolean;
         };
         DTOExtraGroupBasicDTO: {
             /** Format: int32 */
@@ -4283,6 +4285,7 @@ export interface components {
             price: number;
             /** Format: int32 */
             optionGroupId: number;
+            isAvailable: boolean;
         };
         OptionItemsRequest: Record<string, never>;
         OptionGroupUpdateRequest: {
@@ -4315,6 +4318,7 @@ export interface components {
             optionGroupId: number;
             /** Format: int32 */
             outletId: number;
+            isAvailable: boolean;
         };
         NotificationUserRequest: {
             message: string;
@@ -4624,6 +4628,7 @@ export interface components {
             extraGroupId: number;
             /** Format: int32 */
             outletId: number;
+            isAvailable: boolean;
         };
         ExtraItemsRequest: Record<string, never>;
         ExtraGroupUpdateRequest: {
@@ -4654,6 +4659,7 @@ export interface components {
             extraGroupId: number;
             /** Format: int32 */
             outletId: number;
+            isAvailable: boolean;
         };
         DivisionGetUsersResponse: {
             userId: string;

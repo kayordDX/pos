@@ -10396,7 +10396,8 @@
           "price",
           "positionId",
           "optionGroupId",
-          "optionGroup"
+          "optionGroup",
+          "isAvailable"
         ],
         "properties": {
           "optionId": {
@@ -10420,6 +10421,9 @@
           },
           "optionGroup": {
             "$ref": "#/components/schemas/DTOOptionGroupBasicDTO"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         }
       },
@@ -10486,7 +10490,8 @@
           "positionId",
           "price",
           "extraGroupId",
-          "extraGroup"
+          "extraGroup",
+          "isAvailable"
         ],
         "properties": {
           "extraId": {
@@ -10510,6 +10515,9 @@
           },
           "extraGroup": {
             "$ref": "#/components/schemas/DTOExtraGroupBasicDTO"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         }
       },
@@ -15974,7 +15982,8 @@
           "name",
           "positionId",
           "price",
-          "optionGroupId"
+          "optionGroupId",
+          "isAvailable"
         ],
         "properties": {
           "optionId": {
@@ -15995,6 +16004,9 @@
           "optionGroupId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         }
       },
@@ -16072,7 +16084,8 @@
           "positionId",
           "price",
           "optionGroupId",
-          "outletId"
+          "outletId",
+          "isAvailable"
         ],
         "properties": {
           "name": {
@@ -16093,6 +16106,9 @@
           "outletId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         }
       },
@@ -17135,7 +17151,8 @@
           "positionId",
           "price",
           "extraGroupId",
-          "outletId"
+          "outletId",
+          "isAvailable"
         ],
         "properties": {
           "extraId": {
@@ -17160,6 +17177,9 @@
           "outletId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         }
       },
@@ -17241,7 +17261,8 @@
           "positionId",
           "price",
           "extraGroupId",
-          "outletId"
+          "outletId",
+          "isAvailable"
         ],
         "properties": {
           "name": {
@@ -17262,6 +17283,9 @@
           "outletId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           }
         }
       },
