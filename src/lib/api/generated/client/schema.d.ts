@@ -2280,23 +2280,34 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** @description the dto used to send an error response to the client when an unhandled exception occurs on the server */
+        InternalErrorResponse: {
+            /**
+             * @description error status
+             * @default Internal Server Error!
+             */
+            status: string;
+            /**
+             * Format: int32
+             * @description http status code of the error response
+             * @default 500
+             */
+            code: number;
+            /**
+             * @description the reason for the error
+             * @default Something unexpected has happened
+             */
+            reason: string;
+            /**
+             * @description additional information or instructions
+             * @default See application log for stack trace.
+             */
+            note: string;
+        };
         ServicesWhatsappStatus: {
             success: boolean;
             state: string;
             message: string;
-        };
-        InternalErrorResponse: {
-            /** @default Internal Server Error! */
-            status: string;
-            /**
-             * Format: int32
-             * @default 500
-             */
-            code: number;
-            /** @default Something unexpected has happened */
-            reason: string;
-            /** @default See application log for stack trace. */
-            note: string;
         };
         ServicesWhatsappResponse: {
             success: boolean;
@@ -2381,14 +2392,20 @@ export interface components {
         };
         UserTasksRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         UserRemoveUserOutletRoleRequest: Record<string, never>;
+        /** @description the dto used to send an error response to the client */
         ErrorResponse: {
             /**
              * Format: int32
+             * @description the http status code sent to the client. default is 400.
              * @default 400
              */
             statusCode: number;
-            /** @default One or more errors occurred! */
+            /**
+             * @description the message for the error response
+             * @default One or more errors occurred!
+             */
             message: string;
+            /** @description the collection of errors for the current context */
             errors: {
                 [key: string]: string[];
             };
@@ -2465,7 +2482,10 @@ export interface components {
             name: string;
             orders: components["schemas"]["Order"][];
         };
-        /** @enum {integer} */
+        /**
+         * @description enum used to specify whether to execute global pre/post processors before endpoint level processors
+         * @enum {integer}
+         */
         Order: 0 | 1;
         EntitiesOutletPaymentType: {
             /** Format: int32 */

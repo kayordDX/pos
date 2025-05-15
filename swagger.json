@@ -1,5 +1,5 @@
 {
-  "x-generator": "NSwag v14.2.0.0 (NJsonSchema v11.1.0.0 (Newtonsoft.Json v13.0.0.0))",
+  "x-generator": "NSwag v14.4.0.0 (NJsonSchema v11.3.2.0 (Newtonsoft.Json v13.0.0.0))",
   "openapi": "3.0.0",
   "info": {
     "title": "Kayord.Pos",
@@ -18,6 +18,16 @@
         ],
         "operationId": "WhatsappStatus",
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -30,16 +40,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -56,6 +56,16 @@
         ],
         "operationId": "WhatsappRestart",
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -71,16 +81,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -97,22 +97,22 @@
         ],
         "operationId": "WhatsappQrCode",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServicesWhatsappQrResponse"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesWhatsappQrResponse"
                 }
               }
             }
@@ -140,22 +140,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserValidateResponse"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserValidateResponse"
                 }
               }
             }
@@ -206,6 +206,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -218,16 +228,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -280,6 +280,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -292,16 +302,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -354,6 +354,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -366,16 +376,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -502,22 +502,22 @@
         ],
         "operationId": "UserGetStatus",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/UserGetStatusResponse"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserGetStatusResponse"
                 }
               }
             }
@@ -542,6 +542,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -557,16 +567,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -596,6 +596,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -608,16 +618,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -647,12 +647,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -662,6 +656,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -678,6 +678,16 @@
         ],
         "operationId": "UnitsGetAll",
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -693,16 +703,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -719,22 +719,22 @@
         ],
         "operationId": "Test",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -749,22 +749,22 @@
         ],
         "operationId": "TestStockTest",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TestResult"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestResult"
                 }
               }
             }
@@ -779,22 +779,22 @@
         ],
         "operationId": "TestTokenTest",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TestTokenResult"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TestTokenResult"
                 }
               }
             }
@@ -809,22 +809,22 @@
         ],
         "operationId": "TestTotalTest",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/BillTableTotal"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillTableTotal"
                 }
               }
             }
@@ -839,22 +839,22 @@
         ],
         "operationId": "TestWhatsAppTest",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServicesWhatsappStatus"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesWhatsappStatus"
                 }
               }
             }
@@ -882,22 +882,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TableOrderUpdateTableOrderResponse"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderUpdateTableOrderResponse"
                 }
               }
             }
@@ -925,6 +925,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -937,16 +947,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -976,22 +976,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TableOrderUpdateGroupOrderResponse"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderUpdateGroupOrderResponse"
                 }
               }
             }
@@ -1019,6 +1019,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1031,16 +1041,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1070,6 +1070,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1082,16 +1092,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1118,6 +1118,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1130,16 +1140,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1166,6 +1166,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1178,16 +1188,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1222,6 +1222,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1234,16 +1244,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1271,22 +1271,22 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TableOrderGetBillResponse"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderGetBillResponse"
                 }
               }
             }
@@ -1312,22 +1312,22 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/TableOrderGetBasketResponse"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TableOrderGetBasketResponse"
                 }
               }
             }
@@ -1355,6 +1355,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1367,16 +1377,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1411,6 +1411,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1423,16 +1433,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1462,6 +1462,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1474,16 +1484,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1520,6 +1520,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1535,16 +1545,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1574,6 +1574,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1586,16 +1596,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1649,6 +1649,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1664,16 +1674,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1701,6 +1701,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -1716,16 +1726,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -1859,22 +1859,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntitiesTableBooking"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesTableBooking"
                 }
               }
             }
@@ -2135,12 +2135,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -2150,6 +2144,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -2175,6 +2175,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -2190,16 +2200,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -2227,6 +2227,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -2239,16 +2249,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -2330,12 +2330,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -2345,6 +2339,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -2404,6 +2404,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -2416,16 +2426,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -2453,6 +2453,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -2465,16 +2475,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -2504,12 +2504,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -2519,6 +2513,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -2548,6 +2548,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -2560,16 +2570,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -2597,6 +2597,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -2609,16 +2619,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -2635,6 +2635,16 @@
         ],
         "operationId": "StockOrderItemStatus",
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -2650,16 +2660,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -2909,6 +2909,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -2921,16 +2931,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -2958,6 +2958,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -2970,16 +2980,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -3007,6 +3007,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -3019,16 +3029,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -3337,6 +3337,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -3352,16 +3362,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -3461,12 +3461,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -3476,6 +3470,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -3501,6 +3501,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -3516,16 +3526,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -3562,6 +3562,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -3574,16 +3584,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -3645,6 +3645,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -3657,16 +3667,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -3694,6 +3694,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -3709,16 +3719,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -3800,12 +3800,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -3815,6 +3809,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -3874,6 +3874,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -3886,16 +3896,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -3923,6 +3923,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -3935,16 +3945,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -3974,6 +3974,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -3986,16 +3996,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -4023,6 +4023,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -4035,16 +4045,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -4126,6 +4126,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -4138,16 +4148,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -4177,6 +4177,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -4189,16 +4199,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -4226,6 +4226,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -4238,16 +4248,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -4493,22 +4493,22 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntitiesSalesPeriod"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesSalesPeriod"
                 }
               }
             }
@@ -4595,6 +4595,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -4607,16 +4617,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -4707,22 +4707,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntitiesSalesPeriod"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesSalesPeriod"
                 }
               }
             }
@@ -4756,6 +4756,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -4768,16 +4778,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -4807,9 +4807,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -4819,6 +4816,9 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
           }
         }
       }
@@ -4841,6 +4841,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -4856,16 +4866,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -4954,6 +4954,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -4969,16 +4979,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -5126,12 +5126,6 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -5141,6 +5135,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -5167,6 +5167,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -5179,16 +5189,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -5218,6 +5218,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -5230,16 +5240,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -5321,6 +5321,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -5336,16 +5346,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -5373,12 +5373,6 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -5388,6 +5382,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -5478,22 +5478,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntitiesPayment"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesPayment"
                 }
               }
             }
@@ -5528,22 +5528,22 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/CommonWrapperResultOfResponse"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CommonWrapperResultOfResponse"
                 }
               }
             }
@@ -5571,6 +5571,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -5583,16 +5593,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -5690,6 +5690,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -5702,16 +5712,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -5739,6 +5739,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -5754,16 +5764,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -5780,6 +5780,16 @@
         ],
         "operationId": "OutletList",
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -5795,16 +5805,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -5893,12 +5893,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -5908,6 +5902,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -5922,6 +5922,16 @@
         ],
         "operationId": "OptionGroup",
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -5937,16 +5947,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -5974,12 +5974,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -5989,6 +5983,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -6016,6 +6016,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -6031,16 +6041,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6120,12 +6120,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -6135,6 +6129,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -6162,12 +6162,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -6177,6 +6171,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -6258,22 +6258,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -6301,22 +6301,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -6344,22 +6344,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -6374,22 +6374,22 @@
         ],
         "operationId": "NotificationSound",
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -6417,6 +6417,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -6429,16 +6439,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6468,6 +6468,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -6480,16 +6490,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6540,6 +6540,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -6552,16 +6562,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6589,6 +6589,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -6601,16 +6611,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6756,6 +6756,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -6771,16 +6781,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6808,6 +6808,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -6820,16 +6830,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6859,6 +6859,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -6871,16 +6881,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -6908,6 +6908,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -6920,16 +6930,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7025,22 +7025,22 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/MenuGetSectionsResponse"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MenuGetSectionsResponse"
                 }
               }
             }
@@ -7066,6 +7066,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7081,16 +7091,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7135,6 +7135,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7150,16 +7160,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7187,6 +7187,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7199,16 +7209,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7236,6 +7236,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7248,16 +7258,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7336,6 +7336,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7351,16 +7361,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7390,12 +7390,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -7405,6 +7399,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -7419,6 +7419,16 @@
         ],
         "operationId": "ExtraGroup",
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7434,16 +7444,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7471,12 +7471,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -7486,6 +7480,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -7513,6 +7513,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7528,16 +7538,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7617,12 +7617,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -7632,6 +7626,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -7659,12 +7659,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -7674,6 +7668,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -7701,12 +7701,6 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -7716,6 +7710,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -7732,6 +7732,16 @@
         ],
         "operationId": "ExtraGetAll",
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7747,16 +7757,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7784,6 +7784,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7799,16 +7809,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7836,6 +7836,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7851,16 +7861,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -7961,6 +7961,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -7973,16 +7983,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8012,6 +8012,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8024,16 +8034,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8060,6 +8060,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8075,16 +8085,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8112,6 +8112,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8124,16 +8134,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8178,6 +8178,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8190,16 +8200,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8227,6 +8227,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8239,16 +8249,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8278,6 +8278,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8290,16 +8300,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8329,6 +8329,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8341,16 +8351,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8378,6 +8378,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8393,16 +8403,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8419,6 +8419,16 @@
         ],
         "operationId": "BusinessGetAll",
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8434,16 +8444,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8639,6 +8639,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8651,16 +8661,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8690,22 +8690,22 @@
           "x-position": 1
         },
         "responses": {
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "boolean"
-                }
-              }
-            }
-          },
           "500": {
             "description": "Server Error",
             "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
                 }
               }
             }
@@ -8733,6 +8733,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8745,16 +8755,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8784,6 +8784,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8796,16 +8806,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8833,12 +8833,6 @@
           }
         ],
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -8848,6 +8842,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -8877,6 +8877,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8889,16 +8899,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8928,6 +8928,16 @@
           "x-position": 1
         },
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8940,16 +8950,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -8977,6 +8977,16 @@
           }
         ],
         "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
           "200": {
             "description": "Success",
             "content": {
@@ -8992,16 +9002,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
           }
         },
         "security": [
@@ -9031,12 +9031,6 @@
           "x-position": 1
         },
         "responses": {
-          "204": {
-            "description": "No Content"
-          },
-          "401": {
-            "description": "Unauthorized"
-          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -9046,6 +9040,12 @@
                 }
               }
             }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -9058,6 +9058,40 @@
   },
   "components": {
     "schemas": {
+      "InternalErrorResponse": {
+        "type": "object",
+        "description": "the dto used to send an error response to the client when an unhandled exception occurs on the server",
+        "additionalProperties": false,
+        "required": [
+          "status",
+          "code",
+          "reason",
+          "note"
+        ],
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "error status",
+            "default": "Internal Server Error!"
+          },
+          "code": {
+            "type": "integer",
+            "description": "http status code of the error response",
+            "format": "int32",
+            "default": 500
+          },
+          "reason": {
+            "type": "string",
+            "description": "the reason for the error",
+            "default": "Something unexpected has happened"
+          },
+          "note": {
+            "type": "string",
+            "description": "additional information or instructions",
+            "default": "See application log for stack trace."
+          }
+        }
+      },
       "ServicesWhatsappStatus": {
         "type": "object",
         "additionalProperties": false,
@@ -9075,35 +9109,6 @@
           },
           "message": {
             "type": "string"
-          }
-        }
-      },
-      "InternalErrorResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "status",
-          "code",
-          "reason",
-          "note"
-        ],
-        "properties": {
-          "status": {
-            "type": "string",
-            "default": "Internal Server Error!"
-          },
-          "code": {
-            "type": "integer",
-            "format": "int32",
-            "default": 500
-          },
-          "reason": {
-            "type": "string",
-            "default": "Something unexpected has happened"
-          },
-          "note": {
-            "type": "string",
-            "default": "See application log for stack trace."
           }
         }
       },
@@ -9442,6 +9447,7 @@
       },
       "ErrorResponse": {
         "type": "object",
+        "description": "the dto used to send an error response to the client",
         "additionalProperties": false,
         "required": [
           "statusCode",
@@ -9451,15 +9457,18 @@
         "properties": {
           "statusCode": {
             "type": "integer",
+            "description": "the http status code sent to the client. default is 400.",
             "format": "int32",
             "default": 400
           },
           "message": {
             "type": "string",
+            "description": "the message for the error response",
             "default": "One or more errors occurred!"
           },
           "errors": {
             "type": "object",
+            "description": "the collection of errors for the current context",
             "additionalProperties": {
               "type": "array",
               "items": {
@@ -9736,7 +9745,7 @@
       },
       "Order": {
         "type": "integer",
-        "description": "",
+        "description": "enum used to specify whether to execute global pre/post processors before endpoint level processors",
         "x-enumNames": [
           "Before",
           "After"

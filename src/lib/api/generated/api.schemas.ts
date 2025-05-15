@@ -6,17 +6,24 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
+/**
+ * the dto used to send an error response to the client when an unhandled exception occurs on the server
+ */
+export interface InternalErrorResponse {
+	/** error status */
+	status: string;
+	/** http status code of the error response */
+	code: number;
+	/** the reason for the error */
+	reason: string;
+	/** additional information or instructions */
+	note: string;
+}
+
 export interface ServicesWhatsappStatus {
 	success: boolean;
 	state: string;
 	message: string;
-}
-
-export interface InternalErrorResponse {
-	status: string;
-	code: number;
-	reason: string;
-	note: string;
 }
 
 export interface ServicesWhatsappResponse {
@@ -127,11 +134,20 @@ export interface UserRemoveUserOutletRoleRequest {
 	[key: string]: unknown;
 }
 
+/**
+ * the collection of errors for the current context
+ */
 export type ErrorResponseErrors = { [key: string]: string[] };
 
+/**
+ * the dto used to send an error response to the client
+ */
 export interface ErrorResponse {
+	/** the http status code sent to the client. default is 400. */
 	statusCode: number;
+	/** the message for the error response */
 	message: string;
+	/** the collection of errors for the current context */
 	errors: ErrorResponseErrors;
 }
 
@@ -218,6 +234,9 @@ export interface EntitiesCustomer {
 	orders: Order[];
 }
 
+/**
+ * enum used to specify whether to execute global pre/post processors before endpoint level processors
+ */
 export type Order = (typeof Order)[keyof typeof Order];
 
 // eslint-disable-next-line @typescript-eslint/no-redeclare
