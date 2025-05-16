@@ -132,6 +132,7 @@
 							<Control>
 								{#snippet children({ props })}
 									<Checkbox
+										disabled={!option.isAvailable}
 										class="rounded-[4px] w-4 h-4"
 										{...props}
 										{checked}
@@ -150,7 +151,9 @@
 										value={option.optionId}
 										{checked}
 									/>
-									<Label>{option.name} - R{option.price.toFixed(2)}</Label>
+									<Label class={option.isAvailable ? "" : "text-muted"}
+										>{option.name} - R{option.price.toFixed(2)}</Label
+									>
 								{/snippet}
 							</Control>
 						</div>
@@ -172,6 +175,7 @@
 							<Control>
 								{#snippet children({ props })}
 									<Checkbox
+										disabled={!extra.isAvailable}
 										class="rounded-[4px]"
 										{...props}
 										{checked}
@@ -184,7 +188,9 @@
 										}}
 									/>
 									<input hidden type="checkbox" name={props.name} value={extra.extraId} {checked} />
-									<Label>{extra.name} - R{extra.price.toFixed(2)}</Label>
+									<Label class={extra.isAvailable ? "" : "text-muted"}
+										>{extra.name} - R{extra.price.toFixed(2)}</Label
+									>
 								{/snippet}
 							</Control>
 						</div>
