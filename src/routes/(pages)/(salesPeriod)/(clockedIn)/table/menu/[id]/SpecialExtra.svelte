@@ -55,7 +55,7 @@
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Special Extras">
 			{#each $query.data ?? [] as extra}
-				<Command.Item onSelect={() => selectItem(extra.extraId)}>
+				<Command.Item onSelect={() => selectItem(extra.extraId)} disabled={!extra.isAvailable}>
 					<div class="flex w-full items-center flex-row justify-between">
 						<div class="whitespace-nowrap overflow-hidden text-ellipsis">
 							{extra.name.replace(/[^a-zA-Z0-9 -]*/g, "")}
