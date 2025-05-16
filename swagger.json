@@ -13333,21 +13333,38 @@
         ]
       },
       "EntitiesStockCategory": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "name"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/EntitiesAuditableEntity"
           },
-          "name": {
-            "type": "string"
+          {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "outletId",
+              "name"
+            ],
+            "properties": {
+              "id": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "parentId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "outletId": {
+                "type": "integer",
+                "format": "int32"
+              },
+              "name": {
+                "type": "string"
+              }
+            }
           }
-        }
+        ]
       },
       "EntitiesStockItem": {
         "type": "object",
@@ -13707,7 +13724,8 @@
           "stockOrderItemStatusId",
           "stockOrderItemStatus",
           "actual",
-          "price"
+          "price",
+          "created"
         ],
         "properties": {
           "stockOrderId": {
@@ -13739,6 +13757,15 @@
           "price": {
             "type": "number",
             "format": "decimal"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastModified": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         }
       },

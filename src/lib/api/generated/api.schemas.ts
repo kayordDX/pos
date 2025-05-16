@@ -1343,10 +1343,15 @@ export type EntitiesStockAllOf = {
 
 export type EntitiesStock = EntitiesAuditableEntity & EntitiesStockAllOf;
 
-export interface EntitiesStockCategory {
+export type EntitiesStockCategoryAllOf = {
 	id: number;
+	/** @nullable */
+	parentId?: number | null;
+	outletId: number;
 	name: string;
-}
+};
+
+export type EntitiesStockCategory = EntitiesAuditableEntity & EntitiesStockCategoryAllOf;
 
 export interface EntitiesStockItem {
 	id: number;
@@ -1458,6 +1463,9 @@ export interface DTOStockOrderItemDTO {
 	stockOrderItemStatus: DTOStockOrderItemStatusDTO;
 	actual: number;
 	price: number;
+	created: string;
+	/** @nullable */
+	lastModified?: string | null;
 }
 
 export interface DTOStockBasicDTO {

@@ -23,6 +23,7 @@
 	import AddOrderItem from "./AddOrderItem.svelte";
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
+	import { stringToFDate } from "$lib/util";
 
 	const query = createStockOrderGet(Number(page.params.Id));
 
@@ -61,6 +62,11 @@
 			accessorKey: "stockOrderItemStatus.name",
 			size: 1000,
 			cell: (item) => renderSnippet(status, item.row.original),
+		},
+		{
+			header: "Status Date",
+			accessorFn: (item) => stringToFDate(item.lastModified ?? item.created),
+			size: 1000,
 		},
 		{
 			header: "",

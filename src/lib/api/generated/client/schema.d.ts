@@ -3521,9 +3521,13 @@ export interface components {
             stockItems?: components["schemas"]["EntitiesStockItem"][] | null;
             hasVat: boolean;
         };
-        EntitiesStockCategory: {
+        EntitiesStockCategory: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
             id: number;
+            /** Format: int32 */
+            parentId?: number | null;
+            /** Format: int32 */
+            outletId: number;
             name: string;
         };
         EntitiesStockItem: {
@@ -3647,6 +3651,10 @@ export interface components {
             actual: number;
             /** Format: decimal */
             price: number;
+            /** Format: date-time */
+            created: string;
+            /** Format: date-time */
+            lastModified?: string | null;
         };
         DTOStockBasicDTO: {
             /** Format: int32 */
