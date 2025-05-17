@@ -4697,6 +4697,10 @@ export interface components {
         DivisionGetUsersRequest: Record<string, never>;
         DivisionGetAllRequest: Record<string, never>;
         ClockListRequest: Record<string, never>;
+        ClockClockOutRequest: {
+            /** Format: int32 */
+            outletId: number;
+        };
         ClockClockInRequest: {
             /** Format: int32 */
             outletId: number;
@@ -10963,7 +10967,11 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody?: never;
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ClockClockOutRequest"];
+            };
+        };
         responses: {
             /** @description No Content */
             204: {

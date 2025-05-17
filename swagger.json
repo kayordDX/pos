@@ -7947,6 +7947,19 @@
           "Clock"
         ],
         "operationId": "ClockClockOut",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ClockClockOutRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
         "responses": {
           "500": {
             "description": "Server Error",
@@ -17329,6 +17342,19 @@
       "ClockListRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "ClockClockOutRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "outletId"
+        ],
+        "properties": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
       },
       "ClockClockInRequest": {
         "type": "object",

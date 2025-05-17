@@ -2650,6 +2650,10 @@ export interface ClockListRequest {
 	[key: string]: unknown;
 }
 
+export interface ClockClockOutRequest {
+	outletId: number;
+}
+
 export interface ClockClockInRequest {
 	outletId: number;
 }
