@@ -2650,21 +2650,6 @@ export interface ClockListRequest {
 	[key: string]: unknown;
 }
 
-export interface EntitiesClock {
-	id: number;
-	userId: string;
-	user: EntitiesUser;
-	startDate: string;
-	/** @nullable */
-	endDate?: string | null;
-	outletId: number;
-	outlet: EntitiesOutlet;
-}
-
-export interface ClockClockOutRequest {
-	outletId: number;
-}
-
 export interface ClockClockInRequest {
 	outletId: number;
 }

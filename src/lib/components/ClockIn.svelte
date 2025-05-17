@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card, toast } from "@kayord/ui";
-	import { ClockIcon, TimerIcon, TimerOffIcon } from "@lucide/svelte";
+	import { ClockIcon, TimerOffIcon } from "@lucide/svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import { createClockClockIn } from "$lib/api";
 	import { getError } from "$lib/types";

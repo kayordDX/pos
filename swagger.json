@@ -7947,19 +7947,6 @@
           "Clock"
         ],
         "operationId": "ClockClockOut",
-        "requestBody": {
-          "x-name": "Request",
-          "description": "",
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ClockClockOutRequest"
-              }
-            }
-          },
-          "required": true,
-          "x-position": 1
-        },
         "responses": {
           "500": {
             "description": "Server Error",
@@ -7971,15 +7958,8 @@
               }
             }
           },
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntitiesClock"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "401": {
             "description": "Unauthorized"
@@ -8022,15 +8002,8 @@
               }
             }
           },
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/EntitiesClock"
-                }
-              }
-            }
+          "204": {
+            "description": "No Content"
           },
           "401": {
             "description": "Unauthorized"
@@ -17356,59 +17329,6 @@
       "ClockListRequest": {
         "type": "object",
         "additionalProperties": false
-      },
-      "EntitiesClock": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "id",
-          "userId",
-          "user",
-          "startDate",
-          "outletId",
-          "outlet"
-        ],
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "user": {
-            "$ref": "#/components/schemas/EntitiesUser"
-          },
-          "startDate": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "endDate": {
-            "type": "string",
-            "format": "date-time",
-            "nullable": true
-          },
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "outlet": {
-            "$ref": "#/components/schemas/EntitiesOutlet"
-          }
-        }
-      },
-      "ClockClockOutRequest": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "outletId"
-        ],
-        "properties": {
-          "outletId": {
-            "type": "integer",
-            "format": "int32"
-          }
-        }
       },
       "ClockClockInRequest": {
         "type": "object",

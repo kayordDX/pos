@@ -4697,23 +4697,6 @@ export interface components {
         DivisionGetUsersRequest: Record<string, never>;
         DivisionGetAllRequest: Record<string, never>;
         ClockListRequest: Record<string, never>;
-        EntitiesClock: {
-            /** Format: int32 */
-            id: number;
-            userId: string;
-            user: components["schemas"]["EntitiesUser"];
-            /** Format: date-time */
-            startDate: string;
-            /** Format: date-time */
-            endDate?: string | null;
-            /** Format: int32 */
-            outletId: number;
-            outlet: components["schemas"]["EntitiesOutlet"];
-        };
-        ClockClockOutRequest: {
-            /** Format: int32 */
-            outletId: number;
-        };
         ClockClockInRequest: {
             /** Format: int32 */
             outletId: number;
@@ -10980,20 +10963,14 @@ export interface operations {
             path?: never;
             cookie?: never;
         };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["ClockClockOutRequest"];
-            };
-        };
+        requestBody?: never;
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["EntitiesClock"];
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -11026,14 +11003,12 @@ export interface operations {
             };
         };
         responses: {
-            /** @description Success */
-            200: {
+            /** @description No Content */
+            204: {
                 headers: {
                     [name: string]: unknown;
                 };
-                content: {
-                    "application/json": components["schemas"]["EntitiesClock"];
-                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
