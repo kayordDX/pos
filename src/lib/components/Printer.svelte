@@ -54,7 +54,9 @@
 	let deleteOpen = $state(false);
 </script>
 
-<Card.Root class={`border-l-8 ${printer.isEnabled ? "border-l-primary" : "border-l-destructive"}`}>
+<Card.Root
+	class={`p-0 border-l-8 ${printer.isEnabled ? "border-l-primary" : "border-l-destructive"}`}
+>
 	<Card.Header class="flex flex-row items-start bg-muted/50 p-4">
 		<div class="flex items-center justify-between w-full">
 			<div class="flex items-center gap-2">
