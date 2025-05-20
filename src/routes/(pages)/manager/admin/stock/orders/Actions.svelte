@@ -1,20 +1,20 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
 	import { EllipsisVerticalIcon, ShieldXIcon, ViewIcon } from "@lucide/svelte";
-	import { createStockOrderCancel, type EntitiesStockOrder } from "$lib/api";
+	import { createStockOrderCancel, type DTOStockOrderResponseDTO } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
 
 	interface Props {
 		refetch: () => void;
-		stockOrder: EntitiesStockOrder;
+		stockOrder: DTOStockOrderResponseDTO;
 	}
 
 	let { stockOrder, refetch }: Props = $props();
 
 	let cancelOpen = $state(false);
 
-	const showCancel = $derived(stockOrder.stockOrderStatus.id == 1);
+	const showCancel = $derived(stockOrder.stockOrderStatusId == 1);
 
 	const cancelMutation = createStockOrderCancel();
 	const cancelStockOrder = async () => {

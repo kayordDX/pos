@@ -33,6 +33,12 @@
 			enableSorting: false,
 		},
 		{
+			header: "Category",
+			accessorKey: "categoryDisplayName",
+			size: 1000,
+			enableSorting: false,
+		},
+		{
 			header: "Total",
 			accessorKey: "id",
 			cell: (item) =>

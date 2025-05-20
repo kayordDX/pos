@@ -162,6 +162,8 @@ export type UserGetStatusResponseSalesPeriod = EntitiesSalesPeriod | null;
 
 export interface UserGetStatusResponse {
 	outletId: number;
+	/** @nullable */
+	outletName?: string | null;
 	clockedIn: boolean;
 	salesPeriodId: number;
 	/** @nullable */
@@ -276,6 +278,7 @@ export interface UserGetRolesRequest {
 export interface EntitiesUserOutlet {
 	id: number;
 	outletId: number;
+	outlet: EntitiesOutlet;
 	userId: string;
 	isCurrent: boolean;
 }
@@ -1281,6 +1284,7 @@ export interface StockUpdateRequest {
 	name: string;
 	unitId: number;
 	hasVat: boolean;
+	stockCategoryId: number;
 }
 
 export interface StockOrderItemUpdateBulkRequest {
@@ -1416,13 +1420,28 @@ export interface StockOrderUpdateRequest {
 	supplierId: number;
 }
 
-export interface CommonModelsPaginatedListOfStockOrder {
-	items: EntitiesStockOrder[];
+export interface CommonModelsPaginatedListOfStockOrderResponseDTO {
+	items: DTOStockOrderResponseDTO[];
 	pageNumber: number;
 	totalPages: number;
 	totalCount: number;
 	hasPreviousPage: boolean;
 	hasNextPage: boolean;
+}
+
+export interface DTOStockOrderResponseDTO {
+	id: number;
+	outletId: number;
+	orderNumber: string;
+	stockOrderStatusId: number;
+	stockOrderStatusName: string;
+	divisionId: number;
+	divisionName: string;
+	orderDate: string;
+	created: string;
+	supplierId: number;
+	supplierName: string;
+	total: number;
 }
 
 export type StockOrderGetAllRequestAllOf = { [key: string]: unknown };
@@ -1633,6 +1652,8 @@ export interface StockGetAllResponse {
 	unitId: number;
 	unitName: string;
 	stockCategoryId: number;
+	/** @nullable */
+	categoryDisplayName?: string | null;
 	totalActual: number;
 	hasVat: boolean;
 }
@@ -1654,6 +1675,20 @@ export interface StockCreateRequest {
 	name: string;
 	unitId: number;
 	hasVat: boolean;
+	stockCategoryId: number;
+}
+
+export interface StockCategoryResponse {
+	id: number;
+	name: string;
+	parentId: number;
+	parentName: string;
+	outletId: number;
+	displayName: string;
+}
+
+export interface StockCategoryRequest {
+	[key: string]: unknown;
 }
 
 export interface StockAllocateUpdateRequest {
@@ -2990,6 +3025,10 @@ export type StockGetAllDivisionParams = {
 };
 
 export type StockDivisionGetAllParams = {
+	outletId: number;
+};
+
+export type StockCategoryParams = {
 	outletId: number;
 };
 

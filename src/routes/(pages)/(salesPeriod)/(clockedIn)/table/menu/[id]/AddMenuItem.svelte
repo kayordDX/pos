@@ -105,12 +105,12 @@
 </script>
 
 <form use:enhance method="POST">
-	<Drawer.Header>
+	<Drawer.Header class="pt-0 px-0">
 		<Drawer.Title>{data.name}</Drawer.Title>
 		<Drawer.Description>{data.description}</Drawer.Description>
 		<div class="font-bold">R {data.price.toFixed(2)}</div>
 	</Drawer.Header>
-	<div class="flex flex-col gap-5 p-4 pt-0">
+	<div class="flex flex-col gap-2 p-0 pt-0">
 		<div>
 			{#if data.menuItemOptionGroups.length > 0}
 				<h3 class="font-bold">Options</h3>

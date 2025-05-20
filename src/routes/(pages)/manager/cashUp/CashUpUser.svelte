@@ -11,7 +11,7 @@
 </script>
 
 <Card.Root
-	class={`overflow-hidden w-full ${hasOpenTables ? "border-4 border-destructive" : ""} ${cash.cashUpUserId > 0 ? "bg-background border-secondary/40 border-2" : ""}`}
+	class={`overflow-hidden pt-0 w-full ${hasOpenTables ? "border-4 border-destructive" : ""} ${cash.cashUpUserId > 0 ? "bg-background border-secondary/40 border-2" : ""}`}
 >
 	<Card.Header
 		class={`flex flex-col items-start  ${cash.cashUpUserId > 0 ? "bg-muted/20" : "bg-muted/50"} p-4`}

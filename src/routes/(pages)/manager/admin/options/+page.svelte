@@ -23,7 +23,6 @@
 			header: "Name",
 			accessorKey: "name",
 			size: 10000,
-			// cell: (item) => renderSnippet(extraGroup, item.row.original),
 		},
 		{
 			header: "Selection",
@@ -66,7 +65,7 @@
 {/snippet}
 
 {#snippet selection(optionGroup: DTOOptionGroupBasicDTO)}
-	<Card.Root class="p-2 flex items-center gap-2">
+	<Card.Root class="p-2 flex items-center gap-2 flex-row">
 		min: <Badge>{optionGroup.maxSelections}</Badge>
 		max: <Badge>{optionGroup.minSelections}</Badge>
 	</Card.Root>

@@ -127,9 +127,9 @@
 <div class="m-2">
 	<Loader isLoading={$query.isPending} />
 	{#if $query.data}
-		<Card.Root class="bg-secondary">
+		<Card.Root class="bg-secondar flex-row p-0 w-full">
 			<div
-				class="border-2 border-secondary p-2 gap-2 rounded-md flex-col justify-between items-center text-secondary-foreground"
+				class="border-2 border-secondary p-2 gap-2 rounded-md flex-col justify-between items-center text-secondary-foreground w-full"
 			>
 				<div class="flex items-center gap-2 justify-center">
 					<div class="bg-background/60 py-1 px-2 rounded-md">

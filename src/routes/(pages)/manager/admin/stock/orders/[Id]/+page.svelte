@@ -160,7 +160,7 @@
 <div class="m-2">
 	<Loader isLoading={$query.isPending} />
 	{#if $query.data}
-		<Card.Root class="bg-secondary">
+		<Card.Root class="bg-secondary p-0">
 			<div
 				class="border-2 border-secondary p-2 rounded-md flex justify-between items-center bg-background/60 text-secondary-foreground"
 			>

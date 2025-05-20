@@ -13,7 +13,7 @@
 
 	let addOrderOpen = $state(false);
 
-	import { createStockOrderGetAll, type EntitiesStockOrder } from "$lib/api";
+	import { createStockOrderGetAll, type DTOStockOrderResponseDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import {
 		getCoreRowModel,
@@ -31,7 +31,7 @@
 	import QueryBuilder from "fluent-querykit";
 	import { stringToFDate } from "$lib/util";
 
-	const columns: ColumnDef<EntitiesStockOrder>[] = [
+	const columns: ColumnDef<DTOStockOrderResponseDTO>[] = [
 		{
 			header: "Order Number",
 			accessorKey: "orderNumber",
@@ -39,18 +39,23 @@
 		},
 		{
 			header: "Status",
-			accessorKey: "stockOrderStatus.name",
+			accessorKey: "stockOrderStatusName",
 			cell: (item) => renderSnippet(statusCol, item.row.original),
 			size: 1000,
 		},
 		{
 			header: "Supplier",
-			accessorKey: "supplier.name",
+			accessorKey: "supplierName",
 			size: 1000,
 		},
 		{
 			header: "Created",
 			accessorFn: (item) => stringToFDate(item.created),
+			size: 1000,
+		},
+		{
+			header: "Total",
+			accessorFn: (item) => item.total.toFixed(2),
 			size: 1000,
 		},
 		{
@@ -159,14 +164,14 @@
 	});
 </script>
 
-{#snippet statusCol(stockOrder: EntitiesStockOrder)}
+{#snippet statusCol(stockOrder: DTOStockOrderResponseDTO)}
 	{@const v =
 		stockOrder.stockOrderStatusId == 1
 			? "secondary"
 			: stockOrder.stockOrderStatusId == 2
 				? "default"
 				: "outline"}
-	<Badge variant={v}>{stockOrder.stockOrderStatus.name}</Badge>
+	<Badge variant={v}>{stockOrder.stockOrderStatusName}</Badge>
 {/snippet}
 
 {#snippet header()}

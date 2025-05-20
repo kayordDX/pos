@@ -47,7 +47,7 @@
 	};
 </script>
 
-<Card.Root class="p-4 flex justify-between relative">
+<Card.Root class="p-4 flex justify-between relative flex-row">
 	<ItemCount value={quantity} />
 	<div class="flex flex-col gap-2 justify-center">
 		{@render children?.()}

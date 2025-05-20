@@ -5,7 +5,7 @@
 </script>
 
 <div class="flex justify-center">
-	<Card.Root>
+	<Card.Root class="w-100">
 		<Card.Header>
 			<Card.Title>No items</Card.Title>
 			<Card.Description>Add items from menu to basket</Card.Description>

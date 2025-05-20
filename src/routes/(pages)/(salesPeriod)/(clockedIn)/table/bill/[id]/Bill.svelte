@@ -62,7 +62,7 @@
 	let showDetail = $state(false);
 </script>
 
-<Card.Root class="overflow-hidden m-2 mb-12">
+<Card.Root class="overflow-hidden m-2 mb-12 p-0">
 	<Card.Header class="flex flex-col bg-muted/30 dark:bg-background/30 p-4">
 		<div class="flex flex-row w-full justify-between">
 			<div class="flex flex-col">
@@ -75,7 +75,7 @@
 		</div>
 		{#if showDetail}
 			<Separator class="mt-2" />
-			<div class="text-muted-foreground flex flex-row text-sm justify-between">
+			<div class="text-muted-foreground flex flex-row text-sm justify-between w-full">
 				<div class="flex flex-col">
 					<div>{data.tableName}</div>
 					<div>Waiter {data.waiter}</div>

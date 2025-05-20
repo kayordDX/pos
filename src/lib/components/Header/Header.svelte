@@ -7,6 +7,10 @@
 	import { slide } from "svelte/transition";
 	import type { Snippet } from "svelte";
 	import { cn } from "@kayord/ui/utils";
+	import { Badge } from "@kayord/ui";
+	import { status } from "$lib/stores/status.svelte";
+	import { HomeIcon } from "@lucide/svelte";
+	import { getInitials } from "$lib/util";
 
 	interface Props {
 		children?: Snippet;
@@ -42,7 +46,11 @@
 				{@render children()}
 			{/if}
 		</span>
-		<div class="flex gap-2">
+		<div class="flex gap-2 items-center">
+			{#if status.value.outletName}
+				<Badge variant="outline" class="hidden sm:block">{status.value.outletName}</Badge>
+				<Badge variant="outline" class="sm:hidden">{getInitials(status.value.outletName)}</Badge>
+			{/if}
 			{#if session.user}
 				<Menu />
 			{/if}

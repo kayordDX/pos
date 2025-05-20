@@ -2924,13 +2924,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfStockOrder"
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfStockOrderResponseDTO"
                 }
               }
             }
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         },
         "security": [
@@ -3771,6 +3774,58 @@
                 }
               }
             }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
+    "/stock/category": {
+      "get": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockCategory",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StockCategoryResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
           }
         },
         "security": [
@@ -9483,6 +9538,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "outletName": {
+            "type": "string",
+            "nullable": true
+          },
           "clockedIn": {
             "type": "boolean"
           },
@@ -9841,6 +9900,7 @@
         "required": [
           "id",
           "outletId",
+          "outlet",
           "userId",
           "isCurrent"
         ],
@@ -9852,6 +9912,9 @@
           "outletId": {
             "type": "integer",
             "format": "int32"
+          },
+          "outlet": {
+            "$ref": "#/components/schemas/EntitiesOutlet"
           },
           "userId": {
             "type": "string"
@@ -13066,7 +13129,8 @@
           "id",
           "name",
           "unitId",
-          "hasVat"
+          "hasVat",
+          "stockCategoryId"
         ],
         "properties": {
           "id": {
@@ -13082,6 +13146,10 @@
           },
           "hasVat": {
             "type": "boolean"
+          },
+          "stockCategoryId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -13555,7 +13623,7 @@
           }
         }
       },
-      "CommonModelsPaginatedListOfStockOrder": {
+      "CommonModelsPaginatedListOfStockOrderResponseDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -13570,7 +13638,7 @@
           "items": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/EntitiesStockOrder"
+              "$ref": "#/components/schemas/DTOStockOrderResponseDTO"
             }
           },
           "pageNumber": {
@@ -13590,6 +13658,70 @@
           },
           "hasNextPage": {
             "type": "boolean"
+          }
+        }
+      },
+      "DTOStockOrderResponseDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "outletId",
+          "orderNumber",
+          "stockOrderStatusId",
+          "stockOrderStatusName",
+          "divisionId",
+          "divisionName",
+          "orderDate",
+          "created",
+          "supplierId",
+          "supplierName",
+          "total"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderNumber": {
+            "type": "string"
+          },
+          "stockOrderStatusId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockOrderStatusName": {
+            "type": "string"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "divisionName": {
+            "type": "string"
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "supplierId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "supplierName": {
+            "type": "string"
+          },
+          "total": {
+            "type": "number",
+            "format": "decimal"
           }
         }
       },
@@ -14296,6 +14428,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "categoryDisplayName": {
+            "type": "string",
+            "nullable": true
+          },
           "totalActual": {
             "type": "number",
             "format": "decimal"
@@ -14331,7 +14467,8 @@
           "outletId",
           "name",
           "unitId",
-          "hasVat"
+          "hasVat",
+          "stockCategoryId"
         ],
         "properties": {
           "outletId": {
@@ -14347,8 +14484,51 @@
           },
           "hasVat": {
             "type": "boolean"
+          },
+          "stockCategoryId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
+      },
+      "StockCategoryResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "parentId",
+          "parentName",
+          "outletId",
+          "displayName"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "parentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "parentName": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "displayName": {
+            "type": "string"
+          }
+        }
+      },
+      "StockCategoryRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "StockAllocateUpdateRequest": {
         "type": "object",

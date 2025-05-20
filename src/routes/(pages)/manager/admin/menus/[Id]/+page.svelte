@@ -31,7 +31,7 @@
 			</Card.Root>
 		{/if}
 		{#each $query.data?.sections ?? [] as section}
-			<Card.Root class="p-2 flex items-center justify-between">
+			<Card.Root class="p-2 flex items-center justify-between flex-row">
 				{section.name}
 				<Actions refetch={$query.refetch} {section} />
 			</Card.Root>

@@ -3,6 +3,7 @@
 		createUnitsGetAll,
 		createStockCreate,
 		createStockUpdate,
+		createStockCategory,
 		type StockGetAllResponse,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
@@ -28,8 +29,15 @@
 		name: z.string().min(1, { message: "Stock Name is Required" }),
 		unitId: z.number().min(1, { message: "Unit is Required" }),
 		hasVat: z.boolean(),
+		stockCategoryId: z.number().min(1, { message: "Stock Category is Required" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
+
+	const categoryQuery = createStockCategory({ outletId: status.value.outletId });
+	const category = $derived($categoryQuery.data ?? []);
+	const categorySelect = $derived(
+		category.find((i) => i.id === $formData.stockCategoryId)?.displayName ?? "Select Category"
+	);
 
 	const unitsQuery = createUnitsGetAll();
 	const units = $derived($unitsQuery.data ?? []);
@@ -45,6 +53,7 @@
 						name: data.name,
 						unitId: data.unitId,
 						hasVat: data.hasVat,
+						stockCategoryId: data.stockCategoryId,
 					},
 				});
 				toast.info("Edited Stock");
@@ -55,6 +64,7 @@
 						unitId: data.unitId,
 						outletId: status.value.outletId,
 						hasVat: data.hasVat,
+						stockCategoryId: data.stockCategoryId,
 					},
 				});
 				toast.info("Added Stock");
@@ -69,6 +79,7 @@
 		name: stock?.name,
 		unitId: stock?.unitId,
 		hasVat: stock?.hasVat ?? true,
+		stockCategoryId: stock?.stockCategoryId ?? 0,
 	});
 
 	// svelte-ignore state_referenced_locally
@@ -127,6 +138,32 @@
 									{#each units ?? [] as result}
 										<Select.Item value={result.id.toString()}>
 											{result.name}
+										</Select.Item>
+									{/each}
+								</Select.Content>
+							</Select.Root>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors class="text-destructive text-sm" />
+				</Form.Field>
+				<Form.Field {form} name="stockCategoryId">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Category</Form.Label>
+							<Select.Root
+								type="single"
+								allowDeselect={false}
+								onValueChange={(v: string) => {
+									v && ($formData.stockCategoryId = Number(v));
+								}}
+							>
+								<Select.Trigger {...props}>
+									{categorySelect}
+								</Select.Trigger>
+								<Select.Content>
+									{#each category ?? [] as result}
+										<Select.Item value={result.id.toString()}>
+											{result.displayName}
 										</Select.Item>
 									{/each}
 								</Select.Content>

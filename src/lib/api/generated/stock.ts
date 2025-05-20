@@ -23,7 +23,7 @@ import type {
 	CommonModelsPaginatedListOfResponse2,
 	CommonModelsPaginatedListOfResponse3,
 	CommonModelsPaginatedListOfStockAllocateDTOBasic,
-	CommonModelsPaginatedListOfStockOrder,
+	CommonModelsPaginatedListOfStockOrderResponseDTO,
 	DTOStockAllocateDTO,
 	DTOStockOrderDTO,
 	DTOStockOrderItemStatusDTO,
@@ -40,6 +40,8 @@ import type {
 	StockAllocateItemCreateRequest,
 	StockAllocateItemUpdateRequest,
 	StockAllocateUpdateRequest,
+	StockCategoryParams,
+	StockCategoryResponse,
 	StockCreateRequest,
 	StockDivisionGetAllParams,
 	StockGetAllDivisionParams,
@@ -767,7 +769,7 @@ export const createStockOrderUpdate = <
 	return createMutation(mutationOptions, queryClient);
 };
 export const stockOrderGetAll = (params: StockOrderGetAllParams) => {
-	return customInstance<CommonModelsPaginatedListOfStockOrder>({
+	return customInstance<CommonModelsPaginatedListOfStockOrderResponseDTO>({
 		url: `/stock/order`,
 		method: "GET",
 		params,
@@ -1812,6 +1814,61 @@ export const createStockDelete = <
 
 	return createMutation(mutationOptions, queryClient);
 };
+export const stockCategory = (params: StockCategoryParams) => {
+	return customInstance<StockCategoryResponse[]>({ url: `/stock/category`, method: "GET", params });
+};
+
+export const getStockCategoryQueryKey = (params: StockCategoryParams) => {
+	return [`/stock/category`, ...(params ? [params] : [])] as const;
+};
+
+export const getStockCategoryQueryOptions = <
+	TData = Awaited<ReturnType<typeof stockCategory>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: StockCategoryParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockCategory>>, TError, TData>>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getStockCategoryQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof stockCategory>>> = () =>
+		stockCategory(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof stockCategory>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type StockCategoryQueryResult = NonNullable<Awaited<ReturnType<typeof stockCategory>>>;
+export type StockCategoryQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createStockCategory<
+	TData = Awaited<ReturnType<typeof stockCategory>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: StockCategoryParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockCategory>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getStockCategoryQueryOptions(params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const stockAllocateUpdate = (
 	stockAllocateUpdateRequest: BodyType<StockAllocateUpdateRequest>
 ) => {

@@ -174,7 +174,9 @@
 
 <Card.Root class="p-5 m-5">
 	<Card.Header>
-		<Card.Title>Setup Device</Card.Title>
+		<Card.Title>
+			<h3 class="text-lg">Setup Device</h3>
+		</Card.Title>
 	</Card.Header>
 	<Card.Content>
 		<form method="POST" use:enhance>
@@ -212,7 +214,7 @@
 </Card.Root>
 
 <Card.Root class="p-5 m-5">
-	<Card.Header class="pb-6">
+	<Card.Header>
 		<Card.Title>Sound</Card.Title>
 		<Card.Description>Play Sound</Card.Description>
 	</Card.Header>

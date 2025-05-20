@@ -53,7 +53,7 @@
 		<div class="flex flex-col flex-wrap gap-2 mt-4 items-start">
 			{#each $query.data ?? [] as myTable}
 				<a href={`/table/menu/${myTable.id}`} class="w-full">
-					<Card.Root class="p-5 w-full">
+					<Card.Root class="p-5 w-full gap-1">
 						<div class="flex justify-between">
 							<h3>{myTable?.table?.name}</h3>
 							<Badge>{myTable?.table?.section?.name}</Badge>

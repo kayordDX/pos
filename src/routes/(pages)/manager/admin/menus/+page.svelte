@@ -28,7 +28,7 @@
 			</Card.Root>
 		{/if}
 		{#each $query.data ?? [] as menu}
-			<Card.Root class="p-2 flex items-center justify-between">
+			<Card.Root class="p-2 flex items-center justify-between flex-row">
 				{menu.name}
 				<Actions {menu} refetch={$query.refetch} />
 			</Card.Root>
