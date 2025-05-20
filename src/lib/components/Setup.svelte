@@ -147,15 +147,17 @@
 				Service Worker
 			</li>
 
-			<li class="flex gap-2 items-center">
-				7.
-				{#if hasNotifyPermission}
-					<CheckCircleIcon class="text-green-400" />
-				{:else}
-					<CircleXIcon class="text-red-400" />
-					<Button onclick={requestNotificationPermission}>Request Access</Button>
-				{/if}
-				Notification Access
+			<li class="flex flex-col gap-2 items-start">
+				<div class="flex flex-row gap-2 items-center">
+					7.
+					{#if hasNotifyPermission}
+						<CheckCircleIcon class="text-green-400" />
+					{:else}
+						<CircleXIcon class="text-red-400" />
+						<Button onclick={requestNotificationPermission}>Request Access</Button>
+					{/if}
+					Notification Access
+				</div>
 				<Button onclick={testNotification}>Test Notification</Button>
 			</li>
 
