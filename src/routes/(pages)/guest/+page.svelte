@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { info } from "$lib/stores/info.svelte";
 	import { Button, Card } from "@kayord/ui";
 	import { UserCheck2Icon } from "@lucide/svelte";
 </script>
@@ -13,7 +14,11 @@
 		</Card.Header>
 		<Card.Content>
 			<div class="flex flex-col items-start">
-				<img src="/logo.svg" alt="kayord-logo" class="h-28 hover:animate-pulse" />
+				<img
+					src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`}
+					alt="kayord-logo"
+					class="h-28 hover:animate-pulse"
+				/>
 				<div class="text-muted-foreground mt-4 text-sm">
 					Once you have been assigned a role you can start using the system
 				</div>

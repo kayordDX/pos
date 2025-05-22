@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
+	import { info } from "$lib/stores/info.svelte";
 	import { Collapsible, Sidebar } from "@kayord/ui";
 	const sidebar = Sidebar.useSidebar();
 
@@ -144,10 +145,16 @@
 <Sidebar.Root>
 	<Sidebar.Header class="bg-secondary h-14 flex items-center justify-center">
 		<Sidebar.Menu>
-			<Sidebar.MenuItem class="flex items-center justify-center">
+			<Sidebar.MenuItem class="flex items-center justify-start">
 				<button class="flex items-center rounded-full" onclick={() => goto("/")}>
-					<img src="/logo.svg" alt="kayord-logo" class="h-8" />
-					ayord.Pos
+					<img
+						src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`}
+						alt="kayord-logo"
+						class="h-10"
+					/>
+					<span class="hidden md:block font-bold text-lg">
+						{info.isKayord() ? "kayord" : "aviate"}
+					</span>
 				</button>
 			</Sidebar.MenuItem>
 		</Sidebar.Menu>

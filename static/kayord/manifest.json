@@ -1,11 +1,11 @@
 {
-	"name": "Aviate POS",
-	"short_name": "Aviate",
+	"name": "Kayord POS",
+	"short_name": "Kayord",
 	"start_url": "/",
 	"display": "standalone",
 	"background_color": "#09090b",
 	"theme_color": "#9574cd",
-	"description": "Aviate Point of Sale system powered by Kayord",
+	"description": "Point of Sale system powered by Kayord",
 	"icons": [
 		{
 			"src": "pwa-64x64.png",

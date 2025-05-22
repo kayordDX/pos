@@ -11,6 +11,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { HomeIcon } from "@lucide/svelte";
 	import { getInitials } from "$lib/util";
+	import { info } from "$lib/stores/info.svelte";
 
 	interface Props {
 		children?: Snippet;
@@ -34,8 +35,10 @@
 	>
 		{#if !hideHeader}
 			<button class="flex items-center" onclick={() => goto("/")}>
-				<img src="/logo.svg" alt="kayord-logo" class="h-10" />
-				<span class="hidden md:block">ayord.Pos</span>
+				<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="logo" class="h-10" />
+				<span class="hidden md:block font-bold text-lg">
+					{info.isKayord() ? "kayord" : "aviate"}
+				</span>
 			</button>
 		{/if}
 		{#if leftHeader}

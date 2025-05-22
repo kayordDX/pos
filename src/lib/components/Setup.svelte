@@ -13,6 +13,7 @@
 	import { onMount } from "svelte";
 	import { menu } from "$lib/stores/menu.svelte";
 	import { hub } from "$lib/stores/hub.svelte";
+	import { info } from "$lib/stores/info.svelte";
 
 	const query = createOutletList();
 
@@ -73,7 +74,7 @@
 		navigator.serviceWorker.ready.then((registration) => {
 			registration.showNotification("Test Notification", {
 				body: "The very interesting detail that the test entails",
-				icon: "/logo.svg",
+				icon: `${info.isKayord() ? "/kayord" : ""}/logo.svg`,
 			});
 		});
 	};

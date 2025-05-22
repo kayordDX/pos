@@ -14,6 +14,7 @@
 	} from "@lucide/svelte";
 	import type { Snippet } from "svelte";
 	import AdminSidebar from "./AdminSidebar.svelte";
+	import { info } from "$lib/stores/info.svelte";
 
 	let showSidebar = $state(true);
 
@@ -66,7 +67,7 @@
 						class="flex items-center bg-background p-2 rounded-full"
 						onclick={() => goto("/")}
 					>
-						<img src="/logo.svg" alt="kayord-logo" class="h-6" />
+						<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="logo" class="h-6" />
 					</button>
 					{#each menuItems.top as item}
 						<Button

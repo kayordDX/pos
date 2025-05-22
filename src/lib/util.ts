@@ -1,3 +1,5 @@
+import { info } from "./stores/info.svelte";
+
 export const stringToFDate = (dateString: string | null | undefined) => {
 	if (dateString == null || dateString == undefined) return "";
 	const date = new Date(dateString);
@@ -32,7 +34,7 @@ export const requestNotificationPermission = async () => {
 		const registration = await navigator.serviceWorker.ready;
 		registration.showNotification("Your are now subscribed to notifications", {
 			body: "Buzz! Buzz!",
-			icon: "/logo.svg",
+			icon: `${info.isKayord() ? "/kayord" : ""}/logo.svg`,
 		});
 	}
 };

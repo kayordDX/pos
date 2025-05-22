@@ -64,7 +64,7 @@
 		<div class="flex flex-wrap gap-4 mt-4 w-full">
 			{#each $query.data as table}
 				<button class="text-start w-full md:max-w-md" onclick={() => selectTable(table.tableId)}>
-					<Card.Root class="p-5">
+					<Card.Root class="p-4 gap-0">
 						<div class="flex justify-between gap-2">
 							<h3>{table.name}</h3>
 							<Badge>{table.capacity}</Badge>

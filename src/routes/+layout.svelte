@@ -12,6 +12,7 @@
 	import { session } from "$lib/firebase.svelte";
 	let { children }: { children?: Snippet } = $props();
 	import { hub } from "$lib/stores/hub.svelte";
+	import { info } from "$lib/stores/info.svelte";
 
 	$effect(() => {
 		if (session.user) {
@@ -65,6 +66,11 @@
 		},
 	});
 </script>
+
+<svelte:head>
+	<link rel="icon" href={`${info.isKayord() ? "/kayord" : ""}/favicon.svg`} />
+	<link rel="manifest" href={`${info.isKayord() ? "/kayord" : ""}/manifest.json`} />
+</svelte:head>
 
 <AuthCheck>
 	<Toaster />
