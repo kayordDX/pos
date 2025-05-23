@@ -21,10 +21,12 @@ import type {
 
 import type {
 	EntitiesSection,
+	EntitiesTable,
 	ErrorResponse,
 	InternalErrorResponse,
 	SectionCreateRequest,
 	SectionListParams,
+	SectionTableGetAllParams,
 	SectionUpdateRequest,
 } from "./api.schemas";
 
@@ -160,6 +162,67 @@ export function createSectionGet<
 	return query;
 }
 
+export const sectionTableGetAll = (params: SectionTableGetAllParams) => {
+	return customInstance<EntitiesTable[]>({ url: `/section/tables`, method: "GET", params });
+};
+
+export const getSectionTableGetAllQueryKey = (params: SectionTableGetAllParams) => {
+	return [`/section/tables`, ...(params ? [params] : [])] as const;
+};
+
+export const getSectionTableGetAllQueryOptions = <
+	TData = Awaited<ReturnType<typeof sectionTableGetAll>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: SectionTableGetAllParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof sectionTableGetAll>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getSectionTableGetAllQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof sectionTableGetAll>>> = () =>
+		sectionTableGetAll(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof sectionTableGetAll>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type SectionTableGetAllQueryResult = NonNullable<
+	Awaited<ReturnType<typeof sectionTableGetAll>>
+>;
+export type SectionTableGetAllQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export function createSectionTableGetAll<
+	TData = Awaited<ReturnType<typeof sectionTableGetAll>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: SectionTableGetAllParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof sectionTableGetAll>>, TError, TData>
+		>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getSectionTableGetAllQueryOptions(params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const sectionList = (params: SectionListParams) => {
 	return customInstance<EntitiesSection[]>({ url: `/section`, method: "GET", params });
 };
@@ -282,6 +345,71 @@ export const createSectionCreate = <
 	TContext
 > => {
 	const mutationOptions = getSectionCreateMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const sectionDelete = (id: number) => {
+	return customInstance<void>({ url: `/section/${id}`, method: "DELETE" });
+};
+
+export const getSectionDeleteMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof sectionDelete>>,
+		TError,
+		{ id: number },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof sectionDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationKey = ["sectionDelete"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof sectionDelete>>, { id: number }> = (
+		props
+	) => {
+		const { id } = props ?? {};
+
+		return sectionDelete(id);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type SectionDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof sectionDelete>>>;
+
+export type SectionDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createSectionDelete = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof sectionDelete>>,
+			TError,
+			{ id: number },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof sectionDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationOptions = getSectionDeleteMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };

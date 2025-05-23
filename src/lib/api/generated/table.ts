@@ -233,6 +233,71 @@ export function createTableGetAvailable<
 	return query;
 }
 
+export const tableDelete = (id: number) => {
+	return customInstance<void>({ url: `/table/${id}`, method: "DELETE" });
+};
+
+export const getTableDeleteMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof tableDelete>>,
+		TError,
+		{ id: number },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof tableDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationKey = ["tableDelete"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableDelete>>, { id: number }> = (
+		props
+	) => {
+		const { id } = props ?? {};
+
+		return tableDelete(id);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof tableDelete>>>;
+
+export type TableDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createTableDelete = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof tableDelete>>,
+			TError,
+			{ id: number },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof tableDelete>>,
+	TError,
+	{ id: number },
+	TContext
+> => {
+	const mutationOptions = getTableDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
 export const tableCreate = (tableCreateRequest: BodyType<TableCreateRequest>) => {
 	return customInstance<EntitiesTable>({
 		url: `/table`,

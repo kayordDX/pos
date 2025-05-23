@@ -25,6 +25,8 @@
 		ShieldUserIcon,
 		ComponentIcon,
 		PackageOpenIcon,
+		LayoutTemplateIcon,
+		BuildingIcon,
 	} from "@lucide/svelte";
 
 	const menuItems = [
@@ -64,6 +66,18 @@
 			title: "Halo",
 			href: "/manager/admin/halo",
 			icon: NfcIcon,
+		},
+		{
+			title: "Outlet",
+			href: "",
+			icon: BuildingIcon,
+			items: [
+				{
+					title: "Sections",
+					href: "/manager/admin/sections",
+					icon: LayoutTemplateIcon,
+				},
+			],
 		},
 		{
 			title: "Menu",
