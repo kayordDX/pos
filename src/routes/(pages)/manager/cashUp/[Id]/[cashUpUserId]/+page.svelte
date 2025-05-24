@@ -45,7 +45,7 @@
 	{/if}
 
 	{#if $query.data}
-		<Card.Root class="overflow-hidden w-full">
+		<Card.Root class="overflow-hidden w-full pt-0">
 			<Card.Header class="flex flex-col items-start bg-muted/50 p-4">
 				<div class="flex items-center gap-2 justify-between w-full">
 					<div class="flex items-center gap-2">

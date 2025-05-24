@@ -1,8 +1,8 @@
 import createClient, { type Middleware } from "openapi-fetch";
 import type { paths } from "./generated/client/schema";
-import { PUBLIC_API_URL } from "$env/static/public";
 import { browser } from "$app/environment";
 import { session } from "$lib/firebase.svelte";
+import { info } from "$lib/stores/info.svelte";
 
 const myMiddleware: Middleware = {
 	async onRequest({ request }) {
@@ -18,7 +18,7 @@ const myMiddleware: Middleware = {
 };
 
 export const client = createClient<paths>({
-	baseUrl: PUBLIC_API_URL,
+	baseUrl: info.kayordURL(),
 	headers: {
 		"Content-Type": null,
 	},

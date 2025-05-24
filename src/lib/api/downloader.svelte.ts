@@ -1,10 +1,10 @@
 import { session } from "$lib/firebase.svelte";
-import { PUBLIC_API_URL } from "$env/static/public";
+import { info } from "$lib/stores/info.svelte";
 
 export const downloadPdf = async (bookingId: number) => {
 	const token = (await session.user?.getIdToken()) ?? "";
 	const url = `/bill/download/${bookingId}`;
-	let fullUrl = `${PUBLIC_API_URL}${url}`;
+	let fullUrl = `${info.kayordURL()}${url}`;
 
 	const response = await fetch(fullUrl, {
 		method: "GET",

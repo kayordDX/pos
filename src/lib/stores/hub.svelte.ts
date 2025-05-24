@@ -5,8 +5,8 @@ import {
 	HubConnectionState,
 } from "@microsoft/signalr";
 import { session } from "$lib/firebase.svelte";
-import { PUBLIC_API_URL } from "$env/static/public";
 import { status } from "$lib/stores/status.svelte";
+import { info } from "./info.svelte";
 
 const createHub = () => {
 	let connection = $state<HubConnection>();
@@ -19,7 +19,7 @@ const createHub = () => {
 	const init = async () => {
 		const token = await session.user?.getIdToken();
 		connection = new HubConnectionBuilder()
-			.withUrl(`${PUBLIC_API_URL}/hub`, {
+			.withUrl(`${info.kayordURL()}/hub`, {
 				accessTokenFactory: () => token ?? "",
 				withCredentials: false,
 			})
