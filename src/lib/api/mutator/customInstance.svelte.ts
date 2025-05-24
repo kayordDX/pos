@@ -1,7 +1,7 @@
 import { getError, isValidationError } from "$lib/types";
-import { PUBLIC_API_URL } from "$env/static/public";
 import { session } from "$lib/firebase.svelte";
 import qs from "qs";
+import { info } from "$lib/stores/info.svelte";
 
 export const customInstance = async <T>({
 	url,
@@ -18,7 +18,7 @@ export const customInstance = async <T>({
 	headers?: Record<string, any>;
 	data?: BodyType<unknown>;
 }): Promise<T> => {
-	let fullUrl = `${PUBLIC_API_URL}${url}`;
+	let fullUrl = `${info.kayordURL()}${url}`;
 	if (params !== undefined) {
 		const urlParams = qs.stringify(params);
 		if (urlParams.length > 0) {
