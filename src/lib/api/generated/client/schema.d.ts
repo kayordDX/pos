@@ -676,6 +676,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/table/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["TableDelete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/table": {
         parameters: {
             query?: never;
@@ -1140,6 +1156,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/section/tables": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["SectionTableGetAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/section": {
         parameters: {
             query?: never;
@@ -1151,6 +1183,22 @@ export interface paths {
         put?: never;
         post: operations["SectionCreate"];
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/section/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["SectionDelete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1924,6 +1972,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/extra/menu": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExtraGetAllMenu"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/extra/all": {
         parameters: {
             query?: never;
@@ -2471,7 +2535,7 @@ export interface components {
             name: string;
             outlets?: components["schemas"]["EntitiesOutlet"][] | null;
         };
-        EntitiesSection: {
+        EntitiesSection: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
             id: number;
             name: string;
@@ -2480,7 +2544,7 @@ export interface components {
             outlet: components["schemas"]["EntitiesOutlet"];
             tables?: components["schemas"]["EntitiesTable"][] | null;
         };
-        EntitiesTable: {
+        EntitiesTable: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
             tableId: number;
             name: string;
@@ -2492,6 +2556,7 @@ export interface components {
             sectionId: number;
             section: components["schemas"]["EntitiesSection"];
             customers: components["schemas"]["EntitiesCustomer"][];
+            isDeleted: boolean;
         };
         EntitiesCustomer: {
             /** Format: int32 */
@@ -2504,6 +2569,14 @@ export interface components {
          * @enum {integer}
          */
         Order: 0 | 1;
+        EntitiesAuditableEntity: {
+            /** Format: date-time */
+            created: string;
+            createdBy?: string | null;
+            /** Format: date-time */
+            lastModified?: string | null;
+            lastModifiedBy?: string | null;
+        };
         EntitiesOutletPaymentType: {
             /** Format: int32 */
             paymentTypeId: number;
@@ -2705,7 +2778,6 @@ export interface components {
             /** Format: int32 */
             optionGroupId: number;
             optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
-            isAvailable: boolean;
         };
         DTOOptionGroupBasicDTO: {
             /** Format: int32 */
@@ -2736,7 +2808,6 @@ export interface components {
             /** Format: int32 */
             extraGroupId: number;
             extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
-            isAvailable: boolean;
         };
         DTOExtraGroupBasicDTO: {
             /** Format: int32 */
@@ -2951,14 +3022,6 @@ export interface components {
             name: string;
             isActive: boolean;
         };
-        EntitiesAuditableEntity: {
-            /** Format: date-time */
-            created: string;
-            createdBy?: string | null;
-            /** Format: date-time */
-            lastModified?: string | null;
-            lastModifiedBy?: string | null;
-        };
         EntitiesOrderItem: {
             /** Format: int32 */
             orderItemId: number;
@@ -3093,7 +3156,6 @@ export interface components {
             orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         EntitiesOrderItemOption: {
             /** Format: int32 */
@@ -3136,7 +3198,6 @@ export interface components {
             orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         EntitiesOrderItemExtra: {
             /** Format: int32 */
@@ -3379,6 +3440,8 @@ export interface components {
             sectionId: number;
             /** Format: int32 */
             capacity: number;
+            /** Format: int32 */
+            position: number;
         };
         TableGetMyBookedResponse: {
             /** Format: int32 */
@@ -3423,12 +3486,15 @@ export interface components {
             name: string;
         };
         TableGetAvailableRequest: Record<string, never>;
+        TableDeleteRequest: Record<string, never>;
         TableCreateRequest: {
             name: string;
             /** Format: int32 */
             sectionId: number;
             /** Format: int32 */
             capacity: number;
+            /** Format: int32 */
+            position: number;
         };
         SupplierUpdateRequest: {
             /** Format: int32 */
@@ -4102,8 +4168,10 @@ export interface components {
             id: number;
             name: string;
         };
+        SectionTableGetAllRequest: Record<string, never>;
         SectionListRequest: Record<string, never>;
         SectionGetRequest: Record<string, never>;
+        SectionDeleteRequest: Record<string, never>;
         SectionCreateRequest: {
             name: string;
             /** Format: int32 */
@@ -4370,7 +4438,6 @@ export interface components {
             price: number;
             /** Format: int32 */
             optionGroupId: number;
-            isAvailable: boolean;
         };
         OptionItemsRequest: Record<string, never>;
         OptionGroupUpdateRequest: {
@@ -4403,7 +4470,6 @@ export interface components {
             optionGroupId: number;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         NotificationUserRequest: {
             message: string;
@@ -4713,7 +4779,6 @@ export interface components {
             extraGroupId: number;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         ExtraItemsRequest: Record<string, never>;
         ExtraGroupUpdateRequest: {
@@ -4733,6 +4798,20 @@ export interface components {
             name: string;
             isGlobal: boolean;
         };
+        ExtraGetAllMenuSpecialExtrasDTO: {
+            /** Format: int32 */
+            extraId: number;
+            name: string;
+            /** Format: int32 */
+            positionId: number;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            extraGroupId: number;
+            extraGroupName: string;
+            isAvailable: boolean;
+        };
+        ExtraGetAllMenuRequest: Record<string, never>;
         ExtraDeleteRequest: Record<string, never>;
         ExtraCreateRequest: {
             name: string;
@@ -4744,7 +4823,6 @@ export interface components {
             extraGroupId: number;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         DivisionGetUsersResponse: {
             userId: string;
@@ -6483,6 +6561,51 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    TableDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -8286,6 +8409,53 @@ export interface operations {
             };
         };
     };
+    SectionTableGetAll: {
+        parameters: {
+            query: {
+                sectionId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesTable"][];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     SectionList: {
         parameters: {
             query: {
@@ -8356,6 +8526,51 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    SectionDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -10883,6 +11098,45 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraGetAllMenu: {
+        parameters: {
+            query: {
+                outletId: number;
+                divisionId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExtraGetAllMenuSpecialExtrasDTO"][];
+                };
             };
             /** @description Unauthorized */
             401: {

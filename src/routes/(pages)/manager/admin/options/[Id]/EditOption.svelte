@@ -25,7 +25,6 @@
 		name: z.string().min(1, { message: "Name is Required" }),
 		price: z.number(),
 		position: z.number(),
-		isAvailable: z.boolean(),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -40,7 +39,6 @@
 						price: data.price,
 						positionId: data.position,
 						optionGroupId: Number(page.params.Id),
-						isAvailable: data.isAvailable,
 					},
 				});
 				toast.info("Option Updated");
@@ -52,7 +50,6 @@
 						positionId: data.position,
 						optionGroupId: Number(page.params.Id),
 						price: data.price,
-						isAvailable: data.isAvailable,
 					},
 				});
 				toast.info("Added Option");
@@ -67,7 +64,6 @@
 		name: option?.name,
 		price: option?.price,
 		position: option?.positionId,
-		isAvailable: option?.isAvailable ?? true,
 	});
 
 	// svelte-ignore state_referenced_locally
@@ -122,17 +118,6 @@
 						{#snippet children({ props })}
 							<Form.Label>Position</Form.Label>
 							<Input {...props} type="number" step="1" bind:value={$formData.position} />
-						{/snippet}
-					</Form.Control>
-					<Form.FieldErrors />
-				</Form.Field>
-				<Form.Field {form} name="isAvailable">
-					<Form.Control>
-						{#snippet children({ props })}
-							<div class="flex items-center gap-2">
-								<Checkbox {...props} bind:checked={$formData.isAvailable} />
-								<Form.Label>Available</Form.Label>
-							</div>
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />

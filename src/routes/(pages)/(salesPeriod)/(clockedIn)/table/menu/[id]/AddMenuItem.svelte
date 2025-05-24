@@ -199,7 +199,7 @@
 				</Fieldset>
 			{/each}
 		</div>
-		<SpecialExtra bind:currentExtras />
+		<SpecialExtra bind:currentExtras divisionId={data.divisionId} />
 		<Field {form} name="note">
 			<Control>
 				{#snippet children({ props })}
