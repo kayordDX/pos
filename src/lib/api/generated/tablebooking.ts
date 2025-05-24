@@ -189,71 +189,6 @@ export const createTableBookingPaymentEdit = <
 
 	return createMutation(mutationOptions, queryClient);
 };
-export const tableBookingHistory = (params: TableBookingHistoryParams) => {
-	return customInstance<TableBookingHistoryResponse[]>({
-		url: `/tableBooking/myHistory`,
-		method: "GET",
-		params,
-	});
-};
-
-export const getTableBookingHistoryQueryKey = (params: TableBookingHistoryParams) => {
-	return [`/tableBooking/myHistory`, ...(params ? [params] : [])] as const;
-};
-
-export const getTableBookingHistoryQueryOptions = <
-	TData = Awaited<ReturnType<typeof tableBookingHistory>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	params: TableBookingHistoryParams,
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData>
-		>;
-	}
-) => {
-	const { query: queryOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getTableBookingHistoryQueryKey(params);
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistory>>> = () =>
-		tableBookingHistory(params);
-
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof tableBookingHistory>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type TableBookingHistoryQueryResult = NonNullable<
-	Awaited<ReturnType<typeof tableBookingHistory>>
->;
-export type TableBookingHistoryQueryError = ErrorType<void | InternalErrorResponse>;
-
-export function createTableBookingHistory<
-	TData = Awaited<ReturnType<typeof tableBookingHistory>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	params: TableBookingHistoryParams,
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData>
-		>;
-	},
-	queryClient?: QueryClient
-): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getTableBookingHistoryQueryOptions(params, options);
-
-	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
-		queryKey: DataTag<QueryKey, TData, TError>;
-	};
-
-	query.queryKey = queryOptions.queryKey;
-
-	return query;
-}
-
 export const tableBookingHistoryUser = (userId: string, params: TableBookingHistoryUserParams) => {
 	return customInstance<TableBookingHistoryResponse[]>({
 		url: `/tableBooking/myHistory/${userId}`,
@@ -314,6 +249,71 @@ export function createTableBookingHistoryUser<
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const queryOptions = getTableBookingHistoryUserQueryOptions(userId, params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const tableBookingHistory = (params: TableBookingHistoryParams) => {
+	return customInstance<TableBookingHistoryResponse[]>({
+		url: `/tableBooking/myHistory`,
+		method: "GET",
+		params,
+	});
+};
+
+export const getTableBookingHistoryQueryKey = (params: TableBookingHistoryParams) => {
+	return [`/tableBooking/myHistory`, ...(params ? [params] : [])] as const;
+};
+
+export const getTableBookingHistoryQueryOptions = <
+	TData = Awaited<ReturnType<typeof tableBookingHistory>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: TableBookingHistoryParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTableBookingHistoryQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistory>>> = () =>
+		tableBookingHistory(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof tableBookingHistory>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type TableBookingHistoryQueryResult = NonNullable<
+	Awaited<ReturnType<typeof tableBookingHistory>>
+>;
+export type TableBookingHistoryQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createTableBookingHistory<
+	TData = Awaited<ReturnType<typeof tableBookingHistory>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: TableBookingHistoryParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData>
+		>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getTableBookingHistoryQueryOptions(params, options);
 
 	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

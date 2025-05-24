@@ -32,60 +32,6 @@ import type {
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
-export const businessGet = (id: number) => {
-	return customInstance<EntitiesBusiness>({ url: `/business/${id}`, method: "GET" });
-};
-
-export const getBusinessGetQueryKey = (id: number) => {
-	return [`/business/${id}`] as const;
-};
-
-export const getBusinessGetQueryOptions = <
-	TData = Awaited<ReturnType<typeof businessGet>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	id: number,
-	options?: {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGet>>, TError, TData>>;
-	}
-) => {
-	const { query: queryOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getBusinessGetQueryKey(id);
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGet>>> = () => businessGet(id);
-
-	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof businessGet>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type BusinessGetQueryResult = NonNullable<Awaited<ReturnType<typeof businessGet>>>;
-export type BusinessGetQueryError = ErrorType<void | InternalErrorResponse>;
-
-export function createBusinessGet<
-	TData = Awaited<ReturnType<typeof businessGet>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	id: number,
-	options?: {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGet>>, TError, TData>>;
-	},
-	queryClient?: QueryClient
-): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getBusinessGetQueryOptions(id, options);
-
-	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
-		queryKey: DataTag<QueryKey, TData, TError>;
-	};
-
-	query.queryKey = queryOptions.queryKey;
-
-	return query;
-}
-
 export const businessGetOutlets = (outletId: number) => {
 	return customInstance<EntitiesOutlet[]>({ url: `/business/outlets/${outletId}`, method: "GET" });
 };
@@ -410,3 +356,56 @@ export const createBusinessCreate = <
 
 	return createMutation(mutationOptions, queryClient);
 };
+export const businessGet = (id: number) => {
+	return customInstance<EntitiesBusiness>({ url: `/business/${id}`, method: "GET" });
+};
+
+export const getBusinessGetQueryKey = (id: number) => {
+	return [`/business/${id}`] as const;
+};
+
+export const getBusinessGetQueryOptions = <
+	TData = Awaited<ReturnType<typeof businessGet>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGet>>, TError, TData>>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getBusinessGetQueryKey(id);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGet>>> = () => businessGet(id);
+
+	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof businessGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type BusinessGetQueryResult = NonNullable<Awaited<ReturnType<typeof businessGet>>>;
+export type BusinessGetQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createBusinessGet<
+	TData = Awaited<ReturnType<typeof businessGet>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGet>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getBusinessGetQueryOptions(id, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
