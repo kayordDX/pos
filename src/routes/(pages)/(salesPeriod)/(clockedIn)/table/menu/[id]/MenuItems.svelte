@@ -13,10 +13,14 @@
 	let { data, tableBookingId }: Props = $props();
 
 	let menuItemId = $state(0);
+	let divisionId = $state(0);
 	let open = $state(false);
 
 	const query = $derived(
-		createMenuGetItemGetMenuItems({ id: menuItemId }, { query: { enabled: open } })
+		createMenuGetItemGetMenuItems(
+			{ menuItemId: menuItemId, divisionId: divisionId },
+			{ query: { enabled: open } }
+		)
 	);
 </script>
 
@@ -40,6 +44,6 @@
 
 <div class="flex justify-center gap-2 my-2 flex-wrap p-2 w-full">
 	{#each data as item, i (item.menuItemId)}
-		<MenuItem menuItem={item} bind:open bind:menuItemId />
+		<MenuItem menuItem={item} bind:open bind:menuItemId bind:divisionId />
 	{/each}
 </div>

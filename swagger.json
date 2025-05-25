@@ -7398,7 +7398,16 @@
         "operationId": "MenuGetItemGetMenuItems",
         "parameters": [
           {
-            "name": "id",
+            "name": "menuItemId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "divisionId",
             "in": "query",
             "required": true,
             "schema": {
@@ -10485,7 +10494,8 @@
           "table",
           "bookingName",
           "bookingDate",
-          "user"
+          "user",
+          "salesPeriod"
         ],
         "properties": {
           "id": {
@@ -10520,6 +10530,9 @@
           },
           "user": {
             "$ref": "#/components/schemas/DTOUserDTO"
+          },
+          "salesPeriod": {
+            "$ref": "#/components/schemas/DTOSalesPeriodDTO"
           }
         }
       },
@@ -10726,6 +10739,7 @@
           "price",
           "positionId",
           "optionGroupId",
+          "isAvailable",
           "optionGroup"
         ],
         "properties": {
@@ -10747,6 +10761,9 @@
           "optionGroupId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           },
           "optionGroup": {
             "$ref": "#/components/schemas/DTOOptionGroupBasicDTO"
@@ -10816,6 +10833,7 @@
           "positionId",
           "price",
           "extraGroupId",
+          "isAvailable",
           "extraGroup"
         ],
         "properties": {
@@ -10838,6 +10856,9 @@
             "type": "integer",
             "format": "int32"
           },
+          "isAvailable": {
+            "type": "boolean"
+          },
           "extraGroup": {
             "$ref": "#/components/schemas/DTOExtraGroupBasicDTO"
           }
@@ -10857,6 +10878,38 @@
           },
           "name": {
             "type": "string"
+          }
+        }
+      },
+      "DTOSalesPeriodDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "outletId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "endDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -17205,6 +17258,7 @@
           "name",
           "description",
           "price",
+          "divisionId",
           "position",
           "menuSection",
           "isAvailable",
@@ -17228,6 +17282,10 @@
           "price": {
             "type": "number",
             "format": "decimal"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
           },
           "position": {
             "type": "integer",

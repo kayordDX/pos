@@ -6,19 +6,29 @@
 		menuItem: DTOMenuItemDTOBasic;
 		open: boolean;
 		menuItemId: number;
+		divisionId: number;
 	}
 
-	let { menuItem, open = $bindable(), menuItemId = $bindable() }: Props = $props();
+	let {
+		menuItem,
+		open = $bindable(),
+		menuItemId = $bindable(),
+		divisionId = $bindable(),
+	}: Props = $props();
 
-	const openMenuItem = (id: number) => {
+	const openMenuItem = (id: number, divId: number) => {
 		menuItemId = id;
+		divisionId = divId;
 		open = true;
 	};
 </script>
 
 {#if menuItem.isAvailable}
 	<div class="w-full relative max-w-lg text-left">
-		<button class="w-full text-left" onclick={() => openMenuItem(menuItem.menuItemId)}>
+		<button
+			class="w-full text-left"
+			onclick={() => openMenuItem(menuItem.menuItemId, menuItem.divisionId)}
+		>
 			<Card.Root class="w-full relative max-w-lg p-4 gap-0">
 				<div class="font-bold line-clamp-1">{menuItem.name}</div>
 				<div class="text-sm text-muted-foreground">R {menuItem.price.toFixed(2)}</div>

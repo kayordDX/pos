@@ -2708,6 +2708,7 @@ export interface components {
             /** Format: date-time */
             closeDate?: string | null;
             user: components["schemas"]["DTOUserDTO"];
+            salesPeriod: components["schemas"]["DTOSalesPeriodDTO"];
         };
         TableOrderOfficeTableDTO: {
             /** Format: int32 */
@@ -2777,6 +2778,7 @@ export interface components {
             positionId: number;
             /** Format: int32 */
             optionGroupId: number;
+            isAvailable: boolean;
             optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
         };
         DTOOptionGroupBasicDTO: {
@@ -2807,12 +2809,24 @@ export interface components {
             price: number;
             /** Format: int32 */
             extraGroupId: number;
+            isAvailable: boolean;
             extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
         };
         DTOExtraGroupBasicDTO: {
             /** Format: int32 */
             extraGroupId: number;
             name: string;
+        };
+        DTOSalesPeriodDTO: {
+            /** Format: int32 */
+            id: number;
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string | null;
+            /** Format: date-time */
+            endDate?: string | null;
+            /** Format: int32 */
+            outletId: number;
         };
         TableOrderFrontOfficeRequest: Record<string, never>;
         TableOrderBackOfficeResponse: {
@@ -4661,6 +4675,8 @@ export interface components {
             description: string;
             /** Format: decimal */
             price: number;
+            /** Format: int32 */
+            divisionId: number;
             /** Format: int32 */
             position: number;
             tags?: components["schemas"]["EntitiesTag"][] | null;
@@ -10654,7 +10670,8 @@ export interface operations {
     MenuGetItemGetMenuItems: {
         parameters: {
             query: {
-                id: number;
+                menuItemId: number;
+                divisionId: number;
             };
             header?: never;
             path?: never;
