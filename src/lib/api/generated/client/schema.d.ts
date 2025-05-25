@@ -2853,6 +2853,7 @@ export interface components {
             positionId: number;
             /** Format: int32 */
             optionGroupId: number;
+            isAvailable: boolean;
             optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
         };
         DTOOptionGroupBasicDTO: {
@@ -2883,6 +2884,7 @@ export interface components {
             price: number;
             /** Format: int32 */
             extraGroupId: number;
+            isAvailable: boolean;
             extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
         };
         DTOExtraGroupBasicDTO: {

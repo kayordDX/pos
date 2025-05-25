@@ -7530,7 +7530,16 @@
         "operationId": "MenuGetItemGetMenuItems",
         "parameters": [
           {
-            "name": "id",
+            "name": "menuItemId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "divisionId",
             "in": "query",
             "required": true,
             "schema": {
@@ -10967,6 +10976,7 @@
           "price",
           "positionId",
           "optionGroupId",
+          "isAvailable",
           "optionGroup"
         ],
         "properties": {
@@ -10988,6 +10998,9 @@
           "optionGroupId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           },
           "optionGroup": {
             "$ref": "#/components/schemas/DTOOptionGroupBasicDTO"
@@ -11057,6 +11070,7 @@
           "positionId",
           "price",
           "extraGroupId",
+          "isAvailable",
           "extraGroup"
         ],
         "properties": {
@@ -11078,6 +11092,9 @@
           "extraGroupId": {
             "type": "integer",
             "format": "int32"
+          },
+          "isAvailable": {
+            "type": "boolean"
           },
           "extraGroup": {
             "$ref": "#/components/schemas/DTOExtraGroupBasicDTO"
@@ -17487,6 +17504,7 @@
           "name",
           "description",
           "price",
+          "divisionId",
           "position",
           "menuSection",
           "menuSection",
@@ -17511,6 +17529,10 @@
           "price": {
             "type": "number",
             "format": "decimal"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
           },
           "position": {
             "type": "integer",

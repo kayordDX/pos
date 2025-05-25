@@ -393,6 +393,7 @@ export interface TableOrderOfficeTableBookingDTO {
 	closeDate?: string | null;
 	user: DTOUserDTO;
 	salesPeriod: DTOSalesPeriodDTO;
+	salesPeriod: DTOSalesPeriodDTO;
 }
 
 /**
@@ -458,6 +459,7 @@ export interface DTOOptionDTO {
 	price: number;
 	positionId: number;
 	optionGroupId: number;
+	isAvailable: boolean;
 	optionGroup: DTOOptionGroupBasicDTO;
 }
 
@@ -481,12 +483,24 @@ export interface DTOExtraDTO {
 	positionId: number;
 	price: number;
 	extraGroupId: number;
+	isAvailable: boolean;
 	extraGroup: DTOExtraGroupBasicDTO;
 }
 
 export interface DTOExtraGroupBasicDTO {
 	extraGroupId: number;
 	name: string;
+}
+
+export interface DTOSalesPeriodDTO {
+	id: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	startDate?: string | null;
+	/** @nullable */
+	endDate?: string | null;
+	outletId: number;
 }
 
 export interface DTOSalesPeriodDTO {
@@ -2540,7 +2554,8 @@ export interface MenuItemCreateRequest {
 	name: string;
 	description: string;
 	price: number;
-	positionId: number;
+	divisionId: number;
+	position: number;
 	/** @nullable */
 	divisionId?: number | null;
 	isAvailable: boolean;
@@ -3139,9 +3154,8 @@ export type MenuGetItemsGetMenuItemsParams = {
 };
 
 export type MenuGetItemGetMenuItemsParams = {
-	id: number;
-export type MenuGetItemGetMenuItemsParams = {
-	id: number;
+	menuItemId: number;
+	divisionId: number;
 };
 
 export type ManagerOrderViewParams = {
