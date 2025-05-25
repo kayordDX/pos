@@ -462,6 +462,7 @@ export interface DTOOptionDTO {
 	price: number;
 	positionId: number;
 	optionGroupId: number;
+	isAvailable: boolean;
 	optionGroup: DTOOptionGroupBasicDTO;
 }
 
@@ -485,6 +486,7 @@ export interface DTOExtraDTO {
 	positionId: number;
 	price: number;
 	extraGroupId: number;
+	isAvailable: boolean;
 	extraGroup: DTOExtraGroupBasicDTO;
 }
 
@@ -3928,9 +3930,8 @@ export type MenuGetItemsGetMenuItemsParams = {
 };
 
 export type MenuGetItemGetMenuItemsParams = {
-	id: number;
-export type MenuGetItemGetMenuItemsParams = {
-	id: number;
+	menuItemId: number;
+	divisionId: number;
 };
 
 export type ManagerOrderViewParams = {

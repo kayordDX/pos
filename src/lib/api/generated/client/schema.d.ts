@@ -2795,6 +2795,7 @@ export interface components {
 			positionId: number;
 			/** Format: int32 */
 			optionGroupId: number;
+			isAvailable: boolean;
 			optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
 		};
 		DTOOptionGroupBasicDTO: {
@@ -2825,6 +2826,7 @@ export interface components {
 			price: number;
 			/** Format: int32 */
 			extraGroupId: number;
+			isAvailable: boolean;
 			extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
 		};
 		DTOExtraGroupBasicDTO: {
@@ -4832,20 +4834,6 @@ export interface components {
 			name: string;
 			isGlobal: boolean;
 		};
-		ExtraGetAllMenuSpecialExtrasDTO: {
-			/** Format: int32 */
-			extraId: number;
-			name: string;
-			/** Format: int32 */
-			positionId: number;
-			/** Format: decimal */
-			price: number;
-			/** Format: int32 */
-			extraGroupId: number;
-			extraGroupName: string;
-			isAvailable: boolean;
-		};
-		ExtraGetAllMenuRequest: Record<string, never>;
 		ExtraGetAllMenuSpecialExtrasDTO: {
 			/** Format: int32 */
 			extraId: number;
@@ -11147,45 +11135,6 @@ export interface operations {
 					[name: string]: unknown;
 				};
 				content?: never;
-			};
-			/** @description Unauthorized */
-			401: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content?: never;
-			};
-			/** @description Server Error */
-			500: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content: {
-					"application/json": components["schemas"]["InternalErrorResponse"];
-				};
-			};
-		};
-	};
-	ExtraGetAllMenu: {
-		parameters: {
-			query: {
-				outletId: number;
-				divisionId: number;
-			};
-			header?: never;
-			path?: never;
-			cookie?: never;
-		};
-		requestBody?: never;
-		responses: {
-			/** @description Success */
-			200: {
-				headers: {
-					[name: string]: unknown;
-				};
-				content: {
-					"application/json": components["schemas"]["ExtraGetAllMenuSpecialExtrasDTO"][];
-				};
 			};
 			/** @description Unauthorized */
 			401: {
