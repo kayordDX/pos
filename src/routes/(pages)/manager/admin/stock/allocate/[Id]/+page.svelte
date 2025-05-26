@@ -16,8 +16,6 @@
 		renderComponent,
 		renderSnippet,
 		createShadTable,
-		toast,
-		Table,
 	} from "@kayord/ui";
 	import { MoveRightIcon, PlusIcon, WorkflowIcon } from "@lucide/svelte";
 	import AddAllocationItem from "./AddAllocationItem.svelte";
@@ -158,7 +156,7 @@
 
 		<div class="mt-2 flex items-center justify-between">
 			<div>
-				{#if canEdit}
+				{#if canEdit && data.length > 0}
 					<Button size="sm" variant="destructive" onclick={sendToApprover}>
 						<WorkflowIcon class="h-5 w-5" /> Send to Approver
 					</Button>
