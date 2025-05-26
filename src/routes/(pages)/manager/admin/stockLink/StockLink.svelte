@@ -91,7 +91,7 @@
 				<Dialog.Description>Linked Stock Items</Dialog.Description>
 			{/if}
 		</div>
-		<Button onclick={() => (linkOpen = true)}>
+		<Button onclick={() => (linkOpen = true)} class="mr-3">
 			<LinkIcon />
 			Link Stock
 		</Button>
@@ -100,7 +100,7 @@
 <AddLinkStock bind:open={linkOpen} {id} {linkType} refetch={$query.refetch} />
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%] max-w-3xl overflow-auto">
+	<Dialog.Content class="max-h-[98%] overflow-auto p-2 w-[100%] md:min-w-[48rem]">
 		<div class="flex flex-col gap-4 p-0 mt-0">
 			<DataTable
 				{table}
