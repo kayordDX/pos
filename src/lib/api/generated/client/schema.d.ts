@@ -1972,6 +1972,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/extra/menu": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["ExtraGetAllMenu"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/extra/all": {
         parameters: {
             query?: never;
@@ -2692,6 +2708,7 @@ export interface components {
             /** Format: date-time */
             closeDate?: string | null;
             user: components["schemas"]["DTOUserDTO"];
+            salesPeriod: components["schemas"]["DTOSalesPeriodDTO"];
         };
         TableOrderOfficeTableDTO: {
             /** Format: int32 */
@@ -2761,8 +2778,8 @@ export interface components {
             positionId: number;
             /** Format: int32 */
             optionGroupId: number;
-            optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
             isAvailable: boolean;
+            optionGroup: components["schemas"]["DTOOptionGroupBasicDTO"];
         };
         DTOOptionGroupBasicDTO: {
             /** Format: int32 */
@@ -2792,13 +2809,24 @@ export interface components {
             price: number;
             /** Format: int32 */
             extraGroupId: number;
-            extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
             isAvailable: boolean;
+            extraGroup: components["schemas"]["DTOExtraGroupBasicDTO"];
         };
         DTOExtraGroupBasicDTO: {
             /** Format: int32 */
             extraGroupId: number;
             name: string;
+        };
+        DTOSalesPeriodDTO: {
+            /** Format: int32 */
+            id: number;
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string | null;
+            /** Format: date-time */
+            endDate?: string | null;
+            /** Format: int32 */
+            outletId: number;
         };
         TableOrderFrontOfficeRequest: Record<string, never>;
         TableOrderBackOfficeResponse: {
@@ -3142,7 +3170,6 @@ export interface components {
             orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         EntitiesOrderItemOption: {
             /** Format: int32 */
@@ -3185,7 +3212,6 @@ export interface components {
             orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         EntitiesOrderItemExtra: {
             /** Format: int32 */
@@ -4426,7 +4452,6 @@ export interface components {
             price: number;
             /** Format: int32 */
             optionGroupId: number;
-            isAvailable: boolean;
         };
         OptionItemsRequest: Record<string, never>;
         OptionGroupUpdateRequest: {
@@ -4459,7 +4484,6 @@ export interface components {
             optionGroupId: number;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         NotificationUserRequest: {
             message: string;
@@ -4652,6 +4676,8 @@ export interface components {
             /** Format: decimal */
             price: number;
             /** Format: int32 */
+            divisionId: number;
+            /** Format: int32 */
             position: number;
             tags?: components["schemas"]["EntitiesTag"][] | null;
             menuSection: components["schemas"]["DTOMenuSectionBasicDTO"];
@@ -4769,7 +4795,6 @@ export interface components {
             extraGroupId: number;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         ExtraItemsRequest: Record<string, never>;
         ExtraGroupUpdateRequest: {
@@ -4789,6 +4814,20 @@ export interface components {
             name: string;
             isGlobal: boolean;
         };
+        ExtraGetAllMenuSpecialExtrasDTO: {
+            /** Format: int32 */
+            extraId: number;
+            name: string;
+            /** Format: int32 */
+            positionId: number;
+            /** Format: decimal */
+            price: number;
+            /** Format: int32 */
+            extraGroupId: number;
+            extraGroupName: string;
+            isAvailable: boolean;
+        };
+        ExtraGetAllMenuRequest: Record<string, never>;
         ExtraDeleteRequest: Record<string, never>;
         ExtraCreateRequest: {
             name: string;
@@ -4800,7 +4839,6 @@ export interface components {
             extraGroupId: number;
             /** Format: int32 */
             outletId: number;
-            isAvailable: boolean;
         };
         DivisionGetUsersResponse: {
             userId: string;
@@ -10632,7 +10670,8 @@ export interface operations {
     MenuGetItemGetMenuItems: {
         parameters: {
             query: {
-                id: number;
+                menuItemId: number;
+                divisionId: number;
             };
             header?: never;
             path?: never;
@@ -11076,6 +11115,45 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    ExtraGetAllMenu: {
+        parameters: {
+            query: {
+                outletId: number;
+                divisionId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ExtraGetAllMenuSpecialExtrasDTO"][];
+                };
             };
             /** @description Unauthorized */
             401: {

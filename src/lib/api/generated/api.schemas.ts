@@ -131,6 +131,7 @@ export type UserTasksRequestAllOf = { [key: string]: unknown };
 export type UserTasksRequest = CommonModelsQueryModel & UserTasksRequestAllOf;
 
 export interface UserRemoveUserOutletRoleRequest {
+export interface UserRemoveUserOutletRoleRequest {
 	[key: string]: unknown;
 }
 
@@ -151,6 +152,7 @@ export interface ErrorResponse {
 	errors: ErrorResponseErrors;
 }
 
+export interface UserRemoveUserOutletRequest {
 export interface UserRemoveUserOutletRequest {
 	[key: string]: unknown;
 }
@@ -392,6 +394,7 @@ export interface TableOrderOfficeTableBookingDTO {
 	/** @nullable */
 	closeDate?: string | null;
 	user: DTOUserDTO;
+	salesPeriod: DTOSalesPeriodDTO;
 }
 
 /**
@@ -457,8 +460,8 @@ export interface DTOOptionDTO {
 	price: number;
 	positionId: number;
 	optionGroupId: number;
-	optionGroup: DTOOptionGroupBasicDTO;
 	isAvailable: boolean;
+	optionGroup: DTOOptionGroupBasicDTO;
 }
 
 export interface DTOOptionGroupBasicDTO {
@@ -481,13 +484,24 @@ export interface DTOExtraDTO {
 	positionId: number;
 	price: number;
 	extraGroupId: number;
-	extraGroup: DTOExtraGroupBasicDTO;
 	isAvailable: boolean;
+	extraGroup: DTOExtraGroupBasicDTO;
 }
 
 export interface DTOExtraGroupBasicDTO {
 	extraGroupId: number;
 	name: string;
+}
+
+export interface DTOSalesPeriodDTO {
+	id: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	startDate?: string | null;
+	/** @nullable */
+	endDate?: string | null;
+	outletId: number;
 }
 
 export interface TableOrderFrontOfficeRequest {
@@ -864,7 +878,6 @@ export interface EntitiesOption {
 	/** @nullable */
 	orderItemOptions?: EntitiesOrderItemOption[] | null;
 	outletId: number;
-	isAvailable: boolean;
 }
 
 export interface EntitiesOrderItemOption {
@@ -901,7 +914,6 @@ export interface EntitiesExtra {
 	/** @nullable */
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	outletId: number;
-	isAvailable: boolean;
 }
 
 export interface EntitiesOrderItemExtra {
@@ -1136,9 +1148,11 @@ export interface TableBookingPaymentEditRequest {
 }
 
 export interface TableBookingHistoryUserRequest {
+export interface TableBookingHistoryUserRequest {
 	[key: string]: unknown;
 }
 
+export interface TableBookingHistoryRequest {
 export interface TableBookingHistoryRequest {
 	[key: string]: unknown;
 }
@@ -1179,6 +1193,73 @@ export interface TableBookingCreateRequest {
 
 export interface TableBookingCloseRequest {
 	tableBookingId: number;
+}
+
+export interface TableUpdateRequest {
+	/**
+	 * @minLength 1
+	 */
+	name: string;
+	sectionId: number;
+	capacity: number;
+	position: number;
+}
+
+export interface TableGetMyBookedResponse {
+	id: number;
+	tableId: number;
+	bookingName: string;
+	bookingDate: string;
+	salesPeriodId: number;
+	staffId: number;
+	table: TableGetMyBookedTableDto;
+	user: DTOUserDTO;
+}
+
+export interface TableGetMyBookedTableDto {
+	tableId: number;
+	name: string;
+	section: TableGetMyBookedSectionDto;
+}
+
+export interface TableGetMyBookedSectionDto {
+	id: number;
+	name: string;
+}
+
+export interface TableGetMyBookedRequest {
+	[key: string]: unknown;
+}
+
+export interface TableGetAvailableResponse {
+	tableId: number;
+	name: string;
+	capacity: number;
+	sectionId: number;
+	section: TableGetAvailableSectionDto;
+}
+
+export interface TableGetAvailableSectionDto {
+	id: number;
+	name: string;
+}
+
+export interface TableGetAvailableRequest {
+	[key: string]: unknown;
+}
+
+export interface TableDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface TableCreateRequest {
+	/**
+	 * @minLength 1
+	 */
+	name: string;
+	sectionId: number;
+	capacity: number;
+	position: number;
 }
 
 export interface TableUpdateRequest {
@@ -1319,6 +1400,27 @@ export type EntitiesStockOrderItemAllOf = {
 
 export type EntitiesStockOrderItem = EntitiesAuditableEntity & EntitiesStockOrderItemAllOf;
 
+export interface StockOrderItemUpdateBulkRequest {
+	stockOrderId: number;
+	/** @nullable */
+	stockIds?: number[] | null;
+	stockOrderItemStatusId: number;
+}
+
+export type EntitiesStockOrderItemAllOf = {
+	stockOrderId: number;
+	stockOrder: EntitiesStockOrder;
+	stockId: number;
+	stock: EntitiesStock;
+	orderAmount: number;
+	stockOrderItemStatusId: number;
+	stockOrderItemStatus: EntitiesStockOrderItemStatus;
+	actual: number;
+	price: number;
+};
+
+export type EntitiesStockOrderItem = EntitiesAuditableEntity & EntitiesStockOrderItemAllOf;
+
 export type EntitiesStockOrderAllOf = {
 	id: number;
 	outletId: number;
@@ -1420,6 +1522,40 @@ export interface StockOrderItemCreateRequest {
 	price: number;
 }
 
+export interface StockOrderItemUpdateRequest {
+	stockOrderId: number;
+	stockId: number;
+	orderAmount: number;
+	actual: number;
+	price: number;
+	stockOrderItemStatusId: number;
+}
+
+export interface DTOStockOrderItemStatusDTO {
+	id: number;
+	name: string;
+}
+
+export interface StockOrderItemLastPriceResponse {
+	lastPrice: number;
+	totalAmount: number;
+}
+
+export interface StockOrderItemLastPriceRequest {
+	[key: string]: unknown;
+}
+
+export interface StockOrderItemDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface StockOrderItemCreateRequest {
+	stockOrderId: number;
+	stockId: number;
+	orderAmount: number;
+	price: number;
+}
+
 export interface StockOrderUpdateRequest {
 	/**
 	 * @minimum 0
@@ -1430,6 +1566,34 @@ export interface StockOrderUpdateRequest {
 	divisionId: number;
 	supplierId: number;
 }
+
+export interface CommonModelsPaginatedListOfStockOrderResponseDTO {
+	items: DTOStockOrderResponseDTO[];
+	pageNumber: number;
+	totalPages: number;
+	totalCount: number;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
+}
+
+export interface DTOStockOrderResponseDTO {
+	id: number;
+	outletId: number;
+	orderNumber: string;
+	stockOrderStatusId: number;
+	stockOrderStatusName: string;
+	divisionId: number;
+	divisionName: string;
+	orderDate: string;
+	created: string;
+	supplierId: number;
+	supplierName: string;
+	total: number;
+}
+
+export type StockOrderGetAllRequestAllOf = { [key: string]: unknown };
+
+export type StockOrderGetAllRequest = CommonModelsQueryModel & StockOrderGetAllRequestAllOf;
 
 export interface CommonModelsPaginatedListOfStockOrderResponseDTO {
 	items: DTOStockOrderResponseDTO[];
@@ -1572,6 +1736,18 @@ export interface StockLinkGetRequest {
 	[key: string]: unknown;
 }
 
+export interface StockLinkGetResponse {
+	name: string;
+	/** @nullable */
+	description?: string | null;
+	type: string;
+	quantity: number;
+}
+
+export interface StockLinkGetRequest {
+	[key: string]: unknown;
+}
+
 export interface StockLinkDeleteRequest {
 	[key: string]: unknown;
 }
@@ -1594,6 +1770,7 @@ export interface StockItemsUpdateRequest {
 }
 
 export interface StockItemsGetAllResponse {
+export interface StockItemsGetAllResponse {
 	id: number;
 	stockId: number;
 	stockName: string;
@@ -1604,13 +1781,17 @@ export interface StockItemsGetAllResponse {
 }
 
 export interface StockItemsGetAllRequest {
+export interface StockItemsGetAllRequest {
 	[key: string]: unknown;
 }
 
 export interface StockItemsGetResponse {
+export interface StockItemsGetResponse {
 	id: number;
 	stockId: number;
 	stockName: string;
+	unitId: number;
+	unitName: string;
 	unitId: number;
 	unitName: string;
 	divisionId: number;
@@ -1620,10 +1801,12 @@ export interface StockItemsGetResponse {
 }
 
 export interface StockItemsGetRequest {
+export interface StockItemsGetRequest {
 	[key: string]: unknown;
 }
 
 export interface CommonModelsPaginatedListOfResponse2 {
+	items: StockGetAllDivisionResponse[];
 	items: StockGetAllDivisionResponse[];
 	pageNumber: number;
 	totalPages: number;
@@ -1632,6 +1815,7 @@ export interface CommonModelsPaginatedListOfResponse2 {
 	hasNextPage: boolean;
 }
 
+export interface StockGetAllDivisionResponse {
 export interface StockGetAllDivisionResponse {
 	id: number;
 	outletId: number;
@@ -1644,10 +1828,13 @@ export interface StockGetAllDivisionResponse {
 }
 
 export type StockGetAllDivisionRequestAllOf = { [key: string]: unknown };
+export type StockGetAllDivisionRequestAllOf = { [key: string]: unknown };
 
+export type StockGetAllDivisionRequest = CommonModelsQueryModel & StockGetAllDivisionRequestAllOf;
 export type StockGetAllDivisionRequest = CommonModelsQueryModel & StockGetAllDivisionRequestAllOf;
 
 export interface CommonModelsPaginatedListOfResponse3 {
+	items: StockGetAllResponse[];
 	items: StockGetAllResponse[];
 	pageNumber: number;
 	totalPages: number;
@@ -1657,6 +1844,7 @@ export interface CommonModelsPaginatedListOfResponse3 {
 }
 
 export interface StockGetAllResponse {
+export interface StockGetAllResponse {
 	id: number;
 	outletId: number;
 	name: string;
@@ -1665,12 +1853,16 @@ export interface StockGetAllResponse {
 	stockCategoryId: number;
 	/** @nullable */
 	categoryDisplayName?: string | null;
+	/** @nullable */
+	categoryDisplayName?: string | null;
 	totalActual: number;
 	hasVat: boolean;
 }
 
 export type StockGetAllRequestAllOf = { [key: string]: unknown };
+export type StockGetAllRequestAllOf = { [key: string]: unknown };
 
+export type StockGetAllRequest = CommonModelsQueryModel & StockGetAllRequestAllOf;
 export type StockGetAllRequest = CommonModelsQueryModel & StockGetAllRequestAllOf;
 
 export interface StockDivisionGetAllRequest {
@@ -1856,6 +2048,57 @@ export type StockAllocateGetAllRequestAllOf = { [key: string]: unknown };
 
 export type StockAllocateGetAllRequest = CommonModelsQueryModel & StockAllocateGetAllRequestAllOf;
 
+export interface CommonModelsPaginatedListOfStockAllocateDTOBasic {
+	items: DTOStockAllocateDTOBasic[];
+	pageNumber: number;
+	totalPages: number;
+	totalCount: number;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
+}
+
+/**
+ * @nullable
+ */
+export type DTOStockAllocateDTOBasicAssignedUser = DTOUserDTO | null;
+
+/**
+ * @nullable
+ */
+export type DTOStockAllocateDTOBasicFromUser = DTOUserDTO | null;
+
+export interface DTOStockAllocateDTOBasic {
+	id: number;
+	outletId: number;
+	outlet: DTOOutletDTOBasic;
+	toOutletId: number;
+	toOutlet: DTOOutletDTOBasic;
+	comment: string;
+	stockAllocateStatusId: number;
+	stockAllocateStatus: DTOStockAllocateStatusDTO;
+	fromDivisionId: number;
+	fromDivision: ManagerOrderViewDivisionDTO;
+	toDivisionId: number;
+	toDivision: ManagerOrderViewDivisionDTO;
+	assignedUserId: string;
+	/** @nullable */
+	assignedUser?: DTOStockAllocateDTOBasicAssignedUser;
+	fromUserId: string;
+	/** @nullable */
+	fromUser?: DTOStockAllocateDTOBasicFromUser;
+	created: string;
+	completed: string;
+}
+
+export interface DTOStockAllocateStatusDTO {
+	id: number;
+	name: string;
+}
+
+export type StockAllocateGetAllRequestAllOf = { [key: string]: unknown };
+
+export type StockAllocateGetAllRequest = CommonModelsQueryModel & StockAllocateGetAllRequestAllOf;
+
 export type DTOStockAllocateDTOAllOf = {
 	/** @nullable */
 	stockAllocateItems?: DTOStockAllocateItemDTO[] | null;
@@ -1937,9 +2180,11 @@ export interface SectionTableGetAllRequest {
 }
 
 export interface SectionListRequest {
+export interface SectionListRequest {
 	[key: string]: unknown;
 }
 
+export interface SectionGetRequest {
 export interface SectionGetRequest {
 	[key: string]: unknown;
 }
@@ -1977,6 +2222,14 @@ export interface EntitiesCashUp {
 
 export interface SalesPeriodCreateCashUpRequest {
 	[key: string]: unknown;
+}
+
+export interface SalesPeriodCreateRequest {
+	/**
+	 * @minLength 1
+	 */
+	name: string;
+	outletId: number;
 }
 
 export interface SalesPeriodCreateRequest {
@@ -2259,9 +2512,11 @@ export interface OutletUpdateRequest {
 }
 
 export interface OutletGetPaymentTypeRequest {
+export interface OutletGetPaymentTypeRequest {
 	[key: string]: unknown;
 }
 
+export interface OutletGetRequest {
 export interface OutletGetRequest {
 	[key: string]: unknown;
 }
@@ -2280,7 +2535,6 @@ export interface OptionUpdateRequest {
 	positionId: number;
 	price: number;
 	optionGroupId: number;
-	isAvailable: boolean;
 }
 
 export interface OptionItemsRequest {
@@ -2315,7 +2569,6 @@ export interface OptionCreateRequest {
 	price: number;
 	optionGroupId: number;
 	outletId: number;
-	isAvailable: boolean;
 }
 
 export interface NotificationUserRequest {
@@ -2333,8 +2586,120 @@ export interface NotificationTestRequest {
 	message: string;
 }
 
+export interface NotificationTestRequest {
+	message: string;
+}
+
 export interface NotificationAddUserRequest {
 	token: string;
+}
+
+export interface MenuItemUpdateRequest {
+	id: number;
+	menuSectionId: number;
+	name: string;
+	description: string;
+	price: number;
+	positionId: number;
+	/** @nullable */
+	divisionId?: number | null;
+	isAvailable: boolean;
+	isEnabled: boolean;
+	/** @nullable */
+	extraGroupIds?: number[] | null;
+	/** @nullable */
+	optionGroupIds?: number[] | null;
+}
+
+export interface CommonModelsPaginatedListOfMenuItemAdminDTO {
+	items: MenuItemMenuItemAdminDTO[];
+	pageNumber: number;
+	totalPages: number;
+	totalCount: number;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
+}
+
+export interface MenuItemMenuItemAdminDTO {
+	menuItemId: number;
+	menuId: number;
+	menuSectionId: number;
+	menuSection: MenuItemMenuSectionAdminDTO;
+	name: string;
+	description: string;
+	price: number;
+	position: number;
+	divisionId: number;
+	menuItemOptionGroups: DTOMenuItemOptionGroupDTO[];
+	menuItemExtraGroups: DTOMenuItemExtraGroupDTO[];
+	isAvailable: boolean;
+	isEnabled: boolean;
+	stockPrice: number;
+}
+
+export interface MenuItemMenuSectionAdminDTO {
+	menuSectionId: number;
+	/** @nullable */
+	name?: string | null;
+	menuId: number;
+	menu: MenuItemMenuAdminDTO;
+}
+
+export interface MenuItemMenuAdminDTO {
+	id: number;
+	name: string;
+	outletId: number;
+	position: number;
+}
+
+export interface DTOMenuItemOptionGroupDTO {
+	menuItemId: number;
+	optionGroupId: number;
+	optionGroup: DTOOptionGroupDTO;
+}
+
+export interface DTOOptionGroupDTO {
+	optionGroupId: number;
+	name: string;
+	minSelections: number;
+	maxSelections: number;
+	options: DTOOptionDTO[];
+}
+
+export interface DTOMenuItemExtraGroupDTO {
+	menuItemId: number;
+	extraGroupId: number;
+	extraGroup: DTOExtraGroupDTO;
+}
+
+export interface DTOExtraGroupDTO {
+	extraGroupId: number;
+	name: string;
+	extras: DTOExtraDTO[];
+}
+
+export type MenuItemGetAllRequestAllOf = { [key: string]: unknown };
+
+export type MenuItemGetAllRequest = CommonModelsQueryModel & MenuItemGetAllRequestAllOf;
+
+export interface MenuItemDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface MenuItemCreateRequest {
+	menuSectionId: number;
+	name: string;
+	description: string;
+	price: number;
+	positionId: number;
+	/** @nullable */
+	divisionId?: number | null;
+	isAvailable: boolean;
+	isEnabled: boolean;
+	/** @nullable */
+	extraGroupIds?: number[] | null;
+	/** @nullable */
+	optionGroupIds?: number[] | null;
 }
 
 export interface MenuItemUpdateRequest {
@@ -2523,6 +2888,7 @@ export interface DTOMenuItemDTOBasic {
 	name: string;
 	description: string;
 	price: number;
+	divisionId: number;
 	position: number;
 	/** @nullable */
 	tags?: EntitiesTag[] | null;
@@ -2542,12 +2908,15 @@ export interface MenuGetItemsRequest {
 }
 
 export interface DTOMenuItemDTO {
+export interface DTOMenuItemDTO {
 	menuItemId: number;
 	menuSectionId: number;
 	name: string;
 	description: string;
 	price: number;
 	position: number;
+	/** @nullable */
+	tags?: EntitiesTag[] | null;
 	/** @nullable */
 	tags?: EntitiesTag[] | null;
 	divisionId: number;
@@ -2557,8 +2926,12 @@ export interface DTOMenuItemDTO {
 
 export interface MenuGetItemRequest {
 	[key: string]: unknown;
+export interface MenuGetItemRequest {
+	[key: string]: unknown;
 }
 
+export interface MenuListRequest {
+	[key: string]: unknown;
 export interface MenuListRequest {
 	[key: string]: unknown;
 }
@@ -2566,14 +2939,21 @@ export interface MenuListRequest {
 export interface MenuGetRequest {
 	[key: string]: unknown;
 }
+export interface MenuGetRequest {
+	[key: string]: unknown;
+}
 
+export interface MenuDeleteRequest {
 export interface MenuDeleteRequest {
 	[key: string]: unknown;
 }
 
 export interface MenuCreateRequest {
 	outletId: number;
+export interface MenuCreateRequest {
+	outletId: number;
 	name: string;
+	position: number;
 	position: number;
 }
 
@@ -2645,7 +3025,6 @@ export interface ExtraUpdateRequest {
 	price: number;
 	extraGroupId: number;
 	outletId: number;
-	isAvailable: boolean;
 }
 
 export interface ExtraItemsRequest {
@@ -2683,7 +3062,6 @@ export interface ExtraCreateRequest {
 	price: number;
 	extraGroupId: number;
 	outletId: number;
-	isAvailable: boolean;
 }
 
 export interface DivisionGetUsersResponse {
@@ -2823,9 +3201,11 @@ export interface CashUpUserCloseRequest {
 }
 
 export interface BusinessGetOutletsRequest {
+export interface BusinessGetOutletsRequest {
 	[key: string]: unknown;
 }
 
+export interface BusinessGetRequest {
 export interface BusinessGetRequest {
 	[key: string]: unknown;
 }
@@ -2984,12 +3364,24 @@ export type TableBookingPeriodHistoryParams = {
 
 export type TableBookingHistoryUserParams = {
 	cashUpUserId: number;
+export type TableBookingHistoryUserParams = {
+	cashUpUserId: number;
 	tableBookingId: number;
+	outletId: number;
 	outletId: number;
 };
 
 export type TableBookingHistoryParams = {
+export type TableBookingHistoryParams = {
 	tableBookingId: number;
+};
+
+export type TableGetMyBookedParams = {
+	outletId: number;
+	myBooking: boolean;
+};
+
+export type TableGetAvailableParams = {
 };
 
 export type TableGetMyBookedParams = {
@@ -3011,6 +3403,11 @@ export type StockGetAllParams = {
 	filters?: string | null;
 	page?: number | null;
 	pageSize?: number | null;
+};
+
+export type StockOrderItemLastPriceParams = {
+	stockId: number;
+	stockOrderId: number;
 };
 
 export type StockOrderItemLastPriceParams = {
@@ -3095,6 +3492,13 @@ export type MenuItemGetAllParams = {
 	pageSize?: number | null;
 };
 
+export type MenuItemGetAllParams = {
+	sorts?: string | null;
+	filters?: string | null;
+	page?: number | null;
+	pageSize?: number | null;
+};
+
 export type MenuListParams = {
 	outletId: number;
 };
@@ -3120,6 +3524,11 @@ export type MenuGetItemGetMenuItemsParams = {
 
 export type ManagerOrderViewParams = {
 	roleIds?: string | null;
+};
+
+export type ExtraGetAllMenuParams = {
+	outletId: number;
+	divisionId: number;
 };
 
 export type DivisionGetAllParams = {

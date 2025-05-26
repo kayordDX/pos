@@ -2,16 +2,19 @@
 	import { arrayUnique } from "$lib/util";
 	import { Badge, Button, Command } from "@kayord/ui";
 	import { CirclePlusIcon, CircleXIcon } from "@lucide/svelte";
-	import { createExtraGetAll } from "$lib/api";
-
-	const query = createExtraGetAll();
+	import { createExtraGetAll, createExtraGetAllMenu } from "$lib/api";
+	import { page } from "$app/state";
+	import { status } from "$lib/stores/status.svelte";
 
 	let specialExtraOpen = $state(false);
 	interface Props {
+		divisionId: number;
 		currentExtras?: Array<number>;
 	}
 
-	let { currentExtras = $bindable([]) }: Props = $props();
+	let { divisionId, currentExtras = $bindable([]) }: Props = $props();
+
+	const query = createExtraGetAllMenu({ divisionId: divisionId, outletId: status.value.outletId });
 
 	const selectItem = (id: number) => {
 		currentExtras.push(id);

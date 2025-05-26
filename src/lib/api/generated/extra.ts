@@ -25,6 +25,8 @@ import type {
 	EntitiesExtra,
 	ErrorResponse,
 	ExtraCreateRequest,
+	ExtraGetAllMenuParams,
+	ExtraGetAllMenuSpecialExtrasDTO,
 	ExtraUpdateRequest,
 	InternalErrorResponse,
 } from "./api.schemas";
@@ -343,6 +345,65 @@ export const createExtraDelete = <
 
 	return createMutation(mutationOptions, queryClient);
 };
+export const extraGetAllMenu = (params: ExtraGetAllMenuParams) => {
+	return customInstance<ExtraGetAllMenuSpecialExtrasDTO[]>({
+		url: `/extra/menu`,
+		method: "GET",
+		params,
+	});
+};
+
+export const getExtraGetAllMenuQueryKey = (params: ExtraGetAllMenuParams) => {
+	return [`/extra/menu`, ...(params ? [params] : [])] as const;
+};
+
+export const getExtraGetAllMenuQueryOptions = <
+	TData = Awaited<ReturnType<typeof extraGetAllMenu>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: ExtraGetAllMenuParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData>>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getExtraGetAllMenuQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAllMenu>>> = () =>
+		extraGetAllMenu(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof extraGetAllMenu>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type ExtraGetAllMenuQueryResult = NonNullable<Awaited<ReturnType<typeof extraGetAllMenu>>>;
+export type ExtraGetAllMenuQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createExtraGetAllMenu<
+	TData = Awaited<ReturnType<typeof extraGetAllMenu>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: ExtraGetAllMenuParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getExtraGetAllMenuQueryOptions(params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const extraGetAll = () => {
 	return customInstance<EntitiesExtra[]>({ url: `/extra/all`, method: "GET" });
 };
