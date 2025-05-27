@@ -96,7 +96,7 @@
 	<Card.Content class="p-6 text-sm">
 		<div class="grid gap-3">
 			<div class="font-semibold">Order Details</div>
-			<Items data={data?.orderItems ?? []} {showDetail} />
+			<Items bill={data} {showDetail} />
 
 			{#if (data?.adjustments?.length ?? 0) > 0}
 				<Separator class="my-2" />
@@ -113,6 +113,16 @@
 					{/each}
 				</ul>
 			{/if}
+
+			<Separator class="my-2" />
+			<ul class="grid gap-1">
+				{#each data.divisions as division (division.divisionId)}
+					<li class="flex items-center justify-between">
+						<span class="text-muted-foreground">{division.friendlyName}</span>
+						<span>R{division?.total.toFixed(2)}</span>
+					</li>
+				{/each}
+			</ul>
 
 			<Separator class="my-2" />
 			<ul class="grid gap-3">

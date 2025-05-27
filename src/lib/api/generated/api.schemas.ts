@@ -626,6 +626,8 @@ export interface TableOrderOfficeOrderBasedBackRequest {
 
 export interface TableOrderGetBillResponse {
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
+	summaryOrderItems: TableOrderGetBillBillOrderItemDTO[];
+	divisions: TableOrderGetBillDivisionDTO[];
 	total: number;
 	totalExVAT: number;
 	vat: number;
@@ -654,6 +656,10 @@ export interface TableOrderGetBillBillOrderItemDTO {
 	/** @nullable */
 	orderItemExtras?: DTOOrderItemExtraDTO[] | null;
 	orderReceived: string;
+	quantity: number;
+	total: number;
+	optionsTotal: number;
+	extrasTotal: number;
 	/** @nullable */
 	note?: string | null;
 }
@@ -669,10 +675,25 @@ export interface DTOTableBookingDTO {
 	user: DTOUserDTO;
 }
 
+/**
+ * @nullable
+ */
+export type TableOrderGetBillBillMenuItemDTODivision = TableOrderGetBillDivisionDTO | null;
+
 export interface TableOrderGetBillBillMenuItemDTO {
 	menuItemId: number;
 	name: string;
 	price: number;
+	divisionId: number;
+	/** @nullable */
+	division?: TableOrderGetBillBillMenuItemDTODivision;
+}
+
+export interface TableOrderGetBillDivisionDTO {
+	divisionId: number;
+	/** @nullable */
+	friendlyName?: string | null;
+	total: number;
 }
 
 export interface EntitiesPayment {
@@ -848,6 +869,8 @@ export interface EntitiesTag {
 export interface EntitiesDivision {
 	divisionId: number;
 	divisionName: string;
+	/** @nullable */
+	friendlyName?: string | null;
 	outletId: number;
 	divisionTypeId: number;
 }

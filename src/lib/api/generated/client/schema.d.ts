@@ -2966,6 +2966,8 @@ export interface components {
         TableOrderOfficeOrderBasedBackRequest: Record<string, never>;
         TableOrderGetBillResponse: {
             orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
+            summaryOrderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
+            divisions: components["schemas"]["TableOrderGetBillDivisionDTO"][];
             /** Format: decimal */
             total: number;
             /** Format: decimal */
@@ -2998,6 +3000,14 @@ export interface components {
             orderItemExtras?: components["schemas"]["DTOOrderItemExtraDTO"][] | null;
             /** Format: date-time */
             orderReceived: string;
+            /** Format: int32 */
+            quantity: number;
+            /** Format: decimal */
+            total: number;
+            /** Format: decimal */
+            optionsTotal: number;
+            /** Format: decimal */
+            extrasTotal: number;
             note?: string | null;
         };
         DTOTableBookingDTO: {
@@ -3019,6 +3029,16 @@ export interface components {
             name: string;
             /** Format: decimal */
             price: number;
+            /** Format: int32 */
+            divisionId: number;
+            division?: components["schemas"]["TableOrderGetBillDivisionDTO"] | null;
+        };
+        TableOrderGetBillDivisionDTO: {
+            /** Format: int32 */
+            divisionId: number;
+            friendlyName?: string | null;
+            /** Format: decimal */
+            total: number;
         };
         EntitiesPayment: {
             /** Format: int32 */
@@ -3166,6 +3186,7 @@ export interface components {
             /** Format: int32 */
             divisionId: number;
             divisionName: string;
+            friendlyName?: string | null;
             /** Format: int32 */
             outletId: number;
             /** Format: int32 */

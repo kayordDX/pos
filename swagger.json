@@ -11356,6 +11356,8 @@
         "additionalProperties": false,
         "required": [
           "orderItems",
+          "summaryOrderItems",
+          "divisions",
           "total",
           "totalExVAT",
           "vat",
@@ -11371,6 +11373,18 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/TableOrderGetBillBillOrderItemDTO"
+            }
+          },
+          "summaryOrderItems": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TableOrderGetBillBillOrderItemDTO"
+            }
+          },
+          "divisions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TableOrderGetBillDivisionDTO"
             }
           },
           "total": {
@@ -11435,7 +11449,11 @@
           "tableBooking",
           "menuItemId",
           "menuItem",
-          "orderReceived"
+          "orderReceived",
+          "quantity",
+          "total",
+          "optionsTotal",
+          "extrasTotal"
         ],
         "properties": {
           "orderItemId": {
@@ -11473,6 +11491,22 @@
           "orderReceived": {
             "type": "string",
             "format": "date-time"
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "total": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "optionsTotal": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "extrasTotal": {
+            "type": "number",
+            "format": "decimal"
           },
           "note": {
             "type": "string",
@@ -11526,7 +11560,8 @@
         "required": [
           "menuItemId",
           "name",
-          "price"
+          "price",
+          "divisionId"
         ],
         "properties": {
           "menuItemId": {
@@ -11537,6 +11572,40 @@
             "type": "string"
           },
           "price": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "division": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TableOrderGetBillDivisionDTO"
+              }
+            ]
+          }
+        }
+      },
+      "TableOrderGetBillDivisionDTO": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "divisionId",
+          "total"
+        ],
+        "properties": {
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "friendlyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "total": {
             "type": "number",
             "format": "decimal"
           }
@@ -12095,6 +12164,10 @@
           },
           "divisionName": {
             "type": "string"
+          },
+          "friendlyName": {
+            "type": "string",
+            "nullable": true
           },
           "outletId": {
             "type": "integer",
