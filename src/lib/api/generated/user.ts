@@ -26,6 +26,7 @@ import type {
 	ErrorResponse,
 	InternalErrorResponse,
 	UserAddUserOutletRoleRequest,
+	UserApplyOutletRequest,
 	UserAssignOutletRequest,
 	UserGetRolesParams,
 	UserGetStatusResponse,
@@ -603,6 +604,79 @@ export const createUserAssignOutlet = <
 	TContext
 > => {
 	const mutationOptions = getUserAssignOutletMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const userApplyOutlet = (userApplyOutletRequest: BodyType<UserApplyOutletRequest>) => {
+	return customInstance<void>({
+		url: `/user/applyOutlet`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: userApplyOutletRequest,
+	});
+};
+
+export const getUserApplyOutletMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof userApplyOutlet>>,
+		TError,
+		{ data: BodyType<UserApplyOutletRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof userApplyOutlet>>,
+	TError,
+	{ data: BodyType<UserApplyOutletRequest> },
+	TContext
+> => {
+	const mutationKey = ["userApplyOutlet"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof userApplyOutlet>>,
+		{ data: BodyType<UserApplyOutletRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return userApplyOutlet(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type UserApplyOutletMutationResult = NonNullable<
+	Awaited<ReturnType<typeof userApplyOutlet>>
+>;
+export type UserApplyOutletMutationBody = BodyType<UserApplyOutletRequest>;
+export type UserApplyOutletMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createUserApplyOutlet = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof userApplyOutlet>>,
+			TError,
+			{ data: BodyType<UserApplyOutletRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof userApplyOutlet>>,
+	TError,
+	{ data: BodyType<UserApplyOutletRequest> },
+	TContext
+> => {
+	const mutationOptions = getUserApplyOutletMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };

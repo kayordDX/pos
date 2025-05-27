@@ -627,6 +627,50 @@
         ]
       }
     },
+    "/user/applyOutlet": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserApplyOutlet",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserApplyOutletRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/user/role": {
       "post": {
         "tags": [
@@ -5994,6 +6038,47 @@
         ]
       }
     },
+    "/outlet/assigned": {
+      "get": {
+        "tags": [
+          "Outlet"
+        ],
+        "operationId": "OutletGetAllAssigned",
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/DTOOutletDTOBasic"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/outlet": {
       "get": {
         "tags": [
@@ -10206,6 +10291,19 @@
         }
       },
       "UserAssignOutletRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "outletId"
+        ],
+        "properties": {
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "UserApplyOutletRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -14793,7 +14891,6 @@
         "required": [
           "id",
           "name",
-          "parentId",
           "parentName",
           "outletId",
           "displayName"
@@ -14808,7 +14905,8 @@
           },
           "parentId": {
             "type": "integer",
-            "format": "int32"
+            "format": "int32",
+            "nullable": true
           },
           "parentName": {
             "type": "string"

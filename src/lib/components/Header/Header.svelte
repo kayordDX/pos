@@ -51,7 +51,9 @@
 		</span>
 		<div class="flex gap-2 items-center">
 			{#if status.value.outletName}
-				<Badge variant="outline" class="hidden sm:block">{status.value.outletName}</Badge>
+				<button onclick={() => goto("/switch")}>
+					<Badge variant="outline" class="hidden sm:block">{status.value.outletName}</Badge>
+				</button>
 				<Badge variant="outline" class="sm:hidden">{getInitials(status.value.outletName)}</Badge>
 			{/if}
 			{#if session.user}

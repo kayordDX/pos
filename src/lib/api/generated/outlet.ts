@@ -20,6 +20,7 @@ import type {
 } from "@tanstack/svelte-query";
 
 import type {
+	DTOOutletDTOBasic,
 	EntitiesOutlet,
 	EntitiesPaymentType,
 	ErrorResponse,
@@ -210,6 +211,63 @@ export function createOutletGetPaymentType<
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const queryOptions = getOutletGetPaymentTypeQueryOptions(id, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const outletGetAllAssigned = () => {
+	return customInstance<DTOOutletDTOBasic[]>({ url: `/outlet/assigned`, method: "GET" });
+};
+
+export const getOutletGetAllAssignedQueryKey = () => {
+	return [`/outlet/assigned`] as const;
+};
+
+export const getOutletGetAllAssignedQueryOptions = <
+	TData = Awaited<ReturnType<typeof outletGetAllAssigned>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>
+	>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getOutletGetAllAssignedQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGetAllAssigned>>> = () =>
+		outletGetAllAssigned();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof outletGetAllAssigned>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type OutletGetAllAssignedQueryResult = NonNullable<
+	Awaited<ReturnType<typeof outletGetAllAssigned>>
+>;
+export type OutletGetAllAssignedQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createOutletGetAllAssigned<
+	TData = Awaited<ReturnType<typeof outletGetAllAssigned>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>
+		>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getOutletGetAllAssignedQueryOptions(options);
 
 	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

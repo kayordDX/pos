@@ -302,6 +302,10 @@ export interface UserAssignOutletRequest {
 	outletId: number;
 }
 
+export interface UserApplyOutletRequest {
+	outletId: number;
+}
+
 export interface UserAddUserOutletRoleRequest {
 	userId: string;
 	roleId: number;
@@ -1702,7 +1706,8 @@ export interface StockCreateRequest {
 export interface StockCategoryResponse {
 	id: number;
 	name: string;
-	parentId: number;
+	/** @nullable */
+	parentId?: number | null;
 	parentName: string;
 	outletId: number;
 	displayName: string;

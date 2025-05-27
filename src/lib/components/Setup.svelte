@@ -3,15 +3,13 @@
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
-	import { client, createOutletList } from "$lib/api";
+	import { createOutletList, createUserApplyOutlet } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { goto } from "$app/navigation";
 	import { status } from "$lib/stores/status.svelte";
 	import { networkInformation } from "$lib/stores/network.svelte";
 	import { CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon } from "@lucide/svelte";
 	import { requestNotificationPermission } from "$lib/util";
 	import { onMount } from "svelte";
-	import { menu } from "$lib/stores/menu.svelte";
 	import { hub } from "$lib/stores/hub.svelte";
 	import { info } from "$lib/stores/info.svelte";
 
@@ -22,19 +20,14 @@
 	});
 	type FormSchema = z.infer<typeof schema>;
 
+	const assignMutation = createUserApplyOutlet();
+
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			const { response } = await client.POST("/user/assignOutlet", {
-				body: { outletId: data.outletId },
+			await $assignMutation.mutateAsync({
+				data: { outletId: data.outletId },
 			});
-			if (response.ok) {
-				toast.info("Successfully updated outlet");
-				menu.value = { menuId: 0 };
-				await status.getStatus();
-				await goto("/", { replaceState: true, invalidateAll: true });
-			} else {
-				toast.error("Could not set outlet");
-			}
+			toast.info("Applied to outlet. Awaiting approval.");
 		} catch (err) {
 			toast.error(getError(err).message);
 		}
@@ -206,7 +199,7 @@
 						<input hidden bind:value={$formData.outletId} name={props.name} />
 					{/snippet}
 				</Form.Control>
-				<Form.Description>The current outlet this device is linked to.</Form.Description>
+				<Form.Description>Request access to new outlet</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 
