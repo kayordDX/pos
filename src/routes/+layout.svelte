@@ -72,9 +72,9 @@
 	<link rel="manifest" href={`${info.isKayord() ? "/kayord" : ""}/manifest.json`} />
 </svelte:head>
 
+<ModeWatcher defaultMode="dark" track={false} />
 <AuthCheck>
 	<Toaster />
-	<ModeWatcher defaultMode="dark" track={false} />
 	<Notification />
 	<QueryClientProvider client={queryClient}>
 		<OutletCheck>

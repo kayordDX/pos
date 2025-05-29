@@ -1,0 +1,9 @@
+.loading-theme-dark {
+	--loading-background-dark: oklch(0.243 0.03 284);
+	background-color: var(--background, var(--loading-background-dark));
+}
+
+.loading-theme-light {
+	--loading-background-light: oklch(0.958 0.006 265);
+	background-color: var(--background, var(--loading-background-light));
+}

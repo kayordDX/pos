@@ -1,14 +1,18 @@
 <!doctype html>
-<html lang="en" class="dark">
+<html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link rel="stylesheet" href="/css/loading.css" />
 		%sveltekit.head%
 	</head>
-	<body
-		data-sveltekit-preload-data="hover"
-		class="bg-background overscroll-none font-sans antialiased"
-	>
+	<body data-sveltekit-preload-data="hover">
+		<script>
+			const theme = localStorage.getItem("mode-watcher-mode");
+			const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+			const themeInUse = theme === "system" ? (systemPrefersDark ? "dark" : "light") : theme;
+			document.body.setAttribute("class", `loading-theme-${themeInUse}`);
+		</script>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
