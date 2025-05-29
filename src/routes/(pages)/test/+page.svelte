@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { THEMES } from "$lib/themes";
-	import { Select } from "@kayord/ui";
+	import { Button, Select, toast } from "@kayord/ui";
 	import { setTheme, theme } from "@kayord/ui/mode-watcher";
 
 	const label = $derived(THEMES.find((t) => t.value === theme.current)?.name ?? "Select a theme");
@@ -58,3 +58,5 @@
 		</div>
 	{/each}
 </div>
+
+<Button onclick={() => toast("test")}>Test</Button>
