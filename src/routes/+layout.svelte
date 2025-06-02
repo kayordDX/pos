@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ModeWatcher } from "@kayord/ui/mode-watcher";
+	import { ModeWatcher, theme, setTheme } from "@kayord/ui/mode-watcher";
 	import "../app.css";
 	import { Toaster } from "@kayord/ui";
 	import { browser } from "$app/environment";
@@ -64,6 +64,15 @@
 				enabled: browser,
 			},
 		},
+	});
+
+	// const themeName = $derived(info.isKayord() ? "kayord" : "default");
+	$effect(() => {
+		const themeName = info.isKayord() ? "kayord" : "default";
+		if (theme.current != themeName) {
+			console.log("setting theme");
+			setTheme(themeName);
+		}
 	});
 </script>
 

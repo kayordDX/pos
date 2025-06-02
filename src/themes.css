@@ -1,15 +1,15 @@
 [data-theme="kayord"] {
-	--primary: oklch(0.558 0.226 262);
-	--primary-foreground: oklch(0.958 0.006 265);
-	--ring: oklch(0.558 0.226 262);
-	--sidebar-primary: oklch(0.558 0.226 262);
-	--sidebar-ring: oklch(0.558 0.226 262);
+	--primary: oklch(0.606 0.25 292.717);
+	--primary-foreground: oklch(0.969 0.016 293.756);
+	--ring: oklch(0.606 0.25 292.717);
+	--sidebar-primary: oklch(0.606 0.25 292.717);
+	--sidebar-ring: oklch(0.606 0.25 292.717);
 
 	&:where(.dark) {
-		--primary: oklch(0.767 0.111 260);
+		--primary: oklch(0.787 0.119 304);
 		--primary-foreground: oklch(0.243 0.03 284);
-		--ring: oklch(0.767 0.111 260);
-		--sidebar-primary: oklch(0.767 0.111 260);
-		--sidebar-ring: oklch(0.767 0.111 260);
+		--ring: oklch(0.787 0.119 304);
+		--sidebar-primary: oklch(0.787 0.119 304);
+		--sidebar-ring: oklch(0.787 0.119 304);
 	}
 }
