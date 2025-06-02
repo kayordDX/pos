@@ -12,7 +12,6 @@
 		"border",
 		"card-foreground",
 		"card",
-		"destructive-foreground",
 		"destructive",
 		"foreground",
 		"input",

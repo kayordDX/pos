@@ -34,7 +34,7 @@
 				</Avatar.Fallback>
 			</Avatar.Root>
 			<div
-				class={`size-3 rounded-md absolute top-0 right-0 ${networkInformation.value.connectivity == "online" ? "bg-green-400" : networkInformation.value.connectivity == "offline" ? "bg-red-400 animate-pulse" : "bg-muted-foreground"}`}
+				class={`size-3 rounded-md absolute top-0 right-0 ${networkInformation.value.connectivity == "online" ? "bg-success" : networkInformation.value.connectivity == "offline" ? "bg-destructive animate-pulse" : "bg-muted-foreground"}`}
 			></div>
 		</div>
 	</DropdownMenu.Trigger>

@@ -220,6 +220,6 @@
 		{#if $mutation.isError}
 			<Error message={getError($mutation.error).message} />
 		{/if}
-		<Button type="submit">Add</Button>
+		<Button class="mt-2" type="submit">Add</Button>
 	</Drawer.Footer>
 </form>

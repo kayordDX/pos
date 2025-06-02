@@ -76,7 +76,7 @@
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
 			<AlertDialog.Action
-				class="bg-destructive text-destructive-foreground"
+				class="bg-destructive"
 				onclick={() => {
 					deleteMenuItem();
 					deleteOpen = false;

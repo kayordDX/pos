@@ -53,10 +53,7 @@
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action
-				class="bg-destructive text-destructive-foreground"
-				onclick={deleteMenuSection}
-			>
+			<AlertDialog.Action class="bg-destructive" onclick={deleteMenuSection}>
 				Delete
 			</AlertDialog.Action>
 		</AlertDialog.Footer>

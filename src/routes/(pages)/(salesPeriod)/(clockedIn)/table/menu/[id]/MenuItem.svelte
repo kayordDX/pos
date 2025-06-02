@@ -39,7 +39,7 @@
 {:else}
 	<div class="w-full relative max-w-lg text-left">
 		<Card.Root class="w-full relative max-w-lg p-4 bg-background gap-0">
-			<div class="h-4 w-4 bg-red-500 rounded-sm absolute top-2 right-2"></div>
+			<div class="h-4 w-4 bg-destructive rounded-sm absolute top-2 right-2"></div>
 			<div class="font-bold text-muted-foreground line-clamp-1">{menuItem.name}</div>
 			<div class="text-sm text-muted-foreground">R {menuItem.price.toFixed(2)}</div>
 			<div class="text-xs text-muted-foreground">{menuItem.menuSection.name}</div>

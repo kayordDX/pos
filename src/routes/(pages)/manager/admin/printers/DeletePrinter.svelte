@@ -33,12 +33,7 @@
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action
-				class="bg-destructive text-destructive-foreground"
-				onclick={deletePrinter}
-			>
-				Delete
-			</AlertDialog.Action>
+			<AlertDialog.Action class="bg-destructive" onclick={deletePrinter}>Delete</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

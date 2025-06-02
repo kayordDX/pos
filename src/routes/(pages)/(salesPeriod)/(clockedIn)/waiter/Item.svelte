@@ -18,12 +18,12 @@
 		var warning = 10 * 60 * 1000;
 
 		if (Date.now() - theDate.valueOf() > critical) {
-			return "background-color: hsl(var(--destructive));";
+			return "background-color: var(--destructive);";
 		}
 		if (Date.now() - theDate.valueOf() > warning) {
-			return "background-color: rgb(245 158 11);";
+			return "background-color: var(--color-warning);";
 		}
-		return "background-color: rgb(34 197 94);";
+		return "background-color: var(--color-success);";
 	};
 
 	const mutation = createTableOrderUpdateOrderItem();
