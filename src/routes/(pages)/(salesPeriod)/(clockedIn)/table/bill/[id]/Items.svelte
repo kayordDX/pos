@@ -1,6 +1,5 @@
 <script lang="ts">
-	import type { TableOrderGetBillBillOrderItemDTO, TableOrderGetBillResponse } from "$lib/api";
-	import { Badge, Table } from "@kayord/ui";
+	import type { TableOrderGetBillResponse } from "$lib/api";
 
 	interface Props {
 		bill: TableOrderGetBillResponse;
@@ -16,11 +15,11 @@
 	{#each data as item}
 		<li class="flex items-center justify-between">
 			<span class="text-muted-foreground">
-				{#if showDetail}
+				<!-- {#if showDetail}
 					<div class="line-clamp-1 text-xs">
 						{new Date(item.orderReceived).toLocaleTimeString()}
 					</div>
-				{/if}
+				{/if} -->
 				<div class="line-clamp-1">{item.quantity} {item.menuItem.name}</div>
 				{#each item.orderItemOptions ?? [] as option}
 					<div class="ml-4 flex items-center gap-1">
@@ -41,14 +40,18 @@
 				{#if showDetail}
 					<div class="h-3"></div>
 				{/if}
-				{item.menuItem.price.toFixed(2)}
-				<Badge>{item.total}</Badge>
-				{#each item.orderItemOptions ?? [] as option}
-					<div>{option.option.price.toFixed(2)}</div>
-				{/each}
-				{#each item.orderItemExtras ?? [] as extra}
-					<div>{extra.extra.price.toFixed(2)}</div>
-				{/each}
+				<div class="grid grid-cols-2 gap-4 text-muted-foreground">
+					{item.menuItem.price.toFixed(2)}
+					<span class="font-semibold text-foreground">{item.total.toFixed(2)}</span>
+					<div>
+						{#each item.orderItemOptions ?? [] as option}
+							<div>{option.option.price.toFixed(2)}</div>
+						{/each}
+						{#each item.orderItemExtras ?? [] as extra}
+							<div>{extra.extra.price.toFixed(2)}</div>
+						{/each}
+					</div>
+				</div>
 			</span>
 		</li>
 	{/each}

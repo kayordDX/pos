@@ -93,7 +93,7 @@
 		{/if}
 	</Card.Header>
 
-	<Card.Content class="p-6 text-sm">
+	<Card.Content class="px-6 py-0 text-sm">
 		<div class="grid gap-3">
 			<div class="font-semibold">Order Details</div>
 			<Items bill={data} {showDetail} />
@@ -126,7 +126,7 @@
 
 			<Separator class="my-2" />
 			<ul class="grid gap-3">
-				<li class="flex items-center justify-between font-semibold">
+				<li class="flex items-center justify-between font-bold">
 					<span>Total</span>
 					<span>R{data?.total.toFixed(2)}</span>
 				</li>

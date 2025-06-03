@@ -190,7 +190,7 @@
 								<Collapsible.Trigger class="w-full flex items-center justify-between">
 									<Sidebar.MenuButton>
 										{#if item.icon}
-											<item.icon class="!size-6" />
+											<item.icon class="!size-5" />
 										{/if}
 										{item.title}
 										<Plus class="ml-auto group-data-[state=open]/collapsible:hidden" />
@@ -214,7 +214,7 @@
 													>
 														{#if subItem.icon}
 															<subItem.icon
-																class={`!size-6 ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`}
+																class={`!size-5 ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`}
 															/>
 														{/if}
 														<span>{subItem.title}</span>
@@ -245,7 +245,7 @@
 									{item.title}
 								{/snippet}
 								{#if item.icon}
-									<item.icon class="!size-6" />
+									<item.icon class="!size-5" />
 								{/if}
 								<span>{item.title}</span>
 							</Sidebar.MenuButton>
