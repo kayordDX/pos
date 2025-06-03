@@ -40,7 +40,7 @@
 				{#if showDetail}
 					<div class="h-3"></div>
 				{/if}
-				<div class="grid grid-cols-2 gap-4 text-muted-foreground">
+				<div class="grid grid-cols-2 gap-4 text-muted-foreground w-48">
 					{item.menuItem.price.toFixed(2)}
 					<span class="font-semibold text-foreground">{item.total.toFixed(2)}</span>
 					<div>
