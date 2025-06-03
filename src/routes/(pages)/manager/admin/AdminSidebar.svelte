@@ -27,6 +27,7 @@
 		PackageOpenIcon,
 		LayoutTemplateIcon,
 		BuildingIcon,
+		DiffIcon,
 	} from "@lucide/svelte";
 
 	const menuItems = [
@@ -76,6 +77,11 @@
 					title: "Sections",
 					href: "/manager/admin/sections",
 					icon: LayoutTemplateIcon,
+				},
+				{
+					title: "Adjustment Types",
+					href: "/manager/admin/adjustmentTypes",
+					icon: DiffIcon,
 				},
 			],
 		},

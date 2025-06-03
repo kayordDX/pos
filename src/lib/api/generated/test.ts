@@ -77,6 +77,57 @@ export function createTest<
 	return query;
 }
 
+export const testPrinterTest = () => {
+	return customInstance<boolean>({ url: `/test/print`, method: "GET" });
+};
+
+export const getTestPrinterTestQueryKey = () => {
+	return [`/test/print`] as const;
+};
+
+export const getTestPrinterTestQueryOptions = <
+	TData = Awaited<ReturnType<typeof testPrinterTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testPrinterTest>>, TError, TData>>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getTestPrinterTestQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof testPrinterTest>>> = () =>
+		testPrinterTest();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof testPrinterTest>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type TestPrinterTestQueryResult = NonNullable<Awaited<ReturnType<typeof testPrinterTest>>>;
+export type TestPrinterTestQueryError = ErrorType<InternalErrorResponse>;
+
+export function createTestPrinterTest<
+	TData = Awaited<ReturnType<typeof testPrinterTest>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testPrinterTest>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getTestPrinterTestQueryOptions(options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const testStockTest = () => {
 	return customInstance<TestResult>({ url: `/test/stock`, method: "GET" });
 };

@@ -345,6 +345,56 @@ export const createExtraDelete = <
 
 	return createMutation(mutationOptions, queryClient);
 };
+export const extraGetAll = () => {
+	return customInstance<EntitiesExtra[]>({ url: `/extra/all`, method: "GET" });
+};
+
+export const getExtraGetAllQueryKey = () => {
+	return [`/extra/all`] as const;
+};
+
+export const getExtraGetAllQueryOptions = <
+	TData = Awaited<ReturnType<typeof extraGetAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getExtraGetAllQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAll>>> = () => extraGetAll();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof extraGetAll>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type ExtraGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof extraGetAll>>>;
+export type ExtraGetAllQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createExtraGetAll<
+	TData = Awaited<ReturnType<typeof extraGetAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getExtraGetAllQueryOptions(options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const extraGetAllMenu = (params: ExtraGetAllMenuParams) => {
 	return customInstance<ExtraGetAllMenuSpecialExtrasDTO[]>({
 		url: `/extra/menu`,
@@ -394,56 +444,6 @@ export function createExtraGetAllMenu<
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const queryOptions = getExtraGetAllMenuQueryOptions(params, options);
-
-	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
-		queryKey: DataTag<QueryKey, TData, TError>;
-	};
-
-	query.queryKey = queryOptions.queryKey;
-
-	return query;
-}
-
-export const extraGetAll = () => {
-	return customInstance<EntitiesExtra[]>({ url: `/extra/all`, method: "GET" });
-};
-
-export const getExtraGetAllQueryKey = () => {
-	return [`/extra/all`] as const;
-};
-
-export const getExtraGetAllQueryOptions = <
-	TData = Awaited<ReturnType<typeof extraGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
-	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>;
-}) => {
-	const { query: queryOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getExtraGetAllQueryKey();
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAll>>> = () => extraGetAll();
-
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof extraGetAll>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type ExtraGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof extraGetAll>>>;
-export type ExtraGetAllQueryError = ErrorType<void | InternalErrorResponse>;
-
-export function createExtraGetAll<
-	TData = Awaited<ReturnType<typeof extraGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	options?: {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>;
-	},
-	queryClient?: QueryClient
-): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getExtraGetAllQueryOptions(options);
 
 	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;
