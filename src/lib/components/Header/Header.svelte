@@ -53,8 +53,8 @@
 			{#if status.value.outletName}
 				<button onclick={() => goto("/switch")}>
 					<Badge variant="outline" class="hidden sm:block">{status.value.outletName}</Badge>
+					<Badge variant="outline" class="sm:hidden">{getInitials(status.value.outletName)}</Badge>
 				</button>
-				<Badge variant="outline" class="sm:hidden">{getInitials(status.value.outletName)}</Badge>
 			{/if}
 			{#if session.user}
 				<Menu />
