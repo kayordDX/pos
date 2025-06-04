@@ -33,12 +33,12 @@
 				await $editMutation.mutateAsync({
 					data: { id: section?.menuSectionId ?? 0, name: data.name, positionId: data.position },
 				});
-				toast.info("Edited Menu");
+				toast.info("Edited Menu Section");
 			} else {
 				await $createMutation.mutateAsync({
 					data: { menuId: Number(page.params.Id), name: data.name, positionId: data.position },
 				});
-				toast.info("Added Menu");
+				toast.info("Added Menu Section");
 			}
 			refetch();
 		} catch (err) {
