@@ -55,7 +55,7 @@
 						supplierId: data.supplierId,
 					},
 				});
-				toast.info("Edited Menu");
+				toast.info("Edited Order");
 			} else {
 				await $createMutation.mutateAsync({
 					data: {
@@ -65,7 +65,7 @@
 						supplierId: data.supplierId,
 					},
 				});
-				toast.info("Added Menu");
+				toast.info("Order Created");
 			}
 			refetch();
 		} catch (err) {
