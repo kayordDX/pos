@@ -12,7 +12,6 @@ import { getMessaging, getToken } from "firebase/messaging";
 import { PUBLIC_VAPID_KEY } from "$env/static/public";
 
 import { client } from "./api";
-import { onDestroy } from "svelte";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAoHwOFNJ0_ag0Ly4YZzGzdW_n5_NjC2uE",
