@@ -1,37 +1,74 @@
 <script lang="ts">
-	import { createMenuList } from "$lib/api";
+	import { createMenuList, type EntitiesMenu } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, Card } from "@kayord/ui";
+	import { Button, createShadTable, DataTable, renderComponent } from "@kayord/ui";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditMenu from "./EditMenu.svelte";
+	import type { ColumnDef } from "@tanstack/table-core";
+	import Search from "$lib/components/Search.svelte";
 
 	const query = createMenuList({ outletId: status.value.outletId });
 	let addOpen = $state(false);
+
+	const columns: ColumnDef<EntitiesMenu>[] = [
+		{
+			header: "Menu",
+			accessorKey: "name",
+			size: 10000,
+		},
+		{
+			header: "",
+			enableSorting: false,
+			accessorKey: "id",
+			cell: (row) =>
+				renderComponent(Actions, {
+					menu: row.row.original,
+					refetch: $query.refetch,
+				}),
+			size: 10,
+		},
+	];
+
+	let data = $derived($query.data ?? []);
+	let search = $state("");
+
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+		state: {
+			get globalFilter() {
+				return search;
+			},
+		},
+	});
 </script>
 
-<div class="m-2">
+{#snippet header()}
 	<div class="flex items-center justify-between">
-		<h1>Menus</h1>
+		<div class="flex flex-col gap-1">
+			<h1>Menus</h1>
+			<div class="flex gap-2 items-center">
+				<Search bind:search name="Menus" />
+			</div>
+		</div>
+
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
 		<EditMenu refetch={$query.refetch} bind:open={addOpen} />
 	</div>
-	<div class="flex flex-col gap-2 mt-2">
-		{#if $query.data?.length == 0}
-			<Card.Root>
-				<Card.Header class="pb-6">
-					<Card.Title>No Sections</Card.Title>
-					<Card.Description>There are currently no sections in this menu</Card.Description>
-				</Card.Header>
-			</Card.Root>
-		{/if}
-		{#each $query.data ?? [] as menu}
-			<Card.Root class="p-2 flex items-center justify-between flex-row">
-				{menu.name}
-				<Actions {menu} refetch={$query.refetch} />
-			</Card.Root>
-		{/each}
-	</div>
+{/snippet}
+
+<div class="m-2">
+	<DataTable
+		headerClass="pb-2"
+		{header}
+		{table}
+		isLoading={$query.isPending}
+		noDataMessage="No roles for outlet"
+	/>
 </div>

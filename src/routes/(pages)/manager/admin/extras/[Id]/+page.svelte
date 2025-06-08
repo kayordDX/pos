@@ -6,6 +6,7 @@
 	import Actions from "./Actions.svelte";
 	import EditExtra from "./EditExtra.svelte";
 	import type { ColumnDef } from "@tanstack/table-core";
+	import Search from "$lib/components/Search.svelte";
 
 	const query = createExtraItems(Number(page.params.Id));
 	let addOpen = $state(false);
@@ -43,6 +44,7 @@
 	];
 
 	let data = $derived($query.data ?? []);
+	let search = $state("");
 
 	const table = createShadTable({
 		columns,
@@ -50,12 +52,22 @@
 			return data;
 		},
 		enableRowSelection: false,
+		state: {
+			get globalFilter() {
+				return search;
+			},
+		},
 	});
 </script>
 
 {#snippet header()}
 	<div class="flex items-center justify-between">
-		<h1>Extra Items - ({groupName})</h1>
+		<div class="flex flex-col gap-1">
+			<h1>Extra Items - ({groupName})</h1>
+			<div class="flex gap-2 items-center">
+				<Search bind:search name="Extras" />
+			</div>
+		</div>
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>

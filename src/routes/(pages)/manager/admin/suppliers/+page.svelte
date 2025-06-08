@@ -6,6 +6,7 @@
 	import AddSupplier from "./AddSupplier.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
+	import Search from "$lib/components/Search.svelte";
 
 	const query = createSupplierGetAll({ outletId: status.value.outletId });
 
@@ -44,6 +45,7 @@
 	];
 
 	let data = $derived($query.data ?? []);
+	let search = $state("");
 
 	const table = createShadTable({
 		columns,
@@ -52,6 +54,11 @@
 		},
 		enableRowSelection: false,
 		enablePaging: false,
+		state: {
+			get globalFilter() {
+				return search;
+			},
+		},
 	});
 
 	let isOpen = $state(false);
@@ -61,8 +68,11 @@
 
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">
-		<div class="">
+		<div class="flex flex-col gap-1">
 			<h2>Suppliers</h2>
+			<div class="flex gap-2 items-center">
+				<Search bind:search name="Supplier" />
+			</div>
 		</div>
 		<div class="flex gap-2 items-center">
 			<Button size="sm" onclick={() => (isOpen = true)}>

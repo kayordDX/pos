@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createRoleGetAll, type EntitiesRole } from "$lib/api";
+	import Search from "$lib/components/Search.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import { Badge, DataTable, renderSnippet, createShadTable } from "@kayord/ui";
 	import { type ColumnDef } from "@tanstack/table-core";
@@ -23,6 +24,7 @@
 	];
 
 	let data = $derived($query.data ?? []);
+	let search = $state("");
 
 	const table = createShadTable({
 		columns,
@@ -30,6 +32,11 @@
 			return data;
 		},
 		enableRowSelection: false,
+		state: {
+			get globalFilter() {
+				return search;
+			},
+		},
 	});
 </script>
 
@@ -48,25 +55,20 @@
 	{/if}
 {/snippet}
 
-<!-- {#snippet header()}
-	<div class="flex gap-2">
-		<Input
-			value={col?.getFilterValue()}
-			onchange={(e) => debouncedCb(e.currentTarget.value)}
-			oninput={(e) => debouncedCb(e.currentTarget.value)}
-			placeholder="Search Email..."
-			class="h-8 w-[150px] lg:w-[250px]"
-		/>
-		<Filter column={nameCol} title="Role" options={roles} />
-		<FilterReset {table} />
+{#snippet header()}
+	<div class="flex gap-2 justify-between items-center">
+		<div class="flex gap-2 items-center">
+			<Search bind:search name="Roles" />
+		</div>
 	</div>
-{/snippet} -->
+{/snippet}
 
 <div class="m-2">
 	<h2>Roles</h2>
 	<DataTable
 		headerClass="pb-2"
 		{table}
+		{header}
 		isLoading={$query.isPending}
 		noDataMessage="No roles for outlet"
 	/>

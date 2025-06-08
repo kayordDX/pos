@@ -14,6 +14,7 @@
 	import { PlusIcon } from "@lucide/svelte";
 	import EditOptionGroup from "./EditOptionGroup.svelte";
 	import type { ColumnDef } from "@tanstack/table-core";
+	import Search from "$lib/components/Search.svelte";
 
 	const query = createOptionGroup();
 	let addOpen = $state(false);
@@ -44,6 +45,7 @@
 	];
 
 	let data = $derived($query.data ?? []);
+	let search = $state("");
 
 	const table = createShadTable({
 		columns,
@@ -51,12 +53,22 @@
 			return data;
 		},
 		enableRowSelection: false,
+		state: {
+			get globalFilter() {
+				return search;
+			},
+		},
 	});
 </script>
 
 {#snippet header()}
 	<div class="flex items-center justify-between">
-		<h1>Option Groups</h1>
+		<div class="flex flex-col gap-1">
+			<h1>Option Groups</h1>
+			<div class="flex gap-2 items-center">
+				<Search bind:search name="Option Groups" />
+			</div>
+		</div>
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
