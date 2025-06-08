@@ -32,6 +32,7 @@
 		{
 			header: "",
 			accessorKey: "adjustmentTypeId",
+			enableSorting: false,
 			cell: (row) =>
 				renderComponent(Actions, {
 					adjustmentType: row.row.original,

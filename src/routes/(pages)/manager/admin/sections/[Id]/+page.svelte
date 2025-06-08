@@ -6,6 +6,7 @@
 	import Actions from "./Actions.svelte";
 	import { Button, createShadTable, DataTable, renderComponent } from "@kayord/ui";
 	import AddEditTable from "./AddEditTable.svelte";
+	import Search from "$lib/components/Search.svelte";
 	const query = createSectionTableGetAll({ sectionId: Number(page.params.Id) });
 	let selectedTable = $state<EntitiesTable | undefined>(undefined);
 
@@ -44,6 +45,7 @@
 		},
 	];
 	let data = $derived($query.data ?? []);
+	let search = $state("");
 
 	const table = createShadTable({
 		columns,
@@ -51,12 +53,22 @@
 			return data;
 		},
 		enableRowSelection: false,
+		state: {
+			get globalFilter() {
+				return search;
+			},
+		},
 	});
 </script>
 
 {#snippet header()}
 	<div class="flex items-center justify-between">
-		<h1>Section Tables</h1>
+		<div class="flex flex-col gap-1">
+			<h1>Section Tables</h1>
+			<div class="flex gap-2 items-center">
+				<Search bind:search name="Tables" />
+			</div>
+		</div>
 		<Button onclick={openAdd}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>

@@ -27,6 +27,7 @@
 		{
 			header: "",
 			accessorKey: "id",
+			enableSorting: false,
 			cell: (row) =>
 				renderComponent(Actions, {
 					section: row.row.original,
