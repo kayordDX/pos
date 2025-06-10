@@ -90,25 +90,29 @@
 </script>
 
 {#if status.value.statusId == 0}
-	<Alert.Root class="p-5 m-5" variant="destructive">
-		<AlertCircleIcon />
-		<Alert.Title>No access</Alert.Title>
-		<Alert.Description>You have not requested access to any outlet</Alert.Description>
-	</Alert.Root>
+	<div class="p-5">
+		<Alert.Root variant="destructive">
+			<AlertCircleIcon />
+			<Alert.Title>No access</Alert.Title>
+			<Alert.Description>You have not requested access to any outlet</Alert.Description>
+		</Alert.Root>
+	</div>
 {/if}
 
 {#if status.value.statusId == 1}
-	<Alert.Root class="p-5 m-5">
-		<AlertCircleIcon />
-		<Alert.Title>Applied for access</Alert.Title>
-		<Alert.Description
-			>You have applied for access pending approval
-			<Button onclick={() => status.getStatus()} class="mt-2"
-				><UserCheckIcon />
-				Check Access
-			</Button>
-		</Alert.Description>
-	</Alert.Root>
+	<div class="p-5">
+		<Alert.Root>
+			<AlertCircleIcon />
+			<Alert.Title>Applied for access</Alert.Title>
+			<Alert.Description
+				>You have applied for access pending approval
+				<Button onclick={() => status.getStatus()} class="mt-2"
+					><UserCheckIcon />
+					Check Access
+				</Button>
+			</Alert.Description>
+		</Alert.Root>
+	</div>
 {/if}
 
 <Card.Root class="p-5 m-5">
