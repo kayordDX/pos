@@ -15,11 +15,10 @@
 	interface Props {
 		userId: string;
 		refetch: () => void;
+		open: boolean;
 	}
 
-	let { refetch, userId }: Props = $props();
-
-	let open = $state(false);
+	let { refetch, userId, open = $bindable() }: Props = $props();
 
 	export const schema = z.object({
 		roleId: z.number().min(1, { message: "Please select Role" }),
@@ -52,12 +51,6 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Trigger>
-		<Button disabled={false} size="sm">
-			Add
-			<PlusIcon class=" ml-2 size-3" />
-		</Button>
-	</Dialog.Trigger>
 	<Dialog.Content>
 		<form method="POST" use:enhance>
 			<Dialog.Header>

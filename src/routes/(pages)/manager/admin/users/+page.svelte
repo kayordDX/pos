@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createRoleGetAll, createUserUsers, type UserUserResponse } from "$lib/api";
-	import { DataTable, renderComponent, Input, createShadTable } from "@kayord/ui";
+	import { DataTable, renderComponent, Input, createShadTable, Actions } from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -18,6 +18,8 @@
 	import FilterReset from "./FilterReset.svelte";
 	import { debounce } from "$lib/util";
 	import { status } from "$lib/stores/status.svelte";
+	import { PlusIcon } from "@lucide/svelte";
+	import AddRole from "./AddRole.svelte";
 
 	const columns: ColumnDef<UserUserResponse>[] = [
 		{
@@ -48,6 +50,7 @@
 		{
 			header: "Roles",
 			accessorKey: "roles",
+			size: 10000,
 			cell: (item) =>
 				renderComponent(Roles, {
 					roles: String(item.getValue()),
@@ -55,7 +58,29 @@
 					refetch: $query.refetch,
 				}),
 		},
+		{
+			header: "",
+			accessorKey: "userId",
+			enableSorting: false,
+			cell: (item) =>
+				renderComponent(Actions, {
+					variant: "secondary",
+					actions: [
+						{
+							icon: PlusIcon,
+							text: "Add",
+							action: () => {
+								userId = item.row.original.userId;
+								open = true;
+							},
+						},
+					],
+				}),
+		},
 	];
+
+	let userId: string = $state("");
+	let open: boolean = $state(false);
 
 	let pagination: PaginationState = $state({ pageIndex: 0, pageSize: 10 });
 	const setPagination = (updater: Updater<PaginationState>) => {
@@ -165,6 +190,8 @@
 		<FilterReset {table} cb={() => debouncedCb("")} />
 	</div>
 {/snippet}
+
+<AddRole refetch={$query.refetch} {userId} bind:open />
 
 <div class="m-2">
 	<h2>Users</h2>

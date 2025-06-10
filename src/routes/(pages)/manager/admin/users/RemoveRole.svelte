@@ -21,6 +21,7 @@
 		} catch (error) {
 			toast.error(getError(error).message);
 		} finally {
+			toast.info("Rejected user");
 			isLoading = false;
 			refetch();
 		}

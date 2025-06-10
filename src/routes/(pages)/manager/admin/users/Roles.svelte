@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Role from "./Role.svelte";
-	import AddRole from "./AddRole.svelte";
 
 	interface Props {
 		roles: string;
@@ -16,5 +15,4 @@
 	{#each rolesArray as role}
 		<Role {role} {refetch} {userId} />
 	{/each}
-	<AddRole {refetch} {userId} />
 </div>
