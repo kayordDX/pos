@@ -38,11 +38,6 @@
 </script>
 
 <DropdownMenu.Root>
-
-
-
-
-	
 	<DropdownMenu.Trigger>
 		<Button size="icon" variant="secondary">
 			<EllipsisVerticalIcon class="size-5" />
@@ -55,7 +50,9 @@
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
-<AddEditAdjustmentType bind:open={editOpen} {refetch} {adjustmentType} />
+{#if editOpen}
+	<AddEditAdjustmentType bind:open={editOpen} {refetch} {adjustmentType} />
+{/if}
 
 <AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>

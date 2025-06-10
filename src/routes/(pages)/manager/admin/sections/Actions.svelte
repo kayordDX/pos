@@ -49,7 +49,9 @@
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 
-<AddEditSection bind:open={editOpen} {refetch} {section} />
+{#if editOpen}
+	<AddEditSection bind:open={editOpen} {refetch} {section} />
+{/if}
 
 <AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>

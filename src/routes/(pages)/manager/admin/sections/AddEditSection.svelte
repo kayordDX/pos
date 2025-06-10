@@ -61,6 +61,7 @@
 	// svelte-ignore state_referenced_locally
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
+		id: `section-form-${section?.id}`,
 		validators: zod(schema),
 		onUpdate({ form }) {
 			if (form.valid) handleSubmit(form.data);
