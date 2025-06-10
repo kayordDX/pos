@@ -233,7 +233,7 @@ export const getSectionListQueryKey = (params: SectionListParams) => {
 
 export const getSectionListQueryOptions = <
 	TData = Awaited<ReturnType<typeof sectionList>>,
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 >(
 	params: SectionListParams,
 	options?: {
@@ -254,11 +254,11 @@ export const getSectionListQueryOptions = <
 };
 
 export type SectionListQueryResult = NonNullable<Awaited<ReturnType<typeof sectionList>>>;
-export type SectionListQueryError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type SectionListQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export function createSectionList<
 	TData = Awaited<ReturnType<typeof sectionList>>,
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 >(
 	params: SectionListParams,
 	options?: {
