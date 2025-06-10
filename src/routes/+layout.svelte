@@ -70,7 +70,6 @@
 	$effect(() => {
 		const themeName = info.isKayord() ? "kayord" : "default";
 		if (theme.current != themeName) {
-			console.log("setting theme");
 			setTheme(themeName);
 		}
 	});

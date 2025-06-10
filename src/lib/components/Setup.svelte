@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Card, Form, Select, toast } from "@kayord/ui";
+	import { Alert, Button, Card, Form, Select, toast } from "@kayord/ui";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
@@ -7,7 +7,13 @@
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
 	import { networkInformation } from "$lib/stores/network.svelte";
-	import { CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon } from "@lucide/svelte";
+	import {
+		AlertCircleIcon,
+		CheckCircleIcon,
+		CircleXIcon,
+		MessageCircleWarningIcon,
+		UserCheckIcon,
+	} from "@lucide/svelte";
 	import { requestNotificationPermission } from "$lib/util";
 	import { onMount } from "svelte";
 	import { hub } from "$lib/stores/hub.svelte";
@@ -28,6 +34,7 @@
 				data: { outletId: data.outletId },
 			});
 			toast.info("Applied to outlet. Awaiting approval.");
+			await status.getStatus();
 		} catch (err) {
 			toast.error(getError(err).message);
 		}
@@ -81,6 +88,28 @@
 		$query.data?.find((i) => i.id === $formData.outletId)?.name ?? "Select outlet to link to device"
 	);
 </script>
+
+{#if status.value.statusId == 0}
+	<Alert.Root class="p-5 m-5" variant="destructive">
+		<AlertCircleIcon />
+		<Alert.Title>No access</Alert.Title>
+		<Alert.Description>You have not requested access to any outlet</Alert.Description>
+	</Alert.Root>
+{/if}
+
+{#if status.value.statusId == 1}
+	<Alert.Root class="p-5 m-5">
+		<AlertCircleIcon />
+		<Alert.Title>Applied for access</Alert.Title>
+		<Alert.Description
+			>You have applied for access pending approval
+			<Button onclick={() => status.getStatus()} class="mt-2"
+				><UserCheckIcon />
+				Check Access
+			</Button>
+		</Alert.Description>
+	</Alert.Root>
+{/if}
 
 <Card.Root class="p-5 m-5">
 	<Card.Header>

@@ -709,6 +709,9 @@
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         },
         "security": [
@@ -3130,9 +3133,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           }
         },
         "security": [
@@ -4713,9 +4713,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           },
           "500": {
             "description": "Server Error",
@@ -7911,9 +7908,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           }
         },
         "security": [
@@ -8781,9 +8775,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           }
         },
         "security": [
@@ -8835,9 +8826,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           }
         },
         "security": [
@@ -9488,9 +9476,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           }
         },
         "security": [
@@ -9542,9 +9527,6 @@
           },
           "401": {
             "description": "Unauthorized"
-          },
-          "403": {
-            "description": "Forbidden"
           }
         },
         "security": [
@@ -10085,7 +10067,8 @@
           "clockedIn",
           "salesPeriodId",
           "roles",
-          "hasNotification"
+          "hasNotification",
+          "statusId"
         ],
         "properties": {
           "outletId": {
@@ -10119,6 +10102,10 @@
           },
           "hasNotification": {
             "type": "boolean"
+          },
+          "statusId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },

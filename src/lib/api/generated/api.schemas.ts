@@ -170,6 +170,7 @@ export interface UserGetStatusResponse {
 	salesPeriod?: UserGetStatusResponseSalesPeriod;
 	roles: UserGetStatusRoleDTO[];
 	hasNotification: boolean;
+	statusId: number;
 }
 
 export interface EntitiesSalesPeriod {

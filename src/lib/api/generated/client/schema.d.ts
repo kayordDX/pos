@@ -2581,6 +2581,8 @@ export interface components {
             salesPeriod?: components["schemas"]["EntitiesSalesPeriod"] | null;
             roles: components["schemas"]["UserGetStatusRoleDTO"][];
             hasNotification: boolean;
+            /** Format: int32 */
+            statusId: number;
         };
         EntitiesSalesPeriod: {
             /** Format: int32 */
@@ -5686,6 +5688,13 @@ export interface operations {
                 };
                 content?: never;
             };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -7576,13 +7585,6 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -8831,13 +8833,6 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Forbidden */
-            403: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -11334,13 +11329,6 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -12020,13 +12008,6 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -12062,13 +12043,6 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Forbidden */
-            403: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -12599,13 +12573,6 @@ export interface operations {
                 };
                 content?: never;
             };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -12641,13 +12608,6 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Forbidden */
-            403: {
                 headers: {
                     [name: string]: unknown;
                 };

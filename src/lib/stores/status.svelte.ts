@@ -13,6 +13,7 @@ const createStatus = () => {
 		roles: [],
 		isNotReady: true,
 		hasNotification: false,
+		statusId: 0,
 	});
 
 	const hasRole = (role: string) => {
