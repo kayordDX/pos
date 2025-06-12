@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { faro } from "./faro";
 import {
 	getAuth,
 	GoogleAuthProvider,
@@ -93,6 +94,11 @@ const createSession = () => {
 		const unsubscribe = onIdTokenChanged(auth, (u) => {
 			isLoadingSession = false;
 			user = u;
+			faro.api.setUser({
+				email: u?.email ?? "unknown",
+				username: u?.displayName ?? "unknown",
+				id: u?.uid,
+			});
 			u?.getIdToken().then((t) => (idToken = t));
 		});
 
