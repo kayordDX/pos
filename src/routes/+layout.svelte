@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { ModeWatcher, theme, setTheme } from "@kayord/ui/mode-watcher";
 	import "../app.css";
+	import { ModeWatcher, theme, setTheme } from "@kayord/ui/mode-watcher";
 	import { Toaster } from "@kayord/ui";
 	import { browser } from "$app/environment";
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";
@@ -10,10 +10,10 @@
 	import { status } from "$lib/stores/status.svelte";
 	import type { Snippet } from "svelte";
 	import { session } from "$lib/firebase.svelte";
-	let { children }: { children?: Snippet } = $props();
-
 	import { info } from "$lib/stores/info.svelte";
 	import Hub from "$lib/components/Hub.svelte";
+
+	let { children }: { children?: Snippet } = $props();
 
 	$effect(() => {
 		if (session.user) {
@@ -23,12 +23,13 @@
 
 	// Refresh Status Every 5 minutes
 	$effect(() => {
-		const interval = setInterval(
-			() => {
+		const interval = setInterval(() => {
+			const difference = new Date().getTime() - status.lastRefresh.getTime();
+			const isDue = difference > 60 * 1000 * 5;
+			if (isDue) {
 				status.getStatus();
-			},
-			1000 * 60 * 5
-		);
+			}
+		}, 60 * 1000);
 		return () => clearInterval(interval);
 	});
 

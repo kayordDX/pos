@@ -17,6 +17,7 @@ const createStatus = () => {
 	});
 
 	let isLoading = $state(false);
+	let lastRefresh = $state(new Date(1970));
 
 	const hasRole = (role: string) => {
 		const appRoles = value.roles.map((r) => r.roleType);
@@ -34,6 +35,7 @@ const createStatus = () => {
 		if (data) {
 			value = data;
 		}
+		lastRefresh = new Date();
 		isLoading = false;
 	};
 	return {
@@ -48,6 +50,9 @@ const createStatus = () => {
 		hasRoles,
 		get isLoading() {
 			return isLoading;
+		},
+		get lastRefresh() {
+			return lastRefresh;
 		},
 	};
 };
