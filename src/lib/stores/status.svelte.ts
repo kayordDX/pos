@@ -16,6 +16,8 @@ const createStatus = () => {
 		statusId: 0,
 	});
 
+	let isLoading = $state(false);
+
 	const hasRole = (role: string) => {
 		const appRoles = value.roles.map((r) => r.roleType);
 		return appRoles.includes(role);
@@ -27,10 +29,12 @@ const createStatus = () => {
 	};
 
 	const getStatus = async () => {
+		isLoading = true;
 		const { data } = await client.GET("/user/getStatus", { fetch });
 		if (data) {
 			value = data;
 		}
+		isLoading = false;
 	};
 	return {
 		get value() {
@@ -42,6 +46,9 @@ const createStatus = () => {
 		getStatus,
 		hasRole,
 		hasRoles,
+		get isLoading() {
+			return isLoading;
+		},
 	};
 };
 

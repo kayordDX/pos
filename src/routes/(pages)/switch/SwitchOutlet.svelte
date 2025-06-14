@@ -27,7 +27,9 @@
 			if (response.id) {
 				toast.info("Successfully updated outlet");
 				menu.value = { menuId: 0 };
-				await status.getStatus();
+				if (!status.isLoading) {
+					await status.getStatus();
+				}
 				await goto("/", { replaceState: true, invalidateAll: true });
 			} else {
 				toast.error("Could not set outlet");

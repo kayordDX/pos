@@ -11,8 +11,9 @@
 	import type { Snippet } from "svelte";
 	import { session } from "$lib/firebase.svelte";
 	let { children }: { children?: Snippet } = $props();
-	import { hub } from "$lib/stores/hub.svelte";
+
 	import { info } from "$lib/stores/info.svelte";
+	import Hub from "$lib/components/Hub.svelte";
 
 	$effect(() => {
 		if (session.user) {
@@ -29,33 +30,6 @@
 			1000 * 60 * 5
 		);
 		return () => clearInterval(interval);
-	});
-
-	const receiveMessage = (message: string) => {
-		console.log(message);
-	};
-
-	$effect(() => {
-		hub.init();
-		return () => {
-			hub.disconnect();
-		};
-	});
-
-	$effect(() => {
-		if (hub.state == "Connected") {
-			if (status.value.outletId > 0) {
-				hub.connection?.invoke("JoinGroup", `outlet:${status.value.outletId}`);
-				return () => {
-					hub.connection?.invoke("LeaveGroup", `outlet:${status.value.outletId}`);
-				};
-			}
-
-			hub.on("ReceiveMessage", receiveMessage);
-			return () => {
-				hub.off("ReceiveMessage", receiveMessage);
-			};
-		}
 	});
 
 	const queryClient = new QueryClient({
@@ -82,6 +56,7 @@
 
 <ModeWatcher defaultMode="dark" track={false} />
 <AuthCheck>
+	<Hub />
 	<Toaster />
 	<Notification />
 	<QueryClientProvider client={queryClient}>
