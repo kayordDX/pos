@@ -55,7 +55,7 @@
 	<link rel="manifest" href={`${info.isKayord() ? "/kayord" : ""}/manifest.json`} />
 </svelte:head>
 
-<ModeWatcher defaultMode="dark" track={false} />
+<ModeWatcher defaultMode="dark" track={false} lightClassNames={["dark"]} />
 <AuthCheck>
 	<Hub />
 	<Toaster />

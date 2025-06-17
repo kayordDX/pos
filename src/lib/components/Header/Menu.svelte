@@ -51,14 +51,14 @@
 			<DropdownMenu.Item onclick={() => goto("/network")}>
 				<NetworkIcon class="mr-2 h-4 w-4" />Network Information
 			</DropdownMenu.Item>
-			<DropdownMenu.Item onclick={toggleMode}>
+			<!-- <DropdownMenu.Item onclick={toggleMode}>
 				{#if mode.current == "light"}
 					<SunIcon class="mr-2 h-4 w-4" />
 				{:else}
 					<MoonIcon class="mr-2 h-4 w-4" />
 				{/if}
 				Toggle Theme
-			</DropdownMenu.Item>
+			</DropdownMenu.Item> -->
 		</DropdownMenu.Group>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Item onclick={logout}>
