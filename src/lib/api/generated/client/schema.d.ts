@@ -2578,23 +2578,32 @@ export interface components {
             clockedIn: boolean;
             /** Format: int32 */
             salesPeriodId: number;
-            salesPeriod?: components["schemas"]["EntitiesSalesPeriod"] | null;
             roles: components["schemas"]["UserGetStatusRoleDTO"][];
+            divisions: components["schemas"]["UserGetStatusDivisionDTO"][];
             hasNotification: boolean;
             /** Format: int32 */
             statusId: number;
         };
-        EntitiesSalesPeriod: {
+        UserGetStatusRoleDTO: {
             /** Format: int32 */
             id: number;
-            name?: string | null;
-            /** Format: date-time */
-            startDate?: string | null;
-            /** Format: date-time */
-            endDate?: string | null;
-            outlet: components["schemas"]["EntitiesOutlet"];
+            roleName: string;
+            roleType: string;
+        };
+        UserGetStatusDivisionDTO: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        UserGetRolesRequest: Record<string, never>;
+        EntitiesUserOutlet: {
+            /** Format: int32 */
+            id: number;
             /** Format: int32 */
             outletId: number;
+            outlet: components["schemas"]["EntitiesOutlet"];
+            userId: string;
+            isCurrent: boolean;
         };
         EntitiesOutlet: {
             /** Format: int32 */
@@ -2680,22 +2689,6 @@ export interface components {
             discountPercentage: number;
             outletPaymentTypes?: components["schemas"]["EntitiesOutletPaymentType"][] | null;
             canEdit: boolean;
-        };
-        UserGetStatusRoleDTO: {
-            /** Format: int32 */
-            id: number;
-            roleName: string;
-            roleType: string;
-        };
-        UserGetRolesRequest: Record<string, never>;
-        EntitiesUserOutlet: {
-            /** Format: int32 */
-            id: number;
-            /** Format: int32 */
-            outletId: number;
-            outlet: components["schemas"]["EntitiesOutlet"];
-            userId: string;
-            isCurrent: boolean;
         };
         UserAssignOutletRequest: {
             /** Format: int32 */
@@ -3135,6 +3128,18 @@ export interface components {
             totalPayments?: number | null;
             cashUpUser?: components["schemas"]["EntitiesCashUpUser"] | null;
             payments?: components["schemas"]["EntitiesPayment"][] | null;
+        };
+        EntitiesSalesPeriod: {
+            /** Format: int32 */
+            id: number;
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string | null;
+            /** Format: date-time */
+            endDate?: string | null;
+            outlet: components["schemas"]["EntitiesOutlet"];
+            /** Format: int32 */
+            outletId: number;
         };
         EntitiesUser: components["schemas"]["EntitiesAuditableEntity"] & {
             userId: string;

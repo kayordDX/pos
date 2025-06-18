@@ -41,9 +41,9 @@
 		{/if}
 		{#if status.hasRole("back")}
 			<div class="border-1 border-muted p-2 border-dashed rounded-md flex flex-col gap-2">
-				{#each backRoles as backRole}
-					<Button href={`/backOffice/${backRole.id}`} class="w-full" variant="outline">
-						{backRole.roleName}
+				{#each status.value.divisions as division}
+					<Button href={`/backOffice/${division.id}`} class="w-full" variant="outline">
+						{division.name}
 					</Button>
 				{/each}
 			</div>
