@@ -364,7 +364,7 @@ export interface TableOrderUpdateGroupOrderRequest {
 	orderGroupId: number;
 	orderItemStatusId: number;
 	/** @nullable */
-	roleIds?: string | null;
+	divisionIds?: string | null;
 }
 
 export interface TableOrderSendToKitchenResponse {
@@ -3098,7 +3098,7 @@ export type TableOrderOfficeOrderBasedBackParams = {
 	/**
 	 * @nullable
 	 */
-	roleIds?: string | null;
+	divisionIds?: string | null;
 	complete: boolean;
 };
 

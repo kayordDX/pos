@@ -4,22 +4,22 @@
 
 	interface SoundEvent {
 		outletId: number;
-		roleIds: Array<number>;
+		divisionIds: Array<number>;
 	}
 
 	interface Props {
 		refetch: () => void;
-		roleIds?: string;
+		divisionIds?: string;
 	}
-	let { refetch, roleIds }: Props = $props();
+	let { refetch, divisionIds }: Props = $props();
 
 	const audio = new Audio("/sounds/notification.mp3");
 
-	const roles = $derived(roleIds ? roleIds.split(",").map(Number) : []);
+	const roles = $derived(divisionIds ? divisionIds.split(",").map(Number) : []);
 
 	const playSound = (e: SoundEvent) => {
 		console.log("PlaySound", e);
-		const shouldNotify = roles.some((r) => e.roleIds.includes(r));
+		const shouldNotify = roles.some((r) => e.divisionIds.includes(r));
 		if (shouldNotify) {
 			refetch();
 			notification.notify();

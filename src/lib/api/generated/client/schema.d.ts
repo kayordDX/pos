@@ -2761,7 +2761,7 @@ export interface components {
             orderGroupId: number;
             /** Format: int32 */
             orderItemStatusId: number;
-            roleIds?: string | null;
+            divisionIds?: string | null;
         };
         TableOrderSendToKitchenResponse: {
             isSuccess: boolean;
@@ -6198,7 +6198,7 @@ export interface operations {
     TableOrderOfficeOrderBasedBack: {
         parameters: {
             query: {
-                roleIds?: string | null;
+                divisionIds?: string | null;
                 complete: boolean;
             };
             header?: never;
