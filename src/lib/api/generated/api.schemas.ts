@@ -634,7 +634,7 @@ export interface TableOrderOfficeOrderBasedBackRequest {
 export interface TableOrderGetBillResponse {
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
 	summaryOrderItems: TableOrderGetBillBillOrderItemDTO[];
-	divisions: TableOrderGetBillDivisionDTO[];
+	billCategories: TableOrderGetBillBillCategoryDTO[];
 	total: number;
 	totalExVAT: number;
 	vat: number;
@@ -685,21 +685,21 @@ export interface DTOTableBookingDTO {
 /**
  * @nullable
  */
-export type TableOrderGetBillBillMenuItemDTODivision = TableOrderGetBillDivisionDTO | null;
+export type TableOrderGetBillBillMenuItemDTOBillCategory = TableOrderGetBillBillCategoryDTO | null;
 
 export interface TableOrderGetBillBillMenuItemDTO {
 	menuItemId: number;
 	name: string;
 	price: number;
-	divisionId: number;
+	billCategoryId: number;
 	/** @nullable */
-	division?: TableOrderGetBillBillMenuItemDTODivision;
+	billCategory?: TableOrderGetBillBillMenuItemDTOBillCategory;
 }
 
-export interface TableOrderGetBillDivisionDTO {
-	divisionId: number;
+export interface TableOrderGetBillBillCategoryDTO {
+	bilLCategoryId: number;
 	/** @nullable */
-	friendlyName?: string | null;
+	name?: string | null;
 	total: number;
 }
 
@@ -811,6 +811,11 @@ export interface EntitiesOrderGroup {
 /**
  * @nullable
  */
+export type EntitiesMenuItemAllOfBillCategory = EntitiesBillCategory | null;
+
+/**
+ * @nullable
+ */
 export type EntitiesMenuItemAllOfDivision = EntitiesDivision | null;
 
 export type EntitiesMenuItemAllOf = {
@@ -819,6 +824,10 @@ export type EntitiesMenuItemAllOf = {
 	menuSectionId: number;
 	name: string;
 	description: string;
+	/** @nullable */
+	billCategoryId?: number | null;
+	/** @nullable */
+	billCategory?: EntitiesMenuItemAllOfBillCategory;
 	price: number;
 	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
 	position: number;
@@ -875,6 +884,12 @@ export type EntitiesMenuAllOf = {
 
 export type EntitiesMenu = EntitiesAuditableEntity & EntitiesMenuAllOf;
 
+export interface EntitiesBillCategory {
+	id: number;
+	name: string;
+	outletId: number;
+}
+
 export interface NpgsqlTypesNpgsqlTsVectorLexeme {
 	text: string;
 	count: number;
@@ -888,8 +903,6 @@ export interface EntitiesTag {
 export interface EntitiesDivision {
 	divisionId: number;
 	divisionName: string;
-	/** @nullable */
-	friendlyName?: string | null;
 	outletId: number;
 	divisionTypeId: number;
 }

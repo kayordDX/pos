@@ -11601,7 +11601,7 @@
         "required": [
           "orderItems",
           "summaryOrderItems",
-          "divisions",
+          "billCategories",
           "total",
           "totalExVAT",
           "vat",
@@ -11625,10 +11625,10 @@
               "$ref": "#/components/schemas/TableOrderGetBillBillOrderItemDTO"
             }
           },
-          "divisions": {
+          "billCategories": {
             "type": "array",
             "items": {
-              "$ref": "#/components/schemas/TableOrderGetBillDivisionDTO"
+              "$ref": "#/components/schemas/TableOrderGetBillBillCategoryDTO"
             }
           },
           "total": {
@@ -11805,7 +11805,7 @@
           "menuItemId",
           "name",
           "price",
-          "divisionId"
+          "billCategoryId"
         ],
         "properties": {
           "menuItemId": {
@@ -11819,33 +11819,33 @@
             "type": "number",
             "format": "decimal"
           },
-          "divisionId": {
+          "billCategoryId": {
             "type": "integer",
             "format": "int32"
           },
-          "division": {
+          "billCategory": {
             "nullable": true,
             "oneOf": [
               {
-                "$ref": "#/components/schemas/TableOrderGetBillDivisionDTO"
+                "$ref": "#/components/schemas/TableOrderGetBillBillCategoryDTO"
               }
             ]
           }
         }
       },
-      "TableOrderGetBillDivisionDTO": {
+      "TableOrderGetBillBillCategoryDTO": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "divisionId",
+          "bilLCategoryId",
           "total"
         ],
         "properties": {
-          "divisionId": {
+          "bilLCategoryId": {
             "type": "integer",
             "format": "int32"
           },
-          "friendlyName": {
+          "name": {
             "type": "string",
             "nullable": true
           },
@@ -12222,6 +12222,19 @@
               "description": {
                 "type": "string"
               },
+              "billCategoryId": {
+                "type": "integer",
+                "format": "int32",
+                "nullable": true
+              },
+              "billCategory": {
+                "nullable": true,
+                "oneOf": [
+                  {
+                    "$ref": "#/components/schemas/EntitiesBillCategory"
+                  }
+                ]
+              },
               "price": {
                 "type": "number",
                 "format": "decimal"
@@ -12394,6 +12407,28 @@
           }
         ]
       },
+      "EntitiesBillCategory": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "outletId"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "NpgsqlTypesNpgsqlTsVector_Lexeme": {
         "type": "object",
         "additionalProperties": false,
@@ -12444,10 +12479,6 @@
           },
           "divisionName": {
             "type": "string"
-          },
-          "friendlyName": {
-            "type": "string",
-            "nullable": true
           },
           "outletId": {
             "type": "integer",

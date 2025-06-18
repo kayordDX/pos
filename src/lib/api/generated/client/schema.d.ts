@@ -3023,7 +3023,7 @@ export interface components {
         TableOrderGetBillResponse: {
             orderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
             summaryOrderItems: components["schemas"]["TableOrderGetBillBillOrderItemDTO"][];
-            divisions: components["schemas"]["TableOrderGetBillDivisionDTO"][];
+            billCategories: components["schemas"]["TableOrderGetBillBillCategoryDTO"][];
             /** Format: decimal */
             total: number;
             /** Format: decimal */
@@ -3086,13 +3086,13 @@ export interface components {
             /** Format: decimal */
             price: number;
             /** Format: int32 */
-            divisionId: number;
-            division?: components["schemas"]["TableOrderGetBillDivisionDTO"] | null;
+            billCategoryId: number;
+            billCategory?: components["schemas"]["TableOrderGetBillBillCategoryDTO"] | null;
         };
-        TableOrderGetBillDivisionDTO: {
+        TableOrderGetBillBillCategoryDTO: {
             /** Format: int32 */
-            divisionId: number;
-            friendlyName?: string | null;
+            bilLCategoryId: number;
+            name?: string | null;
             /** Format: decimal */
             total: number;
         };
@@ -3198,6 +3198,9 @@ export interface components {
             menuSectionId: number;
             name: string;
             description: string;
+            /** Format: int32 */
+            billCategoryId?: number | null;
+            billCategory?: components["schemas"]["EntitiesBillCategory"] | null;
             /** Format: decimal */
             price: number;
             searchVector: components["schemas"]["NpgsqlTypesNpgsqlTsVector_Lexeme"][];
@@ -3240,6 +3243,13 @@ export interface components {
             outlet: components["schemas"]["EntitiesOutlet"];
             menuSections?: components["schemas"]["EntitiesMenuSection"][] | null;
         };
+        EntitiesBillCategory: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+            /** Format: int32 */
+            outletId: number;
+        };
         NpgsqlTypesNpgsqlTsVector_Lexeme: {
             text: string;
             /** Format: int32 */
@@ -3254,7 +3264,6 @@ export interface components {
             /** Format: int32 */
             divisionId: number;
             divisionName: string;
-            friendlyName?: string | null;
             /** Format: int32 */
             outletId: number;
             /** Format: int32 */
