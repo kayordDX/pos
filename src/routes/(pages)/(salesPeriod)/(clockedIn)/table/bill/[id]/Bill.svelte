@@ -116,10 +116,10 @@
 
 			<Separator class="my-2" />
 			<ul class="grid gap-1">
-				{#each data.divisions as division (division.divisionId)}
+				{#each data.billCategories as cat (cat.bilLCategoryId)}
 					<li class="flex items-center justify-between">
-						<span class="text-muted-foreground">{division.friendlyName}</span>
-						<span>R{division?.total.toFixed(2)}</span>
+						<span class="text-muted-foreground">{cat.name}</span>
+						<span>R{cat?.total.toFixed(2)}</span>
 					</li>
 				{/each}
 			</ul>
