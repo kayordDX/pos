@@ -10,17 +10,18 @@
 	import { backOffice } from "$lib/stores/backOffice.svelte";
 	import NotifyIndicator from "./NotifyIndicator.svelte";
 	import Hub from "./Hub.svelte";
+	import Filter from "$lib/components/Filter/Filter.svelte";
 
 	interface Props {
 		isHistory?: boolean;
-		roleIds?: string;
+		divisionIds?: string;
 	}
 
-	let { isHistory = false, roleIds }: Props = $props();
+	let { isHistory = false, divisionIds }: Props = $props();
 
 	const query = createTableOrderOfficeOrderBasedBack(
 		{
-			roleIds,
+			divisionIds,
 			complete: isHistory,
 		},
 		{ query: { refetchInterval: 40000 } }
@@ -38,6 +39,8 @@
 
 	let [minColWidth, maxColWidth, gap] = [500, 600, 10];
 	let screenWidth = $state(0);
+
+	let selectedDivisions = $state<string[]>([]);
 </script>
 
 <div class="m-1" bind:clientWidth={screenWidth}>
@@ -52,18 +55,28 @@
 			<div>
 				{#if isHistory}
 					<div>
-						<a href={`/backOffice${roleIds ? "/" + roleIds : ""}`}><Badge>Live View</Badge></a>
+						<a href={`/backOffice${divisionIds ? "/" + divisionIds : ""}`}
+							><Badge>Live View</Badge></a
+						>
 					</div>
 				{:else}
 					<Badge>{$query.data.pendingOrders} pending order(s)</Badge>
 					<Badge>{$query.data.pendingItems} pending items(s)</Badge>
+					<Filter
+						title="Division"
+						options={[
+							{ label: "test", value: "test" },
+							{ label: "secpmd", value: "anoter" },
+						]}
+						bind:selected={selectedDivisions}
+					/>
 				{/if}
 			</div>
 			<NotifyIndicator />
 			<div class="flex gap-1 items-center">
 				<div>
 					{#if !isHistory}
-						<a href={`/backOffice${roleIds ? "/" + roleIds : ""}/history`}>
+						<a href={`/backOffice${divisionIds ? "/" + divisionIds : ""}/history`}>
 							<Badge variant="secondary" class="truncate">History</Badge>
 						</a>
 					{/if}
@@ -77,7 +90,7 @@
 				<ToggleHeader />
 			</div>
 		</div>
-		<Hub refetch={$query.refetch} {roleIds} />
+		<Hub refetch={$query.refetch} {divisionIds} />
 
 		<Masonry
 			items={$query.data?.orderGroups ?? []}
@@ -88,7 +101,7 @@
 			idKey="orderGroupId"
 		>
 			{#snippet itemChild(item)}
-				<Group group={item} refetch={$query.refetch} {isHistory} {roleIds} />
+				<Group group={item} refetch={$query.refetch} {isHistory} {divisionIds} />
 			{/snippet}
 		</Masonry>
 	{/if}

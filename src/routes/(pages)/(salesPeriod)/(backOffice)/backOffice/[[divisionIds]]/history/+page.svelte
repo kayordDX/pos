@@ -3,4 +3,4 @@
 	import BackOffice from "../../../BackOffice.svelte";
 </script>
 
-<BackOffice isHistory={true} roleIds={page.params.roleIds} />
+<BackOffice isHistory={true} divisionIds={page.params.divisionIds} />
