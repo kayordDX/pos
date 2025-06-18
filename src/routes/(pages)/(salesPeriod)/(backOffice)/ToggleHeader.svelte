@@ -5,7 +5,7 @@
 </script>
 
 <button class="flex" onclick={header.toggleHeader}>
-	<Badge variant="secondary" class="truncate">
+	<Badge variant="secondary" class="truncate ">
 		{#if header.value}
 			<Maximize2Icon class="size-4" />
 		{:else}

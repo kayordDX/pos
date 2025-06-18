@@ -76,7 +76,7 @@
 									isSelected ? "bg-primary text-primary-foreground" : "opacity-50 [&_svg]:invisible"
 								)}
 							>
-								<Check class={cn("h-4 w-4")} />
+								<Check class={cn("h-4 w-4 stroke-primary-foreground")} />
 							</div>
 							{#if option.icon}
 								{@const Icon = option.icon}

@@ -1,5 +1,5 @@
 <script lang="ts" generics="TData, TValue">
-	import { PlusCircle, Check } from "@lucide/svelte";
+	import { Check, ComponentIcon } from "@lucide/svelte";
 
 	import type { Component } from "svelte";
 	import { Command, Popover, Button, Separator, Badge } from "@kayord/ui";
@@ -25,7 +25,7 @@
 	}: Props<TData, TValue> = $props();
 
 	$effect(() => {
-		goto(selected.join(","), { replaceState: true, invalidateAll: true });
+		goto(selected.join(","), { keepFocus: true });
 	});
 </script>
 
@@ -33,16 +33,15 @@
 	<Popover.Trigger>
 		{#snippet child({ props }: any)}
 			<Button {...props} variant="outline" size="sm" class="h-6">
-				<PlusCircle class="mr-2 h-4 w-4" />
-				{title}
+				<ComponentIcon class="h-4 w-4" />
+
 				{#if selected.length > 0}
-					<Separator orientation="vertical" class="mx-2 h-4" />
 					<Badge variant="secondary" class="rounded-sm px-1 font-normal lg:hidden">
 						{selected.length}
 					</Badge>
 					<div class="hidden space-x-1 lg:flex">
 						{#each options.filter((opt) => selected.includes(opt.value)) as option}
-							<Badge variant="secondary" class="rounded-sm px-1 font-normal">
+							<Badge variant="secondary" class="rounded-sm px-1 py-1 font-normal">
 								{option.label}
 							</Badge>
 						{/each}
@@ -76,7 +75,7 @@
 									isSelected ? "bg-primary text-primary-foreground" : "opacity-50 [&_svg]:invisible"
 								)}
 							>
-								<Check class={cn("h-4 w-4")} />
+								<Check class={cn("h-4 w-4 stroke-primary-foreground")} />
 							</div>
 							{#if option.icon}
 								{@const Icon = option.icon}

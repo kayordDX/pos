@@ -19,12 +19,14 @@
 
 	let { isHistory = false, divisionIds }: Props = $props();
 
-	const query = createTableOrderOfficeOrderBasedBack(
-		{
-			divisionIds,
-			complete: isHistory,
-		},
-		{ query: { refetchInterval: 40000 } }
+	const query = $derived(
+		createTableOrderOfficeOrderBasedBack(
+			{
+				divisionIds,
+				complete: isHistory,
+			},
+			{ query: { refetchInterval: 40000 } }
+		)
 	);
 
 	const getTime = (date: string) => {
@@ -40,7 +42,7 @@
 	let [minColWidth, maxColWidth, gap] = [500, 600, 10];
 	let screenWidth = $state(0);
 
-	let selectedDivisions = $state<string[]>([]);
+	let selectedDivisions = $state<string[]>(divisionIds?.split(",") ?? []);
 </script>
 
 <div class="m-1" bind:clientWidth={screenWidth}>
@@ -52,7 +54,15 @@
 	{/if}
 	{#if $query.data}
 		<div class="flex justify-between mb-2 items-center">
-			<div>
+			<div class="flex items-center gap-1 flex-wrap">
+				<Filter
+					title="Division"
+					options={[
+						{ label: "Kitchen", value: "3" },
+						{ label: "Bar", value: "13" },
+					]}
+					bind:selected={selectedDivisions}
+				/>
 				{#if isHistory}
 					<div>
 						<a href={`/backOffice${divisionIds ? "/" + divisionIds : ""}`}
@@ -60,21 +70,13 @@
 						>
 					</div>
 				{:else}
-					<Badge>{$query.data.pendingOrders} pending order(s)</Badge>
-					<Badge>{$query.data.pendingItems} pending items(s)</Badge>
-					<Filter
-						title="Division"
-						options={[
-							{ label: "test", value: "test" },
-							{ label: "secpmd", value: "anoter" },
-						]}
-						bind:selected={selectedDivisions}
-					/>
+					<Badge class="sm:block hidden">{$query.data.pendingOrders} pending order(s)</Badge>
+					<Badge class="sm:block hidden">{$query.data.pendingItems} pending items(s)</Badge>
 				{/if}
 			</div>
 			<NotifyIndicator />
 			<div class="flex gap-1 items-center">
-				<div>
+				<div class="flex items-center gap-1 flex-wrap">
 					{#if !isHistory}
 						<a href={`/backOffice${divisionIds ? "/" + divisionIds : ""}/history`}>
 							<Badge variant="secondary" class="truncate">History</Badge>
