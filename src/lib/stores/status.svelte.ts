@@ -9,6 +9,7 @@ const createStatus = () => {
 		clockedIn: false,
 		outletId: 0,
 		salesPeriodId: 0,
+		divisions: [],
 		salesPeriod: undefined,
 		roles: [],
 		isNotReady: true,

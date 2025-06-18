@@ -155,16 +155,34 @@ export interface UserRemoveUserOutletRequest {
 	[key: string]: unknown;
 }
 
+/**
+ * @nullable
+ */
+export type UserGetStatusResponseSalesPeriod = UserGetStatusSalesPeriodDTO | null;
+
 export interface UserGetStatusResponse {
 	outletId: number;
 	/** @nullable */
 	outletName?: string | null;
 	clockedIn: boolean;
 	salesPeriodId: number;
+	/** @nullable */
+	salesPeriod?: UserGetStatusResponseSalesPeriod;
 	roles: UserGetStatusRoleDTO[];
 	divisions: UserGetStatusDivisionDTO[];
 	hasNotification: boolean;
 	statusId: number;
+}
+
+export interface UserGetStatusSalesPeriodDTO {
+	id: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	startDate?: string | null;
+	/** @nullable */
+	endDate?: string | null;
+	outletId: number;
 }
 
 export interface UserGetStatusRoleDTO {

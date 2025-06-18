@@ -2578,11 +2578,23 @@ export interface components {
             clockedIn: boolean;
             /** Format: int32 */
             salesPeriodId: number;
+            salesPeriod?: components["schemas"]["UserGetStatusSalesPeriodDTO"] | null;
             roles: components["schemas"]["UserGetStatusRoleDTO"][];
             divisions: components["schemas"]["UserGetStatusDivisionDTO"][];
             hasNotification: boolean;
             /** Format: int32 */
             statusId: number;
+        };
+        UserGetStatusSalesPeriodDTO: {
+            /** Format: int32 */
+            id: number;
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string | null;
+            /** Format: date-time */
+            endDate?: string | null;
+            /** Format: int32 */
+            outletId: number;
         };
         UserGetStatusRoleDTO: {
             /** Format: int32 */
