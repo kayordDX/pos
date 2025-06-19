@@ -1,18 +1,28 @@
 <script lang="ts">
-	import { createDivisionGetAll, type EntitiesDivision } from "$lib/api";
+	import { createRoleDivisionGetAll, type EntitiesRole } from "$lib/api";
 	import Search from "$lib/components/Search.svelte";
-	import { status } from "$lib/stores/status.svelte";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui";
+	import { Button, DataTable, createShadTable, renderComponent } from "@kayord/ui";
 	import { type ColumnDef } from "@tanstack/table-core";
 	import Actions from "./Actions.svelte";
+	import { page } from "$app/state";
+	import AddRole from "./AddRole.svelte";
+	import { PlusIcon } from "@lucide/svelte";
 
-	const query = createDivisionGetAll({ outletId: status.value.outletId });
-	let selectedDivision = $state<EntitiesDivision | undefined>(undefined);
+	console.log(page.params.id);
+
+	const query = createRoleDivisionGetAll(Number(page.params.id) ?? 0);
+	let selectedDivision = $state<EntitiesRole | undefined>(undefined);
 	let isDialogOpen = $state(false);
-	const columns: ColumnDef<EntitiesDivision>[] = [
+	let divisionId = $state(Number(page.params.id));
+	let open: boolean = $state(false);
+	const columns: ColumnDef<EntitiesRole>[] = [
 		{
 			header: "Name",
-			accessorKey: "divisionName",
+			accessorKey: "name",
+		},
+		{
+			header: "Description",
+			accessorKey: "description",
 		},
 		{
 			header: "",
@@ -20,9 +30,9 @@
 			enableSorting: false,
 			cell: (row) =>
 				renderComponent(Actions, {
-					division: row.row.original,
+					role: row.row.original,
 					refetch: $query.refetch,
-					setSection: selectedDivision,
+					divisionId: Number(page.params.id),
 					openDialog: () => (isDialogOpen = true),
 				}),
 			size: 10,
@@ -49,13 +59,18 @@
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">
 		<div class="flex gap-2 items-center">
-			<Search bind:search name="Divisions" />
+			<Search bind:search name="Roles" />
 		</div>
+		<Button onclick={() => (open = true)}>
+			<PlusIcon class="h-5 w-5" /> Add
+		</Button>
 	</div>
 {/snippet}
 
+<AddRole refetch={$query.refetch} {divisionId} bind:open />
+
 <div class="m-2">
-	<h2>Divisions</h2>
+	<h2>Roles</h2>
 	<DataTable
 		headerClass="pb-2"
 		{header}
