@@ -10,7 +10,7 @@
 	import { backOffice } from "$lib/stores/backOffice.svelte";
 	import NotifyIndicator from "./NotifyIndicator.svelte";
 	import Hub from "./Hub.svelte";
-	import Filter from "$lib/components/Filter/Filter.svelte";
+	import Filter from "./Filter.svelte";
 
 	interface Props {
 		isHistory?: boolean;
@@ -61,13 +61,17 @@
 						{ label: "Kitchen", value: "3" },
 						{ label: "Bar", value: "13" },
 					]}
+					{isHistory}
 					bind:selected={selectedDivisions}
 				/>
 				{#if isHistory}
-					<div>
-						<a href={`/backOffice${divisionIds ? "/" + divisionIds : ""}`}
-							><Badge>Live View</Badge></a
+					<div class="flex items-center gap-1 flex-wrap">
+						<a
+							class="flex items-center gap-1"
+							href={`/backOffice${divisionIds ? "/" + divisionIds : ""}`}
 						>
+							<Badge>Live View</Badge>
+						</a>
 					</div>
 				{:else}
 					<Badge class="sm:block hidden">{$query.data.pendingOrders} pending order(s)</Badge>

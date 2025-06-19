@@ -1,10 +1,10 @@
 <script lang="ts" generics="TData, TValue">
 	import { Check, ComponentIcon } from "@lucide/svelte";
-
 	import type { Component } from "svelte";
-	import { Command, Popover, Button, Separator, Badge } from "@kayord/ui";
+	import { Command, Popover, Button, Badge } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
 	import { goto } from "$app/navigation";
+	import { page } from "$app/state";
 
 	type Props<TData, TValue> = {
 		title: string;
@@ -15,6 +15,7 @@
 			icon?: Component;
 		}[];
 		showValue?: boolean;
+		isHistory: boolean;
 	};
 
 	let {
@@ -22,26 +23,30 @@
 		title,
 		options,
 		showValue = false,
+		isHistory,
 	}: Props<TData, TValue> = $props();
 
 	$effect(() => {
-		goto(selected.join(","), { keepFocus: true });
+		if (page.params.divisionIds != selected.join(",")) {
+			const ids = selected.length > 0 ? selected.join(",") : "0";
+			const url = isHistory ? `/backOffice/${ids ?? "0"}/history` : `/backOffice/${ids}`;
+			goto(url, { keepFocus: true });
+		}
 	});
 </script>
 
 <Popover.Root>
 	<Popover.Trigger>
 		{#snippet child({ props }: any)}
-			<Button {...props} variant="outline" size="sm" class="h-6">
+			<Button {...props} variant="outline" size="sm" class="h-6 px-1!">
 				<ComponentIcon class="h-4 w-4" />
-
 				{#if selected.length > 0}
 					<Badge variant="secondary" class="rounded-sm px-1 font-normal lg:hidden">
 						{selected.length}
 					</Badge>
 					<div class="hidden space-x-1 lg:flex">
 						{#each options.filter((opt) => selected.includes(opt.value)) as option}
-							<Badge variant="secondary" class="rounded-sm px-1 py-1 font-normal">
+							<Badge variant="secondary" class="rounded-sm px-1 py-1 font-normal h-4">
 								{option.label}
 							</Badge>
 						{/each}
