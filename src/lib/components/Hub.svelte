@@ -39,6 +39,10 @@
 		}
 	};
 
+	const receiveMessage = (message: string) => {
+		console.log(message);
+	};
+
 	$effect(() => {
 		if (hub.state == HubConnectionState.Connected) {
 			if (status.value.outletId > 0) {
@@ -53,8 +57,10 @@
 	$effect(() => {
 		if (hub.state == HubConnectionState.Connected) {
 			hub.on("RefreshOutlet", refreshOutlet);
+			hub.on("ReceiveMessage", receiveMessage);
 			return () => {
 				hub.off("RefreshOutlet", refreshOutlet);
+				hub.off("ReceiveMessage", receiveMessage);
 			};
 		}
 	});
