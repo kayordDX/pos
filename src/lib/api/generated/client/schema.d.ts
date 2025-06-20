@@ -2077,7 +2077,7 @@ export interface paths {
         };
         get: operations["DivisionGetAll"];
         put?: never;
-        post?: never;
+        post: operations["DivisionCreate"];
         delete?: never;
         options?: never;
         head?: never;
@@ -4981,6 +4981,13 @@ export interface components {
         };
         DivisionGetUsersRequest: Record<string, never>;
         DivisionGetAllRequest: Record<string, never>;
+        DivisionCreateRequest: {
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            divisionTypeId: number;
+            name: string;
+        };
         ClockListRequest: Record<string, never>;
         ClockClockOutRequest: {
             /** Format: int32 */
@@ -11703,6 +11710,53 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    DivisionCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DivisionCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesDivision"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };

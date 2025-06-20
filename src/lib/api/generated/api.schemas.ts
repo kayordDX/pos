@@ -2781,6 +2781,12 @@ export interface DivisionGetAllRequest {
 	[key: string]: unknown;
 }
 
+export interface DivisionCreateRequest {
+	outletId: number;
+	divisionTypeId: number;
+	name: string;
+}
+
 export interface ClockListRequest {
 	[key: string]: unknown;
 }

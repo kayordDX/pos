@@ -4,9 +4,8 @@
 	import GoogleSvg from "$lib/SVG/GoogleSVG.svelte";
 	import { signInGoogle } from "$lib/firebase.svelte";
 	import { info } from "$lib/stores/info.svelte";
-	import { hub } from "$lib/stores/hub.svelte";
-	import { HubConnectionState } from "@microsoft/signalr";
-	import { KeyRoundIcon } from "@lucide/svelte";
+
+	import LoginOtp from "./LoginOtp.svelte";
 
 	let isLoading = $state(false);
 
@@ -20,26 +19,6 @@
 			isLoading = false;
 		}
 	};
-
-	// $effect(() => {
-	// 	hub.init();
-	// 	return () => {
-	// 		hub.disconnect();
-	// 	};
-	// });
-
-	// const receiveMessage = (message: string) => {
-	// 	console.log(message);
-	// };
-
-	// $effect(() => {
-	// 	if (hub.state == HubConnectionState.Connected) {
-	// 		hub.on("ReceiveMessage", receiveMessage);
-	// 		return () => {
-	// 			hub.off("ReceiveMessage", receiveMessage);
-	// 		};
-	// 	}
-	// });
 </script>
 
 <div class=" flex items-center justify-center mt-8">
@@ -49,9 +28,7 @@
 				<Card.Title>POS</Card.Title>
 				<Card.Description>Powered by kayord</Card.Description>
 			</div>
-			<!-- <Button size="icon" variant="outline">
-				<KeyRoundIcon />
-			</Button> -->
+			<!-- <LoginOtp /> -->
 		</Card.Header>
 		<Card.Content>
 			<div class="flex flex-col items-center">
