@@ -19,7 +19,13 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 
-import type { EntitiesRole, InternalErrorResponse, RoleCreateRequest } from "./api.schemas";
+import type {
+	EntitiesDivision,
+	EntitiesRole,
+	InternalErrorResponse,
+	RoleCreateRequest,
+	RoleDivisionCreateRequest,
+} from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
@@ -145,3 +151,208 @@ export function createRoleGetAll<
 
 	return query;
 }
+
+export const roleDivisionGetAll = (divisionid: number) => {
+	return customInstance<EntitiesRole[]>({ url: `/role/division/${divisionid}`, method: "GET" });
+};
+
+export const getRoleDivisionGetAllQueryKey = (divisionid: number) => {
+	return [`/role/division/${divisionid}`] as const;
+};
+
+export const getRoleDivisionGetAllQueryOptions = <
+	TData = Awaited<ReturnType<typeof roleDivisionGetAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	divisionid: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof roleDivisionGetAll>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getRoleDivisionGetAllQueryKey(divisionid);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof roleDivisionGetAll>>> = () =>
+		roleDivisionGetAll(divisionid);
+
+	return { queryKey, queryFn, enabled: !!divisionid, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof roleDivisionGetAll>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type RoleDivisionGetAllQueryResult = NonNullable<
+	Awaited<ReturnType<typeof roleDivisionGetAll>>
+>;
+export type RoleDivisionGetAllQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createRoleDivisionGetAll<
+	TData = Awaited<ReturnType<typeof roleDivisionGetAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	divisionid: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof roleDivisionGetAll>>, TError, TData>
+		>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getRoleDivisionGetAllQueryOptions(divisionid, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const roleDivisionDelete = (roleId: number, divisionId: number) => {
+	return customInstance<void>({ url: `/role/division/${roleId}/${divisionId}`, method: "DELETE" });
+};
+
+export const getRoleDivisionDeleteMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof roleDivisionDelete>>,
+		TError,
+		{ roleId: number; divisionId: number },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof roleDivisionDelete>>,
+	TError,
+	{ roleId: number; divisionId: number },
+	TContext
+> => {
+	const mutationKey = ["roleDivisionDelete"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof roleDivisionDelete>>,
+		{ roleId: number; divisionId: number }
+	> = (props) => {
+		const { roleId, divisionId } = props ?? {};
+
+		return roleDivisionDelete(roleId, divisionId);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type RoleDivisionDeleteMutationResult = NonNullable<
+	Awaited<ReturnType<typeof roleDivisionDelete>>
+>;
+
+export type RoleDivisionDeleteMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createRoleDivisionDelete = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof roleDivisionDelete>>,
+			TError,
+			{ roleId: number; divisionId: number },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof roleDivisionDelete>>,
+	TError,
+	{ roleId: number; divisionId: number },
+	TContext
+> => {
+	const mutationOptions = getRoleDivisionDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const roleDivisionCreate = (
+	roleDivisionCreateRequest: BodyType<RoleDivisionCreateRequest>
+) => {
+	return customInstance<EntitiesDivision>({
+		url: `/role/division`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: roleDivisionCreateRequest,
+	});
+};
+
+export const getRoleDivisionCreateMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof roleDivisionCreate>>,
+		TError,
+		{ data: BodyType<RoleDivisionCreateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof roleDivisionCreate>>,
+	TError,
+	{ data: BodyType<RoleDivisionCreateRequest> },
+	TContext
+> => {
+	const mutationKey = ["roleDivisionCreate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof roleDivisionCreate>>,
+		{ data: BodyType<RoleDivisionCreateRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return roleDivisionCreate(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type RoleDivisionCreateMutationResult = NonNullable<
+	Awaited<ReturnType<typeof roleDivisionCreate>>
+>;
+export type RoleDivisionCreateMutationBody = BodyType<RoleDivisionCreateRequest>;
+export type RoleDivisionCreateMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createRoleDivisionCreate = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof roleDivisionCreate>>,
+			TError,
+			{ data: BodyType<RoleDivisionCreateRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof roleDivisionCreate>>,
+	TError,
+	{ data: BodyType<RoleDivisionCreateRequest> },
+	TContext
+> => {
+	const mutationOptions = getRoleDivisionCreateMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};

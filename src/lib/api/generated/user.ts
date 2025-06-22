@@ -35,11 +35,84 @@ import type {
 	UserUsersParams,
 	UserValidateRequest,
 	UserValidateResponse,
+	UserVerifyOTPRequest,
+	UserVerifyOTPResponse,
 } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
+export const userVerifyOTP = (userVerifyOTPRequest: BodyType<UserVerifyOTPRequest>) => {
+	return customInstance<UserVerifyOTPResponse>({
+		url: `/user/verifyOTP`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: userVerifyOTPRequest,
+	});
+};
+
+export const getUserVerifyOTPMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof userVerifyOTP>>,
+		TError,
+		{ data: BodyType<UserVerifyOTPRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof userVerifyOTP>>,
+	TError,
+	{ data: BodyType<UserVerifyOTPRequest> },
+	TContext
+> => {
+	const mutationKey = ["userVerifyOTP"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof userVerifyOTP>>,
+		{ data: BodyType<UserVerifyOTPRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return userVerifyOTP(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type UserVerifyOTPMutationResult = NonNullable<Awaited<ReturnType<typeof userVerifyOTP>>>;
+export type UserVerifyOTPMutationBody = BodyType<UserVerifyOTPRequest>;
+export type UserVerifyOTPMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createUserVerifyOTP = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof userVerifyOTP>>,
+			TError,
+			{ data: BodyType<UserVerifyOTPRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof userVerifyOTP>>,
+	TError,
+	{ data: BodyType<UserVerifyOTPRequest> },
+	TContext
+> => {
+	const mutationOptions = getUserVerifyOTPMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
 export const userValidate = (userValidateRequest: BodyType<UserValidateRequest>) => {
 	return customInstance<UserValidateResponse>({
 		url: `/user/validate`,

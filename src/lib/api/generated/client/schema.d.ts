@@ -52,6 +52,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user/verifyOTP": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UserVerifyOTP"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user/validate": {
         parameters: {
             query?: never;
@@ -1348,6 +1364,54 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/role/division/{divisionid}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RoleDivisionGetAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/role/division/{roleId}/{divisionId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["RoleDivisionDelete"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/role/division": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RoleDivisionCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/printer/test": {
         parameters: {
             query?: never;
@@ -2076,7 +2140,7 @@ export interface paths {
             cookie?: never;
         };
         get: operations["DivisionGetAll"];
-        put?: never;
+        put: operations["DivisionEdit"];
         post: operations["DivisionCreate"];
         delete?: never;
         options?: never;
@@ -2477,6 +2541,31 @@ export interface components {
             success: boolean;
             qr: string;
         };
+        UserVerifyOTPResponse: {
+            message?: string | null;
+            isSuccess: boolean;
+        };
+        UserVerifyOTPRequest: {
+            otp: string;
+        };
+        /** @description the dto used to send an error response to the client */
+        ErrorResponse: {
+            /**
+             * Format: int32
+             * @description the http status code sent to the client. default is 400.
+             * @default 400
+             */
+            statusCode: number;
+            /**
+             * @description the message for the error response
+             * @default One or more errors occurred!
+             */
+            message: string;
+            /** @description the collection of errors for the current context */
+            errors: {
+                [key: string]: string[];
+            };
+        };
         UserValidateResponse: {
             userId: string;
         };
@@ -2552,24 +2641,6 @@ export interface components {
         };
         UserTasksRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         UserRemoveUserOutletRoleRequest: Record<string, never>;
-        /** @description the dto used to send an error response to the client */
-        ErrorResponse: {
-            /**
-             * Format: int32
-             * @description the http status code sent to the client. default is 400.
-             * @default 400
-             */
-            statusCode: number;
-            /**
-             * @description the message for the error response
-             * @default One or more errors occurred!
-             */
-            message: string;
-            /** @description the collection of errors for the current context */
-            errors: {
-                [key: string]: string[];
-            };
-        };
         UserRemoveUserOutletRequest: Record<string, never>;
         UserGetStatusResponse: {
             /** Format: int32 */
@@ -4433,6 +4504,14 @@ export interface components {
             description: string;
         };
         RoleGetAllRequest: Record<string, never>;
+        RoleDivisionGetAllRequest: Record<string, never>;
+        RoleDivisionDeleteRequest: Record<string, never>;
+        RoleDivisionCreateRequest: {
+            /** Format: int32 */
+            divisionId: number;
+            /** Format: int32 */
+            roleId: number;
+        };
         PrinterTestRequest: {
             /** Format: int32 */
             printerId: number;
@@ -4981,6 +5060,15 @@ export interface components {
         };
         DivisionGetUsersRequest: Record<string, never>;
         DivisionGetAllRequest: Record<string, never>;
+        DivisionEditRequest: {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            divisionTypeId: number;
+            /** Format: int32 */
+            outletId: number;
+            name: string;
+        };
         DivisionCreateRequest: {
             /** Format: int32 */
             outletId: number;
@@ -5283,6 +5371,55 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ServicesWhatsappQrResponse"];
                 };
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserVerifyOTP: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserVerifyOTPRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserVerifyOTPResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -9235,6 +9372,121 @@ export interface operations {
             };
         };
     };
+    RoleDivisionGetAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                divisionid: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesRole"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    RoleDivisionDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                roleId: number;
+                divisionId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    RoleDivisionCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoleDivisionCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesDivision"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     PrinterTest: {
         parameters: {
             query?: never;
@@ -11706,6 +11958,53 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesDivision"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    DivisionEdit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DivisionEditRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */
