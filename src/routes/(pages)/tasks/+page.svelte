@@ -6,6 +6,7 @@
 	import { CheckCheckIcon, CircleCheckIcon, CircleXIcon } from "@lucide/svelte";
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
+	import { Header } from "$lib/components/Header";
 
 	const query = createUserTasks({
 		pageSize: 20,
@@ -27,6 +28,7 @@
 	let data = $derived($query.data?.items ?? []);
 </script>
 
+<Header />
 <div class="m-2">
 	<div class="text-2xl mb-2">Tasks</div>
 	{#if ($query.data?.items?.length ?? 0) === 0}

@@ -1,23 +1,27 @@
 <script lang="ts">
-	import { copy } from "$lib/actions/copy";
+	import Header from "$lib/components/Header/Header.svelte";
 	import { session } from "$lib/firebase.svelte";
-	import { Button, Card, Loader } from "@kayord/ui";
-	import { ClipboardCopyIcon } from "@lucide/svelte";
+	import { Card, CopyButton, Loader } from "@kayord/ui";
 </script>
 
+<Header />
 <div class="m-8 flex flex-col gap-2 items-baseline">
 	{#if !session.idToken}
 		<Loader />
 	{:else}
 		<Card.Root class="w-full ">
 			<Card.Header>
-				<Card.Description>{session.idToken}</Card.Description>
+				<Card.Title>Token</Card.Title>
+				<Card.Description class="overflow-hidden">Auth</Card.Description>
 			</Card.Header>
 			<Card.Content>
-				<button use:copy={session.idToken}>
-					<Button>Copy Token<ClipboardCopyIcon class="h-5 w-5 ml-2" /></Button>
-				</button>
+				<div class="overflow-hidden text-xs text-muted-foreground">
+					{session.idToken}
+				</div>
 			</Card.Content>
+			<Card.Footer>
+				<CopyButton text={session.idToken} />
+			</Card.Footer>
 		</Card.Root>
 	{/if}
 </div>

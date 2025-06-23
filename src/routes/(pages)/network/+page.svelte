@@ -1,8 +1,10 @@
 <script lang="ts">
+	import { Header } from "$lib/components/Header";
 	import { networkInformation } from "$lib/stores/network.svelte";
 	import { Card } from "@kayord/ui";
 </script>
 
+<Header />
 <Card.Root class="m-8">
 	<Card.Header>
 		<Card.Title>Network Information</Card.Title>

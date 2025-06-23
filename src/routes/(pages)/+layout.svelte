@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { Header } from "$lib/components/Header";
-	import { page } from "$app/state";
 	import type { Snippet } from "svelte";
 	import { theme, setTheme } from "@kayord/ui/mode-watcher";
 	import { Toaster } from "@kayord/ui";
@@ -49,8 +47,6 @@
 			setTheme(themeName);
 		}
 	});
-
-	const hideHeader = $derived(!page.route.id?.startsWith("/(salesPeriod)/(clockedIn)/table"));
 </script>
 
 <AuthCheck>
@@ -59,9 +55,6 @@
 	<Notification />
 	<QueryClientProvider client={queryClient}>
 		<OutletCheck>
-			{#if hideHeader}
-				<Header />
-			{/if}
 			{#if children}
 				{@render children()}
 			{/if}

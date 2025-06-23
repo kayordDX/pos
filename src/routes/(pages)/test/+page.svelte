@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { Header } from "$lib/components/Header";
 	import { THEMES } from "$lib/themes";
 	import { Button, Select, toast } from "@kayord/ui";
 	import { setTheme, theme } from "@kayord/ui/mode-watcher";
@@ -36,6 +37,7 @@
 	];
 </script>
 
+<Header />
 <div class="flex gap-8 flex-col p-6">
 	<Select.Root type="single" bind:value={() => theme.current, (v) => setTheme(v ?? "default")}>
 		<Select.Trigger size="sm" class="w-32">

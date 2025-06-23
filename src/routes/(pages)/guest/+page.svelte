@@ -1,9 +1,11 @@
 <script lang="ts">
+	import { Header } from "$lib/components/Header";
 	import { info } from "$lib/stores/info.svelte";
 	import { Button, Card } from "@kayord/ui";
 	import { UserCheck2Icon } from "@lucide/svelte";
 </script>
 
+<Header />
 <div class="m-2">
 	<Card.Root>
 		<Card.Header>
