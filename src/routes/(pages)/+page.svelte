@@ -1,8 +1,7 @@
 <script lang="ts">
-	import { Button, Card, Loader } from "@kayord/ui";
+	import { Button, Loader } from "@kayord/ui";
 	import { status } from "$lib/stores/status.svelte";
 	import { goto } from "$app/navigation";
-	import { Header } from "$lib/components/Header";
 
 	let init = $state(false);
 
@@ -32,7 +31,6 @@
 {#if !init}
 	<Loader />
 {:else}
-	<Header />
 	<div class="flex flex-col gap-4 m-4">
 		{#if status.hasRole("front")}
 			<div class="border-1 border-muted p-2 border-dashed rounded-md">

@@ -21,7 +21,7 @@
 	};
 </script>
 
-<div class=" flex items-center justify-center mt-8">
+<div class="flex flex-col items-center justify-center mt-12">
 	<Card.Root class="max-w-md w-full">
 		<Card.Header class="flex flex-row">
 			<div class="flex flex-col flex-grow">
@@ -49,4 +49,7 @@
 			</Button>
 		</Card.Footer>
 	</Card.Root>
+	<Button variant="link" class="text-xs text-muted-foreground" href="/privacy-policy"
+		>Privacy Policy</Button
+	>
 </div>
