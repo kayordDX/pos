@@ -28,6 +28,7 @@
 		LayoutTemplateIcon,
 		BuildingIcon,
 		DiffIcon,
+		ChartBarStackedIcon,
 	} from "@lucide/svelte";
 
 	const menuItems = [
@@ -136,6 +137,11 @@
 					title: "Allocate",
 					href: "/manager/admin/stock/allocate",
 					icon: PackageOpenIcon,
+				},
+				{
+					title: "Stock Categories",
+					href: "/manager/admin/stockCategory",
+					icon: ChartBarStackedIcon,
 				},
 			],
 		},

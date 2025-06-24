@@ -38,7 +38,7 @@
 						name: data.name,
 					},
 				});
-				toast.info("Edited Category");
+				toast.info("Edited Child Category");
 			} else {
 				await $createMutation.mutateAsync({
 					data: {
@@ -47,7 +47,7 @@
 						outletId: status.value.outletId,
 					},
 				});
-				toast.info("Added Category");
+				toast.info("Added Child Category");
 			}
 			refetch();
 		} catch (err) {
@@ -82,9 +82,9 @@
 	<Dialog.Content class="max-h-[98%] overflow-auto">
 		<form method="POST" use:enhance>
 			<Dialog.Header>
-				<Dialog.Title>{isEdit ? "Edit" : "Add"} Parent Category</Dialog.Title>
+				<Dialog.Title>{isEdit ? "Edit" : "Add"} Child Category</Dialog.Title>
 				<Dialog.Description>
-					Complete form to {isEdit ? "edit this" : "add a"} Parent Category
+					Complete form to {isEdit ? "edit this" : "add a"} Child Category
 				</Dialog.Description>
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">

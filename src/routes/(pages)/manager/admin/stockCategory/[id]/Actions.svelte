@@ -5,6 +5,7 @@
 	import { getError } from "$lib/types";
 	import type { EntitiesStockCategory } from "$lib/api";
 	import AddEditCategory from "./AddEditChildCategory.svelte";
+	import { createStockCategoryUpdate } from "$lib/api";
 
 	interface Props {
 		refetch: () => void;
@@ -14,18 +15,21 @@
 	let editOpen = $state(false);
 	let deleteOpen = $state(false);
 
-	//const deleteMutation = createSectionDelete();
+	const deleteMutation = createStockCategoryUpdate();
 
-	// const deleteSection = async () => {
-	// 	deleteOpen = false;
-	// 	try {
-	// 		await $deleteMutation.mutateAsync({ id: role.id });
-	// 		toast.message("Section Deleted");
-	// 		refetch();
-	// 	} catch (err) {
-	// 		toast.error(getError(err).message);
-	// 	}
-	// };
+	const deleteCategory = async () => {
+		deleteOpen = false;
+		try {
+			await $deleteMutation.mutateAsync({
+				id: category.id,
+				data: { isDeleted: true, name: category.name, parentId: category.parentId },
+			});
+			toast.message("Child Category Deleted");
+			refetch();
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
+	};
 </script>
 
 <AddEditCategory bind:open={editOpen} {refetch} {category} />
@@ -49,17 +53,18 @@
 	<AddEditSection bind:open={editOpen} {refetch} {section} />
 {/if} -->
 
-<!-- <AlertDialog.Root bind:open={deleteOpen}>
+<AlertDialog.Root bind:open={deleteOpen}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
-			<AlertDialog.Title>Delete Section?</AlertDialog.Title>
+			<AlertDialog.Title>Delete Child Category?</AlertDialog.Title>
 			<AlertDialog.Description>
-				This will delete the section if no tables or items depend on it.
+				This will delete this category if no items depend on it.
 			</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action class="bg-destructive" onclick={deleteSection}>Delete</AlertDialog.Action>
+			<AlertDialog.Action class="bg-destructive" onclick={deleteCategory}>Delete</AlertDialog.Action
+			>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
-</AlertDialog.Root> -->
+</AlertDialog.Root>
