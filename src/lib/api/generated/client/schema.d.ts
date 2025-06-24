@@ -788,6 +788,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stockCategory/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["StockCategoryUpdate"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/stockCategory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["StockCategoryGetAll"];
+        put?: never;
+        post: operations["StockCategoryCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/stock": {
         parameters: {
             query?: never;
@@ -1076,7 +1108,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/stock/category": {
+    "/stock/category/{outletId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2334,6 +2366,54 @@ export interface paths {
         get: operations["BusinessGet"];
         put?: never;
         post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/billCategory/{id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["BillCategoryUpdate"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/BillCategory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["BillCategoryGetAll"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/billCategory": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["BillCategoryCreate"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3753,6 +3833,30 @@ export interface components {
             contactNumber: string;
             email: string;
         };
+        EntitiesStockCategory: components["schemas"]["EntitiesAuditableEntity"] & {
+            /** Format: int32 */
+            id: number;
+            /** Format: int32 */
+            parentId?: number | null;
+            /** Format: int32 */
+            outletId: number;
+            name: string;
+            isDeleted: boolean;
+        };
+        StockCategoryUpdateRequest: {
+            name: string;
+            /** Format: int32 */
+            parentId?: number | null;
+            isDeleted?: boolean | null;
+        };
+        StockCategoryGetAllRequest: Record<string, never>;
+        StockCategoryCreateRequest: {
+            name: string;
+            /** Format: int32 */
+            parentId?: number | null;
+            /** Format: int32 */
+            outletId: number;
+        };
         StockUpdateRequest: {
             /** Format: int32 */
             id: number;
@@ -3825,15 +3929,6 @@ export interface components {
             stockCategory: components["schemas"]["EntitiesStockCategory"];
             stockItems?: components["schemas"]["EntitiesStockItem"][] | null;
             hasVat: boolean;
-        };
-        EntitiesStockCategory: components["schemas"]["EntitiesAuditableEntity"] & {
-            /** Format: int32 */
-            id: number;
-            /** Format: int32 */
-            parentId?: number | null;
-            /** Format: int32 */
-            outletId: number;
-            name: string;
         };
         EntitiesStockItem: {
             /** Format: int32 */
@@ -4728,6 +4823,8 @@ export interface components {
             divisionId?: number | null;
             isAvailable: boolean;
             isEnabled: boolean;
+            /** Format: int32 */
+            billCategoryId?: number | null;
             extraGroupIds?: number[] | null;
             optionGroupIds?: number[] | null;
         };
@@ -4758,6 +4855,8 @@ export interface components {
             position: number;
             /** Format: int32 */
             divisionId: number;
+            /** Format: int32 */
+            billCategoryId?: number | null;
             menuItemOptionGroups: components["schemas"]["DTOMenuItemOptionGroupDTO"][];
             menuItemExtraGroups: components["schemas"]["DTOMenuItemExtraGroupDTO"][];
             isAvailable: boolean;
@@ -4827,6 +4926,8 @@ export interface components {
             divisionId?: number | null;
             isAvailable: boolean;
             isEnabled: boolean;
+            /** Format: int32 */
+            billCategoryId?: number | null;
             extraGroupIds?: number[] | null;
             optionGroupIds?: number[] | null;
         };
@@ -5190,6 +5291,15 @@ export interface components {
         };
         BusinessCreateRequest: {
             name: string;
+        };
+        BillCategoryUpdateRequest: {
+            name: string;
+        };
+        BillCategoryGetAllRequest: Record<string, never>;
+        BillCategoryCreateRequest: {
+            name: string;
+            /** Format: int32 */
+            outletId: number;
         };
         BillWhatsappBillRequest: {
             /** Format: int32 */
@@ -7218,6 +7328,146 @@ export interface operations {
             };
         };
     };
+    StockCategoryUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockCategoryUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockCategory"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockCategoryGetAll: {
+        parameters: {
+            query: {
+                outletId: number;
+                parentOnly: boolean;
+                parentId?: number | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockCategory"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockCategoryCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockCategoryCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesStockCategory"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
     StockGetAll: {
         parameters: {
             query: {
@@ -8442,11 +8692,11 @@ export interface operations {
     };
     StockCategory: {
         parameters: {
-            query: {
+            query?: never;
+            header?: never;
+            path: {
                 outletId: number;
             };
-            header?: never;
-            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -12674,6 +12924,144 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["EntitiesBusiness"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BillCategoryUpdate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                id: number;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillCategoryUpdateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesBillCategory"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BillCategoryGetAll: {
+        parameters: {
+            query: {
+                outletId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesBillCategory"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    BillCategoryCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["BillCategoryCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesBillCategory"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
             /** @description Unauthorized */
