@@ -22,6 +22,7 @@
 		createMenuList,
 		createMenuGetSectionsGetMenusSections,
 		createDivisionGetAll,
+		createBillCategoryGetAll,
 		optionGroup,
 	} from "$lib/api";
 	import Extras from "./Extras.svelte";
@@ -50,6 +51,7 @@
 		isEnabled: z.boolean(),
 		isAvailable: z.boolean(),
 		positionId: z.number(),
+		billCategoryId: z.number(),
 		extraGroupIds: z.array(z.number()),
 		optionGroupIds: z.array(z.number()),
 	});
@@ -72,6 +74,7 @@
 						positionId: data.positionId,
 						extraGroupIds: data.extraGroupIds,
 						optionGroupIds: data.optionGroupIds,
+						billCategoryId: data.billCategoryId,
 					},
 				});
 				toast.info("Edited Menu");
@@ -88,6 +91,7 @@
 						positionId: data.positionId,
 						extraGroupIds: data.extraGroupIds,
 						optionGroupIds: data.optionGroupIds,
+						billCategoryId: data.billCategoryId,
 					},
 				});
 				toast.info("Added Menu");
@@ -109,11 +113,11 @@
 		isEnabled: menuItem?.isEnabled ?? true,
 		isAvailable: menuItem?.isAvailable ?? true,
 		positionId: menuItem?.position ?? 0,
+		billCategoryId: menuItem?.billCategoryId ?? 0,
 		extraGroupIds: menuItem?.menuItemExtraGroups.map((i) => i.extraGroupId) ?? new Array<number>(),
 		optionGroupIds:
 			menuItem?.menuItemOptionGroups.map((i) => i.optionGroupId) ?? new Array<number>(),
 	});
-
 	// svelte-ignore state_referenced_locally
 	const form = superForm(defaults(defaultValues, zod(schema)), {
 		SPA: true,
@@ -138,12 +142,10 @@
 	const menuQuery = createMenuList({ outletId: status.value.outletId });
 	const menuList = $derived.by(() => {
 		return (
-			$menuQuery.data?.map((m) => {
-				return {
-					label: m.name,
-					value: m.id.toString(),
-				};
-			}) ?? []
+			$menuQuery.data?.map((m) => ({
+				label: m.name,
+				value: m.id.toString(),
+			})) ?? []
 		);
 	});
 
@@ -155,24 +157,30 @@
 	);
 	const sectionList = $derived.by(() => {
 		return (
-			$sectionQuery.data?.sections?.map((m) => {
-				return {
-					label: m.name,
-					value: m.menuSectionId.toString(),
-				};
-			}) ?? []
+			$sectionQuery.data?.sections?.map((m) => ({
+				label: m.name,
+				value: m.menuSectionId.toString(),
+			})) ?? []
 		);
 	});
 
 	const divisionQuery = createDivisionGetAll({ outletId: status.value.outletId });
 	const divisionList = $derived.by(() => {
 		return (
-			$divisionQuery.data?.map((m) => {
-				return {
-					label: m.divisionName,
-					value: m.divisionId.toString(),
-				};
-			}) ?? []
+			$divisionQuery.data?.map((m) => ({
+				label: m.divisionName,
+				value: m.divisionId.toString(),
+			})) ?? []
+		);
+	});
+
+	const billCatQuery = createBillCategoryGetAll({ outletId: status.value.outletId });
+	const billCatList = $derived.by(() => {
+		return (
+			$billCatQuery.data?.map((m) => ({
+				label: m.name,
+				value: m.id.toString(),
+			})) ?? []
 		);
 	});
 
@@ -182,6 +190,9 @@
 	);
 	const divisionValue = $derived(
 		divisionList.find((i) => i.value == $formData.divisionId.toString())?.label
+	);
+	const billCategoryValue = $derived(
+		billCatList.find((i) => i.value == $formData.billCategoryId.toString())?.label
 	);
 </script>
 
@@ -263,6 +274,32 @@
 								<Select.Content>
 									{#each divisionList as division}
 										<Select.Item value={division.value}>{division.label}</Select.Item>
+									{/each}
+								</Select.Content>
+							</Select.Root>
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+				<Form.Field {form} name="billCategoryId">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Bill Category</Form.Label>
+							<Select.Root
+								type="single"
+								name="billCategoryId"
+								bind:value={
+									() => $formData.billCategoryId.toString(),
+									(v) => ($formData.billCategoryId = Number(v))
+								}
+								allowDeselect={false}
+							>
+								<Select.Trigger {...props}>
+									{billCategoryValue ? billCategoryValue : "Select Bill Category"}
+								</Select.Trigger>
+								<Select.Content>
+									{#each billCatList as cat}
+										<Select.Item value={cat.value}>{cat.label}</Select.Item>
 									{/each}
 								</Select.Content>
 							</Select.Root>
