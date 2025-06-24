@@ -91,7 +91,7 @@
 		} else pagination = updater;
 	};
 
-	let sorting: SortingState = $state([]);
+	let sorting: SortingState = $state([{ id: "Created", desc: true }]);
 	const setSorting = (updater: Updater<SortingState>) => {
 		if (updater instanceof Function) {
 			sorting = updater(sorting);
