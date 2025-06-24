@@ -61,6 +61,6 @@
 		{header}
 		{table}
 		isLoading={$query.isPending}
-		noDataMessage="No roles for outlet"
+		noDataMessage="No Divisions for outlet"
 	/>
 </div>
