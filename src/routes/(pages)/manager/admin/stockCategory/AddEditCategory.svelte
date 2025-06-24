@@ -86,7 +86,7 @@
 			<Dialog.Header>
 				<Dialog.Title>{isEdit ? "Edit" : "Add"} Parent Category</Dialog.Title>
 				<Dialog.Description>
-					Complete form to {isEdit ? "edit this" : "add a"} Parent Category
+					Complete form to {isEdit ? "edit this" : "add a"} child Category
 				</Dialog.Description>
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">

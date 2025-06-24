@@ -11,7 +11,8 @@
 	import { type ColumnDef } from "@tanstack/table-core";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
-	import AddEditCategory from "./AddEditCategory.svelte";
+	import AddEditChildCategory from "./AddEditChildCategory.svelte";
+
 	const query = createStockCategoryGetAll({
 		outletId: status.value.outletId,
 		parentOnly: false,
@@ -19,7 +20,7 @@
 	});
 	let selectedDivision = $state<EntitiesStockCategory | undefined>(undefined);
 	let isDialogOpen = $state(false);
-	const columns: ColumnDef<EntitiesStockCategoryAllOf>[] = [
+	const columns: ColumnDef<EntitiesStockCategory>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
@@ -30,10 +31,8 @@
 			enableSorting: false,
 			cell: (row) =>
 				renderComponent(Actions, {
-					category: row.row.original,
 					refetch: $query.refetch,
-					setSection: selectedDivision,
-					openDialog: () => (isDialogOpen = true),
+					category: row.row.original,
 				}),
 			size: 10,
 		},
@@ -70,7 +69,7 @@
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
 	</div>
-	<AddEditCategory bind:open={isDialogOpen} refetch={$query.refetch} />
+	<AddEditChildCategory bind:open={isDialogOpen} refetch={$query.refetch} />
 {/snippet}
 
 <div class="m-2">

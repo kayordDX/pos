@@ -2,16 +2,15 @@
 	import { goto } from "$app/navigation";
 	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
 	import { Trash2Icon, PencilIcon, TableIcon, EllipsisVerticalIcon } from "@lucide/svelte";
-	//import AddEditSection from "./AddEditSection.svelte";
 	import { getError } from "$lib/types";
-	import type { EntitiesStockCategoryAllOf } from "$lib/api";
+	import type { EntitiesStockCategory } from "$lib/api";
+	import AddEditCategory from "./AddEditChildCategory.svelte";
 
 	interface Props {
 		refetch: () => void;
-		category: EntitiesStockCategoryAllOf;
+		category: EntitiesStockCategory;
 	}
 	let { refetch, category }: Props = $props();
-
 	let editOpen = $state(false);
 	let deleteOpen = $state(false);
 
@@ -29,6 +28,7 @@
 	// };
 </script>
 
+<AddEditCategory bind:open={editOpen} {refetch} {category} />
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger>
 		<Button size="icon" variant="secondary">
