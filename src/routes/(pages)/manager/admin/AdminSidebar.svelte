@@ -111,6 +111,11 @@
 					href: "/manager/admin/options",
 					icon: ToggleRightIcon,
 				},
+				{
+					title: "Bill Categories",
+					href: "/manager/admin/billcategory",
+					icon: ChartBarStackedIcon,
+				},
 			],
 		},
 		{
