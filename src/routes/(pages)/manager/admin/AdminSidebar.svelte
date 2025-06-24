@@ -84,6 +84,11 @@
 					href: "/manager/admin/adjustmentTypes",
 					icon: DiffIcon,
 				},
+				{
+					title: "Divisions",
+					href: "/manager/admin/divisions",
+					icon: ComponentIcon,
+				},
 			],
 		},
 		{
@@ -149,11 +154,6 @@
 					icon: ChartBarStackedIcon,
 				},
 			],
-		},
-		{
-			title: "Divisions",
-			href: "/manager/admin/divisions",
-			icon: ComponentIcon,
 		},
 	];
 

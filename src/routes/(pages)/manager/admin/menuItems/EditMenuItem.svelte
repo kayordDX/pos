@@ -51,7 +51,7 @@
 		isEnabled: z.boolean(),
 		isAvailable: z.boolean(),
 		positionId: z.number(),
-		billCategoryId: z.number(),
+		billCategoryId: z.number().min(1, { message: "Bill Category is Required" }),
 		extraGroupIds: z.array(z.number()),
 		optionGroupIds: z.array(z.number()),
 	});
