@@ -3325,10 +3325,6 @@ export type StockDivisionGetAllParams = {
 	outletId: number;
 };
 
-export type StockCategoryParams = {
-	outletId: number;
-};
-
 export type StockAllocateGetAllParams = {
 	outletId: number;
 	/**

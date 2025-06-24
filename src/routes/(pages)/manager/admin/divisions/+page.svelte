@@ -13,6 +13,7 @@
 		{
 			header: "Name",
 			accessorKey: "divisionName",
+			size: 100000,
 		},
 		{
 			header: "",

@@ -12,6 +12,7 @@
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
+	import { id } from "zod/v4/locales";
 
 	interface Props {
 		refetch: () => void;
@@ -33,7 +34,7 @@
 	});
 	type FormSchema = z.infer<typeof schema>;
 
-	const categoryQuery = createStockCategory({ outletId: status.value.outletId });
+	const categoryQuery = createStockCategory(status.value.outletId);
 	const category = $derived($categoryQuery.data ?? []);
 	const categorySelect = $derived(
 		category.find((i) => i.id === $formData.stockCategoryId)?.displayName ?? "Select Category"

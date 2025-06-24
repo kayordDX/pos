@@ -24,6 +24,7 @@
 		{
 			header: "Name",
 			accessorKey: "name",
+			size: 10000,
 		},
 		{
 			header: "",

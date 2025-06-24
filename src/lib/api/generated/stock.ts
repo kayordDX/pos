@@ -40,7 +40,6 @@ import type {
 	StockAllocateItemCreateRequest,
 	StockAllocateItemUpdateRequest,
 	StockAllocateUpdateRequest,
-	StockCategoryParams,
 	StockCategoryResponse,
 	StockCreateRequest,
 	StockDivisionGetAllParams,
@@ -1814,31 +1813,34 @@ export const createStockDelete = <
 
 	return createMutation(mutationOptions, queryClient);
 };
-export const stockCategory = (params: StockCategoryParams) => {
-	return customInstance<StockCategoryResponse[]>({ url: `/stock/category`, method: "GET", params });
+export const stockCategory = (outletId: number) => {
+	return customInstance<StockCategoryResponse[]>({
+		url: `/stock/category/${outletId}`,
+		method: "GET",
+	});
 };
 
-export const getStockCategoryQueryKey = (params: StockCategoryParams) => {
-	return [`/stock/category`, ...(params ? [params] : [])] as const;
+export const getStockCategoryQueryKey = (outletId: number) => {
+	return [`/stock/category/${outletId}`] as const;
 };
 
 export const getStockCategoryQueryOptions = <
 	TData = Awaited<ReturnType<typeof stockCategory>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params: StockCategoryParams,
+	outletId: number,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockCategory>>, TError, TData>>;
 	}
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getStockCategoryQueryKey(params);
+	const queryKey = queryOptions?.queryKey ?? getStockCategoryQueryKey(outletId);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof stockCategory>>> = () =>
-		stockCategory(params);
+		stockCategory(outletId);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+	return { queryKey, queryFn, enabled: !!outletId, ...queryOptions } as CreateQueryOptions<
 		Awaited<ReturnType<typeof stockCategory>>,
 		TError,
 		TData
@@ -1852,13 +1854,13 @@ export function createStockCategory<
 	TData = Awaited<ReturnType<typeof stockCategory>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params: StockCategoryParams,
+	outletId: number,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockCategory>>, TError, TData>>;
 	},
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getStockCategoryQueryOptions(params, options);
+	const queryOptions = getStockCategoryQueryOptions(outletId, options);
 
 	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

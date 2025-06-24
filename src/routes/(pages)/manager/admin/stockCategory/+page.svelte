@@ -1,9 +1,5 @@
 <script lang="ts">
-	import {
-		createStockCategoryGetAll,
-		type EntitiesStockCategory,
-		type EntitiesStockCategoryAllOf,
-	} from "$lib/api";
+	import { createStockCategoryGetAll, type EntitiesStockCategory } from "$lib/api";
 	import Search from "$lib/components/Search.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import { Button, DataTable, createShadTable, renderComponent } from "@kayord/ui";
@@ -29,6 +25,7 @@
 		{
 			header: "Name",
 			accessorKey: "name",
+			size: 10000,
 		},
 		{
 			header: "",

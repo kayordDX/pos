@@ -19,10 +19,12 @@
 		{
 			header: "Name",
 			accessorKey: "name",
+			size: 1000,
 		},
 		{
 			header: "Description",
 			accessorKey: "description",
+			size: 1000,
 		},
 		{
 			header: "",
