@@ -54,7 +54,7 @@
 	<Dialog.Content>
 		<form method="POST" use:enhance>
 			<Dialog.Header>
-				<Dialog.Title>Add new Role</Dialog.Title>
+				<Dialog.Title>Add Role to Division</Dialog.Title>
 				<Dialog.Description>Choose role</Dialog.Description>
 			</Dialog.Header>
 			<div class="w-full p-4">
