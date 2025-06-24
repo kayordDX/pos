@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { notification } from "$lib/stores/notify.svelte";
 	import { hub } from "$lib/stores/hub.svelte";
+	import { HubConnectionState } from "@microsoft/signalr";
 
 	interface SoundEvent {
 		outletId: number;
@@ -28,7 +29,7 @@
 	};
 
 	$effect(() => {
-		if (hub.state == "Connected") {
+		if (hub.state == HubConnectionState.Connected) {
 			hub.on("PlaySound", playSound);
 			return () => {
 				hub.off("PlaySound", playSound);

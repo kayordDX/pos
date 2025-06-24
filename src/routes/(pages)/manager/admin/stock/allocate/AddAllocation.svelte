@@ -86,7 +86,6 @@
 		SPA: true,
 		validators: zod(schema),
 		onUpdate({ form }) {
-			console.log(form);
 			if (form.valid) {
 				updateMenu(form.data);
 			}

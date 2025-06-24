@@ -36,6 +36,37 @@ export interface ServicesWhatsappQrResponse {
 	qr: string;
 }
 
+export interface UserVerifyOTPResponse {
+	/** @nullable */
+	message?: string | null;
+	isSuccess: boolean;
+}
+
+export interface UserVerifyOTPRequest {
+	/**
+	 * @minLength 8
+	 * @maxLength 8
+	 */
+	otp: string;
+}
+
+/**
+ * the collection of errors for the current context
+ */
+export type ErrorResponseErrors = { [key: string]: string[] };
+
+/**
+ * the dto used to send an error response to the client
+ */
+export interface ErrorResponse {
+	/** the http status code sent to the client. default is 400. */
+	statusCode: number;
+	/** the message for the error response */
+	message: string;
+	/** the collection of errors for the current context */
+	errors: ErrorResponseErrors;
+}
+
 export interface UserValidateResponse {
 	userId: string;
 }
@@ -132,23 +163,6 @@ export type UserTasksRequest = CommonModelsQueryModel & UserTasksRequestAllOf;
 
 export interface UserRemoveUserOutletRoleRequest {
 	[key: string]: unknown;
-}
-
-/**
- * the collection of errors for the current context
- */
-export type ErrorResponseErrors = { [key: string]: string[] };
-
-/**
- * the dto used to send an error response to the client
- */
-export interface ErrorResponse {
-	/** the http status code sent to the client. default is 400. */
-	statusCode: number;
-	/** the message for the error response */
-	message: string;
-	/** the collection of errors for the current context */
-	errors: ErrorResponseErrors;
 }
 
 export interface UserRemoveUserOutletRequest {
@@ -2149,6 +2163,19 @@ export interface RoleGetAllRequest {
 	[key: string]: unknown;
 }
 
+export interface RoleDivisionGetAllRequest {
+	[key: string]: unknown;
+}
+
+export interface RoleDivisionDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface RoleDivisionCreateRequest {
+	divisionId: number;
+	roleId: number;
+}
+
 export interface PrinterTestRequest {
 	/**
 	 * @minLength 1
@@ -2779,6 +2806,25 @@ export interface DivisionGetUsersRequest {
 
 export interface DivisionGetAllRequest {
 	[key: string]: unknown;
+}
+
+export interface DivisionEditRequest {
+	/**
+	 * @minLength 1
+	 */
+	id: number;
+	divisionTypeId: number;
+	outletId: number;
+	/**
+	 * @minLength 1
+	 */
+	name: string;
+}
+
+export interface DivisionCreateRequest {
+	outletId: number;
+	divisionTypeId: number;
+	name: string;
 }
 
 export interface ClockListRequest {

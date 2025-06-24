@@ -6,25 +6,31 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
-import { createQuery } from "@tanstack/svelte-query";
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
+	CreateMutationOptions,
+	CreateMutationResult,
 	CreateQueryOptions,
 	CreateQueryResult,
 	DataTag,
+	MutationFunction,
 	QueryClient,
 	QueryFunction,
 	QueryKey,
 } from "@tanstack/svelte-query";
 
 import type {
+	DivisionCreateRequest,
+	DivisionEditRequest,
 	DivisionGetAllParams,
 	DivisionGetUsersResponse,
 	EntitiesDivision,
+	ErrorResponse,
 	InternalErrorResponse,
 } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
-import type { ErrorType } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 export const divisionGetUsers = (divisionId: number) => {
 	return customInstance<DivisionGetUsersResponse[]>({
@@ -142,3 +148,146 @@ export function createDivisionGetAll<
 
 	return query;
 }
+
+export const divisionEdit = (divisionEditRequest: BodyType<DivisionEditRequest>) => {
+	return customInstance<void>({
+		url: `/division`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: divisionEditRequest,
+	});
+};
+
+export const getDivisionEditMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof divisionEdit>>,
+		TError,
+		{ data: BodyType<DivisionEditRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof divisionEdit>>,
+	TError,
+	{ data: BodyType<DivisionEditRequest> },
+	TContext
+> => {
+	const mutationKey = ["divisionEdit"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof divisionEdit>>,
+		{ data: BodyType<DivisionEditRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return divisionEdit(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type DivisionEditMutationResult = NonNullable<Awaited<ReturnType<typeof divisionEdit>>>;
+export type DivisionEditMutationBody = BodyType<DivisionEditRequest>;
+export type DivisionEditMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+
+export const createDivisionEdit = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof divisionEdit>>,
+			TError,
+			{ data: BodyType<DivisionEditRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof divisionEdit>>,
+	TError,
+	{ data: BodyType<DivisionEditRequest> },
+	TContext
+> => {
+	const mutationOptions = getDivisionEditMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const divisionCreate = (divisionCreateRequest: BodyType<DivisionCreateRequest>) => {
+	return customInstance<EntitiesDivision>({
+		url: `/division`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: divisionCreateRequest,
+	});
+};
+
+export const getDivisionCreateMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof divisionCreate>>,
+		TError,
+		{ data: BodyType<DivisionCreateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof divisionCreate>>,
+	TError,
+	{ data: BodyType<DivisionCreateRequest> },
+	TContext
+> => {
+	const mutationKey = ["divisionCreate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof divisionCreate>>,
+		{ data: BodyType<DivisionCreateRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return divisionCreate(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type DivisionCreateMutationResult = NonNullable<Awaited<ReturnType<typeof divisionCreate>>>;
+export type DivisionCreateMutationBody = BodyType<DivisionCreateRequest>;
+export type DivisionCreateMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createDivisionCreate = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof divisionCreate>>,
+			TError,
+			{ data: BodyType<DivisionCreateRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof divisionCreate>>,
+	TError,
+	{ data: BodyType<DivisionCreateRequest> },
+	TContext
+> => {
+	const mutationOptions = getDivisionCreateMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
