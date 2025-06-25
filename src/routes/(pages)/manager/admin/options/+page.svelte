@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createOptionGroup, optionGroup, type DTOOptionGroupBasicDTO } from "$lib/api";
+	import { createOptionGroup, type DTOOptionGroupBasicDTO } from "$lib/api";
 	import {
 		Badge,
 		Button,
@@ -8,13 +8,18 @@
 		renderComponent,
 		renderSnippet,
 		createShadTable,
-		Tooltip,
+		decodeGlobalFilter,
+		encodeTableState,
+		decodePageIndex,
+		decodeSorting,
 	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import EditOptionGroup from "./EditOptionGroup.svelte";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Search from "$lib/components/Search.svelte";
+	import { goto } from "$app/navigation";
+	import { onMount } from "svelte";
 
 	const query = createOptionGroup();
 	let addOpen = $state(false);
@@ -58,6 +63,24 @@
 				return search;
 			},
 		},
+	});
+
+	// Update URL Params
+	$effect(() => {
+		const params = encodeTableState(table.getState());
+		goto(params, {
+			replaceState: true,
+			keepFocus: true,
+			noScroll: true,
+		});
+	});
+	// Get Defaults from URL Params
+	onMount(() => {
+		table.setPageIndex(decodePageIndex());
+		table.setSorting(decodeSorting());
+		if (decodeGlobalFilter() != null) {
+			search = decodeGlobalFilter() ?? "";
+		}
 	});
 </script>
 

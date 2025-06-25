@@ -7,12 +7,18 @@
 		renderSnippet,
 		createShadTable,
 		Tooltip,
+		encodeTableState,
+		decodePageIndex,
+		decodeSorting,
+		decodeGlobalFilter,
 	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import EditExtraGroup from "./EditExtraGroup.svelte";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Search from "$lib/components/Search.svelte";
+	import { goto } from "$app/navigation";
+	import { onMount } from "svelte";
 
 	const query = createExtraGroup();
 	let addOpen = $state(false);
@@ -51,6 +57,24 @@
 				return search;
 			},
 		},
+	});
+
+	// Update URL Params
+	$effect(() => {
+		const params = encodeTableState(table.getState());
+		goto(params, {
+			replaceState: true,
+			keepFocus: true,
+			noScroll: true,
+		});
+	});
+	// Get Defaults from URL Params
+	onMount(() => {
+		table.setPageIndex(decodePageIndex());
+		table.setSorting(decodeSorting());
+		if (decodeGlobalFilter() != null) {
+			search = decodeGlobalFilter() ?? "";
+		}
 	});
 </script>
 

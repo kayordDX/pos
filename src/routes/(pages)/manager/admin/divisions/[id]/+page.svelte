@@ -8,8 +8,6 @@
 	import AddRole from "./AddRole.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 
-	console.log(page.params.id);
-
 	const query = createRoleDivisionGetAll(Number(page.params.id) ?? 0);
 	let selectedDivision = $state<EntitiesRole | undefined>(undefined);
 	let isDialogOpen = $state(false);
