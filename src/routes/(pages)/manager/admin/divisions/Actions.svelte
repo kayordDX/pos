@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
-	import { Trash2Icon, PencilIcon, TableIcon, EllipsisVerticalIcon } from "@lucide/svelte";
-	//import AddEditSection from "./AddEditSection.svelte";
-	import { getError } from "$lib/types";
+	import AddEditDivision from "./AddEditDivision.svelte";
+
+	import { Button, DropdownMenu } from "@kayord/ui";
+	import { PencilIcon, TableIcon, EllipsisVerticalIcon } from "@lucide/svelte";
+
 	import type { EntitiesDivision } from "$lib/api";
 
 	interface Props {
@@ -13,7 +14,6 @@
 	let { refetch, division }: Props = $props();
 
 	let editOpen = $state(false);
-	let deleteOpen = $state(false);
 
 	//const deleteMutation = createSectionDelete();
 
@@ -39,30 +39,11 @@
 		<DropdownMenu.Item onclick={() => goto(`/manager/admin/divisions/${division.divisionId}`)}>
 			<TableIcon /> View Roles
 		</DropdownMenu.Item>
-		<!-- <DropdownMenu.Item onclick={() => (editOpen = true)}>
-			<PencilIcon /> Edit Section
+		<DropdownMenu.Item onclick={() => (editOpen = true)}>
+			<PencilIcon /> Edit Division
 		</DropdownMenu.Item>
-		<DropdownMenu.Item onclick={() => (deleteOpen = true)}>
-			<Trash2Icon /> Delete
-		</DropdownMenu.Item> -->
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
-
-<!-- {#if editOpen}
-	<AddEditSection bind:open={editOpen} {refetch} {section} />
-{/if} -->
-
-<!-- <AlertDialog.Root bind:open={deleteOpen}>
-	<AlertDialog.Content>
-		<AlertDialog.Header>
-			<AlertDialog.Title>Delete Section?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete the section if no tables or items depend on it.
-			</AlertDialog.Description>
-		</AlertDialog.Header>
-		<AlertDialog.Footer>
-			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action class="bg-destructive" onclick={deleteSection}>Delete</AlertDialog.Action>
-		</AlertDialog.Footer>
-	</AlertDialog.Content>
-</AlertDialog.Root> -->
+{#if editOpen}
+	<AddEditDivision bind:open={editOpen} {refetch} {division} />
+{/if}
