@@ -15,7 +15,7 @@
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import EditExtraGroup from "./EditExtraGroup.svelte";
-	import type { ColumnDef } from "@tanstack/table-core";
+	import { type ColumnDef } from "@tanstack/table-core";
 	import Search from "$lib/components/Search.svelte";
 	import { goto } from "$app/navigation";
 	import { onMount } from "svelte";
@@ -52,6 +52,7 @@
 			return data;
 		},
 		enableRowSelection: false,
+		autoResetPageIndex: false,
 		state: {
 			get globalFilter() {
 				return search;
@@ -68,12 +69,20 @@
 			noScroll: true,
 		});
 	});
-	// Get Defaults from URL Params
+
 	onMount(() => {
 		table.setPageIndex(decodePageIndex());
 		table.setSorting(decodeSorting());
-		if (decodeGlobalFilter() != null) {
-			search = decodeGlobalFilter() ?? "";
+		search = decodeGlobalFilter();
+		table.setGlobalFilter(decodeGlobalFilter());
+	});
+
+	$effect(() => {
+		if (
+			table.getPageCount() > 0 &&
+			table.getState().pagination.pageIndex > table.getPageCount() - 1
+		) {
+			table.resetPageIndex();
 		}
 	});
 </script>
