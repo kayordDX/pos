@@ -252,9 +252,6 @@
 								}}
 								isActive={activeItem?.title === item.title}
 							>
-								{#snippet tooltipContent()}
-									{item.title}
-								{/snippet}
 								{#if item.icon}
 									<item.icon class="!size-5" />
 								{/if}
