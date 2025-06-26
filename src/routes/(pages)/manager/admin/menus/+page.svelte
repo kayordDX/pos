@@ -1,7 +1,13 @@
 <script lang="ts">
 	import { createMenuList, type EntitiesMenu } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, createShadTable, DataTable, renderComponent } from "@kayord/ui";
+	import {
+		Button,
+		createShadTable,
+		DataTable,
+		decodeGlobalFilter,
+		renderComponent,
+	} from "@kayord/ui";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditMenu from "./EditMenu.svelte";
@@ -31,7 +37,7 @@
 	];
 
 	let data = $derived($query.data ?? []);
-	let search = $state("");
+	let search = $state(decodeGlobalFilter() ?? "");
 
 	const table = createShadTable({
 		columns,
@@ -39,6 +45,7 @@
 			return data;
 		},
 		enableRowSelection: false,
+		useURLSearchParams: true,
 		state: {
 			get globalFilter() {
 				return search;

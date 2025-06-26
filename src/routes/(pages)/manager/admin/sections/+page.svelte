@@ -2,7 +2,13 @@
 	import { createSectionList, type EntitiesSection } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
-	import { Button, DataTable, renderComponent, createShadTable } from "@kayord/ui";
+	import {
+		Button,
+		DataTable,
+		renderComponent,
+		createShadTable,
+		decodeGlobalFilter,
+	} from "@kayord/ui";
 	import { type ColumnDef } from "@tanstack/table-core";
 	import { PlusIcon } from "@lucide/svelte";
 	import AddEditSection from "./AddEditSection.svelte";
@@ -40,7 +46,7 @@
 	];
 
 	let data = $derived($query.data ?? []);
-	let search = $state("");
+	let search = $state(decodeGlobalFilter() ?? "");
 
 	const table = createShadTable({
 		columns,
@@ -48,6 +54,7 @@
 			return data;
 		},
 		enableRowSelection: false,
+		useURLSearchParams: true,
 		state: {
 			get globalFilter() {
 				return search;

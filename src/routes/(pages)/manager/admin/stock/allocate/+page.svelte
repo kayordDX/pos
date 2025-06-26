@@ -6,9 +6,6 @@
 		renderComponent,
 		renderSnippet,
 		createShadTable,
-		encodeTableState,
-		decodePageIndex,
-		decodeSorting,
 		decodeColumnFilters,
 	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
@@ -34,8 +31,6 @@
 	import Search from "$lib/components/Search.svelte";
 	import QueryBuilder from "fluent-querykit";
 	import { stringToFDate } from "$lib/util";
-	import { goto } from "$app/navigation";
-	import { onMount } from "svelte";
 
 	const columns: ColumnDef<DTOStockAllocateDTO>[] = [
 		{
@@ -104,7 +99,8 @@
 		} else sorting = updater;
 	};
 
-	let columnFilters = $state<ColumnFiltersState>([]);
+	let search = $state(decodeColumnFilters()?.find((x) => x.id == "comment")?.value ?? "");
+	let columnFilters = $state<ColumnFiltersState>(decodeColumnFilters() ?? []);
 	let filters = $state("");
 
 	// Replacing _ with . to fix sorting issue
@@ -142,6 +138,7 @@
 		manualPagination: true,
 		manualFiltering: true,
 		manualSorting: true,
+		useURLSearchParams: true,
 		getSortedRowModel: getSortedRowModel(),
 		getPaginationRowModel: getPaginationRowModel(),
 		state: {
@@ -166,8 +163,6 @@
 		enableRowSelection: false,
 	});
 
-	let search = $state("");
-
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
 		if (search) {
@@ -177,31 +172,6 @@
 			columnFilters = [];
 		}
 		filters = qb.build();
-	});
-
-	$effect(() => {
-		if (table.getPageCount() > 0 && pagination.pageIndex > table.getPageCount() - 1) {
-			pagination.pageIndex = 0;
-		}
-	});
-
-	// Update URL Params
-	$effect(() => {
-		const params = encodeTableState(table.getState());
-		goto(params, {
-			replaceState: true,
-			keepFocus: true,
-			noScroll: true,
-		});
-	});
-	// Get Defaults from URL Params
-	onMount(() => {
-		table.setPageIndex(decodePageIndex());
-		table.setSorting(decodeSorting());
-
-		if (decodeColumnFilters() != null) {
-			search = decodeColumnFilters()?.find((x) => x.id == "comment")?.value ?? "";
-		}
 	});
 </script>
 

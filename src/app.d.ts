@@ -1,4 +1,5 @@
 import type { Outlet } from "./lib/types";
+import { CustomOptions, CustomColumnMeta } from "@kayord/ui";
 
 declare global {
 	namespace App {
@@ -11,6 +12,11 @@ declare global {
 		}
 		// interface Platform {}
 	}
+}
+
+declare module "@tanstack/table-core" {
+	interface ColumnMeta<TData extends RowData, TValue> extends CustomColumnMeta {}
+	interface TableOptionsResolved<TData extends RowData> extends CustomOptions {}
 }
 
 export {};

@@ -9,17 +9,12 @@
 		renderSnippet,
 		createShadTable,
 		decodeGlobalFilter,
-		encodeTableState,
-		decodePageIndex,
-		decodeSorting,
 	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import EditOptionGroup from "./EditOptionGroup.svelte";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Search from "$lib/components/Search.svelte";
-	import { goto } from "$app/navigation";
-	import { onMount } from "svelte";
 
 	const query = createOptionGroup();
 	let addOpen = $state(false);
@@ -50,7 +45,7 @@
 	];
 
 	let data = $derived($query.data ?? []);
-	let search = $state("");
+	let search = $state(decodeGlobalFilter() ?? "");
 
 	const table = createShadTable({
 		columns,
@@ -58,29 +53,12 @@
 			return data;
 		},
 		enableRowSelection: false,
+		useURLSearchParams: true,
 		state: {
 			get globalFilter() {
 				return search;
 			},
 		},
-	});
-
-	// Update URL Params
-	$effect(() => {
-		const params = encodeTableState(table.getState());
-		goto(params, {
-			replaceState: true,
-			keepFocus: true,
-			noScroll: true,
-		});
-	});
-	// Get Defaults from URL Params
-	onMount(() => {
-		table.setPageIndex(decodePageIndex());
-		table.setSorting(decodeSorting());
-		if (decodeGlobalFilter() != null) {
-			search = decodeGlobalFilter() ?? "";
-		}
 	});
 </script>
 

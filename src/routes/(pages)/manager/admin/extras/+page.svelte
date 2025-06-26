@@ -7,9 +7,6 @@
 		renderSnippet,
 		createShadTable,
 		Tooltip,
-		encodeTableState,
-		decodePageIndex,
-		decodeSorting,
 		decodeGlobalFilter,
 	} from "@kayord/ui";
 	import Actions from "./Actions.svelte";
@@ -17,8 +14,6 @@
 	import EditExtraGroup from "./EditExtraGroup.svelte";
 	import { type ColumnDef } from "@tanstack/table-core";
 	import Search from "$lib/components/Search.svelte";
-	import { goto } from "$app/navigation";
-	import { onMount } from "svelte";
 
 	const query = createExtraGroup();
 	let addOpen = $state(false);
@@ -44,7 +39,7 @@
 	];
 
 	let data = $derived($query.data ?? []);
-	let search = $state("");
+	let search = $state(decodeGlobalFilter() ?? "");
 
 	const table = createShadTable({
 		columns,
@@ -52,38 +47,12 @@
 			return data;
 		},
 		enableRowSelection: false,
-		autoResetPageIndex: false,
+		useURLSearchParams: true,
 		state: {
 			get globalFilter() {
 				return search;
 			},
 		},
-	});
-
-	// Update URL Params
-	$effect(() => {
-		const params = encodeTableState(table.getState());
-		goto(params, {
-			replaceState: true,
-			keepFocus: true,
-			noScroll: true,
-		});
-	});
-
-	onMount(() => {
-		table.setPageIndex(decodePageIndex());
-		table.setSorting(decodeSorting());
-		search = decodeGlobalFilter();
-		table.setGlobalFilter(decodeGlobalFilter());
-	});
-
-	$effect(() => {
-		if (
-			table.getPageCount() > 0 &&
-			table.getState().pagination.pageIndex > table.getPageCount() - 1
-		) {
-			table.resetPageIndex();
-		}
 	});
 </script>
 
