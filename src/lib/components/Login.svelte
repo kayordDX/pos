@@ -49,7 +49,7 @@
 			</Button>
 		</Card.Footer>
 	</Card.Root>
-	<Button variant="link" class="text-xs text-muted-foreground" href="/privacy-policy"
-		>Privacy Policy</Button
-	>
+	<Button variant="link" class="text-xs text-muted-foreground" href="/privacy-policy">
+		Privacy Policy
+	</Button>
 </div>

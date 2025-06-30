@@ -5,18 +5,26 @@
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import z from "zod";
+	import { createUserLinkAccount } from "$lib/api";
 
 	export const schema = z.object({
-		token: z.string().length(8, { message: "Please enter valid code" }),
+		token: z.string().length(6, { message: "Please enter valid code" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
+	const linkAccountMutation = createUserLinkAccount();
+
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			// await $assignMutation.mutateAsync({
-			// 	data: { outletId: data.outletId },
-			// });
-			toast.info("Linking account");
+			const response = await $linkAccountMutation.mutateAsync({
+				data: { otp: data.token.toUpperCase() },
+			});
+
+			if (response.isSuccess) {
+				toast.info(response.message == null ? "Linking account" : response.message);
+			} else {
+				toast.error(response.message ?? "An error occurred while linking account");
+			}
 		} catch (err) {
 			toast.error(getError(err).message);
 		}
@@ -36,22 +44,27 @@
 
 <Header />
 
-<Card.Root class="p-5 m-5">
+<Card.Root class="p-5 m-5 max-w-sm flex justify-self-center">
 	<Card.Header>
 		<Card.Title>Link Account</Card.Title>
 		<Card.Description>
-			To link your account, please enter the 8-digit code displayed on your device
+			To link your account, please enter the 6-digit code displayed on your device
 		</Card.Description>
 	</Card.Header>
-	<Card.Content>
-		<form method="POST" use:enhance>
+	<form method="POST" use:enhance>
+		<Card.Content class="flex flex-col gap-2 items-center">
 			<Form.Field {form} name="token">
 				<Form.Control>
 					{#snippet children({ props })}
-						<InputOTP.Root pattern="[0-9A-Z]" maxlength={6} {...props} bind:value={$formData.token}>
+						<InputOTP.Root maxlength={6} {...props} bind:value={$formData.token} class="uppercase">
 							{#snippet children({ cells })}
 								<InputOTP.Group>
-									{#each cells as cell (cell)}
+									{#each cells.slice(0, 3) as cell (cell)}
+										<InputOTP.Slot {cell} />
+									{/each}
+								</InputOTP.Group>
+								<InputOTP.Group>
+									{#each cells.slice(3, 6) as cell (cell)}
 										<InputOTP.Slot {cell} />
 									{/each}
 								</InputOTP.Group>
@@ -61,8 +74,7 @@
 				</Form.Control>
 				<Form.FieldErrors />
 			</Form.Field>
-
-			<Button>Link Account</Button>
-		</form>
-	</Card.Content>
+			<Button type="submit" class="w-full">Link Account</Button>
+		</Card.Content>
+	</form>
 </Card.Root>
