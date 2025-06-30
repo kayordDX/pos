@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Button, Dialog, Loader, toast } from "@kayord/ui";
+	import { Button, Dialog, Loader, toast, Tooltip } from "@kayord/ui";
 	import { KeyRoundIcon } from "@lucide/svelte";
 	import { hub } from "$lib/stores/hub.svelte";
 	import { HubConnectionState } from "@microsoft/signalr";
@@ -70,9 +70,18 @@
 	};
 </script>
 
-<Button size="icon" variant="outline" onclick={requestToken}>
-	<KeyRoundIcon />
-</Button>
+<Tooltip.Provider>
+	<Tooltip.Root>
+		<Tooltip.Trigger>
+			<Button size="icon" variant="outline" onclick={requestToken}>
+				<KeyRoundIcon />
+			</Button>
+		</Tooltip.Trigger>
+		<Tooltip.Content>
+			<p>Link Account</p>
+		</Tooltip.Content>
+	</Tooltip.Root>
+</Tooltip.Provider>
 
 <Dialog.Root bind:open>
 	<Dialog.Content>

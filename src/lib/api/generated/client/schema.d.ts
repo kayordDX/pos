@@ -52,22 +52,6 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/user/verifyOTP": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        get?: never;
-        put?: never;
-        post: operations["UserVerifyOTP"];
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
-    };
     "/user/validate": {
         parameters: {
             query?: never;
@@ -159,6 +143,22 @@ export interface paths {
         put?: never;
         post?: never;
         delete: operations["UserRemoveUserOutlet"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/user/linkAccount": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UserLinkAccount"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -2148,6 +2148,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/divisionType": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["DivisionTypeGetAll"];
+        put: operations["DivisionTypeEdit"];
+        post: operations["DivisionTypeCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/division/users/{divisionId}": {
         parameters: {
             query?: never;
@@ -2621,31 +2637,6 @@ export interface components {
             success: boolean;
             qr: string;
         };
-        UserVerifyOTPResponse: {
-            message?: string | null;
-            isSuccess: boolean;
-        };
-        UserVerifyOTPRequest: {
-            otp: string;
-        };
-        /** @description the dto used to send an error response to the client */
-        ErrorResponse: {
-            /**
-             * Format: int32
-             * @description the http status code sent to the client. default is 400.
-             * @default 400
-             */
-            statusCode: number;
-            /**
-             * @description the message for the error response
-             * @default One or more errors occurred!
-             */
-            message: string;
-            /** @description the collection of errors for the current context */
-            errors: {
-                [key: string]: string[];
-            };
-        };
         UserValidateResponse: {
             userId: string;
         };
@@ -2721,7 +2712,32 @@ export interface components {
         };
         UserTasksRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         UserRemoveUserOutletRoleRequest: Record<string, never>;
+        /** @description the dto used to send an error response to the client */
+        ErrorResponse: {
+            /**
+             * Format: int32
+             * @description the http status code sent to the client. default is 400.
+             * @default 400
+             */
+            statusCode: number;
+            /**
+             * @description the message for the error response
+             * @default One or more errors occurred!
+             */
+            message: string;
+            /** @description the collection of errors for the current context */
+            errors: {
+                [key: string]: string[];
+            };
+        };
         UserRemoveUserOutletRequest: Record<string, never>;
+        UserLinkAccountResponse: {
+            message?: string | null;
+            isSuccess: boolean;
+        };
+        UserLinkAccountRequest: {
+            otp: string;
+        };
         UserGetStatusResponse: {
             /** Format: int32 */
             outletId: number;
@@ -5154,6 +5170,20 @@ export interface components {
             /** Format: int32 */
             outletId: number;
         };
+        EntitiesDivisionType: {
+            /** Format: int32 */
+            id: number;
+            divisionName: string;
+        };
+        DivisionTypeGetAllRequest: Record<string, never>;
+        DivisionTypeEditRequest: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
+        DivisionTypeCreateRequest: {
+            name: string;
+        };
         DivisionGetUsersResponse: {
             userId: string;
             email: string;
@@ -5493,55 +5523,6 @@ export interface operations {
             };
         };
     };
-    UserVerifyOTP: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        requestBody: {
-            content: {
-                "application/json": components["schemas"]["UserVerifyOTPRequest"];
-            };
-        };
-        responses: {
-            /** @description Success */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["UserVerifyOTPResponse"];
-                };
-            };
-            /** @description Bad Request */
-            400: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/problem+json": components["schemas"]["ErrorResponse"];
-                };
-            };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Server Error */
-            500: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "application/json": components["schemas"]["InternalErrorResponse"];
-                };
-            };
-        };
-    };
     UserValidate: {
         parameters: {
             query?: never;
@@ -5780,6 +5761,55 @@ export interface operations {
             };
             /** @description Forbidden */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserLinkAccount: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserLinkAccountRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserLinkAccountResponse"];
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -12136,6 +12166,138 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    DivisionTypeGetAll: {
+        parameters: {
+            query: {
+                outletId: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesDivisionType"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    DivisionTypeEdit: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DivisionTypeEditRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    DivisionTypeCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["DivisionTypeCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesDivisionType"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };

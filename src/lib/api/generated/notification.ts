@@ -98,79 +98,6 @@ export const createNotificationUser = <
 
 	return createMutation(mutationOptions, queryClient);
 };
-export const notificationTest = (notificationTestRequest: BodyType<NotificationTestRequest>) => {
-	return customInstance<boolean>({
-		url: `/notification/test`,
-		method: "POST",
-		headers: { "Content-Type": "application/json" },
-		data: notificationTestRequest,
-	});
-};
-
-export const getNotificationTestMutationOptions = <
-	TError = ErrorType<InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof notificationTest>>,
-		TError,
-		{ data: BodyType<NotificationTestRequest> },
-		TContext
-	>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof notificationTest>>,
-	TError,
-	{ data: BodyType<NotificationTestRequest> },
-	TContext
-> => {
-	const mutationKey = ["notificationTest"];
-	const { mutation: mutationOptions } = options
-		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey } };
-
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof notificationTest>>,
-		{ data: BodyType<NotificationTestRequest> }
-	> = (props) => {
-		const { data } = props ?? {};
-
-		return notificationTest(data);
-	};
-
-	return { mutationFn, ...mutationOptions };
-};
-
-export type NotificationTestMutationResult = NonNullable<
-	Awaited<ReturnType<typeof notificationTest>>
->;
-export type NotificationTestMutationBody = BodyType<NotificationTestRequest>;
-export type NotificationTestMutationError = ErrorType<InternalErrorResponse>;
-
-export const createNotificationTest = <
-	TError = ErrorType<InternalErrorResponse>,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof notificationTest>>,
-			TError,
-			{ data: BodyType<NotificationTestRequest> },
-			TContext
-		>;
-	},
-	queryClient?: QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof notificationTest>>,
-	TError,
-	{ data: BodyType<NotificationTestRequest> },
-	TContext
-> => {
-	const mutationOptions = getNotificationTestMutationOptions(options);
-
-	return createMutation(mutationOptions, queryClient);
-};
 export const notificationTestNew = (
 	notificationTestNewRequest: BodyType<NotificationTestNewRequest>
 ) => {
@@ -243,6 +170,79 @@ export const createNotificationTestNew = <
 	TContext
 > => {
 	const mutationOptions = getNotificationTestNewMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const notificationTest = (notificationTestRequest: BodyType<NotificationTestRequest>) => {
+	return customInstance<boolean>({
+		url: `/notification/test`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: notificationTestRequest,
+	});
+};
+
+export const getNotificationTestMutationOptions = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof notificationTest>>,
+		TError,
+		{ data: BodyType<NotificationTestRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof notificationTest>>,
+	TError,
+	{ data: BodyType<NotificationTestRequest> },
+	TContext
+> => {
+	const mutationKey = ["notificationTest"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof notificationTest>>,
+		{ data: BodyType<NotificationTestRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return notificationTest(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type NotificationTestMutationResult = NonNullable<
+	Awaited<ReturnType<typeof notificationTest>>
+>;
+export type NotificationTestMutationBody = BodyType<NotificationTestRequest>;
+export type NotificationTestMutationError = ErrorType<InternalErrorResponse>;
+
+export const createNotificationTest = <
+	TError = ErrorType<InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof notificationTest>>,
+			TError,
+			{ data: BodyType<NotificationTestRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof notificationTest>>,
+	TError,
+	{ data: BodyType<NotificationTestRequest> },
+	TContext
+> => {
+	const mutationOptions = getNotificationTestMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };

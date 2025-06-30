@@ -5,7 +5,7 @@
 	import { signInGoogle } from "$lib/firebase.svelte";
 	import { info } from "$lib/stores/info.svelte";
 
-	import LoginOtp from "./LoginOtp.svelte";
+	import LoginLinkDevice from "./LoginLinkDevice.svelte";
 
 	let isLoading = $state(false);
 
@@ -28,7 +28,7 @@
 				<Card.Title>POS</Card.Title>
 				<Card.Description>Powered by kayord</Card.Description>
 			</div>
-			<!-- <LoginOtp /> -->
+			<LoginLinkDevice />
 		</Card.Header>
 		<Card.Content>
 			<div class="flex flex-col items-center">

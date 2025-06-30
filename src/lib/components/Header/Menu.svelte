@@ -8,6 +8,7 @@
 		NetworkIcon,
 		InboxIcon,
 		ArrowRightLeft,
+		ShieldUserIcon,
 	} from "@lucide/svelte";
 	import { getInitials } from "$lib/util";
 	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
@@ -47,6 +48,9 @@
 			</DropdownMenu.Item>
 			<DropdownMenu.Item onclick={() => goto("/setup")}>
 				<WrenchIcon class="mr-2 h-4 w-4" />Setup Device
+			</DropdownMenu.Item>
+			<DropdownMenu.Item onclick={() => goto("/link-account")}>
+				<ShieldUserIcon class="mr-2 h-4 w-4" />Link Account
 			</DropdownMenu.Item>
 			<DropdownMenu.Item onclick={() => goto("/network")}>
 				<NetworkIcon class="mr-2 h-4 w-4" />Network Information
