@@ -11,6 +11,7 @@
 	import NotifyIndicator from "./NotifyIndicator.svelte";
 	import Hub from "./Hub.svelte";
 	import Filter from "./Filter.svelte";
+	import { status } from "$lib/stores/status.svelte";
 
 	interface Props {
 		isHistory?: boolean;
@@ -57,10 +58,9 @@
 			<div class="flex items-center gap-1 flex-wrap">
 				<Filter
 					title="Division"
-					options={[
-						{ label: "Kitchen", value: "3" },
-						{ label: "Bar", value: "13" },
-					]}
+					options={status.value.divisions.map((x) => {
+						return { label: x.name, value: x.id.toString() };
+					})}
 					{isHistory}
 					bind:selected={selectedDivisions}
 				/>
