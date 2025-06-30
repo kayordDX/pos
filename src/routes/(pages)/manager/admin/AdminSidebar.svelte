@@ -29,6 +29,7 @@
 		BuildingIcon,
 		DiffIcon,
 		ChartBarStackedIcon,
+		BlindsIcon,
 	} from "@lucide/svelte";
 
 	const menuItems = [
@@ -88,6 +89,11 @@
 					title: "Divisions",
 					href: "/manager/admin/divisions",
 					icon: ComponentIcon,
+				},
+				{
+					title: "Roles",
+					href: "/manager/admin/roles",
+					icon: BlindsIcon,
 				},
 			],
 		},

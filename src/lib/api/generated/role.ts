@@ -22,40 +22,43 @@ import type {
 import type {
 	EntitiesDivision,
 	EntitiesRole,
+	EntitiesRoleType,
 	InternalErrorResponse,
 	RoleCreateRequest,
 	RoleDivisionCreateRequest,
+	RoleUpdateRequest,
+	UserCreateRoleRequest,
 } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
-export const roleCreate = (roleCreateRequest: BodyType<RoleCreateRequest>) => {
+export const userCreateRole = (userCreateRoleRequest: BodyType<UserCreateRoleRequest>) => {
 	return customInstance<void>({
 		url: `/role/createRole`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		data: roleCreateRequest,
+		data: userCreateRoleRequest,
 	});
 };
 
-export const getRoleCreateMutationOptions = <
-	TError = ErrorType<InternalErrorResponse>,
+export const getUserCreateRoleMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof roleCreate>>,
+		Awaited<ReturnType<typeof userCreateRole>>,
 		TError,
-		{ data: BodyType<RoleCreateRequest> },
+		{ data: BodyType<UserCreateRoleRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
-	Awaited<ReturnType<typeof roleCreate>>,
+	Awaited<ReturnType<typeof userCreateRole>>,
 	TError,
-	{ data: BodyType<RoleCreateRequest> },
+	{ data: BodyType<UserCreateRoleRequest> },
 	TContext
 > => {
-	const mutationKey = ["roleCreate"];
+	const mutationKey = ["userCreateRole"];
 	const { mutation: mutationOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -63,41 +66,170 @@ export const getRoleCreateMutationOptions = <
 		: { mutation: { mutationKey } };
 
 	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof roleCreate>>,
-		{ data: BodyType<RoleCreateRequest> }
+		Awaited<ReturnType<typeof userCreateRole>>,
+		{ data: BodyType<UserCreateRoleRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
-		return roleCreate(data);
+		return userCreateRole(data);
 	};
 
 	return { mutationFn, ...mutationOptions };
 };
 
-export type RoleCreateMutationResult = NonNullable<Awaited<ReturnType<typeof roleCreate>>>;
-export type RoleCreateMutationBody = BodyType<RoleCreateRequest>;
-export type RoleCreateMutationError = ErrorType<InternalErrorResponse>;
+export type UserCreateRoleMutationResult = NonNullable<Awaited<ReturnType<typeof userCreateRole>>>;
+export type UserCreateRoleMutationBody = BodyType<UserCreateRoleRequest>;
+export type UserCreateRoleMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createRoleCreate = <TError = ErrorType<InternalErrorResponse>, TContext = unknown>(
+export const createUserCreateRole = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
 	options?: {
 		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof roleCreate>>,
+			Awaited<ReturnType<typeof userCreateRole>>,
 			TError,
-			{ data: BodyType<RoleCreateRequest> },
+			{ data: BodyType<UserCreateRoleRequest> },
 			TContext
 		>;
 	},
 	queryClient?: QueryClient
 ): CreateMutationResult<
-	Awaited<ReturnType<typeof roleCreate>>,
+	Awaited<ReturnType<typeof userCreateRole>>,
 	TError,
-	{ data: BodyType<RoleCreateRequest> },
+	{ data: BodyType<UserCreateRoleRequest> },
 	TContext
 > => {
-	const mutationOptions = getRoleCreateMutationOptions(options);
+	const mutationOptions = getUserCreateRoleMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };
+export const roleUpdate = (id: number, roleUpdateRequest: BodyType<RoleUpdateRequest>) => {
+	return customInstance<EntitiesRole>({
+		url: `/role/${id}`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: roleUpdateRequest,
+	});
+};
+
+export const getRoleUpdateMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof roleUpdate>>,
+		TError,
+		{ id: number; data: BodyType<RoleUpdateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof roleUpdate>>,
+	TError,
+	{ id: number; data: BodyType<RoleUpdateRequest> },
+	TContext
+> => {
+	const mutationKey = ["roleUpdate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof roleUpdate>>,
+		{ id: number; data: BodyType<RoleUpdateRequest> }
+	> = (props) => {
+		const { id, data } = props ?? {};
+
+		return roleUpdate(id, data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type RoleUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof roleUpdate>>>;
+export type RoleUpdateMutationBody = BodyType<RoleUpdateRequest>;
+export type RoleUpdateMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createRoleUpdate = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof roleUpdate>>,
+			TError,
+			{ id: number; data: BodyType<RoleUpdateRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof roleUpdate>>,
+	TError,
+	{ id: number; data: BodyType<RoleUpdateRequest> },
+	TContext
+> => {
+	const mutationOptions = getRoleUpdateMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const roleTypeGetAll = (outletId: number) => {
+	return customInstance<EntitiesRoleType[]>({ url: `/role/type/${outletId}`, method: "GET" });
+};
+
+export const getRoleTypeGetAllQueryKey = (outletId: number) => {
+	return [`/role/type/${outletId}`] as const;
+};
+
+export const getRoleTypeGetAllQueryOptions = <
+	TData = Awaited<ReturnType<typeof roleTypeGetAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	outletId: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof roleTypeGetAll>>, TError, TData>>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getRoleTypeGetAllQueryKey(outletId);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof roleTypeGetAll>>> = () =>
+		roleTypeGetAll(outletId);
+
+	return { queryKey, queryFn, enabled: !!outletId, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof roleTypeGetAll>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type RoleTypeGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof roleTypeGetAll>>>;
+export type RoleTypeGetAllQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createRoleTypeGetAll<
+	TData = Awaited<ReturnType<typeof roleTypeGetAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	outletId: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof roleTypeGetAll>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getRoleTypeGetAllQueryOptions(outletId, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const roleGetAll = (outletId: number) => {
 	return customInstance<EntitiesRole[]>({ url: `/role/${outletId}`, method: "GET" });
 };
@@ -353,6 +485,77 @@ export const createRoleDivisionCreate = <
 	TContext
 > => {
 	const mutationOptions = getRoleDivisionCreateMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const roleCreate = (roleCreateRequest: BodyType<RoleCreateRequest>) => {
+	return customInstance<EntitiesRole>({
+		url: `/role`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: roleCreateRequest,
+	});
+};
+
+export const getRoleCreateMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof roleCreate>>,
+		TError,
+		{ data: BodyType<RoleCreateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof roleCreate>>,
+	TError,
+	{ data: BodyType<RoleCreateRequest> },
+	TContext
+> => {
+	const mutationKey = ["roleCreate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof roleCreate>>,
+		{ data: BodyType<RoleCreateRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return roleCreate(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type RoleCreateMutationResult = NonNullable<Awaited<ReturnType<typeof roleCreate>>>;
+export type RoleCreateMutationBody = BodyType<RoleCreateRequest>;
+export type RoleCreateMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createRoleCreate = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof roleCreate>>,
+			TError,
+			{ data: BodyType<RoleCreateRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof roleCreate>>,
+	TError,
+	{ data: BodyType<RoleCreateRequest> },
+	TContext
+> => {
+	const mutationOptions = getRoleCreateMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };
