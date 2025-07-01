@@ -4,7 +4,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
-	import { Avatar, Button, Card, Loader, Separator } from "@kayord/ui";
+	import { Avatar, Button, Card, Loader, Separator, toast } from "@kayord/ui";
 	import { getInitials } from "$lib/util";
 	import CashUpItem from "./CashUpItem.svelte";
 	import AddItem from "./AddItem.svelte";
@@ -20,11 +20,17 @@
 
 	const cashUpClose = async () => {
 		try {
-			await $mutation.mutateAsync({
+			const response = await $mutation.mutateAsync({
 				data: { outletId: status.value.outletId, userId: page.params.Id ?? "" },
 			});
-			await goto("/manager/cashUp");
-		} catch (error) {}
+			if (response.isError) {
+				toast.error(response.message);
+			} else {
+				await goto("/manager/cashUp");
+			}
+		} catch (error) {
+			toast.error(getError(error).message);
+		}
 	};
 
 	const manualItems = $derived(

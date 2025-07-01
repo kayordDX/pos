@@ -5325,6 +5325,8 @@ export interface components {
             /** Format: decimal */
             netBalance: number;
             isCashedUp: boolean;
+            isError: boolean;
+            message: string;
         };
         DTOCashUpUserItemDTO: {
             /** Format: int32 */

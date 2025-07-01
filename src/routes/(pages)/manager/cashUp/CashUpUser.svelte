@@ -40,7 +40,7 @@
 					<Button variant="secondary" href={`/manager/cashUp/${cash.userId}/${cash.cashUpUserId}`}>
 						<WalletCardsIcon class="size-4 mr-2" /> View Cash Up
 					</Button>
-				{:else}
+				{:else if !hasOpenTables}
 					<Button href={`/manager/cashUp/${cash.userId}/${cash.cashUpUserId}`}>
 						<WalletCardsIcon class="size-4 mr-2" /> Cash Up
 					</Button>

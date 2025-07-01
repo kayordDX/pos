@@ -19805,7 +19805,9 @@
           "openingBalance",
           "grossBalance",
           "netBalance",
-          "isCashedUp"
+          "isCashedUp",
+          "isError",
+          "message"
         ],
         "properties": {
           "userId": {
@@ -19838,6 +19840,12 @@
           },
           "isCashedUp": {
             "type": "boolean"
+          },
+          "isError": {
+            "type": "boolean"
+          },
+          "message": {
+            "type": "string"
           }
         }
       },

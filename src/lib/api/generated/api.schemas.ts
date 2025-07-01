@@ -2950,6 +2950,8 @@ export interface CashUpUserDetailResponse {
 	grossBalance: number;
 	netBalance: number;
 	isCashedUp: boolean;
+	isError: boolean;
+	message: string;
 }
 
 /**
