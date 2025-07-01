@@ -59,6 +59,7 @@
 						<InputOTP.Root
 							maxlength={6}
 							type="text"
+							inputmode="text"
 							{...props}
 							bind:value={$formData.token}
 							class="uppercase"
