@@ -56,7 +56,13 @@
 			<Form.Field {form} name="token">
 				<Form.Control>
 					{#snippet children({ props })}
-						<InputOTP.Root maxlength={6} {...props} bind:value={$formData.token} class="uppercase">
+						<InputOTP.Root
+							maxlength={6}
+							type="text"
+							{...props}
+							bind:value={$formData.token}
+							class="uppercase"
+						>
 							{#snippet children({ cells })}
 								<InputOTP.Group>
 									{#each cells.slice(0, 3) as cell (cell)}
