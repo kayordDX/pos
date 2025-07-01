@@ -196,6 +196,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/role/createRole": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["UserCreateRole"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user/assignOutlet": {
         parameters: {
             query?: never;
@@ -1364,7 +1380,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/role/createRole": {
+    "/role/{id}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1372,8 +1388,24 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
+        put: operations["RoleUpdate"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/role/type/{outletId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["RoleTypeGetAll"];
         put?: never;
-        post: operations["RoleCreate"];
+        post?: never;
         delete?: never;
         options?: never;
         head?: never;
@@ -1438,6 +1470,22 @@ export interface paths {
         get?: never;
         put?: never;
         post: operations["RoleDivisionCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/role": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["RoleCreate"];
         delete?: never;
         options?: never;
         head?: never;
@@ -2751,6 +2799,7 @@ export interface components {
             hasNotification: boolean;
             /** Format: int32 */
             statusId: number;
+            features: components["schemas"]["EntitiesFeature"][];
         };
         UserGetStatusSalesPeriodDTO: {
             /** Format: int32 */
@@ -2774,7 +2823,16 @@ export interface components {
             id: number;
             name: string;
         };
+        EntitiesFeature: {
+            /** Format: int32 */
+            id: number;
+            name: string;
+        };
         UserGetRolesRequest: Record<string, never>;
+        UserCreateRoleRequest: {
+            name: string;
+            description: string;
+        };
         EntitiesUserOutlet: {
             /** Format: int32 */
             id: number;
@@ -4591,10 +4649,6 @@ export interface components {
             price: number;
         };
         SalesPeriodCashUpRequest: Record<string, never>;
-        RoleCreateRequest: {
-            name: string;
-            description: string;
-        };
         EntitiesRole: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
             roleId: number;
@@ -4614,6 +4668,15 @@ export interface components {
             isBackOffice: boolean;
             description: string;
         };
+        RoleUpdateRequest: {
+            name: string;
+            description: string;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            roleTypeId: number;
+        };
+        RoleTypeGetAllRequest: Record<string, never>;
         RoleGetAllRequest: Record<string, never>;
         RoleDivisionGetAllRequest: Record<string, never>;
         RoleDivisionDeleteRequest: Record<string, never>;
@@ -4622,6 +4685,14 @@ export interface components {
             divisionId: number;
             /** Format: int32 */
             roleId: number;
+        };
+        RoleCreateRequest: {
+            name: string;
+            description: string;
+            /** Format: int32 */
+            outletId: number;
+            /** Format: int32 */
+            roleTypeId: number;
         };
         PrinterTestRequest: {
             /** Format: int32 */
@@ -5874,6 +5945,44 @@ export interface operations {
                 content: {
                     "application/json": string[];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserCreateRole: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserCreateRoleRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {
@@ -9583,21 +9692,70 @@ export interface operations {
             };
         };
     };
-    RoleCreate: {
+    RoleUpdate: {
         parameters: {
             query?: never;
             header?: never;
-            path?: never;
+            path: {
+                id: number;
+            };
             cookie?: never;
         };
         requestBody: {
             content: {
-                "application/json": components["schemas"]["RoleCreateRequest"];
+                "application/json": components["schemas"]["RoleUpdateRequest"];
             };
         };
         responses: {
-            /** @description No Content */
-            204: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesRole"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    RoleTypeGetAll: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                outletId: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesRoleType"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -9751,6 +9909,53 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    RoleCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["RoleCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EntitiesRole"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };

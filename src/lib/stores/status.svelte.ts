@@ -12,6 +12,7 @@ const createStatus = () => {
 		divisions: [],
 		salesPeriod: undefined,
 		roles: [],
+		features: [],
 		isNotReady: true,
 		hasNotification: false,
 		statusId: 0,
@@ -23,6 +24,11 @@ const createStatus = () => {
 	const hasRole = (role: string) => {
 		const appRoles = value.roles.map((r) => r.roleType);
 		return appRoles.includes(role);
+	};
+
+	const hasFeature = (feature: string) => {
+		const features = value.features.map((r) => r.name.toLowerCase());
+		return features.includes(feature.toLowerCase());
 	};
 
 	const hasRoles = (roles: string[]) => {
@@ -49,6 +55,7 @@ const createStatus = () => {
 		getStatus,
 		hasRole,
 		hasRoles,
+		hasFeature,
 		get isLoading() {
 			return isLoading;
 		},

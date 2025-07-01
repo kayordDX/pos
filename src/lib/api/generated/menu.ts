@@ -234,60 +234,6 @@ export const createMenuCreate = <
 
 	return createMutation(mutationOptions, queryClient);
 };
-export const menuGet = (menuId: number) => {
-	return customInstance<EntitiesMenu>({ url: `/menu/${menuId}`, method: "GET" });
-};
-
-export const getMenuGetQueryKey = (menuId: number) => {
-	return [`/menu/${menuId}`] as const;
-};
-
-export const getMenuGetQueryOptions = <
-	TData = Awaited<ReturnType<typeof menuGet>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	menuId: number,
-	options?: {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGet>>, TError, TData>>;
-	}
-) => {
-	const { query: queryOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getMenuGetQueryKey(menuId);
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGet>>> = () => menuGet(menuId);
-
-	return { queryKey, queryFn, enabled: !!menuId, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof menuGet>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type MenuGetQueryResult = NonNullable<Awaited<ReturnType<typeof menuGet>>>;
-export type MenuGetQueryError = ErrorType<void | InternalErrorResponse>;
-
-export function createMenuGet<
-	TData = Awaited<ReturnType<typeof menuGet>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	menuId: number,
-	options?: {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGet>>, TError, TData>>;
-	},
-	queryClient?: QueryClient
-): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getMenuGetQueryOptions(menuId, options);
-
-	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
-		queryKey: DataTag<QueryKey, TData, TError>;
-	};
-
-	query.queryKey = queryOptions.queryKey;
-
-	return query;
-}
-
 export const menuGetSectionsGetMenusSections = (params: MenuGetSectionsGetMenusSectionsParams) => {
 	return customInstance<MenuGetSectionsResponse>({ url: `/menu/sections`, method: "GET", params });
 };
@@ -414,6 +360,67 @@ export function createMenuGetOutletMenuGetOutletMenus<
 	return query;
 }
 
+export const menuGetItemsGetMenuItems = (params: MenuGetItemsGetMenuItemsParams) => {
+	return customInstance<DTOMenuItemDTOBasic[]>({ url: `/menu/items`, method: "GET", params });
+};
+
+export const getMenuGetItemsGetMenuItemsQueryKey = (params: MenuGetItemsGetMenuItemsParams) => {
+	return [`/menu/items`, ...(params ? [params] : [])] as const;
+};
+
+export const getMenuGetItemsGetMenuItemsQueryOptions = <
+	TData = Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: MenuGetItemsGetMenuItemsParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getMenuGetItemsGetMenuItemsQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>> = () =>
+		menuGetItemsGetMenuItems(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type MenuGetItemsGetMenuItemsQueryResult = NonNullable<
+	Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>
+>;
+export type MenuGetItemsGetMenuItemsQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createMenuGetItemsGetMenuItems<
+	TData = Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: MenuGetItemsGetMenuItemsParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData>
+		>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getMenuGetItemsGetMenuItemsQueryOptions(params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const menuGetItemGetMenuItems = (params: MenuGetItemGetMenuItemsParams) => {
 	return customInstance<DTOMenuItemDTO>({ url: `/menu/item`, method: "GET", params });
 };
@@ -475,57 +482,50 @@ export function createMenuGetItemGetMenuItems<
 	return query;
 }
 
-export const menuGetItemsGetMenuItems = (params: MenuGetItemsGetMenuItemsParams) => {
-	return customInstance<DTOMenuItemDTOBasic[]>({ url: `/menu/items`, method: "GET", params });
+export const menuGet = (menuId: number) => {
+	return customInstance<EntitiesMenu>({ url: `/menu/${menuId}`, method: "GET" });
 };
 
-export const getMenuGetItemsGetMenuItemsQueryKey = (params: MenuGetItemsGetMenuItemsParams) => {
-	return [`/menu/items`, ...(params ? [params] : [])] as const;
+export const getMenuGetQueryKey = (menuId: number) => {
+	return [`/menu/${menuId}`] as const;
 };
 
-export const getMenuGetItemsGetMenuItemsQueryOptions = <
-	TData = Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>,
+export const getMenuGetQueryOptions = <
+	TData = Awaited<ReturnType<typeof menuGet>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params: MenuGetItemsGetMenuItemsParams,
+	menuId: number,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGet>>, TError, TData>>;
 	}
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getMenuGetItemsGetMenuItemsQueryKey(params);
+	const queryKey = queryOptions?.queryKey ?? getMenuGetQueryKey(menuId);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>> = () =>
-		menuGetItemsGetMenuItems(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGet>>> = () => menuGet(menuId);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>,
+	return { queryKey, queryFn, enabled: !!menuId, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof menuGet>>,
 		TError,
 		TData
 	> & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type MenuGetItemsGetMenuItemsQueryResult = NonNullable<
-	Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>
->;
-export type MenuGetItemsGetMenuItemsQueryError = ErrorType<void | InternalErrorResponse>;
+export type MenuGetQueryResult = NonNullable<Awaited<ReturnType<typeof menuGet>>>;
+export type MenuGetQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createMenuGetItemsGetMenuItems<
-	TData = Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>,
+export function createMenuGet<
+	TData = Awaited<ReturnType<typeof menuGet>>,
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
-	params: MenuGetItemsGetMenuItemsParams,
+	menuId: number,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGet>>, TError, TData>>;
 	},
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getMenuGetItemsGetMenuItemsQueryOptions(params, options);
+	const queryOptions = getMenuGetQueryOptions(menuId, options);
 
 	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

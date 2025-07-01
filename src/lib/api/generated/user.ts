@@ -291,76 +291,6 @@ export function createUserTasks<
 	return query;
 }
 
-export const userRemoveUserOutlet = (userId: string) => {
-	return customInstance<void>({ url: `/user/outlet/${userId}`, method: "DELETE" });
-};
-
-export const getUserRemoveUserOutletMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof userRemoveUserOutlet>>,
-		TError,
-		{ userId: string },
-		TContext
-	>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof userRemoveUserOutlet>>,
-	TError,
-	{ userId: string },
-	TContext
-> => {
-	const mutationKey = ["userRemoveUserOutlet"];
-	const { mutation: mutationOptions } = options
-		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey } };
-
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof userRemoveUserOutlet>>,
-		{ userId: string }
-	> = (props) => {
-		const { userId } = props ?? {};
-
-		return userRemoveUserOutlet(userId);
-	};
-
-	return { mutationFn, ...mutationOptions };
-};
-
-export type UserRemoveUserOutletMutationResult = NonNullable<
-	Awaited<ReturnType<typeof userRemoveUserOutlet>>
->;
-
-export type UserRemoveUserOutletMutationError = ErrorType<
-	ErrorResponse | void | InternalErrorResponse
->;
-
-export const createUserRemoveUserOutlet = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
-	options?: {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof userRemoveUserOutlet>>,
-			TError,
-			{ userId: string },
-			TContext
-		>;
-	},
-	queryClient?: QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof userRemoveUserOutlet>>,
-	TError,
-	{ userId: string },
-	TContext
-> => {
-	const mutationOptions = getUserRemoveUserOutletMutationOptions(options);
-
-	return createMutation(mutationOptions, queryClient);
-};
 export const userRemoveUserOutletRole = (userId: string, role: string) => {
 	return customInstance<void>({ url: `/user/role/${userId}/${role}`, method: "DELETE" });
 };
@@ -428,6 +358,76 @@ export const createUserRemoveUserOutletRole = <
 	TContext
 > => {
 	const mutationOptions = getUserRemoveUserOutletRoleMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const userRemoveUserOutlet = (userId: string) => {
+	return customInstance<void>({ url: `/user/outlet/${userId}`, method: "DELETE" });
+};
+
+export const getUserRemoveUserOutletMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof userRemoveUserOutlet>>,
+		TError,
+		{ userId: string },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof userRemoveUserOutlet>>,
+	TError,
+	{ userId: string },
+	TContext
+> => {
+	const mutationKey = ["userRemoveUserOutlet"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof userRemoveUserOutlet>>,
+		{ userId: string }
+	> = (props) => {
+		const { userId } = props ?? {};
+
+		return userRemoveUserOutlet(userId);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type UserRemoveUserOutletMutationResult = NonNullable<
+	Awaited<ReturnType<typeof userRemoveUserOutlet>>
+>;
+
+export type UserRemoveUserOutletMutationError = ErrorType<
+	ErrorResponse | void | InternalErrorResponse
+>;
+
+export const createUserRemoveUserOutlet = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof userRemoveUserOutlet>>,
+			TError,
+			{ userId: string },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof userRemoveUserOutlet>>,
+	TError,
+	{ userId: string },
+	TContext
+> => {
+	const mutationOptions = getUserRemoveUserOutletMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };

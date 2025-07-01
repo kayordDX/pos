@@ -89,6 +89,71 @@ export function createSalesPeriodGet<
 	return query;
 }
 
+export const salesPeriodCreateCashUp = (params: SalesPeriodCreateCashUpParams) => {
+	return customInstance<EntitiesCashUp>({
+		url: `/salesperiod/createCashup`,
+		method: "GET",
+		params,
+	});
+};
+
+export const getSalesPeriodCreateCashUpQueryKey = (params: SalesPeriodCreateCashUpParams) => {
+	return [`/salesperiod/createCashup`, ...(params ? [params] : [])] as const;
+};
+
+export const getSalesPeriodCreateCashUpQueryOptions = <
+	TData = Awaited<ReturnType<typeof salesPeriodCreateCashUp>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: SalesPeriodCreateCashUpParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getSalesPeriodCreateCashUpQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>> = () =>
+		salesPeriodCreateCashUp(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof salesPeriodCreateCashUp>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type SalesPeriodCreateCashUpQueryResult = NonNullable<
+	Awaited<ReturnType<typeof salesPeriodCreateCashUp>>
+>;
+export type SalesPeriodCreateCashUpQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createSalesPeriodCreateCashUp<
+	TData = Awaited<ReturnType<typeof salesPeriodCreateCashUp>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: SalesPeriodCreateCashUpParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError, TData>
+		>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getSalesPeriodCreateCashUpQueryOptions(params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const salesPeriodCreate = (salesPeriodCreateRequest: BodyType<SalesPeriodCreateRequest>) => {
 	return customInstance<EntitiesSalesPeriod>({
 		url: `/salesPeriod`,
@@ -164,71 +229,6 @@ export const createSalesPeriodCreate = <
 
 	return createMutation(mutationOptions, queryClient);
 };
-export const salesPeriodCreateCashUp = (params: SalesPeriodCreateCashUpParams) => {
-	return customInstance<EntitiesCashUp>({
-		url: `/salesperiod/createCashup`,
-		method: "GET",
-		params,
-	});
-};
-
-export const getSalesPeriodCreateCashUpQueryKey = (params: SalesPeriodCreateCashUpParams) => {
-	return [`/salesperiod/createCashup`, ...(params ? [params] : [])] as const;
-};
-
-export const getSalesPeriodCreateCashUpQueryOptions = <
-	TData = Awaited<ReturnType<typeof salesPeriodCreateCashUp>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	params: SalesPeriodCreateCashUpParams,
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError, TData>
-		>;
-	}
-) => {
-	const { query: queryOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getSalesPeriodCreateCashUpQueryKey(params);
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>> = () =>
-		salesPeriodCreateCashUp(params);
-
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof salesPeriodCreateCashUp>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type SalesPeriodCreateCashUpQueryResult = NonNullable<
-	Awaited<ReturnType<typeof salesPeriodCreateCashUp>>
->;
-export type SalesPeriodCreateCashUpQueryError = ErrorType<void | InternalErrorResponse>;
-
-export function createSalesPeriodCreateCashUp<
-	TData = Awaited<ReturnType<typeof salesPeriodCreateCashUp>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	params: SalesPeriodCreateCashUpParams,
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError, TData>
-		>;
-	},
-	queryClient?: QueryClient
-): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getSalesPeriodCreateCashUpQueryOptions(params, options);
-
-	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
-		queryKey: DataTag<QueryKey, TData, TError>;
-	};
-
-	query.queryKey = queryOptions.queryKey;
-
-	return query;
-}
-
 export const salesPeriodClose = (salesPeriodCloseRequest: BodyType<SalesPeriodCloseRequest>) => {
 	return customInstance<EntitiesSalesPeriod>({
 		url: `/salesPeriod/close`,

@@ -2,6 +2,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
 	import { info } from "$lib/stores/info.svelte";
+	import { status } from "$lib/stores/status.svelte";
 	import { Collapsible, Sidebar } from "@kayord/ui";
 	const sidebar = Sidebar.useSidebar();
 
@@ -133,6 +134,7 @@
 			title: "Stock",
 			href: "",
 			icon: BookOpenTextIcon,
+			feature: "stock",
 			items: [
 				{
 					title: "Stock Items",
@@ -201,69 +203,71 @@
 		<Sidebar.GroupContent>
 			<Sidebar.Menu class="px-2">
 				{#each menuItems as item (item.title)}
-					{#if (item.items?.length ?? 0) > 0}
-						<Collapsible.Root class="group/collapsible">
+					{#if !item.feature || status.hasFeature(item.feature)}
+						{#if (item.items?.length ?? 0) > 0}
+							<Collapsible.Root class="group/collapsible">
+								<Sidebar.MenuItem>
+									<Collapsible.Trigger class="w-full flex items-center justify-between">
+										<Sidebar.MenuButton>
+											{#if item.icon}
+												<item.icon class="!size-5" />
+											{/if}
+											{item.title}
+											<Plus class="ml-auto group-data-[state=open]/collapsible:hidden" />
+											<Minus class="ml-auto group-data-[state=closed]/collapsible:hidden" />
+										</Sidebar.MenuButton>
+									</Collapsible.Trigger>
+									{#if item.items?.length}
+										<Collapsible.Content>
+											<Sidebar.MenuSub>
+												{#each item.items as subItem (subItem.title)}
+													<Sidebar.MenuSubItem>
+														<Sidebar.MenuSubButton
+															class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-sm cursor-pointer"
+															onclick={() => {
+																goto(subItem.href);
+																if (sidebar.isMobile) {
+																	sidebar.setOpenMobile(false);
+																}
+															}}
+															isActive={activeItem?.title === subItem.title}
+														>
+															{#if subItem.icon}
+																<subItem.icon
+																	class={`!size-5 ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`}
+																/>
+															{/if}
+															<span>{subItem.title}</span>
+														</Sidebar.MenuSubButton>
+													</Sidebar.MenuSubItem>
+												{/each}
+											</Sidebar.MenuSub>
+										</Collapsible.Content>
+									{/if}
+								</Sidebar.MenuItem>
+							</Collapsible.Root>
+						{:else}
 							<Sidebar.MenuItem>
-								<Collapsible.Trigger class="w-full flex items-center justify-between">
-									<Sidebar.MenuButton>
-										{#if item.icon}
-											<item.icon class="!size-5" />
-										{/if}
-										{item.title}
-										<Plus class="ml-auto group-data-[state=open]/collapsible:hidden" />
-										<Minus class="ml-auto group-data-[state=closed]/collapsible:hidden" />
-									</Sidebar.MenuButton>
-								</Collapsible.Trigger>
-								{#if item.items?.length}
-									<Collapsible.Content>
-										<Sidebar.MenuSub>
-											{#each item.items as subItem (subItem.title)}
-												<Sidebar.MenuSubItem>
-													<Sidebar.MenuSubButton
-														class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-sm cursor-pointer"
-														onclick={() => {
-															goto(subItem.href);
-															if (sidebar.isMobile) {
-																sidebar.setOpenMobile(false);
-															}
-														}}
-														isActive={activeItem?.title === subItem.title}
-													>
-														{#if subItem.icon}
-															<subItem.icon
-																class={`!size-5 ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`}
-															/>
-														{/if}
-														<span>{subItem.title}</span>
-													</Sidebar.MenuSubButton>
-												</Sidebar.MenuSubItem>
-											{/each}
-										</Sidebar.MenuSub>
-									</Collapsible.Content>
-								{/if}
+								<Sidebar.MenuButton
+									class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-sm"
+									tooltipContentProps={{
+										hidden: false,
+									}}
+									onclick={() => {
+										goto(item.href);
+										if (sidebar.isMobile) {
+											sidebar.setOpenMobile(false);
+										}
+									}}
+									isActive={activeItem?.title === item.title}
+								>
+									{#if item.icon}
+										<item.icon class="!size-5" />
+									{/if}
+									<span>{item.title}</span>
+								</Sidebar.MenuButton>
 							</Sidebar.MenuItem>
-						</Collapsible.Root>
-					{:else}
-						<Sidebar.MenuItem>
-							<Sidebar.MenuButton
-								class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-sm"
-								tooltipContentProps={{
-									hidden: false,
-								}}
-								onclick={() => {
-									goto(item.href);
-									if (sidebar.isMobile) {
-										sidebar.setOpenMobile(false);
-									}
-								}}
-								isActive={activeItem?.title === item.title}
-							>
-								{#if item.icon}
-									<item.icon class="!size-5" />
-								{/if}
-								<span>{item.title}</span>
-							</Sidebar.MenuButton>
-						</Sidebar.MenuItem>
+						{/if}
 					{/if}
 				{/each}
 			</Sidebar.Menu>
