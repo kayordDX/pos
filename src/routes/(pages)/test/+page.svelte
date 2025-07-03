@@ -1,63 +1,64 @@
 <script lang="ts">
-	import { Header } from "$lib/components/Header";
-	import { THEMES } from "$lib/themes";
-	import { Button, Select, toast } from "@kayord/ui";
-	import { setTheme, theme } from "@kayord/ui/mode-watcher";
+	import { Button, toast } from "@kayord/ui";
+	import { zod } from "sveltekit-superforms/adapters";
+	import { defaults, superForm } from "sveltekit-superforms/client";
+	import { z } from "zod";
+	import { Field, Control, FieldErrors } from "@kayord/ui/formsnap";
+	import Quantity from "$lib/components/Quantity/Quantity.svelte";
+	import { delay } from "$lib/util";
 
-	const label = $derived(THEMES.find((t) => t.value === theme.current)?.name ?? "Select a theme");
+	const schema = z.object({
+		quantity: z.coerce.number().min(1),
+	});
+	type FormSchema = z.infer<typeof schema>;
 
-	const colors = [
-		"accent-foreground",
-		"accent",
-		"background",
-		"border",
-		"card-foreground",
-		"card",
-		"destructive",
-		"foreground",
-		"input",
-		"muted-foreground",
-		"muted",
-		"popover-foreground",
-		"popover",
-		"primary-foreground",
-		"primary",
-		"ring",
-		"secondary-foreground",
-		"secondary",
-		"sidebar-accent-foreground",
-		"sidebar-accent",
-		"sidebar-background",
-		"sidebar-border",
-		"sidebar-foreground",
-		"sidebar-primary-foreground",
-		"sidebar-primary",
-		"sidebar-ring",
-		"sidebar",
-	];
+	let isSubmitting = $state(false);
+
+	const form = superForm(defaults({ quantity: 1 }, zod(schema)), {
+		SPA: true,
+		// validators: zod(schema),
+		// multipleSubmits: "prevent",
+		// delayMs: 1500,
+		// timeoutMs: 8000,
+		onUpdated: async ({ form }) => {
+			if (isSubmitting) {
+				console.log("prevent");
+				return;
+			}
+			isSubmitting = true;
+			if (form.valid) {
+				await delay(2000);
+				toast("...");
+				console.log(form);
+			}
+			isSubmitting = false;
+		},
+		// async onUpdate({ form }) {
+		// 	console.log(isSubmitting, "KJ", $delayed, $submitting, $timeout);
+		// 	if (form.valid) {
+		// 		onSubmit(form.data);
+		// 	}
+		// },
+	});
+
+	const { form: formData, enhance, delayed, submitting, timeout } = form;
 </script>
 
-<Header />
-<div class="flex gap-8 flex-col p-6">
-	<Select.Root type="single" bind:value={() => theme.current, (v) => setTheme(v ?? "default")}>
-		<Select.Trigger size="sm" class="w-32">
-			{label}
-		</Select.Trigger>
-		<Select.Content align="end">
-			{#each THEMES as theme (theme.value)}
-				<Select.Item value={theme.value} label={theme.name}>{theme.name}</Select.Item>
-			{/each}
-		</Select.Content>
-	</Select.Root>
-</div>
-
-<div class="flex items-start justify-start gap-2 flex-wrap p-2 rounded-md m-2">
-	{#each colors as color}
-		<div class="flex items-center gap-2">
-			<div style={"background-color: var(--color-" + color + ");"} class="size-7 rounded-md"></div>
-			<div>{color}</div>
-		</div>
-	{/each}
-</div>
-
-<Button onclick={() => toast("test")}>Test</Button>
+<form use:enhance method="POST">
+	<Field {form} name="quantity">
+		<Control>
+			<Quantity bind:value={$formData.quantity} />
+		</Control>
+		<FieldErrors />
+	</Field>
+	<Button class="mt-2" type="submit">Add</Button>
+	<div>
+		Delayed: {$delayed}
+	</div>
+	<div>
+		submitting: {$submitting}
+	</div>
+	<div>
+		timeout: {$timeout}
+	</div>
+</form>

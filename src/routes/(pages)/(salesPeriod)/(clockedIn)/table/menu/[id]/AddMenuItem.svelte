@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createOrderAddItems, type DTOMenuItemDTO, type DTOOptionDTO } from "$lib/api";
-	import { Button, Checkbox, Drawer, Form, Textarea } from "@kayord/ui";
+	import { Button, Checkbox, Drawer, Form, Textarea, toast } from "@kayord/ui";
 	import { zod } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
@@ -57,30 +57,40 @@
 
 	const mutation = createOrderAddItems();
 
+	let isSubmitting = $state(false);
+
 	const onSubmit = async (formData: FormSchema) => {
-		await $mutation.mutateAsync({
-			data: {
-				orders: [
-					{
-						menuItemId: data.menuItemId,
-						extraIds: arrayUnique(formData.extras.concat(currentExtras)),
-						optionIds: formData.options,
-						note: formData.note,
-						quantity: formData.quantity,
-					},
-				],
-				tableBookingId: tableBookingId,
-			},
-		});
-		open = false;
+		try {
+			isSubmitting = true;
+			await $mutation.mutateAsync({
+				data: {
+					orders: [
+						{
+							menuItemId: data.menuItemId,
+							extraIds: arrayUnique(formData.extras.concat(currentExtras)),
+							optionIds: formData.options,
+							note: formData.note,
+							quantity: formData.quantity,
+						},
+					],
+					tableBookingId: tableBookingId,
+				},
+			});
+			toast.info("Added to basket");
+		} catch (err) {
+			toast.error(getError(err).message);
+		} finally {
+			open = false;
+			isSubmitting = false;
+		}
 	};
 
 	const form = superForm(defaults({ quantity: 1 }, zod(schema)), {
 		SPA: true,
 		validators: zod(schema),
-		onUpdate({ form }) {
+		onUpdated: async ({ form }) => {
 			if (form.valid) {
-				onSubmit(form.data);
+				await onSubmit(form.data);
 			}
 		},
 	});
@@ -220,6 +230,7 @@
 		{#if $mutation.isError}
 			<Error message={getError($mutation.error).message} />
 		{/if}
-		<Button class="mt-2" type="submit">Add</Button>
+
+		<Button class="mt-2" type="submit" disabled={isSubmitting || !open}>Add</Button>
 	</Drawer.Footer>
 </form>
