@@ -36,7 +36,7 @@
 	{@render children()}
 {/if}
 <div class="w-full flex mb-2 items-center justify-center fixed bottom-0">
-	<div class="bg-secondary flex items-center py-1 gap-2 rounded-sm px-2">
+	<div class="bg-secondary flex items-center py-1 gap-2 rounded-md px-2">
 		<a class="flex items-center text-muted-foreground" href={`/waiter`}
 			><HomeIcon class="w-4 h-4" />
 		</a>
