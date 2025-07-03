@@ -14,14 +14,19 @@
 
 	const actionMutation = createStockAllocateItemAction();
 
+	let disableActions: Array<number> = $state([]);
+
 	const action = async (id: number, statusId: number) => {
 		try {
+			disableActions.push(id);
 			await $actionMutation.mutateAsync({ data: { id, stockAllocateItemStatusId: statusId } });
 			$query.refetch();
 			toast.info("Actioned task");
 			status.getStatus();
 		} catch (err) {
 			toast.error(getError(err).message);
+		} finally {
+			disableActions = disableActions.filter((item) => item !== id);
 		}
 	};
 
@@ -49,10 +54,17 @@
 							<Badge variant="outline" class="w-fit">{task.type}: {task.status}</Badge>
 						</div>
 						<div class="flex flex-col gap-2">
-							<Button onclick={() => action(task.id, 4)}>
+							<Button
+								onclick={() => action(task.id, 4)}
+								disabled={disableActions.includes(task.id)}
+							>
 								<CircleCheckIcon /> Approve
 							</Button>
-							<Button onclick={() => action(task.id, 5)} variant="destructive">
+							<Button
+								onclick={() => action(task.id, 5)}
+								variant="destructive"
+								disabled={disableActions.includes(task.id)}
+							>
 								<CircleXIcon /> Reject
 							</Button>
 						</div>
