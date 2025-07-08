@@ -162,6 +162,8 @@
 		}
 		filters = qb.build();
 	});
+
+	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
 </script>
 
 {#snippet statusCol(stockOrder: DTOStockOrderResponseDTO)}
@@ -181,12 +183,14 @@
 				<h2>Orders</h2>
 				<Search bind:search name="Orders" />
 			</div>
-			<AddOrder bind:open={addOrderOpen} refetch={$query.refetch} />
 		</div>
 		<div class="flex gap-2 items-center">
-			<Button size="sm" onclick={() => (addOrderOpen = true)}>
-				<PlusIcon class="h-5 w-5" /> Add
-			</Button>
+			{#if hasOpenSalesPeriod}
+				<AddOrder bind:open={addOrderOpen} refetch={$query.refetch} />
+				<Button size="sm" onclick={() => (addOrderOpen = true)}>
+					<PlusIcon class="h-5 w-5" /> Add
+				</Button>
+			{/if}
 		</div>
 	</div>
 {/snippet}

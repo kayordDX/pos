@@ -22,6 +22,7 @@
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
 	import { stringToFDate } from "$lib/util";
+	import { status } from "$lib/stores/status.svelte";
 
 	const query = createStockAllocateGet(Number(page.params.Id));
 
@@ -38,7 +39,8 @@
 		$query.refetch();
 	};
 
-	const canEdit = $derived($query.data?.stockAllocateStatusId === 1);
+	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
+	const canEdit = $derived($query.data?.stockAllocateStatusId === 1 && hasOpenSalesPeriod);
 
 	const columns: ColumnDef<DTOStockAllocateItemDTO>[] = [
 		{
@@ -55,7 +57,7 @@
 			header: "Status",
 			accessorKey: "stockOrderItemStatus.name",
 			size: 1000,
-			cell: (item) => renderSnippet(status, item.row.original),
+			cell: (item) => renderSnippet(statusSnippet, item.row.original),
 		},
 		{
 			header: "Completed",
@@ -103,7 +105,7 @@
 	});
 </script>
 
-{#snippet status(item: DTOStockAllocateItemDTO)}
+{#snippet statusSnippet(item: DTOStockAllocateItemDTO)}
 	{@const variant =
 		item.stockAllocateItemStatusId === 1
 			? "default"

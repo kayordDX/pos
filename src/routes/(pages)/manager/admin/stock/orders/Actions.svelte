@@ -4,6 +4,7 @@
 	import { createStockOrderCancel, type DTOStockOrderResponseDTO } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
+	import { status } from "$lib/stores/status.svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -14,7 +15,9 @@
 
 	let cancelOpen = $state(false);
 
-	const showCancel = $derived(stockOrder.stockOrderStatusId == 1);
+	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
+
+	const showCancel = $derived(hasOpenSalesPeriod && stockOrder.stockOrderStatusId == 1);
 
 	const cancelMutation = createStockOrderCancel();
 	const cancelStockOrder = async () => {

@@ -3,6 +3,7 @@
 	import { EllipsisVerticalIcon, PencilIcon } from "@lucide/svelte";
 	import { type StockItemsGetAllResponse } from "$lib/api";
 	import EditStockItem from "./EditStockItem.svelte";
+	import { status } from "$lib/stores/status.svelte";
 
 	interface Props {
 		parentRefetch: () => void;
@@ -13,6 +14,8 @@
 	let { refetch, stockItem, parentRefetch }: Props = $props();
 
 	let editOpen = $state(false);
+
+	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
 </script>
 
 <DropdownMenu.Root>
@@ -22,7 +25,9 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>
+		<DropdownMenu.Item disabled={!hasOpenSalesPeriod} onclick={() => (editOpen = true)}>
+			<PencilIcon /> Edit
+		</DropdownMenu.Item>
 	</DropdownMenu.Content>
 </DropdownMenu.Root>
 

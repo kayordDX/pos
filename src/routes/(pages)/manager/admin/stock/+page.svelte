@@ -154,7 +154,7 @@
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">
 		<div class="flex gap-2 items-center">
-			<Search bind:search name="Orders" />
+			<Search bind:search name="Stock Items" />
 		</div>
 		<div class="flex gap-2 items-center">
 			<Button size="sm" onclick={() => (addOpen = true)}>

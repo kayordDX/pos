@@ -24,6 +24,7 @@
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
 	import { stringToFDate } from "$lib/util";
+	import { status } from "$lib/stores/status.svelte";
 
 	const query = createStockOrderGet(Number(page.params.Id));
 
@@ -31,7 +32,8 @@
 
 	let data = $derived($query.data?.stockOrderItems ?? []);
 
-	const showActions = $derived($query?.data?.stockOrderStatus.id != 3);
+	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
+	const showActions = $derived($query?.data?.stockOrderStatus.id != 3 && hasOpenSalesPeriod);
 
 	const columns: ColumnDef<DTOStockOrderItemDTO>[] = [
 		{
@@ -61,7 +63,7 @@
 			header: "Status",
 			accessorKey: "stockOrderItemStatus.name",
 			size: 1000,
-			cell: (item) => renderSnippet(status, item.row.original),
+			cell: (item) => renderSnippet(statusSnippet, item.row.original),
 		},
 		{
 			header: "Status Date",
@@ -124,7 +126,7 @@
 	};
 </script>
 
-{#snippet status(item: DTOStockOrderItemDTO)}
+{#snippet statusSnippet(item: DTOStockOrderItemDTO)}
 	{@const variant =
 		item.stockOrderItemStatusId === 1
 			? "default"
