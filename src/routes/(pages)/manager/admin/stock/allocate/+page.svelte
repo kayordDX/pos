@@ -13,6 +13,7 @@
 	import AddAllocation from "./AddAllocation.svelte";
 
 	let addAllocateOpen = $state(false);
+	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
 
 	import { type DTOStockAllocateDTO, createStockAllocateGetAll } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
@@ -208,12 +209,14 @@
 				<h2>Allocate</h2>
 				<Search bind:search name="Allocations" />
 			</div>
-			<AddAllocation bind:open={addAllocateOpen} refetch={$query.refetch} />
 		</div>
 		<div class="flex gap-2 items-center">
-			<Button size="sm" onclick={() => (addAllocateOpen = true)}>
-				<PlusIcon class="h-5 w-5" /> Add
-			</Button>
+			{#if hasOpenSalesPeriod}
+				<AddAllocation bind:open={addAllocateOpen} refetch={$query.refetch} />
+				<Button size="sm" onclick={() => (addAllocateOpen = true)}>
+					<PlusIcon class="h-5 w-5" /> Add
+				</Button>
+			{/if}
 		</div>
 	</div>
 {/snippet}
