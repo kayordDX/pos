@@ -29,18 +29,20 @@
 	// };
 </script>
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger>
-		<Button size="icon" variant="secondary">
-			<EllipsisVerticalIcon class="size-5" />
-		</Button>
-	</DropdownMenu.Trigger>
-	<DropdownMenu.Content>
-		<DropdownMenu.Item onclick={() => (editOpen = true)}>
-			<PencilIcon /> Edit Role
-		</DropdownMenu.Item>
-	</DropdownMenu.Content>
-</DropdownMenu.Root>
+{#if role?.roleType.name !== "manager" && role?.roleType.name !== "guest"}
+	<DropdownMenu.Root>
+		<DropdownMenu.Trigger>
+			<Button size="icon" variant="secondary">
+				<EllipsisVerticalIcon class="size-5" />
+			</Button>
+		</DropdownMenu.Trigger>
+		<DropdownMenu.Content>
+			<DropdownMenu.Item onclick={() => (editOpen = true)}>
+				<PencilIcon /> Edit Role
+			</DropdownMenu.Item>
+		</DropdownMenu.Content>
+	</DropdownMenu.Root>
+{/if}
 {#if editOpen}
 	<AddEditDivision bind:open={editOpen} {refetch} {role} />
 {/if}

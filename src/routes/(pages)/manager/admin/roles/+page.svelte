@@ -9,7 +9,7 @@
 	import AddEditRole from "./AddEditRole.svelte";
 
 	const query = createRoleGetAll(status.value.outletId);
-	let selectedDivision = $state<EntitiesRole | undefined>(undefined);
+	let selectedRole = $state<EntitiesRole | undefined>(undefined);
 	let isDialogOpen = $state(false);
 
 	const columns: ColumnDef<EntitiesRole>[] = [
@@ -36,14 +36,14 @@
 				renderComponent(Actions, {
 					role: row.row.original,
 					refetch: $query.refetch,
-					setSection: selectedDivision,
+					setSection: selectedRole,
 					openDialog: () => (isDialogOpen = true),
 				}),
 			size: 10,
 		},
 	];
 	const openAdd = () => {
-		selectedDivision = undefined;
+		selectedRole = undefined;
 		isDialogOpen = true;
 	};
 	let data = $derived($query.data ?? []);
@@ -71,7 +71,7 @@
 		<Button onclick={openAdd}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
-		<AddEditRole bind:open={isDialogOpen} role={selectedDivision} refetch={$query.refetch} />
+		<AddEditRole bind:open={isDialogOpen} role={selectedRole} refetch={$query.refetch} />
 	</div>
 {/snippet}
 
