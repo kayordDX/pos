@@ -1,14 +1,12 @@
 <script lang="ts">
 	import { scaleBand } from "d3-scale";
-	import { Highlight, LineChart, type ChartContextValue } from "layerchart";
-	import TrendingUpIcon from "@lucide/svelte/icons/trending-up";
+	import { Highlight, LineChart } from "layerchart";
 	import { Chart, Card } from "@kayord/ui";
-	import { cubicInOut } from "svelte/easing";
 	import { curveNatural } from "d3-shape";
 
 	const chartData = [
 		{ payment: "Account", amount: 1600, average: 1600 },
-		{ payment: "Cash", amount: 4622.0, average: 157 },
+		{ payment: "Cash", amount: 4622.0, average: 5157 },
 		{ payment: "Credit Card", amount: 9392, average: 339 },
 		{ payment: "Halo", amount: 41454, average: 311 },
 	];
@@ -16,7 +14,6 @@
 		amount: { label: "Amount", color: "var(--chart-1)" },
 		average: { label: "Average", color: "var(--chart-3)" },
 	} satisfies Chart.ChartConfig;
-	let context = $state<ChartContextValue>();
 </script>
 
 <div class="m-2 flex flex-col items-center">
@@ -33,16 +30,16 @@
 					data={chartData}
 					x="payment"
 					xScale={scaleBand()}
-					axis="x"
+					legend
 					series={[
 						{
 							key: "amount",
-							label: "Desktop",
+							label: "Amount",
 							color: chartConfig.amount.color,
 						},
 						{
 							key: "average",
-							label: "Mobile",
+							label: "Average",
 							color: chartConfig.average.color,
 							props: {
 								"stroke-dasharray": "6,4",
@@ -52,7 +49,9 @@
 					]}
 					props={{
 						spline: { curve: curveNatural, motion: "tween", strokeWidth: 3 },
-						highlight: { points: { r: 4 } },
+						yAxis: {
+							placement: "radius",
+						},
 					}}
 				>
 					{#snippet belowMarks()}
