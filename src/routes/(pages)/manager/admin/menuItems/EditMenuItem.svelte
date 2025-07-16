@@ -13,7 +13,7 @@
 		toast,
 	} from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { status } from "$lib/stores/status.svelte";
 	import {
@@ -119,9 +119,9 @@
 			menuItem?.menuItemOptionGroups.map((i) => i.optionGroupId) ?? new Array<number>(),
 	});
 	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod(schema)), {
+	const form = superForm(defaults(defaultValues, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		id: `menu-item-${menuItem?.menuItemId ?? 0}`,
 		resetForm: false,
 		onUpdate({ form }) {

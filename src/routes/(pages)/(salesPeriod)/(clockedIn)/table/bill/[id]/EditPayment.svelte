@@ -4,7 +4,7 @@
 	import { getError } from "$lib/types";
 	import { Button, Dialog, Form, Select, toast, Input } from "@kayord/ui";
 	import { PencilIcon } from "@lucide/svelte";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 
@@ -44,9 +44,9 @@
 		}
 	};
 
-	const form = superForm(defaults({ paymentTypeId, amount }, zod(schema)), {
+	const form = superForm(defaults({ paymentTypeId, amount }, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		resetForm: false,
 		onUpdate({ form }) {
 			if (form.valid) {

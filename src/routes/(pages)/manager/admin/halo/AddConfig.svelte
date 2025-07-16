@@ -3,7 +3,7 @@
 	import { Button, Dialog, Form, Input, toast } from "@kayord/ui";
 	import { PlusIcon } from "@lucide/svelte";
 	import { defaults, superForm } from "sveltekit-superforms";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
@@ -41,9 +41,9 @@
 		}
 	};
 
-	const form = superForm(defaults(zod(schema)), {
+	const form = superForm(defaults(zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdate({ form }) {
 			if (form.valid) {
 				createHaloConfig(form.data);

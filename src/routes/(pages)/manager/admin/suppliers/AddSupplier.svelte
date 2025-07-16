@@ -9,7 +9,7 @@
 		type StockGetAllResponse,
 	} from "$lib/api";
 	import { defaults, superForm } from "sveltekit-superforms/client";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
@@ -74,10 +74,10 @@
 	};
 
 	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod(schema)), {
+	const form = superForm(defaults(defaultValues, zod4(schema)), {
 		SPA: true,
 		id: supplier?.id.toString() ?? "0",
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);

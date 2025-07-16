@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Badge, Button, Card, Form, Input, Select, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms/client";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { page } from "$app/state";
 	import { client, createPayManualPayment, createOutletGetPaymentType } from "$lib/api";
@@ -58,9 +58,9 @@
 		goto(`/table/bill/${page.params.id}`);
 	};
 
-	const form = superForm(defaults(zod(schema)), {
+	const form = superForm(defaults(zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		resetForm: false,
 		onUpdate({ form }) {
 			if (form.valid) {

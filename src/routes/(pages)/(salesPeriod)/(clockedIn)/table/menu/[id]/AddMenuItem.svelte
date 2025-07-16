@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createOrderAddItems, type DTOMenuItemDTO, type DTOOptionDTO } from "$lib/api";
 	import { Button, Checkbox, Drawer, Form, Textarea, toast } from "@kayord/ui";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { Field, Control, FieldErrors, Fieldset, Legend, Label } from "@kayord/ui/formsnap";
@@ -85,9 +85,9 @@
 		}
 	};
 
-	const form = superForm(defaults({ quantity: 1 }, zod(schema)), {
+	const form = superForm(defaults({ quantity: 1 }, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdated: async ({ form }) => {
 			if (form.valid) {
 				await onSubmit(form.data);
