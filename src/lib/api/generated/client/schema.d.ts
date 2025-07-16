@@ -1236,6 +1236,38 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stats/salesPeriod": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["StatsTopSalesPeriod"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/stats/paymentTypes": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["StatsPaymentTypes"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/section/{sectionId}": {
         parameters: {
             query?: never;
@@ -4370,7 +4402,7 @@ export interface components {
             stockAllocateItemStatusId: number;
             stockAllocateItemStatus: components["schemas"]["EntitiesStockAllocateItemStatus"];
             /** Format: date-time */
-            completed: string;
+            completed?: string | null;
             /** Format: int32 */
             stockAllocateId: number;
             assignedUserId: string;
@@ -4551,6 +4583,24 @@ export interface components {
             toDivisionId: number;
             assignedUserId: string;
         };
+        StatsTopSalesPeriodResponse: {
+            /** Format: int32 */
+            id: number;
+            name?: string | null;
+            /** Format: date-time */
+            startDate?: string | null;
+            /** Format: date-time */
+            endDate?: string | null;
+        };
+        StatsTopSalesPeriodRequest: Record<string, never>;
+        StatsPaymentTypesResponse: {
+            paymentType: string;
+            /** Format: decimal */
+            amount: number;
+            /** Format: decimal */
+            averageAmount: number;
+        };
+        StatsPaymentTypesRequest: Record<string, never>;
         SectionUpdateRequest: {
             /** Format: int32 */
             id: number;
@@ -9212,6 +9262,83 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["DTOStockAllocateDTO"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StatsTopSalesPeriod: {
+        parameters: {
+            query: {
+                top: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatsTopSalesPeriodResponse"][];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StatsPaymentTypes: {
+        parameters: {
+            query: {
+                salesPeriodId: number;
+                top: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["StatsPaymentTypesResponse"][];
                 };
             };
             /** @description Unauthorized */

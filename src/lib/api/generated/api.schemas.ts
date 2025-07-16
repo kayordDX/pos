@@ -1840,7 +1840,8 @@ export type EntitiesStockAllocateItemAllOf = {
 	actual: number;
 	stockAllocateItemStatusId: number;
 	stockAllocateItemStatus: EntitiesStockAllocateItemStatus;
-	completed: string;
+	/** @nullable */
+	completed?: string | null;
 	stockAllocateId: number;
 	assignedUserId: string;
 	/** @nullable */
@@ -2039,6 +2040,30 @@ export interface StockAllocateCreateRequest {
 	fromDivisionId: number;
 	toDivisionId: number;
 	assignedUserId: string;
+}
+
+export interface StatsTopSalesPeriodResponse {
+	id: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	startDate?: string | null;
+	/** @nullable */
+	endDate?: string | null;
+}
+
+export interface StatsTopSalesPeriodRequest {
+	[key: string]: unknown;
+}
+
+export interface StatsPaymentTypesResponse {
+	paymentType: string;
+	amount: number;
+	averageAmount: number;
+}
+
+export interface StatsPaymentTypesRequest {
+	[key: string]: unknown;
 }
 
 export interface SectionUpdateRequest {
@@ -3399,6 +3424,15 @@ export type StockAllocateGetAllParams = {
 	 * @nullable
 	 */
 	pageSize?: number | null;
+};
+
+export type StatsTopSalesPeriodParams = {
+	top: number;
+};
+
+export type StatsPaymentTypesParams = {
+	salesPeriodId: number;
+	top: number;
 };
 
 export type SectionTableGetAllParams = {

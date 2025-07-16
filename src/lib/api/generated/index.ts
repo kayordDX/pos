@@ -15,6 +15,7 @@ export * from "./table";
 export * from "./supplier";
 export * from "./stockcategory";
 export * from "./stock";
+export * from "./stats";
 export * from "./section";
 export * from "./salesperiod";
 export * from "./printer";
