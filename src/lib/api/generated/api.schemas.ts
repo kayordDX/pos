@@ -2066,6 +2066,19 @@ export interface StatsPaymentTypesRequest {
 	[key: string]: unknown;
 }
 
+export interface StatsCashUpResponse {
+	name: string;
+	revenue: number;
+	actualSales: number;
+	adjustments: number;
+	tips: number;
+	tipsPercentage: number;
+}
+
+export interface StatsCashUpRequest {
+	[key: string]: unknown;
+}
+
 export interface SectionUpdateRequest {
 	/**
 	 * @minimum 0
@@ -3433,6 +3446,10 @@ export type StatsTopSalesPeriodParams = {
 export type StatsPaymentTypesParams = {
 	salesPeriodId: number;
 	top: number;
+};
+
+export type StatsCashUpParams = {
+	salesPeriodId: number;
 };
 
 export type SectionTableGetAllParams = {

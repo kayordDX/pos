@@ -4913,6 +4913,58 @@
         ]
       }
     },
+    "/stats/cashUp": {
+      "get": {
+        "tags": [
+          "Stats"
+        ],
+        "operationId": "StatsCashUp",
+        "parameters": [
+          {
+            "name": "salesPeriodId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/StatsCashUpResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/section/{sectionId}": {
       "put": {
         "tags": [
@@ -17330,6 +17382,47 @@
         }
       },
       "StatsPaymentTypesRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "StatsCashUpResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "name",
+          "revenue",
+          "actualSales",
+          "adjustments",
+          "tips",
+          "tipsPercentage"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "revenue": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "actualSales": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "adjustments": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "tips": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "tipsPercentage": {
+            "type": "number",
+            "format": "decimal"
+          }
+        }
+      },
+      "StatsCashUpRequest": {
         "type": "object",
         "additionalProperties": false
       },

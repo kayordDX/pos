@@ -18,6 +18,8 @@ import type {
 
 import type {
 	InternalErrorResponse,
+	StatsCashUpParams,
+	StatsCashUpResponse,
 	StatsPaymentTypesParams,
 	StatsPaymentTypesResponse,
 	StatsTopSalesPeriodParams,
@@ -147,6 +149,60 @@ export function createStatsPaymentTypes<
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const queryOptions = getStatsPaymentTypesQueryOptions(params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const statsCashUp = (params: StatsCashUpParams) => {
+	return customInstance<StatsCashUpResponse[]>({ url: `/stats/cashUp`, method: "GET", params });
+};
+
+export const getStatsCashUpQueryKey = (params: StatsCashUpParams) => {
+	return [`/stats/cashUp`, ...(params ? [params] : [])] as const;
+};
+
+export const getStatsCashUpQueryOptions = <
+	TData = Awaited<ReturnType<typeof statsCashUp>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: StatsCashUpParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsCashUp>>, TError, TData>>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getStatsCashUpQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof statsCashUp>>> = () => statsCashUp(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof statsCashUp>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type StatsCashUpQueryResult = NonNullable<Awaited<ReturnType<typeof statsCashUp>>>;
+export type StatsCashUpQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createStatsCashUp<
+	TData = Awaited<ReturnType<typeof statsCashUp>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: StatsCashUpParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsCashUp>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getStatsCashUpQueryOptions(params, options);
 
 	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;
