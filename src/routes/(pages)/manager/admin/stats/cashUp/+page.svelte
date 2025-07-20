@@ -3,6 +3,7 @@
 	import { Card, createShadTable, DataTable, aggregationFns } from "@kayord/ui";
 	import Top5SalesPeriod from "../Top5SalesPeriod.svelte";
 	import { type ColumnDef } from "@tanstack/table-core";
+	import GrafanaLink from "../GrafanaLink.svelte";
 	let salesPeriod = $state(0);
 
 	const query = $derived(createStatsCashUp({ salesPeriodId: salesPeriod }));
@@ -56,12 +57,15 @@
 	});
 </script>
 
-<div class="m-2 flex flex-col items-center">
-	<Card.Root>
+<div class="m-2 flex flex-col gap-2 items-center">
+	<Card.Root class="w-full flex items-center p-1 gap-1">
+		<p class="text-muted-foreground">Sales Period</p>
+		<Top5SalesPeriod bind:salesPeriod />
+	</Card.Root>
+	<Card.Root class="w-full">
 		<Card.Header>
 			<Card.Title>Cash Up</Card.Title>
 			<Card.Description>Waiter Cash Up Summary</Card.Description>
-			<Top5SalesPeriod bind:salesPeriod />
 		</Card.Header>
 		<Card.Content>
 			<DataTable
@@ -71,4 +75,6 @@
 			/>
 		</Card.Content>
 	</Card.Root>
+
+	<GrafanaLink />
 </div>
