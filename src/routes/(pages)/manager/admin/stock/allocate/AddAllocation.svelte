@@ -12,6 +12,7 @@
 		createDivisionGetUsers,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
+	import { session } from "$lib/firebase.svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -37,7 +38,18 @@
 		toOutletId: z.number().min(1, { message: "Outlet is Required" }),
 		fromDivisionId: z.number().min(1, { message: "From Division is Required" }),
 		toDivisionId: z.number().min(1, { message: "To Division is Required" }),
-		assignedUserId: z.string().min(1, { message: "Assigned User is Required" }),
+		assignedUserId: z
+			.string()
+			.min(1, { message: "Assigned User is Required" })
+			.check((ctx) => {
+				if (ctx.value != (session.user?.uid ?? "")) {
+					ctx.issues.push({
+						code: "custom",
+						message: "Cannot assign to yourself",
+						input: ctx.value,
+					});
+				}
+			}),
 	});
 	type FormSchema = z.infer<typeof schema>;
 

@@ -29,24 +29,24 @@
 		note: z.string(),
 		extras: z.array(z.number()),
 		quantity: z.coerce.number().min(1),
-		options: z.array(z.number()).superRefine((val, ctx) => {
+		options: z.array(z.number()).check((ctx) => {
 			data.menuItemOptionGroups.map((o) => {
 				const maxSelections = o.optionGroup.maxSelections;
 				const minSelections = o.optionGroup.minSelections;
 				const count = getSelectedCountInOptionGroup(o.optionGroup.options);
 				if (count > maxSelections) {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
+					ctx.issues.push({
+						code: "custom",
 						message: `${o.optionGroup.name} has maxSelection as ${maxSelections} but has ${count}`,
-						fatal: true,
+						input: ctx.value,
 					});
 					return;
 				}
 				if (count < minSelections) {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
+					ctx.issues.push({
+						code: "custom",
 						message: `${o.optionGroup.name} has minSelections as ${maxSelections} but has ${count}`,
-						fatal: true,
+						input: ctx.value,
 					});
 					return;
 				}
