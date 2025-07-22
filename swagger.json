@@ -9179,6 +9179,14 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "excludeSelf",
+            "in": "query",
+            "schema": {
+              "type": "boolean",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -13429,6 +13437,10 @@
             }
           },
           "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "userId": {
             "type": "string",
             "nullable": true
           }

@@ -128,7 +128,9 @@
 			"Select Division"
 	);
 
-	const divisionUsersQuery = $derived(createDivisionGetUsers($formData.toDivisionId));
+	const divisionUsersQuery = $derived(
+		createDivisionGetUsers($formData.toDivisionId, { excludeSelf: true })
+	);
 	const divisionUsers = $derived($divisionUsersQuery.data ?? []);
 </script>
 

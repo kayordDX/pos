@@ -3457,6 +3457,7 @@ export interface components {
             orderItemOptions?: components["schemas"]["EntitiesOrderItemOption"][] | null;
             orderItemExtras?: components["schemas"]["EntitiesOrderItemExtra"][] | null;
             note?: string | null;
+            userId?: string | null;
         };
         EntitiesOrderGroup: {
             /** Format: int32 */
@@ -12718,7 +12719,9 @@ export interface operations {
     };
     DivisionGetUsers: {
         parameters: {
-            query?: never;
+            query?: {
+                excludeSelf?: boolean | null;
+            };
             header?: never;
             path: {
                 divisionId: number;

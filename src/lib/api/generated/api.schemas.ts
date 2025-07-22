@@ -825,6 +825,8 @@ export interface EntitiesOrderItem {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	/** @nullable */
 	note?: string | null;
+	/** @nullable */
+	userId?: string | null;
 }
 
 export interface EntitiesOrderGroup {
@@ -3544,6 +3546,13 @@ export type ExtraGetAllMenuParams = {
 
 export type DivisionTypeGetAllParams = {
 	outletId: number;
+};
+
+export type DivisionGetUsersParams = {
+	/**
+	 * @nullable
+	 */
+	excludeSelf?: boolean | null;
 };
 
 export type DivisionGetAllParams = {
