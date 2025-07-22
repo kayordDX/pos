@@ -7,8 +7,11 @@
 	import Top5SalesPeriod from "../Top5SalesPeriod.svelte";
 	import { cubicInOut } from "svelte/easing";
 	import GrafanaLink from "../GrafanaLink.svelte";
+	import { Tween } from "svelte/motion";
 
 	let salesPeriod = $state(0);
+
+	const tww = new Tween(0);
 
 	const chartQuery = $derived(createStatsPaymentTypes({ salesPeriodId: salesPeriod, top: 5 }));
 	const getColorFromIndex = (i: number) => {
@@ -30,11 +33,20 @@
 </script>
 
 <div class="m-2 flex flex-col items-center gap-2">
-	<Card.Root class="w-full flex items-center p-1 gap-1">
-		<p class="text-muted-foreground">Sales Period</p>
-		<Top5SalesPeriod bind:salesPeriod />
-	</Card.Root>
-	<div class="m-2 flex items-center flex-wrap justify-center gap-2 w-full">
+	<div class="flex justify-between w-full">
+		<div class="sm:flex flex-col mb-2 w-full hidden">
+			<h1 class="flex font-bold text-lg">Payment Types</h1>
+			<h2 class="flex text-muted-foreground text-xs">
+				Sales Period Payment Type vs Average of last 5 Sales Periods
+			</h2>
+		</div>
+		<div class="flex items-center gap-2 w-full justify-end">
+			<p class="text-muted-foreground text-sm">Sales Period</p>
+			<Top5SalesPeriod bind:salesPeriod />
+		</div>
+	</div>
+
+	<div class="m-2 flex items-center flex-wrap justify-center gap-4 w-full mt-8">
 		<Card.Root class="w-xl">
 			<Card.Header>
 				<Card.Title>Payment Types</Card.Title>
@@ -128,7 +140,13 @@
 						]}
 						cornerRadius={5}
 						padAngle={0.02}
-						props={{ pie: { motion: "tween" } }}
+						props={{
+							pie: {
+								motion: {
+									type: "tween",
+								},
+							},
+						}}
 						legend
 					>
 						{#snippet tooltip()}

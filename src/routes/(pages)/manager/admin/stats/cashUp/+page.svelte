@@ -57,24 +57,25 @@
 	});
 </script>
 
-<div class="m-2 flex flex-col gap-2 items-center">
-	<Card.Root class="w-full flex items-center p-1 gap-1">
-		<p class="text-muted-foreground">Sales Period</p>
-		<Top5SalesPeriod bind:salesPeriod />
-	</Card.Root>
-	<Card.Root class="w-full">
-		<Card.Header>
-			<Card.Title>Cash Up</Card.Title>
-			<Card.Description>Waiter Cash Up Summary</Card.Description>
-		</Card.Header>
-		<Card.Content>
-			<DataTable
-				{table}
-				isLoading={$query.isPending}
-				noDataMessage="No Cash up Data for Sales Period"
-			/>
-		</Card.Content>
-	</Card.Root>
+{#snippet header()}
+	<div class="flex justify-between w-full">
+		<div class="sm:flex flex-col mb-2 w-full hidden">
+			<h1 class="flex font-bold text-lg">Cash Up</h1>
+			<h2 class="flex text-muted-foreground text-xs">Waiter Cash Up Summary</h2>
+		</div>
+		<div class="flex items-center gap-2 w-full justify-end">
+			<p class="text-muted-foreground text-sm">Sales Period</p>
+			<Top5SalesPeriod bind:salesPeriod />
+		</div>
+	</div>
+{/snippet}
 
+<div class="m-2 flex flex-col gap-2 items-center">
+	<DataTable
+		{table}
+		{header}
+		isLoading={$query.isPending}
+		noDataMessage="No Cash up Data for Sales Period"
+	/>
 	<GrafanaLink />
 </div>
