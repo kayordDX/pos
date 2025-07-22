@@ -131,8 +131,8 @@
 						data={chartData}
 						key="paymentType"
 						value="amount"
-						innerRadius={60}
-						padding={29}
+						innerRadius={40}
+						padding={20}
 						c="color"
 						cRange={[
 							"var(--chart-1)",
