@@ -104,8 +104,12 @@
 						{#snippet aboveMarks()}
 							<Area
 								y1="averageAmount"
-								class="fill-primary/20"
-								line={{ class: "stroke-primary", "stroke-dasharray": "6,4", strokeWidth: 2 }}
+								class="stroke-warning/20"
+								line={{
+									class: "stroke-warning",
+									"stroke-dasharray": "2,2",
+									strokeWidth: 2,
+								}}
 								curve={curveNatural}
 							/>
 						{/snippet}

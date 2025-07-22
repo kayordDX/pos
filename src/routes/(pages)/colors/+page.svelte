@@ -35,6 +35,8 @@
 		"sidebar-ring",
 		"sidebar",
 	];
+
+	const colors2 = ["chart-1", "chart-2", "chart-3", "chart-4", "chart-5"];
 </script>
 
 <Header />
@@ -55,6 +57,15 @@
 	{#each colors as color}
 		<div class="flex items-center gap-2">
 			<div style={"background-color: var(--color-" + color + ");"} class="size-7 rounded-md"></div>
+			<div>{color}</div>
+		</div>
+	{/each}
+</div>
+
+<div class="flex items-start justify-start gap-2 flex-wrap p-2 rounded-md m-2">
+	{#each colors2 as color}
+		<div class="flex items-center gap-2">
+			<div style={"background-color: var(--" + color + ");"} class="size-7 rounded-md"></div>
 			<div>{color}</div>
 		</div>
 	{/each}
