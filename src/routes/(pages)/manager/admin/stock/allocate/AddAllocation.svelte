@@ -42,7 +42,7 @@
 			.string()
 			.min(1, { message: "Assigned User is Required" })
 			.check((ctx) => {
-				if (ctx.value != (session.user?.uid ?? "")) {
+				if (ctx.value == (session.user?.uid ?? "")) {
 					ctx.issues.push({
 						code: "custom",
 						message: "Cannot assign to yourself",
