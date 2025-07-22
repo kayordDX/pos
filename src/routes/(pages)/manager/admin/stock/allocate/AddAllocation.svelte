@@ -3,7 +3,7 @@
 	import { getError } from "$lib/types";
 	import { Button, Dialog, Form, Input, Label, Select, Combobox, Switch, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import {
 		createStockDivisionGetAll,
@@ -12,6 +12,7 @@
 		createDivisionGetUsers,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
+	import { session } from "$lib/firebase.svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -37,7 +38,18 @@
 		toOutletId: z.number().min(1, { message: "Outlet is Required" }),
 		fromDivisionId: z.number().min(1, { message: "From Division is Required" }),
 		toDivisionId: z.number().min(1, { message: "To Division is Required" }),
-		assignedUserId: z.string().min(1, { message: "Assigned User is Required" }),
+		assignedUserId: z
+			.string()
+			.min(1, { message: "Assigned User is Required" })
+			.check((ctx) => {
+				if (ctx.value != (session.user?.uid ?? "")) {
+					ctx.issues.push({
+						code: "custom",
+						message: "Cannot assign to yourself",
+						input: ctx.value,
+					});
+				}
+			}),
 	});
 	type FormSchema = z.infer<typeof schema>;
 
@@ -82,9 +94,9 @@
 	});
 
 	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod(schema)), {
+	const form = superForm(defaults(defaultValues, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdate({ form }) {
 			if (form.valid) {
 				updateMenu(form.data);
@@ -116,7 +128,9 @@
 			"Select Division"
 	);
 
-	const divisionUsersQuery = $derived(createDivisionGetUsers($formData.toDivisionId));
+	const divisionUsersQuery = $derived(
+		createDivisionGetUsers($formData.toDivisionId, { excludeSelf: true })
+	);
 	const divisionUsers = $derived($divisionUsersQuery.data ?? []);
 </script>
 

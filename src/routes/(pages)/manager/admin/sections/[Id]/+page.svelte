@@ -53,6 +53,7 @@
 			return data;
 		},
 		enableRowSelection: false,
+		useURLSearchParams: true,
 		state: {
 			get globalFilter() {
 				return search;

@@ -825,6 +825,8 @@ export interface EntitiesOrderItem {
 	orderItemExtras?: EntitiesOrderItemExtra[] | null;
 	/** @nullable */
 	note?: string | null;
+	/** @nullable */
+	userId?: string | null;
 }
 
 export interface EntitiesOrderGroup {
@@ -1840,7 +1842,8 @@ export type EntitiesStockAllocateItemAllOf = {
 	actual: number;
 	stockAllocateItemStatusId: number;
 	stockAllocateItemStatus: EntitiesStockAllocateItemStatus;
-	completed: string;
+	/** @nullable */
+	completed?: string | null;
 	stockAllocateId: number;
 	assignedUserId: string;
 	/** @nullable */
@@ -2039,6 +2042,43 @@ export interface StockAllocateCreateRequest {
 	fromDivisionId: number;
 	toDivisionId: number;
 	assignedUserId: string;
+}
+
+export interface StatsTopSalesPeriodResponse {
+	id: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	startDate?: string | null;
+	/** @nullable */
+	endDate?: string | null;
+}
+
+export interface StatsTopSalesPeriodRequest {
+	[key: string]: unknown;
+}
+
+export interface StatsPaymentTypesResponse {
+	paymentType: string;
+	amount: number;
+	averageAmount: number;
+}
+
+export interface StatsPaymentTypesRequest {
+	[key: string]: unknown;
+}
+
+export interface StatsCashUpResponse {
+	name: string;
+	revenue: number;
+	actualSales: number;
+	adjustments: number;
+	tips: number;
+	tipsPercentage: number;
+}
+
+export interface StatsCashUpRequest {
+	[key: string]: unknown;
 }
 
 export interface SectionUpdateRequest {
@@ -3401,6 +3441,19 @@ export type StockAllocateGetAllParams = {
 	pageSize?: number | null;
 };
 
+export type StatsTopSalesPeriodParams = {
+	top: number;
+};
+
+export type StatsPaymentTypesParams = {
+	salesPeriodId: number;
+	top: number;
+};
+
+export type StatsCashUpParams = {
+	salesPeriodId: number;
+};
+
 export type SectionTableGetAllParams = {
 	sectionId: number;
 };
@@ -3493,6 +3546,13 @@ export type ExtraGetAllMenuParams = {
 
 export type DivisionTypeGetAllParams = {
 	outletId: number;
+};
+
+export type DivisionGetUsersParams = {
+	/**
+	 * @nullable
+	 */
+	excludeSelf?: boolean | null;
 };
 
 export type DivisionGetAllParams = {

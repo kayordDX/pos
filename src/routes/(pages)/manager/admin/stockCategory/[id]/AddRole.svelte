@@ -4,7 +4,7 @@
 	import { createRoleDivisionCreate, createRoleGetAll } from "$lib/api";
 	import { z } from "zod";
 	import { defaults, superForm } from "sveltekit-superforms";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
 	import { status } from "$lib/stores/status.svelte";
@@ -33,9 +33,9 @@
 		refetch();
 	};
 
-	const form = superForm(defaults({}, zod(schema)), {
+	const form = superForm(defaults({}, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		id: `add-role-${divisionId}`,
 		onUpdate({ form }) {
 			if (form.valid) {

@@ -3,7 +3,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { Button, Dialog, Form, Input, toast, Select } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { getError } from "$lib/types";
 	import type { EntitiesRole } from "$lib/api";
@@ -68,10 +68,10 @@
 	});
 
 	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod(schema)), {
+	const form = superForm(defaults(defaultValues, zod4(schema)), {
 		SPA: true,
 		id: `section-form-${role?.roleId}`,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdate({ form }) {
 			if (form.valid)
 				handleSubmit({

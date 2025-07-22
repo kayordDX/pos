@@ -17,7 +17,7 @@
 		renderSnippet,
 		createShadTable,
 		toast,
-		sum,
+		aggregationFns,
 	} from "@kayord/ui";
 	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
@@ -45,19 +45,19 @@
 			header: "Ordered Amount",
 			accessorKey: "orderAmount",
 			size: 1000,
-			footer: () => sum(data, "orderAmount"),
+			footer: () => aggregationFns.sum(data, "orderAmount"),
 		},
 		{
 			header: "Actual",
 			accessorKey: "actual",
 			size: 1000,
-			footer: () => sum(data, "actual"),
+			footer: () => aggregationFns.sum(data, "actual"),
 		},
 		{
 			header: "Price",
 			accessorKey: "price",
 			size: 1000,
-			footer: () => sum(data, "price"),
+			footer: () => aggregationFns.sum(data, "price"),
 		},
 		{
 			header: "Status",

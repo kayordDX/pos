@@ -23,6 +23,7 @@ import type {
 	DivisionCreateRequest,
 	DivisionEditRequest,
 	DivisionGetAllParams,
+	DivisionGetUsersParams,
 	DivisionGetUsersResponse,
 	EntitiesDivision,
 	ErrorResponse,
@@ -32,15 +33,19 @@ import type {
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
-export const divisionGetUsers = (divisionId: number) => {
+export const divisionGetUsers = (divisionId: number, params?: DivisionGetUsersParams) => {
 	return customInstance<DivisionGetUsersResponse[]>({
 		url: `/division/users/${divisionId}`,
 		method: "GET",
+		params,
 	});
 };
 
-export const getDivisionGetUsersQueryKey = (divisionId: number) => {
-	return [`/division/users/${divisionId}`] as const;
+export const getDivisionGetUsersQueryKey = (
+	divisionId: number,
+	params?: DivisionGetUsersParams
+) => {
+	return [`/division/users/${divisionId}`, ...(params ? [params] : [])] as const;
 };
 
 export const getDivisionGetUsersQueryOptions = <
@@ -48,6 +53,7 @@ export const getDivisionGetUsersQueryOptions = <
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	divisionId: number,
+	params?: DivisionGetUsersParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<Awaited<ReturnType<typeof divisionGetUsers>>, TError, TData>
@@ -56,10 +62,10 @@ export const getDivisionGetUsersQueryOptions = <
 ) => {
 	const { query: queryOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getDivisionGetUsersQueryKey(divisionId);
+	const queryKey = queryOptions?.queryKey ?? getDivisionGetUsersQueryKey(divisionId, params);
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof divisionGetUsers>>> = () =>
-		divisionGetUsers(divisionId);
+		divisionGetUsers(divisionId, params);
 
 	return { queryKey, queryFn, enabled: !!divisionId, ...queryOptions } as CreateQueryOptions<
 		Awaited<ReturnType<typeof divisionGetUsers>>,
@@ -76,6 +82,7 @@ export function createDivisionGetUsers<
 	TError = ErrorType<void | InternalErrorResponse>,
 >(
 	divisionId: number,
+	params?: DivisionGetUsersParams,
 	options?: {
 		query?: Partial<
 			CreateQueryOptions<Awaited<ReturnType<typeof divisionGetUsers>>, TError, TData>
@@ -83,7 +90,7 @@ export function createDivisionGetUsers<
 	},
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getDivisionGetUsersQueryOptions(divisionId, options);
+	const queryOptions = getDivisionGetUsersQueryOptions(divisionId, params, options);
 
 	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

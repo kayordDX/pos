@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card, Form, Select, toast } from "@kayord/ui";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { createUserAssignOutlet, createOutletGetAllAssigned } from "$lib/api";
@@ -39,9 +39,9 @@
 		}
 	};
 
-	const form = superForm(defaults({ outletId: status.value.outletId }, zod(schema)), {
+	const form = superForm(defaults({ outletId: status.value.outletId }, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);

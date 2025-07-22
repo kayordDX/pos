@@ -31,6 +31,9 @@
 		DiffIcon,
 		ChartBarStackedIcon,
 		BlindsIcon,
+		ChartLineIcon,
+		BanknoteArrowUp,
+		CreditCardIcon,
 	} from "@lucide/svelte";
 
 	const menuItems = [
@@ -160,6 +163,23 @@
 					title: "Stock Categories",
 					href: "/manager/admin/stockCategory",
 					icon: ChartBarStackedIcon,
+				},
+			],
+		},
+		{
+			title: "Stats",
+			href: "",
+			icon: ChartLineIcon,
+			items: [
+				{
+					title: "Cashup",
+					href: "/manager/admin/stats/cashUp",
+					icon: BanknoteArrowUp,
+				},
+				{
+					title: "Payment Types",
+					href: "/manager/admin/stats/paymentTypes",
+					icon: CreditCardIcon,
 				},
 			],
 		},

@@ -11,7 +11,7 @@
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
 	import { defaults, superForm } from "sveltekit-superforms/client";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { schema, type FormSchema } from "./types";
 	import { Control, FieldErrors, Fieldset, Label } from "@kayord/ui/formsnap";
 	import { getError } from "$lib/types";
@@ -38,10 +38,10 @@
 		}
 	};
 	const form = superForm(
-		defaults(zod(schema), { defaults: { orderItemIds: [], orderItemStatusId: 2 } }),
+		defaults(zod4(schema), { defaults: { orderItemIds: [], orderItemStatusId: 2 } }),
 		{
 			SPA: true,
-			validators: zod(schema),
+			validators: zod4(schema),
 			onUpdate({ form }) {
 				if (form.valid) {
 					onSubmit(form.data);

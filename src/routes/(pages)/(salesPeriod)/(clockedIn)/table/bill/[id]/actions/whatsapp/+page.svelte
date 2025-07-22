@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Card, Form, Input, toast } from "@kayord/ui";
 	import { Control, Field, FieldErrors } from "@kayord/ui/formsnap";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { createBillWhatsappBill, createWhatsappStatus } from "$lib/api";
@@ -44,10 +44,10 @@
 		}
 	};
 
-	const form = superForm(defaults(zod(schema)), {
+	const form = superForm(defaults(zod4(schema)), {
 		SPA: true,
 		resetForm: false,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);

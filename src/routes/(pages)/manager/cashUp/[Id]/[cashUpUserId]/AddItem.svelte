@@ -4,7 +4,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { Alert, Button, Dialog, Form, Input, Select } from "@kayord/ui";
 	import { MessageCircleWarningIcon, PlusIcon } from "@lucide/svelte";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4Client, zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 
@@ -40,9 +40,9 @@
 		refetch();
 	};
 
-	const form = superForm(defaults({ value: 0 }, zod(schema)), {
+	const form = superForm(defaults({ value: 0 }, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4Client(schema),
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);

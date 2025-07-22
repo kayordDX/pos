@@ -3,7 +3,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import { Button, Dialog, Form, Input, Select, toast } from "@kayord/ui";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 
@@ -48,9 +48,9 @@
 	});
 
 	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod(schema)), {
+	const form = superForm(defaults(defaultValues, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		id: `stock-item-${stockItem?.id ?? 0}-${stockItem?.divisionId ?? 0}`,
 		onUpdate({ form }) {
 			if (form.valid) {

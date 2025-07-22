@@ -2,7 +2,7 @@
 	import Header from "$lib/components/Header/Header.svelte";
 	import { getError } from "$lib/types";
 	import { Button, Card, Form, InputOTP, toast } from "@kayord/ui";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import z from "zod";
 	import { createUserLinkAccount } from "$lib/api";
@@ -30,9 +30,9 @@
 		}
 	};
 
-	const form = superForm(defaults(zod(schema)), {
+	const form = superForm(defaults(zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, toast } from "@kayord/ui";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { Field, Control, FieldErrors } from "@kayord/ui/formsnap";
@@ -14,9 +14,9 @@
 
 	let isSubmitting = $state(false);
 
-	const form = superForm(defaults({ quantity: 1 }, zod(schema)), {
+	const form = superForm(defaults({ quantity: 1 }, zod4(schema)), {
 		SPA: true,
-		// validators: zod(schema),
+		// validators: zod4(schema),
 		// multipleSubmits: "prevent",
 		// delayMs: 1500,
 		// timeoutMs: 8000,

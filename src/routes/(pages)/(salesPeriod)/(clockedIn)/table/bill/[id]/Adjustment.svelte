@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createAdjustmentCreate, createAdjustmentGetAll } from "$lib/api";
 	import { Alert, Button, Dialog, Form, Input, Select, Textarea, toast } from "@kayord/ui";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { Field, Control, FieldErrors } from "@kayord/ui/formsnap";
@@ -50,9 +50,9 @@
 		}
 	};
 
-	const form = superForm(defaults({ amount: 0 }, zod(schema)), {
+	const form = superForm(defaults({ amount: 0 }, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdated: async ({ form }) => {
 			if (form.valid) {
 				await onSubmit(form.data);

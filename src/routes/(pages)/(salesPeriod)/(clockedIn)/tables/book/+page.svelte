@@ -7,7 +7,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { z } from "zod";
 	import { defaults, superForm } from "sveltekit-superforms/client";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { Control, Field, FieldErrors } from "@kayord/ui/formsnap";
 
 	const query = createTableGetAvailable({ outletId: status.value?.outletId ?? 0 });
@@ -37,9 +37,9 @@
 		goto("/waiter");
 	};
 
-	const form = superForm(defaults(zod(schema)), {
+	const form = superForm(defaults(zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);

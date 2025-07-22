@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createOrderAddItems, type DTOMenuItemDTO, type DTOOptionDTO } from "$lib/api";
 	import { Button, Checkbox, Drawer, Form, Textarea, toast } from "@kayord/ui";
-	import { zod } from "sveltekit-superforms/adapters";
+	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
 	import { Field, Control, FieldErrors, Fieldset, Legend, Label } from "@kayord/ui/formsnap";
@@ -29,24 +29,24 @@
 		note: z.string(),
 		extras: z.array(z.number()),
 		quantity: z.coerce.number().min(1),
-		options: z.array(z.number()).superRefine((val, ctx) => {
+		options: z.array(z.number()).check((ctx) => {
 			data.menuItemOptionGroups.map((o) => {
 				const maxSelections = o.optionGroup.maxSelections;
 				const minSelections = o.optionGroup.minSelections;
 				const count = getSelectedCountInOptionGroup(o.optionGroup.options);
 				if (count > maxSelections) {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
+					ctx.issues.push({
+						code: "custom",
 						message: `${o.optionGroup.name} has maxSelection as ${maxSelections} but has ${count}`,
-						fatal: true,
+						input: ctx.value,
 					});
 					return;
 				}
 				if (count < minSelections) {
-					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
+					ctx.issues.push({
+						code: "custom",
 						message: `${o.optionGroup.name} has minSelections as ${maxSelections} but has ${count}`,
-						fatal: true,
+						input: ctx.value,
 					});
 					return;
 				}
@@ -85,9 +85,9 @@
 		}
 	};
 
-	const form = superForm(defaults({ quantity: 1 }, zod(schema)), {
+	const form = superForm(defaults({ quantity: 1 }, zod4(schema)), {
 		SPA: true,
-		validators: zod(schema),
+		validators: zod4(schema),
 		onUpdated: async ({ form }) => {
 			if (form.valid) {
 				await onSubmit(form.data);
