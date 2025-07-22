@@ -1,30 +1,19 @@
 <script lang="ts">
 	import { scaleBand } from "d3-scale";
-	import { Area, BarChart, PieChart, type ChartContextValue } from "layerchart";
+	import { BarChart, PieChart, type ChartContextValue } from "layerchart";
 	import { Chart, Card } from "@kayord/ui";
-	import { curveNatural } from "d3-shape";
 	import { createStatsPaymentTypes } from "$lib/api";
 	import Top5SalesPeriod from "../Top5SalesPeriod.svelte";
 	import { cubicInOut } from "svelte/easing";
 	import GrafanaLink from "../GrafanaLink.svelte";
-	import { Tween } from "svelte/motion";
 
 	let salesPeriod = $state(0);
 
-	const tww = new Tween(0);
-
 	const chartQuery = $derived(createStatsPaymentTypes({ salesPeriodId: salesPeriod, top: 5 }));
-	const getColorFromIndex = (i: number) => {
-		return `var(--chart-${i + 1})`;
-	};
-	const chartData = $derived(
-		$chartQuery.data?.map((x, i) => {
-			return { ...x, color: getColorFromIndex(i) };
-		}) ?? []
-	);
+	const chartData = $derived($chartQuery.data ?? []);
 
 	const chartConfig = {
-		paymentType: { label: "PaymentType" },
+		// paymentType: { label: "PaymentType" },
 		amount: { label: "Amount", color: "var(--chart-1)" },
 		averageAmount: { label: "Average", color: "var(--chart-3)" },
 	} satisfies Chart.ChartConfig;
@@ -61,37 +50,33 @@
 						data={chartData}
 						xScale={scaleBand().padding(0.25)}
 						x="paymentType"
-						c="color"
-						cRange={[
-							"var(--chart-1)",
-							"var(--chart-2)",
-							"var(--chart-3)",
-							"var(--chart-4)",
-							"var(--chart-5)",
-						]}
 						series={[
 							{
 								key: "amount",
 								label: "Amount",
+								color: chartConfig.amount.color,
 							},
 							{
 								key: "averageAmount",
 								label: "Average Amount",
+								color: chartConfig.averageAmount.color,
 							},
 						]}
+						x1Scale={scaleBand().paddingInner(0.2)}
+						seriesLayout="group"
+						rule={false}
+						legend
 						props={{
 							bars: {
 								stroke: "none",
+								strokeWidth: 0,
 								rounded: "all",
 								radius: 8,
-								// use the height of the chart to animate the bars
 								initialY: context?.height,
 								initialHeight: 0,
 								motion: {
-									x: { type: "tween", duration: 500, easing: cubicInOut },
-									width: { type: "tween", duration: 500, easing: cubicInOut },
-									height: { type: "tween", duration: 500, easing: cubicInOut },
 									y: { type: "tween", duration: 500, easing: cubicInOut },
+									height: { type: "tween", duration: 500, easing: cubicInOut },
 								},
 							},
 							highlight: { area: { fill: "none" } },
@@ -100,21 +85,8 @@
 							},
 						}}
 					>
-						{#snippet aboveMarks()}
-							<Area
-								y1="averageAmount"
-								class="stroke-warning/20"
-								line={{
-									class: "stroke-warning",
-									"stroke-dasharray": "2,2",
-									strokeWidth: 2,
-								}}
-								curve={curveNatural}
-							/>
-						{/snippet}
-
 						{#snippet tooltip()}
-							<Chart.Tooltip hideLabel hideIndicator />
+							<Chart.Tooltip />
 						{/snippet}
 					</BarChart>
 				</Chart.Container>
