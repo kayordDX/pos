@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { Select } from "@kayord/ui";
 	import { createStatsTopSalesPeriod } from "$lib/api";
+	import { stringToFDate } from "$lib/util";
 
 	const salesPeriodQuery = createStatsTopSalesPeriod({ top: 5 });
 	const salesPeriods = $derived($salesPeriodQuery.data ?? []);
@@ -12,7 +13,8 @@
 	let { salesPeriod = $bindable() }: Props = $props();
 
 	const triggerContent = $derived(
-		salesPeriods.find((f) => f.id === salesPeriod)?.name ?? "Select Sales Period"
+		stringToFDate(salesPeriods.find((f) => f.id === salesPeriod)?.startDate) ??
+			"Select Sales Period"
 	);
 
 	$effect(() => {
@@ -36,9 +38,9 @@
 			{#each salesPeriods as salesPeriod (salesPeriod.id)}
 				<Select.Item
 					value={salesPeriod.id.toString()}
-					label={salesPeriod.name ?? salesPeriod.startDate ?? salesPeriod.id.toString()}
+					label={salesPeriod.startDate ?? salesPeriod.id.toString()}
 				>
-					{salesPeriod.name ?? salesPeriod.startDate ?? salesPeriod.id}
+					{stringToFDate(salesPeriod.startDate) ?? salesPeriod.id}
 				</Select.Item>
 			{/each}
 		</Select.Group>

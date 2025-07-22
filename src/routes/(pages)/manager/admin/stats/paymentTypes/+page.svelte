@@ -61,7 +61,6 @@
 						data={chartData}
 						xScale={scaleBand().padding(0.25)}
 						x="paymentType"
-						axis="x"
 						c="color"
 						cRange={[
 							"var(--chart-1)",
