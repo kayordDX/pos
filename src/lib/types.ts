@@ -110,9 +110,10 @@ export const getError = (inputError: ApiError): ErrorGeneric => {
 			note: [inputError.note],
 		};
 	} else if (isError(inputError)) {
-		error.message = inputError.message;
+		const summary = inputError.cause as string | undefined;
+		error.message = summary ?? inputError.message;
 		error.statusCode = 0;
-		error.summary = inputError.cause as string;
+		error.summary = inputError.message;
 		error.errors = {
 			name: [inputError.name],
 			cause: [inputError.cause as string],

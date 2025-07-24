@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Badge, Button, Card, Dialog, Form, Input, Label, Loader } from "@kayord/ui";
+	import { Badge, Button, Card, Dialog, Form, Input, Label, Loader, toast } from "@kayord/ui";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
@@ -26,15 +26,20 @@
 	});
 	type FormSchema = z.infer<typeof schema>;
 	const onSubmit = async (data: FormSchema) => {
-		await $mutate.mutateAsync({
-			data: {
-				bookingName: data.bookingName,
-				salesPeriodId: status.value?.salesPeriodId ?? 0,
-				tableId: tableId,
-			},
-		});
-		dialogOpen = false;
-		goto("/waiter");
+		try {
+			await $mutate.mutateAsync({
+				data: {
+					bookingName: data.bookingName,
+					salesPeriodId: status.value?.salesPeriodId ?? 0,
+					tableId: tableId,
+				},
+			});
+			dialogOpen = false;
+			goto("/waiter");
+			toast.message("Created new booking");
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
 	};
 
 	const form = superForm(defaults(zod4(schema)), {
