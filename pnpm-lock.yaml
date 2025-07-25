@@ -13,7 +13,7 @@ importers:
         version: 1.19.0
       '@kayord/ui':
         specifier: 1.1.4
-        version: 1.1.4(@lucide/svelte@0.525.0(svelte@5.36.16))(@tanstack/table-core@8.21.3)(layerchart@2.0.0-next.30(svelte@5.36.16))(svelte@5.36.16)(sveltekit-superforms@2.27.1(@sveltejs/kit@2.26.0(@sveltejs/vite-plugin-svelte@6.1.0(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(@types/json-schema@7.0.15)(esbuild@0.25.8)(svelte@5.36.16)(typescript@5.8.3))(tailwindcss@4.1.11)(zod@4.0.10)
+        version: 1.1.4(@lucide/svelte@0.525.0(svelte@5.36.16))(@tanstack/table-core@8.21.3)(layerchart@2.0.0-next.33(svelte@5.36.16))(svelte@5.36.16)(sveltekit-superforms@2.27.1(@sveltejs/kit@2.26.0(@sveltejs/vite-plugin-svelte@6.1.0(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(@types/json-schema@7.0.15)(esbuild@0.25.8)(svelte@5.36.16)(typescript@5.8.3))(tailwindcss@4.1.11)(zod@4.0.10)
       '@lucide/svelte':
         specifier: ^0.525.0
         version: 0.525.0(svelte@5.36.16)
@@ -78,8 +78,8 @@ importers:
         specifier: ^0.0.6
         version: 0.0.6
       layerchart:
-        specifier: 2.0.0-next.30
-        version: 2.0.0-next.30(svelte@5.36.16)
+        specifier: 2.0.0-next.33
+        version: 2.0.0-next.33(svelte@5.36.16)
       openapi-fetch:
         specifier: ^0.14.0
         version: 0.14.0
@@ -856,17 +856,17 @@ packages:
       sveltekit-superforms: ^2.27.1
       zod: ^4.0.5
 
-  '@layerstack/svelte-actions@1.0.1-next.12':
-    resolution: {integrity: sha512-dndWTlYu8b1u6vw2nrO7NssccoACArGG75WoNlyVC13KuENZlWdKE9Q79/wlnbq00NeQMNKMjJwRMsrKQj2ULA==}
+  '@layerstack/svelte-actions@1.0.1-next.14':
+    resolution: {integrity: sha512-MPBmVaB+GfNHvBkg5nJkPG18smoXKvsvJRpsdWnrUBfca+TieZLoaEzNxDH+9LG11dIXP9gghsXt1mUqbbyAsA==}
 
-  '@layerstack/svelte-state@0.1.0-next.17':
-    resolution: {integrity: sha512-z7e6mPJnypD80LEI/UDuH0bI6s8/nut06MB7rEkRcEfHJekhKSJgFhMnrYzLED7Mc2gTTD0X/wcYlakauWlU8A==}
+  '@layerstack/svelte-state@0.1.0-next.19':
+    resolution: {integrity: sha512-yCYoQAIbeP8y1xmOB/r0+UundgP4JFnpNURgMki+26TotzoqrZ5oLpHvhPSVm60ks+buR3ebDBTeUFdHzxwzQQ==}
 
-  '@layerstack/tailwind@2.0.0-next.15':
-    resolution: {integrity: sha512-7tqKE3OV7/ybeDOORX++USYYCBJa7IgTya2czFpzbgXGo7CQDVyuv+0J1DggjRcEqhhXQA4MUhgnhcRaZvHxWg==}
+  '@layerstack/tailwind@2.0.0-next.17':
+    resolution: {integrity: sha512-ZSn6ouqpnzB6DKzSKLVwrUBOQsrzpDA/By2/ba9ApxgTGnaD1nyqNwrvmZ+kswdAwB4YnrGEAE4VZkKrB2+DaQ==}
 
-  '@layerstack/utils@2.0.0-next.12':
-    resolution: {integrity: sha512-fhGZUlSr3N+D44BYm37WKMGSEFyZBW+dwIqtGU8Cl54mR4TLQ/UwyGhdpgIHyH/x/8q1abE0fP0Dn6ZsrDE3BA==}
+  '@layerstack/utils@2.0.0-next.14':
+    resolution: {integrity: sha512-1I2CS0Cwgs53W35qVg1eBdYhB/CiPvL3s0XE61b8jWkTHxgjBF65yYNgXjW74kv7WI7GsJcWMNBufPd0rnu9kA==}
 
   '@lucide/svelte@0.525.0':
     resolution: {integrity: sha512-dyUxkXzepagLUzL8jHQNdeH286nC66ClLACsg+Neu/bjkRJWPWMzkT+H0DKlE70QdkicGCfs1ZGmXCc351hmZA==}
@@ -2437,8 +2437,8 @@ packages:
   known-css-properties@0.37.0:
     resolution: {integrity: sha512-JCDrsP4Z1Sb9JwG0aJ8Eo2r7k4Ou5MwmThS/6lcIe1ICyb7UBJKGRIUUdqc2ASdE/42lgz6zFUnzAIhtXnBVrQ==}
 
-  layerchart@2.0.0-next.30:
-    resolution: {integrity: sha512-qUHd9pMqyQEk5jfz49Ylcq9MzzhdrXG4+qvQk71ssk5iTZlY91myoFgJ8FpL1RPHtVDTMfGBfy1I+kRfe6GYBA==}
+  layerchart@2.0.0-next.33:
+    resolution: {integrity: sha512-D4T2ogF6Hxlp4YKmeua2r1zDBQ8va2i5l/mBTRgqiU6esImZsqfHYql1c2fqDxoHEpNgHV0BvzYghOwVXem9vQ==}
     peerDependencies:
       svelte: ^5.0.0
 
@@ -4290,7 +4290,7 @@ snapshots:
     dependencies:
       jsep: 1.4.0
 
-  '@kayord/ui@1.1.4(@lucide/svelte@0.525.0(svelte@5.36.16))(@tanstack/table-core@8.21.3)(layerchart@2.0.0-next.30(svelte@5.36.16))(svelte@5.36.16)(sveltekit-superforms@2.27.1(@sveltejs/kit@2.26.0(@sveltejs/vite-plugin-svelte@6.1.0(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(@types/json-schema@7.0.15)(esbuild@0.25.8)(svelte@5.36.16)(typescript@5.8.3))(tailwindcss@4.1.11)(zod@4.0.10)':
+  '@kayord/ui@1.1.4(@lucide/svelte@0.525.0(svelte@5.36.16))(@tanstack/table-core@8.21.3)(layerchart@2.0.0-next.33(svelte@5.36.16))(svelte@5.36.16)(sveltekit-superforms@2.27.1(@sveltejs/kit@2.26.0(@sveltejs/vite-plugin-svelte@6.1.0(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(@types/json-schema@7.0.15)(esbuild@0.25.8)(svelte@5.36.16)(typescript@5.8.3))(tailwindcss@4.1.11)(zod@4.0.10)':
     dependencies:
       '@internationalized/date': 3.8.2
       '@lucide/svelte': 0.525.0(svelte@5.36.16)
@@ -4299,7 +4299,7 @@ snapshots:
       clsx: 2.1.1
       embla-carousel-svelte: 8.6.0(svelte@5.36.16)
       formsnap: 2.0.1(svelte@5.36.16)(sveltekit-superforms@2.27.1(@sveltejs/kit@2.26.0(@sveltejs/vite-plugin-svelte@6.1.0(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(svelte@5.36.16)(vite@7.0.6(@types/node@24.0.15)(jiti@2.4.2)(lightningcss@1.30.1)(yaml@2.8.0)))(@types/json-schema@7.0.15)(esbuild@0.25.8)(svelte@5.36.16)(typescript@5.8.3))
-      layerchart: 2.0.0-next.30(svelte@5.36.16)
+      layerchart: 2.0.0-next.33(svelte@5.36.16)
       mode-watcher: 1.1.0(svelte@5.36.16)
       paneforge: 1.0.0(svelte@5.36.16)
       svelte: 5.36.16
@@ -4312,25 +4312,25 @@ snapshots:
     transitivePeerDependencies:
       - tailwindcss
 
-  '@layerstack/svelte-actions@1.0.1-next.12':
+  '@layerstack/svelte-actions@1.0.1-next.14':
     dependencies:
       '@floating-ui/dom': 1.7.2
-      '@layerstack/utils': 2.0.0-next.12
+      '@layerstack/utils': 2.0.0-next.14
       d3-scale: 4.0.2
 
-  '@layerstack/svelte-state@0.1.0-next.17':
+  '@layerstack/svelte-state@0.1.0-next.19':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.12
+      '@layerstack/utils': 2.0.0-next.14
 
-  '@layerstack/tailwind@2.0.0-next.15':
+  '@layerstack/tailwind@2.0.0-next.17':
     dependencies:
-      '@layerstack/utils': 2.0.0-next.12
+      '@layerstack/utils': 2.0.0-next.14
       clsx: 2.1.1
       d3-array: 3.2.4
       lodash-es: 4.17.21
       tailwind-merge: 3.3.1
 
-  '@layerstack/utils@2.0.0-next.12':
+  '@layerstack/utils@2.0.0-next.14':
     dependencies:
       d3-array: 3.2.4
       d3-time: 3.1.0
@@ -6229,13 +6229,13 @@ snapshots:
 
   known-css-properties@0.37.0: {}
 
-  layerchart@2.0.0-next.30(svelte@5.36.16):
+  layerchart@2.0.0-next.33(svelte@5.36.16):
     dependencies:
       '@dagrejs/dagre': 1.1.5
-      '@layerstack/svelte-actions': 1.0.1-next.12
-      '@layerstack/svelte-state': 0.1.0-next.17
-      '@layerstack/tailwind': 2.0.0-next.15
-      '@layerstack/utils': 2.0.0-next.12
+      '@layerstack/svelte-actions': 1.0.1-next.14
+      '@layerstack/svelte-state': 0.1.0-next.19
+      '@layerstack/tailwind': 2.0.0-next.17
+      '@layerstack/utils': 2.0.0-next.14
       d3-array: 3.2.4
       d3-color: 3.1.0
       d3-delaunay: 6.0.4
