@@ -24,7 +24,7 @@
 			<h1>Other Tables</h1>
 			<p class="text-muted-foreground">Tables assigned to other waiters</p>
 			<div class="flex flex-wrap gap-4 mt-4 w-full">
-				{#each $query.data as otherTable}
+				{#each $query.data as otherTable (otherTable.id)}
 					<a href={`/table/menu/${otherTable.id}`} class="w-full">
 						<Card.Root class="p-5 w-full gap-1">
 							<div class="flex justify-between gap-2 line-clamp-1 items-center">

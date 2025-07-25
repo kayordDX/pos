@@ -52,7 +52,7 @@
 		{/if}
 
 		<div class="flex flex-col flex-wrap gap-2 mt-4 items-start">
-			{#each $query.data ?? [] as myTable}
+			{#each $query.data ?? [] as myTable (myTable.id)}
 				<a href={`/table/menu/${myTable.id}`} class="w-full">
 					<Card.Root class="p-5 w-full gap-1">
 						<div class="flex justify-between">
