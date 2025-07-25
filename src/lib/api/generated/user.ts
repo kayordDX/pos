@@ -34,7 +34,9 @@ import type {
 	UserLinkAccountResponse,
 	UserTasksParams,
 	UserUnassignedUsersParams,
+	UserUserResponse,
 	UserUsersParams,
+	UserUsersTypeParams,
 	UserValidateRequest,
 	UserValidateResponse,
 } from "./api.schemas";
@@ -110,6 +112,61 @@ export const createUserValidate = <TError = ErrorType<InternalErrorResponse>, TC
 
 	return createMutation(mutationOptions, queryClient);
 };
+export const userUsersType = (params: UserUsersTypeParams) => {
+	return customInstance<UserUserResponse[]>({ url: `/user/typeList`, method: "GET", params });
+};
+
+export const getUserUsersTypeQueryKey = (params: UserUsersTypeParams) => {
+	return [`/user/typeList`, ...(params ? [params] : [])] as const;
+};
+
+export const getUserUsersTypeQueryOptions = <
+	TData = Awaited<ReturnType<typeof userUsersType>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: UserUsersTypeParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsersType>>, TError, TData>>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getUserUsersTypeQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userUsersType>>> = () =>
+		userUsersType(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof userUsersType>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type UserUsersTypeQueryResult = NonNullable<Awaited<ReturnType<typeof userUsersType>>>;
+export type UserUsersTypeQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createUserUsersType<
+	TData = Awaited<ReturnType<typeof userUsersType>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: UserUsersTypeParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsersType>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getUserUsersTypeQueryOptions(params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
 export const userUsers = (params?: UserUsersParams) => {
 	return customInstance<CommonModelsPaginatedListOfUserResponse>({
 		url: `/user/list`,

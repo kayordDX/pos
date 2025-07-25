@@ -32,11 +32,89 @@ import type {
 	TableBookingHistoryUserParams,
 	TableBookingPaymentEditRequest,
 	TableBookingPeriodHistoryParams,
+	TableBookingTransferRequest,
 } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
+export const tableBookingTransfer = (
+	tableBookingTransferRequest: BodyType<TableBookingTransferRequest>
+) => {
+	return customInstance<void>({
+		url: `/tableBooking/transfer`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: tableBookingTransferRequest,
+	});
+};
+
+export const getTableBookingTransferMutationOptions = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof tableBookingTransfer>>,
+		TError,
+		{ data: BodyType<TableBookingTransferRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof tableBookingTransfer>>,
+	TError,
+	{ data: BodyType<TableBookingTransferRequest> },
+	TContext
+> => {
+	const mutationKey = ["tableBookingTransfer"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof tableBookingTransfer>>,
+		{ data: BodyType<TableBookingTransferRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableBookingTransfer(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableBookingTransferMutationResult = NonNullable<
+	Awaited<ReturnType<typeof tableBookingTransfer>>
+>;
+export type TableBookingTransferMutationBody = BodyType<TableBookingTransferRequest>;
+export type TableBookingTransferMutationError = ErrorType<
+	ErrorResponse | void | InternalErrorResponse
+>;
+
+export const createTableBookingTransfer = <
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof tableBookingTransfer>>,
+			TError,
+			{ data: BodyType<TableBookingTransferRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof tableBookingTransfer>>,
+	TError,
+	{ data: BodyType<TableBookingTransferRequest> },
+	TContext
+> => {
+	const mutationOptions = getTableBookingTransferMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
 export const tableBookingPeriodHistory = (
 	salesPeriodId: number,
 	params: TableBookingPeriodHistoryParams
@@ -391,7 +469,7 @@ export const tableBookingCreate = (
 };
 
 export const getTableBookingCreateMutationOptions = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -429,10 +507,12 @@ export type TableBookingCreateMutationResult = NonNullable<
 	Awaited<ReturnType<typeof tableBookingCreate>>
 >;
 export type TableBookingCreateMutationBody = BodyType<TableBookingCreateRequest>;
-export type TableBookingCreateMutationError = ErrorType<ErrorResponse | InternalErrorResponse>;
+export type TableBookingCreateMutationError = ErrorType<
+	ErrorResponse | void | InternalErrorResponse
+>;
 
 export const createTableBookingCreate = <
-	TError = ErrorType<ErrorResponse | InternalErrorResponse>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 	TContext = unknown,
 >(
 	options?: {

@@ -7,6 +7,7 @@
 	import { createTableGetMyBooked } from "$lib/api";
 	import Orders from "./Orders.svelte";
 	import { status } from "$lib/stores/status.svelte";
+	import TransferTable from "../tables/TransferTable.svelte";
 
 	const query = createTableGetMyBooked({ myBooking: true, outletId: status.value?.outletId ?? 0 });
 </script>
@@ -59,6 +60,7 @@
 							<Badge>{myTable?.table?.section?.name}</Badge>
 						</div>
 						<p class="text-xs">{myTable.bookingName}</p>
+						<TransferTable otherTable={myTable} refetch={$query.refetch} />
 					</Card.Root>
 				</a>
 			{/each}

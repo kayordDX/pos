@@ -7,6 +7,7 @@
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
 	import { getInitials } from "$lib/util";
+	import TransferTable from "./TransferTable.svelte";
 
 	const query = createTableGetMyBooked({ myBooking: false, outletId: status.value?.outletId ?? 0 });
 </script>
@@ -31,17 +32,18 @@
 								<Badge>{otherTable.table.section.name}</Badge>
 							</div>
 
-							<div class="flex items-center gap-2 mt-2">
+							<div class="flex items-center gap-2 mt-2 w-full">
 								<Avatar.Root>
 									<Avatar.Image src={otherTable.user.image} alt="profile" />
 									<Avatar.Fallback class="bg-primary text-primary-foreground">
 										{getInitials(otherTable.user.name ?? "")}
 									</Avatar.Fallback>
 								</Avatar.Root>
-								<div>
+								<div class="w-full">
 									<div>{otherTable.user.name}</div>
 									<p class="text-xs">{otherTable.bookingName}</p>
 								</div>
+								<TransferTable {otherTable} refetch={$query.refetch} />
 							</div>
 						</Card.Root>
 					</a>

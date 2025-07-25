@@ -163,6 +163,65 @@
         }
       }
     },
+    "/user/typeList": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserUsersType",
+        "parameters": [
+          {
+            "name": "isFrontLine",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "isBackOffice",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserUserResponse"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/user/list": {
       "get": {
         "tags": [
@@ -1678,6 +1737,60 @@
         ]
       }
     },
+    "/tableBooking/transfer": {
+      "post": {
+        "tags": [
+          "Tablebooking"
+        ],
+        "operationId": "TableBookingTransfer",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TableBookingTransferRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/tableBooking/history/salesPeriod/{salesPeriodId}": {
       "get": {
         "tags": [
@@ -2011,6 +2124,9 @@
               }
             }
           },
+          "401": {
+            "description": "Unauthorized"
+          },
           "500": {
             "description": "Server Error",
             "content": {
@@ -2021,7 +2137,12 @@
               }
             }
           }
-        }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
       }
     },
     "/tableBooking/close": {
@@ -10966,6 +11087,42 @@
           }
         }
       },
+      "UserUserResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "isCurrent",
+          "userId",
+          "email",
+          "image",
+          "name",
+          "roles"
+        ],
+        "properties": {
+          "isCurrent": {
+            "type": "boolean"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "roles": {
+            "type": "string"
+          }
+        }
+      },
+      "UserUsersTypeRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "CommonModelsPaginatedListOfUserResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -11001,38 +11158,6 @@
           },
           "hasNextPage": {
             "type": "boolean"
-          }
-        }
-      },
-      "UserUserResponse": {
-        "type": "object",
-        "additionalProperties": false,
-        "required": [
-          "isCurrent",
-          "userId",
-          "email",
-          "image",
-          "name",
-          "roles"
-        ],
-        "properties": {
-          "isCurrent": {
-            "type": "boolean"
-          },
-          "userId": {
-            "type": "string"
-          },
-          "email": {
-            "type": "string"
-          },
-          "image": {
-            "type": "string"
-          },
-          "name": {
-            "type": "string"
-          },
-          "roles": {
-            "type": "string"
           }
         }
       },
@@ -14624,6 +14749,27 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "TableBookingTransferRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "transferUserId",
+          "tableBookingId"
+        ],
+        "properties": {
+          "tableBookingId": {
+            "type": "integer",
+            "format": "int32",
+            "minimum": 0.0,
+            "exclusiveMinimum": true
+          },
+          "transferUserId": {
+            "type": "string",
+            "minLength": 1,
+            "nullable": false
           }
         }
       },

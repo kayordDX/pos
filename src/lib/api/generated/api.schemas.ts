@@ -48,15 +48,6 @@ export interface UserValidateRequest {
 	name: string;
 }
 
-export interface CommonModelsPaginatedListOfUserResponse {
-	items: UserUserResponse[];
-	pageNumber: number;
-	totalPages: number;
-	totalCount: number;
-	hasPreviousPage: boolean;
-	hasNextPage: boolean;
-}
-
 export interface UserUserResponse {
 	isCurrent: boolean;
 	userId: string;
@@ -64,6 +55,19 @@ export interface UserUserResponse {
 	image: string;
 	name: string;
 	roles: string;
+}
+
+export interface UserUsersTypeRequest {
+	[key: string]: unknown;
+}
+
+export interface CommonModelsPaginatedListOfUserResponse {
+	items: UserUserResponse[];
+	pageNumber: number;
+	totalPages: number;
+	totalCount: number;
+	hasPreviousPage: boolean;
+	hasNextPage: boolean;
 }
 
 export type UserUsersRequestAllOf = { [key: string]: unknown };
@@ -1189,6 +1193,18 @@ export interface OrderAddItemsOrder {
 	extraIds?: number[] | null;
 	note: string;
 	quantity: number;
+}
+
+export interface TableBookingTransferRequest {
+	/**
+	 * @minimum 0
+	 * @exclusiveMinimum
+	 */
+	tableBookingId: number;
+	/**
+	 * @minLength 1
+	 */
+	transferUserId: string;
 }
 
 export interface TableBookingHistoryResponse {
@@ -3215,6 +3231,11 @@ export interface AdjustmentCreateRequest {
 	/** @nullable */
 	note?: string | null;
 }
+
+export type UserUsersTypeParams = {
+	isFrontLine: boolean;
+	isBackOffice: boolean;
+};
 
 export type UserUsersParams = {
 	/**
