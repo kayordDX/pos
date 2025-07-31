@@ -11,10 +11,12 @@
 		Trash,
 		CloudUploadIcon,
 		CloudOffIcon,
+		RadarIcon,
 	} from "@lucide/svelte";
 	import AddPrinter from "../../routes/(pages)/manager/admin/printers/AddPrinter.svelte";
 	import DeletePrinter from "../../routes/(pages)/manager/admin/printers/DeletePrinter.svelte";
 	import { page } from "$app/state";
+	import PrinterScan from "./PrinterScan.svelte";
 
 	interface Props {
 		printer: DTOPrinterDTO;
@@ -52,6 +54,7 @@
 
 	let open = $state(false);
 	let deleteOpen = $state(false);
+	let scanOpen = $state(false);
 </script>
 
 <Card.Root
@@ -100,6 +103,9 @@
 						<DropdownMenu.Item onclick={testPrinter}>
 							<TestTubeIcon class="mr-2 h-4 w-4" />Test
 						</DropdownMenu.Item>
+						<DropdownMenu.Item onclick={() => (scanOpen = true)}>
+							<RadarIcon class="mr-2 h-4 w-4" />Scan
+						</DropdownMenu.Item>
 						<DropdownMenu.Item onclick={() => (deleteOpen = true)}>
 							<Trash class="mr-2 h-4 w-4" />
 							Delete
@@ -111,6 +117,9 @@
 				{/if}
 				{#if deleteOpen}
 					<DeletePrinter {refetch} bind:deleteOpen printerId={printer.id} />
+				{/if}
+				{#if scanOpen}
+					<PrinterScan bind:open={scanOpen} {printer} />
 				{/if}
 			{/if}
 		</div>

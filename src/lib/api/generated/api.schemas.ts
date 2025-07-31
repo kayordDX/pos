@@ -2289,6 +2289,24 @@ export interface PrinterTestRequest {
 	printerId: number;
 }
 
+export interface PrinterScanResultsResults {
+	/** @nullable */
+	status?: string | null;
+	/** @nullable */
+	output?: string | null;
+}
+
+export interface PrinterScanResultsRequest {
+	[key: string]: unknown;
+}
+
+export interface PrinterScanRequest {
+	/**
+	 * @minLength 1
+	 */
+	printerId: number;
+}
+
 export interface DTOPrinterDTO {
 	id: number;
 	outletId: number;
@@ -3500,6 +3518,11 @@ export type SalesPeriodCreateCashUpParams = {
 export type SalesPeriodCashUpParams = {
 	salesPeriodId: number;
 	userId: string;
+};
+
+export type PrinterScanResultsParams = {
+	outletId: number;
+	deviceId: number;
 };
 
 export type PayGetLinkParams = {
