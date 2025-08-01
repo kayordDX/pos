@@ -3177,37 +3177,29 @@ export interface BillDownloadBillRequest {
 	[key: string]: unknown;
 }
 
-/**
- * @nullable
- */
-export type ServicesAIGenerateResponseUsageMetadata = ServicesAIUsageMetadata | null;
-
-export interface ServicesAIGenerateResponse {
-	candidates: ServicesAICandidate[];
-	/** @nullable */
-	usageMetadata?: ServicesAIGenerateResponseUsageMetadata;
-	modelVersion: string;
+export interface AIGenerateStreamRequest {
+	[key: string]: unknown;
 }
 
-export interface ServicesAICandidate {
-	content: ServicesAIContent;
+export interface AIGenerateMenuDescriptionRequest {
+	/**
+	 * @minLength 1
+	 */
+	menu: string;
+	/**
+	 * @minLength 1
+	 */
+	section: string;
+	/**
+	 * @minLength 1
+	 */
+	name: string;
 }
 
-export interface ServicesAIContent {
-	parts: ServicesAIPart[];
-	role: string;
-}
-
-export interface ServicesAIPart {
-	text: string;
-}
-
-export interface ServicesAIUsageMetadata {
-	promptTokenCount: number;
-	totalTokenCount: number;
-}
-
-export interface GenerateRequest {
+export interface AIGenerateRequest {
+	/**
+	 * @minLength 1
+	 */
 	prompt: string;
 }
 
@@ -3618,4 +3610,8 @@ export type CashUpUserDetailParams = {
 
 export type BillCategoryGetAllParams = {
 	outletId: number;
+};
+
+export type AIGenerateStreamParams = {
+	prompt: string;
 };

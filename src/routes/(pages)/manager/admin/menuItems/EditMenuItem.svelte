@@ -8,8 +8,10 @@
 		Dialog,
 		Form,
 		Input,
+		Loader,
 		Select,
 		Tabs,
+		Textarea,
 		toast,
 	} from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
@@ -23,11 +25,11 @@
 		createMenuGetSectionsGetMenusSections,
 		createDivisionGetAll,
 		createBillCategoryGetAll,
-		optionGroup,
+		createAIGenerateMenuDescription,
 	} from "$lib/api";
 	import Extras from "./Extras.svelte";
 	import Options from "./Options.svelte";
-	import { ChevronsUpDownIcon } from "@lucide/svelte";
+	import { ChevronsUpDownIcon, WandSparklesIcon } from "@lucide/svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -194,6 +196,26 @@
 	const billCategoryValue = $derived(
 		billCatList.find((i) => i.value == $formData.billCategoryId.toString())?.label
 	);
+
+	const aiGen = createAIGenerateMenuDescription();
+	let aiLoading = $state(false);
+	const generateDescription = async () => {
+		try {
+			aiLoading = true;
+			const results = await $aiGen.mutateAsync({
+				data: {
+					menu: menuValue ?? "",
+					section: sectionValue ?? "",
+					name: $formData.name,
+				},
+			});
+			$formData.description = results;
+		} catch (err) {
+			toast.error(getError(err).message);
+		} finally {
+			aiLoading = false;
+		}
+	};
 </script>
 
 <Dialog.Root bind:open>
@@ -319,8 +341,24 @@
 				<Form.Field {form} name="description">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Description</Form.Label>
-							<Input {...props} bind:value={$formData.description} />
+							<Form.Label>
+								Description
+								<Button
+									onclick={generateDescription}
+									disabled={aiLoading}
+									size="sm"
+									variant="ghost"
+								>
+									{#if aiLoading}
+										<Loader class="m-0" />
+									{:else}
+										<WandSparklesIcon />
+									{/if}
+									AI Generate
+								</Button>
+							</Form.Label>
+
+							<Textarea {...props} bind:value={$formData.description} disabled={aiLoading} />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
