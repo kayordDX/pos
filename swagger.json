@@ -4047,6 +4047,53 @@
         ]
       }
     },
+    "/stock/items/stockTake": {
+      "put": {
+        "tags": [
+          "Stock"
+        ],
+        "operationId": "StockItemsUpdateStockTake",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/StockItemsUpdateStockTakeRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/stock/items": {
       "put": {
         "tags": [
@@ -15951,7 +15998,8 @@
           "divisionId",
           "division",
           "threshold",
-          "actual"
+          "actual",
+          "updated"
         ],
         "properties": {
           "id": {
@@ -15979,6 +16027,10 @@
           "actual": {
             "type": "number",
             "format": "decimal"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },
@@ -16654,6 +16706,19 @@
           }
         }
       },
+      "StockItemsUpdateStockTakeRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "stockItemId"
+        ],
+        "properties": {
+          "stockItemId": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
       "StockItemsUpdateRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -16823,17 +16888,25 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "id",
+          "stockItemId",
+          "stockId",
           "outletId",
           "name",
           "unitId",
           "unitName",
           "stockCategoryId",
-          "totalActual",
-          "hasVat"
+          "actual",
+          "threshold",
+          "hasVat",
+          "divisionId",
+          "updated"
         ],
         "properties": {
-          "id": {
+          "stockItemId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "stockId": {
             "type": "integer",
             "format": "int32"
           },
@@ -16855,12 +16928,24 @@
             "type": "integer",
             "format": "int32"
           },
-          "totalActual": {
+          "actual": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "threshold": {
             "type": "number",
             "format": "decimal"
           },
           "hasVat": {
             "type": "boolean"
+          },
+          "divisionId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "updated": {
+            "type": "string",
+            "format": "date-time"
           }
         }
       },

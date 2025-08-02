@@ -113,7 +113,7 @@
 	});
 
 	const stockListSelect = $derived(
-		stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unitName})` }))
+		stockList.map((s) => ({ value: s.stockId, label: `${s.name} - (${s.unitName})` }))
 	);
 
 	const last = $derived(

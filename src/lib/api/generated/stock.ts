@@ -49,6 +49,7 @@ import type {
 	StockItemsGetAllResponse,
 	StockItemsGetResponse,
 	StockItemsUpdateRequest,
+	StockItemsUpdateStockTakeRequest,
 	StockLinkAddRequest,
 	StockLinkGetAllParams,
 	StockLinkGetAllResponse,
@@ -1424,6 +1425,81 @@ export const createStockLinkDelete = <
 	TContext
 > => {
 	const mutationOptions = getStockLinkDeleteMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const stockItemsUpdateStockTake = (
+	stockItemsUpdateStockTakeRequest: BodyType<StockItemsUpdateStockTakeRequest>
+) => {
+	return customInstance<void>({
+		url: `/stock/items/stockTake`,
+		method: "PUT",
+		headers: { "Content-Type": "application/json" },
+		data: stockItemsUpdateStockTakeRequest,
+	});
+};
+
+export const getStockItemsUpdateStockTakeMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof stockItemsUpdateStockTake>>,
+		TError,
+		{ data: BodyType<StockItemsUpdateStockTakeRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof stockItemsUpdateStockTake>>,
+	TError,
+	{ data: BodyType<StockItemsUpdateStockTakeRequest> },
+	TContext
+> => {
+	const mutationKey = ["stockItemsUpdateStockTake"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof stockItemsUpdateStockTake>>,
+		{ data: BodyType<StockItemsUpdateStockTakeRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return stockItemsUpdateStockTake(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type StockItemsUpdateStockTakeMutationResult = NonNullable<
+	Awaited<ReturnType<typeof stockItemsUpdateStockTake>>
+>;
+export type StockItemsUpdateStockTakeMutationBody = BodyType<StockItemsUpdateStockTakeRequest>;
+export type StockItemsUpdateStockTakeMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createStockItemsUpdateStockTake = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof stockItemsUpdateStockTake>>,
+			TError,
+			{ data: BodyType<StockItemsUpdateStockTakeRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof stockItemsUpdateStockTake>>,
+	TError,
+	{ data: BodyType<StockItemsUpdateStockTakeRequest> },
+	TContext
+> => {
+	const mutationOptions = getStockItemsUpdateStockTakeMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };

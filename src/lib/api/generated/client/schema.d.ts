@@ -1076,6 +1076,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/stock/items/stockTake": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put: operations["StockItemsUpdateStockTake"];
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/stock/items": {
         parameters: {
             query?: never;
@@ -4152,6 +4168,8 @@ export interface components {
             threshold: number;
             /** Format: decimal */
             actual: number;
+            /** Format: date-time */
+            updated: string;
         };
         EntitiesStockOrderItemStatus: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
@@ -4365,6 +4383,10 @@ export interface components {
             /** Format: int32 */
             linkType: number;
         };
+        StockItemsUpdateStockTakeRequest: {
+            /** Format: int32 */
+            stockItemId: number;
+        };
         StockItemsUpdateRequest: {
             /** Format: int32 */
             divisionId: number;
@@ -4421,7 +4443,9 @@ export interface components {
         };
         StockGetAllDivisionResponse: {
             /** Format: int32 */
-            id: number;
+            stockItemId: number;
+            /** Format: int32 */
+            stockId: number;
             /** Format: int32 */
             outletId: number;
             name: string;
@@ -4431,8 +4455,14 @@ export interface components {
             /** Format: int32 */
             stockCategoryId: number;
             /** Format: decimal */
-            totalActual: number;
+            actual: number;
+            /** Format: decimal */
+            threshold: number;
             hasVat: boolean;
+            /** Format: int32 */
+            divisionId: number;
+            /** Format: date-time */
+            updated: string;
         };
         StockGetAllDivisionRequest: components["schemas"]["CommonModelsQueryModel"] & Record<string, never>;
         CommonModelsPaginatedListOfResponse3: {
@@ -8805,6 +8835,51 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    StockItemsUpdateStockTake: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["StockItemsUpdateStockTakeRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Unauthorized */
             401: {

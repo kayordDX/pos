@@ -34,6 +34,7 @@
 		ChartLineIcon,
 		BanknoteArrowUp,
 		CreditCardIcon,
+		CalculatorIcon,
 	} from "@lucide/svelte";
 
 	const menuItems = [
@@ -163,6 +164,11 @@
 					title: "Stock Categories",
 					href: "/manager/admin/stockCategory",
 					icon: ChartBarStackedIcon,
+				},
+				{
+					title: "Stock Take",
+					href: "/manager/admin/stock/take",
+					icon: CalculatorIcon,
 				},
 			],
 		},

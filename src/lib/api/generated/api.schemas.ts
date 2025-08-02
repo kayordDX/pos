@@ -1514,6 +1514,7 @@ export interface EntitiesStockItem {
 	division: EntitiesDivision;
 	threshold: number;
 	actual: number;
+	updated: string;
 }
 
 export type EntitiesStockOrderItemStatusAllOf = {
@@ -1724,6 +1725,10 @@ export interface StockLinkAddRequest {
 	linkType: number;
 }
 
+export interface StockItemsUpdateStockTakeRequest {
+	stockItemId: number;
+}
+
 export interface StockItemsUpdateRequest {
 	divisionId: number;
 	stockId: number;
@@ -1771,14 +1776,18 @@ export interface CommonModelsPaginatedListOfResponse2 {
 }
 
 export interface StockGetAllDivisionResponse {
-	id: number;
+	stockItemId: number;
+	stockId: number;
 	outletId: number;
 	name: string;
 	unitId: number;
 	unitName: string;
 	stockCategoryId: number;
-	totalActual: number;
+	actual: number;
+	threshold: number;
 	hasVat: boolean;
+	divisionId: number;
+	updated: string;
 }
 
 export type StockGetAllDivisionRequestAllOf = { [key: string]: unknown };
