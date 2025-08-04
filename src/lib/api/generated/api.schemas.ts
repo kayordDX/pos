@@ -1783,6 +1783,8 @@ export interface StockGetAllDivisionResponse {
 	unitId: number;
 	unitName: string;
 	stockCategoryId: number;
+	/** @nullable */
+	categoryDisplayName?: string | null;
 	actual: number;
 	threshold: number;
 	hasVat: boolean;

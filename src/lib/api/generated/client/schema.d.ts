@@ -4934,6 +4934,7 @@ export interface components {
             unitName: string;
             /** Format: int32 */
             stockCategoryId: number;
+            categoryDisplayName?: string | null;
             /** Format: decimal */
             actual: number;
             /** Format: decimal */

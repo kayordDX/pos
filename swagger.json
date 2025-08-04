@@ -17803,6 +17803,10 @@
             "type": "integer",
             "format": "int32"
           },
+          "categoryDisplayName": {
+            "type": "string",
+            "nullable": true
+          },
           "actual": {
             "type": "number",
             "format": "decimal"

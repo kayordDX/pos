@@ -55,7 +55,6 @@
 			header: "Category",
 			accessorKey: "categoryDisplayName",
 			size: 1000,
-			enableSorting: false,
 		},
 		{
 			header: "Threshold",
@@ -200,7 +199,7 @@
 {/snippet}
 
 <div class="m-2">
-	<h2>Stock Items</h2>
+	<h2>Stock Take</h2>
 	<DataTable
 		{table}
 		{header}
