@@ -45,6 +45,12 @@
 			size: 10,
 			footer: () => aggregationFns.mean(data, "tipsPercentage")?.toFixed(2),
 		},
+		{
+			header: "Payments",
+			accessorKey: "payments",
+			size: 10,
+			footer: () => aggregationFns.sum(data, "payments").toFixed(2),
+		},
 	];
 
 	const table = createShadTable({

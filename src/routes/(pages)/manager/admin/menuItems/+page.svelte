@@ -27,12 +27,15 @@
 		{
 			header: "Name",
 			accessorKey: "name",
-			size: 1000,
+			size: 100,
 		},
 		{
 			header: "Description",
 			accessorKey: "description",
 			size: 1000,
+			meta: {
+				className: "whitespace-normal text-xs",
+			},
 		},
 		{
 			header: "Price",

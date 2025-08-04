@@ -343,19 +343,21 @@
 						{#snippet children({ props })}
 							<Form.Label>
 								Description
-								<Button
-									onclick={generateDescription}
-									disabled={aiLoading}
-									size="sm"
-									variant="ghost"
-								>
-									{#if aiLoading}
-										<Loader class="m-0" />
-									{:else}
-										<WandSparklesIcon />
-									{/if}
-									AI Generate
-								</Button>
+								{#if status.hasFeature("ai")}
+									<Button
+										onclick={generateDescription}
+										disabled={aiLoading}
+										size="sm"
+										variant="ghost"
+									>
+										{#if aiLoading}
+											<Loader class="m-0" />
+										{:else}
+											<WandSparklesIcon />
+										{/if}
+										AI Generate
+									</Button>
+								{/if}
 							</Form.Label>
 
 							<Textarea {...props} bind:value={$formData.description} disabled={aiLoading} />

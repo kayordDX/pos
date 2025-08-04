@@ -41,3 +41,4 @@ export * from "./admin";
 export * from "./remove";
 export * from "./adjustmenttype";
 export * from "./adjustment";
+export * from "./ticker-q";

@@ -2100,6 +2100,7 @@ export interface StatsCashUpResponse {
 	adjustments: number;
 	tips: number;
 	tipsPercentage: number;
+	payments: number;
 }
 
 export interface StatsCashUpRequest {
@@ -3251,6 +3252,37 @@ export interface AdjustmentCreateRequest {
 	note?: string | null;
 }
 
+/**
+ * @nullable
+ */
+export type TickerQDashboardRequestsSetBatchParentRequestBatchRunCondition =
+	TickerQUtilitiesEnumsBatchRunCondition | null;
+
+export interface TickerQDashboardRequestsSetBatchParentRequest {
+	targetId: string;
+	parentId: string;
+	/** @nullable */
+	batchRunCondition?: TickerQDashboardRequestsSetBatchParentRequestBatchRunCondition;
+}
+
+export type TickerQUtilitiesEnumsBatchRunCondition =
+	(typeof TickerQUtilitiesEnumsBatchRunCondition)[keyof typeof TickerQUtilitiesEnumsBatchRunCondition];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const TickerQUtilitiesEnumsBatchRunCondition = {
+	OnAnyCompletedStatus: 0,
+	OnSuccess: 1,
+} as const;
+
+export type TickerQUtilitiesEnumsTickerType =
+	(typeof TickerQUtilitiesEnumsTickerType)[keyof typeof TickerQUtilitiesEnumsTickerType];
+
+// eslint-disable-next-line @typescript-eslint/no-redeclare
+export const TickerQUtilitiesEnumsTickerType = {
+	CronExpression: 0,
+	Timer: 1,
+} as const;
+
 export type UserUsersTypeParams = {
 	isFrontLine: boolean;
 	isBackOffice: boolean;
@@ -3623,4 +3655,61 @@ export type BillCategoryGetAllParams = {
 
 export type AIGenerateStreamParams = {
 	prompt: string;
+};
+
+export type TickerQGetTimeTickersGraphDataByRangeParams = {
+	pastDays?: number;
+	futureDays?: number;
+};
+
+export type TickerQGetCronTickersGraphDataByRangeParams = {
+	pastDays?: number;
+	futureDays?: number;
+};
+
+export type TickerQGetCronTickersByIdGraphDataByRangeParams = {
+	id?: string;
+	pastDays?: number;
+	futureDays?: number;
+};
+
+export type TickerQGetCronTickerOccurrencesParams = {
+	cronTickerId?: string;
+};
+
+export type TickerQGetCronTickerOccurrencesGraphDataParams = {
+	cronTickerId?: string;
+};
+
+export type TickerQCancelTickerByIdParams = {
+	id?: string;
+};
+
+export type TickerQDeleteTimeTickerParams = {
+	id?: string;
+};
+
+export type TickerQDeleteCronTickerParams = {
+	id?: string;
+};
+
+export type TickerQDeleteCronTickerOccurrenceParams = {
+	id?: string;
+};
+
+export type TickerQGetTickerRequestByIdParams = {
+	tickerId?: string;
+	tickerType?: TickerQUtilitiesEnumsTickerType;
+};
+
+export type TickerQUpdateTimeTickerPUTParams = {
+	id?: string;
+};
+
+export type TickerQUpdateCronTickerParams = {
+	id?: string;
+};
+
+export type TickerQRunCronTickerOnDemandParams = {
+	id?: string;
 };

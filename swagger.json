@@ -11267,6 +11267,881 @@
           }
         ]
       }
+    },
+    "/api/options": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetOptions",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-tickers": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetCronTickers",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/time-tickers": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetTimeTickers",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/time-tickers/:graph-data-range": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetTimeTickersGraphDataByRange",
+        "parameters": [
+          {
+            "name": "pastDays",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            },
+            "x-position": 1
+          },
+          {
+            "name": "futureDays",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/time-tickers/:graph-data": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetTimeTickersGraphData",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/time-tickers/set-batch-parent": {
+      "post": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_SetBatchParent",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerQDashboardRequestsSetBatchParentRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-tickers/:graph-data-range": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetCronTickersGraphDataByRange",
+        "parameters": [
+          {
+            "name": "pastDays",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            },
+            "x-position": 1
+          },
+          {
+            "name": "futureDays",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-tickers/:graph-data-range-id": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetCronTickersByIdGraphDataByRange",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "pastDays",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            },
+            "x-position": 2
+          },
+          {
+            "name": "futureDays",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 3
+            },
+            "x-position": 3
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-tickers/:graph-data": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetCronTickersGraphData",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-ticker-occurrences/:cronTickerId": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetCronTickerOccurrences",
+        "parameters": [
+          {
+            "name": "cronTickerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-ticker-occurrences/:cronTickerId/:graph-data": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetCronTickerOccurrencesGraphData",
+        "parameters": [
+          {
+            "name": "cronTickerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker/:cancel": {
+      "post": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_CancelTickerById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/time-ticker/:delete": {
+      "delete": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_DeleteTimeTicker",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-ticker/:delete": {
+      "delete": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_DeleteCronTicker",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-ticker-occurrence/:delete": {
+      "delete": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_DeleteCronTickerOccurrence",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker-request/:id": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetTickerRequestById",
+        "parameters": [
+          {
+            "name": "tickerId",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          },
+          {
+            "name": "tickerType",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/TickerQUtilitiesEnumsTickerType"
+            },
+            "x-position": 2
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker-functions": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetTickerFunctions",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/time-ticker/:update": {
+      "put": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_UpdateTimeTickerPUT",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "json",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/time-ticker/:add": {
+      "post": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_UpdateTimeTickerPOST",
+        "requestBody": {
+          "x-name": "json",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-ticker/:add": {
+      "post": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_AddCronTicker",
+        "requestBody": {
+          "x-name": "json",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-ticker/:update": {
+      "put": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_UpdateCronTicker",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "requestBody": {
+          "x-name": "json",
+          "content": {
+            "application/json": {
+              "schema": {}
+            }
+          },
+          "required": true,
+          "x-position": 2
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/cron-ticker/:run": {
+      "post": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_RunCronTickerOnDemand",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "format": "guid"
+            },
+            "x-position": 1
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker-host/:next-ticker": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetNextTicker",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker-host/:stop": {
+      "post": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_StopTickerHost",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker-host/:start": {
+      "post": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_StartTickerHost",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker-host/:restart": {
+      "post": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_RestartTickerHost",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker-host/:status": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetTickerHostStatus",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker/statuses/:get-last-week": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetLastWeekJobStatus",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker/statuses/:get": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetJobStatuses",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/ticker/machine/:jobs": {
+      "get": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_GetMachineJobs",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -17896,7 +18771,8 @@
           "actualSales",
           "adjustments",
           "tips",
-          "tipsPercentage"
+          "tipsPercentage",
+          "payments"
         ],
         "properties": {
           "name": {
@@ -17919,6 +18795,10 @@
             "format": "decimal"
           },
           "tipsPercentage": {
+            "type": "number",
+            "format": "decimal"
+          },
+          "payments": {
             "type": "number",
             "format": "decimal"
           }
@@ -21158,6 +22038,56 @@
             "nullable": true
           }
         }
+      },
+      "TickerQDashboardRequestsSetBatchParentRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "targetId",
+          "parentId"
+        ],
+        "properties": {
+          "targetId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "parentId": {
+            "type": "string",
+            "format": "guid"
+          },
+          "batchRunCondition": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/TickerQUtilitiesEnumsBatchRunCondition"
+              }
+            ]
+          }
+        }
+      },
+      "TickerQUtilitiesEnumsBatchRunCondition": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "OnAnyCompletedStatus",
+          "OnSuccess"
+        ],
+        "enum": [
+          0,
+          1
+        ]
+      },
+      "TickerQUtilitiesEnumsTickerType": {
+        "type": "integer",
+        "description": "",
+        "x-enumNames": [
+          "CronExpression",
+          "Timer"
+        ],
+        "enum": [
+          0,
+          1
+        ]
       }
     },
     "securitySchemes": {
