@@ -3366,6 +3366,8 @@ export interface components {
             assignedUser?: components["schemas"]["DTOUserDTO"] | null;
             /** Format: date-time */
             lastModified: string;
+            /** Format: int32 */
+            toDivisionId: number;
         };
         DTOOutletDTOBasic: {
             /** Format: int32 */
@@ -5088,6 +5090,8 @@ export interface components {
             id: number;
             /** Format: int32 */
             stockAllocateItemStatusId: number;
+            /** Format: int32 */
+            stockId?: number | null;
         };
         CommonModelsPaginatedListOfStockAllocateDTOBasic: {
             items: components["schemas"]["DTOStockAllocateDTOBasic"][];

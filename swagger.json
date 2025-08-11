@@ -12418,7 +12418,8 @@
           "status",
           "description",
           "assignedUserId",
-          "lastModified"
+          "lastModified",
+          "toDivisionId"
         ],
         "properties": {
           "id": {
@@ -12458,6 +12459,10 @@
           "lastModified": {
             "type": "string",
             "format": "date-time"
+          },
+          "toDivisionId": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -18331,6 +18336,11 @@
           "stockAllocateItemStatusId": {
             "type": "integer",
             "format": "int32"
+          },
+          "stockId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
           }
         }
       },

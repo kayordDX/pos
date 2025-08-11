@@ -108,6 +108,7 @@ export interface UserTasksResponse {
 	/** @nullable */
 	assignedUser?: UserTasksResponseAssignedUser;
 	lastModified: string;
+	toDivisionId: number;
 }
 
 export interface DTOOutletDTOBasic {
@@ -1954,6 +1955,8 @@ export interface StockAllocateItemCancelRequest {
 export interface StockAllocateItemActionRequest {
 	id: number;
 	stockAllocateItemStatusId: number;
+	/** @nullable */
+	stockId?: number | null;
 }
 
 export interface CommonModelsPaginatedListOfStockAllocateDTOBasic {
