@@ -28,12 +28,16 @@ import type {
 	UserAddUserOutletRoleRequest,
 	UserApplyOutletRequest,
 	UserAssignOutletRequest,
+	UserGetCounterUsersParams,
+	UserGetCounterUsersResponse,
 	UserGetRolesParams,
 	UserGetStatusResponse,
 	UserLinkAccountRequest,
 	UserLinkAccountResponse,
 	UserPinCreateRequest,
 	UserPinGetResponse,
+	UserPinLoginRequest,
+	UserPinLoginResponse,
 	UserTasksParams,
 	UserUnassignedUsersParams,
 	UserUserResponse,
@@ -490,6 +494,77 @@ export const createUserRemoveUserOutlet = <
 
 	return createMutation(mutationOptions, queryClient);
 };
+export const userPinLogin = (userPinLoginRequest: BodyType<UserPinLoginRequest>) => {
+	return customInstance<UserPinLoginResponse>({
+		url: `/user/pin/login`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: userPinLoginRequest,
+	});
+};
+
+export const getUserPinLoginMutationOptions = <
+	TError = ErrorType<null | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof userPinLogin>>,
+		TError,
+		{ data: BodyType<UserPinLoginRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof userPinLogin>>,
+	TError,
+	{ data: BodyType<UserPinLoginRequest> },
+	TContext
+> => {
+	const mutationKey = ["userPinLogin"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof userPinLogin>>,
+		{ data: BodyType<UserPinLoginRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return userPinLogin(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type UserPinLoginMutationResult = NonNullable<Awaited<ReturnType<typeof userPinLogin>>>;
+export type UserPinLoginMutationBody = BodyType<UserPinLoginRequest>;
+export type UserPinLoginMutationError = ErrorType<null | InternalErrorResponse>;
+
+export const createUserPinLogin = <
+	TError = ErrorType<null | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof userPinLogin>>,
+			TError,
+			{ data: BodyType<UserPinLoginRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof userPinLogin>>,
+	TError,
+	{ data: BodyType<UserPinLoginRequest> },
+	TContext
+> => {
+	const mutationOptions = getUserPinLoginMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
 export const userPinGet = () => {
 	return customInstance<UserPinGetResponse>({ url: `/user/pin`, method: "GET" });
 };
@@ -779,6 +854,71 @@ export function createUserGetRoles<
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const queryOptions = getUserGetRolesQueryOptions(params, options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const userGetCounterUsers = (params: UserGetCounterUsersParams) => {
+	return customInstance<UserGetCounterUsersResponse[]>({
+		url: `/user/counter`,
+		method: "GET",
+		params,
+	});
+};
+
+export const getUserGetCounterUsersQueryKey = (params?: UserGetCounterUsersParams) => {
+	return [`/user/counter`, ...(params ? [params] : [])] as const;
+};
+
+export const getUserGetCounterUsersQueryOptions = <
+	TData = Awaited<ReturnType<typeof userGetCounterUsers>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: UserGetCounterUsersParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof userGetCounterUsers>>, TError, TData>
+		>;
+	}
+) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getUserGetCounterUsersQueryKey(params);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userGetCounterUsers>>> = () =>
+		userGetCounterUsers(params);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof userGetCounterUsers>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type UserGetCounterUsersQueryResult = NonNullable<
+	Awaited<ReturnType<typeof userGetCounterUsers>>
+>;
+export type UserGetCounterUsersQueryError = ErrorType<InternalErrorResponse>;
+
+export function createUserGetCounterUsers<
+	TData = Awaited<ReturnType<typeof userGetCounterUsers>>,
+	TError = ErrorType<InternalErrorResponse>,
+>(
+	params: UserGetCounterUsersParams,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof userGetCounterUsers>>, TError, TData>
+		>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getUserGetCounterUsersQueryOptions(params, options);
 
 	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
 		queryKey: DataTag<QueryKey, TData, TError>;

@@ -7,12 +7,18 @@
 	import z from "zod";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { createUserPinGet, createUserPinCreate } from "$lib/api";
+	import { mode } from "$lib/stores/mode.svelte";
+	import { status } from "$lib/stores/status.svelte";
+	import { logout } from "$lib/firebase.svelte";
 
 	const query = createUserPinGet({ query: { retry: false } });
 	const pinMutation = createUserPinCreate();
 
 	export const schema = z.object({
-		pin: z.string().length(4, { message: "Pin needs to be 4 characters long" }),
+		pin: z
+			.string()
+			.min(4, { message: "Pin needs to be at least 4 characters long" })
+			.max(12, { message: "Pin cannot be longer than 12 characters" }),
 		IsEnabled: z.boolean(),
 	});
 	type FormSchema = z.infer<typeof schema>;
@@ -46,6 +52,15 @@
 			reset({ data: { IsEnabled: $query.data.isEnabled, pin: $query.data.pin } });
 		}
 	});
+
+	const enableCounterMode = async () => {
+		try {
+			mode.value = { mode: "counter", outletId: status.value.outletId };
+			await logout();
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
+	};
 </script>
 
 <Header />
@@ -67,7 +82,13 @@
 				<Form.Control>
 					{#snippet children({ props })}
 						<Form.Label>Pin</Form.Label>
-						<Input {...props} class="max-w-xs" type="password" bind:value={$formData.pin} />
+						<Input
+							{...props}
+							class="max-w-xs"
+							type="password"
+							bind:value={$formData.pin}
+							autocomplete="off"
+						/>
 					{/snippet}
 				</Form.Control>
 				<Form.Description>Request access to new outlet</Form.Description>
@@ -86,7 +107,7 @@
 		<Card.Description>This will log you out and activate counter mode on device</Card.Description>
 	</Card.Header>
 	<Card.Footer>
-		<Button variant="destructive">
+		<Button variant="destructive" onclick={enableCounterMode}>
 			<TvMinimalIcon /> Enable Counter Mode
 		</Button>
 	</Card.Footer>

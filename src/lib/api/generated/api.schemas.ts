@@ -160,6 +160,16 @@ export interface UserRemoveUserOutletRequest {
 	[key: string]: unknown;
 }
 
+export interface UserPinLoginResponse {
+	token: string;
+}
+
+export interface UserPinLoginRequest {
+	userId: string;
+	outletId: number;
+	pin: string;
+}
+
 export interface UserPinGetResponse {
 	userId: string;
 	outletId: number;
@@ -234,6 +244,16 @@ export interface EntitiesFeature {
 }
 
 export interface UserGetRolesRequest {
+	[key: string]: unknown;
+}
+
+export interface UserGetCounterUsersResponse {
+	userId: string;
+	name: string;
+	image: string;
+}
+
+export interface UserGetCounterUsersRequest {
 	[key: string]: unknown;
 }
 
@@ -3426,6 +3446,10 @@ export type UserTasksParams = {
 
 export type UserGetRolesParams = {
 	userId: string;
+};
+
+export type UserGetCounterUsersParams = {
+	outletId: number;
 };
 
 export type TableOrderFrontOfficeParams = {

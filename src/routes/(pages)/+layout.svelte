@@ -49,15 +49,15 @@
 	});
 </script>
 
-<AuthCheck>
-	<Hub />
+<QueryClientProvider client={queryClient}>
 	<Toaster />
-	<Notification />
-	<QueryClientProvider client={queryClient}>
+	<AuthCheck>
+		<Hub />
+		<Notification />
 		<OutletCheck>
 			{#if children}
 				{@render children()}
 			{/if}
 		</OutletCheck>
-	</QueryClientProvider>
-</AuthCheck>
+	</AuthCheck>
+</QueryClientProvider>

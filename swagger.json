@@ -557,6 +557,57 @@
         ]
       }
     },
+    "/user/pin/login": {
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserPinLogin",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPinLoginRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPinLoginResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/user/pin": {
       "get": {
         "tags": [
@@ -777,6 +828,50 @@
             "JWTBearerAuth": []
           }
         ]
+      }
+    },
+    "/user/counter": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserGetCounterUsers",
+        "parameters": [
+          {
+            "name": "outletId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UserGetCounterUsersResponse"
+                  }
+                }
+              }
+            }
+          }
+        }
       }
     },
     "/role/createRole": {
@@ -12700,6 +12795,39 @@
         "type": "object",
         "additionalProperties": false
       },
+      "UserPinLoginResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "token"
+        ],
+        "properties": {
+          "token": {
+            "type": "string"
+          }
+        }
+      },
+      "UserPinLoginRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "outletId",
+          "pin"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pin": {
+            "type": "string"
+          }
+        }
+      },
       "UserPinGetResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -12923,6 +13051,30 @@
         }
       },
       "UserGetRolesRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
+      "UserGetCounterUsersResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "name",
+          "image"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "image": {
+            "type": "string"
+          }
+        }
+      },
+      "UserGetCounterUsersRequest": {
         "type": "object",
         "additionalProperties": false
       },
