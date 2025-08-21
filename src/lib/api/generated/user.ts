@@ -32,6 +32,8 @@ import type {
 	UserGetStatusResponse,
 	UserLinkAccountRequest,
 	UserLinkAccountResponse,
+	UserPinCreateRequest,
+	UserPinGetResponse,
 	UserTasksParams,
 	UserUnassignedUsersParams,
 	UserUserResponse,
@@ -485,6 +487,127 @@ export const createUserRemoveUserOutlet = <
 	TContext
 > => {
 	const mutationOptions = getUserRemoveUserOutletMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const userPinGet = () => {
+	return customInstance<UserPinGetResponse>({ url: `/user/pin`, method: "GET" });
+};
+
+export const getUserPinGetQueryKey = () => {
+	return [`/user/pin`] as const;
+};
+
+export const getUserPinGetQueryOptions = <
+	TData = Awaited<ReturnType<typeof userPinGet>>,
+	TError = ErrorType<null | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userPinGet>>, TError, TData>>;
+}) => {
+	const { query: queryOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getUserPinGetQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userPinGet>>> = () => userPinGet();
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof userPinGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type UserPinGetQueryResult = NonNullable<Awaited<ReturnType<typeof userPinGet>>>;
+export type UserPinGetQueryError = ErrorType<null | InternalErrorResponse>;
+
+export function createUserPinGet<
+	TData = Awaited<ReturnType<typeof userPinGet>>,
+	TError = ErrorType<null | InternalErrorResponse>,
+>(
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userPinGet>>, TError, TData>>;
+	},
+	queryClient?: QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const queryOptions = getUserPinGetQueryOptions(options);
+
+	const query = createQuery(queryOptions, queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+
+	query.queryKey = queryOptions.queryKey;
+
+	return query;
+}
+
+export const userPinCreate = (userPinCreateRequest: BodyType<UserPinCreateRequest>) => {
+	return customInstance<null>({
+		url: `/user/pin`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: userPinCreateRequest,
+	});
+};
+
+export const getUserPinCreateMutationOptions = <
+	TError = ErrorType<null | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof userPinCreate>>,
+		TError,
+		{ data: BodyType<UserPinCreateRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof userPinCreate>>,
+	TError,
+	{ data: BodyType<UserPinCreateRequest> },
+	TContext
+> => {
+	const mutationKey = ["userPinCreate"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof userPinCreate>>,
+		{ data: BodyType<UserPinCreateRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return userPinCreate(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type UserPinCreateMutationResult = NonNullable<Awaited<ReturnType<typeof userPinCreate>>>;
+export type UserPinCreateMutationBody = BodyType<UserPinCreateRequest>;
+export type UserPinCreateMutationError = ErrorType<null | InternalErrorResponse>;
+
+export const createUserPinCreate = <
+	TError = ErrorType<null | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof userPinCreate>>,
+			TError,
+			{ data: BodyType<UserPinCreateRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof userPinCreate>>,
+	TError,
+	{ data: BodyType<UserPinCreateRequest> },
+	TContext
+> => {
+	const mutationOptions = getUserPinCreateMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };

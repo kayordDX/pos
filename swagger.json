@@ -557,6 +557,86 @@
         ]
       }
     },
+    "/user/pin": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserPinGet",
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserPinGetResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      },
+      "post": {
+        "tags": [
+          "User"
+        ],
+        "operationId": "UserPinCreate",
+        "requestBody": {
+          "x-name": "Request",
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserPinCreateRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "204": {
+            "description": "No Content"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        },
+        "security": [
+          {
+            "JWTBearerAuth": []
+          }
+        ]
+      }
+    },
     "/user/linkAccount": {
       "post": {
         "tags": [
@@ -11428,6 +11508,39 @@
         }
       }
     },
+    "/api/time-tickers/unbatch": {
+      "post": {
+        "tags": [
+          "TickerQ"
+        ],
+        "operationId": "TickerQ_UnbatchTimeTicker",
+        "requestBody": {
+          "x-name": "request",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TickerQDashboardRequestsUnbatchTickerRequest"
+              }
+            }
+          },
+          "required": true,
+          "x-position": 1
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/octet-stream": {
+                "schema": {
+                  "type": "string",
+                  "format": "binary"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/cron-tickers/:graph-data-range": {
       "get": {
         "tags": [
@@ -11802,7 +11915,7 @@
         "tags": [
           "TickerQ"
         ],
-        "operationId": "TickerQ_UpdateTimeTickerPUT",
+        "operationId": "TickerQ_UpdateTimeTicker",
         "parameters": [
           {
             "name": "id",
@@ -11815,10 +11928,12 @@
           }
         ],
         "requestBody": {
-          "x-name": "json",
+          "x-name": "request",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest"
+              }
             }
           },
           "required": true,
@@ -11844,12 +11959,14 @@
         "tags": [
           "TickerQ"
         ],
-        "operationId": "TickerQ_UpdateTimeTickerPOST",
+        "operationId": "TickerQ_AddTimeTicker",
         "requestBody": {
-          "x-name": "json",
+          "x-name": "request",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/TickerQUtilitiesDashboardDtosAddTimeTickerRequest"
+              }
             }
           },
           "required": true,
@@ -11877,10 +11994,12 @@
         ],
         "operationId": "TickerQ_AddCronTicker",
         "requestBody": {
-          "x-name": "json",
+          "x-name": "request",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/TickerQUtilitiesDashboardDtosAddCronTickerRequest"
+              }
             }
           },
           "required": true,
@@ -11919,10 +12038,12 @@
           }
         ],
         "requestBody": {
-          "x-name": "json",
+          "x-name": "request",
           "content": {
             "application/json": {
-              "schema": {}
+              "schema": {
+                "$ref": "#/components/schemas/TickerQUtilitiesDashboardDtosUpdateCronTickerRequest"
+              }
             }
           },
           "required": true,
@@ -12578,6 +12699,47 @@
       "UserRemoveUserOutletRequest": {
         "type": "object",
         "additionalProperties": false
+      },
+      "UserPinGetResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "userId",
+          "outletId",
+          "pin",
+          "isEnabled"
+        ],
+        "properties": {
+          "userId": {
+            "type": "string"
+          },
+          "outletId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pin": {
+            "type": "string"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          }
+        }
+      },
+      "UserPinCreateRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pin",
+          "isEnabled"
+        ],
+        "properties": {
+          "pin": {
+            "type": "string"
+          },
+          "isEnabled": {
+            "type": "boolean"
+          }
+        }
       },
       "UserLinkAccountResponse": {
         "type": "object",
@@ -22091,6 +22253,19 @@
           1
         ]
       },
+      "TickerQDashboardRequestsUnbatchTickerRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "tickerId"
+        ],
+        "properties": {
+          "tickerId": {
+            "type": "string",
+            "format": "guid"
+          }
+        }
+      },
       "TickerQUtilitiesEnumsTickerType": {
         "type": "integer",
         "description": "",
@@ -22102,6 +22277,150 @@
           0,
           1
         ]
+      },
+      "TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "retries"
+        ],
+        "properties": {
+          "function": {
+            "type": "string",
+            "nullable": true
+          },
+          "request": {
+            "type": "string",
+            "nullable": true
+          },
+          "retries": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "executionTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "intervals": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "TickerQUtilitiesDashboardDtosAddTimeTickerRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "retries"
+        ],
+        "properties": {
+          "function": {
+            "type": "string",
+            "nullable": true
+          },
+          "request": {
+            "type": "string",
+            "nullable": true
+          },
+          "retries": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "executionTime": {
+            "type": "string",
+            "nullable": true
+          },
+          "intervals": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "TickerQUtilitiesDashboardDtosAddCronTickerRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "function": {
+            "type": "string",
+            "nullable": true
+          },
+          "expression": {
+            "type": "string",
+            "nullable": true
+          },
+          "request": {
+            "type": "string",
+            "nullable": true
+          },
+          "retries": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "intervals": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
+      },
+      "TickerQUtilitiesDashboardDtosUpdateCronTickerRequest": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "function": {
+            "type": "string",
+            "nullable": true
+          },
+          "expression": {
+            "type": "string",
+            "nullable": true
+          },
+          "request": {
+            "type": "string",
+            "nullable": true
+          },
+          "retries": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "intervals": {
+            "type": "array",
+            "nullable": true,
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        }
       }
     },
     "securitySchemes": {

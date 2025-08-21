@@ -160,6 +160,18 @@ export interface UserRemoveUserOutletRequest {
 	[key: string]: unknown;
 }
 
+export interface UserPinGetResponse {
+	userId: string;
+	outletId: number;
+	pin: string;
+	isEnabled: boolean;
+}
+
+export interface UserPinCreateRequest {
+	pin: string;
+	isEnabled: boolean;
+}
+
 export interface UserLinkAccountResponse {
 	/** @nullable */
 	message?: string | null;
@@ -3279,6 +3291,10 @@ export const TickerQUtilitiesEnumsBatchRunCondition = {
 	OnSuccess: 1,
 } as const;
 
+export interface TickerQDashboardRequestsUnbatchTickerRequest {
+	tickerId: string;
+}
+
 export type TickerQUtilitiesEnumsTickerType =
 	(typeof TickerQUtilitiesEnumsTickerType)[keyof typeof TickerQUtilitiesEnumsTickerType];
 
@@ -3287,6 +3303,64 @@ export const TickerQUtilitiesEnumsTickerType = {
 	CronExpression: 0,
 	Timer: 1,
 } as const;
+
+export interface TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest {
+	/** @nullable */
+	function?: string | null;
+	/** @nullable */
+	request?: string | null;
+	retries: number;
+	/** @nullable */
+	description?: string | null;
+	/** @nullable */
+	executionTime?: string | null;
+	/** @nullable */
+	intervals?: number[] | null;
+}
+
+export interface TickerQUtilitiesDashboardDtosAddTimeTickerRequest {
+	/** @nullable */
+	function?: string | null;
+	/** @nullable */
+	request?: string | null;
+	retries: number;
+	/** @nullable */
+	description?: string | null;
+	/** @nullable */
+	executionTime?: string | null;
+	/** @nullable */
+	intervals?: number[] | null;
+}
+
+export interface TickerQUtilitiesDashboardDtosAddCronTickerRequest {
+	/** @nullable */
+	function?: string | null;
+	/** @nullable */
+	expression?: string | null;
+	/** @nullable */
+	request?: string | null;
+	/** @nullable */
+	retries?: number | null;
+	/** @nullable */
+	description?: string | null;
+	/** @nullable */
+	intervals?: number[] | null;
+}
+
+export interface TickerQUtilitiesDashboardDtosUpdateCronTickerRequest {
+	/** @nullable */
+	function?: string | null;
+	/** @nullable */
+	expression?: string | null;
+	/** @nullable */
+	request?: string | null;
+	/** @nullable */
+	retries?: number | null;
+	/** @nullable */
+	description?: string | null;
+	/** @nullable */
+	intervals?: number[] | null;
+}
 
 export type UserUsersTypeParams = {
 	isFrontLine: boolean;
@@ -3707,7 +3781,7 @@ export type TickerQGetTickerRequestByIdParams = {
 	tickerType?: TickerQUtilitiesEnumsTickerType;
 };
 
-export type TickerQUpdateTimeTickerPUTParams = {
+export type TickerQUpdateTimeTickerParams = {
 	id?: string;
 };
 

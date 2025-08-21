@@ -9,6 +9,7 @@
 		InboxIcon,
 		ArrowRightLeft,
 		ShieldUserIcon,
+		TvMinimalIcon,
 	} from "@lucide/svelte";
 	import { getInitials } from "$lib/util";
 	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
@@ -35,7 +36,7 @@
 				</Avatar.Fallback>
 			</Avatar.Root>
 			<div
-				class={`size-3 rounded-md absolute top-0 right-0 ${networkInformation.value.connectivity == "online" ? "bg-success" : networkInformation.value.connectivity == "offline" ? "bg-destructive animate-pulse" : "bg-muted-foreground"}`}
+				class={`size-3 rounded-md absolute top-0 right-0 ${networkInformation.isOnline() ? "bg-success" : networkInformation.isOnline() ? "bg-destructive animate-pulse" : "bg-muted-foreground"}`}
 			></div>
 		</div>
 	</DropdownMenu.Trigger>
@@ -49,6 +50,11 @@
 			<DropdownMenu.Item onclick={() => goto("/setup")}>
 				<WrenchIcon class="mr-2 h-4 w-4" />Setup Device
 			</DropdownMenu.Item>
+			{#if status.hasFeature("counter mode")}
+				<DropdownMenu.Item onclick={() => goto("/counter-mode")}>
+					<TvMinimalIcon class="mr-2 h-4 w-4" />Counter Mode
+				</DropdownMenu.Item>
+			{/if}
 			<DropdownMenu.Item onclick={() => goto("/link-account")}>
 				<ShieldUserIcon class="mr-2 h-4 w-4" />Link Account
 			</DropdownMenu.Item>

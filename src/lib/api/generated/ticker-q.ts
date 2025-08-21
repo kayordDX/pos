@@ -22,6 +22,7 @@ import type {
 import type {
 	TickerQCancelTickerByIdParams,
 	TickerQDashboardRequestsSetBatchParentRequest,
+	TickerQDashboardRequestsUnbatchTickerRequest,
 	TickerQDeleteCronTickerOccurrenceParams,
 	TickerQDeleteCronTickerParams,
 	TickerQDeleteTimeTickerParams,
@@ -33,7 +34,11 @@ import type {
 	TickerQGetTimeTickersGraphDataByRangeParams,
 	TickerQRunCronTickerOnDemandParams,
 	TickerQUpdateCronTickerParams,
-	TickerQUpdateTimeTickerPUTParams,
+	TickerQUpdateTimeTickerParams,
+	TickerQUtilitiesDashboardDtosAddCronTickerRequest,
+	TickerQUtilitiesDashboardDtosAddTimeTickerRequest,
+	TickerQUtilitiesDashboardDtosUpdateCronTickerRequest,
+	TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest,
 } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
@@ -420,6 +425,80 @@ export const createTickerQSetBatchParent = <TError = ErrorType<unknown>, TContex
 	TContext
 > => {
 	const mutationOptions = getTickerQSetBatchParentMutationOptions(options);
+
+	return createMutation(mutationOptions, queryClient);
+};
+export const tickerQUnbatchTimeTicker = (
+	tickerQDashboardRequestsUnbatchTickerRequest: BodyType<TickerQDashboardRequestsUnbatchTickerRequest>
+) => {
+	return customInstance<Blob>({
+		url: `/api/time-tickers/unbatch`,
+		method: "POST",
+		headers: { "Content-Type": "application/json" },
+		data: tickerQDashboardRequestsUnbatchTickerRequest,
+		responseType: "blob",
+	});
+};
+
+export const getTickerQUnbatchTimeTickerMutationOptions = <
+	TError = ErrorType<unknown>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof tickerQUnbatchTimeTicker>>,
+		TError,
+		{ data: BodyType<TickerQDashboardRequestsUnbatchTickerRequest> },
+		TContext
+	>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof tickerQUnbatchTimeTicker>>,
+	TError,
+	{ data: BodyType<TickerQDashboardRequestsUnbatchTickerRequest> },
+	TContext
+> => {
+	const mutationKey = ["tickerQUnbatchTimeTicker"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof tickerQUnbatchTimeTicker>>,
+		{ data: BodyType<TickerQDashboardRequestsUnbatchTickerRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tickerQUnbatchTimeTicker(data);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TickerQUnbatchTimeTickerMutationResult = NonNullable<
+	Awaited<ReturnType<typeof tickerQUnbatchTimeTicker>>
+>;
+export type TickerQUnbatchTimeTickerMutationBody =
+	BodyType<TickerQDashboardRequestsUnbatchTickerRequest>;
+export type TickerQUnbatchTimeTickerMutationError = ErrorType<unknown>;
+
+export const createTickerQUnbatchTimeTicker = <TError = ErrorType<unknown>, TContext = unknown>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof tickerQUnbatchTimeTicker>>,
+			TError,
+			{ data: BodyType<TickerQDashboardRequestsUnbatchTickerRequest> },
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof tickerQUnbatchTimeTicker>>,
+	TError,
+	{ data: BodyType<TickerQDashboardRequestsUnbatchTickerRequest> },
+	TContext
+> => {
+	const mutationOptions = getTickerQUnbatchTimeTickerMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };
@@ -1209,37 +1288,43 @@ export function createTickerQGetTickerFunctions<
 	return query;
 }
 
-export const tickerQUpdateTimeTickerPUT = (
-	tickerQUpdateTimeTickerPUTBody: BodyType<unknown>,
-	params?: TickerQUpdateTimeTickerPUTParams
+export const tickerQUpdateTimeTicker = (
+	tickerQUtilitiesDashboardDtosUpdateTimeTickerRequest: BodyType<TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest>,
+	params?: TickerQUpdateTimeTickerParams
 ) => {
 	return customInstance<Blob>({
 		url: `/api/time-ticker/:update`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
-		data: tickerQUpdateTimeTickerPUTBody,
+		data: tickerQUtilitiesDashboardDtosUpdateTimeTickerRequest,
 		params,
 		responseType: "blob",
 	});
 };
 
-export const getTickerQUpdateTimeTickerPUTMutationOptions = <
+export const getTickerQUpdateTimeTickerMutationOptions = <
 	TError = ErrorType<unknown>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof tickerQUpdateTimeTickerPUT>>,
+		Awaited<ReturnType<typeof tickerQUpdateTimeTicker>>,
 		TError,
-		{ data: BodyType<unknown>; params?: TickerQUpdateTimeTickerPUTParams },
+		{
+			data: BodyType<TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest>;
+			params?: TickerQUpdateTimeTickerParams;
+		},
 		TContext
 	>;
 }): CreateMutationOptions<
-	Awaited<ReturnType<typeof tickerQUpdateTimeTickerPUT>>,
+	Awaited<ReturnType<typeof tickerQUpdateTimeTicker>>,
 	TError,
-	{ data: BodyType<unknown>; params?: TickerQUpdateTimeTickerPUTParams },
+	{
+		data: BodyType<TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest>;
+		params?: TickerQUpdateTimeTickerParams;
+	},
 	TContext
 > => {
-	const mutationKey = ["tickerQUpdateTimeTickerPUT"];
+	const mutationKey = ["tickerQUpdateTimeTicker"];
 	const { mutation: mutationOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -1247,70 +1332,82 @@ export const getTickerQUpdateTimeTickerPUTMutationOptions = <
 		: { mutation: { mutationKey } };
 
 	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof tickerQUpdateTimeTickerPUT>>,
-		{ data: BodyType<unknown>; params?: TickerQUpdateTimeTickerPUTParams }
+		Awaited<ReturnType<typeof tickerQUpdateTimeTicker>>,
+		{
+			data: BodyType<TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest>;
+			params?: TickerQUpdateTimeTickerParams;
+		}
 	> = (props) => {
 		const { data, params } = props ?? {};
 
-		return tickerQUpdateTimeTickerPUT(data, params);
+		return tickerQUpdateTimeTicker(data, params);
 	};
 
 	return { mutationFn, ...mutationOptions };
 };
 
-export type TickerQUpdateTimeTickerPUTMutationResult = NonNullable<
-	Awaited<ReturnType<typeof tickerQUpdateTimeTickerPUT>>
+export type TickerQUpdateTimeTickerMutationResult = NonNullable<
+	Awaited<ReturnType<typeof tickerQUpdateTimeTicker>>
 >;
-export type TickerQUpdateTimeTickerPUTMutationBody = BodyType<unknown>;
-export type TickerQUpdateTimeTickerPUTMutationError = ErrorType<unknown>;
+export type TickerQUpdateTimeTickerMutationBody =
+	BodyType<TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest>;
+export type TickerQUpdateTimeTickerMutationError = ErrorType<unknown>;
 
-export const createTickerQUpdateTimeTickerPUT = <TError = ErrorType<unknown>, TContext = unknown>(
+export const createTickerQUpdateTimeTicker = <TError = ErrorType<unknown>, TContext = unknown>(
 	options?: {
 		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof tickerQUpdateTimeTickerPUT>>,
+			Awaited<ReturnType<typeof tickerQUpdateTimeTicker>>,
 			TError,
-			{ data: BodyType<unknown>; params?: TickerQUpdateTimeTickerPUTParams },
+			{
+				data: BodyType<TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest>;
+				params?: TickerQUpdateTimeTickerParams;
+			},
 			TContext
 		>;
 	},
 	queryClient?: QueryClient
 ): CreateMutationResult<
-	Awaited<ReturnType<typeof tickerQUpdateTimeTickerPUT>>,
+	Awaited<ReturnType<typeof tickerQUpdateTimeTicker>>,
 	TError,
-	{ data: BodyType<unknown>; params?: TickerQUpdateTimeTickerPUTParams },
+	{
+		data: BodyType<TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest>;
+		params?: TickerQUpdateTimeTickerParams;
+	},
 	TContext
 > => {
-	const mutationOptions = getTickerQUpdateTimeTickerPUTMutationOptions(options);
+	const mutationOptions = getTickerQUpdateTimeTickerMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };
-export const tickerQUpdateTimeTickerPOST = (tickerQUpdateTimeTickerPOSTBody: BodyType<unknown>) => {
+export const tickerQAddTimeTicker = (
+	tickerQUtilitiesDashboardDtosAddTimeTickerRequest: BodyType<TickerQUtilitiesDashboardDtosAddTimeTickerRequest>
+) => {
 	return customInstance<Blob>({
 		url: `/api/time-ticker/:add`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		data: tickerQUpdateTimeTickerPOSTBody,
+		data: tickerQUtilitiesDashboardDtosAddTimeTickerRequest,
 		responseType: "blob",
 	});
 };
 
-export const getTickerQUpdateTimeTickerPOSTMutationOptions = <
+export const getTickerQAddTimeTickerMutationOptions = <
 	TError = ErrorType<unknown>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof tickerQUpdateTimeTickerPOST>>,
+		Awaited<ReturnType<typeof tickerQAddTimeTicker>>,
 		TError,
-		{ data: BodyType<unknown> },
+		{ data: BodyType<TickerQUtilitiesDashboardDtosAddTimeTickerRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
-	Awaited<ReturnType<typeof tickerQUpdateTimeTickerPOST>>,
+	Awaited<ReturnType<typeof tickerQAddTimeTicker>>,
 	TError,
-	{ data: BodyType<unknown> },
+	{ data: BodyType<TickerQUtilitiesDashboardDtosAddTimeTickerRequest> },
 	TContext
 > => {
-	const mutationKey = ["tickerQUpdateTimeTickerPOST"];
+	const mutationKey = ["tickerQAddTimeTicker"];
 	const { mutation: mutationOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -1318,49 +1415,52 @@ export const getTickerQUpdateTimeTickerPOSTMutationOptions = <
 		: { mutation: { mutationKey } };
 
 	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof tickerQUpdateTimeTickerPOST>>,
-		{ data: BodyType<unknown> }
+		Awaited<ReturnType<typeof tickerQAddTimeTicker>>,
+		{ data: BodyType<TickerQUtilitiesDashboardDtosAddTimeTickerRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
-		return tickerQUpdateTimeTickerPOST(data);
+		return tickerQAddTimeTicker(data);
 	};
 
 	return { mutationFn, ...mutationOptions };
 };
 
-export type TickerQUpdateTimeTickerPOSTMutationResult = NonNullable<
-	Awaited<ReturnType<typeof tickerQUpdateTimeTickerPOST>>
+export type TickerQAddTimeTickerMutationResult = NonNullable<
+	Awaited<ReturnType<typeof tickerQAddTimeTicker>>
 >;
-export type TickerQUpdateTimeTickerPOSTMutationBody = BodyType<unknown>;
-export type TickerQUpdateTimeTickerPOSTMutationError = ErrorType<unknown>;
+export type TickerQAddTimeTickerMutationBody =
+	BodyType<TickerQUtilitiesDashboardDtosAddTimeTickerRequest>;
+export type TickerQAddTimeTickerMutationError = ErrorType<unknown>;
 
-export const createTickerQUpdateTimeTickerPOST = <TError = ErrorType<unknown>, TContext = unknown>(
+export const createTickerQAddTimeTicker = <TError = ErrorType<unknown>, TContext = unknown>(
 	options?: {
 		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof tickerQUpdateTimeTickerPOST>>,
+			Awaited<ReturnType<typeof tickerQAddTimeTicker>>,
 			TError,
-			{ data: BodyType<unknown> },
+			{ data: BodyType<TickerQUtilitiesDashboardDtosAddTimeTickerRequest> },
 			TContext
 		>;
 	},
 	queryClient?: QueryClient
 ): CreateMutationResult<
-	Awaited<ReturnType<typeof tickerQUpdateTimeTickerPOST>>,
+	Awaited<ReturnType<typeof tickerQAddTimeTicker>>,
 	TError,
-	{ data: BodyType<unknown> },
+	{ data: BodyType<TickerQUtilitiesDashboardDtosAddTimeTickerRequest> },
 	TContext
 > => {
-	const mutationOptions = getTickerQUpdateTimeTickerPOSTMutationOptions(options);
+	const mutationOptions = getTickerQAddTimeTickerMutationOptions(options);
 
 	return createMutation(mutationOptions, queryClient);
 };
-export const tickerQAddCronTicker = (tickerQAddCronTickerBody: BodyType<unknown>) => {
+export const tickerQAddCronTicker = (
+	tickerQUtilitiesDashboardDtosAddCronTickerRequest: BodyType<TickerQUtilitiesDashboardDtosAddCronTickerRequest>
+) => {
 	return customInstance<Blob>({
 		url: `/api/cron-ticker/:add`,
 		method: "POST",
 		headers: { "Content-Type": "application/json" },
-		data: tickerQAddCronTickerBody,
+		data: tickerQUtilitiesDashboardDtosAddCronTickerRequest,
 		responseType: "blob",
 	});
 };
@@ -1372,13 +1472,13 @@ export const getTickerQAddCronTickerMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<typeof tickerQAddCronTicker>>,
 		TError,
-		{ data: BodyType<unknown> },
+		{ data: BodyType<TickerQUtilitiesDashboardDtosAddCronTickerRequest> },
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<typeof tickerQAddCronTicker>>,
 	TError,
-	{ data: BodyType<unknown> },
+	{ data: BodyType<TickerQUtilitiesDashboardDtosAddCronTickerRequest> },
 	TContext
 > => {
 	const mutationKey = ["tickerQAddCronTicker"];
@@ -1390,7 +1490,7 @@ export const getTickerQAddCronTickerMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<typeof tickerQAddCronTicker>>,
-		{ data: BodyType<unknown> }
+		{ data: BodyType<TickerQUtilitiesDashboardDtosAddCronTickerRequest> }
 	> = (props) => {
 		const { data } = props ?? {};
 
@@ -1403,7 +1503,8 @@ export const getTickerQAddCronTickerMutationOptions = <
 export type TickerQAddCronTickerMutationResult = NonNullable<
 	Awaited<ReturnType<typeof tickerQAddCronTicker>>
 >;
-export type TickerQAddCronTickerMutationBody = BodyType<unknown>;
+export type TickerQAddCronTickerMutationBody =
+	BodyType<TickerQUtilitiesDashboardDtosAddCronTickerRequest>;
 export type TickerQAddCronTickerMutationError = ErrorType<unknown>;
 
 export const createTickerQAddCronTicker = <TError = ErrorType<unknown>, TContext = unknown>(
@@ -1411,7 +1512,7 @@ export const createTickerQAddCronTicker = <TError = ErrorType<unknown>, TContext
 		mutation?: CreateMutationOptions<
 			Awaited<ReturnType<typeof tickerQAddCronTicker>>,
 			TError,
-			{ data: BodyType<unknown> },
+			{ data: BodyType<TickerQUtilitiesDashboardDtosAddCronTickerRequest> },
 			TContext
 		>;
 	},
@@ -1419,7 +1520,7 @@ export const createTickerQAddCronTicker = <TError = ErrorType<unknown>, TContext
 ): CreateMutationResult<
 	Awaited<ReturnType<typeof tickerQAddCronTicker>>,
 	TError,
-	{ data: BodyType<unknown> },
+	{ data: BodyType<TickerQUtilitiesDashboardDtosAddCronTickerRequest> },
 	TContext
 > => {
 	const mutationOptions = getTickerQAddCronTickerMutationOptions(options);
@@ -1427,14 +1528,14 @@ export const createTickerQAddCronTicker = <TError = ErrorType<unknown>, TContext
 	return createMutation(mutationOptions, queryClient);
 };
 export const tickerQUpdateCronTicker = (
-	tickerQUpdateCronTickerBody: BodyType<unknown>,
+	tickerQUtilitiesDashboardDtosUpdateCronTickerRequest: BodyType<TickerQUtilitiesDashboardDtosUpdateCronTickerRequest>,
 	params?: TickerQUpdateCronTickerParams
 ) => {
 	return customInstance<Blob>({
 		url: `/api/cron-ticker/:update`,
 		method: "PUT",
 		headers: { "Content-Type": "application/json" },
-		data: tickerQUpdateCronTickerBody,
+		data: tickerQUtilitiesDashboardDtosUpdateCronTickerRequest,
 		params,
 		responseType: "blob",
 	});
@@ -1447,13 +1548,19 @@ export const getTickerQUpdateCronTickerMutationOptions = <
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<typeof tickerQUpdateCronTicker>>,
 		TError,
-		{ data: BodyType<unknown>; params?: TickerQUpdateCronTickerParams },
+		{
+			data: BodyType<TickerQUtilitiesDashboardDtosUpdateCronTickerRequest>;
+			params?: TickerQUpdateCronTickerParams;
+		},
 		TContext
 	>;
 }): CreateMutationOptions<
 	Awaited<ReturnType<typeof tickerQUpdateCronTicker>>,
 	TError,
-	{ data: BodyType<unknown>; params?: TickerQUpdateCronTickerParams },
+	{
+		data: BodyType<TickerQUtilitiesDashboardDtosUpdateCronTickerRequest>;
+		params?: TickerQUpdateCronTickerParams;
+	},
 	TContext
 > => {
 	const mutationKey = ["tickerQUpdateCronTicker"];
@@ -1465,7 +1572,10 @@ export const getTickerQUpdateCronTickerMutationOptions = <
 
 	const mutationFn: MutationFunction<
 		Awaited<ReturnType<typeof tickerQUpdateCronTicker>>,
-		{ data: BodyType<unknown>; params?: TickerQUpdateCronTickerParams }
+		{
+			data: BodyType<TickerQUtilitiesDashboardDtosUpdateCronTickerRequest>;
+			params?: TickerQUpdateCronTickerParams;
+		}
 	> = (props) => {
 		const { data, params } = props ?? {};
 
@@ -1478,7 +1588,8 @@ export const getTickerQUpdateCronTickerMutationOptions = <
 export type TickerQUpdateCronTickerMutationResult = NonNullable<
 	Awaited<ReturnType<typeof tickerQUpdateCronTicker>>
 >;
-export type TickerQUpdateCronTickerMutationBody = BodyType<unknown>;
+export type TickerQUpdateCronTickerMutationBody =
+	BodyType<TickerQUtilitiesDashboardDtosUpdateCronTickerRequest>;
 export type TickerQUpdateCronTickerMutationError = ErrorType<unknown>;
 
 export const createTickerQUpdateCronTicker = <TError = ErrorType<unknown>, TContext = unknown>(
@@ -1486,7 +1597,10 @@ export const createTickerQUpdateCronTicker = <TError = ErrorType<unknown>, TCont
 		mutation?: CreateMutationOptions<
 			Awaited<ReturnType<typeof tickerQUpdateCronTicker>>,
 			TError,
-			{ data: BodyType<unknown>; params?: TickerQUpdateCronTickerParams },
+			{
+				data: BodyType<TickerQUtilitiesDashboardDtosUpdateCronTickerRequest>;
+				params?: TickerQUpdateCronTickerParams;
+			},
 			TContext
 		>;
 	},
@@ -1494,7 +1608,10 @@ export const createTickerQUpdateCronTicker = <TError = ErrorType<unknown>, TCont
 ): CreateMutationResult<
 	Awaited<ReturnType<typeof tickerQUpdateCronTicker>>,
 	TError,
-	{ data: BodyType<unknown>; params?: TickerQUpdateCronTickerParams },
+	{
+		data: BodyType<TickerQUtilitiesDashboardDtosUpdateCronTickerRequest>;
+		params?: TickerQUpdateCronTickerParams;
+	},
 	TContext
 > => {
 	const mutationOptions = getTickerQUpdateCronTickerMutationOptions(options);

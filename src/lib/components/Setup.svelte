@@ -136,7 +136,7 @@
 			</li>
 			<li class="flex gap-2 items-center">
 				2.
-				{#if networkInformation.value.state == "subscribed"}
+				{#if networkInformation.value.isOnline}
 					<CheckCircleIcon class="text-green-400" />
 				{:else}
 					<MessageCircleWarningIcon class="text-amber-400" />

@@ -164,6 +164,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/user/pin": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["UserPinGet"];
+        put?: never;
+        post: operations["UserPinCreate"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/user/linkAccount": {
         parameters: {
             query?: never;
@@ -2884,6 +2900,22 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/time-tickers/unbatch": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post: operations["TickerQ_UnbatchTimeTicker"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/cron-tickers/:graph-data-range": {
         parameters: {
             query?: never;
@@ -3068,7 +3100,7 @@ export interface paths {
             cookie?: never;
         };
         get?: never;
-        put: operations["TickerQ_UpdateTimeTickerPUT"];
+        put: operations["TickerQ_UpdateTimeTicker"];
         post?: never;
         delete?: never;
         options?: never;
@@ -3085,7 +3117,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["TickerQ_UpdateTimeTickerPOST"];
+        post: operations["TickerQ_AddTimeTicker"];
         delete?: never;
         options?: never;
         head?: never;
@@ -3406,6 +3438,17 @@ export interface components {
             };
         };
         UserRemoveUserOutletRequest: Record<string, never>;
+        UserPinGetResponse: {
+            userId: string;
+            /** Format: int32 */
+            outletId: number;
+            pin: string;
+            isEnabled: boolean;
+        };
+        UserPinCreateRequest: {
+            pin: string;
+            isEnabled: boolean;
+        };
         UserLinkAccountResponse: {
             message?: string | null;
             isSuccess: boolean;
@@ -6173,8 +6216,48 @@ export interface components {
         };
         /** @enum {integer} */
         TickerQUtilitiesEnumsBatchRunCondition: 0 | 1;
+        TickerQDashboardRequestsUnbatchTickerRequest: {
+            /** Format: guid */
+            tickerId: string;
+        };
         /** @enum {integer} */
         TickerQUtilitiesEnumsTickerType: 0 | 1;
+        TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest: {
+            function?: string | null;
+            request?: string | null;
+            /** Format: int32 */
+            retries: number;
+            description?: string | null;
+            executionTime?: string | null;
+            intervals?: number[] | null;
+        };
+        TickerQUtilitiesDashboardDtosAddTimeTickerRequest: {
+            function?: string | null;
+            request?: string | null;
+            /** Format: int32 */
+            retries: number;
+            description?: string | null;
+            executionTime?: string | null;
+            intervals?: number[] | null;
+        };
+        TickerQUtilitiesDashboardDtosAddCronTickerRequest: {
+            function?: string | null;
+            expression?: string | null;
+            request?: string | null;
+            /** Format: int32 */
+            retries?: number | null;
+            description?: string | null;
+            intervals?: number[] | null;
+        };
+        TickerQUtilitiesDashboardDtosUpdateCronTickerRequest: {
+            function?: string | null;
+            expression?: string | null;
+            request?: string | null;
+            /** Format: int32 */
+            retries?: number | null;
+            description?: string | null;
+            intervals?: number[] | null;
+        };
     };
     responses: never;
     parameters: never;
@@ -6562,6 +6645,80 @@ export interface operations {
             };
             /** @description Forbidden */
             403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserPinGet: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["UserPinGetResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    UserPinCreate: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["UserPinCreateRequest"];
+            };
+        };
+        responses: {
+            /** @description No Content */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Unauthorized */
+            401: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -15110,6 +15267,29 @@ export interface operations {
             };
         };
     };
+    TickerQ_UnbatchTimeTicker: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TickerQDashboardRequestsUnbatchTickerRequest"];
+            };
+        };
+        responses: {
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/octet-stream": string;
+                };
+            };
+        };
+    };
     TickerQ_GetCronTickersGraphDataByRange: {
         parameters: {
             query?: {
@@ -15341,7 +15521,7 @@ export interface operations {
             };
         };
     };
-    TickerQ_UpdateTimeTickerPUT: {
+    TickerQ_UpdateTimeTicker: {
         parameters: {
             query?: {
                 id?: string;
@@ -15352,7 +15532,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": unknown;
+                "application/json": components["schemas"]["TickerQUtilitiesDashboardDtosUpdateTimeTickerRequest"];
             };
         };
         responses: {
@@ -15366,7 +15546,7 @@ export interface operations {
             };
         };
     };
-    TickerQ_UpdateTimeTickerPOST: {
+    TickerQ_AddTimeTicker: {
         parameters: {
             query?: never;
             header?: never;
@@ -15375,7 +15555,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": unknown;
+                "application/json": components["schemas"]["TickerQUtilitiesDashboardDtosAddTimeTickerRequest"];
             };
         };
         responses: {
@@ -15398,7 +15578,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": unknown;
+                "application/json": components["schemas"]["TickerQUtilitiesDashboardDtosAddCronTickerRequest"];
             };
         };
         responses: {
@@ -15423,7 +15603,7 @@ export interface operations {
         };
         requestBody: {
             content: {
-                "application/json": unknown;
+                "application/json": components["schemas"]["TickerQUtilitiesDashboardDtosUpdateCronTickerRequest"];
             };
         };
         responses: {
