@@ -2,7 +2,6 @@
 	import { session } from "$lib/firebase.svelte";
 	import { hub } from "$lib/stores/hub.svelte";
 	import { info } from "$lib/stores/info.svelte";
-	import { networkInformation } from "$lib/stores/network.svelte";
 	import { Button } from "@kayord/ui";
 
 	const setModeAgain = async () => {
@@ -34,5 +33,3 @@
 	<Button onclick={listCookies}>Cookies</Button>
 	<Button onclick={setModeAgain}>Mode Again</Button>
 </div>
-
-{JSON.stringify(networkInformation.value)}
