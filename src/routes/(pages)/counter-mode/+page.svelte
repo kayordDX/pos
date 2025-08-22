@@ -1,15 +1,12 @@
 <script lang="ts">
 	import Header from "$lib/components/Header/Header.svelte";
 	import { getError } from "$lib/types";
-	import { Button, Card, Form, Input, InputOTP, Label, Switch, toast } from "@kayord/ui";
-	import { TvMinimalIcon } from "@lucide/svelte";
+	import { Card, Form, Input, Label, Switch, toast } from "@kayord/ui";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import z from "zod";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { createUserPinGet, createUserPinCreate } from "$lib/api";
-	import { mode } from "$lib/stores/mode.svelte";
-	import { status } from "$lib/stores/status.svelte";
-	import { logout } from "$lib/firebase.svelte";
+	import DeviceSettings from "./DeviceSettings.svelte";
 
 	const query = createUserPinGet({ query: { retry: false } });
 	const pinMutation = createUserPinCreate();
@@ -52,15 +49,6 @@
 			reset({ data: { IsEnabled: $query.data.isEnabled, pin: $query.data.pin } });
 		}
 	});
-
-	const enableCounterMode = async () => {
-		try {
-			mode.value = { mode: "counter", outletId: status.value.outletId };
-			await logout();
-		} catch (err) {
-			toast.error(getError(err).message);
-		}
-	};
 </script>
 
 <Header />
@@ -101,14 +89,4 @@
 	</Card.Root>
 </form>
 
-<Card.Root class="p-5 m-5">
-	<Card.Header>
-		<Card.Title>Device Settings enable Counter Mode</Card.Title>
-		<Card.Description>This will log you out and activate counter mode on device</Card.Description>
-	</Card.Header>
-	<Card.Footer>
-		<Button variant="destructive" onclick={enableCounterMode}>
-			<TvMinimalIcon /> Enable Counter Mode
-		</Button>
-	</Card.Footer>
-</Card.Root>
+<DeviceSettings />

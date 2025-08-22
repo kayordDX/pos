@@ -8,9 +8,12 @@
 	import { mode } from "$lib/stores/mode.svelte";
 	import { getInitials } from "$lib/util";
 	import CounterPin from "./CounterPin.svelte";
+	import { goto } from "$app/navigation";
 
 	const exitCounterMode = () => {
-		mode.value = { mode: "default", outletId: 0 };
+		mode.remove();
+		goto("/");
+		// mode.value = { mode: "default", outletId: 0 };
 	};
 
 	const query = createUserGetCounterUsers({ outletId: mode.value.outletId });

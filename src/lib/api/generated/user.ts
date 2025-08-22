@@ -504,7 +504,7 @@ export const userPinLogin = (userPinLoginRequest: BodyType<UserPinLoginRequest>)
 };
 
 export const getUserPinLoginMutationOptions = <
-	TError = ErrorType<null | InternalErrorResponse>,
+	TError = ErrorType<InternalErrorResponse>,
 	TContext = unknown,
 >(options?: {
 	mutation?: CreateMutationOptions<
@@ -540,12 +540,9 @@ export const getUserPinLoginMutationOptions = <
 
 export type UserPinLoginMutationResult = NonNullable<Awaited<ReturnType<typeof userPinLogin>>>;
 export type UserPinLoginMutationBody = BodyType<UserPinLoginRequest>;
-export type UserPinLoginMutationError = ErrorType<null | InternalErrorResponse>;
+export type UserPinLoginMutationError = ErrorType<InternalErrorResponse>;
 
-export const createUserPinLogin = <
-	TError = ErrorType<null | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createUserPinLogin = <TError = ErrorType<InternalErrorResponse>, TContext = unknown>(
 	options?: {
 		mutation?: CreateMutationOptions<
 			Awaited<ReturnType<typeof userPinLogin>>,

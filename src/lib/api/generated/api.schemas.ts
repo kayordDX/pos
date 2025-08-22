@@ -2542,6 +2542,31 @@ export interface OutletCreateRequest {
 	businessId: number;
 }
 
+export type EntitiesOutletCounterAllOf = {
+	id: string;
+	deviceName: string;
+	outletId: number;
+	outlet: EntitiesOutlet;
+};
+
+export type EntitiesOutletCounter = EntitiesAuditableEntity & EntitiesOutletCounterAllOf;
+
+export interface OutletCounterGetAllRequest {
+	[key: string]: unknown;
+}
+
+export interface OutletCounterCreateRequest {
+	/**
+	 * @minLength 1
+	 */
+	deviceName: string;
+	/**
+	 * @minimum 0
+	 * @exclusiveMinimum
+	 */
+	outletId: number;
+}
+
 export interface OptionUpdateRequest {
 	optionId: number;
 	name: string;
