@@ -7,6 +7,8 @@
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { createUserPinGet, createUserPinCreate } from "$lib/api";
 	import DeviceSettings from "./DeviceSettings.svelte";
+	import { status } from "$lib/stores/status.svelte";
+	import Devices from "./Devices.svelte";
 
 	const query = createUserPinGet({ query: { retry: false } });
 	const pinMutation = createUserPinCreate();
@@ -79,7 +81,7 @@
 						/>
 					{/snippet}
 				</Form.Control>
-				<Form.Description>Request access to new outlet</Form.Description>
+				<Form.Description>Set pin for counter mode</Form.Description>
 				<Form.FieldErrors />
 			</Form.Field>
 		</Card.Content>
@@ -88,5 +90,7 @@
 		</Card.Footer>
 	</Card.Root>
 </form>
-
-<DeviceSettings />
+{#if status.hasRole("manager")}
+	<DeviceSettings />
+	<Devices />
+{/if}

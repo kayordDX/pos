@@ -2552,7 +2552,7 @@ export type EntitiesOutletCounterAllOf = {
 
 export type EntitiesOutletCounter = EntitiesAuditableEntity & EntitiesOutletCounterAllOf;
 
-export interface OutletCounterGetAllRequest {
+export interface OutletCounterDeleteRequest {
 	[key: string]: unknown;
 }
 

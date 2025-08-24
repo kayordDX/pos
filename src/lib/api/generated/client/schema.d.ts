@@ -1924,7 +1924,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/outlet/counter/{outletId}": {
+    "/outlet/counter": {
         parameters: {
             query?: never;
             header?: never;
@@ -1933,14 +1933,14 @@ export interface paths {
         };
         get: operations["OutletCounterGetAll"];
         put?: never;
-        post?: never;
+        post: operations["OutletCounterCreate"];
         delete?: never;
         options?: never;
         head?: never;
         patch?: never;
         trace?: never;
     };
-    "/outlet/counter": {
+    "/outlet/counter/{deviceId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -1949,8 +1949,8 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        post: operations["OutletCounterCreate"];
-        delete?: never;
+        post?: never;
+        delete: operations["OutletCounterDelete"];
         options?: never;
         head?: never;
         patch?: never;
@@ -5662,7 +5662,7 @@ export interface components {
             outletId: number;
             outlet: components["schemas"]["EntitiesOutlet"];
         };
-        OutletCounterGetAllRequest: Record<string, never>;
+        OutletCounterDeleteRequest: Record<string, never>;
         OutletCounterCreateRequest: {
             deviceName: string;
             /** Format: int32 */
@@ -12162,9 +12162,7 @@ export interface operations {
         parameters: {
             query?: never;
             header?: never;
-            path: {
-                outletId: number;
-            };
+            path?: never;
             cookie?: never;
         };
         requestBody?: never;
@@ -12180,6 +12178,13 @@ export interface operations {
             };
             /** @description Unauthorized */
             401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
                 headers: {
                     [name: string]: unknown;
                 };
@@ -12208,6 +12213,60 @@ export interface operations {
                 "application/json": components["schemas"]["OutletCounterCreateRequest"];
             };
         };
+        responses: {
+            /** @description Success */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": string;
+                };
+            };
+            /** @description Bad Request */
+            400: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/problem+json": components["schemas"]["ErrorResponse"];
+                };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Forbidden */
+            403: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Server Error */
+            500: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["InternalErrorResponse"];
+                };
+            };
+        };
+    };
+    OutletCounterDelete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                deviceId: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
         responses: {
             /** @description Success */
             200: {
