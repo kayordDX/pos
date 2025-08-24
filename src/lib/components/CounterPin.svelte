@@ -6,6 +6,7 @@
 	import { createUserPinLogin } from "$lib/api";
 	import { signInCustomToken } from "$lib/firebase.svelte";
 	import { goto } from "$app/navigation";
+	import { mode } from "$lib/stores/mode.svelte";
 
 	interface Props {
 		open: boolean;
@@ -41,7 +42,7 @@
 		try {
 			isLoading = true;
 			const loginResult = await $loginMutation.mutateAsync({
-				data: { pin: data.pin, userId, outletId },
+				data: { pin: data.pin, userId, outletId, deviceId: mode.value.deviceId },
 			});
 			await signInCustomToken(loginResult.token);
 			goto("/");

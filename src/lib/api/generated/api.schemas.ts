@@ -167,6 +167,7 @@ export interface UserPinLoginResponse {
 export interface UserPinLoginRequest {
 	userId: string;
 	outletId: number;
+	deviceId: string;
 	pin: string;
 }
 

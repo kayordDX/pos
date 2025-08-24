@@ -3509,6 +3509,8 @@ export interface components {
             userId: string;
             /** Format: int32 */
             outletId: number;
+            /** Format: guid */
+            deviceId: string;
             pin: string;
         };
         UserPinGetResponse: {

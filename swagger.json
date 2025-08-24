@@ -12922,6 +12922,7 @@
         "required": [
           "userId",
           "outletId",
+          "deviceId",
           "pin"
         ],
         "properties": {
@@ -12931,6 +12932,10 @@
           "outletId": {
             "type": "integer",
             "format": "int32"
+          },
+          "deviceId": {
+            "type": "string",
+            "format": "guid"
           },
           "pin": {
             "type": "string"
