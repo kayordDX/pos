@@ -2,7 +2,7 @@
 	import { Alert, Avatar, Button, Card } from "@kayord/ui";
 	import { toast } from "@kayord/ui";
 	import { info } from "$lib/stores/info.svelte";
-	import { createUserGetCounterUsers } from "$lib/api";
+	import { createOutletCounterDelete, createUserGetCounterUsers } from "$lib/api";
 
 	import { DoorClosedIcon, UserRoundXIcon } from "@lucide/svelte";
 	import { mode } from "$lib/stores/mode.svelte";
@@ -10,10 +10,12 @@
 	import CounterPin from "./CounterPin.svelte";
 	import { goto } from "$app/navigation";
 
-	const exitCounterMode = () => {
+	const deleteMutation = createOutletCounterDelete();
+
+	const exitCounterMode = async () => {
+		await $deleteMutation.mutateAsync({ deviceId: mode.value.deviceId });
 		mode.remove();
 		goto("/");
-		// mode.value = { mode: "default", outletId: 0 };
 	};
 
 	const query = createUserGetCounterUsers({ outletId: mode.value.outletId });
