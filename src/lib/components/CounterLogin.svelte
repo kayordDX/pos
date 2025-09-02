@@ -13,9 +13,12 @@
 	const deleteMutation = createOutletCounterDelete();
 
 	const exitCounterMode = async () => {
-		await $deleteMutation.mutateAsync({ deviceId: mode.value.deviceId });
-		mode.remove();
-		goto("/");
+		try {
+			await $deleteMutation.mutateAsync({ deviceId: mode.value.deviceId });
+		} finally {
+			mode.remove();
+			goto("/");
+		}
 	};
 
 	const query = createUserGetCounterUsers({ outletId: mode.value.outletId });
