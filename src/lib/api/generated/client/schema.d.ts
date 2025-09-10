@@ -4237,7 +4237,7 @@ export interface components {
             tagId: number;
             name: string;
         };
-        EntitiesDivision: {
+        EntitiesDivision: components["schemas"]["EntitiesAuditableEntity"] & {
             /** Format: int32 */
             divisionId: number;
             divisionName: string;
@@ -6452,6 +6452,13 @@ export interface operations {
                     "application/json": components["schemas"]["ServicesWhatsappQrResponse"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -6930,6 +6937,13 @@ export interface operations {
                     "application/json": components["schemas"]["UserGetStatusResponse"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -7225,6 +7239,13 @@ export interface operations {
                     "application/json": boolean;
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -7254,6 +7275,13 @@ export interface operations {
                     "application/json": boolean;
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -7282,6 +7310,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TestResult"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -7341,6 +7376,13 @@ export interface operations {
                     "application/json": components["schemas"]["BillTableTotal"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -7369,6 +7411,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["ServicesWhatsappStatus"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -7402,6 +7451,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TableOrderUpdateTableOrderResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -7475,6 +7531,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TableOrderUpdateGroupOrderResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -7702,6 +7765,13 @@ export interface operations {
                     "application/json": components["schemas"]["TableOrderGetBillResponse"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -7732,6 +7802,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["TableOrderGetBasketResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -8108,6 +8185,13 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -8190,6 +8274,13 @@ export interface operations {
                     "application/json": components["schemas"]["EntitiesTableBooking"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -8234,6 +8325,13 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -8275,6 +8373,13 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -8314,6 +8419,13 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -8401,6 +8513,13 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -10526,6 +10645,13 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -10569,6 +10695,13 @@ export interface operations {
                 content: {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -10706,6 +10839,13 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -10781,6 +10921,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["EntitiesSalesPeriod"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -10908,6 +11055,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["EntitiesSalesPeriod"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -11827,6 +11981,13 @@ export interface operations {
                     "application/json": components["schemas"]["EntitiesPayment"];
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -11858,6 +12019,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["CommonWrapperResultOfResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -12286,20 +12454,6 @@ export interface operations {
                     "application/problem+json": components["schemas"]["ErrorResponse"];
                 };
             };
-            /** @description Unauthorized */
-            401: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
-            /** @description Forbidden */
-            403: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content?: never;
-            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -12649,6 +12803,13 @@ export interface operations {
                     "application/json": boolean;
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -12681,6 +12842,13 @@ export interface operations {
                 content: {
                     "application/json": boolean;
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -12715,6 +12883,13 @@ export interface operations {
                     "application/json": boolean;
                 };
             };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
             /** @description Server Error */
             500: {
                 headers: {
@@ -12743,6 +12918,13 @@ export interface operations {
                 content: {
                     "application/json": boolean;
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -13258,6 +13440,13 @@ export interface operations {
                 content: {
                     "application/json": components["schemas"]["MenuGetSectionsResponse"];
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {
@@ -14989,6 +15178,13 @@ export interface operations {
                 content: {
                     "application/json": boolean;
                 };
+            };
+            /** @description Unauthorized */
+            401: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
             };
             /** @description Server Error */
             500: {

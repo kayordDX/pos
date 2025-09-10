@@ -9,6 +9,7 @@ export const customInstance = async <T>({
 	params,
 	headers,
 	data,
+	responseType,
 }: {
 	url: string;
 	method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
@@ -17,6 +18,7 @@ export const customInstance = async <T>({
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	headers?: Record<string, any>;
 	data?: BodyType<unknown>;
+	responseType?: string;
 }): Promise<T> => {
 	let fullUrl = `${info.kayordURL()}${url}`;
 	if (params !== undefined) {
