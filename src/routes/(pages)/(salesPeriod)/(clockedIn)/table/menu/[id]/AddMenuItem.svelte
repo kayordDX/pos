@@ -76,7 +76,6 @@
 					tableBookingId: tableBookingId,
 				},
 			});
-			toast.info("Added to basket");
 		} catch (err) {
 			toast.error(getError(err).message);
 		} finally {
