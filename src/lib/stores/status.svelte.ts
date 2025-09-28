@@ -1,4 +1,5 @@
 import { client, type UserGetStatusResponse } from "$lib/api";
+import { delay } from "$lib/util";
 
 interface Status extends UserGetStatusResponse {
 	isNotReady?: boolean;
@@ -36,14 +37,40 @@ const createStatus = () => {
 		return appRoles.some((r) => roles.includes(r));
 	};
 
+	let getStatusRunId = 0;
+
 	const getStatus = async () => {
-		isLoading = true;
-		const { data } = await client.GET("/user/getStatus", { fetch });
-		if (data) {
-			value = data;
+		// increment run id to cancel any in-flight retry loop from previous calls
+		const runId = ++getStatusRunId;
+
+		let delayTime = 500; // start with 0.5s
+		const maxDelay = 5 * 60 * 1000; // cap at 5 minutes
+
+		while (runId === getStatusRunId) {
+			try {
+				isLoading = true;
+				const { data } = await client.GET("/user/getStatus", { fetch });
+				if (data) {
+					value = data;
+					lastRefresh = new Date();
+				}
+				isLoading = false;
+				return; // success; stop retrying
+			} catch (e) {
+				console.error("Error fetching status", e);
+				isLoading = false;
+
+				// backoff with jitter (80% - 120%)
+				const jitter = 0.8 + Math.random() * 0.4;
+				const wait = Math.min(Math.round(delayTime * jitter), maxDelay);
+
+				// if a newer call started, stop retrying
+				if (runId !== getStatusRunId) return;
+
+				await delay(wait);
+				delayTime = Math.min(delayTime * 2, maxDelay);
+			}
 		}
-		lastRefresh = new Date();
-		isLoading = false;
 	};
 	return {
 		get value() {
