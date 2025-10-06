@@ -42,7 +42,7 @@
 			header: "Type",
 			accessorKey: "type",
 			size: 1000,
-			cell: (item) => renderSnippet(linkedType, item.getValue<string>()),
+			cell: (item) => renderSnippet(linkedType, { type: item.getValue<string>() }),
 		},
 	];
 
@@ -55,15 +55,15 @@
 	});
 </script>
 
-{#snippet linkedType(type: string)}
-	{#if type == "Menu Item"}
-		<Badge>{type}</Badge>
-	{:else if type == "Extra"}
-		<Badge variant="secondary">{type}</Badge>
-	{:else if type == "Bulk"}
-		<Badge variant="destructive">{type}</Badge>
+{#snippet linkedType(param: { type: string })}
+	{#if param.type == "Menu Item"}
+		<Badge>{param.type}</Badge>
+	{:else if param.type == "Extra"}
+		<Badge variant="secondary">{param.type}</Badge>
+	{:else if param.type == "Bulk"}
+		<Badge variant="destructive">{param.type}</Badge>
 	{:else}
-		<Badge variant="outline">{type}</Badge>
+		<Badge variant="outline">{param.type}</Badge>
 	{/if}
 {/snippet}
 

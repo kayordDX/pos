@@ -19,7 +19,7 @@
 		{
 			header: "Role Type",
 			accessorKey: "roleType.name",
-			cell: (item) => renderSnippet(roleType, item.getValue<string>()),
+			cell: (item) => renderSnippet(roleType, { roleType: item.getValue<string>() }),
 		},
 	];
 
@@ -40,18 +40,18 @@
 	});
 </script>
 
-{#snippet roleType(roleType: string)}
-	{#if roleType === "manager"}
-		<Badge variant="destructive">{roleType}</Badge>
+{#snippet roleType(param: { roleType: string })}
+	{#if param.roleType === "manager"}
+		<Badge variant="destructive">{param.roleType}</Badge>
 	{/if}
-	{#if roleType === "guest"}
-		<Badge variant="outline">{roleType}</Badge>
+	{#if param.roleType === "guest"}
+		<Badge variant="outline">{param.roleType}</Badge>
 	{/if}
-	{#if roleType === "front"}
-		<Badge variant="default">{roleType}</Badge>
+	{#if param.roleType === "front"}
+		<Badge variant="default">{param.roleType}</Badge>
 	{/if}
-	{#if roleType === "back"}
-		<Badge variant="secondary">{roleType}</Badge>
+	{#if param.roleType === "back"}
+		<Badge variant="secondary">{param.roleType}</Badge>
 	{/if}
 {/snippet}
 
