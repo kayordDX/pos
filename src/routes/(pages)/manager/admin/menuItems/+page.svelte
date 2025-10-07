@@ -1,7 +1,14 @@
 <script lang="ts">
 	import { createMenuItemGetAll, createMenuList, type MenuItemMenuItemAdminDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, DataTable, Input, renderComponent, createShadTable } from "@kayord/ui";
+	import {
+		Button,
+		DataTable,
+		Input,
+		renderComponent,
+		createShadTable,
+		InputGroup,
+	} from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -20,7 +27,7 @@
 	import { debounce } from "$lib/util";
 	import QueryBuilder from "fluent-querykit";
 	import MenuFilter from "./MenuFilter.svelte";
-	import { PlusIcon } from "@lucide/svelte";
+	import { PlusIcon, SearchIcon } from "@lucide/svelte";
 	import EditMenuItem from "./EditMenuItem.svelte";
 
 	const columns: ColumnDef<MenuItemMenuItemAdminDTO>[] = [
@@ -203,13 +210,18 @@
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">
 		<div class="flex gap-2 items-center">
-			<Input
-				value={col?.getFilterValue()}
-				onchange={(e) => debouncedCb(e.currentTarget.value)}
-				oninput={(e) => debouncedCb(e.currentTarget.value)}
-				placeholder="Search Menu Item..."
-				class="h-8 w-[150px] lg:w-[250px]"
-			/>
+			<InputGroup.Root class="h-8 w-[150px] lg:w-[250px]">
+				<InputGroup.Input
+					value={col?.getFilterValue()}
+					onchange={(e) => debouncedCb(e.currentTarget.value)}
+					oninput={(e) => debouncedCb(e.currentTarget.value)}
+					placeholder="Search Menu Item..."
+				/>
+				<InputGroup.Addon>
+					<SearchIcon />
+				</InputGroup.Addon>
+			</InputGroup.Root>
+
 			<MenuFilter column={menuCol} title="Menu" options={menus} />
 			<FilterReset {table} cb={() => debouncedCb("")} />
 		</div>

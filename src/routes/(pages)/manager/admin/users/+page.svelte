@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { createRoleGetAll, createUserUsers, type UserUserResponse } from "$lib/api";
-	import { DataTable, renderComponent, Input, createShadTable, Actions } from "@kayord/ui";
+	import {
+		DataTable,
+		renderComponent,
+		Input,
+		createShadTable,
+		Actions,
+		InputGroup,
+	} from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -18,7 +25,7 @@
 	import FilterReset from "./FilterReset.svelte";
 	import { debounce } from "$lib/util";
 	import { status } from "$lib/stores/status.svelte";
-	import { PlusIcon } from "@lucide/svelte";
+	import { PlusIcon, SearchIcon } from "@lucide/svelte";
 	import AddRole from "./AddRole.svelte";
 
 	const columns: ColumnDef<UserUserResponse>[] = [
@@ -179,13 +186,18 @@
 
 {#snippet header()}
 	<div class="flex gap-2">
-		<Input
-			value={col?.getFilterValue()}
-			onchange={(e) => debouncedCb(e.currentTarget.value)}
-			oninput={(e) => debouncedCb(e.currentTarget.value)}
-			placeholder="Search Email..."
-			class="h-8 w-[150px] lg:w-[250px]"
-		/>
+		<InputGroup.Root class="h-8 w-[150px] lg:w-[250px]">
+			<InputGroup.Input
+				value={col?.getFilterValue()}
+				onchange={(e) => debouncedCb(e.currentTarget.value)}
+				oninput={(e) => debouncedCb(e.currentTarget.value)}
+				placeholder="Search Email..."
+			/>
+			<InputGroup.Addon>
+				<SearchIcon />
+			</InputGroup.Addon>
+		</InputGroup.Root>
+
 		<Filter column={nameCol} title="Role" options={roles} />
 		<FilterReset {table} cb={() => debouncedCb("")} />
 	</div>
