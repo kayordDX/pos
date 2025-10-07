@@ -1,4 +1,4 @@
-import { client, type UserGetStatusResponse } from "$lib/api";
+import { userGetStatus, type UserGetStatusResponse } from "$lib/api";
 import { delay } from "$lib/util";
 
 interface Status extends UserGetStatusResponse {
@@ -49,7 +49,7 @@ const createStatus = () => {
 		while (runId === getStatusRunId) {
 			try {
 				isLoading = true;
-				const { data } = await client.GET("/user/getStatus", { fetch });
+				const data = await userGetStatus();
 				if (data) {
 					value = data;
 					lastRefresh = new Date();

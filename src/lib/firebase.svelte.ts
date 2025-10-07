@@ -12,7 +12,7 @@ import {
 import { getMessaging, getToken } from "firebase/messaging";
 import { PUBLIC_VAPID_KEY } from "$env/static/public";
 
-import { client } from "./api";
+import { notificationAddUser, userValidate } from "./api";
 
 const firebaseConfig = {
 	apiKey: "AIzaSyAoHwOFNJ0_ag0Ly4YZzGzdW_n5_NjC2uE",
@@ -26,11 +26,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 
 const saveTokenToDatabase = async (token: string) => {
-	await client.POST("/notification/addUser", {
-		body: {
-			token: token,
-		},
-	});
+	await notificationAddUser({ token: token });
 };
 
 export const subscribeToPushNotifications = async () => {
@@ -60,13 +56,11 @@ export const signInGoogle = async () => {
 	provider.setCustomParameters({ prompt: "select_account" });
 	const result = await signInWithPopup(auth, provider);
 
-	await client.POST("/user/validate", {
-		body: {
-			email: result.user.email ?? "",
-			image: result.user.photoURL,
-			name: result.user.displayName ?? "",
-			userId: result.user.uid,
-		},
+	await userValidate({
+		email: result.user.email ?? "",
+		image: result.user.photoURL,
+		name: result.user.displayName ?? "",
+		userId: result.user.uid,
 	});
 };
 

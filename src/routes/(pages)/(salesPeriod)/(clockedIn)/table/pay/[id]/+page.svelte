@@ -4,7 +4,7 @@
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { page } from "$app/state";
-	import { client, createPayManualPayment, createOutletGetPaymentType } from "$lib/api";
+	import { createPayManualPayment, createOutletGetPaymentType, payGetLink } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import { payment } from "$lib/stores/payment.svelte";
 	import { onMount } from "svelte";
@@ -32,12 +32,13 @@
 		reference = undefined;
 
 		linkLoading = true;
-		const linkResult = await client.GET("/pay/getLink", {
-			params: { query: { amount: data.amount, tableBookingId: Number(page.params.id) } },
+		const linkResult = await payGetLink({
+			amount: data.amount,
+			tableBookingId: Number(page.params.id),
 		});
-		if (linkResult.data?.value) {
-			url = linkResult.data.value.url;
-			reference = linkResult.data.value.reference;
+		if (linkResult?.value) {
+			url = linkResult.value.url;
+			reference = linkResult.value.reference;
 			payment.setUrl(url);
 			goto(`/table/pay/${page.params.id}/${reference}?url=${url}`);
 		} else {
