@@ -1,7 +1,7 @@
 import { defineConfig } from "orval";
 
 export default defineConfig({
-	iot: {
+	api: {
 		input: "./swagger.json",
 		output: {
 			mode: "tags",
@@ -20,6 +20,15 @@ export default defineConfig({
 					signal: false,
 				},
 			},
+		},
+	},
+	zod: {
+		input: "./swagger.json",
+		output: {
+			mode: "single",
+			workspace: "./src/lib/api/generated",
+			target: "zod.ts",
+			client: "zod",
 		},
 	},
 });

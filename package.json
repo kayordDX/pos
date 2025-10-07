@@ -10,7 +10,9 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
-		"api": "curl http://localhost:5117/openapi/v1.json > swagger.json && orval && npx openapi-typescript http://localhost:5117/openapi/v1.json -o ./src/lib/api/generated/client/schema.d.ts"
+		"api": "pnpm run api:swagger && pnpm run api:orval",
+		"api:swagger": "curl http://localhost:5117/openapi/v1.json > swagger.json",
+		"api:orval": "orval && npx openapi-typescript http://localhost:5117/openapi/v1.json -o ./src/lib/api/generated/client/schema.d.ts"
 	},
 	"devDependencies": {
 		"@grafana/faro-web-sdk": "^1.19.0",

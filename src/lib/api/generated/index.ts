@@ -40,3 +40,4 @@ export * from "./remove";
 export * from "./adjustmenttype";
 export * from "./adjustment";
 export * from "./ticker-q";
+export * from './zod';
