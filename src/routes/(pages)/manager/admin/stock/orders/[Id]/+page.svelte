@@ -30,10 +30,10 @@
 
 	let addOrderItemOpen = $state(false);
 
-	let data = $derived($query.data?.stockOrderItems ?? []);
+	let data = $derived(query.data?.stockOrderItems ?? []);
 
 	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
-	const showActions = $derived($query?.data?.stockOrderStatus.id != 3 && hasOpenSalesPeriod);
+	const showActions = $derived(query?.data?.stockOrderStatus.id != 3 && hasOpenSalesPeriod);
 
 	const columns: ColumnDef<DTOStockOrderItemDTO>[] = [
 		{
@@ -77,7 +77,7 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					item: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					showActions: showActions,
 				}),
 			size: 10,
@@ -111,14 +111,14 @@
 	const updateSelected = async (isCancel: boolean) => {
 		try {
 			const stockIds: Array<number> = Object.keys(rowSelection).map((i) => Number(i));
-			await $bulkEditMutation.mutateAsync({
+			await bulkEditMutation.mutateAsync({
 				data: {
 					stockOrderId: Number(page.params.Id),
 					stockIds,
 					stockOrderItemStatusId: isCancel ? 3 : 2,
 				},
 			});
-			$query.refetch();
+			query.refetch();
 			toast.info(`Updated ${Object.keys(rowSelection).length} order items`);
 		} catch (err) {
 			toast.error(getError(err).message);
@@ -160,24 +160,24 @@
 {/snippet}
 
 <div class="m-2">
-	<Loader isLoading={$query.isPending} />
-	{#if $query.data}
+	<Loader isLoading={query.isPending} />
+	{#if query.data}
 		<Card.Root class="bg-secondary p-0">
 			<div
 				class="border-2 border-secondary p-2 rounded-md flex justify-between items-center bg-background/60 text-secondary-foreground"
 			>
 				<div class="flex flex-col">
-					<h2 class="font-bold">Order: {$query.data.orderNumber}</h2>
+					<h2 class="font-bold">Order: {query.data.orderNumber}</h2>
 					<div>
-						<Badge>{$query.data.stockOrderStatus.name}</Badge>
+						<Badge>{query.data.stockOrderStatus.name}</Badge>
 					</div>
 				</div>
 				<div class="flex flex-col">
 					<div>
-						Division: {$query.data.division.divisionName}
+						Division: {query.data.division.divisionName}
 					</div>
 					<div>
-						Supplier: {$query.data.supplier.name}
+						Supplier: {query.data.supplier.name}
 					</div>
 				</div>
 			</div>
@@ -202,14 +202,14 @@
 		<DataTable
 			{table}
 			headerClass="pb-2"
-			isLoading={$query.isPending}
+			isLoading={query.isPending}
 			noDataMessage="No order items"
 		/>
-	{:else if !$query.isPending}
+	{:else if !query.isPending}
 		{@render errorMessage("An error occurred while fetching order items")}
 	{/if}
-	{#if $query.error}
-		{@render errorMessage(getError($query.error).message)}
+	{#if query.error}
+		{@render errorMessage(getError(query.error).message)}
 	{/if}
 	{#if Object.keys(rowSelection).length > 0 && showActions}
 		<div class="flex gap-2 mt-2">
@@ -225,5 +225,5 @@
 			{/if}
 		</div>
 	{/if}
-	<AddOrderItem bind:open={addOrderItemOpen} refetch={$query.refetch} />
+	<AddOrderItem bind:open={addOrderItemOpen} refetch={query.refetch} />
 </div>

@@ -29,7 +29,7 @@
 	const createMutation = createStockOrderItemCreate();
 
 	const itemStatusQuery = createStockOrderItemStatus();
-	const itemStatus = $derived($itemStatusQuery.data ?? []);
+	const itemStatus = $derived(itemStatusQuery.data ?? []);
 
 	const itemStatusValue = $derived(itemStatus.find((i) => i.id == $formData.statusId)?.name);
 
@@ -47,7 +47,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						stockId: data.stockId,
 						stockOrderId: Number(page.params.Id),
@@ -59,7 +59,7 @@
 				});
 				toast.info("Edited Order Item");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						stockOrderId: Number(page.params.Id),
 						stockId: data.stockId,
@@ -115,7 +115,7 @@
 		})
 	);
 
-	const stockList = $derived($stockQuery.data?.items ?? []);
+	const stockList = $derived(stockQuery.data?.items ?? []);
 
 	let stockSearch = $state("");
 
@@ -144,7 +144,7 @@
 			{ query: { enabled: ($formData.stockId ?? 0) > 0 } }
 		)
 	);
-	const lastPriceData = $derived($last.data ?? { lastPrice: 0, totalAmount: 0 });
+	const lastPriceData = $derived(last.data ?? { lastPrice: 0, totalAmount: 0 });
 </script>
 
 <Dialog.Root bind:open>

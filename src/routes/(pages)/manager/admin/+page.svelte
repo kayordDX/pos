@@ -18,13 +18,13 @@
 			<Card.Description>Printers that can be used in outlet</Card.Description>
 		</div>
 		<div>
-			<Button variant="outline" disabled={$query.isPending} onclick={() => $query.refetch()}>
+			<Button variant="outline" disabled={query.isPending} onclick={() => query.refetch()}>
 				Refresh <RefreshCwIcon />
 			</Button>
 		</div>
 	</Card.Header>
 	<Card.Content>
-		{#if $query.data?.length === 0}
+		{#if query.data?.length === 0}
 			<Alert.Root>
 				<TriangleAlertIcon class="size-4" />
 				<Alert.Title>No printers available</Alert.Title>
@@ -32,8 +32,8 @@
 			</Alert.Root>
 		{:else}
 			<div class="flex flex-col gap-4">
-				{#each $query.data ?? [] as printer}
-					<Printer {printer} refetch={$query.refetch} canPrint={false} isAdmin={true} />
+				{#each query.data ?? [] as printer}
+					<Printer {printer} refetch={query.refetch} canPrint={false} isAdmin={true} />
 				{/each}
 			</div>
 		{/if}
@@ -45,4 +45,4 @@
 	</Card.Footer>
 </Card.Root>
 
-<AddPrinter refetch={$query.refetch} bind:open />
+<AddPrinter refetch={query.refetch} bind:open />

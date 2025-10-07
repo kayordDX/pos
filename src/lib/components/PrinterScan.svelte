@@ -16,10 +16,10 @@
 	const printerScanMutation = createPrinterScan();
 
 	const scan = async () => {
-		await $printerScanMutation.mutateAsync({ data: { printerId: printer.id } });
-		$scanResults.refetch();
+		await printerScanMutation.mutateAsync({ data: { printerId: printer.id } });
+		scanResults.refetch();
 	};
-	const results = $derived($scanResults.data);
+	const results = $derived(scanResults.data);
 </script>
 
 <Dialog.Root bind:open>

@@ -24,7 +24,7 @@
 
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			await $pinMutation.mutateAsync({
+			await pinMutation.mutateAsync({
 				data: { isEnabled: data.IsEnabled, pin: data.pin },
 			});
 			toast.info("Updated user pin");
@@ -47,8 +47,8 @@
 	const { form: formData, enhance, reset } = form;
 
 	$effect(() => {
-		if ($query.data) {
-			reset({ data: { IsEnabled: $query.data.isEnabled, pin: $query.data.pin } });
+		if (query.data) {
+			reset({ data: { IsEnabled: query.data.isEnabled, pin: query.data.pin } });
 		}
 	});
 </script>

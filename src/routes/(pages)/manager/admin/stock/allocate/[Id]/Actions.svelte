@@ -26,7 +26,7 @@
 	const deleteAllocateItem = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ id: item.id });
+			await deleteMutation.mutateAsync({ id: item.id });
 			refetch();
 			toast.message("Stock Allocation Item Deleted");
 		} catch (error) {
@@ -37,7 +37,7 @@
 	const cancelMutation = createStockAllocateItemCancel();
 	const cancelAllocateItem = async () => {
 		try {
-			await $cancelMutation.mutateAsync({ data: { id: item.id } });
+			await cancelMutation.mutateAsync({ data: { id: item.id } });
 			refetch();
 			toast.message("Stock Allocation Item Cancelled");
 		} catch (error) {

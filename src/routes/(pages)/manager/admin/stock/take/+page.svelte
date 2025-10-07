@@ -25,7 +25,7 @@
 	const divisionQuery = createDivisionGetAll({ outletId: status.value.outletId });
 	const divisionList = $derived.by(() => {
 		return (
-			$divisionQuery.data?.map((m) => ({
+			divisionQuery.data?.map((m) => ({
 				label: m.divisionName,
 				value: m.divisionId.toString(),
 			})) ?? []
@@ -77,7 +77,7 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					stockItem: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
@@ -113,8 +113,8 @@
 		})
 	);
 
-	let data = $derived($query.data?.items ?? []);
-	let rowCount = $derived($query.data?.totalCount ?? 0);
+	let data = $derived(query.data?.items ?? []);
+	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
 		columns,
@@ -204,7 +204,7 @@
 		{table}
 		{header}
 		headerClass="pb-2"
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No stock take items"
 	/>
 </div>

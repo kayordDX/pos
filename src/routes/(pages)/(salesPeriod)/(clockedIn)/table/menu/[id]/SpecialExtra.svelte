@@ -27,7 +27,7 @@
 	};
 
 	const getItem = (id: number) => {
-		return $query.data?.find((s) => s.extraId === id);
+		return query.data?.find((s) => s.extraId === id);
 	};
 </script>
 
@@ -57,7 +57,7 @@
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Special Extras">
-			{#each $query.data ?? [] as extra}
+			{#each query.data ?? [] as extra}
 				<Command.Item
 					onSelect={() => selectItem(extra.extraId)}
 					disabled={!extra.isAvailable}

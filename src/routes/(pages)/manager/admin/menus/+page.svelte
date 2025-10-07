@@ -30,13 +30,13 @@
 			cell: (row) =>
 				renderComponent(Actions, {
 					menu: row.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state(decodeGlobalFilter() ?? "");
 
 	const table = createShadTable({
@@ -66,7 +66,7 @@
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
-		<EditMenu refetch={$query.refetch} bind:open={addOpen} />
+		<EditMenu refetch={query.refetch} bind:open={addOpen} />
 	</div>
 {/snippet}
 
@@ -75,7 +75,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No roles for outlet"
 	/>
 </div>

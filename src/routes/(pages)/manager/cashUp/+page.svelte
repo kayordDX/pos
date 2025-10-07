@@ -14,7 +14,7 @@
 
 	const closeSalesPeriod = async () => {
 		try {
-			await $mutation.mutateAsync({ data: { salesPeriodId: status.value.salesPeriodId } });
+			await mutation.mutateAsync({ data: { salesPeriodId: status.value.salesPeriodId } });
 			await status.getStatus();
 			await goto("/manager");
 		} catch (ex) {
@@ -22,18 +22,18 @@
 		}
 	};
 
-	const isCashUpBusy = $derived(($query.data?.items ?? []).some((d) => d.cashUpUserId == 0));
+	const isCashUpBusy = $derived((query.data?.items ?? []).some((d) => d.cashUpUserId == 0));
 </script>
 
 <div class="m-2">
-	{#if $query.isPending}
+	{#if query.isPending}
 		<Loader />
 	{/if}
-	{#if $query.error}
-		<Error message={getError($query.error).message} />
+	{#if query.error}
+		<Error message={getError(query.error).message} />
 	{/if}
 
-	{#if $query.data}
+	{#if query.data}
 		{#if !isCashUpBusy}
 			<Card.Root class="m-4">
 				<Card.Header class="flex flex-row items-center gap-4 pb-6">
@@ -57,7 +57,7 @@
 		{/if}
 		<!-- <CashUpSummary /> -->
 		<div class="flex flex-col gap-2 items-center">
-			{#each $query.data.items as cash}
+			{#each query.data.items as cash}
 				<CashUpUser {cash} />
 			{/each}
 		</div>

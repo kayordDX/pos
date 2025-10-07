@@ -12,15 +12,15 @@
 </script>
 
 <div class="m-2">
-	{#if $cashUpQuery.isPending}
+	{#if cashUpQuery.isPending}
 		<Loader />
 	{/if}
-	{#if $cashUpQuery.error}
-		<Error message={getError($cashUpQuery.error).message} />
+	{#if cashUpQuery.error}
+		<Error message={getError(cashUpQuery.error).message} />
 	{/if}
 
-	{#if $cashUpQuery.data}
-		{@const d = $cashUpQuery.data}
+	{#if cashUpQuery.data}
+		{@const d = cashUpQuery.data}
 		<div class="flex flex-col gap-4">
 			<div class="flex flex-row gap-4 flex-wrap items-center justify-center">
 				<Card.Root class="min-w-52">

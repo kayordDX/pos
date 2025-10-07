@@ -23,7 +23,7 @@
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -69,7 +69,7 @@
 		headerClass="pb-2"
 		{table}
 		{header}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No roles for outlet"
 	/>
 </div>

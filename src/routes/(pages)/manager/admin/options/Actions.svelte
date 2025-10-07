@@ -27,7 +27,7 @@
 	const deleteMenu = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ id: optionGroup.optionGroupId });
+			await deleteMutation.mutateAsync({ id: optionGroup.optionGroupId });
 			refetch();
 			toast.message("Option Group Deleted");
 		} catch (error) {

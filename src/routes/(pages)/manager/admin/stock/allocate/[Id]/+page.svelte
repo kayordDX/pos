@@ -30,17 +30,17 @@
 
 	const stockAllocateMutation = createStockAllocateUpdate();
 	const sendToApprover = async () => {
-		await $stockAllocateMutation.mutateAsync({
+		await stockAllocateMutation.mutateAsync({
 			data: {
 				id: Number(page.params.Id),
 				stockAllocateStatusId: 2,
 			},
 		});
-		$query.refetch();
+		query.refetch();
 	};
 
 	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
-	const canEdit = $derived($query.data?.stockAllocateStatusId === 1 && hasOpenSalesPeriod);
+	const canEdit = $derived(query.data?.stockAllocateStatusId === 1 && hasOpenSalesPeriod);
 
 	const columns: ColumnDef<DTOStockAllocateItemDTO>[] = [
 		{
@@ -73,14 +73,14 @@
 				renderComponent(Actions, {
 					canEdit: canEdit,
 					item: item.row.original,
-					refetch: $query.refetch,
-					divisionId: $query.data?.fromDivisionId ?? 0,
+					refetch: query.refetch,
+					divisionId: query.data?.fromDivisionId ?? 0,
 				}),
 			size: 10,
 		},
 	];
 
-	let data = $derived($query.data?.stockAllocateItems ?? []);
+	let data = $derived(query.data?.stockAllocateItems ?? []);
 
 	let rowSelection: RowSelectionState = $state({});
 
@@ -125,32 +125,32 @@
 {/snippet}
 
 <div class="m-2">
-	<Loader isLoading={$query.isPending} />
-	{#if $query.data}
+	<Loader isLoading={query.isPending} />
+	{#if query.data}
 		<Card.Root class="bg-secondar flex-row p-0 w-full">
 			<div
 				class="border-2 border-secondary p-2 gap-2 rounded-md flex-col justify-between items-center text-secondary-foreground w-full"
 			>
 				<div class="flex items-center gap-2 justify-center">
 					<div class="bg-background/60 py-1 px-2 rounded-md">
-						<div class="font-bold">{$query.data.fromDivision.divisionName}</div>
+						<div class="font-bold">{query.data.fromDivision.divisionName}</div>
 					</div>
 					<MoveRightIcon />
 					<div class="bg-background/60 py-1 px-2 rounded-md">
-						<div class="font-bold">{$query.data.toDivision.divisionName}</div>
+						<div class="font-bold">{query.data.toDivision.divisionName}</div>
 					</div>
 					<div class="bg-background/60 py-1 px-2 rounded-md">
-						<div class="font-bold">{$query.data.toOutlet.name}</div>
+						<div class="font-bold">{query.data.toOutlet.name}</div>
 					</div>
 				</div>
 				<div class="flex items-center gap-2 justify-between">
 					<div class="flex flex-col">
-						<h1 class="text-xl">{$query.data.comment}</h1>
-						<Badge class="w-fit">{$query.data.stockAllocateStatus.name}</Badge>
+						<h1 class="text-xl">{query.data.comment}</h1>
+						<Badge class="w-fit">{query.data.stockAllocateStatus.name}</Badge>
 					</div>
 					<div class="flex flex-col gap-1">
-						<Badge variant="outline">Requested: {$query.data.fromUser?.name}</Badge>
-						<Badge variant="outline">Assigned: {$query.data.assignedUser?.name}</Badge>
+						<Badge variant="outline">Requested: {query.data.fromUser?.name}</Badge>
+						<Badge variant="outline">Assigned: {query.data.assignedUser?.name}</Badge>
 					</div>
 				</div>
 			</div>
@@ -176,18 +176,18 @@
 		<DataTable
 			{table}
 			headerClass="pb-2"
-			isLoading={$query.isPending}
+			isLoading={query.isPending}
 			noDataMessage="No order items"
 		/>
-	{:else if !$query.isPending}
+	{:else if !query.isPending}
 		{@render errorMessage("An error occurred while fetching order items")}
 	{/if}
-	{#if $query.error}
-		{@render errorMessage(getError($query.error).message)}
+	{#if query.error}
+		{@render errorMessage(getError(query.error).message)}
 	{/if}
 	<AddAllocationItem
 		bind:open={addOrderItemOpen}
-		refetch={$query.refetch}
-		divisionId={$query.data?.fromDivisionId ?? 0}
+		refetch={query.refetch}
+		divisionId={query.data?.fromDivisionId ?? 0}
 	/>
 </div>

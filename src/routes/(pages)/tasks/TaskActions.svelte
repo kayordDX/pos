@@ -22,7 +22,7 @@
 	const action = async (id: number, statusId: number) => {
 		try {
 			isBusy = true;
-			await $actionMutation.mutateAsync({
+			await actionMutation.mutateAsync({
 				data: { id, stockAllocateItemStatusId: statusId, stockId: toStockId },
 			});
 			refetch();

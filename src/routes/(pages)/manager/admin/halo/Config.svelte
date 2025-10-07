@@ -26,7 +26,7 @@
 	const setActive = async () => {
 		try {
 			isActivating = true;
-			await $activeMutation.mutateAsync({
+			await activeMutation.mutateAsync({
 				data: {
 					id: config.id,
 					isEnabled: !config.isEnabled,
@@ -45,7 +45,7 @@
 	const deleteConfig = async () => {
 		try {
 			isDeleting = true;
-			await $deleteMutation.mutateAsync({
+			await deleteMutation.mutateAsync({
 				id: config.id,
 			});
 			await refetch();
@@ -60,7 +60,7 @@
 	const testConfig = async () => {
 		try {
 			isTesting = true;
-			const result = await $testMutation.mutateAsync({
+			const result = await testMutation.mutateAsync({
 				data: { id: config.id },
 			});
 			const message = result

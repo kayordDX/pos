@@ -85,12 +85,12 @@
 
 	const rejectUser = async (rejectUserId: string) => {
 		try {
-			await $mutation.mutateAsync({ userId: rejectUserId });
+			await mutation.mutateAsync({ userId: rejectUserId });
 		} catch (error) {
 			toast.error(getError(error).message);
 		} finally {
 			toast.info("Rejected user");
-			$query.refetch();
+			query.refetch();
 		}
 	};
 
@@ -107,8 +107,8 @@
 	const query = $derived(
 		createUserUnassignedUsers({ page: pagination.pageIndex + 1, pageSize: 10, filters })
 	);
-	let data = $derived($query.data?.items ?? []);
-	let rowCount = $derived($query.data?.totalCount ?? 0);
+	let data = $derived(query.data?.items ?? []);
+	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
 		columns,
@@ -166,7 +166,7 @@
 {/snippet}
 
 {#if addOpen}
-	<AddRole refetch={$query.refetch} {userId} bind:open={addOpen} />
+	<AddRole refetch={query.refetch} {userId} bind:open={addOpen} />
 {/if}
 
 <div class="m-2">
@@ -175,7 +175,7 @@
 		{table}
 		{header}
 		headerClass="pb-2"
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No unassigned users for outlet"
 	/>
 </div>

@@ -14,11 +14,11 @@
 	let { open = $bindable(false), id, stockName, refetch }: Props = $props();
 
 	const query = $derived(createStockItemsGetAll({ id }, { query: { enabled: false } }));
-	const data = $derived($query.data ?? []);
+	const data = $derived(query.data ?? []);
 
 	$effect(() => {
 		if (open) {
-			$query.refetch();
+			query.refetch();
 		}
 	});
 
@@ -43,7 +43,7 @@
 			accessorKey: "id",
 			cell: (item) =>
 				renderComponent(StockItemActions, {
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					parentRefetch: refetch,
 					stockItem: item.row.original,
 				}),
@@ -75,7 +75,7 @@
 				{table}
 				{header}
 				headerClass="pb-2"
-				isLoading={$query.isPending}
+				isLoading={query.isPending}
 				noDataMessage="No stock items"
 			/>
 		</div>

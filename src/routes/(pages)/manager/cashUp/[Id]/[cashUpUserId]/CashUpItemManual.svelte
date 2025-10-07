@@ -16,7 +16,7 @@
 	const isCashedUp = $derived(Number(page.params.cashUpUserId ?? 0) > 0);
 
 	const deleteItem = async () => {
-		await $mutation.mutateAsync({ id: item.id });
+		await mutation.mutateAsync({ id: item.id });
 		refetch();
 	};
 </script>

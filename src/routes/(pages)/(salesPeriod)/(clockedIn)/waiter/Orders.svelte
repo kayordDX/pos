@@ -8,15 +8,15 @@
 	const query = createTableOrderFrontOffice({}, { query: { refetchInterval: 20000 } });
 </script>
 
-{#if $query.isPending}
+{#if query.isPending}
 	<Loader />
 {/if}
-{#if $query.error}
-	<Error message={getError($query.error).message} />
+{#if query.error}
+	<Error message={getError(query.error).message} />
 {/if}
-{#if $query.data}
+{#if query.data}
 	<div class="flex flex-col gap-2">
-		{#each $query.data.tables ?? [] as tableOrder}
+		{#each query.data.tables ?? [] as tableOrder}
 			<Card.Root class="p-4">
 				<div class="flex justify-between items-center">
 					<div class="flex items-center gap-2">
@@ -31,7 +31,7 @@
 				</div>
 				<div class="flex flex-col gap-2 mt-2">
 					{#each tableOrder.orderItems ?? [] as item}
-						<Item {item} refetch={$query.refetch} />
+						<Item {item} refetch={query.refetch} />
 					{/each}
 				</div>
 			</Card.Root>

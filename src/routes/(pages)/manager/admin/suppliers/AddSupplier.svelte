@@ -45,7 +45,7 @@
 		try {
 			isOpen = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						id: supplier?.id ?? 0,
 						name: data.name,
@@ -56,7 +56,7 @@
 				});
 				toast.info("Edited Supplier");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						name: data.name,
 						outletId: status.value.outletId,

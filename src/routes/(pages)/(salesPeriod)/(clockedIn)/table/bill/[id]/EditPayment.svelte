@@ -30,7 +30,7 @@
 
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			await $mutation.mutateAsync({
+			await mutation.mutateAsync({
 				data: {
 					paymentId: paymentId,
 					paymentTypeId: data.paymentTypeId,
@@ -57,7 +57,7 @@
 	const { form: formData, enhance } = form;
 
 	const paymentTypeSelect = $derived(
-		$paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
+		paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
 			?.paymentTypeName ?? "Select payment type"
 	);
 </script>
@@ -106,7 +106,7 @@
 									{paymentTypeSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each $paymentTypeQuery.data ?? [] as paymentType}
+									{#each paymentTypeQuery.data ?? [] as paymentType}
 										{#if paymentType.canEdit}
 											<Select.Item value={paymentType.paymentTypeId.toString()}>
 												{paymentType.paymentTypeName}

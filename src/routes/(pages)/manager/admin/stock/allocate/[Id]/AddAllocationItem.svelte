@@ -39,7 +39,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						id: allocateItem?.id ?? 0,
 						stockId: data.stockId,
@@ -48,7 +48,7 @@
 				});
 				toast.info("Edited Allocation Item");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						stockAllocateId: Number(page.params.Id),
 						stockId: data.stockId,
@@ -100,7 +100,7 @@
 		})
 	);
 
-	const stockList = $derived($stockQuery.data?.items ?? []);
+	const stockList = $derived(stockQuery.data?.items ?? []);
 
 	let stockSearch = $state("");
 
@@ -121,7 +121,7 @@
 			query: { enabled: ($formData.stockId ?? 0) > 0 },
 		})
 	);
-	const lastData = $derived($last.data);
+	const lastData = $derived(last.data);
 </script>
 
 <Dialog.Root bind:open>

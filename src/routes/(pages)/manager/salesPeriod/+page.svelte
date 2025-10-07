@@ -11,7 +11,7 @@
 
 	const openSalesPeriod = async () => {
 		try {
-			await $mutation.mutateAsync({
+			await mutation.mutateAsync({
 				data: { outletId: status.value?.outletId ?? 0, name: name },
 			});
 			await status.getStatus();

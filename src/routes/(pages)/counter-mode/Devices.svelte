@@ -7,7 +7,7 @@
 	import { getError } from "$lib/types";
 
 	const query = createOutletCounterGetAll();
-	const data = $derived($query.data ?? []);
+	const data = $derived(query.data ?? []);
 	const deleteMutation = createOutletCounterDelete();
 
 	let deviceId: string | undefined = $state();
@@ -19,9 +19,9 @@
 				toast.info("No device id");
 				return;
 			}
-			await $deleteMutation.mutateAsync({ deviceId });
+			await deleteMutation.mutateAsync({ deviceId });
 			toast.info("Removed counter device");
-			$query.refetch();
+			query.refetch();
 		} catch (err) {
 			toast.error(getError(err).message);
 		} finally {

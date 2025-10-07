@@ -23,7 +23,7 @@
 	const cancelStockOrder = async () => {
 		cancelOpen = false;
 		try {
-			await $cancelMutation.mutateAsync({ data: { id: stockOrder.id } });
+			await cancelMutation.mutateAsync({ data: { id: stockOrder.id } });
 			refetch();
 			toast.message("Stock Order Cancelled");
 		} catch (error) {

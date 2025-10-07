@@ -48,7 +48,7 @@
 
 	const mutation = createPayManualPayment();
 	const onSubmitManual = async (manualData: FormSchema) => {
-		await $mutation.mutateAsync({
+		await mutation.mutateAsync({
 			data: {
 				amount: manualData.amount,
 				tableBookingId: Number(page.params.id),
@@ -79,11 +79,11 @@
 	$effect(() => {
 		if (
 			$formData.paymentTypeId == 0 &&
-			$paymentTypeQuery.data &&
-			$paymentTypeQuery.data.length > 0 &&
-			$paymentTypeQuery.data[0]?.paymentTypeId != undefined
+			paymentTypeQuery.data &&
+			paymentTypeQuery.data.length > 0 &&
+			paymentTypeQuery.data[0]?.paymentTypeId != undefined
 		) {
-			$formData.paymentTypeId = $paymentTypeQuery.data[0]?.paymentTypeId;
+			$formData.paymentTypeId = paymentTypeQuery.data[0]?.paymentTypeId;
 		}
 	});
 
@@ -91,7 +91,7 @@
 	const balance = Number(page.url.searchParams.get("balance") ?? "0").toFixed(2);
 
 	const paymentTypeSelect = $derived(
-		$paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
+		paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
 			?.paymentTypeName ?? "Select payment type"
 	);
 </script>
@@ -134,7 +134,7 @@
 								{paymentTypeSelect}
 							</Select.Trigger>
 							<Select.Content>
-								{#each $paymentTypeQuery.data ?? [] as paymentType}
+								{#each paymentTypeQuery.data ?? [] as paymentType}
 									<Select.Item value={paymentType.paymentTypeId.toString()}
 										>{paymentType.paymentTypeName}</Select.Item
 									>

@@ -47,13 +47,13 @@
 </script>
 
 <div class="m-1" bind:clientWidth={screenWidth}>
-	{#if $query.isPending}
+	{#if query.isPending}
 		<Loader />
 	{/if}
-	{#if $query.error}
-		<Error message={getError($query.error).message} />
+	{#if query.error}
+		<Error message={getError(query.error).message} />
 	{/if}
-	{#if $query.data}
+	{#if query.data}
 		<div class="flex justify-between mb-2 items-center">
 			<div class="flex items-center gap-1 flex-wrap">
 				<Filter
@@ -74,8 +74,8 @@
 						</a>
 					</div>
 				{:else}
-					<Badge class="sm:block hidden">{$query.data.pendingOrders} pending order(s)</Badge>
-					<Badge class="sm:block hidden">{$query.data.pendingItems} pending items(s)</Badge>
+					<Badge class="sm:block hidden">{query.data.pendingOrders} pending order(s)</Badge>
+					<Badge class="sm:block hidden">{query.data.pendingItems} pending items(s)</Badge>
 				{/if}
 			</div>
 			<NotifyIndicator />
@@ -86,9 +86,9 @@
 							<Badge variant="secondary" class="truncate">History</Badge>
 						</a>
 					{/if}
-					<button onclick={() => $query.refetch()}>
+					<button onclick={() => query.refetch()}>
 						<Badge variant="secondary" class="truncate">
-							Refreshed: {getTime($query.data.lastRefresh)}
+							Refreshed: {getTime(query.data.lastRefresh)}
 						</Badge>
 					</button>
 				</div>
@@ -96,10 +96,10 @@
 				<ToggleHeader />
 			</div>
 		</div>
-		<Hub refetch={$query.refetch} {divisionIds} />
+		<Hub refetch={query.refetch} {divisionIds} />
 
 		<Masonry
-			items={$query.data?.orderGroups ?? []}
+			items={query.data?.orderGroups ?? []}
 			{minColWidth}
 			{maxColWidth}
 			{maxColHeight}
@@ -107,7 +107,7 @@
 			idKey="orderGroupId"
 		>
 			{#snippet itemChild(item)}
-				<Group group={item} refetch={$query.refetch} {isHistory} {divisionIds} />
+				<Group group={item} refetch={query.refetch} {isHistory} {divisionIds} />
 			{/snippet}
 		</Masonry>
 	{/if}

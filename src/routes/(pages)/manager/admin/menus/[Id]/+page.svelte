@@ -27,13 +27,13 @@
 			cell: (row) =>
 				renderComponent(Actions, {
 					section: row.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 		},
 	];
 
-	let data = $derived($query.data?.sections ?? []);
+	let data = $derived(query.data?.sections ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -62,7 +62,7 @@
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
-		<EditSection refetch={$query.refetch} bind:open={addOpen} />
+		<EditSection refetch={query.refetch} bind:open={addOpen} />
 	</div>
 {/snippet}
 
@@ -71,7 +71,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No roles for outlet"
 	/>
 </div>

@@ -78,7 +78,7 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					menuItem: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
@@ -112,8 +112,8 @@
 			sorts,
 		})
 	);
-	let data = $derived($query.data?.items ?? []);
-	let rowCount = $derived($query.data?.totalCount ?? 0);
+	let data = $derived(query.data?.items ?? []);
+	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
 		columns,
@@ -189,7 +189,7 @@
 	const menuCol = $derived(table.getColumn("menuId")!);
 	const queryMenu = createMenuList({ outletId: status.value.outletId });
 	const menus = $derived(
-		$queryMenu.data?.map((m) => {
+		queryMenu.data?.map((m) => {
 			return {
 				label: m.name,
 				value: m.id.toString(),
@@ -217,7 +217,7 @@
 			<Button size="sm" onclick={() => (addOpen = true)}>
 				<PlusIcon class="h-5 w-5" /> Add
 			</Button>
-			<EditMenuItem refetch={$query.refetch} bind:open={addOpen} />
+			<EditMenuItem refetch={query.refetch} bind:open={addOpen} />
 		</div>
 	</div>
 {/snippet}
@@ -228,7 +228,7 @@
 		{table}
 		{header}
 		headerClass="pb-2"
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No menu items"
 	/>
 </div>

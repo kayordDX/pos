@@ -19,7 +19,7 @@
 	const assignMutation = createUserAssignOutlet();
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			const response = await $assignMutation.mutateAsync({
+			const response = await assignMutation.mutateAsync({
 				data: {
 					outletId: data.outletId,
 				},
@@ -51,7 +51,7 @@
 	const { form: formData, enhance } = form;
 
 	const outletList = $derived(
-		$query.data?.find((i) => i.id === $formData.outletId)?.name ?? "Select outlet to link to device"
+		query.data?.find((i) => i.id === $formData.outletId)?.name ?? "Select outlet to link to device"
 	);
 </script>
 
@@ -78,7 +78,7 @@
 								{outletList}
 							</Select.Trigger>
 							<Select.Content>
-								{#each $query.data ?? [] as outlet}
+								{#each query.data ?? [] as outlet}
 									<Select.Item value={outlet.id.toString()}>{outlet.name}</Select.Item>
 								{/each}
 							</Select.Content>

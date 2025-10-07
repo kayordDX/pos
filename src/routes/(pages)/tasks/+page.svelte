@@ -9,13 +9,13 @@
 		pageSize: 20,
 	});
 
-	let data = $derived($query.data?.items ?? []);
+	let data = $derived(query.data?.items ?? []);
 </script>
 
 <Header />
 <div class="m-2">
 	<div class="text-2xl mb-2">Tasks</div>
-	{#if ($query.data?.items?.length ?? 0) === 0}
+	{#if (query.data?.items?.length ?? 0) === 0}
 		<Alert.Root>
 			<CheckCheckIcon class="size-4" />
 			<Alert.Title>No tasks available</Alert.Title>
@@ -33,7 +33,7 @@
 							<Badge variant="outline" class="w-fit">{task.type}: {task.status}</Badge>
 						</div>
 						<div class="flex flex-col gap-2">
-							<TaskActions {task} refetch={$query.refetch} />
+							<TaskActions {task} refetch={query.refetch} />
 						</div>
 					</div>
 				</Card.Root>

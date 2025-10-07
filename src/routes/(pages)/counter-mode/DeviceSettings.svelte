@@ -18,7 +18,7 @@
 	const mutation = createOutletCounterCreate();
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			const deviceId = await $mutation.mutateAsync({
+			const deviceId = await mutation.mutateAsync({
 				data: { outletId: status.value.outletId, deviceName: data.deviceName },
 			});
 

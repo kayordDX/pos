@@ -36,7 +36,7 @@
 			cell: (row) =>
 				renderComponent(Actions, {
 					adjustmentType: row.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					setAdjustmentType: selectedAdjustmentType,
 					adjustmentTypeId: row.row.original.adjustmentTypeId,
 					openDialog: () => (isDialogOpen = true),
@@ -45,7 +45,7 @@
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -77,7 +77,7 @@
 	<AddEditAdjustmentType
 		bind:open={isDialogOpen}
 		adjustmentType={selectedAdjustmentType}
-		refetch={$query.refetch}
+		refetch={query.refetch}
 	/>
 {/snippet}
 
@@ -86,7 +86,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No adjustment types for outlet"
 	/>
 </div>

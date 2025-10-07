@@ -37,14 +37,14 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					supplier: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -64,7 +64,7 @@
 	let isOpen = $state(false);
 </script>
 
-<AddSupplier bind:isOpen refetch={$query.refetch} />
+<AddSupplier bind:isOpen refetch={query.refetch} />
 
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">
@@ -87,7 +87,7 @@
 		{table}
 		{header}
 		headerClass="pb-2"
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No suppliers"
 	/>
 </div>

@@ -17,7 +17,7 @@
 	const rejectUser = async () => {
 		try {
 			isLoading = true;
-			await $mutation.mutateAsync({ userId: userId });
+			await mutation.mutateAsync({ userId: userId });
 		} catch (error) {
 			toast.error(getError(error).message);
 		} finally {

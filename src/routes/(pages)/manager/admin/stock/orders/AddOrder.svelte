@@ -27,8 +27,8 @@
 
 	const suppliersQuery = createSupplierGetAll({ outletId: status.value.outletId });
 	const divisionQuery = createStockDivisionGetAll({ outletId: status.value.outletId });
-	const suppliers = $derived($suppliersQuery.data ?? []);
-	const divisions = $derived($divisionQuery.data ?? []);
+	const suppliers = $derived(suppliersQuery.data ?? []);
+	const divisions = $derived(divisionQuery.data ?? []);
 	const supplierSelect = $derived(
 		suppliers.find((i) => i.id === $formData.supplierId)?.name ?? "Select Supplier"
 	);
@@ -47,7 +47,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						id: order?.id ?? 0,
 						orderNumber: data.orderNumber,
@@ -57,7 +57,7 @@
 				});
 				toast.info("Edited Order");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						orderNumber: data.orderNumber,
 						outletId: status.value.outletId,

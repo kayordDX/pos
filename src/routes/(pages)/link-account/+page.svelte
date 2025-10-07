@@ -16,7 +16,7 @@
 
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			const response = await $linkAccountMutation.mutateAsync({
+			const response = await linkAccountMutation.mutateAsync({
 				data: { otp: data.token.toUpperCase() },
 			});
 

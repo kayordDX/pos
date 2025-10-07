@@ -29,7 +29,7 @@
 	const deleteMenu = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ id: extra.extraId });
+			await deleteMutation.mutateAsync({ id: extra.extraId });
 			refetch();
 			toast.message("Extra Deleted");
 		} catch (error) {

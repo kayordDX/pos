@@ -62,7 +62,7 @@
 	const onSubmit = async (formData: FormSchema) => {
 		try {
 			isSubmitting = true;
-			await $mutation.mutateAsync({
+			await mutation.mutateAsync({
 				data: {
 					orders: [
 						{
@@ -226,8 +226,8 @@
 		<FieldErrors />
 	</Field>
 	<Drawer.Footer>
-		{#if $mutation.isError}
-			<Error message={getError($mutation.error).message} />
+		{#if mutation.isError}
+			<Error message={getError(mutation.error).message} />
 		{/if}
 
 		<Button class="mt-2" type="submit" disabled={isSubmitting || !open}>Add</Button>

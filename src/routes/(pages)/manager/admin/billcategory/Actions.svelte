@@ -21,7 +21,7 @@
 	const deleteSection = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ id: billCat.id });
+			await deleteMutation.mutateAsync({ id: billCat.id });
 			toast.message("Category Deleted");
 			refetch();
 		} catch (err) {

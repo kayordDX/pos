@@ -32,7 +32,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					id: category?.id ?? 0,
 					data: {
 						parentId: category?.parentId ?? 0,
@@ -41,7 +41,7 @@
 				});
 				toast.info("Edited Table");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						parentId: Number(page.params.id),
 						name: data.name,

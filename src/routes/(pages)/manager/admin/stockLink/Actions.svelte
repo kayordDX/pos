@@ -23,7 +23,7 @@
 	const deleteMenuItem = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ id, linkType, stockId });
+			await deleteMutation.mutateAsync({ id, linkType, stockId });
 			refetch();
 			toast.message("Stock Item Unlinked");
 		} catch (error) {

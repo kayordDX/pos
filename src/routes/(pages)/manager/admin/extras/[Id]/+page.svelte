@@ -11,7 +11,7 @@
 	const query = createExtraItems(Number(page.params.Id));
 	let addOpen = $state(false);
 
-	const groupName = $derived(($query.data ?? [])[0]?.extraGroup.name);
+	const groupName = $derived((query.data ?? [])[0]?.extraGroup.name);
 
 	const columns: ColumnDef<DTOExtraDTO>[] = [
 		{
@@ -36,14 +36,14 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					extra: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -71,7 +71,7 @@
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
-		<EditExtra refetch={$query.refetch} bind:open={addOpen} />
+		<EditExtra refetch={query.refetch} bind:open={addOpen} />
 	</div>
 {/snippet}
 
@@ -80,7 +80,7 @@
 		headerClass="pb-2"
 		{table}
 		{header}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No roles for outlet"
 	/>
 </div>

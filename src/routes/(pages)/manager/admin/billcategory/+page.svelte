@@ -35,7 +35,7 @@
 			cell: (row) =>
 				renderComponent(Actions, {
 					billCat: row.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					setSection: selectedSection,
 					openDialog: () => (isDialogOpen = true),
 				}),
@@ -43,7 +43,7 @@
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -76,7 +76,7 @@
 	<AddEditBillCategory
 		bind:open={isDialogOpen}
 		billCat={selectedSection}
-		refetch={$query.refetch}
+		refetch={query.refetch}
 	/>
 {/snippet}
 
@@ -85,7 +85,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No sections for outlet"
 	/>
 </div>

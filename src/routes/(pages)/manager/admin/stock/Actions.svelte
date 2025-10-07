@@ -21,7 +21,7 @@
 	const deleteMenuItem = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ id: stock?.id ?? 0 });
+			await deleteMutation.mutateAsync({ id: stock?.id ?? 0 });
 			refetch();
 			toast.message("Stock Item Deleted");
 		} catch (error) {

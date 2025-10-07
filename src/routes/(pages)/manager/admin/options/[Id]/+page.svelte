@@ -11,7 +11,7 @@
 	const query = createOptionItems(Number(page.params.Id));
 	let addOpen = $state(false);
 
-	const groupName = $derived(($query.data ?? [])[0]?.optionGroup.name);
+	const groupName = $derived((query.data ?? [])[0]?.optionGroup.name);
 
 	const columns: ColumnDef<DTOOptionDTO>[] = [
 		{
@@ -36,14 +36,14 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					option: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -71,7 +71,7 @@
 		<Button onclick={() => (addOpen = true)}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
-		<EditOption refetch={$query.refetch} bind:open={addOpen} />
+		<EditOption refetch={query.refetch} bind:open={addOpen} />
 	</div>
 {/snippet}
 
@@ -80,7 +80,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No roles for outlet"
 	/>
 </div>

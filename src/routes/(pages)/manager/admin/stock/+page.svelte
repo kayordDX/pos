@@ -46,7 +46,7 @@
 					id: item.row.original.id,
 					name: item.row.original.name,
 					totalActual: item.row.original.totalActual,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 1000,
 			enableSorting: false,
@@ -57,7 +57,7 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					stock: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
@@ -92,8 +92,8 @@
 			outletId: status.value.outletId,
 		})
 	);
-	let data = $derived($query.data?.items ?? []);
-	let rowCount = $derived($query.data?.totalCount ?? 0);
+	let data = $derived(query.data?.items ?? []);
+	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
 		columns,
@@ -164,7 +164,7 @@
 	</div>
 {/snippet}
 
-<AddStock refetch={$query.refetch} bind:open={addOpen} />
+<AddStock refetch={query.refetch} bind:open={addOpen} />
 
 <div class="m-2">
 	<h2>Stock Items</h2>
@@ -172,7 +172,7 @@
 		{table}
 		{header}
 		headerClass="pb-2"
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No stock items"
 	/>
 </div>

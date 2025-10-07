@@ -15,7 +15,7 @@
 	const query = createWhatsappStatus();
 	const mutation = createBillWhatsappBill();
 
-	const canWhatsapp = $derived($query.data?.success ?? false);
+	const canWhatsapp = $derived(query.data?.success ?? false);
 
 	const goBack = () => {
 		goto(`/table/bill/${bookingId}`);
@@ -29,7 +29,7 @@
 	type FormSchema = z.infer<typeof schema>;
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			await $mutation.mutateAsync({
+			await mutation.mutateAsync({
 				data: {
 					phoneNumber: data.phoneNumber,
 					countryCode: data.countryCode,
@@ -65,13 +65,13 @@
 				<Card.Title>Whatsapp bill #{bookingId}</Card.Title>
 				<Card.Description>This will send a whatsapp message with bill attached</Card.Description>
 				<div class="flex items-center gap-2">
-					Status: {#if $query.data?.success}
+					Status: {#if query.data?.success}
 						<CheckIcon class="text-secondary-foreground" />
 					{:else}
 						<XIcon class="text-primary" />
 					{/if}
 				</div>
-				<div>State: {$query.data?.state}</div>
+				<div>State: {query.data?.state}</div>
 				{#if !canWhatsapp}
 					<div class="text-sm text-destructive">Whatsapp is not enabled</div>
 				{/if}
@@ -103,7 +103,7 @@
 			</div>
 			<Card.Footer class="flex justify-between items-center">
 				<Button variant="secondary" onclick={goBack}>Cancel</Button>
-				<Button type="submit" disabled={$mutation.isPending || !canWhatsapp}>Send Whatsapp</Button>
+				<Button type="submit" disabled={mutation.isPending || !canWhatsapp}>Send Whatsapp</Button>
 			</Card.Footer>
 		</form>
 	</div>

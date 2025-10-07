@@ -41,7 +41,7 @@
 	const onSubmit = async (data: FormSchema) => {
 		try {
 			isLoading = true;
-			const loginResult = await $loginMutation.mutateAsync({
+			const loginResult = await loginMutation.mutateAsync({
 				data: { pin: data.pin, userId, outletId, deviceId: mode.value.deviceId },
 			});
 			await signInCustomToken(loginResult.token);

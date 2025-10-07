@@ -26,7 +26,7 @@
 	type FormSchema = z.infer<typeof schema>;
 
 	const onSubmit = async (data: FormSchema) => {
-		await $mutation.mutateAsync({
+		await mutation.mutateAsync({
 			data: { divisionId: divisionId, roleId: Number(data.roleId) },
 		});
 		open = false;
@@ -46,7 +46,7 @@
 	const { form: formData, enhance } = form;
 
 	const roleSelect = $derived(
-		$rolesQuery.data?.find((i) => i.roleId === $formData.roleId)?.name ?? "Select Role"
+		rolesQuery.data?.find((i) => i.roleId === $formData.roleId)?.name ?? "Select Role"
 	);
 </script>
 
@@ -72,7 +72,7 @@
 							>
 								<Select.Trigger {...props}>{roleSelect}</Select.Trigger>
 								<Select.Content>
-									{#each $rolesQuery.data ?? [] as item}
+									{#each rolesQuery.data ?? [] as item}
 										<Select.Item value={item.roleId.toString()} label={item.name}
 											>{item.name}</Select.Item
 										>
@@ -87,10 +87,10 @@
 			</div>
 			<Dialog.Footer>
 				<div class="flex flex-col gap-2 w-full">
-					{#if $mutation.isError}
-						<Error message={getError($mutation.error).message} />
+					{#if mutation.isError}
+						<Error message={getError(mutation.error).message} />
 					{/if}
-					<Form.Button type="submit" class="w-full" disabled={$mutation.isPending}>
+					<Form.Button type="submit" class="w-full" disabled={mutation.isPending}>
 						Add Role
 					</Form.Button>
 				</div>

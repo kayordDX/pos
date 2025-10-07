@@ -22,7 +22,7 @@
 			outletId: status.value.outletId,
 		})
 	);
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 
 	const columns: ColumnDef<TableBookingHistoryResponse>[] = [
 		{
@@ -96,7 +96,7 @@
 
 <DataTable
 	{table}
-	isLoading={$query.isPending}
+	isLoading={query.isPending}
 	headerClass="pb-2"
 	noDataMessage="No history available"
 />

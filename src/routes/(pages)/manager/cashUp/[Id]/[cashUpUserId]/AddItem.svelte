@@ -27,7 +27,7 @@
 	type FormSchema = z.infer<typeof schema>;
 
 	const onSubmit = async (data: FormSchema) => {
-		await $mutation.mutateAsync({
+		await mutation.mutateAsync({
 			data: {
 				cashUpUserId: cashUpUserId,
 				cashUpUserItemTypeId: data.cashUpUserItemTypeId,
@@ -52,7 +52,7 @@
 	const { form: formData, enhance } = form;
 
 	const typeSelect = $derived(
-		$query.data?.find((i) => i.id === $formData.cashUpUserItemTypeId)?.itemType ?? "Select type"
+		query.data?.find((i) => i.id === $formData.cashUpUserItemTypeId)?.itemType ?? "Select type"
 	);
 </script>
 
@@ -84,7 +84,7 @@
 									{typeSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each $query.data ?? [] as item}
+									{#each query.data ?? [] as item}
 										<Select.Item value={item.id.toString()}>{item.itemType}</Select.Item>
 									{/each}
 								</Select.Content>

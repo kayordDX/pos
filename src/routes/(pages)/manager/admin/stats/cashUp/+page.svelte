@@ -7,7 +7,7 @@
 	let salesPeriod = $state(0);
 
 	const query = $derived(createStatsCashUp({ salesPeriodId: salesPeriod }));
-	const data = $derived($query.data ?? []);
+	const data = $derived(query.data ?? []);
 
 	const columns: ColumnDef<StatsCashUpResponse>[] = [
 		{
@@ -80,7 +80,7 @@
 	<DataTable
 		{table}
 		{header}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No Cash up Data for Sales Period"
 	/>
 	<GrafanaLink />

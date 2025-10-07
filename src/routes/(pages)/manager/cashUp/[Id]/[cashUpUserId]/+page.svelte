@@ -20,7 +20,7 @@
 
 	const cashUpClose = async () => {
 		try {
-			const response = await $mutation.mutateAsync({
+			const response = await mutation.mutateAsync({
 				data: { outletId: status.value.outletId, userId: page.params.Id ?? "" },
 			});
 			if (response.isError) {
@@ -34,40 +34,40 @@
 	};
 
 	const manualItems = $derived(
-		$query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == false) ?? []
+		query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == false) ?? []
 	);
 
 	const autoItems = $derived(
-		$query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == true) ?? []
+		query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == true) ?? []
 	);
 </script>
 
 <div class="m-2">
-	{#if $query.isPending}
+	{#if query.isPending}
 		<Loader />
 	{/if}
-	{#if $query.error}
-		<Error message={getError($query.error).message} />
+	{#if query.error}
+		<Error message={getError(query.error).message} />
 	{/if}
 
-	{#if $query.data}
+	{#if query.data}
 		<Card.Root class="overflow-hidden w-full pt-0">
 			<Card.Header class="flex flex-col items-start bg-muted/50 p-4">
 				<div class="flex items-center gap-2 justify-between w-full">
 					<div class="flex items-center gap-2">
 						<Avatar.Root>
-							<Avatar.Image src={$query.data.user?.image} alt="profile" />
+							<Avatar.Image src={query.data.user?.image} alt="profile" />
 							<Avatar.Fallback class="bg-primary text-primary-foreground">
-								{getInitials($query.data.user?.name ?? "")}
+								{getInitials(query.data.user?.name ?? "")}
 							</Avatar.Fallback>
 						</Avatar.Root>
 						<div>
-							<Card.Title>{$query.data.user.name}</Card.Title>
-							<Card.Description>{$query.data.user.email}</Card.Description>
+							<Card.Title>{query.data.user.name}</Card.Title>
+							<Card.Description>{query.data.user.email}</Card.Description>
 						</div>
 					</div>
 					{#if Number(page.params.cashUpUserId ?? 0) == 0}
-						<AddItem refetch={$query.refetch} cashUpUserId={$query.data.cashUpUserId} />
+						<AddItem refetch={query.refetch} cashUpUserId={query.data.cashUpUserId} />
 					{/if}
 				</div>
 			</Card.Header>
@@ -84,20 +84,20 @@
 					<ul class="grid gap-3">
 						<li class="flex items-center justify-between">
 							<span class="text-muted-foreground">Opening Balance</span>
-							<span>R {$query.data.openingBalance.toFixed(2)}</span>
+							<span>R {query.data.openingBalance.toFixed(2)}</span>
 						</li>
 						<li class="flex items-center justify-between">
 							<span class="text-muted-foreground">Gross Balance</span>
-							<span>R {$query.data.grossBalance.toFixed(2)}</span>
+							<span>R {query.data.grossBalance.toFixed(2)}</span>
 						</li>
 						<div class="flex flex-col gap-2 items-center">
 							{#each manualItems as item}
-								<CashUpItemManual {item} refetch={$query.refetch} />
+								<CashUpItemManual {item} refetch={query.refetch} />
 							{/each}
 						</div>
 						<li class="flex items-center justify-between">
 							<span class="text-muted-foreground">Net Balance</span>
-							<span>R {$query.data.netBalance.toFixed(2)}</span>
+							<span>R {query.data.netBalance.toFixed(2)}</span>
 						</li>
 					</ul>
 				</div>

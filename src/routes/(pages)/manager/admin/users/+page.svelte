@@ -55,7 +55,7 @@
 				renderComponent(Roles, {
 					roles: String(item.getValue()),
 					userId: item.row.original.userId,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 		},
 		{
@@ -101,8 +101,8 @@
 		})
 	);
 
-	let data = $derived($query.data?.items ?? []);
-	let rowCount = $derived($query.data?.totalCount ?? 0);
+	let data = $derived(query.data?.items ?? []);
+	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
 		columns,
@@ -140,7 +140,7 @@
 
 	const rolesQuery = createRoleGetAll(status.value.outletId);
 	const roles = $derived(
-		$rolesQuery.data?.map((role) => {
+		rolesQuery.data?.map((role) => {
 			return {
 				label: role.name,
 				value: role.name,
@@ -191,7 +191,7 @@
 	</div>
 {/snippet}
 
-<AddRole refetch={$query.refetch} {userId} bind:open />
+<AddRole refetch={query.refetch} {userId} bind:open />
 
 <div class="m-2">
 	<h2>Users</h2>
@@ -199,7 +199,7 @@
 		headerClass="pb-2"
 		{table}
 		{header}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No unassigned users for outlet"
 	/>
 </div>

@@ -19,7 +19,7 @@
 	const removeRole = async () => {
 		try {
 			isLoading = true;
-			await $mutation.mutateAsync({ role: role, userId: userId });
+			await mutation.mutateAsync({ role: role, userId: userId });
 		} catch (error) {
 			toast.error(getError(error).message);
 		} finally {

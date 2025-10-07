@@ -38,13 +38,13 @@
 			cell: (row) =>
 				renderComponent(Actions, {
 					table: row.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
 		},
 	];
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -77,7 +77,7 @@
 		<AddEditTable
 			bind:open={isDialogOpen}
 			sectionId={Number(page.params.Id)}
-			refetch={$query.refetch}
+			refetch={query.refetch}
 		/>
 	</div>
 {/snippet}
@@ -86,7 +86,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No tables in section"
 	/>
 </div>

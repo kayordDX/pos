@@ -30,7 +30,7 @@
 	type FormSchema = z.infer<typeof schema>;
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			await $mutation.mutateAsync({
+			await mutation.mutateAsync({
 				data: { email: data.email, name: data.name, tableBookingId: Number(page.params.id) },
 			});
 			toast.info(`Sending email to ${data.email}`);
@@ -81,7 +81,7 @@
 			</div>
 			<Card.Footer class="flex justify-between items-center">
 				<Button variant="secondary" onclick={goBack}>Cancel</Button>
-				<Button type="submit" disabled={$mutation.isPending}>Send Email</Button>
+				<Button type="submit" disabled={mutation.isPending}>Send Email</Button>
 			</Card.Footer>
 		</form>
 	</div>

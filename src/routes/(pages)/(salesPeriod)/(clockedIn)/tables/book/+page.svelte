@@ -27,7 +27,7 @@
 	type FormSchema = z.infer<typeof schema>;
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			await $mutate.mutateAsync({
+			await mutate.mutateAsync({
 				data: {
 					bookingName: data.bookingName,
 					salesPeriodId: status.value?.salesPeriodId ?? 0,
@@ -58,16 +58,16 @@
 	<h1>Available Tables</h1>
 	<p class="text-muted-foreground">Select table to book</p>
 
-	{#if $query.isPending}
+	{#if query.isPending}
 		<Loader />
 	{/if}
-	{#if $query.error}
-		<Error message={getError($query.error).message} />
+	{#if query.error}
+		<Error message={getError(query.error).message} />
 	{/if}
 
-	{#if $query.isSuccess}
+	{#if query.isSuccess}
 		<div class="flex flex-wrap gap-4 mt-4 w-full">
-			{#each $query.data as table}
+			{#each query.data as table}
 				<button class="text-start w-full md:max-w-md" onclick={() => selectTable(table.tableId)}>
 					<Card.Root class="p-4 gap-0">
 						<div class="flex justify-between gap-2">
@@ -91,7 +91,7 @@
 					<Dialog.Description>This will book the table and assign it to you</Dialog.Description>
 				</Dialog.Header>
 				<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
-					{#if $mutate.isPending}
+					{#if mutate.isPending}
 						<Loader />
 					{/if}
 

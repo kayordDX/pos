@@ -26,7 +26,7 @@
 
 	const createHaloConfig = async (data: FormSchema) => {
 		try {
-			await $mutation.mutateAsync({
+			await mutation.mutateAsync({
 				data: {
 					merchantId: data.merchantId,
 					outletId: status.value.outletId,

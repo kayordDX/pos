@@ -29,7 +29,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						isGlobal: data.isGlobal,
 						name: data.name,
@@ -38,7 +38,7 @@
 				});
 				toast.info("Edited Extra Group");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: { name: data.name, isGlobal: data.isGlobal },
 				});
 				toast.info("Added Extra Group");

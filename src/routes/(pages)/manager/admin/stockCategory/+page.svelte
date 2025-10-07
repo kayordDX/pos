@@ -34,7 +34,7 @@
 			cell: (row) =>
 				renderComponent(Actions, {
 					category: row.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					setSection: selectedCategory,
 					openDialog: () => (isDialogOpen = true),
 				}),
@@ -42,7 +42,7 @@
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -69,7 +69,7 @@
 		</Button>
 	</div>
 
-	<AddEditCategory bind:open={isDialogOpen} refetch={$query.refetch} />
+	<AddEditCategory bind:open={isDialogOpen} refetch={query.refetch} />
 {/snippet}
 
 <div class="m-2">
@@ -78,7 +78,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No categories for Outlet"
 	/>
 </div>
