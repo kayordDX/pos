@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { AlertDialog, toast } from "@kayord/ui";
+	import { AlertDialog } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { createPrinterDelete } from "$lib/api";
 	import { getError } from "$lib/types";
 

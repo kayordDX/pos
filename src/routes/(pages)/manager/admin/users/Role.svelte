@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { toast, Button } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { XIcon } from "@lucide/svelte";
 	import { createUserRemoveUserOutletRole } from "$lib/api";
 	import { getError } from "$lib/types";

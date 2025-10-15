@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createTableBookingHistoryUser, type TableBookingHistoryResponse } from "$lib/api";
-	import { DataTable, Input, renderComponent, createShadTable } from "@kayord/ui";
+	import { Input } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import { stringToFDate } from "$lib/util";
 	import View from "./View.svelte";
 	import { page } from "$app/state";

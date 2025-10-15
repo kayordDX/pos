@@ -1,14 +1,6 @@
 <script lang="ts">
-	import {
-		Button,
-		Card,
-		Dialog,
-		Loader,
-		ProgressLoading,
-		Separator,
-		toast,
-		Tooltip,
-	} from "@kayord/ui";
+	import { Button, Card, Dialog, Loader, ProgressLoading, Separator, Tooltip } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { KeyRoundIcon, ScreenShareIcon } from "@lucide/svelte";
 	import { hub } from "$lib/stores/hub.svelte";
 	import { HubConnectionState } from "@microsoft/signalr";

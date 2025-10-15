@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { scaleBand } from "d3-scale";
 	import { BarChart, PieChart, type ChartContextValue } from "layerchart";
-	import { Chart, Card } from "@kayord/ui";
+	import { Card } from "@kayord/ui";
+	import { Chart } from "@kayord/ui/chart";
 	import { createStatsPaymentTypes } from "$lib/api";
 	import Top5SalesPeriod from "../Top5SalesPeriod.svelte";
 	import { cubicInOut } from "svelte/easing";

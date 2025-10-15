@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { Dialog, Form, Input, Loader, toast } from "@kayord/ui";
+	import { Dialog, Input, Loader } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import z from "zod";

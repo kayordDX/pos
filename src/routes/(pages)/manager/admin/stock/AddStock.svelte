@@ -8,7 +8,9 @@
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
-	import { Button, Checkbox, Dialog, Form, Input, Select, toast } from "@kayord/ui";
+	import { Button, Checkbox, Dialog, Input, Select } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";

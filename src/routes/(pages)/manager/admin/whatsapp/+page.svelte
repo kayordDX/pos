@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { toCanvas } from "qrcode";
 	import { createWhatsappStatus, createWhatsappQrCode, createWhatsappRestart } from "$lib/api";
-	import { Button, Card, toast } from "@kayord/ui";
+	import { Button, Card } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { CheckIcon, XIcon } from "@lucide/svelte";
 
 	const query = createWhatsappStatus();

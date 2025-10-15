@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Button, Drawer } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { Drawer } from "@kayord/ui/drawer";
 	import { ReceiptTextIcon, MailIcon, MessageCircleMoreIcon, PrinterIcon } from "@lucide/svelte";
 	import DownloadBill from "./actions/DownloadBill.svelte";
 	let dialogOpen = $state(false);

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { createUserRemoveUserOutlet } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, toast } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { XIcon } from "@lucide/svelte";
 
 	interface Props {

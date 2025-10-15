@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { createRoleGetAll, createUserUsers, type UserUserResponse } from "$lib/api";
-	import {
-		DataTable,
-		renderComponent,
-		Input,
-		createShadTable,
-		Actions,
-		InputGroup,
-	} from "@kayord/ui";
+	import { Actions, InputGroup } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import {
 		type ColumnDef,
 		getCoreRowModel,

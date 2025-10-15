@@ -4,7 +4,8 @@
 	import { PlusIcon } from "@lucide/svelte";
 	import { page } from "$app/state";
 	import Actions from "./Actions.svelte";
-	import { Button, createShadTable, DataTable, renderComponent } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import AddEditTable from "./AddEditTable.svelte";
 	import Search from "$lib/components/Search.svelte";
 	const query = createSectionTableGetAll({ sectionId: Number(page.params.Id) });

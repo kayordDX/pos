@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
+	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import {
 		BookOpenTextIcon,
 		EllipsisVerticalIcon,

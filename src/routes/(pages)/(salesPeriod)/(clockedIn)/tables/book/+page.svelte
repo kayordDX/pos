@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { Badge, Button, Card, Dialog, Form, Input, Label, Loader, toast } from "@kayord/ui";
+	import { Badge, Button, Card, Dialog, Input, Label, Loader } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
@@ -8,7 +10,7 @@
 	import { z } from "zod";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod4 } from "sveltekit-superforms/adapters";
-	import { Control, Field, FieldErrors } from "@kayord/ui/formsnap";
+	import { Control, Field, FieldErrors } from "formsnap";
 
 	const query = createTableGetAvailable({ outletId: status.value?.outletId ?? 0 });
 	let dialogOpen = $state(false);

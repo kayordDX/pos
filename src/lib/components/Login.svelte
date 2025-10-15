@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { Button, Card } from "@kayord/ui";
-	import { toast } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import GoogleSvg from "$lib/SVG/GoogleSVG.svelte";
 	import { signInGoogle } from "$lib/firebase.svelte";
 	import { info } from "$lib/stores/info.svelte";

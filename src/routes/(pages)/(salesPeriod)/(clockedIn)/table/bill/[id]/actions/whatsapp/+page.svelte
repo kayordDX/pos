@@ -1,6 +1,8 @@
 <script lang="ts">
-	import { Button, Card, Form, Input, toast } from "@kayord/ui";
-	import { Control, Field, FieldErrors } from "@kayord/ui/formsnap";
+	import { Button, Card, Input } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
+	import { Control, Field, FieldErrors } from "formsnap";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";

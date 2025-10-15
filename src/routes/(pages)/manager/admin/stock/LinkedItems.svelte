@@ -4,7 +4,8 @@
 		type StockGetAllResponse,
 		type StockLinkGetResponse,
 	} from "$lib/api";
-	import { Badge, DataTable, Dialog, renderSnippet, createShadTable } from "@kayord/ui";
+	import { Badge, Dialog } from "@kayord/ui";
+	import { DataTable, createShadTable, renderSnippet } from "@kayord/ui/data-table";
 	import type { ColumnDef } from "@tanstack/table-core";
 
 	interface Props {

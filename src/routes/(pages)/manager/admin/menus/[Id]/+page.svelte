@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createMenuGetSectionsGetMenusSections, type DTOMenuSectionDTO } from "$lib/api";
-	import { Button, createShadTable, DataTable, renderComponent } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditSection from "./EditSection.svelte";

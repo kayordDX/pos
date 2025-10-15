@@ -6,7 +6,8 @@
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
-	import { DataTable, renderComponent, createShadTable, Select, Label } from "@kayord/ui";
+	import { Select, Label } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import {
 		type ColumnDef,
 		getCoreRowModel,

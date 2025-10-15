@@ -1,7 +1,9 @@
 <script lang="ts">
 	import Header from "$lib/components/Header/Header.svelte";
 	import { getError } from "$lib/types";
-	import { Button, Card, Form, InputOTP, toast } from "@kayord/ui";
+	import { Button, Card, InputOTP } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import z from "zod";

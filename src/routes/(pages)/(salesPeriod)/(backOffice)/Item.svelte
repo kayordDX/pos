@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { TableOrderOfficeOrderItemDTO } from "$lib/api";
-	import { Badge, Button, Card, Drawer } from "@kayord/ui";
+	import { Badge, Button, Card } from "@kayord/ui";
+	import { Drawer } from "@kayord/ui/drawer";
 	import { CheckIcon, ConciergeBellIcon, Trash2Icon, XIcon } from "@lucide/svelte";
 	import { createTableOrderUpdateOrderItem } from "$lib/api";
 	let open = $state(false);

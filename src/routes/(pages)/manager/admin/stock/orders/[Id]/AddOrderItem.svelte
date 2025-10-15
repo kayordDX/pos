@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { DTOStockOrderItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Card, Combobox, Dialog, Form, Input, Select, Table, toast } from "@kayord/ui";
+	import { Button, Card, Combobox, Dialog, Input, Select, Table } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";

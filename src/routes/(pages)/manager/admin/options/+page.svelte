@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { createOptionGroup, type DTOOptionGroupBasicDTO } from "$lib/api";
+	import { Badge, Button, Card } from "@kayord/ui";
 	import {
-		Badge,
-		Button,
-		Card,
 		DataTable,
 		renderComponent,
 		renderSnippet,
 		createShadTable,
 		decodeGlobalFilter,
-	} from "@kayord/ui";
+	} from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import EditOptionGroup from "./EditOptionGroup.svelte";

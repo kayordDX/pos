@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { logout } from "$lib/firebase.svelte";
 	import { getError } from "$lib/types";
-	import { Button, Card, Form, Input, toast } from "@kayord/ui";
+	import { Button, Card, Input } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { TvMinimalIcon } from "@lucide/svelte";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";

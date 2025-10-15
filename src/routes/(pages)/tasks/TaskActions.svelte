@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { createStockAllocateItemAction, type UserTasksResponse } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Dialog, toast } from "@kayord/ui";
+	import { Button, Dialog } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { CircleCheckIcon, CircleEllipsisIcon, CircleXIcon } from "@lucide/svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import AllocateStockSelect from "./AllocateStockSelect.svelte";

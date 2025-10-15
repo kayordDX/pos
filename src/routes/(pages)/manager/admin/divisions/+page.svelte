@@ -2,7 +2,8 @@
 	import { createDivisionGetAll, type EntitiesDivision } from "$lib/api";
 	import Search from "$lib/components/Search.svelte";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, DataTable, createShadTable, renderComponent } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import { type ColumnDef } from "@tanstack/table-core";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
@@ -61,11 +62,7 @@
 		<Button onclick={openAdd}>
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
-		<AddEditDivision
-			bind:open={isDialogOpen}
-			division={selectedDivision}
-			refetch={query.refetch}
-		/>
+		<AddEditDivision bind:open={isDialogOpen} division={selectedDivision} refetch={query.refetch} />
 	</div>
 {/snippet}
 

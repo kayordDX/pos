@@ -2,7 +2,8 @@
 	import type { DTOPrinterDTO } from "$lib/api";
 	import { createBillPrintBill, createPrinterTest } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Card, Switch, Table, toast, Avatar, DropdownMenu, Tooltip } from "@kayord/ui";
+	import { Button, Card, Switch, Table, Avatar, DropdownMenu, Tooltip } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import {
 		PrinterIcon,
 		EllipsisVerticalIcon,

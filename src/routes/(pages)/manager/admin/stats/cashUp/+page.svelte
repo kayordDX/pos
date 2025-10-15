@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createStatsCashUp, type StatsCashUpResponse } from "$lib/api";
-	import { Card, createShadTable, DataTable, aggregationFns } from "@kayord/ui";
+	import { DataTable, createShadTable, aggregationFns } from "@kayord/ui/data-table";
 	import Top5SalesPeriod from "../Top5SalesPeriod.svelte";
 	import { type ColumnDef } from "@tanstack/table-core";
 	import GrafanaLink from "../GrafanaLink.svelte";

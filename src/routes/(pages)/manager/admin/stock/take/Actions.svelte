@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Button, DropdownMenu, toast } from "@kayord/ui";
+	import { Button, DropdownMenu } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { CalculatorIcon, EllipsisVerticalIcon, PencilIcon } from "@lucide/svelte";
 	import { type StockGetAllDivisionResponse, createStockItemsUpdateStockTake } from "$lib/api";
 	import StockTake from "./StockTake.svelte";

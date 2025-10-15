@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
-	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
+	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { Trash2Icon, PencilIcon, TableIcon, EllipsisVerticalIcon } from "@lucide/svelte";
-	//import AddEditSection from "./AddEditSection.svelte";
 	import { getError } from "$lib/types";
 	import type { EntitiesStockCategory } from "$lib/api";
 	import AddEditCategory from "./AddEditCategory.svelte";

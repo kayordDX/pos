@@ -4,7 +4,9 @@
 		createUserUnassignedUsers,
 		type UserUserResponse,
 	} from "$lib/api";
-	import { DataTable, renderComponent, createShadTable, Actions, toast } from "@kayord/ui";
+	import { Actions } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
+	import { toast } from "@kayord/ui/sonner";
 	import {
 		type ColumnDef,
 		getCoreRowModel,

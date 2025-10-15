@@ -7,7 +7,8 @@
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
-	import { Card, Button, toast } from "@kayord/ui";
+	import { Card, Button } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { CheckIcon, Trash2Icon, XIcon, TestTubeDiagonalIcon } from "@lucide/svelte";
 
 	interface Props {

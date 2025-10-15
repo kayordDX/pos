@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createCashUpUserGet, createSalesPeriodClose } from "$lib/api";
-	import { Button, Card, Loader, toast } from "@kayord/ui";
+	import { Button, Card, Loader } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";

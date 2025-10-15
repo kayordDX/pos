@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Button, Card, toast } from "@kayord/ui";
+	import { Button, Card } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { CalendarOffIcon, CalendarCheck2Icon } from "@lucide/svelte";
 	import { status } from "$lib/stores/status.svelte";
 

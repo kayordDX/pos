@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { createStockItemsUpdate, type StockGetAllDivisionResponse } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Dialog, Form, Input, Select, toast } from "@kayord/ui";
+	import { Button, Dialog, Input } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";

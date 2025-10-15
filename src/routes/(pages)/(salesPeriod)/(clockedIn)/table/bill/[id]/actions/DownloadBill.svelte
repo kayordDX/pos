@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { downloadPdf, downloadFile } from "$lib/api/downloader.svelte";
 	import { getError } from "$lib/types";
-	import { Button, Loader, toast } from "@kayord/ui";
+	import { Button, Loader } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { DownloadIcon } from "@lucide/svelte";
 
 	interface Props {
