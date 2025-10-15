@@ -4,7 +4,8 @@
 		type TableOrderOfficeOrderBasedBackOrderGroupDTO,
 	} from "$lib/api";
 	import { getInitials } from "$lib/util";
-	import { Avatar, Badge, Button, Card, Dialog, Drawer, Popover, ScrollArea } from "@kayord/ui";
+	import { Avatar, Badge, Button, Card, Popover, ScrollArea } from "@kayord/ui";
+	import { Drawer } from "@kayord/ui/drawer";
 	import { BellElectricIcon, EllipsisIcon } from "@lucide/svelte";
 	import Item from "./Item.svelte";
 	import { backOffice } from "$lib/stores/backOffice.svelte";

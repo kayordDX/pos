@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { createRoleCreate, createRoleUpdate, createRoleTypeGetAll } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, Dialog, Form, Input, toast, Select } from "@kayord/ui";
+	import { Button, Dialog, Input, Select } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";

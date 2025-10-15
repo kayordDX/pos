@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { TableOrderGetBillResponse } from "$lib/api";
-	import { Button, Card, Separator, Switch, toast } from "@kayord/ui";
+	import { Button, Card, Separator, Switch } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { createTableBookingClose, createPayCheck } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import Error from "$lib/components/Error.svelte";

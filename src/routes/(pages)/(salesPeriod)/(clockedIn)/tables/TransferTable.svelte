@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { Button, Combobox, Dialog, Form, Input, Label, toast } from "@kayord/ui";
+	import { Button, Combobox, Dialog, Input, Label } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { status } from "$lib/stores/status.svelte";
 	import { UserRoundPenIcon } from "@lucide/svelte";
 	import z from "zod";

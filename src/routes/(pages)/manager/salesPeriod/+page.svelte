@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Card, Input, Label, toast } from "@kayord/ui";
+	import { Card, Input, Label } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { Button } from "@kayord/ui";
 	import { createSalesPeriodCreate } from "$lib/api";
 	import { goto } from "$app/navigation";

@@ -2,7 +2,8 @@
 	import { createAdjustmentGetAll, type EntitiesAdjustmentType } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
-	import { Button, DataTable, renderComponent, createShadTable } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import { type ColumnDef } from "@tanstack/table-core";
 	import { PlusIcon } from "@lucide/svelte";
 	import AddEditAdjustmentType from "./AddEditAdjustmentType.svelte";

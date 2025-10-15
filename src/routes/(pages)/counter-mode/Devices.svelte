@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Alert, AlertDialog, Button, Card, toast } from "@kayord/ui";
+	import { Alert, AlertDialog, Button, Card } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { createOutletCounterGetAll } from "$lib/api";
 	import { stringToFDate } from "$lib/util";
 	import { CircleAlertIcon, XIcon } from "@lucide/svelte";

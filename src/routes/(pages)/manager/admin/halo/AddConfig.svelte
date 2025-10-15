@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { createPayPayConfigCreate } from "$lib/api";
-	import { Button, Dialog, Form, Input, toast } from "@kayord/ui";
+	import { Button, Dialog, Input } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { PlusIcon } from "@lucide/svelte";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createTableBookingPeriodHistory, type TableBookingHistoryResponse } from "$lib/api";
-	import { DataTable, Input, renderComponent, createShadTable } from "@kayord/ui";
+	import { Input } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import { stringToFDate } from "$lib/util";
 	import View from "./user/[userId]/[cashUpUserId]/View.svelte";
 	import { status } from "$lib/stores/status.svelte";

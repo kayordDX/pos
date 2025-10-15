@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { createStockItemsGetAll, type StockItemsGetAllResponse } from "$lib/api";
-	import { DataTable, Dialog, renderComponent, createShadTable } from "@kayord/ui";
+	import { Dialog } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import StockItemActions from "./StockItemActions.svelte";
 

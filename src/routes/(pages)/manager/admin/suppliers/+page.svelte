@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { createSupplierGetAll, type DTOSupplierDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, DataTable, renderComponent, createShadTable } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import AddSupplier from "./AddSupplier.svelte";
 	import { PlusIcon } from "@lucide/svelte";

@@ -1,5 +1,5 @@
 import type { Outlet } from "./lib/types";
-import { CustomOptions, CustomColumnMeta } from "@kayord/ui";
+import { CustomOptions, CustomColumnMeta } from "@kayord/ui/data-table";
 
 declare global {
 	namespace App {

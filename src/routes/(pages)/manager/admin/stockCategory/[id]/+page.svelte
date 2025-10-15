@@ -7,7 +7,8 @@
 	import Search from "$lib/components/Search.svelte";
 	import { page } from "$app/state";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, DataTable, createShadTable, renderComponent } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import { type ColumnDef } from "@tanstack/table-core";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";

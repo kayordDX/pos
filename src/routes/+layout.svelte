@@ -1,6 +1,6 @@
 <script lang="ts">
 	import "../app.css";
-	import { ModeWatcher, theme, setTheme } from "@kayord/ui/mode-watcher";
+	import { ModeWatcher, theme, setTheme } from "mode-watcher";
 	import type { Snippet } from "svelte";
 	import { info } from "$lib/stores/info.svelte";
 

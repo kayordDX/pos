@@ -1,14 +1,13 @@
 <script lang="ts">
 	import { createExtraGroup, type DTOExtraGroupAdminDTO } from "$lib/api";
+	import { Button, Tooltip } from "@kayord/ui";
 	import {
-		Button,
 		DataTable,
+		createShadTable,
 		renderComponent,
 		renderSnippet,
-		createShadTable,
-		Tooltip,
 		decodeGlobalFilter,
-	} from "@kayord/ui";
+	} from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import EditExtraGroup from "./EditExtraGroup.svelte";

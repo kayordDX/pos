@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
+	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { EllipsisVerticalIcon, ShieldXIcon, ViewIcon } from "@lucide/svelte";
 	import { createStockOrderCancel, type DTOStockOrderResponseDTO } from "$lib/api";
 	import { getError } from "$lib/types";

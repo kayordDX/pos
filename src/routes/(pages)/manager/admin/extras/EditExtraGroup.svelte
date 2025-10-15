@@ -1,7 +1,9 @@
 <script lang="ts">
 	import type { DTOExtraGroupAdminDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import { Button, Checkbox, Dialog, Form, Input, toast } from "@kayord/ui";
+	import { Button, Checkbox, Dialog, Input } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";

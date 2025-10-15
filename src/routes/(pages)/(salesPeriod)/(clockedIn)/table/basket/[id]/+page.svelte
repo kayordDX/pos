@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Button, Checkbox, toast } from "@kayord/ui";
+	import { Button, Checkbox } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import BasketItem from "./BasketItem.svelte";
 	import EmptyBasket from "./EmptyBasket.svelte";
 	import { ChefHatIcon } from "@lucide/svelte";
@@ -13,7 +14,7 @@
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { schema, type FormSchema } from "./types";
-	import { Control, FieldErrors, Fieldset, Label } from "@kayord/ui/formsnap";
+	import { Control, FieldErrors, Fieldset, Label } from "formsnap";
 	import { getError } from "$lib/types";
 
 	const query = createTableOrderGetBasket({ tableBookingId: Number(page.params.id) });

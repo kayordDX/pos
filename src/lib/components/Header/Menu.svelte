@@ -12,7 +12,7 @@
 		TvMinimalIcon,
 	} from "@lucide/svelte";
 	import { getInitials } from "$lib/util";
-	import { toggleMode, mode } from "@kayord/ui/mode-watcher";
+	import { toggleMode, mode } from "mode-watcher";
 	import { logout, session } from "$lib/firebase.svelte";
 	import { networkInformation } from "$lib/stores/network.svelte";
 	import { goto } from "$app/navigation";

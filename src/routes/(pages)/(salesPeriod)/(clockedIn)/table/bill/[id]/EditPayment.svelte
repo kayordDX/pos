@@ -2,7 +2,9 @@
 	import { createOutletGetPaymentType, createTableBookingPaymentEdit } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
-	import { Button, Dialog, Form, Select, toast, Input } from "@kayord/ui";
+	import { Button, Dialog, Select, Input } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { PencilIcon } from "@lucide/svelte";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";

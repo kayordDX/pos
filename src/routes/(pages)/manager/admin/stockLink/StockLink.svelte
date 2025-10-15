@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { createStockLinkGetAll, type StockLinkGetAllResponse } from "$lib/api";
 	import { LinkType } from "$lib/types";
-	import { Button, DataTable, Dialog, renderComponent, createShadTable } from "@kayord/ui";
+	import { Button, Dialog } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Actions from "./Actions.svelte";
 	import { LinkIcon } from "@lucide/svelte";

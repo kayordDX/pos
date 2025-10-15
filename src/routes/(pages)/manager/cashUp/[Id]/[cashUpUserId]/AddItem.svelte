@@ -2,7 +2,8 @@
 	import { page } from "$app/state";
 	import { createCashUpUserCreate, createCashUpUserItemType } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Alert, Button, Dialog, Form, Input, Select } from "@kayord/ui";
+	import { Alert, Button, Dialog, Input, Select } from "@kayord/ui";
+	import { Form } from "@kayord/ui/form";
 	import { MessageCircleWarningIcon, PlusIcon } from "@lucide/svelte";
 	import { zod4Client, zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";

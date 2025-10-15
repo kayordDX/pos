@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
+	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { CableIcon, EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import { createStockDelete, type StockGetAllResponse } from "$lib/api";
 	import { getError } from "$lib/types";

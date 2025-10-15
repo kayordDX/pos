@@ -1,13 +1,8 @@
 <script lang="ts">
-	import { Badge, Button, Dialog, Form, Input, Select, toast } from "@kayord/ui";
-	import { SettingsIcon, SigmaIcon } from "@lucide/svelte";
-	import {
-		createStockDivisionGetAll,
-		createSupplierCreate,
-		createSupplierUpdate,
-		type DTOSupplierDTO,
-		type StockGetAllResponse,
-	} from "$lib/api";
+	import { Button, Dialog, Input } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
+	import { createSupplierCreate, createSupplierUpdate, type DTOSupplierDTO } from "$lib/api";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";

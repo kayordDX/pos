@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { Header } from "$lib/components/Header";
 	import { THEMES } from "$lib/themes";
-	import { Button, Select, toast } from "@kayord/ui";
-	import { setTheme, theme } from "@kayord/ui/mode-watcher";
+	import { Button, Select } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { setTheme, theme } from "mode-watcher";
 
 	const label = $derived(THEMES.find((t) => t.value === theme.current)?.name ?? "Select a theme");
 

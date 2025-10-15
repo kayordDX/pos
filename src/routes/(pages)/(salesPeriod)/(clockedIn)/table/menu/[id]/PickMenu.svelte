@@ -1,5 +1,6 @@
 <script lang="ts">
-	import { Button, Drawer } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { Drawer } from "@kayord/ui/drawer";
 	import { SquareMenuIcon } from "@lucide/svelte";
 	import Menus from "./Menus.svelte";
 	import type { EntitiesMenu } from "$lib/api";

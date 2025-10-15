@@ -6,17 +6,13 @@
 		type DTOStockAllocateItemDTO,
 	} from "$lib/api";
 	import { getError } from "$lib/types";
+	import { Alert, Badge, Button, Card, Loader } from "@kayord/ui";
 	import {
-		Alert,
-		Badge,
-		Button,
-		Card,
 		DataTable,
-		Loader,
+		createShadTable,
 		renderComponent,
 		renderSnippet,
-		createShadTable,
-	} from "@kayord/ui";
+	} from "@kayord/ui/data-table";
 	import { MoveRightIcon, PlusIcon, WorkflowIcon } from "@lucide/svelte";
 	import AddAllocationItem from "./AddAllocationItem.svelte";
 	import Actions from "./Actions.svelte";

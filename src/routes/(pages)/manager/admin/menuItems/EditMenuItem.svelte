@@ -6,14 +6,13 @@
 		Checkbox,
 		Collapsible,
 		Dialog,
-		Form,
 		Input,
 		Loader,
 		Select,
-		Tabs,
 		Textarea,
-		toast,
 	} from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";

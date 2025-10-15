@@ -1,14 +1,8 @@
 <script lang="ts">
 	import { createMenuItemGetAll, createMenuList, type MenuItemMenuItemAdminDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import {
-		Button,
-		DataTable,
-		Input,
-		renderComponent,
-		createShadTable,
-		InputGroup,
-	} from "@kayord/ui";
+	import { Button, InputGroup } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import {
 		type ColumnDef,
 		getCoreRowModel,

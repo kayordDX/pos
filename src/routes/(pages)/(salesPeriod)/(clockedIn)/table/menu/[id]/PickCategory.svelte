@@ -1,6 +1,7 @@
 <script lang="ts">
 	import type { MenuGetSectionsResponse } from "$lib/api";
-	import { Button, Card, Drawer } from "@kayord/ui";
+	import { Button } from "@kayord/ui";
+	import { Drawer } from "@kayord/ui/drawer";
 	import { FilterIcon } from "@lucide/svelte";
 	import CategoriesList from "./CategoriesList.svelte";
 	import { cn } from "@kayord/ui/utils";

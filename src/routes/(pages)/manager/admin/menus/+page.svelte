@@ -1,13 +1,13 @@
 <script lang="ts">
 	import { createMenuList, type EntitiesMenu } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
+	import { Button } from "@kayord/ui";
 	import {
-		Button,
-		createShadTable,
 		DataTable,
-		decodeGlobalFilter,
+		createShadTable,
 		renderComponent,
-	} from "@kayord/ui";
+		decodeGlobalFilter,
+	} from "@kayord/ui/data-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditMenu from "./EditMenu.svelte";

@@ -1,5 +1,7 @@
 <script lang="ts">
-	import { Badge, Button, Card, Form, Input, Select, toast } from "@kayord/ui";
+	import { Badge, Button, Card, Input, Select } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";

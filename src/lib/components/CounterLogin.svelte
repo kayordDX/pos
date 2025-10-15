@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Alert, Avatar, Button, Card } from "@kayord/ui";
-	import { toast } from "@kayord/ui";
 	import { info } from "$lib/stores/info.svelte";
 	import { createOutletCounterDelete, createUserGetCounterUsers } from "$lib/api";
 

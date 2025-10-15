@@ -1,13 +1,12 @@
 <script lang="ts">
+	import { Badge, Button } from "@kayord/ui";
 	import {
-		Badge,
-		Button,
 		DataTable,
+		createShadTable,
 		renderComponent,
 		renderSnippet,
-		createShadTable,
 		decodeColumnFilters,
-	} from "@kayord/ui";
+	} from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 
 	import AddAllocation from "./AddAllocation.svelte";

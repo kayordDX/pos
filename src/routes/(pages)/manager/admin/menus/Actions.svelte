@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import type { EntitiesMenu } from "$lib/api";
-	import { AlertDialog, Button, DropdownMenu, toast } from "@kayord/ui";
+	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { EllipsisVerticalIcon, EqualIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import EditMenu from "./EditMenu.svelte";
 	import { createMenuDelete } from "$lib/api";

@@ -4,7 +4,8 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
-	import { Avatar, Button, Card, Loader, Separator, toast } from "@kayord/ui";
+	import { Avatar, Button, Card, Loader, Separator } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import { getInitials } from "$lib/util";
 	import CashUpItem from "./CashUpItem.svelte";
 	import AddItem from "./AddItem.svelte";

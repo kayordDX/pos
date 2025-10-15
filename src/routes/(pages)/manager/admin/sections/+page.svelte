@@ -2,13 +2,13 @@
 	import { createSectionList, type EntitiesSection } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
+	import { Button } from "@kayord/ui";
 	import {
-		Button,
 		DataTable,
-		renderComponent,
 		createShadTable,
+		renderComponent,
 		decodeGlobalFilter,
-	} from "@kayord/ui";
+	} from "@kayord/ui/data-table";
 	import { type ColumnDef } from "@tanstack/table-core";
 	import { PlusIcon } from "@lucide/svelte";
 	import AddEditSection from "./AddEditSection.svelte";

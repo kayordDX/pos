@@ -6,19 +6,15 @@
 		type DTOStockOrderItemDTO,
 	} from "$lib/api";
 	import { getError } from "$lib/types";
+	import { Alert, Badge, Button, Card, Loader } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
 	import {
-		Alert,
-		Badge,
-		Button,
-		Card,
 		DataTable,
-		Loader,
-		renderComponent,
-		renderSnippet,
 		createShadTable,
-		toast,
+		renderComponent,
 		aggregationFns,
-	} from "@kayord/ui";
+		renderSnippet,
+	} from "@kayord/ui/data-table";
 	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
 	import Actions from "./Actions.svelte";

@@ -2,7 +2,8 @@
 	import { createRoleGetAll, type EntitiesRole } from "$lib/api";
 	import Search from "$lib/components/Search.svelte";
 	import { status } from "$lib/stores/status.svelte";
-	import { Badge, DataTable, renderSnippet, createShadTable } from "@kayord/ui";
+	import { Badge } from "@kayord/ui";
+	import { DataTable, createShadTable, renderSnippet } from "@kayord/ui/data-table";
 	import { type ColumnDef } from "@tanstack/table-core";
 
 	const query = createRoleGetAll(status.value.outletId);

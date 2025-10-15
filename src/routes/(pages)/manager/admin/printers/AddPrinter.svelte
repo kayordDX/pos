@@ -1,6 +1,8 @@
 <script lang="ts">
 	import { createPrinterCreate, createPrinterEdit, type DTOPrinterDTO } from "$lib/api";
-	import { Button, Dialog, Form, Input, toast, Checkbox, Switch } from "@kayord/ui";
+	import { Button, Dialog, Input, Switch } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
