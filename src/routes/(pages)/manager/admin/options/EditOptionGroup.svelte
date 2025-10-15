@@ -31,7 +31,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						optionGroupId: optionGroup?.optionGroupId ?? 0,
 						name: data.name,
@@ -41,7 +41,7 @@
 				});
 				toast.info("Edited Extra");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						name: data.name,
 						minSelections: data.minSelections,

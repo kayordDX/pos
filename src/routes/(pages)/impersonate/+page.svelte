@@ -6,12 +6,12 @@
 
 	const query = createUserUsers({ pageSize: 100 });
 
-	const data = $derived($query.data?.items ?? []);
+	const data = $derived(query.data?.items ?? []);
 
 	const createToken = createAdminToken();
 	const impersonate = async (userId: string) => {
 		// Get custom token
-		const token = (await $createToken.mutateAsync({ data: { userId } })).token;
+		const token = (await createToken.mutateAsync({ data: { userId } })).token;
 		console.log("token", token);
 
 		// Login using custom token.

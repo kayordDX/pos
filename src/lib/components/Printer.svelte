@@ -32,7 +32,7 @@
 
 	const testPrinter = async () => {
 		try {
-			await $testMutation.mutateAsync({
+			await testMutation.mutateAsync({
 				data: { printerId: printer.id },
 			});
 			toast.info("Printing Test");
@@ -43,7 +43,7 @@
 
 	const printBill = async () => {
 		try {
-			await $mutation.mutateAsync({
+			await mutation.mutateAsync({
 				data: { tableBookingId: Number(page.params.id), printerId: printer.id },
 			});
 			toast.info("Printing Bill");

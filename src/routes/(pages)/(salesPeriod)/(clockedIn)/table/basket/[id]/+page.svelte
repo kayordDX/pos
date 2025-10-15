@@ -19,14 +19,14 @@
 	const query = createTableOrderGetBasket({ tableBookingId: Number(page.params.id) });
 
 	const refetch = async () => {
-		await $query.refetch();
+		await query.refetch();
 	};
 
 	const updateOrderItem = createTableOrderUpdateOrderItem();
 
 	const onSubmit = async (data: FormSchema) => {
 		try {
-			const result = await $updateOrderItem.mutateAsync({
+			const result = await updateOrderItem.mutateAsync({
 				data,
 			});
 			if (!result.isSuccess) {
@@ -55,7 +55,7 @@
 
 	const sendAllToKitchen = async () => {
 		try {
-			const result = await $mutation.mutateAsync({
+			const result = await mutation.mutateAsync({
 				data: {
 					tableBookingId: Number(page.params.id),
 				},
@@ -83,7 +83,7 @@
 <div class="m-2 mb-12">
 	<form use:enhance>
 		<Fieldset {form} name="orderItemIds" class="flex flex-col gap-2">
-			{#each $query.data?.orderItems ?? [] as item, i (item.orderItemId)}
+			{#each query.data?.orderItems ?? [] as item, i (item.orderItemId)}
 				{@const checked = $formData.orderItemIds.includes(item.orderItemId)}
 
 				<BasketItem
@@ -125,13 +125,13 @@
 			{/each}
 			<FieldErrors />
 		</Fieldset>
-		{#if ($query.data?.orderItems.length ?? 0) <= 0}
+		{#if (query.data?.orderItems.length ?? 0) <= 0}
 			<EmptyBasket />
 		{:else}
 			<div class="flex flex-col mt-4 gap-2 w-full items-end">
 				<div class="flex items-center gap-2">
 					<div class="text-muted-foreground">Total:</div>
-					<h2>R{$query.data?.total.toFixed(2)}</h2>
+					<h2>R{query.data?.total.toFixed(2)}</h2>
 				</div>
 				{#if $formData.orderItemIds.length > 0}
 					<Button type="submit" variant="secondary" class="w-full border-2 border-primary">

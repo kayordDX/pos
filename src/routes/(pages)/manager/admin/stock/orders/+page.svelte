@@ -67,7 +67,7 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					stockOrder: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
@@ -107,8 +107,8 @@
 		})
 	);
 
-	let data = $derived($query.data?.items ?? []);
-	let rowCount = $derived($query.data?.totalCount ?? 0);
+	let data = $derived(query.data?.items ?? []);
+	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
 		columns,
@@ -186,7 +186,7 @@
 		</div>
 		<div class="flex gap-2 items-center">
 			{#if hasOpenSalesPeriod}
-				<AddOrder bind:open={addOrderOpen} refetch={$query.refetch} />
+				<AddOrder bind:open={addOrderOpen} refetch={query.refetch} />
 				<Button size="sm" onclick={() => (addOrderOpen = true)}>
 					<PlusIcon class="h-5 w-5" /> Add
 				</Button>
@@ -200,7 +200,7 @@
 		{table}
 		{header}
 		headerClass="pb-2"
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No menu items"
 	/>
 </div>

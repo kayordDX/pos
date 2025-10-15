@@ -29,14 +29,14 @@
 	const createUserUsersTypeQuery = $derived(
 		createUserUsersType({ isBackOffice: false, isFrontLine: true })
 	);
-	const users = $derived($createUserUsersTypeQuery.data ?? []);
+	const users = $derived(createUserUsersTypeQuery.data ?? []);
 
 	const transferMutation = createTableBookingTransfer();
 
 	const onSubmit = async (data: FormSchema) => {
 		try {
 			open = false;
-			await $transferMutation.mutateAsync({
+			await transferMutation.mutateAsync({
 				data: {
 					tableBookingId: otherTable.id,
 					transferUserId: data.transferUserId,

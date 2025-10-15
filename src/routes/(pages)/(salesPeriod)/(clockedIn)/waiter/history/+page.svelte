@@ -15,7 +15,7 @@
 	let billId = $state<number>();
 
 	const query = $derived(createTableBookingHistory({ tableBookingId: billId ?? 0 }));
-	const data = $derived($query.data ?? []);
+	const data = $derived(query.data ?? []);
 
 	const columns: ColumnDef<TableBookingHistoryResponse>[] = [
 		{
@@ -90,6 +90,6 @@
 <DataTable
 	{table}
 	headerClass="pb-2"
-	isLoading={$query.isPending}
+	isLoading={query.isPending}
 	noDataMessage="No history available"
 />

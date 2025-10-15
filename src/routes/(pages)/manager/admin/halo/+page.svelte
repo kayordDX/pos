@@ -15,7 +15,7 @@
 		<Card.Description>All available halo configuration for outlet</Card.Description>
 	</Card.Header>
 	<Card.Content>
-		{#if $query.data?.length === 0}
+		{#if query.data?.length === 0}
 			<Alert.Root>
 				<TriangleAlertIcon class="size-4" />
 				<Alert.Title>No halo config available</Alert.Title>
@@ -25,13 +25,13 @@
 			</Alert.Root>
 		{:else}
 			<div class="flex flex-col gap-4">
-				{#each $query.data ?? [] as config}
-					<Config {config} refetch={$query.refetch} />
+				{#each query.data ?? [] as config}
+					<Config {config} refetch={query.refetch} />
 				{/each}
 			</div>
 		{/if}
 	</Card.Content>
 	<Card.Footer class="flex flex-col gap-2">
-		<AddConfig refetch={$query.refetch} />
+		<AddConfig refetch={query.refetch} />
 	</Card.Footer>
 </Card.Root>

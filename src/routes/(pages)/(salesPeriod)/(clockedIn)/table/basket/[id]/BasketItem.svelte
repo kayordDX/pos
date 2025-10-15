@@ -37,12 +37,12 @@
 	const copyItem = createTableOrderCopyItem();
 
 	const remove = async () => {
-		await $removeItem.mutateAsync({ data: { orderItemId: id } });
+		await removeItem.mutateAsync({ data: { orderItemId: id } });
 		refetch();
 	};
 
 	const copy = async () => {
-		await $copyItem.mutateAsync({ data: { orderItemId: id } });
+		await copyItem.mutateAsync({ data: { orderItemId: id } });
 		refetch();
 	};
 </script>

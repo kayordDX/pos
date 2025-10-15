@@ -23,7 +23,7 @@
 	const deleteAdjustmentType = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({
+			await deleteMutation.mutateAsync({
 				data: {
 					outletId: status.value.outletId,
 					adjustmentTypeId: adjustmentType.adjustmentTypeId,

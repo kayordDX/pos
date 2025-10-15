@@ -25,7 +25,7 @@
 			cell: (row) =>
 				renderComponent(Actions, {
 					division: row.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					setSection: selectedDivision,
 					openDialog: () => (isDialogOpen = true),
 				}),
@@ -36,7 +36,7 @@
 		selectedDivision = undefined;
 		isDialogOpen = true;
 	};
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -64,7 +64,7 @@
 		<AddEditDivision
 			bind:open={isDialogOpen}
 			division={selectedDivision}
-			refetch={$query.refetch}
+			refetch={query.refetch}
 		/>
 	</div>
 {/snippet}
@@ -75,7 +75,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No Divisions for outlet"
 	/>
 </div>

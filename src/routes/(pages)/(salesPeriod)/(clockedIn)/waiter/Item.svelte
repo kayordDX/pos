@@ -31,7 +31,7 @@
 	const completeItem = async (id: number, statusId: number) => {
 		try {
 			completeItemBusy = true;
-			await $mutation.mutateAsync({ data: { orderItemIds: [id], orderItemStatusId: statusId } });
+			await mutation.mutateAsync({ data: { orderItemIds: [id], orderItemStatusId: statusId } });
 		} catch (e) {
 			console.error(e);
 		} finally {

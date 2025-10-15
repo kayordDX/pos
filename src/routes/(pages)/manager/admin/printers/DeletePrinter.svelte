@@ -14,7 +14,7 @@
 	const deletePrinter = async () => {
 		try {
 			deleteOpen = false;
-			await $mutation.mutateAsync({ id: printerId });
+			await mutation.mutateAsync({ id: printerId });
 			toast.info("Deleted Printer");
 			refetch();
 		} catch (err) {

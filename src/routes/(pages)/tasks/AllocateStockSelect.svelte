@@ -21,7 +21,7 @@
 		})
 	);
 
-	const stockList = $derived($stockQuery.data?.items ?? []);
+	const stockList = $derived(stockQuery.data?.items ?? []);
 
 	let stockSearch = $state("");
 

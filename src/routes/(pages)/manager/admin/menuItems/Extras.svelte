@@ -24,7 +24,7 @@
 	};
 
 	const getItem = (id: number) => {
-		return $query.data?.find((s) => s.extraGroupId === id);
+		return query.data?.find((s) => s.extraGroupId === id);
 	};
 </script>
 
@@ -56,7 +56,7 @@
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Extras Groups">
-			{#each $query.data ?? [] as extraGroup}
+			{#each query.data ?? [] as extraGroup}
 				<Command.Item onSelect={() => selectItem(extraGroup.extraGroupId)}>
 					<div class="flex w-full items-center flex-row justify-between">
 						<div class="whitespace-nowrap overflow-hidden text-ellipsis">

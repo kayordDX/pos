@@ -20,7 +20,7 @@
 	const deleteRole = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ roleId: role.roleId, divisionId: divisionId });
+			await deleteMutation.mutateAsync({ roleId: role.roleId, divisionId: divisionId });
 			toast.message("Role Removed from Division");
 			refetch();
 		} catch (err) {

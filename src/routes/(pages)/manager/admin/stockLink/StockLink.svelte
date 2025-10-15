@@ -17,11 +17,11 @@
 	let linkOpen = $state(false);
 
 	const query = $derived(createStockLinkGetAll({ id, linkType }, { query: { enabled: false } }));
-	const data = $derived($query.data ?? []);
+	const data = $derived(query.data ?? []);
 
 	$effect(() => {
 		if (open) {
-			$query.refetch();
+			query.refetch();
 		}
 	});
 
@@ -49,7 +49,7 @@
 					id: item.row.original.stockId,
 					name: item.row.original.name,
 					totalActual: item.row.original.totalActual,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 1000,
 			enableSorting: false,
@@ -59,7 +59,7 @@
 			accessorKey: "id",
 			cell: (item) =>
 				renderComponent(Actions, {
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					id: item.row.original.id,
 					stockId: item.row.original.stockId,
 					quantity: item.row.original.quantity,
@@ -97,7 +97,7 @@
 		</Button>
 	</Dialog.Header>
 {/snippet}
-<AddLinkStock bind:open={linkOpen} {id} {linkType} refetch={$query.refetch} />
+<AddLinkStock bind:open={linkOpen} {id} {linkType} refetch={query.refetch} />
 
 <Dialog.Root bind:open>
 	<Dialog.Content class="max-h-[98%] overflow-auto p-2 w-[100%] md:min-w-[48rem]">
@@ -106,7 +106,7 @@
 				{table}
 				{header}
 				headerClass="pb-2"
-				isLoading={$query.isPending}
+				isLoading={query.isPending}
 				noDataMessage="No linked items"
 			/>
 		</div>

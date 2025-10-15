@@ -14,11 +14,11 @@
 	let { open = $bindable(false), stock }: Props = $props();
 
 	const query = $derived(createStockLinkGet(stock?.id ?? 0, { query: { enabled: false } }));
-	const data = $derived($query.data ?? []);
+	const data = $derived(query.data ?? []);
 
 	$effect(() => {
 		if (open) {
-			$query.refetch();
+			query.refetch();
 		}
 	});
 
@@ -81,7 +81,7 @@
 				{table}
 				{header}
 				headerClass="pb-2"
-				isLoading={$query.isPending}
+				isLoading={query.isPending}
 				noDataMessage="No linked items"
 			/>
 		</div>

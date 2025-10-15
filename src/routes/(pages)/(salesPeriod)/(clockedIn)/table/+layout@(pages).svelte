@@ -24,11 +24,11 @@
 		<div
 			class="flex items-center gap-1 bg-secondary/60 text-secondary-foreground py-1 px-4 rounded-sm"
 		>
-			<span class="line-clamp-1">{$query.data?.table.name}</span>
+			<span class="line-clamp-1">{query.data?.table.name}</span>
 			<span class="text-muted-foreground text-sm line-clamp-1"
-				>{$query.data?.table.section?.name}</span
+				>{query.data?.table.section?.name}</span
 			>
-			<span class="text-sm line-clamp-1">({$query.data?.bookingName})</span>
+			<span class="text-sm line-clamp-1">({query.data?.bookingName})</span>
 		</div>
 	</div>
 </Header>

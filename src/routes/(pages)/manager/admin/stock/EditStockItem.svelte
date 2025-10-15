@@ -26,7 +26,7 @@
 	const onSubmit = async (data: FormSchema) => {
 		try {
 			open = false;
-			await $editMutation.mutateAsync({
+			await editMutation.mutateAsync({
 				data: {
 					actual: data.actual,
 					threshold: data.threshold,

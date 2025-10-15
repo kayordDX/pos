@@ -1,7 +1,14 @@
 <script lang="ts">
 	import { createMenuItemGetAll, createMenuList, type MenuItemMenuItemAdminDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { Button, DataTable, Input, renderComponent, createShadTable } from "@kayord/ui";
+	import {
+		Button,
+		DataTable,
+		Input,
+		renderComponent,
+		createShadTable,
+		InputGroup,
+	} from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -20,7 +27,7 @@
 	import { debounce } from "$lib/util";
 	import QueryBuilder from "fluent-querykit";
 	import MenuFilter from "./MenuFilter.svelte";
-	import { PlusIcon } from "@lucide/svelte";
+	import { PlusIcon, SearchIcon } from "@lucide/svelte";
 	import EditMenuItem from "./EditMenuItem.svelte";
 
 	const columns: ColumnDef<MenuItemMenuItemAdminDTO>[] = [
@@ -78,7 +85,7 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					menuItem: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
@@ -112,8 +119,8 @@
 			sorts,
 		})
 	);
-	let data = $derived($query.data?.items ?? []);
-	let rowCount = $derived($query.data?.totalCount ?? 0);
+	let data = $derived(query.data?.items ?? []);
+	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
 		columns,
@@ -189,7 +196,7 @@
 	const menuCol = $derived(table.getColumn("menuId")!);
 	const queryMenu = createMenuList({ outletId: status.value.outletId });
 	const menus = $derived(
-		$queryMenu.data?.map((m) => {
+		queryMenu.data?.map((m) => {
 			return {
 				label: m.name,
 				value: m.id.toString(),
@@ -203,13 +210,18 @@
 {#snippet header()}
 	<div class="flex gap-2 justify-between items-center">
 		<div class="flex gap-2 items-center">
-			<Input
-				value={col?.getFilterValue()}
-				onchange={(e) => debouncedCb(e.currentTarget.value)}
-				oninput={(e) => debouncedCb(e.currentTarget.value)}
-				placeholder="Search Menu Item..."
-				class="h-8 w-[150px] lg:w-[250px]"
-			/>
+			<InputGroup.Root class="h-8 w-[150px] lg:w-[250px]">
+				<InputGroup.Input
+					value={col?.getFilterValue()}
+					onchange={(e) => debouncedCb(e.currentTarget.value)}
+					oninput={(e) => debouncedCb(e.currentTarget.value)}
+					placeholder="Search Menu Item..."
+				/>
+				<InputGroup.Addon>
+					<SearchIcon />
+				</InputGroup.Addon>
+			</InputGroup.Root>
+
 			<MenuFilter column={menuCol} title="Menu" options={menus} />
 			<FilterReset {table} cb={() => debouncedCb("")} />
 		</div>
@@ -217,7 +229,7 @@
 			<Button size="sm" onclick={() => (addOpen = true)}>
 				<PlusIcon class="h-5 w-5" /> Add
 			</Button>
-			<EditMenuItem refetch={$query.refetch} bind:open={addOpen} />
+			<EditMenuItem refetch={query.refetch} bind:open={addOpen} />
 		</div>
 	</div>
 {/snippet}
@@ -228,7 +240,7 @@
 		{table}
 		{header}
 		headerClass="pb-2"
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No menu items"
 	/>
 </div>

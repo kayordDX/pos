@@ -32,7 +32,7 @@
 			cell: (row) =>
 				renderComponent(Actions, {
 					role: row.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					divisionId: Number(page.params.id),
 					openDialog: () => (isDialogOpen = true),
 				}),
@@ -40,7 +40,7 @@
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 
 	const table = createShadTable({
@@ -68,7 +68,7 @@
 	</div>
 {/snippet}
 
-<AddRole refetch={$query.refetch} {divisionId} bind:open />
+<AddRole refetch={query.refetch} {divisionId} bind:open />
 
 <div class="m-2">
 	<h2>Roles</h2>
@@ -76,7 +76,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No roles for outlet"
 	/>
 </div>

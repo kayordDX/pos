@@ -19,7 +19,7 @@
 	const deleteMenuItem = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ id: supplier?.id ?? 0 });
+			await deleteMutation.mutateAsync({ id: supplier?.id ?? 0 });
 			refetch();
 			toast.message("Supplier Deleted");
 		} catch (error) {

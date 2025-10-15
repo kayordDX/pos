@@ -32,7 +32,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						id: division?.divisionId ?? 0,
 						name: division?.divisionName ?? "",
@@ -42,7 +42,7 @@
 				});
 				toast.info("Edited Division");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						name: data.name,
 						outletId: status.value.outletId,
@@ -88,7 +88,7 @@
 
 	const divTypeList = $derived.by(() => {
 		return (
-			$divisionTypeList.data?.map((m) => ({
+			divisionTypeList.data?.map((m) => ({
 				label: m.divisionName,
 				value: m.id.toString(),
 			})) ?? []

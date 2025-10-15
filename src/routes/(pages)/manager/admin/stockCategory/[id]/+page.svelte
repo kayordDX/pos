@@ -32,14 +32,14 @@
 			enableSorting: false,
 			cell: (row) =>
 				renderComponent(Actions, {
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					category: row.row.original,
 				}),
 			size: 10,
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state("");
 	let selectedCategory = $state<EntitiesStockCategory | undefined>(undefined);
 
@@ -70,7 +70,7 @@
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
 	</div>
-	<AddEditChildCategory bind:open={isDialogOpen} refetch={$query.refetch} />
+	<AddEditChildCategory bind:open={isDialogOpen} refetch={query.refetch} />
 {/snippet}
 
 <div class="m-2">
@@ -79,7 +79,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No child categories"
 	/>
 </div>

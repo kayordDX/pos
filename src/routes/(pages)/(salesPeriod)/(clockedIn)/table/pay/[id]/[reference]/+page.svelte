@@ -31,16 +31,16 @@
 
 	const paymentCheck = () => {
 		if (
-			($query.data?.value?.transactionId.length ?? 0) > 0 &&
-			$query.data?.value?.responseCode == 0 &&
-			($query.data?.value?.authorisationCode.length ?? 0) > 0
+			(query.data?.value?.transactionId.length ?? 0) > 0 &&
+			query.data?.value?.responseCode == 0 &&
+			(query.data?.value?.authorisationCode.length ?? 0) > 0
 		) {
-			paymentDone($query.data?.value?.amount ?? 0);
+			paymentDone(query.data?.value?.amount ?? 0);
 		}
 	};
 
 	$effect(() => {
-		$query.data?.value && paymentCheck();
+		query.data?.value && paymentCheck();
 	});
 </script>
 
@@ -57,22 +57,22 @@
 		</div>
 	</Card.Header>
 	<Card.Content>
-		{#if $query.isPending}
+		{#if query.isPending}
 			<Loader />
 		{/if}
-		{#if $query.error}
-			<Error message={getError($query.error).message} />
+		{#if query.error}
+			<Error message={getError(query.error).message} />
 		{/if}
 
-		{#if $query.data}
+		{#if query.data}
 			<div class="flex flex-col gap-1">
 				<div class="flex gap-2 items-center">
 					<div class="text-sm text-muted-foreground">Amount:</div>
-					<div class="text-lg">R{$query.data.value?.amount.toFixed(2)}</div>
+					<div class="text-lg">R{query.data.value?.amount.toFixed(2)}</div>
 				</div>
 
-				<Button class="my-4" onclick={() => $query.refetch()} variant="outline">
-					{#if $query.isFetching}
+				<Button class="my-4" onclick={() => query.refetch()} variant="outline">
+					{#if query.isFetching}
 						<Loader class="size-5" />
 						Checking Payment Status...
 					{:else}
@@ -82,26 +82,26 @@
 
 				<div class="flex gap-2 items-center">
 					<div class="text-sm text-muted-foreground">QR Code Status:</div>
-					<Badge>{$query.data?.value?.qrCodeState}</Badge>
+					<Badge>{query.data?.value?.qrCodeState}</Badge>
 				</div>
 
 				<div class="flex gap-2 items-center">
 					<div class="text-sm text-muted-foreground">Payment Reference:</div>
-					<div class="text-sm">{$query.data?.value?.paymentReference}</div>
+					<div class="text-sm">{query.data?.value?.paymentReference}</div>
 				</div>
 
-				{#if $query.data.value?.status}
+				{#if query.data.value?.status}
 					<div class="flex gap-2 items-center">
 						<div class="text-sm text-muted-foreground">Status:</div>
-						<Badge>{$query.data.value?.status}</Badge>
+						<Badge>{query.data.value?.status}</Badge>
 					</div>
 					<div class="flex gap-2 items-center">
 						<div class="text-sm text-muted-foreground">Currency:</div>
-						<div class="text-sm">{$query.data.value?.currency}</div>
+						<div class="text-sm">{query.data.value?.currency}</div>
 					</div>
 					<div class="flex gap-2 items-center">
 						<div class="text-sm text-muted-foreground">Disposition:</div>
-						<Badge>{$query.data.value?.disposition}</Badge>
+						<Badge>{query.data.value?.disposition}</Badge>
 					</div>
 				{/if}
 			</div>

@@ -9,16 +9,16 @@
 	const restartWhatsapp = createWhatsappRestart({ query: { enabled: false } });
 
 	const restart = async () => {
-		await $restartWhatsapp.refetch();
-		await $query.refetch();
+		await restartWhatsapp.refetch();
+		await query.refetch();
 	};
 
 	let canvas: HTMLCanvasElement | undefined = $state(undefined);
 
 	$effect(() => {
-		if ($qrQuery.data?.qr) {
+		if (qrQuery.data?.qr) {
 			if (canvas) canvas.hidden = false;
-			toCanvas(canvas, $qrQuery.data?.qr, function (error) {
+			toCanvas(canvas, qrQuery.data?.qr, function (error) {
 				if (error) console.error(error);
 				console.log("success!");
 			});
@@ -28,8 +28,8 @@
 	});
 
 	const generateQrCode = async () => {
-		await $qrQuery.refetch();
-		if ($qrQuery.data && $qrQuery.data.success != true) {
+		await qrQuery.refetch();
+		if (qrQuery.data && qrQuery.data.success != true) {
 			toast.error("Could not generate QR code");
 		}
 	};
@@ -49,22 +49,22 @@
 		</Card.Header>
 		<Card.Content>
 			<div class="flex items-center gap-2">
-				Status: {#if $query.data?.success}
+				Status: {#if query.data?.success}
 					<CheckIcon class="text-secondary" />
 				{:else}
 					<XIcon class="text-primary" />
 				{/if}
 			</div>
-			<div>Message: {$query.data?.message}</div>
-			<div>State: {$query.data?.state}</div>
+			<div>Message: {query.data?.message}</div>
+			<div>State: {query.data?.state}</div>
 		</Card.Content>
 		<Card.Footer class="flex flex-col gap-2">
-			<Button class="w-full" onclick={() => $query.refetch()}>Refresh</Button>
+			<Button class="w-full" onclick={() => query.refetch()}>Refresh</Button>
 			<Button
 				class="w-full"
 				variant="destructive"
 				onclick={restart}
-				disabled={$restartWhatsapp.isLoading}
+				disabled={restartWhatsapp.isLoading}
 			>
 				Restart
 			</Button>
@@ -80,7 +80,7 @@
 			<canvas id="canvas" bind:this={canvas} class="rounded-sm mt-4 size-0"></canvas>
 		</Card.Content>
 		<Card.Footer class="flex flex-col gap-2">
-			<Button disabled={$qrQuery.isLoading} onclick={generateQrCode} class="w-full">
+			<Button disabled={qrQuery.isLoading} onclick={generateQrCode} class="w-full">
 				Generate QR Code
 			</Button>
 		</Card.Footer>

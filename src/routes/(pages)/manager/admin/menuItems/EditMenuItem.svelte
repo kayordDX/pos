@@ -63,7 +63,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						id: menuItem?.menuItemId ?? 0,
 						name: data.name,
@@ -81,7 +81,7 @@
 				});
 				toast.info("Edited Menu");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						name: data.name,
 						menuSectionId: data.menuSectionId,
@@ -144,7 +144,7 @@
 	const menuQuery = createMenuList({ outletId: status.value.outletId });
 	const menuList = $derived.by(() => {
 		return (
-			$menuQuery.data?.map((m) => ({
+			menuQuery.data?.map((m) => ({
 				label: m.name,
 				value: m.id.toString(),
 			})) ?? []
@@ -159,7 +159,7 @@
 	);
 	const sectionList = $derived.by(() => {
 		return (
-			$sectionQuery.data?.sections?.map((m) => ({
+			sectionQuery.data?.sections?.map((m) => ({
 				label: m.name,
 				value: m.menuSectionId.toString(),
 			})) ?? []
@@ -169,7 +169,7 @@
 	const divisionQuery = createDivisionGetAll({ outletId: status.value.outletId });
 	const divisionList = $derived.by(() => {
 		return (
-			$divisionQuery.data?.map((m) => ({
+			divisionQuery.data?.map((m) => ({
 				label: m.divisionName,
 				value: m.divisionId.toString(),
 			})) ?? []
@@ -179,7 +179,7 @@
 	const billCatQuery = createBillCategoryGetAll({ outletId: status.value.outletId });
 	const billCatList = $derived.by(() => {
 		return (
-			$billCatQuery.data?.map((m) => ({
+			billCatQuery.data?.map((m) => ({
 				label: m.name,
 				value: m.id.toString(),
 			})) ?? []
@@ -202,7 +202,7 @@
 	const generateDescription = async () => {
 		try {
 			aiLoading = true;
-			const results = await $aiGen.mutateAsync({
+			const results = await aiGen.mutateAsync({
 				data: {
 					menu: menuValue ?? "",
 					section: sectionValue ?? "",

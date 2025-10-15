@@ -1,6 +1,13 @@
 <script lang="ts">
 	import { createRoleGetAll, createUserUsers, type UserUserResponse } from "$lib/api";
-	import { DataTable, renderComponent, Input, createShadTable, Actions } from "@kayord/ui";
+	import {
+		DataTable,
+		renderComponent,
+		Input,
+		createShadTable,
+		Actions,
+		InputGroup,
+	} from "@kayord/ui";
 	import {
 		type ColumnDef,
 		getCoreRowModel,
@@ -18,7 +25,7 @@
 	import FilterReset from "./FilterReset.svelte";
 	import { debounce } from "$lib/util";
 	import { status } from "$lib/stores/status.svelte";
-	import { PlusIcon } from "@lucide/svelte";
+	import { PlusIcon, SearchIcon } from "@lucide/svelte";
 	import AddRole from "./AddRole.svelte";
 
 	const columns: ColumnDef<UserUserResponse>[] = [
@@ -55,7 +62,7 @@
 				renderComponent(Roles, {
 					roles: String(item.getValue()),
 					userId: item.row.original.userId,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 		},
 		{
@@ -101,8 +108,8 @@
 		})
 	);
 
-	let data = $derived($query.data?.items ?? []);
-	let rowCount = $derived($query.data?.totalCount ?? 0);
+	let data = $derived(query.data?.items ?? []);
+	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
 		columns,
@@ -140,7 +147,7 @@
 
 	const rolesQuery = createRoleGetAll(status.value.outletId);
 	const roles = $derived(
-		$rolesQuery.data?.map((role) => {
+		rolesQuery.data?.map((role) => {
 			return {
 				label: role.name,
 				value: role.name,
@@ -179,19 +186,24 @@
 
 {#snippet header()}
 	<div class="flex gap-2">
-		<Input
-			value={col?.getFilterValue()}
-			onchange={(e) => debouncedCb(e.currentTarget.value)}
-			oninput={(e) => debouncedCb(e.currentTarget.value)}
-			placeholder="Search Email..."
-			class="h-8 w-[150px] lg:w-[250px]"
-		/>
+		<InputGroup.Root class="h-8 w-[150px] lg:w-[250px]">
+			<InputGroup.Input
+				value={col?.getFilterValue()}
+				onchange={(e) => debouncedCb(e.currentTarget.value)}
+				oninput={(e) => debouncedCb(e.currentTarget.value)}
+				placeholder="Search Email..."
+			/>
+			<InputGroup.Addon>
+				<SearchIcon />
+			</InputGroup.Addon>
+		</InputGroup.Root>
+
 		<Filter column={nameCol} title="Role" options={roles} />
 		<FilterReset {table} cb={() => debouncedCb("")} />
 	</div>
 {/snippet}
 
-<AddRole refetch={$query.refetch} {userId} bind:open />
+<AddRole refetch={query.refetch} {userId} bind:open />
 
 <div class="m-2">
 	<h2>Users</h2>
@@ -199,7 +211,7 @@
 		headerClass="pb-2"
 		{table}
 		{header}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No unassigned users for outlet"
 	/>
 </div>

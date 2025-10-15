@@ -45,7 +45,7 @@
 			open = false;
 			stockSearch = "";
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						id: id,
 						linkType: linkType,
@@ -55,7 +55,7 @@
 				});
 				toast.info("Edited Linked Stock Item");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						id: id,
 						linkType: linkType,
@@ -112,11 +112,11 @@
 
 	$effect(() => {
 		if (open) {
-			$stockQuery.refetch();
+			stockQuery.refetch();
 		}
 	});
 
-	const stockList = $derived($stockQuery.data?.items ?? []);
+	const stockList = $derived(stockQuery.data?.items ?? []);
 
 	let stockSearch = $state("");
 

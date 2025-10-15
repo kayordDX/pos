@@ -23,7 +23,7 @@
 		try {
 			open = false;
 			stockTakeLoading = true;
-			await $stockTakeMutation.mutateAsync({ data: { stockItemId: stockItem.stockItemId } });
+			await stockTakeMutation.mutateAsync({ data: { stockItemId: stockItem.stockItemId } });
 			refetch();
 		} catch (err) {
 			toast.error(getError(err).message);

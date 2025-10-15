@@ -79,7 +79,7 @@
 			cell: (item) =>
 				renderComponent(Actions, {
 					stockAllocate: item.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 				}),
 			size: 10,
 			enableSorting: false,
@@ -119,8 +119,8 @@
 		})
 	);
 
-	let data = $derived($query.data?.items ?? []);
-	let rowCount = $derived($query.data?.totalCount ?? 0);
+	let data = $derived(query.data?.items ?? []);
+	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
 		columns,
@@ -212,7 +212,7 @@
 		</div>
 		<div class="flex gap-2 items-center">
 			{#if hasOpenSalesPeriod}
-				<AddAllocation bind:open={addAllocateOpen} refetch={$query.refetch} />
+				<AddAllocation bind:open={addAllocateOpen} refetch={query.refetch} />
 				<Button size="sm" onclick={() => (addAllocateOpen = true)}>
 					<PlusIcon class="h-5 w-5" /> Add
 				</Button>
@@ -226,7 +226,7 @@
 		{table}
 		{header}
 		headerClass="pb-2"
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No allocations"
 	/>
 </div>

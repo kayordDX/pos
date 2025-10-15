@@ -35,20 +35,20 @@
 	type FormSchema = z.infer<typeof schema>;
 
 	const categoryQuery = createStockCategory(status.value.outletId);
-	const category = $derived($categoryQuery.data ?? []);
+	const category = $derived(categoryQuery.data ?? []);
 	const categorySelect = $derived(
 		category.find((i) => i.id === $formData.stockCategoryId)?.displayName ?? "Select Category"
 	);
 
 	const unitsQuery = createUnitsGetAll();
-	const units = $derived($unitsQuery.data ?? []);
+	const units = $derived(unitsQuery.data ?? []);
 	const unitSelect = $derived(units.find((i) => i.id === $formData.unitId)?.name ?? "Select Unit");
 
 	const onSubmit = async (data: FormSchema) => {
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						id: stock?.id ?? 0,
 						name: data.name,
@@ -59,7 +59,7 @@
 				});
 				toast.info("Edited Stock");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						name: data.name,
 						unitId: data.unitId,

@@ -32,7 +32,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						optionId: option?.optionId ?? 0,
 						name: data.name,
@@ -43,7 +43,7 @@
 				});
 				toast.info("Option Updated");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						name: data.name,
 						outletId: status.value.outletId,

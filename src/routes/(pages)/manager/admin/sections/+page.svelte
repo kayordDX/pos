@@ -37,7 +37,7 @@
 			cell: (row) =>
 				renderComponent(Actions, {
 					section: row.row.original,
-					refetch: $query.refetch,
+					refetch: query.refetch,
 					setSection: selectedSection,
 					openDialog: () => (isDialogOpen = true),
 				}),
@@ -45,7 +45,7 @@
 		},
 	];
 
-	let data = $derived($query.data ?? []);
+	let data = $derived(query.data ?? []);
 	let search = $state(decodeGlobalFilter() ?? "");
 
 	const table = createShadTable({
@@ -76,7 +76,7 @@
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
 	</div>
-	<AddEditSection bind:open={isDialogOpen} section={selectedSection} refetch={$query.refetch} />
+	<AddEditSection bind:open={isDialogOpen} section={selectedSection} refetch={query.refetch} />
 {/snippet}
 
 <div class="m-2">
@@ -84,7 +84,7 @@
 		headerClass="pb-2"
 		{header}
 		{table}
-		isLoading={$query.isPending}
+		isLoading={query.isPending}
 		noDataMessage="No sections for outlet"
 	/>
 </div>

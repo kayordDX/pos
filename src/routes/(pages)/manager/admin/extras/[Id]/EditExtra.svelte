@@ -32,7 +32,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						extraId: extra?.extraId ?? 0,
 						outletId: status.value.outletId,
@@ -44,7 +44,7 @@
 				});
 				toast.info("Edited Extra");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						name: data.name,
 						outletId: status.value.outletId,

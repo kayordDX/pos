@@ -4,7 +4,7 @@
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { page } from "$app/state";
-	import { client, createPayManualPayment, createOutletGetPaymentType } from "$lib/api";
+	import { createPayManualPayment, createOutletGetPaymentType, payGetLink } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import { payment } from "$lib/stores/payment.svelte";
 	import { onMount } from "svelte";
@@ -32,12 +32,13 @@
 		reference = undefined;
 
 		linkLoading = true;
-		const linkResult = await client.GET("/pay/getLink", {
-			params: { query: { amount: data.amount, tableBookingId: Number(page.params.id) } },
+		const linkResult = await payGetLink({
+			amount: data.amount,
+			tableBookingId: Number(page.params.id),
 		});
-		if (linkResult.data?.value) {
-			url = linkResult.data.value.url;
-			reference = linkResult.data.value.reference;
+		if (linkResult?.value) {
+			url = linkResult.value.url;
+			reference = linkResult.value.reference;
 			payment.setUrl(url);
 			goto(`/table/pay/${page.params.id}/${reference}?url=${url}`);
 		} else {
@@ -48,7 +49,7 @@
 
 	const mutation = createPayManualPayment();
 	const onSubmitManual = async (manualData: FormSchema) => {
-		await $mutation.mutateAsync({
+		await mutation.mutateAsync({
 			data: {
 				amount: manualData.amount,
 				tableBookingId: Number(page.params.id),
@@ -79,11 +80,11 @@
 	$effect(() => {
 		if (
 			$formData.paymentTypeId == 0 &&
-			$paymentTypeQuery.data &&
-			$paymentTypeQuery.data.length > 0 &&
-			$paymentTypeQuery.data[0]?.paymentTypeId != undefined
+			paymentTypeQuery.data &&
+			paymentTypeQuery.data.length > 0 &&
+			paymentTypeQuery.data[0]?.paymentTypeId != undefined
 		) {
-			$formData.paymentTypeId = $paymentTypeQuery.data[0]?.paymentTypeId;
+			$formData.paymentTypeId = paymentTypeQuery.data[0]?.paymentTypeId;
 		}
 	});
 
@@ -91,7 +92,7 @@
 	const balance = Number(page.url.searchParams.get("balance") ?? "0").toFixed(2);
 
 	const paymentTypeSelect = $derived(
-		$paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
+		paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
 			?.paymentTypeName ?? "Select payment type"
 	);
 </script>
@@ -134,7 +135,7 @@
 								{paymentTypeSelect}
 							</Select.Trigger>
 							<Select.Content>
-								{#each $paymentTypeQuery.data ?? [] as paymentType}
+								{#each paymentTypeQuery.data ?? [] as paymentType}
 									<Select.Item value={paymentType.paymentTypeId.toString()}
 										>{paymentType.paymentTypeName}</Select.Item
 									>

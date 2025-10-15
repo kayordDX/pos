@@ -27,7 +27,7 @@
 	const createMutation = createStockAllocateCreate();
 
 	const outletsQuery = createBusinessGetOutlets(status.value.outletId);
-	const outlets = $derived($outletsQuery.data ?? []);
+	const outlets = $derived(outletsQuery.data ?? []);
 
 	const outletSelect = $derived(
 		outlets.find((i) => i.id === $formData.toOutletId)?.name ?? "Select Outlet"
@@ -57,7 +57,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				// await $editMutation.mutateAsync({
+				// await editMutation.mutateAsync({
 				// 	data: {
 				// 		id: order?.id ?? 0,
 				// 		orderNumber: data.orderNumber,
@@ -67,7 +67,7 @@
 				// });
 				toast.info("Edited Allocation");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						comment: data.comment,
 						fromDivisionId: data.fromDivisionId,
@@ -115,14 +115,14 @@
 	let isDifferentOutlet = $state(false);
 
 	const fromDivisionQuery = createStockDivisionGetAll({ outletId: status.value.outletId });
-	const fromDivisions = $derived($fromDivisionQuery.data ?? []);
+	const fromDivisions = $derived(fromDivisionQuery.data ?? []);
 	const fromDivisionSelect = $derived(
 		fromDivisions.find((i) => i.divisionId === $formData.fromDivisionId)?.divisionName ??
 			"Select Division"
 	);
 
 	const toDivisionQuery = $derived(createStockDivisionGetAll({ outletId: $formData.toOutletId }));
-	const toDivisions = $derived($toDivisionQuery.data ?? []);
+	const toDivisions = $derived(toDivisionQuery.data ?? []);
 	const toDivisionSelect = $derived(
 		toDivisions.find((i) => i.divisionId === $formData.toDivisionId)?.divisionName ??
 			"Select Division"
@@ -131,7 +131,7 @@
 	const divisionUsersQuery = $derived(
 		createDivisionGetUsers($formData.toDivisionId, { excludeSelf: true })
 	);
-	const divisionUsers = $derived($divisionUsersQuery.data ?? []);
+	const divisionUsers = $derived(divisionUsersQuery.data ?? []);
 </script>
 
 <Dialog.Root bind:open>

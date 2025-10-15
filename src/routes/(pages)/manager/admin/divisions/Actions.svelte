@@ -20,7 +20,7 @@
 	// const deleteSection = async () => {
 	// 	deleteOpen = false;
 	// 	try {
-	// 		await $deleteMutation.mutateAsync({ id: role.id });
+	// 		await deleteMutation.mutateAsync({ id: role.id });
 	// 		toast.message("Section Deleted");
 	// 		refetch();
 	// 	} catch (err) {

@@ -32,7 +32,7 @@
 	const onSubmit = async (data: FormSchema) => {
 		try {
 			isSubmitting = true;
-			await $mutation.mutateAsync({
+			await mutation.mutateAsync({
 				data: {
 					tableBookingId: tableBookingId,
 					adjustmentTypeId: data.adjustmentTypeId,
@@ -66,7 +66,7 @@
 		createAdjustmentGetAll(status.value.outletId, { query: { enabled: open } })
 	);
 	const typeSelect = $derived(
-		$query.data?.find((i) => i.adjustmentTypeId === $formData.adjustmentTypeId)?.name ??
+		query.data?.find((i) => i.adjustmentTypeId === $formData.adjustmentTypeId)?.name ??
 			"Select adjustment type"
 	);
 </script>
@@ -102,7 +102,7 @@
 									{typeSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each $query.data ?? [] as result}
+									{#each query.data ?? [] as result}
 										<Select.Item value={result.adjustmentTypeId.toString()}
 											>{result.name}</Select.Item
 										>
@@ -150,8 +150,8 @@
 				</Field>
 			</div>
 			<Dialog.Footer class="sm:flex-col gap-2">
-				{#if $mutation.isError}
-					<Error message={getError($mutation.error).message} />
+				{#if mutation.isError}
+					<Error message={getError(mutation.error).message} />
 				{/if}
 				<Button type="submit" disabled={isSubmitting || !open}>Add</Button>
 			</Dialog.Footer>

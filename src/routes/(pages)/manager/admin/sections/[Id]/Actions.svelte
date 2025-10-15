@@ -20,7 +20,7 @@
 	const deleteTable = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ id: table.tableId });
+			await deleteMutation.mutateAsync({ id: table.tableId });
 			toast.message("Table Deleted");
 			refetch();
 		} catch (err) {

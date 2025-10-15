@@ -43,16 +43,16 @@
 		<h1 class="mt-8">My Tables</h1>
 		<p class="text-muted-foreground">List of my current tables</p>
 
-		{#if $query.isPending}
+		{#if query.isPending}
 			<Loader />
 		{/if}
 
-		{#if $query.error}
-			<Error message={getError($query.error).message} />
+		{#if query.error}
+			<Error message={getError(query.error).message} />
 		{/if}
 
 		<div class="flex flex-col flex-wrap gap-2 mt-4 items-start">
-			{#each $query.data ?? [] as myTable (myTable.id)}
+			{#each query.data ?? [] as myTable (myTable.id)}
 				<a href={`/table/menu/${myTable.id}`} class="w-full">
 					<Card.Root class="p-5 w-full gap-1">
 						<div class="flex justify-between">
@@ -60,7 +60,7 @@
 							<Badge>{myTable?.table?.section?.name}</Badge>
 						</div>
 						<p class="text-xs">{myTable.bookingName}</p>
-						<TransferTable otherTable={myTable} refetch={$query.refetch} />
+						<TransferTable otherTable={myTable} refetch={query.refetch} />
 					</Card.Root>
 				</a>
 			{/each}

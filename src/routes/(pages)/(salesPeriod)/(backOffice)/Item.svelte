@@ -31,7 +31,7 @@
 	};
 
 	const setStatus = async (statusId: number, orderItemId: number) => {
-		await $mutation.mutateAsync({
+		await mutation.mutateAsync({
 			data: { orderItemIds: [orderItemId], orderItemStatusId: statusId },
 		});
 		refetch();

@@ -21,7 +21,7 @@
 	const deleteMenu = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({ id: extraGroup.extraGroupId });
+			await deleteMutation.mutateAsync({ id: extraGroup.extraGroupId });
 			refetch();
 			toast.message("Extra Group Deleted");
 		} catch (error) {

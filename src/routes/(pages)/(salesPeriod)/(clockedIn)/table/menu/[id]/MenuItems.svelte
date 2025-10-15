@@ -29,14 +29,14 @@
 	<Dialog.Content class="max-h-[96%] overflow-auto">
 		<!-- mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 -->
 		<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4">
-			{#if $query.isPending}
+			{#if query.isPending}
 				<Loader />
 			{/if}
-			{#if $query.error}
-				<Error message={getError($query.error).message} />
+			{#if query.error}
+				<Error message={getError(query.error).message} />
 			{/if}
-			{#if $query.data}
-				<AddMenuItem data={$query.data} {tableBookingId} bind:open />
+			{#if query.data}
+				<AddMenuItem data={query.data} {tableBookingId} bind:open />
 			{/if}
 		</div>
 	</Dialog.Content>

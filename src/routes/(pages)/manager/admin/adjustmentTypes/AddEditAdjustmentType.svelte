@@ -33,7 +33,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						outletId: status.value.outletId,
 						name: data.name,
@@ -42,7 +42,7 @@
 				});
 				toast.info("Edited Adjustment Type");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						name: data.name,
 						outletId: status.value.outletId,

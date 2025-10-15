@@ -14,7 +14,7 @@
 
 	const exitCounterMode = async () => {
 		try {
-			await $deleteMutation.mutateAsync({ deviceId: mode.value.deviceId });
+			await deleteMutation.mutateAsync({ deviceId: mode.value.deviceId });
 		} finally {
 			mode.remove();
 			goto("/");
@@ -22,7 +22,7 @@
 	};
 
 	const query = createUserGetCounterUsers({ outletId: mode.value.outletId });
-	const data = $derived($query.data ?? []);
+	const data = $derived(query.data ?? []);
 
 	const pinLogin = (selUserId: string, selName: string) => {
 		name = selName;

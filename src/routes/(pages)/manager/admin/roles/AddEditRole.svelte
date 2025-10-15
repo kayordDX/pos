@@ -34,7 +34,7 @@
 		try {
 			open = false;
 			if (isEdit) {
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					id: role?.roleId ?? 0,
 					data: {
 						name: data.name,
@@ -45,7 +45,7 @@
 				});
 				toast.info("Edited Role");
 			} else {
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						name: data.name,
 						outletId: status.value.outletId,
@@ -89,7 +89,7 @@
 
 	const divTypeList = $derived.by(
 		() =>
-			$roleTypeList.data?.map((m) => ({
+			roleTypeList.data?.map((m) => ({
 				label: m.name,
 				value: m.id.toString(),
 			})) ?? []

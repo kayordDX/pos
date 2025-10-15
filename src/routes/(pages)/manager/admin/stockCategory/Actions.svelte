@@ -21,7 +21,7 @@
 	const deleteCategory = async () => {
 		deleteOpen = false;
 		try {
-			await $deleteMutation.mutateAsync({
+			await deleteMutation.mutateAsync({
 				id: category.id,
 				data: { isDeleted: true, name: category.name, parentId: category.parentId },
 			});

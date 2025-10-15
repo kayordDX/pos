@@ -28,7 +28,7 @@
 
 	const closeTable = async () => {
 		try {
-			const result = await $closeTableMut.mutateAsync({ data: { tableBookingId: bookingId } });
+			const result = await closeTableMut.mutateAsync({ data: { tableBookingId: bookingId } });
 			if (result.id) {
 				goto("/waiter");
 			}
@@ -42,7 +42,7 @@
 	const recheckHaloPayments = async () => {
 		try {
 			recheckHaloLoading = true;
-			const result = await $recheckHaloPayment.mutateAsync({ data: { tableBookingId: bookingId } });
+			const result = await recheckHaloPayment.mutateAsync({ data: { tableBookingId: bookingId } });
 			toast.info(`${result.checked} Halo payment checked`);
 			if (result.checked > 0) {
 				refetch();
@@ -191,7 +191,7 @@
 				{#if data?.balance == 0}
 					<Button
 						class="w-full"
-						disabled={$closeTableMut.isPending}
+						disabled={closeTableMut.isPending}
 						variant="destructive"
 						onclick={closeTable}
 					>
@@ -199,8 +199,8 @@
 						Close Table
 					</Button>
 				{/if}
-				{#if $closeTableMut.error}
-					<Error message={getError($closeTableMut.error).message} />
+				{#if closeTableMut.error}
+					<Error message={getError(closeTableMut.error).message} />
 				{/if}
 			{/if}
 			<BillOptions {bookingId} />

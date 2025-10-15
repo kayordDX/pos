@@ -19,7 +19,7 @@
 
 	const mutation = createTableOrderUpdateGroupOrder();
 	const readyAll = async (id: number, statusId: number) => {
-		await $mutation.mutateAsync({
+		await mutation.mutateAsync({
 			data: { orderItemStatusId: statusId, orderGroupId: id, divisionIds },
 		});
 		refetch();

@@ -43,7 +43,7 @@
 		try {
 			if (isEdit) {
 				open = false;
-				await $editMutation.mutateAsync({
+				await editMutation.mutateAsync({
 					data: {
 						id: printer?.id ?? 0,
 						ipAddress: data.iPAddress,
@@ -57,7 +57,7 @@
 				toast.info("Edited Printer");
 			} else {
 				open = false;
-				await $createMutation.mutateAsync({
+				await createMutation.mutateAsync({
 					data: {
 						outletId: status.value.outletId,
 						ipAddress: data.iPAddress,
