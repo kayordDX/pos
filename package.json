@@ -17,7 +17,7 @@
 	"devDependencies": {
 		"@grafana/faro-web-sdk": "^1.19.0",
 		"@internationalized/date": "^3.10.0",
-		"@kayord/ui": "2.0.2",
+		"@kayord/ui": "2.0.3",
 		"@lucide/svelte": "^0.545.0",
 		"@microsoft/signalr": "^9.0.6",
 		"@sveltejs/adapter-static": "^3.0.10",

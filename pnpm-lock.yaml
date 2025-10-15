@@ -15,8 +15,8 @@ importers:
         specifier: ^3.10.0
         version: 3.10.0
       '@kayord/ui':
-        specifier: 2.0.2
-        version: 2.0.2(93675194fb41e8a8846f821fdca16e4f)
+        specifier: 2.0.3
+        version: 2.0.3(93675194fb41e8a8846f821fdca16e4f)
       '@lucide/svelte':
         specifier: ^0.545.0
         version: 0.545.0(svelte@5.40.1)
@@ -701,8 +701,8 @@ packages:
     peerDependencies:
       jsep: ^0.4.0||^1.0.0
 
-  '@kayord/ui@2.0.2':
-    resolution: {integrity: sha512-5UIJ+j1zSS5/uC+jwA2CmiawfJeoKHSKe4uNplqqaWvuW5LSDUboypIY7Br/aQYlkaOv9VdndBbQ51zl1cCKfQ==}
+  '@kayord/ui@2.0.3':
+    resolution: {integrity: sha512-TqDv8GKIEM+yJntDp+vuKXPVt3R8U8En8ERnTnpzAzji/ZWtQJgTrQ8OCyVM/9VFVb4qSdlaw3P6v2i79St+9Q==}
     peerDependencies:
       '@internationalized/date': ^3.10.0
       '@lucide/svelte': '>= 0.482.0 < 1.0.0'
@@ -1469,8 +1469,8 @@ packages:
   balanced-match@1.0.2:
     resolution: {integrity: sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==}
 
-  bits-ui@2.11.5:
-    resolution: {integrity: sha512-d7b6HrrCUeK261c777agFz0G5lx13RMA0DT022e4SRuIjI3bZ8ci53YxIZ2/jpXTmeAeqeShyC+Mgibh9OeW9A==}
+  bits-ui@2.11.6:
+    resolution: {integrity: sha512-8FOk9YZJYQjVmHZuo1Jj7OJ3TP3sg+JHPO1xa7Xbr/RCcQzK3v0C/Oe5Lad+4RwfEDFZdCGkwuui5dMTSgg2iw==}
     engines: {node: '>=20'}
     peerDependencies:
       '@internationalized/date': ^3.8.1
@@ -4130,10 +4130,10 @@ snapshots:
     dependencies:
       jsep: 1.4.0
 
-  '@kayord/ui@2.0.2(93675194fb41e8a8846f821fdca16e4f)':
+  '@kayord/ui@2.0.3(93675194fb41e8a8846f821fdca16e4f)':
     dependencies:
       '@lucide/svelte': 0.545.0(svelte@5.40.1)
-      bits-ui: 2.11.5(@internationalized/date@3.10.0)(svelte@5.40.1)
+      bits-ui: 2.11.6(@internationalized/date@3.10.0)(svelte@5.40.1)
       clsx: 2.1.1
       mode-watcher: 1.1.0(svelte@5.40.1)
       svelte: 5.40.1
@@ -5063,7 +5063,7 @@ snapshots:
 
   balanced-match@1.0.2: {}
 
-  bits-ui@2.11.5(@internationalized/date@3.10.0)(svelte@5.40.1):
+  bits-ui@2.11.6(@internationalized/date@3.10.0)(svelte@5.40.1):
     dependencies:
       '@floating-ui/core': 1.7.3
       '@floating-ui/dom': 1.7.4
