@@ -5646,6 +5646,48 @@
             "description": "Unauthorized"
           }
         }
+      },
+      "delete": {
+        "tags": [
+          "Role"
+        ],
+        "operationId": "RoleDelete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EntitiesRole"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
       }
     },
     "/role/type/{outletId}": {
@@ -9306,6 +9348,53 @@
         }
       }
     },
+    "/division/{id}": {
+      "delete": {
+        "tags": [
+          "Division"
+        ],
+        "operationId": "DivisionDelete",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/problem+json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/clock/list": {
       "get": {
         "tags": [
@@ -12540,7 +12629,8 @@
               "id",
               "name",
               "outletId",
-              "outlet"
+              "outlet",
+              "isDeleted"
             ],
             "properties": {
               "id": {
@@ -12563,6 +12653,9 @@
                 "items": {
                   "$ref": "#/components/schemas/EntitiesTable"
                 }
+              },
+              "isDeleted": {
+                "type": "boolean"
               }
             }
           }
@@ -14699,7 +14792,8 @@
               "divisionId",
               "divisionName",
               "outletId",
-              "divisionTypeId"
+              "divisionTypeId",
+              "isDeleted"
             ],
             "properties": {
               "divisionId": {
@@ -14716,6 +14810,9 @@
               "divisionTypeId": {
                 "type": "integer",
                 "format": "int32"
+              },
+              "isDeleted": {
+                "type": "boolean"
               }
             }
           }
@@ -18944,6 +19041,10 @@
           }
         }
       },
+      "RoleDeleteRequest": {
+        "type": "object",
+        "additionalProperties": false
+      },
       "RoleCreateRequest": {
         "type": "object",
         "additionalProperties": false,
@@ -21049,6 +21150,10 @@
             "nullable": false
           }
         }
+      },
+      "DivisionDeleteRequest": {
+        "type": "object",
+        "additionalProperties": false
       },
       "DivisionCreateRequest": {
         "type": "object",

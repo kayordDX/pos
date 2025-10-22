@@ -1,11 +1,12 @@
 <script lang="ts">
-	import { goto } from "$app/navigation";
 	import AddEditDivision from "./AddEditRole.svelte";
 
-	import { Button, DropdownMenu } from "@kayord/ui";
-	import { PencilIcon, TableIcon, EllipsisVerticalIcon } from "@lucide/svelte";
+	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
+	import { PencilIcon, EllipsisVerticalIcon, Trash2Icon } from "@lucide/svelte";
 
-	import type { EntitiesRole } from "$lib/api";
+	import { createRoleDelete, type EntitiesRole } from "$lib/api";
+	import { toast } from "@kayord/ui/sonner";
+	import { getError } from "$lib/types";
 
 	interface Props {
 		refetch: () => void;
@@ -14,19 +15,20 @@
 	let { refetch, role }: Props = $props();
 
 	let editOpen = $state(false);
+	let deleteOpen = $state(false);
 
-	//const deleteMutation = createSectionDelete();
+	const deleteMutation = createRoleDelete();
 
-	// const deleteSection = async () => {
-	// 	deleteOpen = false;
-	// 	try {
-	// 		await deleteMutation.mutateAsync({ id: role.id });
-	// 		toast.message("Section Deleted");
-	// 		refetch();
-	// 	} catch (err) {
-	// 		toast.error(getError(err).message);
-	// 	}
-	// };
+	const deleteRole = async () => {
+		deleteOpen = false;
+		try {
+			await deleteMutation.mutateAsync({ id: role.roleId });
+			toast.message("Role Deleted");
+			refetch();
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
+	};
 </script>
 
 {#if role?.roleType.name !== "manager" && role?.roleType.name !== "guest"}
@@ -40,9 +42,29 @@
 			<DropdownMenu.Item onclick={() => (editOpen = true)}>
 				<PencilIcon /> Edit Role
 			</DropdownMenu.Item>
+			<DropdownMenu.Item onclick={() => (deleteOpen = true)}>
+				<Trash2Icon /> Delete
+			</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 {/if}
 {#if editOpen}
 	<AddEditDivision bind:open={editOpen} {refetch} {role} />
+{/if}
+
+{#if deleteOpen}
+	<AlertDialog.Root bind:open={deleteOpen}>
+		<AlertDialog.Content>
+			<AlertDialog.Header>
+				<AlertDialog.Title>Delete Role?</AlertDialog.Title>
+				<AlertDialog.Description>
+					This will remove the role and users assigned to it will lose access
+				</AlertDialog.Description>
+			</AlertDialog.Header>
+			<AlertDialog.Footer>
+				<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
+				<AlertDialog.Action class="bg-destructive" onclick={deleteRole}>Delete</AlertDialog.Action>
+			</AlertDialog.Footer>
+		</AlertDialog.Content>
+	</AlertDialog.Root>
 {/if}
