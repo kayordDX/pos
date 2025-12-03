@@ -18,20 +18,73 @@ export interface InternalErrorResponse {
 	note: string;
 }
 
-export interface ServicesWhatsappStatus {
+/**
+ * @nullable
+ */
+export type ServicesWhatsappWResponseOfSessionStatusData = ServicesWhatsappSessionStatus | null;
+
+export interface ServicesWhatsappWResponseOfSessionStatus {
+	code: number;
 	success: boolean;
-	state: string;
-	message: string;
+	/** @nullable */
+	data?: ServicesWhatsappWResponseOfSessionStatusData;
 }
 
-export interface ServicesWhatsappResponse {
+export interface ServicesWhatsappSessionStatus {
+	connected: boolean;
+	loggedIn: boolean;
+}
+
+/**
+ * @nullable
+ */
+export type ServicesWhatsappWResponseOfQrResponseData = ServicesWhatsappQrResponse | null;
+
+export interface ServicesWhatsappWResponseOfQrResponse {
+	code: number;
 	success: boolean;
-	message: string;
+	/** @nullable */
+	data?: ServicesWhatsappWResponseOfQrResponseData;
 }
 
 export interface ServicesWhatsappQrResponse {
+	qrCode: string;
+}
+
+/**
+ * @nullable
+ */
+export type ServicesWhatsappWResponseOfSessionLogoutData = ServicesWhatsappSessionLogout | null;
+
+export interface ServicesWhatsappWResponseOfSessionLogout {
+	code: number;
 	success: boolean;
-	qr: string;
+	/** @nullable */
+	data?: ServicesWhatsappWResponseOfSessionLogoutData;
+}
+
+export interface ServicesWhatsappSessionLogout {
+	details: string;
+}
+
+/**
+ * @nullable
+ */
+export type ServicesWhatsappWResponseOfSessionConnectResponseData =
+	ServicesWhatsappSessionConnectResponse | null;
+
+export interface ServicesWhatsappWResponseOfSessionConnectResponse {
+	code: number;
+	success: boolean;
+	/** @nullable */
+	data?: ServicesWhatsappWResponseOfSessionConnectResponseData;
+}
+
+export interface ServicesWhatsappSessionConnectResponse {
+	details: string;
+	events: string;
+	jid: string;
+	webhook: string;
 }
 
 export interface UserValidateResponse {

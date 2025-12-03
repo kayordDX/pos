@@ -4,11 +4,14 @@
  * Kayord.Pos
  * OpenAPI spec version: v1
  */
-import { createQuery } from "@tanstack/svelte-query";
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
+	CreateMutationOptions,
+	CreateMutationResult,
 	CreateQueryOptions,
 	CreateQueryResult,
 	DataTag,
+	MutationFunction,
 	QueryClient,
 	QueryFunction,
 	QueryKey,
@@ -16,16 +19,20 @@ import type {
 
 import type {
 	InternalErrorResponse,
-	ServicesWhatsappQrResponse,
-	ServicesWhatsappResponse,
-	ServicesWhatsappStatus,
+	ServicesWhatsappWResponseOfQrResponse,
+	ServicesWhatsappWResponseOfSessionConnectResponse,
+	ServicesWhatsappWResponseOfSessionLogout,
+	ServicesWhatsappWResponseOfSessionStatus,
 } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType } from "../mutator/customInstance.svelte";
 
 export const whatsappStatus = () => {
-	return customInstance<ServicesWhatsappStatus>({ url: `/whatsapp/status`, method: "GET" });
+	return customInstance<ServicesWhatsappWResponseOfSessionStatus>({
+		url: `/whatsapp/status`,
+		method: "GET",
+	});
 };
 
 export const getWhatsappStatusQueryKey = () => {
@@ -75,60 +82,11 @@ export function createWhatsappStatus<
 	return query;
 }
 
-export const whatsappRestart = () => {
-	return customInstance<ServicesWhatsappResponse[]>({ url: `/whatsapp/restart`, method: "GET" });
-};
-
-export const getWhatsappRestartQueryKey = () => {
-	return [`/whatsapp/restart`] as const;
-};
-
-export const getWhatsappRestartQueryOptions = <
-	TData = Awaited<ReturnType<typeof whatsappRestart>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
-	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof whatsappRestart>>, TError, TData>>;
-}) => {
-	const { query: queryOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getWhatsappRestartQueryKey();
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof whatsappRestart>>> = () =>
-		whatsappRestart();
-
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof whatsappRestart>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type WhatsappRestartQueryResult = NonNullable<Awaited<ReturnType<typeof whatsappRestart>>>;
-export type WhatsappRestartQueryError = ErrorType<void | InternalErrorResponse>;
-
-export function createWhatsappRestart<
-	TData = Awaited<ReturnType<typeof whatsappRestart>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	options?: {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof whatsappRestart>>, TError, TData>>;
-	},
-	queryClient?: QueryClient
-): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getWhatsappRestartQueryOptions(options);
-
-	const query = createQuery(() => ({ ...queryOptions, queryClient })) as CreateQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-	query.queryKey = queryOptions.queryKey;
-
-	return query;
-}
-
 export const whatsappQrCode = () => {
-	return customInstance<ServicesWhatsappQrResponse>({ url: `/whatsapp/qr`, method: "GET" });
+	return customInstance<ServicesWhatsappWResponseOfQrResponse>({
+		url: `/whatsapp/qr`,
+		method: "GET",
+	});
 };
 
 export const getWhatsappQrCodeQueryKey = () => {
@@ -177,3 +135,114 @@ export function createWhatsappQrCode<
 
 	return query;
 }
+
+export const whatsappLogout = () => {
+	return customInstance<ServicesWhatsappWResponseOfSessionLogout>({
+		url: `/whatsapp/logout`,
+		method: "POST",
+	});
+};
+
+export const getWhatsappLogoutMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof whatsappLogout>>,
+		TError,
+		void,
+		TContext
+	>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof whatsappLogout>>, TError, void, TContext> => {
+	const mutationKey = ["whatsappLogout"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof whatsappLogout>>, void> = () => {
+		return whatsappLogout();
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type WhatsappLogoutMutationResult = NonNullable<Awaited<ReturnType<typeof whatsappLogout>>>;
+
+export type WhatsappLogoutMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createWhatsappLogout = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof whatsappLogout>>,
+			TError,
+			void,
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof whatsappLogout>>, TError, void, TContext> => {
+	const mutationOptions = getWhatsappLogoutMutationOptions(options);
+
+	return createMutation(() => ({ ...mutationOptions, queryClient }));
+};
+export const whatsappConnect = () => {
+	return customInstance<ServicesWhatsappWResponseOfSessionConnectResponse>({
+		url: `/whatsapp/connect`,
+		method: "POST",
+	});
+};
+
+export const getWhatsappConnectMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof whatsappConnect>>,
+		TError,
+		void,
+		TContext
+	>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof whatsappConnect>>, TError, void, TContext> => {
+	const mutationKey = ["whatsappConnect"];
+	const { mutation: mutationOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey } };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof whatsappConnect>>, void> = () => {
+		return whatsappConnect();
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type WhatsappConnectMutationResult = NonNullable<
+	Awaited<ReturnType<typeof whatsappConnect>>
+>;
+
+export type WhatsappConnectMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createWhatsappConnect = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof whatsappConnect>>,
+			TError,
+			void,
+			TContext
+		>;
+	},
+	queryClient?: QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof whatsappConnect>>, TError, void, TContext> => {
+	const mutationOptions = getWhatsappConnectMutationOptions(options);
+
+	return createMutation(() => ({ ...mutationOptions, queryClient }));
+};

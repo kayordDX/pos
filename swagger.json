@@ -33,43 +33,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServicesWhatsappStatus"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/whatsapp/restart": {
-      "get": {
-        "tags": [
-          "Whatsapp"
-        ],
-        "operationId": "WhatsappRestart",
-        "responses": {
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ServicesWhatsappResponse"
-                  }
+                  "$ref": "#/components/schemas/ServicesWhatsappWResponseOfSessionStatus"
                 }
               }
             }
@@ -102,7 +66,73 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ServicesWhatsappQrResponse"
+                  "$ref": "#/components/schemas/ServicesWhatsappWResponseOfQrResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/whatsapp/logout": {
+      "post": {
+        "tags": [
+          "Whatsapp"
+        ],
+        "operationId": "WhatsappLogout",
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesWhatsappWResponseOfSessionLogout"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    },
+    "/whatsapp/connect": {
+      "post": {
+        "tags": [
+          "Whatsapp"
+        ],
+        "operationId": "WhatsappConnect",
+        "responses": {
+          "500": {
+            "description": "Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InternalErrorResponse"
+                }
+              }
+            }
+          },
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ServicesWhatsappWResponseOfSessionConnectResponse"
                 }
               }
             }
@@ -1166,39 +1196,6 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/BillTableTotal"
-                }
-              }
-            }
-          },
-          "401": {
-            "description": "Unauthorized"
-          }
-        }
-      }
-    },
-    "/test/whatsapp": {
-      "get": {
-        "tags": [
-          "Test"
-        ],
-        "operationId": "TestWhatsAppTest",
-        "responses": {
-          "500": {
-            "description": "Server Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/InternalErrorResponse"
-                }
-              }
-            }
-          },
-          "200": {
-            "description": "Success",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/ServicesWhatsappStatus"
                 }
               }
             }
@@ -11796,39 +11793,69 @@
           }
         }
       },
-      "ServicesWhatsappStatus": {
+      "ServicesWhatsappWResponseOfSessionStatus": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "success",
-          "state",
-          "message"
+          "code",
+          "success"
         ],
         "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
           "success": {
             "type": "boolean"
           },
-          "state": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ServicesWhatsappSessionStatus"
+              }
+            ]
           }
         }
       },
-      "ServicesWhatsappResponse": {
+      "ServicesWhatsappSessionStatus": {
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "success",
-          "message"
+          "connected",
+          "loggedIn"
         ],
         "properties": {
+          "connected": {
+            "type": "boolean"
+          },
+          "loggedIn": {
+            "type": "boolean"
+          }
+        }
+      },
+      "ServicesWhatsappWResponseOfQrResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "success"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
           "success": {
             "type": "boolean"
           },
-          "message": {
-            "type": "string"
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ServicesWhatsappQrResponse"
+              }
+            ]
           }
         }
       },
@@ -11836,14 +11863,96 @@
         "type": "object",
         "additionalProperties": false,
         "required": [
-          "success",
-          "qr"
+          "qrCode"
         ],
         "properties": {
+          "qrCode": {
+            "type": "string"
+          }
+        }
+      },
+      "ServicesWhatsappWResponseOfSessionLogout": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "success"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
           "success": {
             "type": "boolean"
           },
-          "qr": {
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ServicesWhatsappSessionLogout"
+              }
+            ]
+          }
+        }
+      },
+      "ServicesWhatsappSessionLogout": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "details"
+        ],
+        "properties": {
+          "details": {
+            "type": "string"
+          }
+        }
+      },
+      "ServicesWhatsappWResponseOfSessionConnectResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "code",
+          "success"
+        ],
+        "properties": {
+          "code": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "nullable": true,
+            "oneOf": [
+              {
+                "$ref": "#/components/schemas/ServicesWhatsappSessionConnectResponse"
+              }
+            ]
+          }
+        }
+      },
+      "ServicesWhatsappSessionConnectResponse": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "details",
+          "events",
+          "jid",
+          "webhook"
+        ],
+        "properties": {
+          "details": {
+            "type": "string"
+          },
+          "events": {
+            "type": "string"
+          },
+          "jid": {
+            "type": "string"
+          },
+          "webhook": {
             "type": "string"
           }
         }

@@ -63,9 +63,7 @@
 				<Card.Title>Email bill #{bookingId}</Card.Title>
 				<Card.Description>This will send email with bill attached</Card.Description>
 			</Card.Header>
-			<div
-				class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2 overflow-y-scroll"
-			>
+			<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
 				<Field {form} name="name">
 					<Control>
 						<Form.Label>Name</Form.Label>
