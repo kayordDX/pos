@@ -67,20 +67,26 @@
 				<Card.Title>Whatsapp bill #{bookingId}</Card.Title>
 				<Card.Description>This will send a whatsapp message with bill attached</Card.Description>
 				<div class="flex items-center gap-2">
-					Status: {#if query.data?.success}
-						<CheckIcon class="text-secondary-foreground" />
+					Connected: {#if query.data?.data?.connected}
+						<CheckIcon class="text-success" />
 					{:else}
-						<XIcon class="text-primary" />
+						<XIcon class="text-destructive" />
 					{/if}
 				</div>
-				<div>State: {query.data?.state}</div>
+				<div class="flex items-center gap-2">
+					Logged In: {#if query.data?.data?.loggedIn}
+						<CheckIcon class="text-success" />
+					{:else}
+						<XIcon class="text-destructive" />
+					{/if}
+				</div>
+				<div class="text-sm text-muted-foreground">Success: {query.data?.success}</div>
+				<div class="text-sm text-muted-foreground">Code: {query.data?.code}</div>
 				{#if !canWhatsapp}
 					<div class="text-sm text-destructive">Whatsapp is not enabled</div>
 				{/if}
 			</Card.Header>
-			<div
-				class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2 overflow-y-scroll"
-			>
+			<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
 				<Field {form} name="name">
 					<Control>
 						<Form.Label>Name</Form.Label>

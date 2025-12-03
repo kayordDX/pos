@@ -7,22 +7,42 @@
 import zod from 'zod';
 
 export const whatsappStatusResponse = zod.object({
+  "code": zod.number(),
   "success": zod.boolean(),
-  "state": zod.string(),
-  "message": zod.string()
+  "data": zod.object({
+  "connected": zod.boolean(),
+  "loggedIn": zod.boolean()
+}).nullish()
 })
-
-
-export const whatsappRestartResponseItem = zod.object({
-  "success": zod.boolean(),
-  "message": zod.string()
-})
-export const whatsappRestartResponse = zod.array(whatsappRestartResponseItem)
 
 
 export const whatsappQrCodeResponse = zod.object({
+  "code": zod.number(),
   "success": zod.boolean(),
-  "qr": zod.string()
+  "data": zod.object({
+  "qrCode": zod.string()
+}).nullish()
+})
+
+
+export const whatsappLogoutResponse = zod.object({
+  "code": zod.number(),
+  "success": zod.boolean(),
+  "data": zod.object({
+  "details": zod.string()
+}).nullish()
+})
+
+
+export const whatsappConnectResponse = zod.object({
+  "code": zod.number(),
+  "success": zod.boolean(),
+  "data": zod.object({
+  "details": zod.string(),
+  "events": zod.string(),
+  "jid": zod.string(),
+  "webhook": zod.string()
+}).nullish()
 })
 
 
@@ -361,13 +381,6 @@ export const testTotalTestResponse = zod.object({
   "total": zod.number(),
   "totalPayments": zod.number(),
   "tipTotal": zod.number()
-})
-
-
-export const testWhatsAppTestResponse = zod.object({
-  "success": zod.boolean(),
-  "state": zod.string(),
-  "message": zod.string()
 })
 
 

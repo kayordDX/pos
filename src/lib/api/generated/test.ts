@@ -17,7 +17,6 @@ import type {
 import type {
 	BillTableTotal,
 	InternalErrorResponse,
-	ServicesWhatsappStatus,
 	TestResult,
 	TestTokenResult,
 } from "./api.schemas";
@@ -270,60 +269,6 @@ export function createTestTotalTest<
 	queryClient?: QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const queryOptions = getTestTotalTestQueryOptions(options);
-
-	const query = createQuery(() => ({ ...queryOptions, queryClient })) as CreateQueryResult<
-		TData,
-		TError
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-	query.queryKey = queryOptions.queryKey;
-
-	return query;
-}
-
-export const testWhatsAppTest = () => {
-	return customInstance<ServicesWhatsappStatus>({ url: `/test/whatsapp`, method: "GET" });
-};
-
-export const getTestWhatsAppTestQueryKey = () => {
-	return [`/test/whatsapp`] as const;
-};
-
-export const getTestWhatsAppTestQueryOptions = <
-	TData = Awaited<ReturnType<typeof testWhatsAppTest>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
-	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testWhatsAppTest>>, TError, TData>>;
-}) => {
-	const { query: queryOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getTestWhatsAppTestQueryKey();
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof testWhatsAppTest>>> = () =>
-		testWhatsAppTest();
-
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof testWhatsAppTest>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type TestWhatsAppTestQueryResult = NonNullable<Awaited<ReturnType<typeof testWhatsAppTest>>>;
-export type TestWhatsAppTestQueryError = ErrorType<void | InternalErrorResponse>;
-
-export function createTestWhatsAppTest<
-	TData = Awaited<ReturnType<typeof testWhatsAppTest>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof testWhatsAppTest>>, TError, TData>
-		>;
-	},
-	queryClient?: QueryClient
-): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const queryOptions = getTestWhatsAppTestQueryOptions(options);
 
 	const query = createQuery(() => ({ ...queryOptions, queryClient })) as CreateQueryResult<
 		TData,
