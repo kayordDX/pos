@@ -4,6 +4,8 @@
 	import { Drawer } from "@kayord/ui/drawer";
 	import { CheckIcon, ConciergeBellIcon, Trash2Icon, XIcon } from "@lucide/svelte";
 	import { createTableOrderUpdateOrderItem } from "$lib/api";
+	import { toast } from "@kayord/ui/sonner";
+	import { getError } from "$lib/types";
 	let open = $state(false);
 
 	const mutation = createTableOrderUpdateOrderItem();
@@ -32,9 +34,13 @@
 	};
 
 	const setStatus = async (statusId: number, orderItemId: number) => {
-		await mutation.mutateAsync({
-			data: { orderItemIds: [orderItemId], orderItemStatusId: statusId },
-		});
+		try {
+			await mutation.mutateAsync({
+				data: { orderItemIds: [orderItemId], orderItemStatusId: statusId },
+			});
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
 		refetch();
 	};
 </script>
