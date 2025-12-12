@@ -6,6 +6,7 @@
 	interface SoundEvent {
 		outletId: number;
 		divisionIds: Array<number>;
+		isSilent: boolean;
 	}
 
 	interface Props {
@@ -19,12 +20,13 @@
 	const roles = $derived(divisionIds ? divisionIds.split(",").map(Number) : []);
 
 	const playSound = (e: SoundEvent) => {
-		console.log("PlaySound", e);
 		const shouldNotify = roles.some((r) => e.divisionIds.includes(r));
 		if (shouldNotify) {
 			refetch();
-			notification.notify();
-			audio.play();
+			if (!e.isSilent) {
+				notification.notify();
+				audio.play();
+			}
 		}
 	};
 
