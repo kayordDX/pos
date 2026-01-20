@@ -14,7 +14,10 @@
 
 	let { divisionId, currentExtras = $bindable([]) }: Props = $props();
 
-	const query = createExtraGetAllMenu({ divisionId: divisionId, outletId: status.value.outletId });
+	const query = createExtraGetAllMenu(() => ({
+		divisionId: divisionId,
+		outletId: status.value.outletId,
+	}));
 
 	const selectItem = (id: number) => {
 		currentExtras.push(id);

@@ -20,7 +20,7 @@
 		}
 	};
 
-	const query = createUserGetCounterUsers({ outletId: mode.value.outletId });
+	const query = createUserGetCounterUsers(() => ({ outletId: mode.value.outletId }));
 	const data = $derived(query.data ?? []);
 
 	const pinLogin = (selUserId: string, selName: string) => {

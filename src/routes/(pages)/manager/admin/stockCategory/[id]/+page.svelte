@@ -1,9 +1,5 @@
 <script lang="ts">
-	import {
-		createStockCategoryGetAll,
-		type EntitiesStockCategory,
-		type EntitiesStockCategoryAllOf,
-	} from "$lib/api";
+	import { createStockCategoryGetAll, type EntitiesStockCategory } from "$lib/api";
 	import Search from "$lib/components/Search.svelte";
 	import { page } from "$app/state";
 	import { status } from "$lib/stores/status.svelte";
@@ -14,11 +10,11 @@
 	import { PlusIcon } from "@lucide/svelte";
 	import AddEditChildCategory from "./AddEditChildCategory.svelte";
 
-	const query = createStockCategoryGetAll({
+	const query = createStockCategoryGetAll(() => ({
 		outletId: status.value.outletId,
 		parentOnly: false,
 		parentId: Number(page.params.id),
-	});
+	}));
 	let selectedDivision = $state<EntitiesStockCategory | undefined>(undefined);
 	let isDialogOpen = $state(false);
 	const columns: ColumnDef<EntitiesStockCategory>[] = [

@@ -36,7 +36,7 @@
 	});
 	type FormSchema = z.infer<typeof schema>;
 
-	const categoryQuery = createStockCategory(status.value.outletId);
+	const categoryQuery = createStockCategory(() => status.value.outletId);
 	const category = $derived(categoryQuery.data ?? []);
 	const categorySelect = $derived(
 		category.find((i) => i.id === $formData.stockCategoryId)?.displayName ?? "Select Category"

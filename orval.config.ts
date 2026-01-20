@@ -12,6 +12,11 @@ export default defineConfig({
 			headers: false,
 			clean: true,
 			override: {
+				// aliasCombinedTypes: true,
+				fetch: {
+					// forceSuccessResponse: true,
+					includeHttpResponseReturnType: false,
+				},
 				mutator: {
 					path: "../mutator/customInstance.svelte.ts",
 					name: "customInstance",
@@ -22,13 +27,13 @@ export default defineConfig({
 			},
 		},
 	},
-	zod: {
-		input: "./swagger.json",
-		output: {
-			mode: "single",
-			workspace: "./src/lib/api/generated",
-			target: "zod.ts",
-			client: "zod",
-		},
-	},
+	// zod: {
+	// 	input: "./swagger.json",
+	// 	output: {
+	// 		mode: "single",
+	// 		workspace: "./src/lib/api/generated",
+	// 		target: "zod.ts",
+	// 		client: "zod",
+	// 	},
+	// },
 });

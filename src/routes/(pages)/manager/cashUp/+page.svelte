@@ -9,7 +9,7 @@
 	import { CalendarClockIcon, CheckIcon } from "@lucide/svelte";
 	import { goto } from "$app/navigation";
 
-	const query = createCashUpUserGet(status.value.outletId);
+	const query = createCashUpUserGet(() => status.value.outletId);
 
 	const mutation = createSalesPeriodClose();
 

@@ -9,7 +9,10 @@
 	import { getInitials } from "$lib/util";
 	import TransferTable from "./TransferTable.svelte";
 
-	const query = createTableGetMyBooked({ myBooking: false, outletId: status.value?.outletId ?? 0 });
+	const query = createTableGetMyBooked(() => ({
+		myBooking: false,
+		outletId: status.value?.outletId ?? 0,
+	}));
 </script>
 
 <div class="m-8">

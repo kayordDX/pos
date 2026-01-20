@@ -93,13 +93,13 @@
 
 	let filters = $state("");
 	const stockQuery = $derived(
-		createStockGetAllDivision({
+		createStockGetAllDivision(() => ({
 			page: 1,
 			pageSize: 10,
 			filters,
 			sorts: "",
 			divisionId: divisionId,
-		})
+		}))
 	);
 
 	const stockList = $derived(stockQuery.data?.items ?? []);
@@ -119,9 +119,13 @@
 	);
 
 	const last = $derived(
-		createStockItemsGet($formData.stockId ?? 0, divisionId, {
-			query: { enabled: ($formData.stockId ?? 0) > 0 },
-		})
+		createStockItemsGet(
+			() => $formData.stockId ?? 0,
+			() => divisionId,
+			() => ({
+				query: { enabled: ($formData.stockId ?? 0) > 0 },
+			})
+		)
 	);
 	const lastData = $derived(last.data);
 </script>

@@ -13,9 +13,12 @@
 	let id = $derived(Number(page.params.id ?? "0"));
 
 	const query = $derived(
-		createTableBookingGet(id, {
-			query: { enabled: id > 0 },
-		})
+		createTableBookingGet(
+			() => id,
+			() => ({
+				query: { enabled: id > 0 },
+			})
+		)
 	);
 </script>
 

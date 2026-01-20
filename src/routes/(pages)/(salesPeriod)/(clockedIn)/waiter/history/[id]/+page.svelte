@@ -6,7 +6,7 @@
 	import Bill from "../../../table/bill/[id]/Bill.svelte";
 	import { page } from "$app/state";
 
-	const query = createTableOrderGetBill({ tableBookingId: Number(page.params.id) });
+	const query = createTableOrderGetBill(() => ({ tableBookingId: Number(page.params.id) }));
 </script>
 
 {#if query.error}

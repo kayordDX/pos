@@ -9,7 +9,7 @@
 	import AddEditAdjustmentType from "./AddEditAdjustmentType.svelte";
 	import Search from "$lib/components/Search.svelte";
 
-	const query = createAdjustmentGetAll(status.value.outletId);
+	const query = createAdjustmentGetAll(() => status.value.outletId);
 
 	let isDialogOpen = $state(false);
 	let selectedAdjustmentType = $state<EntitiesAdjustmentType | undefined>(undefined);

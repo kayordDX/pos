@@ -8,7 +8,7 @@
 	}
 
 	let { roleId }: Props = $props();
-	const query = createRoleGetAll(status.value.outletId);
+	const query = createRoleGetAll(() => status.value.outletId);
 
 	const result = query.data?.find((x) => x.roleId === roleId);
 </script>

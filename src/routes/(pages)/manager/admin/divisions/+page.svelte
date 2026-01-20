@@ -9,7 +9,7 @@
 	import { PlusIcon } from "@lucide/svelte";
 	import AddEditDivision from "./AddEditDivision.svelte";
 
-	const query = createDivisionGetAll({ outletId: status.value.outletId });
+	const query = createDivisionGetAll(() => ({ outletId: status.value.outletId }));
 	let selectedDivision = $state<EntitiesDivision | undefined>(undefined);
 	let isDialogOpen = $state(false);
 

@@ -19,7 +19,10 @@
 		}
 	});
 
-	const query = createPayStatus(page.params.reference ?? "", { query: { refetchInterval: 15000 } });
+	const query = createPayStatus(
+		() => page.params.reference ?? "",
+		() => ({ query: { refetchInterval: 15000 } })
+	);
 
 	const paymentDone = (amount: number) => {
 		goto(`/table/pay/${page.params.id}/done?amount=${amount}`);

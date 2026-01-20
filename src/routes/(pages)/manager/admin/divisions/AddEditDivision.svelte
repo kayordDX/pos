@@ -86,7 +86,7 @@
 			reset({ data: defaultValues });
 		}
 	});
-	const divisionTypeList = createDivisionTypeGetAll({ outletId: status.value.outletId });
+	const divisionTypeList = createDivisionTypeGetAll(() => ({ outletId: status.value.outletId }));
 
 	const divTypeList = $derived.by(() => {
 		return (

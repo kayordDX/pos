@@ -17,11 +17,14 @@
 	let billId = $state<number>();
 
 	const query = $derived(
-		createTableBookingHistoryUser(page.params.userId ?? "", {
-			tableBookingId: billId ?? 0,
-			cashUpUserId: Number(page.params.cashUpUserId ?? 0),
-			outletId: status.value.outletId,
-		})
+		createTableBookingHistoryUser(
+			() => page.params.userId ?? "",
+			() => ({
+				tableBookingId: billId ?? 0,
+				cashUpUserId: Number(page.params.cashUpUserId ?? 0),
+				outletId: status.value.outletId,
+			})
+		)
 	);
 	let data = $derived(query.data ?? []);
 

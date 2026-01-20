@@ -12,7 +12,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import Devices from "./Devices.svelte";
 
-	const query = createUserPinGet({ query: { retry: false } });
+	const query = createUserPinGet(() => ({ query: { retry: false } }));
 	const pinMutation = createUserPinCreate();
 
 	export const schema = z.object({

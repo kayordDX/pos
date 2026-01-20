@@ -3,7 +3,7 @@
 	import { createStatsTopSalesPeriod } from "$lib/api";
 	import { stringToFDate } from "$lib/util";
 
-	const salesPeriodQuery = createStatsTopSalesPeriod({ top: 5 });
+	const salesPeriodQuery = createStatsTopSalesPeriod(() => ({ top: 5 }));
 	const salesPeriods = $derived(salesPeriodQuery.data ?? []);
 
 	interface Props {

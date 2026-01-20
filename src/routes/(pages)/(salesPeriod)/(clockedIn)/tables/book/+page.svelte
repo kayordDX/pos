@@ -12,7 +12,7 @@
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { Control, Field, FieldErrors } from "formsnap";
 
-	const query = createTableGetAvailable({ outletId: status.value?.outletId ?? 0 });
+	const query = createTableGetAvailable(() => ({ outletId: status.value?.outletId ?? 0 }));
 	let dialogOpen = $state(false);
 	let tableId: number = 0;
 

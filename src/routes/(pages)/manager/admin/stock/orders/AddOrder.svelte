@@ -27,8 +27,8 @@
 	const editMutation = createStockOrderUpdate();
 	const createMutation = createStockOrderCreate();
 
-	const suppliersQuery = createSupplierGetAll({ outletId: status.value.outletId });
-	const divisionQuery = createStockDivisionGetAll({ outletId: status.value.outletId });
+	const suppliersQuery = createSupplierGetAll(() => ({ outletId: status.value.outletId }));
+	const divisionQuery = createStockDivisionGetAll(() => ({ outletId: status.value.outletId }));
 	const suppliers = $derived(suppliersQuery.data ?? []);
 	const divisions = $derived(divisionQuery.data ?? []);
 	const supplierSelect = $derived(

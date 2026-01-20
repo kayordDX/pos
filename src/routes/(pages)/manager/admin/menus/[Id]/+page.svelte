@@ -9,10 +9,10 @@
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Search from "$lib/components/Search.svelte";
 
-	const query = createMenuGetSectionsGetMenusSections({
+	const query = createMenuGetSectionsGetMenusSections(() => ({
 		menuId: Number(page.params.Id),
 		sectionId: 0,
-	});
+	}));
 	let addOpen = $state(false);
 
 	const columns: ColumnDef<DTOMenuSectionDTO>[] = [

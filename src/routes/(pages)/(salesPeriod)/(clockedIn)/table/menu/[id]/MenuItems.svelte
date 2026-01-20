@@ -18,8 +18,8 @@
 
 	const query = $derived(
 		createMenuGetItemGetMenuItems(
-			{ menuItemId: menuItemId, divisionId: divisionId },
-			{ query: { enabled: open } }
+			() => ({ menuItemId: menuItemId, divisionId: divisionId }),
+			() => ({ query: { enabled: open } })
 		)
 	);
 </script>

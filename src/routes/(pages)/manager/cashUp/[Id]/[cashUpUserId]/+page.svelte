@@ -13,9 +13,13 @@
 	import { goto } from "$app/navigation";
 	import CashUpItemManual from "./CashUpItemManual.svelte";
 
-	const query = createCashUpUserDetail(page.params.Id ?? "", status.value.outletId, {
-		cashUpUserId: Number(page.params.cashUpUserId ?? 0),
-	});
+	const query = createCashUpUserDetail(
+		() => page.params.Id ?? "",
+		() => status.value.outletId,
+		() => ({
+			cashUpUserId: Number(page.params.cashUpUserId ?? 0),
+		})
+	);
 
 	const mutation = createCashUpUserClose();
 

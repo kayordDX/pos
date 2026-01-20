@@ -5,7 +5,10 @@
 	import { getError } from "$lib/types";
 	import Item from "./Item.svelte";
 
-	const query = createTableOrderFrontOffice({}, { query: { refetchInterval: 20000 } });
+	const query = createTableOrderFrontOffice(
+		() => ({}),
+		() => ({ query: { refetchInterval: 20000 } })
+	);
 </script>
 
 {#if query.isPending}

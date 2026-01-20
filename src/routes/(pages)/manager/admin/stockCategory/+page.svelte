@@ -10,11 +10,11 @@
 	import AddEditTable from "../sections/[Id]/AddEditTable.svelte";
 	import AddEditCategory from "./AddEditCategory.svelte";
 
-	const query = createStockCategoryGetAll({
+	const query = createStockCategoryGetAll(() => ({
 		outletId: status.value.outletId,
 		parentOnly: true,
 		parentId: 0,
-	});
+	}));
 
 	let selectedCategory = $state<EntitiesStockCategory | undefined>(undefined);
 	let isDialogOpen = $state(false);

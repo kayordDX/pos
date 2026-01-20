@@ -14,7 +14,7 @@
 	import AddEditSection from "./AddEditSection.svelte";
 	import Search from "$lib/components/Search.svelte";
 
-	const query = createSectionList({ outletId: status.value.outletId });
+	const query = createSectionList(() => ({ outletId: status.value.outletId }));
 
 	let isDialogOpen = $state(false);
 	let selectedSection = $state<EntitiesSection | undefined>(undefined);

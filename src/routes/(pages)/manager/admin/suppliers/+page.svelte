@@ -9,7 +9,7 @@
 	import Actions from "./Actions.svelte";
 	import Search from "$lib/components/Search.svelte";
 
-	const query = createSupplierGetAll({ outletId: status.value.outletId });
+	const query = createSupplierGetAll(() => ({ outletId: status.value.outletId }));
 
 	const columns: ColumnDef<DTOSupplierDTO>[] = [
 		{

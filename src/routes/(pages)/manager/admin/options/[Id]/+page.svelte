@@ -9,7 +9,7 @@
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Search from "$lib/components/Search.svelte";
 
-	const query = createOptionItems(Number(page.params.Id));
+	const query = createOptionItems(() => Number(page.params.Id));
 	let addOpen = $state(false);
 
 	const groupName = $derived((query.data ?? [])[0]?.optionGroup.name);

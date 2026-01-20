@@ -20,7 +20,7 @@
 	import { stringToFDate } from "$lib/util";
 	import { status } from "$lib/stores/status.svelte";
 
-	const query = createStockAllocateGet(Number(page.params.Id));
+	const query = createStockAllocateGet(() => Number(page.params.Id));
 
 	let addOrderItemOpen = $state(false);
 

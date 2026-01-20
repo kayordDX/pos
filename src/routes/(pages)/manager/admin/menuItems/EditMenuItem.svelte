@@ -140,7 +140,7 @@
 		}
 	});
 
-	const menuQuery = createMenuList({ outletId: status.value.outletId });
+	const menuQuery = createMenuList(() => ({ outletId: status.value.outletId }));
 	const menuList = $derived.by(() => {
 		return (
 			menuQuery.data?.map((m) => ({
@@ -151,10 +151,10 @@
 	});
 
 	const sectionQuery = $derived(
-		createMenuGetSectionsGetMenusSections({
+		createMenuGetSectionsGetMenusSections(() => ({
 			menuId: $formData.menuId,
 			sectionId: 0,
-		})
+		}))
 	);
 	const sectionList = $derived.by(() => {
 		return (
@@ -165,7 +165,7 @@
 		);
 	});
 
-	const divisionQuery = createDivisionGetAll({ outletId: status.value.outletId });
+	const divisionQuery = createDivisionGetAll(() => ({ outletId: status.value.outletId }));
 	const divisionList = $derived.by(() => {
 		return (
 			divisionQuery.data?.map((m) => ({
@@ -175,7 +175,7 @@
 		);
 	});
 
-	const billCatQuery = createBillCategoryGetAll({ outletId: status.value.outletId });
+	const billCatQuery = createBillCategoryGetAll(() => ({ outletId: status.value.outletId }));
 	const billCatList = $derived.by(() => {
 		return (
 			billCatQuery.data?.map((m) => ({

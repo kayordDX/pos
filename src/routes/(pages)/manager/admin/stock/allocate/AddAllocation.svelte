@@ -28,7 +28,7 @@
 	// const editMutation = createStockAllocate();
 	const createMutation = createStockAllocateCreate();
 
-	const outletsQuery = createBusinessGetOutlets(status.value.outletId);
+	const outletsQuery = createBusinessGetOutlets(() => status.value.outletId);
 	const outlets = $derived(outletsQuery.data ?? []);
 
 	const outletSelect = $derived(
@@ -116,14 +116,16 @@
 
 	let isDifferentOutlet = $state(false);
 
-	const fromDivisionQuery = createStockDivisionGetAll({ outletId: status.value.outletId });
+	const fromDivisionQuery = createStockDivisionGetAll(() => ({ outletId: status.value.outletId }));
 	const fromDivisions = $derived(fromDivisionQuery.data ?? []);
 	const fromDivisionSelect = $derived(
 		fromDivisions.find((i) => i.divisionId === $formData.fromDivisionId)?.divisionName ??
 			"Select Division"
 	);
 
-	const toDivisionQuery = $derived(createStockDivisionGetAll({ outletId: $formData.toOutletId }));
+	const toDivisionQuery = $derived(
+		createStockDivisionGetAll(() => ({ outletId: $formData.toOutletId }))
+	);
 	const toDivisions = $derived(toDivisionQuery.data ?? []);
 	const toDivisionSelect = $derived(
 		toDivisions.find((i) => i.divisionId === $formData.toDivisionId)?.divisionName ??
@@ -131,7 +133,10 @@
 	);
 
 	const divisionUsersQuery = $derived(
-		createDivisionGetUsers($formData.toDivisionId, { excludeSelf: true })
+		createDivisionGetUsers(
+			() => $formData.toDivisionId,
+			() => ({ excludeSelf: true })
+		)
 	);
 	const divisionUsers = $derived(divisionUsersQuery.data ?? []);
 </script>

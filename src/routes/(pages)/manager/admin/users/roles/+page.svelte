@@ -6,7 +6,7 @@
 	import { DataTable, createShadTable, renderSnippet } from "@kayord/ui/data-table";
 	import { type ColumnDef } from "@tanstack/table-core";
 
-	const query = createRoleGetAll(status.value.outletId);
+	const query = createRoleGetAll(() => status.value.outletId);
 
 	const columns: ColumnDef<EntitiesRole>[] = [
 		{

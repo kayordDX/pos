@@ -4,7 +4,7 @@
 	import TriangleAlertIcon from "@lucide/svelte/icons/triangle-alert";
 	import { status } from "$lib/stores/status.svelte";
 	import Printer from "$lib/components/Printer.svelte";
-	const query = createPrinterList(status.value.outletId);
+	const query = createPrinterList(() => status.value.outletId);
 
 	const enabledPrinters = $derived((query.data ?? []).filter((x) => x.isEnabled == true));
 </script>

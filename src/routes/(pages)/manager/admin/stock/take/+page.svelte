@@ -23,7 +23,7 @@
 	import Search from "$lib/components/Search.svelte";
 	import { stringToFDate } from "$lib/util";
 
-	const divisionQuery = createDivisionGetAll({ outletId: status.value.outletId });
+	const divisionQuery = createDivisionGetAll(() => ({ outletId: status.value.outletId }));
 	const divisionList = $derived.by(() => {
 		return (
 			divisionQuery.data?.map((m) => ({
@@ -105,13 +105,13 @@
 	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id}`).join(","));
 
 	const query = $derived(
-		createStockGetAllDivision({
+		createStockGetAllDivision(() => ({
 			page: pagination.pageIndex + 1,
 			pageSize: 10,
 			filters,
 			sorts,
 			divisionId: divisionId,
-		})
+		}))
 	);
 
 	let data = $derived(query.data?.items ?? []);

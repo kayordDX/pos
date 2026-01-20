@@ -14,7 +14,12 @@
 	}
 	let { open = $bindable(false), stock }: Props = $props();
 
-	const query = $derived(createStockLinkGet(stock?.id ?? 0, { query: { enabled: false } }));
+	const query = $derived(
+		createStockLinkGet(
+			() => stock?.id ?? 0,
+			() => ({ query: { enabled: false } })
+		)
+	);
 	const data = $derived(query.data ?? []);
 
 	$effect(() => {

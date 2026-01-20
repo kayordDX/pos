@@ -9,7 +9,10 @@
 	import { status } from "$lib/stores/status.svelte";
 	import TransferTable from "../tables/TransferTable.svelte";
 
-	const query = createTableGetMyBooked({ myBooking: true, outletId: status.value?.outletId ?? 0 });
+	const query = createTableGetMyBooked(() => ({
+		myBooking: true,
+		outletId: status.value?.outletId ?? 0,
+	}));
 </script>
 
 <div class="m-2">

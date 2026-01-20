@@ -6,7 +6,7 @@
 	import Config from "./Config.svelte";
 	import AddConfig from "./AddConfig.svelte";
 
-	const query = createPayPayConfigGet(status.value.outletId);
+	const query = createPayPayConfigGet(() => status.value.outletId);
 </script>
 
 <Card.Root class="m-2">

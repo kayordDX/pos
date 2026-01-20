@@ -10,8 +10,8 @@
 	let { open = $bindable(), printer }: Props = $props();
 
 	const scanResults = createPrinterScanResults(
-		{ deviceId: printer.deviceId, outletId: printer.outletId },
-		{ query: { refetchInterval: 6000 } }
+		() => ({ deviceId: printer.deviceId, outletId: printer.outletId }),
+		() => ({ query: { refetchInterval: 6000 } })
 	);
 	const printerScanMutation = createPrinterScan();
 

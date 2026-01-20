@@ -13,7 +13,7 @@
 	import AddEditBillCategory from "./AddEditBillCategory.svelte";
 	import Search from "$lib/components/Search.svelte";
 
-	const query = createBillCategoryGetAll({ outletId: status.value.outletId });
+	const query = createBillCategoryGetAll(() => ({ outletId: status.value.outletId }));
 
 	let isDialogOpen = $state(false);
 	let selectedSection = $state<EntitiesBillCategory | undefined>(undefined);

@@ -4,7 +4,7 @@
 	import { signInCustomToken } from "$lib/firebase.svelte";
 	import { goto } from "$app/navigation";
 
-	const query = createUserUsers({ pageSize: 100 });
+	const query = createUserUsers(() => ({ pageSize: 100 }));
 
 	const data = $derived(query.data?.items ?? []);
 

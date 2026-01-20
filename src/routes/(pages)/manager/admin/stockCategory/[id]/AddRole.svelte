@@ -10,7 +10,7 @@
 	import { status } from "$lib/stores/status.svelte";
 
 	const mutation = createRoleDivisionCreate();
-	const rolesQuery = createRoleGetAll(status.value.outletId);
+	const rolesQuery = createRoleGetAll(() => status.value.outletId);
 
 	interface Props {
 		divisionId: number;

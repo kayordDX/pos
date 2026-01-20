@@ -14,7 +14,7 @@
 	import type { ColumnDef } from "@tanstack/table-core";
 	import Search from "$lib/components/Search.svelte";
 
-	const query = createMenuList({ outletId: status.value.outletId });
+	const query = createMenuList(() => ({ outletId: status.value.outletId }));
 	let addOpen = $state(false);
 
 	const columns: ColumnDef<EntitiesMenu>[] = [

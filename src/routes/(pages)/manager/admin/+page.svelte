@@ -6,7 +6,7 @@
 	import Printer from "$lib/components/Printer.svelte";
 	import AddPrinter from "./printers/AddPrinter.svelte";
 	import { PlusIcon, RefreshCwIcon } from "@lucide/svelte";
-	const query = createPrinterList(status.value.outletId);
+	const query = createPrinterList(() => status.value.outletId);
 
 	let open = $state(false);
 </script>

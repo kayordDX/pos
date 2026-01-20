@@ -87,7 +87,7 @@
 
 	const { form: formData, enhance, reset } = form;
 
-	const roleTypeList = createRoleTypeGetAll(status.value.outletId);
+	const roleTypeList = createRoleTypeGetAll(() => status.value.outletId);
 
 	const divTypeList = $derived.by(
 		() =>

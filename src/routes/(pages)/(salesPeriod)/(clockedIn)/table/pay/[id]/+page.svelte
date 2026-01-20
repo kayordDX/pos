@@ -16,7 +16,7 @@
 	let reference: string | undefined;
 	let linkLoading = false;
 
-	const paymentTypeQuery = createOutletGetPaymentType(status.value?.outletId ?? 0);
+	const paymentTypeQuery = createOutletGetPaymentType(() => status.value?.outletId ?? 0);
 
 	const schema = z.object({
 		amount: z.coerce.number().min(1, { message: "You need an amount of bigger than 1" }),

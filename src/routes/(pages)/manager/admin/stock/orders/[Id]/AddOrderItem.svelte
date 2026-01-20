@@ -108,13 +108,13 @@
 
 	let filters = $state("");
 	const stockQuery = $derived(
-		createStockGetAll({
+		createStockGetAll(() => ({
 			page: 1,
 			pageSize: 10,
 			filters,
 			sorts: "",
 			outletId: status.value.outletId,
-		})
+		}))
 	);
 
 	const stockList = $derived(stockQuery.data?.items ?? []);
@@ -139,11 +139,11 @@
 
 	const last = $derived(
 		createStockOrderItemLastPrice(
-			{
+			() => ({
 				stockId: $formData.stockId ?? 0,
 				stockOrderId: Number(page.params.Id),
-			},
-			{ query: { enabled: ($formData.stockId ?? 0) > 0 } }
+			}),
+			() => ({ query: { enabled: ($formData.stockId ?? 0) > 0 } })
 		)
 	);
 	const lastPriceData = $derived(last.data ?? { lastPrice: 0, totalAmount: 0 });

@@ -1,34 +1,17 @@
 import { getError, isValidationError } from "$lib/types";
 import { session } from "$lib/firebase.svelte";
-import qs from "qs";
 import { info } from "$lib/stores/info.svelte";
 
-export const customInstance = async <T>({
-	url,
-	method,
-	params,
-	headers,
-	data,
-	responseType,
-}: {
-	url: string;
-	method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	params?: Record<string, any>;
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	headers?: Record<string, any>;
-	data?: BodyType<unknown>;
-	responseType?: string;
-}): Promise<T> => {
-	let fullUrl = `${info.kayordURL()}${url}`;
-	if (params !== undefined) {
-		const urlParams = qs.stringify(params);
-		if (urlParams.length > 0) {
-			fullUrl = fullUrl + "?" + urlParams;
-		}
-	}
+const getUrl = (contextUrl: string): string => {
+	const baseUrl = info.kayordURL();
+	const url = new URL(baseUrl + contextUrl);
+	const pathname = url.pathname;
+	const search = url.search;
+	const requestUrl = new URL(`${baseUrl}${pathname}${search}`);
+	return requestUrl.toString();
+};
 
-	const token = (await session.user?.getIdToken()) ?? "";
+const getHeaders = (token: string, headers?: HeadersInit): HeadersInit => {
 	if (headers == undefined) {
 		if (session.user != undefined) {
 			headers = {
@@ -36,38 +19,36 @@ export const customInstance = async <T>({
 			};
 		}
 	}
+	return {
+		...headers,
+		Authorization: `Bearer ${token}`,
+	};
+};
 
-	if (headers) {
-		if (headers.Authorization == undefined) {
-			headers.Authorization = `Bearer ${token}`;
-		}
-	}
+const getBody = async <T>(resp: Response): Promise<T> => {
+	if (resp.ok) {
+		// if (resp.status == 204) return null as unknown as Promise<T>;
 
-	const response = await fetch(fullUrl, {
-		method,
-		headers: {
-			...headers,
-			// Authorization: `Bearer ${token}`,
-		},
-		...(data ? { body: JSON.stringify(data) } : {}),
-	});
+		// const contentType = resp.headers.get("content-type");
 
-	if (response.ok) {
-		if (response.status == 204) return null as unknown as T;
-		return response.json();
+		// if (contentType && contentType.includes("application/pdf")) {
+		// 	return resp.blob() as Promise<T>;
+		// }
+
+		return resp.json() as T;
 	} else {
-		if (response.status == 401) {
+		if (resp.status == 401) {
 			// TODO: Possibly refresh token from lib/firebase
 			throw new Error("Unauthorized", { cause: "401" });
 		}
-		if (response.status == 403) {
+		if (resp.status == 403) {
 			throw new Error("Forbidden", { cause: "403" });
 		}
-		if (response.status == 404) {
+		if (resp.status == 404) {
 			throw new Error("Not found", { cause: "404" });
 		}
 		// Error response
-		const errorResult = await response.json();
+		const errorResult = await resp.json();
 		if (isValidationError(errorResult)) {
 			const errorMessage = Object.values(errorResult.errors ?? []).map((e) => e.toString());
 			throw new Error(errorResult.message, {
@@ -77,6 +58,24 @@ export const customInstance = async <T>({
 			throw new Error(getError(errorResult).message);
 		}
 	}
+};
+
+export const customInstance = async <T>(url: string, options: RequestInit): Promise<T> => {
+	const requestUrl = getUrl(url);
+	const token = (await session.user?.getIdToken()) ?? "";
+	const requestHeaders = getHeaders(token, options.headers);
+
+	const requestInit: RequestInit = {
+		...options,
+		headers: requestHeaders,
+	};
+	const request = new Request(requestUrl, requestInit);
+	const response = await fetch(request);
+
+	return (await response.json()) as T;
+
+	// const data = await getBody<T>(response);
+	// return data as T;
 };
 
 export default customInstance;

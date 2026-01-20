@@ -109,13 +109,13 @@
 	);
 
 	const query = $derived(
-		createStockAllocateGetAll({
+		createStockAllocateGetAll(() => ({
 			page: pagination.pageIndex + 1,
 			pageSize: 10,
 			filters,
 			sorts,
 			outletId: status.value.outletId,
-		})
+		}))
 	);
 
 	let data = $derived(query.data?.items ?? []);

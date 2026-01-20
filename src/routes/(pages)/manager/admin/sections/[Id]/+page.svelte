@@ -8,7 +8,7 @@
 	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import AddEditTable from "./AddEditTable.svelte";
 	import Search from "$lib/components/Search.svelte";
-	const query = createSectionTableGetAll({ sectionId: Number(page.params.Id) });
+	const query = createSectionTableGetAll(() => ({ sectionId: Number(page.params.Id) }));
 	let selectedTable = $state<EntitiesTable | undefined>(undefined);
 
 	let isDialogOpen = $state(false);

@@ -106,12 +106,12 @@
 	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id}`).join(","));
 
 	const query = $derived(
-		createMenuItemGetAll({
+		createMenuItemGetAll(() => ({
 			page: pagination.pageIndex + 1,
 			pageSize: 10,
 			filters,
 			sorts,
-		})
+		}))
 	);
 	let data = $derived(query.data?.items ?? []);
 	let rowCount = $derived(query.data?.totalCount ?? 0);
@@ -188,7 +188,7 @@
 	});
 
 	const menuCol = $derived(table.getColumn("menuId")!);
-	const queryMenu = createMenuList({ outletId: status.value.outletId });
+	const queryMenu = createMenuList(() => ({ outletId: status.value.outletId }));
 	const menus = $derived(
 		queryMenu.data?.map((m) => {
 			return {

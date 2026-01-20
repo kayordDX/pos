@@ -22,11 +22,11 @@
 
 	const query = $derived(
 		createTableOrderOfficeOrderBasedBack(
-			{
+			() => ({
 				divisionIds,
 				complete: isHistory,
-			},
-			{ query: { refetchInterval: 40000 } }
+			}),
+			() => ({ query: { refetchInterval: 40000 } })
 		)
 	);
 

@@ -20,7 +20,7 @@
 	let { refetch, paymentId, paymentTypeId, amount }: Props = $props();
 	let open = $state(false);
 
-	const paymentTypeQuery = createOutletGetPaymentType(status.value?.outletId ?? 0);
+	const paymentTypeQuery = createOutletGetPaymentType(() => status.value?.outletId ?? 0);
 
 	const mutation = createTableBookingPaymentEdit();
 

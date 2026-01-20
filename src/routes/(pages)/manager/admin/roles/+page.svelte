@@ -9,7 +9,7 @@
 	import { PlusIcon } from "@lucide/svelte";
 	import AddEditRole from "./AddEditRole.svelte";
 
-	const query = createRoleGetAll(status.value.outletId);
+	const query = createRoleGetAll(() => status.value.outletId);
 	let selectedRole = $state<EntitiesRole | undefined>(undefined);
 	let isDialogOpen = $state(false);
 

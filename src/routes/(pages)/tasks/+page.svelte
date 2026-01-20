@@ -5,9 +5,9 @@
 	import { Header } from "$lib/components/Header";
 	import TaskActions from "./TaskActions.svelte";
 
-	const query = createUserTasks({
+	const query = createUserTasks(() => ({
 		pageSize: 20,
-	});
+	}));
 
 	let data = $derived(query.data?.items ?? []);
 </script>

@@ -5,10 +5,10 @@
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
 
-	const cashUpQuery = createSalesPeriodCashUp({
+	const cashUpQuery = createSalesPeriodCashUp(() => ({
 		salesPeriodId: status.value?.salesPeriodId ?? 0,
 		userId: "",
-	});
+	}));
 </script>
 
 <div class="m-2">

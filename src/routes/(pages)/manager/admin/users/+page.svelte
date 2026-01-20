@@ -95,11 +95,11 @@
 	let filters = $state("");
 
 	const query = $derived(
-		createUserUsers({
+		createUserUsers(() => ({
 			page: pagination.pageIndex + 1,
 			pageSize: 10,
 			filters,
-		})
+		}))
 	);
 
 	let data = $derived(query.data?.items ?? []);
@@ -139,7 +139,7 @@
 
 	const nameCol = $derived(table.getColumn("roles")!);
 
-	const rolesQuery = createRoleGetAll(status.value.outletId);
+	const rolesQuery = createRoleGetAll(() => status.value.outletId);
 	const roles = $derived(
 		rolesQuery.data?.map((role) => {
 			return {

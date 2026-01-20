@@ -17,7 +17,7 @@
 	let { refetch, cashUpUserId }: Props = $props();
 	let open = $state(false);
 
-	const query = createCashUpUserItemType({ isAuto: false });
+	const query = createCashUpUserItemType(() => ({ isAuto: false }));
 
 	const mutation = createCashUpUserCreate();
 

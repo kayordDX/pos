@@ -17,7 +17,7 @@
 	import { Control, FieldErrors, Fieldset, Label } from "formsnap";
 	import { getError } from "$lib/types";
 
-	const query = createTableOrderGetBasket({ tableBookingId: Number(page.params.id) });
+	const query = createTableOrderGetBasket(() => ({ tableBookingId: Number(page.params.id) }));
 
 	const refetch = async () => {
 		await query.refetch();
