@@ -35,6 +35,9 @@
 		BanknoteArrowUp,
 		CreditCardIcon,
 		CalculatorIcon,
+		HistoryIcon,
+		FolderClockIcon,
+		ReceiptIcon,
 	} from "@lucide/svelte";
 
 	const menuItems = [
@@ -186,6 +189,18 @@
 					title: "Payment Types",
 					href: "/manager/admin/stats/paymentTypes",
 					icon: CreditCardIcon,
+				},
+			],
+		},
+		{
+			title: "History",
+			href: "",
+			icon: FolderClockIcon,
+			items: [
+				{
+					title: "Bill",
+					href: "/manager/admin/history/bill",
+					icon: ReceiptIcon,
 				},
 			],
 		},

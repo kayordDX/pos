@@ -111,6 +111,7 @@
 				return pagination;
 			},
 		},
+		useURLSearchParams: true,
 		onPaginationChange: setPagination,
 		enableRowSelection: false,
 	});
@@ -122,45 +123,49 @@
 	};
 </script>
 
-<div class="m-4 flex items-center justify-between">
-	<div class="flex items-center w-full">
-		<div class="flex flex-col">
-			<h1>History</h1>
+{#snippet header()}
+	<div class="flex justify-between w-full">
+		<div class="sm:flex flex-col mb-2 w-full hidden">
+			<h1 class="flex font-bold text-lg">History</h1>
+
 			{#if historyType == "all"}
-				<p class="text-muted-foreground">Bill history all</p>
+				<h2 class="flex text-muted-foreground text-xs">Bill history all</h2>
 			{:else if historyType == "waiter"}
-				<p class="text-muted-foreground">Bill history</p>
+				<h2 class="flex text-muted-foreground text-xs">Bill history</h2>
 			{:else}
-				<p class="text-muted-foreground">Sales period Bill history all users</p>
+				<h2 class="flex text-muted-foreground text-xs">Sales period Bill history all users</h2>
 			{/if}
 		</div>
-	</div>
-	<div class="flex items-center gap-2">
-		{#if historyType == "all"}
-			<div class="flex items-center gap-2">
-				<Popover.Root bind:open={filterOpen}>
-					<Popover.Trigger>
-						<Button variant="secondary" size="icon"><CalendarRangeIcon /></Button>
-					</Popover.Trigger>
-					<Popover.Content class="w-auto overflow-hidden p-0" align="center">
-						<RangeCalendar bind:value={dateValue} />
-						<div class="p-2 flex justify-between">
-							<Button class="w-full" onclick={filter}><FunnelIcon /> Filter</Button>
-						</div>
-					</Popover.Content>
-				</Popover.Root>
-			</div>
-		{/if}
 		<div class="flex items-center gap-2">
-			<div class="text-muted-foreground">#Bill</div>
-			<Input type="number" placeholder="Search Bill..." bind:value={billId} min="0" />
+			{#if historyType == "all"}
+				<div class="flex items-center gap-2">
+					<Popover.Root bind:open={filterOpen}>
+						<Popover.Trigger>
+							<Button variant="secondary" size="icon"><CalendarRangeIcon /></Button>
+						</Popover.Trigger>
+						<Popover.Content class="w-auto overflow-hidden p-0" align="center">
+							<RangeCalendar bind:value={dateValue} />
+							<div class="p-2 flex justify-between">
+								<Button class="w-full" onclick={filter}><FunnelIcon /> Filter</Button>
+							</div>
+						</Popover.Content>
+					</Popover.Root>
+				</div>
+			{/if}
+			<div class="flex items-center gap-2">
+				<div class="text-muted-foreground">#Bill</div>
+				<Input type="number" placeholder="Search Bill..." bind:value={billId} min="0" />
+			</div>
 		</div>
 	</div>
-</div>
+{/snippet}
 
-<DataTable
-	{table}
-	isLoading={query.isPending}
-	headerClass="pb-2"
-	noDataMessage="No history available"
-/>
+<div class="m-2">
+	<DataTable
+		{table}
+		{header}
+		isLoading={query.isPending}
+		headerClass="pb-2"
+		noDataMessage="No history available"
+	/>
+</div>

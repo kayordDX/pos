@@ -22,7 +22,7 @@
 					<WalletCardsIcon class="size-4 mr-2" /> Cash Up
 				</Button>
 				<Button variant="outline" class="m-2" href="manager/history">
-					<ReceiptTextIcon class="size-4 mr-2" /> All Bills
+					<ReceiptTextIcon class="size-4 mr-2" /> Sales Period Bills
 				</Button>
 			</Card.Footer>
 		</Card.Root>
