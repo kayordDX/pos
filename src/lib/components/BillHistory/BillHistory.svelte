@@ -4,6 +4,7 @@
 		createTableBookingPeriodHistory,
 		createTableBookingHistoryAll,
 		type TableBookingHistoryResponse,
+		createTableBookingHistoryUser,
 	} from "$lib/api";
 	import { Button, Input, Popover } from "@kayord/ui";
 	import { RangeCalendar } from "@kayord/ui/calendar";
@@ -21,9 +22,10 @@
 		getPaginationRowModel,
 	} from "@tanstack/table-core";
 	import { CalendarRangeIcon, FunnelIcon } from "@lucide/svelte";
+	import { page } from "$app/state";
 
 	interface Props {
-		historyType: "waiter" | "salesPeriod" | "all";
+		historyType: "waiter" | "salesPeriod" | "all" | "cashUpUser";
 	}
 
 	let { historyType }: Props = $props();
@@ -52,7 +54,16 @@
 						() => status.value.salesPeriodId,
 						() => ({ tableBookingId: billId ?? 0 })
 					)
-				: createTableBookingHistory(() => ({ tableBookingId: billId ?? 0 }))
+				: historyType == "cashUpUser"
+					? createTableBookingHistoryUser(
+							() => page.params.userId ?? "",
+							() => ({
+								tableBookingId: billId ?? 0,
+								cashUpUserId: Number(page.params.cashUpUserId ?? 0),
+								outletId: status.value.outletId,
+							})
+						)
+					: createTableBookingHistory(() => ({ tableBookingId: billId ?? 0 }))
 	);
 
 	let data = $derived(query.data ?? []);
@@ -132,6 +143,8 @@
 				<h2 class="flex text-muted-foreground text-xs">Bill history all</h2>
 			{:else if historyType == "waiter"}
 				<h2 class="flex text-muted-foreground text-xs">Bill history</h2>
+			{:else if historyType == "cashUpUser"}
+				<h2 class="flex text-muted-foreground text-xs">Bill history user</h2>
 			{:else}
 				<h2 class="flex text-muted-foreground text-xs">Sales period Bill history all users</h2>
 			{/if}
