@@ -2,4 +2,4 @@
 	import { BillHistory } from "$lib/components/BillHistory";
 </script>
 
-<BillHistory historyType="waiter" />
+<BillHistory historyType="all" />

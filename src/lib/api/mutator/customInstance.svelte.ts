@@ -27,14 +27,11 @@ const getHeaders = (token: string, headers?: HeadersInit): HeadersInit => {
 
 const getBody = async <T>(resp: Response): Promise<T> => {
 	if (resp.ok) {
-		// if (resp.status == 204) return null as unknown as Promise<T>;
-
-		// const contentType = resp.headers.get("content-type");
-
-		// if (contentType && contentType.includes("application/pdf")) {
-		// 	return resp.blob() as Promise<T>;
-		// }
-
+		if (resp.status == 204) return null as unknown as Promise<T>;
+		const contentType = resp.headers.get("content-type");
+		if (contentType && contentType.includes("application/pdf")) {
+			return resp.blob() as Promise<T>;
+		}
 		return resp.json() as T;
 	} else {
 		if (resp.status == 401) {
@@ -47,6 +44,7 @@ const getBody = async <T>(resp: Response): Promise<T> => {
 		if (resp.status == 404) {
 			throw new Error("Not found", { cause: "404" });
 		}
+
 		// Error response
 		const errorResult = await resp.json();
 		if (isValidationError(errorResult)) {
@@ -72,10 +70,10 @@ export const customInstance = async <T>(url: string, options: RequestInit): Prom
 	const request = new Request(requestUrl, requestInit);
 	const response = await fetch(request);
 
-	return (await response.json()) as T;
+	// return (await response.json()) as T;
 
-	// const data = await getBody<T>(response);
-	// return data as T;
+	const data = await getBody<T>(response);
+	return data as T;
 };
 
 export default customInstance;
