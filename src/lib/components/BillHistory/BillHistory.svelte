@@ -8,19 +8,13 @@
 	} from "$lib/api";
 	import { Button, Input, Popover } from "@kayord/ui";
 	import { RangeCalendar } from "@kayord/ui/calendar";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
+	import { DataGrid, createGrid, renderComponent } from "@kayord/ui/data-grid";
 	import { stringToFDate } from "$lib/util";
 	import View from "./View.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import { today, getLocalTimeZone, CalendarDate } from "@internationalized/date";
 
-	import {
-		type ColumnDef,
-		getCoreRowModel,
-		type Updater,
-		type PaginationState,
-		getPaginationRowModel,
-	} from "@tanstack/table-core";
+	import { type ColumnDef } from "@tanstack/table-core";
 	import { CalendarRangeIcon, FunnelIcon } from "@lucide/svelte";
 	import { page } from "$app/state";
 
@@ -78,7 +72,8 @@
 				}),
 		},
 		{
-			accessorKey: "id",
+			accessorFn: (d) => d.id,
+			accessorKey: "bill#",
 			header: "Bill#",
 		},
 		{
@@ -103,28 +98,13 @@
 		},
 	];
 
-	let pagination: PaginationState = $state({ pageIndex: 0, pageSize: 10 });
-	const setPagination = (updater: Updater<PaginationState>) => {
-		if (updater instanceof Function) {
-			pagination = updater(pagination);
-		} else pagination = updater;
-	};
-
-	const table = createShadTable({
+	const { table, dataGridProps } = createGrid({
 		columns,
-		get data() {
-			return data;
+		data: () => data,
+		dataGridProps: {
+			useURLSearchParams: true,
+			manualFiltering: true,
 		},
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		state: {
-			get pagination() {
-				return pagination;
-			},
-		},
-		useURLSearchParams: true,
-		onPaginationChange: setPagination,
-		enableRowSelection: false,
 	});
 
 	let filterOpen = $state(false);
@@ -168,15 +148,17 @@
 			<div class="flex items-center gap-2">
 				<div class="text-muted-foreground">#Bill</div>
 				<Input type="number" placeholder="Search Bill..." bind:value={billId} min="0" />
+				<Input bind:value={() => table.getState().globalFilter, (v) => table.setGlobalFilter(v)} />
 			</div>
 		</div>
 	</div>
 {/snippet}
 
 <div class="m-2">
-	<DataTable
+	<DataGrid
 		{table}
 		{header}
+		{dataGridProps}
 		isLoading={query.isPending}
 		headerClass="pb-2"
 		noDataMessage="No history available"
