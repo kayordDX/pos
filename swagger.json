@@ -2651,6 +2651,40 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "sorts",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -2669,10 +2703,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TableBookingHistoryResponse"
-                  }
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse2"
                 }
               }
             }
@@ -2770,6 +2801,40 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "sorts",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -2788,10 +2853,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TableBookingHistoryResponse"
-                  }
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse2"
                 }
               }
             }
@@ -2835,6 +2897,40 @@
               "format": "date-time",
               "nullable": true
             }
+          },
+          {
+            "name": "sorts",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -2853,16 +2949,16 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TableBookingHistoryResponse"
-                  }
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse2"
                 }
               }
             }
           },
           "401": {
             "description": "Unauthorized"
+          },
+          "403": {
+            "description": "Forbidden"
           }
         }
       }
@@ -2882,6 +2978,40 @@
               "type": "integer",
               "format": "int32"
             }
+          },
+          {
+            "name": "sorts",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "filters",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "nullable": true
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "nullable": true
+            }
           }
         ],
         "responses": {
@@ -2900,10 +3030,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/TableBookingHistoryResponse"
-                  }
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse2"
                 }
               }
             }
@@ -3826,7 +3953,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse3"
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse4"
                 }
               }
             }
@@ -5053,7 +5180,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse2"
+                  "$ref": "#/components/schemas/CommonModelsPaginatedListOfResponse3"
                 }
               }
             }
@@ -15747,6 +15874,44 @@
           }
         }
       },
+      "CommonModelsPaginatedListOfResponse2": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "items",
+          "pageNumber",
+          "totalPages",
+          "totalCount",
+          "hasPreviousPage",
+          "hasNextPage"
+        ],
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TableBookingHistoryResponse"
+            }
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "hasPreviousPage": {
+            "type": "boolean"
+          },
+          "hasNextPage": {
+            "type": "boolean"
+          }
+        }
+      },
       "TableBookingHistoryResponse": {
         "type": "object",
         "additionalProperties": false,
@@ -15840,8 +16005,15 @@
         }
       },
       "TableBookingPeriodHistoryRequest": {
-        "type": "object",
-        "additionalProperties": false
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommonModelsQueryModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
       },
       "TableBookingPaymentEditRequest": {
         "type": "object",
@@ -15867,16 +16039,37 @@
         }
       },
       "TableBookingHistoryUserRequest": {
-        "type": "object",
-        "additionalProperties": false
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommonModelsQueryModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
       },
       "TableBookingHistoryAllRequest": {
-        "type": "object",
-        "additionalProperties": false
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommonModelsQueryModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
       },
       "TableBookingHistoryRequest": {
-        "type": "object",
-        "additionalProperties": false
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/CommonModelsQueryModel"
+          },
+          {
+            "type": "object",
+            "additionalProperties": false
+          }
+        ]
       },
       "TableBookingGetResponse": {
         "type": "object",
@@ -17518,7 +17711,7 @@
         "type": "object",
         "additionalProperties": false
       },
-      "CommonModelsPaginatedListOfResponse2": {
+      "CommonModelsPaginatedListOfResponse3": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -17636,7 +17829,7 @@
           }
         ]
       },
-      "CommonModelsPaginatedListOfResponse3": {
+      "CommonModelsPaginatedListOfResponse4": {
         "type": "object",
         "additionalProperties": false,
         "required": [
