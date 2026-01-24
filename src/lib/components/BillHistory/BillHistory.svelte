@@ -14,7 +14,13 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { today, getLocalTimeZone, CalendarDate } from "@internationalized/date";
 
-	import { type ColumnDef, type PaginationState, type Updater } from "@tanstack/table-core";
+	import {
+		type ColumnDef,
+		type ColumnFiltersState,
+		type PaginationState,
+		type SortingState,
+		type Updater,
+	} from "@tanstack/table-core";
 	import { CalendarRangeIcon, FunnelIcon } from "@lucide/svelte";
 	import { page } from "$app/state";
 
@@ -24,33 +30,52 @@
 
 	let { historyType }: Props = $props();
 
-	let dateValue = $state<{ start?: CalendarDate; end?: CalendarDate }>({
+	const defaultDate = {
 		start: today(getLocalTimeZone()),
 		end: today(getLocalTimeZone()).add({ weeks: 1 }),
-	});
+	};
+	let dateValue = $state<{ start?: CalendarDate; end?: CalendarDate }>(defaultDate);
 
-	let dateValueCurrent = $state<{ start?: CalendarDate; end?: CalendarDate }>({
-		start: today(getLocalTimeZone()),
-		end: today(getLocalTimeZone()).add({ weeks: 1 }),
-	});
-
-	let pagination: PaginationState = $state({ pageIndex: 0, pageSize: 10 });
+	let pagination: PaginationState = $state({ pageIndex: 0, pageSize: 20 });
 	const setPagination = (updater: Updater<PaginationState>) => {
 		if (updater instanceof Function) {
 			pagination = updater(pagination);
 		} else pagination = updater;
 	};
 
+	let columnFilters = $state<ColumnFiltersState>([]);
+
+	let sorting: SortingState = $state([]);
+	const setSorting = (updater: Updater<SortingState>) => {
+		if (updater instanceof Function) {
+			sorting = updater(sorting);
+		} else sorting = updater;
+	};
+
+	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id}`).join(","));
+
 	let globalFilter = $state<number>();
+	const getColumnFilterValue = (id: string) => {
+		const filter = columnFilters.find((filter) => filter.id === id);
+		if (filter?.value == undefined) {
+			if (id == "startDate") {
+				return defaultDate.start?.toString();
+			}
+			if (id == "endDate") {
+				return defaultDate.end?.toString();
+			}
+		}
+		return filter?.value?.toString();
+	};
 
 	const query = $derived(
 		historyType == "all"
 			? createTableBookingHistoryAll(() => ({
 					tableBookingId: globalFilter ?? 0,
-					startDate: dateValueCurrent.start?.toString(),
-					endDate: dateValueCurrent.end?.toString(),
+					startDate: getColumnFilterValue("startDate"),
+					endDate: getColumnFilterValue("endDate"),
 					page: pagination.pageIndex + 1,
-					pageSize: pagination.pageSize,
+					sorts,
 				}))
 			: historyType == "salesPeriod"
 				? createTableBookingPeriodHistory(
@@ -58,7 +83,7 @@
 						() => ({
 							tableBookingId: globalFilter ?? 0,
 							page: pagination.pageIndex + 1,
-							pageSize: pagination.pageSize,
+							sorts,
 						})
 					)
 				: historyType == "cashUpUser"
@@ -69,13 +94,13 @@
 								cashUpUserId: Number(page.params.cashUpUserId ?? 0),
 								outletId: status.value.outletId,
 								page: pagination.pageIndex + 1,
-								pageSize: pagination.pageSize,
+								sorts,
 							})
 						)
 					: createTableBookingHistory(() => ({
 							tableBookingId: globalFilter ?? 0,
 							page: pagination.pageIndex + 1,
-							pageSize: pagination.pageSize,
+							sorts,
 						}))
 	);
 
@@ -96,6 +121,7 @@
 			accessorFn: (d) => d.id,
 			accessorKey: "bill#",
 			header: "Bill#",
+			id: "id",
 		},
 		{
 			accessorKey: "bookingName",
@@ -103,14 +129,17 @@
 		},
 		{
 			header: "Table Name",
+			id: "table.name",
 			accessorFn: ({ table }) => table.name,
 		},
 		{
 			header: "Booking Date",
+			id: "bookingDate",
 			accessorFn: ({ bookingDate }) => stringToFDate(bookingDate),
 		},
 		{
 			header: "Close Date",
+			id: "closeDate",
 			accessorFn: ({ closeDate }) => stringToFDate(closeDate),
 		},
 		{
@@ -125,28 +154,55 @@
 			return data;
 		},
 		useURLSearchParams: true,
-		manualFiltering: true,
 		manualPagination: true,
+		manualSorting: true,
+		manualFiltering: true,
 		state: {
 			get pagination() {
 				return pagination;
+			},
+			get sorting() {
+				return sorting;
+			},
+			get globalFilter() {
+				return globalFilter;
+			},
+			get columnFilters() {
+				return columnFilters;
 			},
 		},
 		get rowCount() {
 			return rowCount;
 		},
 		onPaginationChange: setPagination,
+		onSortingChange: setSorting,
+		onGlobalFilterChange: (updater) => {
+			globalFilter = Number(updater ?? 0);
+		},
+		onColumnFiltersChange: (updater) => {
+			if (typeof updater === "function") {
+				columnFilters = updater(columnFilters);
+			} else {
+				columnFilters = updater;
+			}
+		},
 	});
 
 	let filterOpen = $state(false);
 	const filter = () => {
-		dateValueCurrent = dateValue;
+		const filterState = [
+			{
+				id: "startDate",
+				value: dateValue.start?.toString(),
+			},
+			{
+				id: "endDate",
+				value: dateValue.end?.toString(),
+			},
+		];
+		columnFilters = filterState;
 		filterOpen = false;
 	};
-
-	$effect(() => {
-		if (table.getState().globalFilter !== globalFilter) table.setGlobalFilter(globalFilter);
-	});
 </script>
 
 {#snippet header()}
