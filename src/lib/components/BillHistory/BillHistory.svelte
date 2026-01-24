@@ -12,7 +12,7 @@
 	import { stringToFDate } from "$lib/util";
 	import View from "./View.svelte";
 	import { status } from "$lib/stores/status.svelte";
-	import { today, getLocalTimeZone, CalendarDate } from "@internationalized/date";
+	import { today, getLocalTimeZone, CalendarDate, parseDate } from "@internationalized/date";
 
 	import {
 		type ColumnDef,
@@ -23,6 +23,7 @@
 	} from "@tanstack/table-core";
 	import { CalendarRangeIcon, FunnelIcon } from "@lucide/svelte";
 	import { page } from "$app/state";
+	import { onMount } from "svelte";
 
 	interface Props {
 		historyType: "waiter" | "salesPeriod" | "all" | "cashUpUser";
@@ -44,6 +45,18 @@
 	};
 
 	let columnFilters = $state<ColumnFiltersState>([]);
+	onMount(() => {
+		if (columnFilters.length > 0) {
+			const start = columnFilters.find((filter) => filter.id === "startDate");
+			if (start) {
+				dateValue.start = parseDate(start.value as string);
+			}
+			const end = columnFilters.find((filter) => filter.id === "endDate");
+			if (end) {
+				dateValue.end = parseDate(end.value as string);
+			}
+		}
+	});
 
 	let sorting: SortingState = $state([]);
 	const setSorting = (updater: Updater<SortingState>) => {
