@@ -31,11 +31,8 @@
 
 	let { historyType }: Props = $props();
 
-	const defaultDate = {
-		start: today(getLocalTimeZone()),
-		end: today(getLocalTimeZone()).add({ weeks: 1 }),
-	};
-	let dateValue = $state<{ start?: CalendarDate; end?: CalendarDate }>(defaultDate);
+	const defaultDate = today(getLocalTimeZone()).add({ weeks: -1 });
+	let dateValue = $state<{ start?: CalendarDate; end?: CalendarDate }>({ start: defaultDate });
 
 	let pagination: PaginationState = $state({ pageIndex: 0, pageSize: 20 });
 	const setPagination = (updater: Updater<PaginationState>) => {
@@ -72,10 +69,7 @@
 		const filter = columnFilters.find((filter) => filter.id === id);
 		if (filter?.value == undefined) {
 			if (id == "startDate") {
-				return defaultDate.start?.toString();
-			}
-			if (id == "endDate") {
-				return defaultDate.end?.toString();
+				return defaultDate?.toString();
 			}
 		}
 		return filter?.value?.toString();
@@ -141,14 +135,9 @@
 			header: "Booking Name",
 		},
 		{
-			header: "Table Name",
-			id: "table.name",
-			accessorFn: ({ table }) => table.name,
-		},
-		{
-			header: "Booking Date",
-			id: "bookingDate",
-			accessorFn: ({ bookingDate }) => stringToFDate(bookingDate),
+			accessorKey: "user.name",
+			header: "Waiter",
+			id: "user.name",
 		},
 		{
 			header: "Close Date",
@@ -203,16 +192,19 @@
 
 	let filterOpen = $state(false);
 	const filter = () => {
-		const filterState = [
-			{
+		const filterState: Array<{ id: string; value: string }> = [];
+		if (dateValue.start) {
+			filterState.push({
 				id: "startDate",
-				value: dateValue.start?.toString(),
-			},
-			{
+				value: dateValue.start.toString(),
+			});
+		}
+		if (dateValue.end) {
+			filterState.push({
 				id: "endDate",
-				value: dateValue.end?.toString(),
-			},
-		];
+				value: dateValue.end.toString(),
+			});
+		}
 		columnFilters = filterState;
 		filterOpen = false;
 	};
@@ -241,7 +233,7 @@
 							<Button variant="secondary" size="icon"><CalendarRangeIcon /></Button>
 						</Popover.Trigger>
 						<Popover.Content class="w-auto overflow-hidden p-0" align="center">
-							<RangeCalendar bind:value={dateValue} />
+							<RangeCalendar bind:value={dateValue} minDays={1} />
 							<div class="p-2 flex justify-between">
 								<Button class="w-full" onclick={filter}><FunnelIcon /> Filter</Button>
 							</div>
