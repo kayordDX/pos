@@ -20,7 +20,7 @@
 	import MenuItems from "./MenuItems.svelte";
 	import { menuSection } from "$lib/stores/menuSection.svelte";
 
-	const query = $derived(createMenuList(() => ({ outletId: status.value?.outletId })));
+	const query = createMenuList(() => ({ outletId: status.value?.outletId }));
 
 	let search = $state<string | undefined>(undefined);
 
@@ -43,9 +43,9 @@
 	};
 	const debouncedHandleInput = debounce(setSearchString, 500);
 
-	let itemsQuery = $derived(createMenuGetItemsGetMenuItems(() => itemParams));
+	let itemsQuery = createMenuGetItemsGetMenuItems(() => itemParams);
 
-	let sectionsQuery = $derived(createMenuGetSectionsGetMenusSections(() => sectionParams));
+	let sectionsQuery = createMenuGetSectionsGetMenusSections(() => sectionParams);
 
 	const setMenuSelection = (menuId: number) => {
 		menu.value.menuId = menuId;

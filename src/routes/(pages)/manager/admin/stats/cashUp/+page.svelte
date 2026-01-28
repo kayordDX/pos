@@ -6,7 +6,7 @@
 	import GrafanaLink from "../GrafanaLink.svelte";
 	let salesPeriod = $state(0);
 
-	const query = $derived(createStatsCashUp(() => ({ salesPeriodId: salesPeriod })));
+	const query = createStatsCashUp(() => ({ salesPeriodId: salesPeriod }));
 	const data = $derived(query.data ?? []);
 
 	const columns: ColumnDef<StatsCashUpResponse>[] = [

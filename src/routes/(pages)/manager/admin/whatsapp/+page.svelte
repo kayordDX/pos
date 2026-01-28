@@ -17,7 +17,7 @@
 	} from "@lucide/svelte";
 
 	const query = createWhatsappStatus();
-	const qrQuery = $derived(createWhatsappQrCode(() => ({ query: { enabled: false } })));
+	const qrQuery = createWhatsappQrCode(() => ({ query: { enabled: false } }));
 
 	const logoutMutation = createWhatsappLogout();
 	const connectMutation = createWhatsappConnect();

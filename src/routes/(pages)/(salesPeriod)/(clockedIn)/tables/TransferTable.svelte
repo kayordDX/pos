@@ -28,9 +28,11 @@
 	});
 	type FormSchema = z.infer<typeof schema>;
 
-	const createUserUsersTypeQuery = $derived(
-		createUserUsersType(() => ({ isBackOffice: false, isFrontLine: true }))
-	);
+	const createUserUsersTypeQuery = createUserUsersType(() => ({
+		isBackOffice: false,
+		isFrontLine: true,
+	}));
+
 	const users = $derived(createUserUsersTypeQuery.data ?? []);
 
 	const transferMutation = createTableBookingTransfer();
