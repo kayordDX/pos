@@ -116,14 +116,12 @@
 		stockList.map((s) => ({ value: s.stockId, label: `${s.name} - (${s.unitName})` }))
 	);
 
-	const last = $derived(
-		createStockItemsGet(
-			() => $formData.stockId ?? 0,
-			() => divisionId,
-			() => ({
-				query: { enabled: ($formData.stockId ?? 0) > 0 },
-			})
-		)
+	const last = createStockItemsGet(
+		() => $formData.stockId ?? 0,
+		() => divisionId,
+		() => ({
+			query: { enabled: ($formData.stockId ?? 0) > 0 },
+		})
 	);
 	const lastData = $derived(last.data);
 </script>

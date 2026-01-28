@@ -14,11 +14,9 @@
 
 	let { open = $bindable(false), id, stockName, refetch }: Props = $props();
 
-	const query = $derived(
-		createStockItemsGetAll(
-			() => ({ id }),
-			() => ({ query: { enabled: false } })
-		)
+	const query = createStockItemsGetAll(
+		() => ({ id }),
+		() => ({ query: { enabled: false } })
 	);
 	const data = $derived(query.data ?? []);
 
