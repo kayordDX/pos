@@ -11,15 +11,13 @@
 
 	let filters = $state("");
 
-	const stockQuery = $derived(
-		createStockGetAllDivision(() => ({
-			page: 1,
-			pageSize: 10,
-			filters,
-			sorts: "",
-			divisionId: divisionId,
-		}))
-	);
+	const stockQuery = createStockGetAllDivision(() => ({
+		page: 1,
+		pageSize: 10,
+		filters,
+		sorts: "",
+		divisionId: divisionId,
+	}));
 
 	const stockList = $derived(stockQuery.data?.items ?? []);
 

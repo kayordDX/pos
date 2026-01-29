@@ -64,11 +64,9 @@
 
 	const { form: formData, enhance } = form;
 
-	const query = $derived(
-		createAdjustmentGetAll(
-			() => status.value.outletId,
-			() => ({ query: { enabled: open } })
-		)
+	const query = createAdjustmentGetAll(
+		() => status.value.outletId,
+		() => ({ query: { enabled: open } })
 	);
 	const typeSelect = $derived(
 		query.data?.find((i) => i.adjustmentTypeId === $formData.adjustmentTypeId)?.name ??

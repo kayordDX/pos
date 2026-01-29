@@ -107,15 +107,13 @@
 	});
 
 	let filters = $state("");
-	const stockQuery = $derived(
-		createStockGetAll(() => ({
-			page: 1,
-			pageSize: 10,
-			filters,
-			sorts: "",
-			outletId: status.value.outletId,
-		}))
-	);
+	const stockQuery = createStockGetAll(() => ({
+		page: 1,
+		pageSize: 10,
+		filters,
+		sorts: "",
+		outletId: status.value.outletId,
+	}));
 
 	const stockList = $derived(stockQuery.data?.items ?? []);
 

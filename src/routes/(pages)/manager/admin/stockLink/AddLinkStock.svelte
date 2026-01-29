@@ -99,17 +99,15 @@
 	});
 
 	let filters = $state("");
-	const stockQuery = $derived(
-		createStockGetAll(
-			() => ({
-				page: 1,
-				pageSize: 10,
-				filters,
-				sorts: "",
-				outletId: status.value.outletId,
-			}),
-			() => ({ query: { enabled: false } })
-		)
+	const stockQuery = createStockGetAll(
+		() => ({
+			page: 1,
+			pageSize: 10,
+			filters,
+			sorts: "",
+			outletId: status.value.outletId,
+		}),
+		() => ({ query: { enabled: false } })
 	);
 
 	$effect(() => {

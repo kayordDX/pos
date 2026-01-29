@@ -84,15 +84,13 @@
 
 	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id}`).join(","));
 
-	const query = $derived(
-		createStockGetAll(() => ({
-			page: pagination.pageIndex + 1,
-			pageSize: 10,
-			filters,
-			sorts,
-			outletId: status.value.outletId,
-		}))
-	);
+	const query = createStockGetAll(() => ({
+		page: pagination.pageIndex + 1,
+		pageSize: 10,
+		filters,
+		sorts,
+		outletId: status.value.outletId,
+	}));
 	let data = $derived(query.data?.items ?? []);
 	let rowCount = $derived(query.data?.totalCount ?? 0);
 

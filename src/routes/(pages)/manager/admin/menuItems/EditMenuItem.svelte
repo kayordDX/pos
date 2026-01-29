@@ -150,12 +150,10 @@
 		);
 	});
 
-	const sectionQuery = $derived(
-		createMenuGetSectionsGetMenusSections(() => ({
-			menuId: $formData.menuId,
-			sectionId: 0,
-		}))
-	);
+	const sectionQuery = createMenuGetSectionsGetMenusSections(() => ({
+		menuId: $formData.menuId,
+		sectionId: 0,
+	}));
 	const sectionList = $derived.by(() => {
 		return (
 			sectionQuery.data?.sections?.map((m) => ({

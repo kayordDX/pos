@@ -123,20 +123,16 @@
 			"Select Division"
 	);
 
-	const toDivisionQuery = $derived(
-		createStockDivisionGetAll(() => ({ outletId: $formData.toOutletId }))
-	);
+	const toDivisionQuery = createStockDivisionGetAll(() => ({ outletId: $formData.toOutletId }));
 	const toDivisions = $derived(toDivisionQuery.data ?? []);
 	const toDivisionSelect = $derived(
 		toDivisions.find((i) => i.divisionId === $formData.toDivisionId)?.divisionName ??
 			"Select Division"
 	);
 
-	const divisionUsersQuery = $derived(
-		createDivisionGetUsers(
-			() => $formData.toDivisionId,
-			() => ({ excludeSelf: true })
-		)
+	const divisionUsersQuery = createDivisionGetUsers(
+		() => $formData.toDivisionId,
+		() => ({ excludeSelf: true })
 	);
 	const divisionUsers = $derived(divisionUsersQuery.data ?? []);
 </script>

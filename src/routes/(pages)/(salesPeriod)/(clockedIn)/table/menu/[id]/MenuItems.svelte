@@ -16,11 +16,9 @@
 	let divisionId = $state(0);
 	let open = $state(false);
 
-	const query = $derived(
-		createMenuGetItemGetMenuItems(
-			() => ({ menuItemId: menuItemId, divisionId: divisionId }),
-			() => ({ query: { enabled: open } })
-		)
+	const query = createMenuGetItemGetMenuItems(
+		() => ({ menuItemId: menuItemId, divisionId: divisionId }),
+		() => ({ query: { enabled: open } })
 	);
 </script>
 

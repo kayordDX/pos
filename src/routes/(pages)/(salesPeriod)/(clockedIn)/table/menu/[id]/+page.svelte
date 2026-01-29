@@ -24,17 +24,6 @@
 
 	let search = $state<string | undefined>(undefined);
 
-	const itemParams: MenuGetItemsGetMenuItemsParams = $derived({
-		menuId: menu.value.menuId,
-		sectionId: menuSection.sectionId,
-		search: search,
-	});
-
-	const sectionParams: MenuGetSectionsGetMenusSectionsParams = $derived({
-		menuId: menu.value.menuId,
-		sectionId: menuSection.sectionId,
-	});
-
 	const setSearchString = (event: Event) => {
 		const target = event.target as HTMLInputElement;
 		page.url.searchParams.set("search", target.value);
@@ -43,9 +32,16 @@
 	};
 	const debouncedHandleInput = debounce(setSearchString, 500);
 
-	let itemsQuery = createMenuGetItemsGetMenuItems(() => itemParams);
+	const itemsQuery = createMenuGetItemsGetMenuItems(() => ({
+		menuId: menu.value.menuId,
+		sectionId: menuSection.sectionId,
+		search: search,
+	}));
 
-	let sectionsQuery = createMenuGetSectionsGetMenusSections(() => sectionParams);
+	let sectionsQuery = createMenuGetSectionsGetMenusSections(() => ({
+		menuId: menu.value.menuId,
+		sectionId: menuSection.sectionId,
+	}));
 
 	const setMenuSelection = (menuId: number) => {
 		menu.value.menuId = menuId;

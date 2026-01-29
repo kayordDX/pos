@@ -106,9 +106,11 @@
 	let columnFilters = $state<ColumnFiltersState>([]);
 	let filters = $state("");
 
-	const query = $derived(
-		createUserUnassignedUsers(() => ({ page: pagination.pageIndex + 1, pageSize: 10, filters }))
-	);
+	const query = createUserUnassignedUsers(() => ({
+		page: pagination.pageIndex + 1,
+		pageSize: 10,
+		filters,
+	}));
 	let data = $derived(query.data?.items ?? []);
 	let rowCount = $derived(query.data?.totalCount ?? 0);
 

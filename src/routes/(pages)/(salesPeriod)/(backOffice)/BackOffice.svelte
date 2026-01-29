@@ -20,14 +20,12 @@
 
 	let { isHistory = false, divisionIds }: Props = $props();
 
-	const query = $derived(
-		createTableOrderOfficeOrderBasedBack(
-			() => ({
-				divisionIds,
-				complete: isHistory,
-			}),
-			() => ({ query: { refetchInterval: 40000 } })
-		)
+	const query = createTableOrderOfficeOrderBasedBack(
+		() => ({
+			divisionIds,
+			complete: isHistory,
+		}),
+		() => ({ query: { refetchInterval: 40000 } })
 	);
 
 	const getTime = (date: string) => {

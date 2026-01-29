@@ -94,13 +94,11 @@
 
 	let filters = $state("");
 
-	const query = $derived(
-		createUserUsers(() => ({
-			page: pagination.pageIndex + 1,
-			pageSize: 10,
-			filters,
-		}))
-	);
+	const query = createUserUsers(() => ({
+		page: pagination.pageIndex + 1,
+		pageSize: 10,
+		filters,
+	}));
 
 	let data = $derived(query.data?.items ?? []);
 	let rowCount = $derived(query.data?.totalCount ?? 0);

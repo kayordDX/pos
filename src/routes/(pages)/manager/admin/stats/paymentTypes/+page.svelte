@@ -10,9 +10,7 @@
 
 	let salesPeriod = $state(0);
 
-	const chartQuery = $derived(
-		createStatsPaymentTypes(() => ({ salesPeriodId: salesPeriod, top: 5 }))
-	);
+	const chartQuery = createStatsPaymentTypes(() => ({ salesPeriodId: salesPeriod, top: 5 }));
 	const chartData = $derived(chartQuery.data ?? []);
 
 	const chartConfig = {
