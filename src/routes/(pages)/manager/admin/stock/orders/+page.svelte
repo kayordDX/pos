@@ -84,7 +84,7 @@
 	const setSorting = (updater: Updater<SortingState>) => {
 		if (updater instanceof Function) {
 			sorting = updater(sorting);
-		} else sorting = updater;
+		}
 	};
 
 	let search = $state(decodeColumnFilters()?.find((x) => x.id == "orderNumber")?.value ?? "");
