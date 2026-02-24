@@ -39,21 +39,21 @@
 		},
 		{
 			header: "Ordered Amount",
-			accessorKey: "orderAmount",
+			accessorFn: (item) => item.orderAmount,
 			size: 1000,
-			footer: () => aggregationFns.sum(data, "orderAmount"),
+			footer: () => aggregationFns.sum(data, "orderAmount").toFixed(3),
 		},
 		{
 			header: "Actual",
-			accessorKey: "actual",
+			accessorFn: (item) => item.actual,
 			size: 1000,
-			footer: () => aggregationFns.sum(data, "actual"),
+			footer: () => aggregationFns.sum(data, "actual").toFixed(3),
 		},
 		{
 			header: "Price",
-			accessorKey: "price",
+			accessorFn: (item) => item.price.toFixed(2),
 			size: 1000,
-			footer: () => aggregationFns.sum(data, "price"),
+			footer: () => aggregationFns.sum(data, "price").toFixed(2),
 		},
 		{
 			header: "Status",
