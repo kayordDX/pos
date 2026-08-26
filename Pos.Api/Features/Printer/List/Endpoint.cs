@@ -46,14 +46,14 @@ public class Endpoint : Endpoint<Request, List<PrinterDTO>>
                 {
                     var subCount = await db.ExecuteAsync("PUBSUB", "NUMSUB", channel);
                     var subCountList = ((StackExchange.Redis.RedisValue[]?)subCount)?.Select(x => x.ToString()).ToList() ?? [];
-                    if (subCountList.Count > 1)
+                    // Consider a printer connected if it has at least one subscriber. NUMSUB returns
+                    // [channel, count], and duplicates/lingering subscriptions can push the count above 1.
+                    if (subCountList.Count > 1
+                        && int.TryParse(subCountList[1], out int subscriberCount)
+                        && subscriberCount > 0
+                        && int.TryParse(channel.Replace($"print:{r.OutletId}:", ""), out int deviceId))
                     {
-                        bool isSubConnected = subCountList[1] == "1";
-                        if (isSubConnected)
-                        {
-                            int deviceId = int.Parse(channel.Replace($"print:{r.OutletId}:", "") ?? "0");
-                            onlineDevices.Add(deviceId);
-                        }
+                        onlineDevices.Add(deviceId);
                     }
                 }
                 result.ForEach(x => x.IsConnected = onlineDevices.Contains(x.DeviceId));
