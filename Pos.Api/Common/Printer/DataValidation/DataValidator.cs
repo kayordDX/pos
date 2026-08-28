@@ -1,4 +1,4 @@
-﻿using Pos.Api.Common.Printer.Emitters;
+﻿using Pos.Api.Common.Printer.Emitters.Enums;
 
 namespace Pos.Api.Common.Printer.DataValidation;
 

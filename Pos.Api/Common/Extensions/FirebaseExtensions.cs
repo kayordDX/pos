@@ -18,7 +18,8 @@ public static class FirebaseExtensions
             }
             else
             {
-                credential = GoogleCredential.FromFile("private_key.json");
+                // credential = GoogleCredential.FromFile("private_key.json");
+                credential = CredentialFactory.FromFile<ServiceAccountCredential>("private_key.json").ToGoogleCredential();
             }
 
             FirebaseApp.Create(new AppOptions()

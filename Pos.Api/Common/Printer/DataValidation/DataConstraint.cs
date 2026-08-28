@@ -6,7 +6,7 @@ public class DataConstraint
 
     public int MaxLength { get; set; }
 
-    public List<int> ValidLengths { get; set; } = new List<int>();
+    public List<int> ValidLengths { get; set; } = [];
 
     public string ValidChars { get; set; } = string.Empty;
 }

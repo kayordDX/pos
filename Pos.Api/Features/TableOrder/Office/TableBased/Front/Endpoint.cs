@@ -39,7 +39,7 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
                 x.SalesPeriod.OutletId == userOutlet.OutletId &&
                 x.CloseDate == null &&
                 x.UserId == _cu.UserId &&
-                x.OrderItems.Any(oi =>
+                x.OrderItems!.Any(oi =>
                     statusIds.Contains(oi.OrderItemStatusId) &&
                     divisionIds.Contains(oi.MenuItem.DivisionId) &&
                     oi.OrderItemStatusId != 1 &&

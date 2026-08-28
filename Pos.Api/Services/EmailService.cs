@@ -10,19 +10,14 @@ using MimeKit;
 
 namespace Pos.Api.Services;
 
-public class EmailService : IEmailSender
+public class EmailService(IOptions<EmailConfig> emailConfig, AppDbContext dbContext) : IEmailSender
 {
-    private readonly EmailConfig _emailConfig;
-    private readonly AppDbContext _dbContext;
-    public EmailService(IOptions<EmailConfig> emailConfig, AppDbContext dbContext)
-    {
-        _emailConfig = emailConfig.Value;
-        _dbContext = dbContext;
-    }
+    private readonly EmailConfig _emailConfig = emailConfig.Value;
+    private readonly AppDbContext _dbContext = dbContext;
 
     public async Task SendEmailAsync(string toEmail, string toName, string subject, string message, AttachmentCollection? attachments = null)
     {
-        List<MailboxAddress> emails = new() { new MailboxAddress(toName, toEmail) };
+        List<MailboxAddress> emails = [new MailboxAddress(toName, toEmail)];
         await SendAsync(emails, subject, message, attachments);
     }
 
@@ -31,6 +26,14 @@ public class EmailService : IEmailSender
         if (string.IsNullOrEmpty(_emailConfig.Email))
         {
             throw new Exception("Email is empty in config");
+        }
+        if (string.IsNullOrEmpty(_emailConfig.Host))
+        {
+            throw new Exception("Email host is empty in config");
+        }
+        if (string.IsNullOrEmpty(_emailConfig.Password))
+        {
+            throw new Exception("Email password is empty in config");
         }
 
         var email = string.Join(";", emails.Select(x => x.Address));

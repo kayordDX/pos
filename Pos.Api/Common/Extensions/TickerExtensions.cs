@@ -39,7 +39,11 @@ public static class TickerExtensions
 
             opt.AddDashboard(o =>
             {
-                o.WithBasicAuth(configuration["TickerQBasicAuth:Username"], configuration["TickerQBasicAuth:Password"]);
+                var username = configuration["TickerQBasicAuth:Username"]
+                        ?? throw new InvalidOperationException("TickerQBasicAuth:Username is not configured.");
+                var password = configuration["TickerQBasicAuth:Password"]
+                        ?? throw new InvalidOperationException("TickerQBasicAuth:Password is not configured.");
+                o.WithBasicAuth(username, password);
             });
         });
     }

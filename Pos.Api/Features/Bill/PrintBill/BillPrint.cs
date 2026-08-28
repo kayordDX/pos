@@ -1,4 +1,5 @@
 using Pos.Api.Common.Printer.Emitters;
+using Pos.Api.Common.Printer.Emitters.Enums;
 using Pos.Api.Features.Bill.EmailBill;
 
 namespace Pos.Api.Features.Bill.PrintBill;

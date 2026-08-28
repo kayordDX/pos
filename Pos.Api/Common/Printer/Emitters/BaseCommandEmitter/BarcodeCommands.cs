@@ -1,7 +1,7 @@
 ﻿using System.Text;
-using Pos.Api.Common.Printer;
 using Pos.Api.Common.Printer.DataValidation;
 using Pos.Api.Common.Printer.Emitters.BaseCommandValues;
+using Pos.Api.Common.Printer.Emitters.Enums;
 
 namespace Pos.Api.Common.Printer.Emitters;
 

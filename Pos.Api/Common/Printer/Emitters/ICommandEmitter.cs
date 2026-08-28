@@ -1,4 +1,5 @@
 using System.Text;
+using Pos.Api.Common.Printer.Emitters.Enums;
 
 namespace Pos.Api.Common.Printer.Emitters;
 

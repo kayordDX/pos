@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Text;
+﻿using System.Text;
 using System.Text.RegularExpressions;
 using Pos.Api.Common.Printer.Emitters.BaseCommandValues;
 

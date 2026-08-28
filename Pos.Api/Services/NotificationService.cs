@@ -7,15 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Services;
 
-public class NotificationService
+public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web)
 {
-    private readonly AppDbContext _dbContext;
-    private readonly IWebHostEnvironment _web;
-    public NotificationService(AppDbContext dbContext, IWebHostEnvironment web)
-    {
-        _dbContext = dbContext;
-        _web = web;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
+    private readonly IWebHostEnvironment _web = web;
 
     public async Task SendUserNotificationAsync(string title, string body, string userId)
     {
@@ -32,13 +27,13 @@ public class NotificationService
     public async Task<bool> SendNotificationAsync(string title, string body, string token, string userId)
     {
         // Do not send notification when not in prod. For now still sending
-        // if (!_web.IsProduction())
-        // {
-        //     var notificationSummary = new NotificationDTO { Title = title, Body = body, UserId = userId };
-        //     string? notificationPayload = JsonSerializer.Serialize(notificationSummary);
-        //     await LogNotification(token, true, notificationPayload, userId, "Non prod did not notify");
-        //     return true;
-        // }
+        if (!_web.IsProduction())
+        {
+            var notificationSummary = new NotificationDTO { Title = title, Body = body, UserId = userId };
+            string? notificationPayload = JsonSerializer.Serialize(notificationSummary);
+            await LogNotification(token, true, notificationPayload, userId, "Non prod did not notify");
+            return true;
+        }
 
         bool result;
         try
@@ -72,7 +67,7 @@ public class NotificationService
                         VibrateTimingsMillis = [100, 200, 100, 200, 400]
                     }
                 },
-                Token = token
+                Fid = token
             };
             var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
             // string? payload = JsonSerializer.Serialize(message);
@@ -104,7 +99,7 @@ public class NotificationService
                     Body = body,
                     ImageUrl = "https://pos.kayord.com/logo.svg"
                 },
-                Token = token
+                Fid = token
             };
             string? payload = JsonSerializer.Serialize(message);
             await LogNotification(token, false, payload, userId, e.Message);
@@ -120,7 +115,7 @@ public class NotificationService
                     Body = body,
                     ImageUrl = "https://pos.kayord.com/logo.svg"
                 },
-                Token = token
+                Fid = token
             };
             string? payload = JsonSerializer.Serialize(message);
             await LogNotification(token, false, payload, userId, ex.Message);

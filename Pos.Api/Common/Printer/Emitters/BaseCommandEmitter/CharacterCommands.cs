@@ -1,4 +1,5 @@
 ﻿using Pos.Api.Common.Printer.Emitters.BaseCommandValues;
+using Pos.Api.Common.Printer.Emitters.Enums;
 
 namespace Pos.Api.Common.Printer.Emitters;
 

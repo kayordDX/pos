@@ -17,3 +17,5 @@ api/src/club/bin*
 *.log
 
 .agents/skills/aspire*/evals/
+
+private_key.json

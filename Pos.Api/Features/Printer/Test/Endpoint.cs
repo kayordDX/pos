@@ -2,6 +2,7 @@ using Pos.Api.Common.Printer.Emitters;
 using Pos.Api.Data;
 using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Common.Printer.Emitters.Enums;
 
 namespace Pos.Api.Features.Printer.Test;
 

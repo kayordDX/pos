@@ -1,4 +1,4 @@
-﻿namespace Pos.Api.Common.Printer.Emitters;
+﻿namespace Pos.Api.Common.Printer.Emitters.Enums;
 
 public enum BarcodeCode
 {
