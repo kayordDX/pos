@@ -15,7 +15,7 @@
 		createStockOrderItemLastPrice,
 	} from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import QueryBuilder from "fluent-querykit";
+	import { QueryBuilder } from "fluent-querykit";
 	import { page } from "$app/state";
 
 	interface Props {

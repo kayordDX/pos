@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { createStockGetAllDivision } from "$lib/api";
 	import { Combobox, Label } from "@kayord/ui";
-	import QueryBuilder from "fluent-querykit";
+	import { QueryBuilder } from "fluent-querykit";
 
 	interface Props {
 		value: number | undefined;

@@ -22,7 +22,7 @@
 	import { type ColumnDef, type ColumnFiltersState, type PaginationState, type SortingState, type Updater } from "@tanstack/svelte-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Search from "$lib/components/Search.svelte";
-	import QueryBuilder from "fluent-querykit";
+	import { QueryBuilder } from "fluent-querykit";
 	import { stringToFDate } from "$lib/util";
 
 	const columns: ColumnDef<DataTableFeatures, DTOStockOrderResponseDTO>[] = [

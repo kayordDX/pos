@@ -9,7 +9,7 @@
 	import { z } from "zod";
 	import { createStockAllocateItemCreate, createStockAllocateItemUpdate, createStockGetAllDivision, createStockItemsGet } from "$lib/api";
 
-	import QueryBuilder from "fluent-querykit";
+	import { QueryBuilder } from "fluent-querykit";
 	import { page } from "$app/state";
 
 	interface Props {

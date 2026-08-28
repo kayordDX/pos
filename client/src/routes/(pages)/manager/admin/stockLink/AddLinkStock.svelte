@@ -5,7 +5,7 @@
 	import { Button, Card, Combobox, Dialog, Input } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
 	import { Form } from "@kayord/ui/form";
-	import QueryBuilder from "fluent-querykit";
+	import { QueryBuilder } from "fluent-querykit";
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";

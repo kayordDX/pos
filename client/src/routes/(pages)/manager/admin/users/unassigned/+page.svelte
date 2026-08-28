@@ -7,7 +7,7 @@
 	import Current from "../Current.svelte";
 	import Avatar from "../Avatar.svelte";
 	import AddRole from "../AddRole.svelte";
-	import QueryBuilder from "fluent-querykit";
+	import { QueryBuilder } from "fluent-querykit";
 	import Search from "$lib/components/Search.svelte";
 	import { PlusIcon, XIcon } from "@lucide/svelte";
 	import { getError } from "$lib/types";
@@ -132,8 +132,8 @@
 
 	let searchEmail = $state("");
 
+	const qb = new QueryBuilder(false, false);
 	$effect(() => {
-		const qb = new QueryBuilder(false, false);
 		if (searchEmail) {
 			qb.containsCaseInsensitive("email", searchEmail);
 		}

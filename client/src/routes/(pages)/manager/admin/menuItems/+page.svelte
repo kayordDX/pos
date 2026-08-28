@@ -9,7 +9,7 @@
 	import Actions from "./Actions.svelte";
 	import FilterReset from "$lib/components/FilterReset.svelte";
 	import { debounce } from "$lib/util";
-	import QueryBuilder from "fluent-querykit";
+	import { QueryBuilder } from "fluent-querykit";
 	import MenuFilter from "./MenuFilter.svelte";
 	import { PlusIcon, SearchIcon } from "@lucide/svelte";
 	import EditMenuItem from "./EditMenuItem.svelte";

@@ -5,7 +5,7 @@
 	import { Select, Label } from "@kayord/ui";
 	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
 	import { type ColumnDef, type Updater, type PaginationState, type SortingState, type ColumnFiltersState } from "@tanstack/svelte-table";
-	import QueryBuilder from "fluent-querykit";
+	import { QueryBuilder } from "fluent-querykit";
 	import Search from "$lib/components/Search.svelte";
 	import { stringToFDate } from "$lib/util";
 
