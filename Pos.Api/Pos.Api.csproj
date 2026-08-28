@@ -44,6 +44,7 @@
     <PackageReference Include="TickerQ" />
     <PackageReference Include="TickerQ.Dashboard" />
     <PackageReference Include="TickerQ.EntityFrameworkCore" />
+    <ProjectReference Include="../Pos.ServiceDefaults/Pos.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>

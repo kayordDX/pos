@@ -8,10 +8,11 @@ USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["src/Pos.Api/Pos.Api.csproj", "Directory.Build.props", "Directory.Packages.props", "src/Pos.Api/"]
-RUN dotnet restore "src/Pos.Api/Pos.Api.csproj"
+COPY Pos.Api/Pos.Api.csproj Pos.Api/
+COPY Directory.Build.props Directory.Packages.props ./
+RUN dotnet restore "Pos.Api/Pos.Api.csproj"
 COPY . .
-WORKDIR "/src/src/Pos.Api"
+WORKDIR "/src/Pos.Api"
 RUN dotnet build "Pos.Api.csproj" -c $configuration -o /app/build
 
 FROM build AS publish

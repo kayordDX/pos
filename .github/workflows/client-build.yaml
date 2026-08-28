@@ -1,4 +1,4 @@
-name: Build
+name: Build Client
 on:
   release:
     types: [published]
@@ -10,6 +10,25 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2
+        name: Install pnpm
+        with:
+          version: latest
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm i
+
+      - name: Build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=4096"
+        run: pnpm build
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
@@ -24,12 +43,9 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v5
         with:
+          context: ./client
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: |
-            doink/kayord-pos-api:latest
-            doink/kayord-pos-api:${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          tags: doink/kayord-pos:latest, doink/kayord-pos:${{ github.sha }}
