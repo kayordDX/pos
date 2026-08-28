@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Kayord.Pos\Kayord.Pos.csproj" />
-  </ItemGroup>  
+    <ProjectReference Include="..\..\Pos.Api\Pos.Api.csproj" />
+  </ItemGroup>
 
 </Project>

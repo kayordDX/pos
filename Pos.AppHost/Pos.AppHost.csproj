@@ -9,4 +9,11 @@
     <UserSecretsId>b9f9296c-6fb8-4426-8e66-1d6c6fa1bb05</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Browsers" />
+    <PackageReference Include="Aspire.Hosting.JavaScript" />
+    <PackageReference Include="Aspire.Hosting.PostgreSQL" />
+    <PackageReference Include="Aspire.Hosting.Redis" />
+    <ProjectReference Include="../Pos.Api/Pos.Api.csproj" />
+  </ItemGroup>
 </Project>
