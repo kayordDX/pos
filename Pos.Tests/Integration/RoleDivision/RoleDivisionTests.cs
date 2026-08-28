@@ -45,7 +45,7 @@ public class RoleDivisionTests(App app) : TestBase<App>
             RoleId = 8888
         };
         dbContext.RoleDivision.Add(link1);
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(app.Context.CancellationToken);
 
         var link2 = new Pos.Api.Entities.RoleDivision
         {

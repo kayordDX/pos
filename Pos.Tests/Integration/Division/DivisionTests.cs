@@ -29,7 +29,7 @@ public class DivisionTests(App app) : TestBase<App>
         // Arrange
         await using var scope = app.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var outlet = await dbContext.Outlet.FirstAsync();
+        var outlet = await dbContext.Outlet.FirstAsync(app.Context.CancellationToken);
         var suffix = Guid.NewGuid().ToString("N");
         var activeDivisionName = $"Test Division GetAll {suffix}";
         var deletedDivisionName = $"Deleted Division {suffix}";
@@ -51,7 +51,7 @@ public class DivisionTests(App app) : TestBase<App>
             IsDeleted = true
         };
         dbContext.Division.Add(deletedDivision);
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(app.Context.CancellationToken);
 
         // Act
         var (rsp, res) = await app.ClientAuth.GETAsync<Pos.Api.Features.Division.GetAll.Endpoint, Pos.Api.Features.Division.GetAll.Request, List<Pos.Api.Entities.Division>>(
@@ -70,7 +70,7 @@ public class DivisionTests(App app) : TestBase<App>
         // (the endpoint is protected by Manager policy)
         await using var scope = app.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-        var outlet = await dbContext.Outlet.FirstAsync();
+        var outlet = await dbContext.Outlet.FirstAsync(app.Context.CancellationToken);
         var duplicateDivisionName = $"Unique Division Name {Guid.NewGuid():N}";
 
         var division1 = new Pos.Api.Entities.Division
@@ -81,7 +81,7 @@ public class DivisionTests(App app) : TestBase<App>
             IsDeleted = false
         };
         dbContext.Division.Add(division1);
-        await dbContext.SaveChangesAsync();
+        await dbContext.SaveChangesAsync(app.Context.CancellationToken);
 
         var division2 = new Pos.Api.Entities.Division
         {
