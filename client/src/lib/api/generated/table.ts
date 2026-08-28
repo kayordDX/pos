@@ -24,8 +24,8 @@ import type {
 	TableCreateRequest,
 	TableGetAvailableParams,
 	TableGetAvailableResponse,
-	TableGetMyBookedParams,
-	TableGetMyBookedResponse,
+	TableGetBookedParams,
+	TableGetBookedResponse,
 	TableUpdateRequest,
 } from "./api.schemas";
 
@@ -113,7 +113,7 @@ export const createTableUpdate = <
 > => {
 	return createMutation(() => ({ ...getTableUpdateMutationOptions(options?.()) }), queryClient);
 };
-export const getTableGetMyBookedUrl = (params: TableGetMyBookedParams) => {
+export const getTableGetBookedUrl = (params: TableGetBookedParams) => {
 	const normalizedParams = new URLSearchParams();
 
 	Object.entries(params || {}).forEach(([key, value]) => {
@@ -127,64 +127,60 @@ export const getTableGetMyBookedUrl = (params: TableGetMyBookedParams) => {
 	return stringifiedParams.length > 0 ? `/table/booked?${stringifiedParams}` : `/table/booked`;
 };
 
-export const tableGetMyBooked = async (
-	params: TableGetMyBookedParams,
+export const tableGetBooked = async (
+	params: TableGetBookedParams,
 	options?: RequestInit
-): Promise<TableGetMyBookedResponse[]> => {
-	return customInstance<TableGetMyBookedResponse[]>(getTableGetMyBookedUrl(params), {
+): Promise<TableGetBookedResponse[]> => {
+	return customInstance<TableGetBookedResponse[]>(getTableGetBookedUrl(params), {
 		...options,
 		method: "GET",
 	});
 };
 
-export const getTableGetMyBookedQueryKey = (params?: TableGetMyBookedParams) => {
+export const getTableGetBookedQueryKey = (params?: TableGetBookedParams) => {
 	return [`/table/booked`, ...(params ? [params] : [])] as const;
 };
 
-export const getTableGetMyBookedQueryOptions = <
-	TData = Awaited<ReturnType<typeof tableGetMyBooked>>,
+export const getTableGetBookedQueryOptions = <
+	TData = Awaited<ReturnType<typeof tableGetBooked>>,
 	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 >(
-	params: TableGetMyBookedParams,
+	params: TableGetBookedParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableGetMyBooked>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableGetBooked>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
 	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getTableGetMyBookedQueryKey(params);
+	const queryKey = queryOptions?.queryKey ?? getTableGetBookedQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableGetMyBooked>>> = () =>
-		tableGetMyBooked(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableGetBooked>>> = () =>
+		tableGetBooked(params, requestOptions);
 
 	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof tableGetMyBooked>>,
+		Awaited<ReturnType<typeof tableGetBooked>>,
 		TError,
 		TData
 	> & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type TableGetMyBookedQueryResult = NonNullable<Awaited<ReturnType<typeof tableGetMyBooked>>>;
-export type TableGetMyBookedQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type TableGetBookedQueryResult = NonNullable<Awaited<ReturnType<typeof tableGetBooked>>>;
+export type TableGetBookedQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export function createTableGetMyBooked<
-	TData = Awaited<ReturnType<typeof tableGetMyBooked>>,
+export function createTableGetBooked<
+	TData = Awaited<ReturnType<typeof tableGetBooked>>,
 	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 >(
-	params: () => TableGetMyBookedParams,
+	params: () => TableGetBookedParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableGetMyBooked>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableGetBooked>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const query = createQuery(
-		() => getTableGetMyBookedQueryOptions(params(), options?.()),
+		() => getTableGetBookedQueryOptions(params(), options?.()),
 		queryClient
 	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

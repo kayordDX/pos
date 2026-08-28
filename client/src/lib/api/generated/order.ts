@@ -20,8 +20,8 @@ import type {
 import type {
 	EntitiesOrderItem,
 	InternalErrorResponse,
-	OrderClearBasketRequest,
 	TableOrderAddItemsRequest,
+	TableOrderClearBasketRequest,
 	TableOrderCopyItemRequest,
 	TableOrderCopyItemResponse,
 	TableOrderGetBasketParams,
@@ -45,172 +45,6 @@ import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-export const getOrderClearBasketWithUrl = () => {
-	return `/order/clearBasket`;
-};
-
-export const orderClearBasketWith_ = async (
-	orderClearBasketWithBody: Blob,
-	options?: RequestInit
-): Promise<EntitiesOrderItem> => {
-	return customInstance<EntitiesOrderItem>(getOrderClearBasketWithUrl(), {
-		...options,
-		method: "DELETE",
-		headers: { "Content-Type": "*/*", ...options?.headers },
-		body: JSON.stringify(orderClearBasketWithBody),
-	});
-};
-
-export const getOrderClearBasketWithMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof orderClearBasketWith_>>,
-		TError,
-		{ data: BodyType<Blob> },
-		TContext
-	>;
-	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof orderClearBasketWith_>>,
-	TError,
-	{ data: BodyType<Blob> },
-	TContext
-> => {
-	const mutationKey = ["orderClearBasketWith"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
-
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof orderClearBasketWith_>>,
-		{ data: BodyType<Blob> }
-	> = (props) => {
-		const { data } = props ?? {};
-
-		return orderClearBasketWith_(data, requestOptions);
-	};
-
-	return { mutationFn, ...mutationOptions };
-};
-
-export type OrderClearBasketWithMutationResult = NonNullable<
-	Awaited<ReturnType<typeof orderClearBasketWith_>>
->;
-export type OrderClearBasketWithMutationBody = BodyType<Blob>;
-export type OrderClearBasketWithMutationError = ErrorType<void | InternalErrorResponse>;
-
-export const createOrderClearBasketWith = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
-	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof orderClearBasketWith_>>,
-			TError,
-			{ data: BodyType<Blob> },
-			TContext
-		>;
-		request?: SecondParameter<typeof customInstance>;
-	},
-	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof orderClearBasketWith_>>,
-	TError,
-	{ data: BodyType<Blob> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getOrderClearBasketWithMutationOptions(options?.()) }),
-		queryClient
-	);
-};
-export const getOrderClearBasketWithJsonUrl = () => {
-	return `/order/clearBasket`;
-};
-
-export const orderClearBasketWithJson = async (
-	orderClearBasketRequest: OrderClearBasketRequest,
-	options?: RequestInit
-): Promise<EntitiesOrderItem> => {
-	return customInstance<EntitiesOrderItem>(getOrderClearBasketWithJsonUrl(), {
-		...options,
-		method: "DELETE",
-		headers: { "Content-Type": "application/json", ...options?.headers },
-		body: JSON.stringify(orderClearBasketRequest),
-	});
-};
-
-export const getOrderClearBasketWithJsonMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof orderClearBasketWithJson>>,
-		TError,
-		{ data: BodyType<OrderClearBasketRequest> },
-		TContext
-	>;
-	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof orderClearBasketWithJson>>,
-	TError,
-	{ data: BodyType<OrderClearBasketRequest> },
-	TContext
-> => {
-	const mutationKey = ["orderClearBasketWithJson"];
-	const { mutation: mutationOptions, request: requestOptions } = options
-		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
-			? options
-			: { ...options, mutation: { ...options.mutation, mutationKey } }
-		: { mutation: { mutationKey }, request: undefined };
-
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof orderClearBasketWithJson>>,
-		{ data: BodyType<OrderClearBasketRequest> }
-	> = (props) => {
-		const { data } = props ?? {};
-
-		return orderClearBasketWithJson(data, requestOptions);
-	};
-
-	return { mutationFn, ...mutationOptions };
-};
-
-export type OrderClearBasketWithJsonMutationResult = NonNullable<
-	Awaited<ReturnType<typeof orderClearBasketWithJson>>
->;
-export type OrderClearBasketWithJsonMutationBody = BodyType<OrderClearBasketRequest>;
-export type OrderClearBasketWithJsonMutationError = ErrorType<void | InternalErrorResponse>;
-
-export const createOrderClearBasketWithJson = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
-	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof orderClearBasketWithJson>>,
-			TError,
-			{ data: BodyType<OrderClearBasketRequest> },
-			TContext
-		>;
-		request?: SecondParameter<typeof customInstance>;
-	},
-	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof orderClearBasketWithJson>>,
-	TError,
-	{ data: BodyType<OrderClearBasketRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getOrderClearBasketWithJsonMutationOptions(options?.()) }),
-		queryClient
-	);
-};
 export const getTableOrderUpdateTableOrderUrl = () => {
 	return `/order/updateTableOrder`;
 };
@@ -868,6 +702,172 @@ export const createTableOrderCopyItem = <
 > => {
 	return createMutation(
 		() => ({ ...getTableOrderCopyItemMutationOptions(options?.()) }),
+		queryClient
+	);
+};
+export const getTableOrderClearBasketWithUrl = () => {
+	return `/order/clearBasket`;
+};
+
+export const tableOrderClearBasketWith_ = async (
+	tableOrderClearBasketWithBody: Blob,
+	options?: RequestInit
+): Promise<EntitiesOrderItem> => {
+	return customInstance<EntitiesOrderItem>(getTableOrderClearBasketWithUrl(), {
+		...options,
+		method: "DELETE",
+		headers: { "Content-Type": "*/*", ...options?.headers },
+		body: JSON.stringify(tableOrderClearBasketWithBody),
+	});
+};
+
+export const getTableOrderClearBasketWithMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof tableOrderClearBasketWith_>>,
+		TError,
+		{ data: BodyType<Blob> },
+		TContext
+	>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof tableOrderClearBasketWith_>>,
+	TError,
+	{ data: BodyType<Blob> },
+	TContext
+> => {
+	const mutationKey = ["tableOrderClearBasketWith"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof tableOrderClearBasketWith_>>,
+		{ data: BodyType<Blob> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderClearBasketWith_(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderClearBasketWithMutationResult = NonNullable<
+	Awaited<ReturnType<typeof tableOrderClearBasketWith_>>
+>;
+export type TableOrderClearBasketWithMutationBody = BodyType<Blob>;
+export type TableOrderClearBasketWithMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createTableOrderClearBasketWith = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: () => {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof tableOrderClearBasketWith_>>,
+			TError,
+			{ data: BodyType<Blob> },
+			TContext
+		>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof tableOrderClearBasketWith_>>,
+	TError,
+	{ data: BodyType<Blob> },
+	TContext
+> => {
+	return createMutation(
+		() => ({ ...getTableOrderClearBasketWithMutationOptions(options?.()) }),
+		queryClient
+	);
+};
+export const getTableOrderClearBasketWithJsonUrl = () => {
+	return `/order/clearBasket`;
+};
+
+export const tableOrderClearBasketWithJson = async (
+	tableOrderClearBasketRequest: TableOrderClearBasketRequest,
+	options?: RequestInit
+): Promise<EntitiesOrderItem> => {
+	return customInstance<EntitiesOrderItem>(getTableOrderClearBasketWithJsonUrl(), {
+		...options,
+		method: "DELETE",
+		headers: { "Content-Type": "application/json", ...options?.headers },
+		body: JSON.stringify(tableOrderClearBasketRequest),
+	});
+};
+
+export const getTableOrderClearBasketWithJsonMutationOptions = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(options?: {
+	mutation?: CreateMutationOptions<
+		Awaited<ReturnType<typeof tableOrderClearBasketWithJson>>,
+		TError,
+		{ data: BodyType<TableOrderClearBasketRequest> },
+		TContext
+	>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<
+	Awaited<ReturnType<typeof tableOrderClearBasketWithJson>>,
+	TError,
+	{ data: BodyType<TableOrderClearBasketRequest> },
+	TContext
+> => {
+	const mutationKey = ["tableOrderClearBasketWithJson"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<
+		Awaited<ReturnType<typeof tableOrderClearBasketWithJson>>,
+		{ data: BodyType<TableOrderClearBasketRequest> }
+	> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderClearBasketWithJson(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderClearBasketWithJsonMutationResult = NonNullable<
+	Awaited<ReturnType<typeof tableOrderClearBasketWithJson>>
+>;
+export type TableOrderClearBasketWithJsonMutationBody = BodyType<TableOrderClearBasketRequest>;
+export type TableOrderClearBasketWithJsonMutationError = ErrorType<void | InternalErrorResponse>;
+
+export const createTableOrderClearBasketWithJson = <
+	TError = ErrorType<void | InternalErrorResponse>,
+	TContext = unknown,
+>(
+	options?: () => {
+		mutation?: CreateMutationOptions<
+			Awaited<ReturnType<typeof tableOrderClearBasketWithJson>>,
+			TError,
+			{ data: BodyType<TableOrderClearBasketRequest> },
+			TContext
+		>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<
+	Awaited<ReturnType<typeof tableOrderClearBasketWithJson>>,
+	TError,
+	{ data: BodyType<TableOrderClearBasketRequest> },
+	TContext
+> => {
+	return createMutation(
+		() => ({ ...getTableOrderClearBasketWithJsonMutationOptions(options?.()) }),
 		queryClient
 	);
 };

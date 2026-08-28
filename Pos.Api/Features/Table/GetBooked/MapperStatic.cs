@@ -1,6 +1,6 @@
 using Riok.Mapperly.Abstractions;
 
-namespace Pos.Api.Features.Table.GetMyBooked;
+namespace Pos.Api.Features.Table.GetBooked;
 
 [Mapper]
 public static partial class MapperStatic

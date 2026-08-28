@@ -10,12 +10,12 @@
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import {
 		createUserUsersType,
-		type TableGetMyBookedResponse,
+		type TableGetBookedResponse,
 		createTableBookingTransfer,
 	} from "$lib/api";
 
 	interface Props {
-		otherTable: TableGetMyBookedResponse;
+		otherTable: TableGetBookedResponse;
 		refetch: () => void;
 	}
 

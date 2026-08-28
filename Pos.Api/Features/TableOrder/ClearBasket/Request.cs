@@ -1,4 +1,4 @@
-namespace Pos.Api.Features.Order.ClearBasket;
+namespace Pos.Api.Features.TableOrder.ClearBasket;
 
 public class Request
 {

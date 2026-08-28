@@ -1,7 +1,7 @@
 <script lang="ts">
 	import Error from "$lib/components/Error.svelte";
 
-	import { createTableGetMyBooked } from "$lib/api";
+	import { createTableGetBooked } from "$lib/api";
 
 	import { Card, Loader, Badge, Avatar } from "@kayord/ui";
 	import { getError } from "$lib/types";
@@ -9,7 +9,7 @@
 	import { getInitials } from "$lib/util";
 	import TransferTable from "./TransferTable.svelte";
 
-	const query = createTableGetMyBooked(() => ({
+	const query = createTableGetBooked(() => ({
 		myBooking: false,
 		outletId: status.value?.outletId ?? 0,
 	}));

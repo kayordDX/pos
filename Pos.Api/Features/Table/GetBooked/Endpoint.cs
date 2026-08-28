@@ -2,18 +2,12 @@ using Pos.Api.Data;
 using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Pos.Api.Features.Table.GetMyBooked;
+namespace Pos.Api.Features.Table.GetBooked;
 
-public class Endpoint : Endpoint<Request, List<Response>>
+public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<Request, List<Response>>
 {
-    private readonly AppDbContext _dbContext;
-    private readonly CurrentUserService _cu;
-
-    public Endpoint(AppDbContext dbContext, CurrentUserService cu)
-    {
-        _dbContext = dbContext;
-        _cu = cu;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
+    private readonly CurrentUserService _cu = cu;
 
     public override void Configure()
     {
@@ -22,8 +16,8 @@ public class Endpoint : Endpoint<Request, List<Response>>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        List<Response> results = new();
-        if (req.myBooking)
+        List<Response> results = [];
+        if (req.MyBooking)
         {
             //current bookings
             results = await _dbContext.TableBooking
@@ -32,7 +26,7 @@ public class Endpoint : Endpoint<Request, List<Response>>
                 .Where(x => x.Table.Section.OutletId == req.OutletId)
                 .OrderBy(x => x.Table.Position)
                 .ProjectToDto()
-                .ToListAsync();
+                .ToListAsync(ct);
         }
         else
         {
@@ -45,8 +39,8 @@ public class Endpoint : Endpoint<Request, List<Response>>
                 .Where(x => x.Table.Section.OutletId == req.OutletId)
                 .OrderBy(x => x.Table.Position)
                 .ProjectToDto()
-                .ToListAsync();
+                .ToListAsync(ct);
         }
-        await Send.OkAsync(results);
+        await Send.OkAsync(results, ct);
     }
 }

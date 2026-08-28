@@ -2,16 +2,11 @@ using Pos.Api.Data;
 using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Pos.Api.Features.Order.ClearBasket;
+namespace Pos.Api.Features.TableOrder.ClearBasket;
 
-public class Endpoint : Endpoint<Request, Pos.Api.Entities.OrderItem>
+public class Endpoint(AppDbContext dbContext) : Endpoint<Request, Pos.Api.Entities.OrderItem>
 {
-    private readonly AppDbContext _dbContext;
-
-    public Endpoint(AppDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
 
     public override void Configure()
     {
@@ -25,11 +20,11 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.OrderItem>
         {
             _dbContext.RemoveRange(entities);
             await _dbContext.SaveChangesAsync(ct);
-            await Send.OkAsync();
+            await Send.OkAsync(ct);
         }
         else
         {
-            await Send.NotFoundAsync();
+            await Send.NotFoundAsync(ct);
         }
     }
 }

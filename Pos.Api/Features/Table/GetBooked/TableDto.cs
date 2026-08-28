@@ -1,4 +1,4 @@
-namespace Pos.Api.Features.Table.GetMyBooked;
+namespace Pos.Api.Features.Table.GetBooked;
 
 public class TableDto
 {

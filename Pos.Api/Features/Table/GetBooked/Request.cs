@@ -1,11 +1,11 @@
 using FluentValidation;
 
-namespace Pos.Api.Features.Table.GetMyBooked;
+namespace Pos.Api.Features.Table.GetBooked;
 
 public class Request
 {
     public int OutletId { get; set; }
-    public bool myBooking { get; set; }
+    public bool MyBooking { get; set; }
 
 }
 

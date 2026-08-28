@@ -404,360 +404,6 @@ export interface BillTableTotal {
 	tipTotal: number;
 }
 
-export interface EntitiesOrderGroup {
-	orderGroupId: number;
-	/** @nullable */
-	orderItems?: EntitiesOrderItem[] | null;
-}
-
-export interface EntitiesSalesPeriod {
-	id: number;
-	/** @nullable */
-	name?: string | null;
-	/** @nullable */
-	startDate?: string | null;
-	/** @nullable */
-	endDate?: string | null;
-	outlet: EntitiesOutlet;
-	outletId: number;
-}
-
-export type EntitiesUser = EntitiesAuditableEntity & {
-	userId: string;
-	email: string;
-	image: string;
-	name: string;
-	isActive: boolean;
-};
-
-export interface EntitiesAdjustmentType {
-	adjustmentTypeId: number;
-	name: string;
-	/** @nullable */
-	description?: string | null;
-}
-
-export interface EntitiesAdjustment {
-	adjustmentId: number;
-	adjustmentType: EntitiesAdjustmentType;
-	adjustmentTypeId: number;
-	created: string;
-	userId: string;
-	amount: number;
-	/** @nullable */
-	note?: string | null;
-}
-
-export type CommonEnumsCashUpUserItemRule =
-	(typeof CommonEnumsCashUpUserItemRule)[keyof typeof CommonEnumsCashUpUserItemRule];
-
-export const CommonEnumsCashUpUserItemRule = {
-	None: 0,
-	PaymentTotal: 1,
-	PaymentTip: 2,
-	PaymentLevy: 3,
-	Adjustment: 4,
-	Config: 5,
-	SalesRevenue: 6,
-	CardPaymentTotal: 7,
-	CardTips: 8,
-} as const;
-
-export interface EntitiesCashUpConfig {
-	id: number;
-	/** @nullable */
-	name?: string | null;
-	outletId: number;
-	value: number;
-}
-
-export interface EntitiesCashUpUserItemType {
-	id: number;
-	itemType: string;
-	isAuto: boolean;
-	affectsGrossBalance: boolean;
-	position: number;
-	cashUpUserItemRule: CommonEnumsCashUpUserItemRule;
-	/** @nullable */
-	paymentTypeId?: number | null;
-	paymentType?: EntitiesPaymentType | null;
-	/** @nullable */
-	adjustmentTypeId?: number | null;
-	adjustmentType?: EntitiesAdjustmentType | null;
-	/** @nullable */
-	cashupConfigId?: number | null;
-	cashupConfig?: EntitiesCashUpConfig | null;
-}
-
-export interface EntitiesCashUpUserItem {
-	id: number;
-	cashUpUserId: number;
-	cashUpUser: EntitiesCashUpUser;
-	userId: string;
-	outletId: number;
-	cashUpUserItemTypeId: number;
-	cashUpUserItemType: EntitiesCashUpUserItemType;
-	value: number;
-}
-
-export interface EntitiesCashUpUser {
-	id: number;
-	userId: string;
-	outletId: number;
-	openingBalance: number;
-	/** @nullable */
-	closingBalance?: number | null;
-	completerUserId: string;
-	/** @nullable */
-	cashUpDate?: string | null;
-	cashUpUserItems: EntitiesCashUpUserItem[];
-	salesPeriodId: number;
-	sales: number;
-	tips: number;
-	payments: number;
-}
-
-export interface EntitiesPayment {
-	id: number;
-	paymentReference: string;
-	tableBookingId: number;
-	tableBooking: EntitiesTableBooking;
-	amount: number;
-	userId: string;
-	/** @nullable */
-	paymentTypeId?: number | null;
-	paymentType: EntitiesPaymentType;
-	dateReceived: string;
-}
-
-export interface EntitiesTableBooking {
-	id: number;
-	tableId: number;
-	table: EntitiesTable;
-	bookingName: string;
-	bookingDate: string;
-	/** @nullable */
-	closeDate?: string | null;
-	salesPeriodId: number;
-	salesPeriod: EntitiesSalesPeriod;
-	userId: string;
-	user: EntitiesUser;
-	/** @nullable */
-	orderItems?: EntitiesOrderItem[] | null;
-	/** @nullable */
-	adjustments?: EntitiesAdjustment[] | null;
-	/** @nullable */
-	cashUpUserId?: number | null;
-	/** @nullable */
-	total?: number | null;
-	/** @nullable */
-	totalTips?: number | null;
-	/** @nullable */
-	totalPayments?: number | null;
-	cashUpUser?: EntitiesCashUpUser | null;
-	/** @nullable */
-	payments?: EntitiesPayment[] | null;
-}
-
-export type EntitiesMenu = EntitiesAuditableEntity & {
-	id: number;
-	name: string;
-	outletId: number;
-	position: number;
-	outlet: EntitiesOutlet;
-	/** @nullable */
-	menuSections?: EntitiesMenuSection[] | null;
-};
-
-export type EntitiesMenuSection = EntitiesAuditableEntity & {
-	menuSectionId: number;
-	name: string;
-	menu: EntitiesMenu;
-	menuId: number;
-	parent?: EntitiesMenuSection | null;
-	/** @nullable */
-	parentId?: number | null;
-	/** @nullable */
-	positionId?: number | null;
-	/** @nullable */
-	subMenuSections?: EntitiesMenuSection[] | null;
-	/** @nullable */
-	menuItems?: EntitiesMenuItem[] | null;
-};
-
-export interface EntitiesBillCategory {
-	id: number;
-	name: string;
-	outletId: number;
-}
-
-/**
- * Represents a lexeme. A lexeme consists of a text string and optional word entry positions.
- */
-export interface NpgsqlTypesNpgsqlTsVectorLexeme {
-	/** Gets or sets the text. */
-	text: string;
-	/** Gets the number of word entry positions. */
-	count: number;
-}
-
-export interface EntitiesTag {
-	tagId: number;
-	name: string;
-}
-
-export type EntitiesDivision = EntitiesAuditableEntity & {
-	divisionId: number;
-	divisionName: string;
-	outletId: number;
-	divisionTypeId: number;
-	isDeleted: boolean;
-};
-
-export interface EntitiesOrderItemOption {
-	orderItemOptionId: number;
-	orderItemId: number;
-	orderItem: EntitiesOrderItem;
-	optionId: number;
-	option: EntitiesOption;
-}
-
-export interface EntitiesOption {
-	optionId: number;
-	name: string;
-	price: number;
-	positionId: number;
-	optionGroupId: number;
-	optionGroup: EntitiesOptionGroup;
-	/** @nullable */
-	orderItemOptions?: EntitiesOrderItemOption[] | null;
-	outletId: number;
-}
-
-export interface EntitiesOptionGroup {
-	optionGroupId: number;
-	name: string;
-	minSelections: number;
-	maxSelections: number;
-	options: EntitiesOption[];
-	/** @nullable */
-	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
-	outletId: number;
-}
-
-export interface EntitiesMenuItemOptionGroup {
-	menuItemId: number;
-	optionGroupId: number;
-	menuItem: EntitiesMenuItem;
-	optionGroup: EntitiesOptionGroup;
-}
-
-export interface EntitiesOrderItemExtra {
-	orderItemExtraId: number;
-	orderItemId: number;
-	orderItem: EntitiesOrderItem;
-	extraId: number;
-	extra: EntitiesExtra;
-}
-
-export interface EntitiesExtra {
-	extraId: number;
-	name: string;
-	positionId: number;
-	price: number;
-	extraGroupId: number;
-	extraGroup: EntitiesExtraGroup;
-	/** @nullable */
-	orderItemExtras?: EntitiesOrderItemExtra[] | null;
-	outletId: number;
-}
-
-export interface EntitiesExtraGroup {
-	extraGroupId: number;
-	name: string;
-	extras: EntitiesExtra[];
-	/** @nullable */
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	outletId: number;
-}
-
-export interface EntitiesMenuItemExtraGroup {
-	menuItemId: number;
-	extraGroupId: number;
-	menuItem: EntitiesMenuItem;
-	extraGroup: EntitiesExtraGroup;
-}
-
-export type EntitiesMenuItem = EntitiesAuditableEntity & {
-	menuItemId: number;
-	menuSection: EntitiesMenuSection;
-	menuSectionId: number;
-	name: string;
-	description: string;
-	/** @nullable */
-	billCategoryId?: number | null;
-	billCategory?: EntitiesBillCategory | null;
-	price: number;
-	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
-	position: number;
-	/** @nullable */
-	tags?: EntitiesTag[] | null;
-	divisionId: number;
-	division: EntitiesDivision;
-	/** @nullable */
-	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
-	/** @nullable */
-	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
-	isAvailable: boolean;
-	isEnabled: boolean;
-	stockPrice: number;
-};
-
-export interface EntitiesOrderItemStatus {
-	orderItemStatusId: number;
-	status: string;
-	assignGroup: boolean;
-	isFrontLine: boolean;
-	isBackOffice: boolean;
-	isComplete: boolean;
-	isCancelled: boolean;
-	isBillable: boolean;
-	isHistory: boolean;
-	isNotify: boolean;
-	priority: number;
-	isUpdateStock: boolean;
-	isUpdateStockReverse: boolean;
-}
-
-export interface EntitiesOrderItem {
-	orderItemId: number;
-	/** @nullable */
-	orderGroupId?: number | null;
-	orderGroup?: EntitiesOrderGroup | null;
-	tableBookingId: number;
-	tableBooking: EntitiesTableBooking;
-	menuItemId: number;
-	menuItem: EntitiesMenuItem;
-	orderReceived: string;
-	orderUpdated: string;
-	/** @nullable */
-	orderCompleted?: string | null;
-	orderItemStatusId: number;
-	orderItemStatus: EntitiesOrderItemStatus;
-	/** @nullable */
-	orderItemOptions?: EntitiesOrderItemOption[] | null;
-	/** @nullable */
-	orderItemExtras?: EntitiesOrderItemExtra[] | null;
-	/** @nullable */
-	note?: string | null;
-	/** @nullable */
-	userId?: string | null;
-}
-
-export interface OrderClearBasketRequest {
-	tableBookingId: number;
-}
-
 export interface TableOrderUpdateTableOrderResponse {
 	isSuccess: boolean;
 }
@@ -1070,6 +716,356 @@ export interface TableOrderGetBillBillOrderItemDTO {
 	note?: string | null;
 }
 
+export interface EntitiesSalesPeriod {
+	id: number;
+	/** @nullable */
+	name?: string | null;
+	/** @nullable */
+	startDate?: string | null;
+	/** @nullable */
+	endDate?: string | null;
+	outlet: EntitiesOutlet;
+	outletId: number;
+}
+
+export type EntitiesUser = EntitiesAuditableEntity & {
+	userId: string;
+	email: string;
+	image: string;
+	name: string;
+	isActive: boolean;
+};
+
+export interface EntitiesOrderGroup {
+	orderGroupId: number;
+	/** @nullable */
+	orderItems?: EntitiesOrderItem[] | null;
+}
+
+export type EntitiesMenu = EntitiesAuditableEntity & {
+	id: number;
+	name: string;
+	outletId: number;
+	position: number;
+	outlet: EntitiesOutlet;
+	/** @nullable */
+	menuSections?: EntitiesMenuSection[] | null;
+};
+
+export type EntitiesMenuSection = EntitiesAuditableEntity & {
+	menuSectionId: number;
+	name: string;
+	menu: EntitiesMenu;
+	menuId: number;
+	parent?: EntitiesMenuSection | null;
+	/** @nullable */
+	parentId?: number | null;
+	/** @nullable */
+	positionId?: number | null;
+	/** @nullable */
+	subMenuSections?: EntitiesMenuSection[] | null;
+	/** @nullable */
+	menuItems?: EntitiesMenuItem[] | null;
+};
+
+export interface EntitiesBillCategory {
+	id: number;
+	name: string;
+	outletId: number;
+}
+
+/**
+ * Represents a lexeme. A lexeme consists of a text string and optional word entry positions.
+ */
+export interface NpgsqlTypesNpgsqlTsVectorLexeme {
+	/** Gets or sets the text. */
+	text: string;
+	/** Gets the number of word entry positions. */
+	count: number;
+}
+
+export interface EntitiesTag {
+	tagId: number;
+	name: string;
+}
+
+export type EntitiesDivision = EntitiesAuditableEntity & {
+	divisionId: number;
+	divisionName: string;
+	outletId: number;
+	divisionTypeId: number;
+	isDeleted: boolean;
+};
+
+export interface EntitiesOrderItemOption {
+	orderItemOptionId: number;
+	orderItemId: number;
+	orderItem: EntitiesOrderItem;
+	optionId: number;
+	option: EntitiesOption;
+}
+
+export interface EntitiesOption {
+	optionId: number;
+	name: string;
+	price: number;
+	positionId: number;
+	optionGroupId: number;
+	optionGroup: EntitiesOptionGroup;
+	/** @nullable */
+	orderItemOptions?: EntitiesOrderItemOption[] | null;
+	outletId: number;
+}
+
+export interface EntitiesOptionGroup {
+	optionGroupId: number;
+	name: string;
+	minSelections: number;
+	maxSelections: number;
+	options: EntitiesOption[];
+	/** @nullable */
+	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
+	outletId: number;
+}
+
+export interface EntitiesMenuItemOptionGroup {
+	menuItemId: number;
+	optionGroupId: number;
+	menuItem: EntitiesMenuItem;
+	optionGroup: EntitiesOptionGroup;
+}
+
+export interface EntitiesOrderItemExtra {
+	orderItemExtraId: number;
+	orderItemId: number;
+	orderItem: EntitiesOrderItem;
+	extraId: number;
+	extra: EntitiesExtra;
+}
+
+export interface EntitiesExtra {
+	extraId: number;
+	name: string;
+	positionId: number;
+	price: number;
+	extraGroupId: number;
+	extraGroup: EntitiesExtraGroup;
+	/** @nullable */
+	orderItemExtras?: EntitiesOrderItemExtra[] | null;
+	outletId: number;
+}
+
+export interface EntitiesExtraGroup {
+	extraGroupId: number;
+	name: string;
+	extras: EntitiesExtra[];
+	/** @nullable */
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	outletId: number;
+}
+
+export interface EntitiesMenuItemExtraGroup {
+	menuItemId: number;
+	extraGroupId: number;
+	menuItem: EntitiesMenuItem;
+	extraGroup: EntitiesExtraGroup;
+}
+
+export type EntitiesMenuItem = EntitiesAuditableEntity & {
+	menuItemId: number;
+	menuSection: EntitiesMenuSection;
+	menuSectionId: number;
+	name: string;
+	description: string;
+	/** @nullable */
+	billCategoryId?: number | null;
+	billCategory?: EntitiesBillCategory | null;
+	price: number;
+	searchVector: NpgsqlTypesNpgsqlTsVectorLexeme[];
+	position: number;
+	/** @nullable */
+	tags?: EntitiesTag[] | null;
+	divisionId: number;
+	division: EntitiesDivision;
+	/** @nullable */
+	menuItemOptionGroups?: EntitiesMenuItemOptionGroup[] | null;
+	/** @nullable */
+	menuItemExtraGroups?: EntitiesMenuItemExtraGroup[] | null;
+	isAvailable: boolean;
+	isEnabled: boolean;
+	stockPrice: number;
+};
+
+export interface EntitiesOrderItemStatus {
+	orderItemStatusId: number;
+	status: string;
+	assignGroup: boolean;
+	isFrontLine: boolean;
+	isBackOffice: boolean;
+	isComplete: boolean;
+	isCancelled: boolean;
+	isBillable: boolean;
+	isHistory: boolean;
+	isNotify: boolean;
+	priority: number;
+	isUpdateStock: boolean;
+	isUpdateStockReverse: boolean;
+}
+
+export interface EntitiesOrderItem {
+	orderItemId: number;
+	/** @nullable */
+	orderGroupId?: number | null;
+	orderGroup?: EntitiesOrderGroup | null;
+	tableBookingId: number;
+	tableBooking: EntitiesTableBooking;
+	menuItemId: number;
+	menuItem: EntitiesMenuItem;
+	orderReceived: string;
+	orderUpdated: string;
+	/** @nullable */
+	orderCompleted?: string | null;
+	orderItemStatusId: number;
+	orderItemStatus: EntitiesOrderItemStatus;
+	/** @nullable */
+	orderItemOptions?: EntitiesOrderItemOption[] | null;
+	/** @nullable */
+	orderItemExtras?: EntitiesOrderItemExtra[] | null;
+	/** @nullable */
+	note?: string | null;
+	/** @nullable */
+	userId?: string | null;
+}
+
+export interface EntitiesAdjustmentType {
+	adjustmentTypeId: number;
+	name: string;
+	/** @nullable */
+	description?: string | null;
+}
+
+export interface EntitiesAdjustment {
+	adjustmentId: number;
+	adjustmentType: EntitiesAdjustmentType;
+	adjustmentTypeId: number;
+	created: string;
+	userId: string;
+	amount: number;
+	/** @nullable */
+	note?: string | null;
+}
+
+export type CommonEnumsCashUpUserItemRule =
+	(typeof CommonEnumsCashUpUserItemRule)[keyof typeof CommonEnumsCashUpUserItemRule];
+
+export const CommonEnumsCashUpUserItemRule = {
+	None: 0,
+	PaymentTotal: 1,
+	PaymentTip: 2,
+	PaymentLevy: 3,
+	Adjustment: 4,
+	Config: 5,
+	SalesRevenue: 6,
+	CardPaymentTotal: 7,
+	CardTips: 8,
+} as const;
+
+export interface EntitiesCashUpConfig {
+	id: number;
+	/** @nullable */
+	name?: string | null;
+	outletId: number;
+	value: number;
+}
+
+export interface EntitiesCashUpUserItemType {
+	id: number;
+	itemType: string;
+	isAuto: boolean;
+	affectsGrossBalance: boolean;
+	position: number;
+	cashUpUserItemRule: CommonEnumsCashUpUserItemRule;
+	/** @nullable */
+	paymentTypeId?: number | null;
+	paymentType?: EntitiesPaymentType | null;
+	/** @nullable */
+	adjustmentTypeId?: number | null;
+	adjustmentType?: EntitiesAdjustmentType | null;
+	/** @nullable */
+	cashupConfigId?: number | null;
+	cashupConfig?: EntitiesCashUpConfig | null;
+}
+
+export interface EntitiesCashUpUserItem {
+	id: number;
+	cashUpUserId: number;
+	cashUpUser: EntitiesCashUpUser;
+	userId: string;
+	outletId: number;
+	cashUpUserItemTypeId: number;
+	cashUpUserItemType: EntitiesCashUpUserItemType;
+	value: number;
+}
+
+export interface EntitiesCashUpUser {
+	id: number;
+	userId: string;
+	outletId: number;
+	openingBalance: number;
+	/** @nullable */
+	closingBalance?: number | null;
+	completerUserId: string;
+	/** @nullable */
+	cashUpDate?: string | null;
+	cashUpUserItems: EntitiesCashUpUserItem[];
+	salesPeriodId: number;
+	sales: number;
+	tips: number;
+	payments: number;
+}
+
+export interface EntitiesTableBooking {
+	id: number;
+	tableId: number;
+	table: EntitiesTable;
+	bookingName: string;
+	bookingDate: string;
+	/** @nullable */
+	closeDate?: string | null;
+	salesPeriodId: number;
+	salesPeriod: EntitiesSalesPeriod;
+	userId: string;
+	user: EntitiesUser;
+	/** @nullable */
+	orderItems?: EntitiesOrderItem[] | null;
+	/** @nullable */
+	adjustments?: EntitiesAdjustment[] | null;
+	/** @nullable */
+	cashUpUserId?: number | null;
+	/** @nullable */
+	total?: number | null;
+	/** @nullable */
+	totalTips?: number | null;
+	/** @nullable */
+	totalPayments?: number | null;
+	cashUpUser?: EntitiesCashUpUser | null;
+	/** @nullable */
+	payments?: EntitiesPayment[] | null;
+}
+
+export interface EntitiesPayment {
+	id: number;
+	paymentReference: string;
+	tableBookingId: number;
+	tableBooking: EntitiesTableBooking;
+	amount: number;
+	userId: string;
+	/** @nullable */
+	paymentTypeId?: number | null;
+	paymentType: EntitiesPaymentType;
+	dateReceived: string;
+}
+
 export interface TableOrderGetBillResponse {
 	orderItems: TableOrderGetBillBillOrderItemDTO[];
 	summaryOrderItems: TableOrderGetBillBillOrderItemDTO[];
@@ -1131,6 +1127,10 @@ export interface TableOrderCopyItemResponse {
 
 export interface TableOrderCopyItemRequest {
 	orderItemId: number;
+}
+
+export interface TableOrderClearBasketRequest {
+	tableBookingId: number;
 }
 
 export interface TableOrderAddItemsOrder {
@@ -1240,29 +1240,29 @@ export interface TableUpdateRequest {
 	position: number;
 }
 
-export interface TableGetMyBookedSectionDto {
+export interface TableGetBookedSectionDto {
 	id: number;
 	name: string;
 }
 
-export interface TableGetMyBookedTableDto {
+export interface TableGetBookedTableDto {
 	tableId: number;
 	name: string;
-	section: TableGetMyBookedSectionDto;
+	section: TableGetBookedSectionDto;
 }
 
-export interface TableGetMyBookedResponse {
+export interface TableGetBookedResponse {
 	id: number;
 	tableId: number;
 	bookingName: string;
 	bookingDate: string;
 	salesPeriodId: number;
 	staffId: number;
-	table: TableGetMyBookedTableDto;
+	table: TableGetBookedTableDto;
 	user: DTOUserDTO;
 }
 
-export interface TableGetMyBookedRequest {
+export interface TableGetBookedRequest {
 	[key: string]: unknown;
 }
 
@@ -3207,7 +3207,7 @@ export type TableBookingHistoryParams = {
 	pageSize?: number | null;
 };
 
-export type TableGetMyBookedParams = {
+export type TableGetBookedParams = {
 	outletId: number;
 	myBooking: boolean;
 };
