@@ -154,7 +154,7 @@
 									{divTypeValue ? divTypeValue : "Select Role Type"}
 								</Select.Trigger>
 								<Select.Content>
-									{#each divTypeList as divType}
+									{#each divTypeList as divType (divType.value)}
 										<Select.Item value={divType.value}>{divType.label}</Select.Item>
 									{/each}
 								</Select.Content>

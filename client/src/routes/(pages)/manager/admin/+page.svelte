@@ -32,7 +32,7 @@
 			</Alert.Root>
 		{:else}
 			<div class="flex flex-col gap-4">
-				{#each query.data ?? [] as printer}
+				{#each query.data ?? [] as printer (printer.id)}
 					<Printer {printer} refetch={query.refetch} canPrint={false} isAdmin={true} />
 				{/each}
 			</div>

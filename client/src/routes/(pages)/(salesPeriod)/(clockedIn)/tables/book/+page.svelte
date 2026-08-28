@@ -3,6 +3,7 @@
 	import { toast } from "@kayord/ui/sonner";
 	import { Form } from "@kayord/ui/form";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { createTableBookingCreate, createTableGetAvailable } from "$lib/api";
@@ -37,7 +38,7 @@
 				},
 			});
 			dialogOpen = false;
-			goto("/waiter");
+			goto(resolve("/waiter"));
 			toast.message("Created new booking");
 		} catch (err) {
 			toast.error(getError(err).message);
@@ -69,7 +70,7 @@
 
 	{#if query.isSuccess}
 		<div class="mt-4 flex w-full flex-wrap gap-4">
-			{#each query.data as table}
+			{#each query.data as table (table.tableId)}
 				<button class="w-full text-start md:max-w-md" onclick={() => selectTable(table.tableId)}>
 					<Card.Root class="gap-0 p-4">
 						<div class="flex justify-between gap-2">

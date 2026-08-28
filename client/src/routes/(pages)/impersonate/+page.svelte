@@ -3,6 +3,7 @@
 	import { Card } from "@kayord/ui";
 	import { signInCustomToken } from "$lib/firebase.svelte";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 
 	const query = createUserUsers(() => ({ pageSize: 100 }));
 
@@ -18,13 +19,13 @@
 		const result = await signInCustomToken(token);
 		console.log("result", result);
 
-		goto("/");
+		goto(resolve("/"));
 	};
 </script>
 
 <div class="m-2">
 	<div class="flex flex-col gap-2">
-		{#each data as user}
+		{#each data as user (user.userId)}
 			<button onclick={() => impersonate(user.userId)}>
 				<Card.Root class="p-2">
 					{user.name}

@@ -6,6 +6,7 @@
 	import { HubConnectionState } from "@microsoft/signalr";
 	import { signInCustomToken } from "$lib/firebase.svelte";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 
 	let init = $state(false);
 	let open = $state(false);
@@ -40,7 +41,7 @@
 
 			try {
 				await signInCustomToken(deviceAuthEvent.token);
-				goto("/");
+				goto(resolve("/"));
 			} catch (err) {
 				toast.error("Could not login");
 				console.error(err);

@@ -11,6 +11,7 @@
 	import AddItem from "./AddItem.svelte";
 	import { BookUpIcon } from "@lucide/svelte";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import CashUpItemManual from "./CashUpItemManual.svelte";
 
 	const query = createCashUpUserDetail(
@@ -31,7 +32,7 @@
 			if (response.isError) {
 				toast.error(response.message);
 			} else {
-				await goto("/manager/cashUp");
+				await goto(resolve("/manager/cashUp"));
 			}
 		} catch (error) {
 			toast.error(getError(error).message);
@@ -75,7 +76,7 @@
 			<Card.Content>
 				<div class="mt-5 text-left font-semibold">Cash Up Items</div>
 				<div class="mt-2 flex flex-col items-center gap-2">
-					{#each autoItems as item}
+					{#each autoItems as item (item.id)}
 						<CashUpItem {item} />
 					{/each}
 				</div>
@@ -92,7 +93,7 @@
 							<span>R {query.data.grossBalance.toFixed(2)}</span>
 						</li>
 						<div class="flex flex-col items-center gap-2">
-							{#each manualItems as item}
+							{#each manualItems as item (item.id)}
 								<CashUpItemManual {item} refetch={query.refetch} />
 							{/each}
 						</div>

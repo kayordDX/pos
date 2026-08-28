@@ -12,7 +12,7 @@
 </script>
 
 <ul class="grid gap-3">
-	{#each data as item}
+	{#each data as item (item.orderItemId)}
 		<li class="flex items-center justify-between">
 			<span class="text-muted-foreground">
 				<!-- {#if showDetail}
@@ -21,14 +21,14 @@
 					</div>
 				{/if} -->
 				<div class="line-clamp-1">{item.quantity} {item.menuItem.name}</div>
-				{#each item.orderItemOptions ?? [] as option}
+				{#each item.orderItemOptions ?? [] as option (option.orderItemOptionId)}
 					<div class="ml-4 flex items-center gap-1">
 						&gt;
 						<span>{option.option.optionGroup.name}:</span>
 						<span>{option.option.name}</span>
 					</div>
 				{/each}
-				{#each item.orderItemExtras ?? [] as extra}
+				{#each item.orderItemExtras ?? [] as extra (extra.orderItemExtraId)}
 					<div class="ml-4 flex items-center gap-1">
 						+
 						<span class="font-light">{extra.extra.extraGroup.name}:</span>
@@ -44,10 +44,10 @@
 					{item.menuItem.price.toFixed(2)}
 					<span class="text-foreground font-semibold">{item.total.toFixed(2)}</span>
 					<div>
-						{#each item.orderItemOptions ?? [] as option}
+						{#each item.orderItemOptions ?? [] as option (option.orderItemOptionId)}
 							<div>{option.option.price.toFixed(2)}</div>
 						{/each}
-						{#each item.orderItemExtras ?? [] as extra}
+						{#each item.orderItemExtras ?? [] as extra (extra.orderItemExtraId)}
 							<div>{extra.extra.price.toFixed(2)}</div>
 						{/each}
 					</div>

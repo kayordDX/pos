@@ -8,6 +8,7 @@
 	import { createUserAssignOutlet, createOutletGetAllAssigned } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { status } from "$lib/stores/status.svelte";
 	import { menu } from "$lib/stores/menu.svelte";
 
@@ -32,7 +33,7 @@
 				if (!status.isLoading) {
 					await status.getStatus();
 				}
-				await goto("/", { replaceState: true, invalidateAll: true });
+				await goto(resolve("/"), { replaceState: true, invalidateAll: true });
 			} else {
 				toast.error("Could not set outlet");
 			}
@@ -78,7 +79,7 @@
 								{outletList}
 							</Select.Trigger>
 							<Select.Content>
-								{#each query.data ?? [] as outlet}
+								{#each query.data ?? [] as outlet (outlet.id)}
 									<Select.Item value={outlet.id.toString()}>{outlet.name}</Select.Item>
 								{/each}
 							</Select.Content>

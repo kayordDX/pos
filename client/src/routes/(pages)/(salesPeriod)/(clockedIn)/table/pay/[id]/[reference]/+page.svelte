@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { page } from "$app/state";
 	import Error from "$lib/components/Error.svelte";
 	import { payment } from "$lib/stores/payment.svelte";
@@ -25,11 +26,11 @@
 	);
 
 	const paymentDone = (amount: number) => {
-		goto(`/table/pay/${page.params.id}/done?amount=${amount}`);
+		goto(resolve(`/table/pay/${page.params.id}/done?amount=${amount}`));
 	};
 
 	const cancelPayment = () => {
-		goto(`/table/bill/${page.params.id}`);
+		goto(resolve(`/table/bill/${page.params.id}`));
 	};
 
 	const paymentCheck = () => {
@@ -43,7 +44,7 @@
 	});
 </script>
 
-<a class="hidden" href="/" bind:this={a}>Halo</a>
+<a class="hidden" href={resolve("/")} bind:this={a}>Halo</a>
 
 <Card.Root class="m-8">
 	<Card.Header class="flex flex-row items-center gap-2">

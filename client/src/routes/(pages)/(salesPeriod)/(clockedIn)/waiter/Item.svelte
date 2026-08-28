@@ -49,7 +49,7 @@
 				<div class="text-muted-foreground mt-2">
 					Options
 					<div class="ml-4">
-						{#each item.orderItemOptions ?? [] as option}
+						{#each item.orderItemOptions ?? [] as option (option.orderItemOptionId)}
 							<div>
 								<span class="text-foreground">{option.option.optionGroup.name}:</span>
 								<span>{option.option.name}</span>
@@ -63,7 +63,7 @@
 				<div class="text-muted-foreground mt-2">
 					Extras
 					<div class="ml-4">
-						{#each item.orderItemExtras ?? [] as extra}
+						{#each item.orderItemExtras ?? [] as extra (extra.orderItemExtraId)}
 							<div>
 								<span class="text-foreground">{extra.extra.extraGroup.name}:</span>
 								<span> {extra.extra.name}</span>

@@ -4,6 +4,7 @@
 	import { toast } from "@kayord/ui/sonner";
 	import { createTableBookingClose, createPayCheck } from "$lib/api";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { stringToFDate } from "$lib/util";
@@ -31,7 +32,7 @@
 		try {
 			const result = await closeTableMut.mutateAsync({ data: { tableBookingId: bookingId } });
 			if (result.id) {
-				goto("/waiter");
+				goto(resolve("/waiter"));
 			}
 		} catch (error) {
 			toast.error(getError(error).message);
@@ -106,7 +107,7 @@
 						<span>Adjustments</span>
 						<span></span>
 					</li>
-					{#each data?.adjustments ?? [] as adjustment}
+					{#each data?.adjustments ?? [] as adjustment (adjustment.adjustmentId)}
 						<li class="flex items-center justify-between">
 							<span class="text-muted-foreground">{adjustment.adjustmentType.name}</span>
 							<span>{adjustment.amount.toFixed(2)}</span>
@@ -142,7 +143,7 @@
 			<div class="grid gap-3">
 				<div class="font-semibold">Payments</div>
 				<dl class="grid gap-3">
-					{#each data.paymentsReceived as payment}
+					{#each data.paymentsReceived as payment (payment.id)}
 						<div class="flex items-center justify-between">
 							<div class="text-muted-foreground flex w-full items-center justify-start gap-1">
 								<PaymentTypeIcon type={payment.paymentType.paymentTypeName} />

@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { page } from "$app/state";
 	import { Header } from "$lib/components/Header";
 	import { Button, Sidebar } from "@kayord/ui";
@@ -54,7 +55,7 @@
 		{#if showSidebar}
 			<div class="bg-secondary fixed top-0 bottom-0 left-0 z-0 flex w-14 flex-col justify-between">
 				<div class="flex flex-col gap-4 p-2">
-					<button class="bg-background flex items-center rounded-full p-2" onclick={() => goto("/")}>
+					<button class="bg-background flex items-center rounded-full p-2" onclick={() => goto(resolve("/"))}>
 						<img src="/logo.svg" alt="logo" class="h-6" />
 					</button>
 					{#each menuItems.top as item (item)}

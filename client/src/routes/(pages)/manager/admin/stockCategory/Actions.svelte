@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
 	import { Trash2Icon, PencilIcon, TableIcon, EllipsisVerticalIcon } from "@lucide/svelte";
@@ -40,7 +41,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item onclick={() => goto(`/manager/admin/stockCategory/${category.id}`)}>
+		<DropdownMenu.Item onclick={() => goto(resolve(`/manager/admin/stockCategory/${category.id}`))}>
 			<TableIcon /> View Child Categories
 		</DropdownMenu.Item>
 		<DropdownMenu.Item onclick={() => (editOpen = true)}>

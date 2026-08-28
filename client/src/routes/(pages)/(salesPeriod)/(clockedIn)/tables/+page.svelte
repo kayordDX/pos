@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from "$app/paths";
 	import Error from "$lib/components/Error.svelte";
 
 	import { createTableGetBooked } from "$lib/api";
@@ -28,7 +29,7 @@
 			<p class="text-muted-foreground">Tables assigned to other waiters</p>
 			<div class="mt-4 flex w-full flex-wrap gap-4">
 				{#each query.data as otherTable (otherTable.id)}
-					<a href={`/table/menu/${otherTable.id}`} class="w-full">
+					<a href={resolve(`/table/menu/${otherTable.id}`)} class="w-full">
 						<Card.Root class="w-full gap-1 p-5">
 							<div class="line-clamp-1 flex items-center justify-between gap-2">
 								<h3>{otherTable.table.name}</h3>

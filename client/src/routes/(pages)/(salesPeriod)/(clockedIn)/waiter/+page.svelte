@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from "$app/paths";
 	import { Card, Button, Badge, Loader } from "@kayord/ui";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
@@ -50,7 +51,7 @@
 
 		<div class="mt-4 flex flex-col flex-wrap items-start gap-2">
 			{#each query.data ?? [] as myTable (myTable.id)}
-				<a href={`/table/menu/${myTable.id}`} class="w-full">
+				<a href={resolve(`/table/menu/${myTable.id}`)} class="w-full">
 					<Card.Root class="w-full gap-1 p-5">
 						<div class="flex justify-between">
 							<h3>{myTable?.table?.name}</h3>

@@ -23,7 +23,7 @@
 			</Alert.Root>
 		{:else}
 			<div class="flex flex-col gap-4">
-				{#each query.data ?? [] as config}
+				{#each query.data ?? [] as config (config.id)}
 					<Config {config} refetch={query.refetch} />
 				{/each}
 			</div>

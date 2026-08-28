@@ -19,7 +19,7 @@
 {/if}
 {#if query.data}
 	<div class="flex flex-col gap-2">
-		{#each query.data.tables ?? [] as tableOrder}
+		{#each query.data.tables ?? [] as tableOrder (tableOrder.id)}
 			<Card.Root class="p-4">
 				<div class="flex items-center justify-between">
 					<div class="flex items-center gap-2">
@@ -33,7 +33,7 @@
 					</div>
 				</div>
 				<div class="mt-2 flex flex-col gap-2">
-					{#each tableOrder.orderItems ?? [] as item}
+					{#each tableOrder.orderItems ?? [] as item (item.orderItemId)}
 						<Item {item} refetch={query.refetch} />
 					{/each}
 				</div>

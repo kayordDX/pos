@@ -4,6 +4,7 @@
 	import { Command, Popover, Button, Badge } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { page } from "$app/state";
 
 	type Props<TData, TValue> = {
@@ -23,7 +24,7 @@
 	$effect(() => {
 		if (page.params.divisionIds != selected.join(",")) {
 			const ids = selected.length > 0 ? selected.join(",") : "0";
-			const url = isHistory ? `/backOffice/${ids ?? "0"}/history` : `/backOffice/${ids}`;
+			const url = isHistory ? resolve(`/backOffice/${ids}/history`) : resolve(`/backOffice/${ids}`);
 			goto(url, { keepFocus: true });
 		}
 	});
@@ -39,7 +40,7 @@
 						{selected.length}
 					</Badge>
 					<div class="hidden space-x-1 lg:flex">
-						{#each options.filter((opt) => selected.includes(opt.value)) as option}
+						{#each options.filter((opt) => selected.includes(opt.value)) as option (option.value)}
 							<Badge variant="secondary" class="h-4 rounded-sm px-1 py-1 font-normal">
 								{option.label}
 							</Badge>
@@ -55,7 +56,7 @@
 			<Command.List>
 				<Command.Empty>No results found.</Command.Empty>
 				<Command.Group>
-					{#each options as option}
+					{#each options as option (option.value)}
 						{@const isSelected = selected.includes(option.value)}
 						<Command.Item
 							onSelect={() => {
