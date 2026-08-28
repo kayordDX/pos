@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import AddEditDivision from "./AddEditDivision.svelte";
 
 	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
@@ -39,7 +40,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item onclick={() => goto(`/manager/admin/divisions/${division.divisionId}`)}>
+		<DropdownMenu.Item onclick={() => goto(resolve(`/manager/admin/divisions/${division.divisionId}`))}>
 			<TableIcon /> View Roles
 		</DropdownMenu.Item>
 		<DropdownMenu.Item onclick={() => (editOpen = true)}>

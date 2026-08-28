@@ -23,7 +23,7 @@
 			</Alert.Root>
 		{:else}
 			<div class="flex flex-col gap-4">
-				{#each enabledPrinters as printer}
+				{#each enabledPrinters as printer (printer.id)}
 					<Printer {printer} refetch={query.refetch} canPrint={true} />
 				{/each}
 			</div>

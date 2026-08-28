@@ -194,7 +194,7 @@
 									{fromDivisionSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each fromDivisions ?? [] as result}
+									{#each fromDivisions ?? [] as result (result.divisionId)}
 										<Select.Item value={result.divisionId.toString()}>
 											{result.divisionName}
 										</Select.Item>
@@ -220,7 +220,7 @@
 									{toDivisionSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each toDivisions ?? [] as result}
+									{#each toDivisions ?? [] as result (result.divisionId)}
 										<Select.Item value={result.divisionId.toString()}>
 											{result.divisionName}
 										</Select.Item>

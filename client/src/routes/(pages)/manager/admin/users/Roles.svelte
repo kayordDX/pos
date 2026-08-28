@@ -12,7 +12,7 @@
 </script>
 
 <div class="flex gap-2">
-	{#each rolesArray as role}
+	{#each rolesArray as role (role)}
 		<Role {role} {refetch} {userId} />
 	{/each}
 </div>

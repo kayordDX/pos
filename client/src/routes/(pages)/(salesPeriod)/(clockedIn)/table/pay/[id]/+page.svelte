@@ -8,6 +8,7 @@
 	import { page } from "$app/state";
 	import { createPayManualPayment, createOutletGetPaymentType, payGetLink } from "$lib/api";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { payment } from "$lib/stores/payment.svelte";
 	import { onMount } from "svelte";
 	import { status } from "$lib/stores/status.svelte";
@@ -42,7 +43,7 @@
 			url = linkResult.value.url;
 			reference = linkResult.value.reference;
 			payment.setUrl(url);
-			goto(`/table/pay/${page.params.id}/${reference}?url=${url}`);
+			goto(resolve(`/table/pay/${page.params.id}/${reference}?url=${url}`));
 		} else {
 			toast.error("Could not start payment");
 		}
@@ -58,7 +59,7 @@
 				paymentTypeId: manualData.paymentTypeId,
 			},
 		});
-		goto(`/table/bill/${page.params.id}`);
+		goto(resolve(`/table/bill/${page.params.id}`));
 	};
 
 	const form = superForm(defaults(zod4(schema)), {
@@ -123,7 +124,7 @@
 								{paymentTypeSelect}
 							</Select.Trigger>
 							<Select.Content>
-								{#each paymentTypeQuery.data ?? [] as paymentType}
+								{#each paymentTypeQuery.data ?? [] as paymentType (paymentType.paymentTypeId)}
 									<Select.Item value={paymentType.paymentTypeId.toString()}>{paymentType.paymentTypeName}</Select.Item>
 								{/each}
 							</Select.Content>

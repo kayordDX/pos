@@ -136,7 +136,7 @@
 									{unitSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each units ?? [] as result}
+									{#each units ?? [] as result (result.id)}
 										<Select.Item value={result.id.toString()}>
 											{result.name}
 										</Select.Item>
@@ -162,7 +162,7 @@
 									{categorySelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each category ?? [] as result}
+									{#each category ?? [] as result (result.id)}
 										<Select.Item value={result.id.toString()}>
 											{result.displayName}
 										</Select.Item>

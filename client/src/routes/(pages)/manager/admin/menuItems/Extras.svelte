@@ -34,7 +34,7 @@
 			<CirclePlusIcon class="size-4" /> Extra Groups
 		</Button>
 		<div class="mt-2 flex flex-wrap gap-2">
-			{#each extras as current}
+			{#each extras as current (current)}
 				<button
 					onclick={(e) => {
 						removeItem(current);
@@ -56,7 +56,7 @@
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Extras Groups">
-			{#each query.data ?? [] as extraGroup}
+			{#each query.data ?? [] as extraGroup (extraGroup.extraGroupId)}
 				<Command.Item onSelect={() => selectItem(extraGroup.extraGroupId)}>
 					<div class="flex w-full flex-row items-center justify-between">
 						<div class="overflow-hidden text-ellipsis whitespace-nowrap">

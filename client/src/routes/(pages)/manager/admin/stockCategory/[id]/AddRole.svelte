@@ -69,7 +69,7 @@
 							>
 								<Select.Trigger {...props}>{roleSelect}</Select.Trigger>
 								<Select.Content>
-									{#each rolesQuery.data ?? [] as item}
+									{#each rolesQuery.data ?? [] as item (item.roleId)}
 										<Select.Item value={item.roleId.toString()} label={item.name}>{item.name}</Select.Item>
 									{/each}
 								</Select.Content>

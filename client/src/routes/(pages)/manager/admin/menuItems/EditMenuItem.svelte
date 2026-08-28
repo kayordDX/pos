@@ -228,7 +228,7 @@
 									{menuValue ? menuValue : "Select Menu"}
 								</Select.Trigger>
 								<Select.Content>
-									{#each menuList as menu}
+									{#each menuList as menu (menu.value)}
 										<Select.Item value={menu.value}>{menu.label}</Select.Item>
 									{/each}
 								</Select.Content>
@@ -251,7 +251,7 @@
 									{sectionValue ? sectionValue : "Select Section"}
 								</Select.Trigger>
 								<Select.Content>
-									{#each sectionList as section}
+									{#each sectionList as section (section.value)}
 										<Select.Item value={section.value}>{section.label}</Select.Item>
 									{/each}
 								</Select.Content>
@@ -274,7 +274,7 @@
 									{divisionValue ? divisionValue : "Select Division"}
 								</Select.Trigger>
 								<Select.Content>
-									{#each divisionList as division}
+									{#each divisionList as division (division.value)}
 										<Select.Item value={division.value}>{division.label}</Select.Item>
 									{/each}
 								</Select.Content>
@@ -297,7 +297,7 @@
 									{billCategoryValue ? billCategoryValue : "Select Bill Category"}
 								</Select.Trigger>
 								<Select.Content>
-									{#each billCatList as cat}
+									{#each billCatList as cat (cat.value)}
 										<Select.Item value={cat.value}>{cat.label}</Select.Item>
 									{/each}
 								</Select.Content>

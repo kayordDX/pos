@@ -128,7 +128,7 @@
 				<h3 class="font-bold">Options</h3>
 			{/if}
 			<Fieldset {form} name="options" class="mt-2">
-				{#each data.menuItemOptionGroups as optionGroup}
+				{#each data.menuItemOptionGroups as optionGroup (optionGroup.optionGroupId)}
 					<Legend>
 						{optionGroup.optionGroup.name}
 						{optionGroup.optionGroup.minSelections > 0 ? "*" : ""} -
@@ -137,7 +137,7 @@
 						</span>
 					</Legend>
 
-					{#each optionGroup.optionGroup.options as option}
+					{#each optionGroup.optionGroup.options as option (option.optionId)}
 						{@const checked = $formData.options.includes(option.optionId)}
 						<div class="flex items-center gap-2 p-1">
 							<Control>
@@ -169,10 +169,10 @@
 			{#if data.menuItemExtraGroups.length > 0}
 				<h3 class="font-bold">Extras</h3>
 			{/if}
-			{#each data.menuItemExtraGroups as extraGroup}
+			{#each data.menuItemExtraGroups as extraGroup (extraGroup.extraGroupId)}
 				<Fieldset {form} name="extras" class="mt-2">
 					<Legend>{extraGroup.extraGroup.name}</Legend>
-					{#each extraGroup.extraGroup.extras as extra}
+					{#each extraGroup.extraGroup.extras as extra (extra.extraId)}
 						{@const checked = $formData.extras.includes(extra.extraId)}
 						<div class="flex items-center gap-2 p-1">
 							<Control>

@@ -2,18 +2,19 @@
 	import { Button, Loader } from "@kayord/ui";
 	import { status } from "$lib/stores/status.svelte";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { Header } from "$lib/components/Header";
 
 	let init = $state(false);
 
 	const redirect = async () => {
 		if (status.value.roles.length == 0 || (status.value.roles.length == 1 && status.hasRole("guest"))) {
-			await goto("/guest");
+			await goto(resolve("/guest"));
 		} else if (status.value.roles.length == 1) {
 			if (status.hasRole("front")) {
-				await goto("/waiter");
+				await goto(resolve("/waiter"));
 			} else if (status.hasRole("manager")) {
-				await goto("/manager");
+				await goto(resolve("/manager"));
 			}
 		}
 		init = true;
@@ -38,7 +39,7 @@
 		{/if}
 		{#if status.hasRole("back")}
 			<div class="border-muted flex flex-col gap-2 rounded-md border-1 border-dashed p-2">
-				{#each status.value.divisions as division}
+				{#each status.value.divisions as division (division.id)}
 					<Button href={`/backOffice/${division.id}`} class="w-full" variant="outline">
 						{division.name}
 					</Button>

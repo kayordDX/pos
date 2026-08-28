@@ -39,7 +39,7 @@
 		<CirclePlusIcon class="mr-2 size-4" /> More Extras
 	</Button>
 	<div class="mt-2 flex flex-wrap gap-2">
-		{#each currentExtras as current}
+		{#each currentExtras as current (current)}
 			<button
 				onclick={(e) => {
 					removeItem(current);
@@ -60,7 +60,7 @@
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Special Extras">
-			{#each query.data ?? [] as extra}
+			{#each query.data ?? [] as extra (extra.extraId)}
 				<Command.Item onSelect={() => selectItem(extra.extraId)} disabled={!extra.isAvailable} class={!extra.isAvailable ? "text-muted" : ""}>
 					<div class="flex w-full flex-row items-center justify-between">
 						<div class="overflow-hidden text-ellipsis whitespace-nowrap">

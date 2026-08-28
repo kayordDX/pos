@@ -4,6 +4,7 @@
 	import { Button } from "@kayord/ui";
 	import { createSalesPeriodCreate } from "$lib/api";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { status } from "$lib/stores/status.svelte";
 
 	let name: string = $state("");
@@ -17,7 +18,7 @@
 			});
 			await status.getStatus();
 			toast.success("Successfully opened sales period");
-			await goto("/", { invalidateAll: true });
+			await goto(resolve("/"), { invalidateAll: true });
 		} catch (err) {
 			toast.error("Error opening sales period");
 		}

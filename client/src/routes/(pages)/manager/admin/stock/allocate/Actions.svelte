@@ -3,6 +3,7 @@
 	import { ViewIcon } from "@lucide/svelte";
 	import { type DTOStockAllocateDTO } from "$lib/api";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 
 	interface Props {
 		refetch: () => void;
@@ -17,7 +18,7 @@
 		{
 			icon: ViewIcon,
 			text: "View",
-			action: () => goto(`/manager/admin/stock/allocate/${stockAllocate.id}`),
+			action: () => goto(resolve(`/manager/admin/stock/allocate/${stockAllocate.id}`)),
 		},
 	]}
 />

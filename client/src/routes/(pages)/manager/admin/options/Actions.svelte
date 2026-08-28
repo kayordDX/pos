@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import type { DTOOptionGroupBasicDTO } from "$lib/api";
 	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
@@ -38,7 +39,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item onclick={() => goto(`/manager/admin/options/${optionGroup.optionGroupId}`)}>
+		<DropdownMenu.Item onclick={() => goto(resolve(`/manager/admin/options/${optionGroup.optionGroupId}`))}>
 			<ListCollapseIcon /> Options
 		</DropdownMenu.Item>
 		<DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>

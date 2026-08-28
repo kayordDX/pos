@@ -6,6 +6,7 @@
 	import { ChefHatIcon } from "@lucide/svelte";
 	import { createTableOrderGetBasket, createTableOrderSendToKitchen, createTableOrderUpdateOrderItem } from "$lib/api";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { page } from "$app/state";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod4 } from "sveltekit-superforms/adapters";
@@ -55,7 +56,7 @@
 				},
 			});
 			if (result.isSuccess) {
-				goto(`/table/menu/${page.params.id}`);
+				goto(resolve(`/table/menu/${page.params.id}`));
 			} else {
 				toast.error(result.message);
 				refetch();

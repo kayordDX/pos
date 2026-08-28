@@ -34,7 +34,7 @@
 			<CirclePlusIcon class="size-4" /> Option Groups
 		</Button>
 		<div class="mt-2 flex flex-wrap gap-2">
-			{#each options as current}
+			{#each options as current (current)}
 				<button
 					onclick={(e) => {
 						removeItem(current);
@@ -56,7 +56,7 @@
 	<Command.List>
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Option Groups">
-			{#each query.data ?? [] as optionGroup}
+			{#each query.data ?? [] as optionGroup (optionGroup.optionGroupId)}
 				<Command.Item onSelect={() => selectItem(optionGroup.optionGroupId)}>
 					<div class="flex w-full flex-row items-center justify-between">
 						<div class="overflow-hidden text-ellipsis whitespace-nowrap">

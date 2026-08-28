@@ -10,6 +10,7 @@
 	import { page } from "$app/state";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { CheckIcon, XIcon } from "@lucide/svelte";
 
 	const bookingId = Number(page.params.id);
@@ -20,7 +21,7 @@
 	const canWhatsapp = $derived(query.data?.success ?? false);
 
 	const goBack = () => {
-		goto(`/table/bill/${bookingId}`);
+		goto(resolve(`/table/bill/${bookingId}`));
 	};
 
 	const schema = z.object({

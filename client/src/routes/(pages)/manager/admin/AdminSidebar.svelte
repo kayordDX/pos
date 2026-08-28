@@ -259,7 +259,7 @@
 														<Sidebar.MenuSubButton
 															class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground cursor-pointer rounded-sm"
 															onclick={() => {
-																goto(subItem.href);
+																goto(resolve(subItem.href as "/"));
 																if (sidebar.isMobile) {
 																	sidebar.setOpenMobile(false);
 																}
@@ -286,7 +286,7 @@
 										hidden: false,
 									}}
 									onclick={() => {
-										goto(item.href);
+										goto(resolve(item.href as "/"));
 										if (sidebar.isMobile) {
 											sidebar.setOpenMobile(false);
 										}

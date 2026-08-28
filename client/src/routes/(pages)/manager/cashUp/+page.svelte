@@ -8,6 +8,7 @@
 	import CashUpUser from "./CashUpUser.svelte";
 	import { CalendarClockIcon, CheckIcon } from "@lucide/svelte";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 
 	const query = createCashUpUserGet(() => status.value.outletId);
 
@@ -17,7 +18,7 @@
 		try {
 			await mutation.mutateAsync({ data: { salesPeriodId: status.value.salesPeriodId } });
 			await status.getStatus();
-			await goto("/manager");
+			await goto(resolve("/manager"));
 		} catch (ex) {
 			toast.error(getError(ex).message);
 		}
@@ -58,7 +59,7 @@
 		{/if}
 		<!-- <CashUpSummary /> -->
 		<div class="flex flex-col items-center gap-2">
-			{#each query.data.items as cash}
+			{#each query.data.items as cash (cash.userId)}
 				<CashUpUser {cash} />
 			{/each}
 		</div>

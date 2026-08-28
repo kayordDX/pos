@@ -5,6 +5,7 @@
 	import { createStockOrderCancel, type DTOStockOrderResponseDTO } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { status } from "$lib/stores/status.svelte";
 
 	interface Props {
@@ -40,7 +41,7 @@
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
-		<DropdownMenu.Item onclick={() => goto(`/manager/admin/stock/orders/${stockOrder.id}`)}>
+		<DropdownMenu.Item onclick={() => goto(resolve(`/manager/admin/stock/orders/${stockOrder.id}`))}>
 			<ViewIcon /> View
 		</DropdownMenu.Item>
 		{#if showCancel}

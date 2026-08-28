@@ -10,6 +10,7 @@
 	import { page } from "$app/state";
 	import { getError } from "$lib/types";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 
 	interface Props {
 		bookingId: number;
@@ -19,7 +20,7 @@
 	const mutation = createBillEmailBill();
 
 	const goBack = () => {
-		goto(`/table/bill/${bookingId}`);
+		goto(resolve(`/table/bill/${bookingId}`));
 	};
 
 	const schema = z.object({

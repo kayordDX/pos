@@ -55,7 +55,7 @@
 </div>
 
 <div class="m-2 flex flex-wrap items-start justify-start gap-2 rounded-md p-2">
-	{#each colors as color}
+	{#each colors as color (color)}
 		<div class="flex items-center gap-2">
 			<div style={"background-color: var(--color-" + color + ");"} class="size-7 rounded-md"></div>
 			<div>{color}</div>
@@ -64,7 +64,7 @@
 </div>
 
 <div class="m-2 flex flex-wrap items-start justify-start gap-2 rounded-md p-2">
-	{#each colors2 as color}
+	{#each colors2 as color (color)}
 		<div class="flex items-center gap-2">
 			<div style={"background-color: var(--" + color + ");"} class="size-7 rounded-md"></div>
 			<div>{color}</div>
