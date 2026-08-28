@@ -1,0 +1,49 @@
+using Kayord.Pos.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace Kayord.Pos.Features.Stock.OrderItem.LastPrice;
+
+public class Endpoint : Endpoint<Request, Response>
+{
+    private readonly AppDbContext _dbContext;
+
+    public Endpoint(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public override void Configure()
+    {
+        Get("/stock/orderItem/lastPrice");
+        Policies(Constants.Policy.Manager);
+    }
+
+    public override async Task HandleAsync(Request req, CancellationToken ct)
+    {
+        decimal amount = _dbContext.StockItem
+            .Where(x => x.StockId == req.StockId)
+            .Sum(x => x.Actual);
+
+        decimal result = 0;
+        var entity = await _dbContext.StockOrderItem
+            .AsNoTracking()
+            .Where(x => x.StockOrderId < req.StockOrderId && x.StockId == req.StockId && x.StockOrderItemStatusId == 2)
+            .OrderByDescending(x => x.Created)
+            .FirstOrDefaultAsync(ct);
+
+        if (entity != null)
+        {
+            if (entity.OrderAmount == 0)
+            {
+                result = 0;
+            }
+            else
+            {
+                result = entity.Price / entity.OrderAmount;
+            }
+        }
+
+        Response response = new() { LastPrice = result, TotalAmount = amount };
+        await Send.OkAsync(response);
+    }
+}
