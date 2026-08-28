@@ -3,8 +3,8 @@
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
 	import { Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent, decodeGlobalFilter } from "@kayord/ui/data-table";
-	import { type ColumnDef } from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderComponent, decodeGlobalFilter, type DataTableFeatures, useTableUrlSync } from "@kayord/ui/data-table";
+	import { type ColumnDef } from "@tanstack/svelte-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import AddEditSection from "./AddEditSection.svelte";
 	import Search from "$lib/components/Search.svelte";
@@ -19,7 +19,7 @@
 		isDialogOpen = true;
 	};
 
-	const columns: ColumnDef<EntitiesSection>[] = [
+	const columns: ColumnDef<DataTableFeatures, EntitiesSection>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
@@ -49,13 +49,13 @@
 			return data;
 		},
 		enableRowSelection: false,
-		useURLSearchParams: true,
 		state: {
 			get globalFilter() {
 				return search;
 			},
 		},
 	});
+	useTableUrlSync(table);
 </script>
 
 {#snippet header()}

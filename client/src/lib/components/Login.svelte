@@ -3,8 +3,6 @@
 	import { toast } from "@kayord/ui/sonner";
 	import GoogleSvg from "$lib/SVG/GoogleSVG.svelte";
 	import { signInGoogle } from "$lib/firebase.svelte";
-	import { info } from "$lib/stores/info.svelte";
-
 	import LoginLinkDevice from "./LoginLinkDevice.svelte";
 
 	let isLoading = $state(false);
@@ -32,7 +30,7 @@
 		</Card.Header>
 		<Card.Content>
 			<div class="flex flex-col items-center">
-				<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="logo" class="h-28 hover:animate-pulse" />
+				<img src="/logo.svg" alt="logo" class="h-28 hover:animate-pulse" />
 				<div class="text-muted-foreground mt-4">Get started by signing in with your google account.</div>
 			</div>
 		</Card.Content>

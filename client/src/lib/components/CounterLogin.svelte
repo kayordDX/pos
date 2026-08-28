@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { Alert, Avatar, Button, Card } from "@kayord/ui";
-	import { info } from "$lib/stores/info.svelte";
 	import { createOutletCounterDelete, createUserGetCounterUsers } from "$lib/api";
 
 	import { DoorClosedIcon, UserRoundXIcon } from "@lucide/svelte";
@@ -36,7 +35,7 @@
 
 <div class="mt-8 flex flex-col items-center justify-center">
 	<div class="flex items-center gap-4">
-		<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="logo" class="h-12 hover:animate-pulse" />
+		<img src="/logo.svg" alt="logo" class="h-12 hover:animate-pulse" />
 		<div class="flex flex-col">
 			<h1 class="text-primary text-2xl">Counter Login</h1>
 			<div class="text-muted-foreground text-xs">Select User to Login</div>

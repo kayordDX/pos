@@ -1,6 +1,16 @@
 <script lang="ts">
 	import { Badge, Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent, renderSnippet, decodeColumnFilters, decodeSorting, decodePageIndex } from "@kayord/ui/data-table";
+	import {
+		DataTable,
+		createShadTable,
+		renderComponent,
+		renderSnippet,
+		decodeColumnFilters,
+		decodeSorting,
+		decodePageIndex,
+		type DataTableFeatures,
+		useTableUrlSync,
+	} from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 
 	import AddOrder from "./AddOrder.svelte";
@@ -9,23 +19,13 @@
 
 	import { createStockOrderGetAll, type DTOStockOrderResponseDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import {
-		getCoreRowModel,
-		getFilteredRowModel,
-		getPaginationRowModel,
-		getSortedRowModel,
-		type ColumnDef,
-		type ColumnFiltersState,
-		type PaginationState,
-		type SortingState,
-		type Updater,
-	} from "@tanstack/table-core";
+	import { type ColumnDef, type ColumnFiltersState, type PaginationState, type SortingState, type Updater } from "@tanstack/svelte-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Search from "$lib/components/Search.svelte";
 	import QueryBuilder from "fluent-querykit";
 	import { stringToFDate } from "$lib/util";
 
-	const columns: ColumnDef<DTOStockOrderResponseDTO>[] = [
+	const columns: ColumnDef<DataTableFeatures, DTOStockOrderResponseDTO>[] = [
 		{
 			header: "Order Number",
 			accessorKey: "orderNumber",
@@ -102,8 +102,6 @@
 		get data() {
 			return data;
 		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
 		onColumnFiltersChange: (updater) => {
 			if (typeof updater === "function") {
 				columnFilters = updater(columnFilters);
@@ -114,9 +112,6 @@
 		manualPagination: true,
 		manualFiltering: true,
 		manualSorting: true,
-		useURLSearchParams: true,
-		getSortedRowModel: getSortedRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			get pagination() {
 				return pagination;
@@ -138,6 +133,7 @@
 		onSortingChange: setSorting,
 		enableRowSelection: false,
 	});
+	useTableUrlSync(table);
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);

@@ -8,13 +8,13 @@
 	} from "$lib/api";
 	import { Button, Input, Popover } from "@kayord/ui";
 	import { RangeCalendar } from "@kayord/ui/calendar";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, useTableUrlSync, type DataTableFeatures } from "@kayord/ui/data-table";
 	import { stringToFDate } from "$lib/util";
 	import View from "./View.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import { today, getLocalTimeZone, CalendarDate, parseDate } from "@internationalized/date";
 
-	import { type ColumnDef, type ColumnFiltersState, type PaginationState, type SortingState, type Updater } from "@tanstack/table-core";
+	import { type ColumnDef, type ColumnFiltersState, type PaginationState, type SortingState, type Updater } from "@tanstack/svelte-table";
 	import { CalendarRangeIcon, FunnelIcon } from "@lucide/svelte";
 	import { page } from "$app/state";
 	import { onMount } from "svelte";
@@ -108,7 +108,7 @@
 	let data = $derived(query.data?.items ?? []);
 	let rowCount = $derived(query.data?.totalCount ?? 0);
 
-	const columns: ColumnDef<TableBookingHistoryResponse>[] = [
+	const columns: ColumnDef<DataTableFeatures, TableBookingHistoryResponse>[] = [
 		{
 			accessorKey: "id",
 			enableSorting: false,
@@ -149,7 +149,7 @@
 		get data() {
 			return data;
 		},
-		useURLSearchParams: true,
+		enableRowSelection: false,
 		manualPagination: true,
 		manualSorting: true,
 		manualFiltering: true,
@@ -183,6 +183,7 @@
 			}
 		},
 	});
+	useTableUrlSync(table);
 
 	let filterOpen = $state(false);
 	const filter = () => {

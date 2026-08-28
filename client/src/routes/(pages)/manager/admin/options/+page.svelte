@@ -1,17 +1,25 @@
 <script lang="ts">
 	import { createOptionGroup, type DTOOptionGroupBasicDTO } from "$lib/api";
 	import { Badge, Button, Card } from "@kayord/ui";
-	import { DataTable, renderComponent, renderSnippet, createShadTable, decodeGlobalFilter } from "@kayord/ui/data-table";
+	import {
+		DataTable,
+		renderComponent,
+		renderSnippet,
+		createShadTable,
+		decodeGlobalFilter,
+		type DataTableFeatures,
+		useTableUrlSync,
+	} from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import EditOptionGroup from "./EditOptionGroup.svelte";
-	import type { ColumnDef } from "@tanstack/table-core";
+	import type { ColumnDef } from "@tanstack/svelte-table";
 	import Search from "$lib/components/Search.svelte";
 
 	const query = createOptionGroup();
 	let addOpen = $state(false);
 
-	const columns: ColumnDef<DTOOptionGroupBasicDTO>[] = [
+	const columns: ColumnDef<DataTableFeatures, DTOOptionGroupBasicDTO>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
@@ -45,13 +53,13 @@
 			return data;
 		},
 		enableRowSelection: false,
-		useURLSearchParams: true,
 		state: {
 			get globalFilter() {
 				return search;
 			},
 		},
 	});
+	useTableUrlSync(table);
 </script>
 
 {#snippet header()}

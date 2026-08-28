@@ -1,17 +1,18 @@
-<script lang="ts" generics="T">
+<script lang="ts" generics="T extends RowData">
 	import { XIcon } from "@lucide/svelte";
 
-	import type { Table } from "@tanstack/table-core";
+	import type { Table, RowData } from "@tanstack/svelte-table";
 	import { Popover, Badge, Select, Input } from "@kayord/ui";
+	import type { DataTableFeatures } from "@kayord/ui/data-table";
 
-	interface Props<T> {
-		table: Table<T>;
+	interface Props<T extends RowData> {
+		table: Table<DataTableFeatures, T>;
 	}
 	let { table }: Props<T> = $props();
 </script>
 
 <div class="mb-2 flex gap-2">
-	{#each table.getAllColumns() as col}
+	{#each table.getAllColumns() as col (col)}
 		{#if col.getFilterValue()}
 			<Badge variant="secondary">
 				<Popover.Root>

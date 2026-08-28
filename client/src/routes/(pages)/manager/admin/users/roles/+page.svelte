@@ -3,12 +3,12 @@
 	import Search from "$lib/components/Search.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import { Badge } from "@kayord/ui";
-	import { DataTable, createShadTable, renderSnippet } from "@kayord/ui/data-table";
-	import { type ColumnDef } from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderSnippet, type DataTableFeatures } from "@kayord/ui/data-table";
+	import { type ColumnDef } from "@tanstack/svelte-table";
 
 	const query = createRoleGetAll(() => status.value.outletId);
 
-	const columns: ColumnDef<EntitiesRole>[] = [
+	const columns: ColumnDef<DataTableFeatures, EntitiesRole>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",

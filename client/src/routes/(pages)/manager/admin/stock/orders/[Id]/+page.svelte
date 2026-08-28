@@ -4,11 +4,11 @@
 	import { getError } from "$lib/types";
 	import { Alert, Badge, Button, Card, Loader } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import { DataTable, createShadTable, renderComponent, aggregationFns, renderSnippet } from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, aggregationFns, renderSnippet, type DataTableFeatures } from "@kayord/ui/data-table";
 	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
 	import Actions from "./Actions.svelte";
-	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
+	import { type ColumnDef, type RowSelectionState } from "@tanstack/svelte-table";
 	import { stringToFDate } from "$lib/util";
 	import { status } from "$lib/stores/status.svelte";
 
@@ -21,7 +21,7 @@
 	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
 	const showActions = $derived(query?.data?.stockOrderStatus.id != 3 && hasOpenSalesPeriod);
 
-	const columns: ColumnDef<DTOStockOrderItemDTO>[] = [
+	const columns: ColumnDef<DataTableFeatures, DTOStockOrderItemDTO>[] = [
 		{
 			header: "Stock",
 			accessorKey: "stock.name",
@@ -84,7 +84,7 @@
 			},
 		},
 		enableRowSelection: true,
-		enablePaging: false,
+		manualPagination: true,
 		onRowSelectionChange: (updater) => {
 			if (updater instanceof Function) {
 				rowSelection = updater(rowSelection);

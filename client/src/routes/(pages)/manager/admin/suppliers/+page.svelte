@@ -2,8 +2,8 @@
 	import { createSupplierGetAll, type DTOSupplierDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
-	import type { ColumnDef } from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
+	import type { ColumnDef } from "@tanstack/svelte-table";
 	import AddSupplier from "./AddSupplier.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
@@ -11,7 +11,7 @@
 
 	const query = createSupplierGetAll(() => ({ outletId: status.value.outletId }));
 
-	const columns: ColumnDef<DTOSupplierDTO>[] = [
+	const columns: ColumnDef<DataTableFeatures, DTOSupplierDTO>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
@@ -54,7 +54,7 @@
 			return data;
 		},
 		enableRowSelection: false,
-		enablePaging: false,
+		manualPagination: true,
 		state: {
 			get globalFilter() {
 				return search;

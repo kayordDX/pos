@@ -2,17 +2,17 @@
 	import { createMenuList, type EntitiesMenu } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent, decodeGlobalFilter } from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, decodeGlobalFilter, type DataTableFeatures, useTableUrlSync } from "@kayord/ui/data-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditMenu from "./EditMenu.svelte";
-	import type { ColumnDef } from "@tanstack/table-core";
+	import type { ColumnDef } from "@tanstack/svelte-table";
 	import Search from "$lib/components/Search.svelte";
 
 	const query = createMenuList(() => ({ outletId: status.value.outletId }));
 	let addOpen = $state(false);
 
-	const columns: ColumnDef<EntitiesMenu>[] = [
+	const columns: ColumnDef<DataTableFeatures, EntitiesMenu>[] = [
 		{
 			header: "Menu",
 			accessorKey: "name",
@@ -40,13 +40,13 @@
 			return data;
 		},
 		enableRowSelection: false,
-		useURLSearchParams: true,
 		state: {
 			get globalFilter() {
 				return search;
 			},
 		},
 	});
+	useTableUrlSync(table);
 </script>
 
 {#snippet header()}

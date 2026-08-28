@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
-	import { info } from "$lib/stores/info.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import { Collapsible, Sidebar } from "@kayord/ui";
 	const sidebar = Sidebar.useSidebar();
@@ -35,7 +34,6 @@
 		BanknoteArrowUp,
 		CreditCardIcon,
 		CalculatorIcon,
-		HistoryIcon,
 		FolderClockIcon,
 		ReceiptIcon,
 	} from "@lucide/svelte";
@@ -227,10 +225,8 @@
 		<Sidebar.Menu>
 			<Sidebar.MenuItem class="flex items-center justify-start">
 				<button class="flex items-center rounded-full" onclick={() => goto("/")}>
-					<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="kayord-logo" class="h-10" />
-					<span class="hidden text-lg font-bold md:block">
-						{info.isKayord() ? "kayord" : "aviate"}
-					</span>
+					<img src="/logo.svg" alt="kayord-logo" class="h-10" />
+					<span class="hidden text-lg font-bold md:block">aviate</span>
 				</button>
 			</Sidebar.MenuItem>
 		</Sidebar.Menu>

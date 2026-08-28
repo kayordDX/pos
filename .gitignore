@@ -19,3 +19,4 @@ api/src/club/bin*
 .agents/skills/aspire*/evals/
 
 private_key.json
+temp/

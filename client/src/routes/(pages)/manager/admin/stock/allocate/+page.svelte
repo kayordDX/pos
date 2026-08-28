@@ -1,6 +1,14 @@
 <script lang="ts">
 	import { Badge, Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent, renderSnippet, decodeColumnFilters } from "@kayord/ui/data-table";
+	import {
+		DataTable,
+		createShadTable,
+		renderComponent,
+		renderSnippet,
+		decodeColumnFilters,
+		type DataTableFeatures,
+		useTableUrlSync,
+	} from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 
 	import AddAllocation from "./AddAllocation.svelte";
@@ -10,23 +18,13 @@
 
 	import { type DTOStockAllocateDTO, createStockAllocateGetAll } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import {
-		getCoreRowModel,
-		getFilteredRowModel,
-		getPaginationRowModel,
-		getSortedRowModel,
-		type ColumnDef,
-		type ColumnFiltersState,
-		type PaginationState,
-		type SortingState,
-		type Updater,
-	} from "@tanstack/table-core";
+	import { type ColumnDef, type ColumnFiltersState, type PaginationState, type SortingState, type Updater } from "@tanstack/svelte-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Search from "$lib/components/Search.svelte";
 	import QueryBuilder from "fluent-querykit";
 	import { stringToFDate } from "$lib/util";
 
-	const columns: ColumnDef<DTOStockAllocateDTO>[] = [
+	const columns: ColumnDef<DataTableFeatures, DTOStockAllocateDTO>[] = [
 		{
 			header: "Comment",
 			accessorKey: "comment",
@@ -116,8 +114,6 @@
 		get data() {
 			return data;
 		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
 		onColumnFiltersChange: (updater) => {
 			if (typeof updater === "function") {
 				columnFilters = updater(columnFilters);
@@ -128,9 +124,6 @@
 		manualPagination: true,
 		manualFiltering: true,
 		manualSorting: true,
-		useURLSearchParams: true,
-		getSortedRowModel: getSortedRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			get pagination() {
 				return pagination;
@@ -152,6 +145,8 @@
 		onSortingChange: setSorting,
 		enableRowSelection: false,
 	});
+
+	useTableUrlSync(table);
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);

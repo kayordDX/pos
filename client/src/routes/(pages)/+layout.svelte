@@ -9,7 +9,6 @@
 	import { Notification } from "$lib/components/Notification";
 	import { status } from "$lib/stores/status.svelte";
 	import { session } from "$lib/firebase.svelte";
-	import { info } from "$lib/stores/info.svelte";
 	import Hub from "$lib/components/Hub.svelte";
 
 	let { children }: { children?: Snippet } = $props();
@@ -38,14 +37,6 @@
 				enabled: browser,
 			},
 		},
-	});
-
-	// const themeName = $derived(info.isKayord() ? "kayord" : "default");
-	$effect(() => {
-		const themeName = info.isKayord() ? "kayord" : "default";
-		if (theme.current != themeName) {
-			setTheme(themeName);
-		}
 	});
 </script>
 

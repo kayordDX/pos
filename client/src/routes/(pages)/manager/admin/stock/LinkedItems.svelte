@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createStockLinkGet, type StockGetAllResponse, type StockLinkGetResponse } from "$lib/api";
 	import { Badge, Dialog } from "@kayord/ui";
-	import { DataTable, createShadTable, renderSnippet } from "@kayord/ui/data-table";
-	import type { ColumnDef } from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderSnippet, type DataTableFeatures } from "@kayord/ui/data-table";
+	import type { ColumnDef } from "@tanstack/svelte-table";
 
 	interface Props {
 		open: boolean;
@@ -22,7 +22,7 @@
 		}
 	});
 
-	const columns: ColumnDef<StockLinkGetResponse>[] = [
+	const columns: ColumnDef<DataTableFeatures, StockLinkGetResponse>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",

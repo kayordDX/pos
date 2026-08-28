@@ -1,27 +1,18 @@
 <script lang="ts">
 	import { createUserRemoveUserOutlet, createUserUnassignedUsers, type UserUserResponse } from "$lib/api";
 	import { Actions } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
 	import { toast } from "@kayord/ui/sonner";
-	import {
-		type ColumnDef,
-		getCoreRowModel,
-		type Updater,
-		type PaginationState,
-		type ColumnFiltersState,
-		getPaginationRowModel,
-		getFilteredRowModel,
-	} from "@tanstack/table-core";
+	import { type ColumnDef, type Updater, type PaginationState, type ColumnFiltersState } from "@tanstack/svelte-table";
 	import Current from "../Current.svelte";
 	import Avatar from "../Avatar.svelte";
 	import AddRole from "../AddRole.svelte";
-	import RemoveRole from "../RemoveRole.svelte";
 	import QueryBuilder from "fluent-querykit";
 	import Search from "$lib/components/Search.svelte";
 	import { PlusIcon, XIcon } from "@lucide/svelte";
 	import { getError } from "$lib/types";
 
-	const columns: ColumnDef<UserUserResponse>[] = [
+	const columns: ColumnDef<DataTableFeatures, UserUserResponse>[] = [
 		{
 			accessorKey: "image",
 			header: "Image",
@@ -115,8 +106,6 @@
 		get data() {
 			return data;
 		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
 		onColumnFiltersChange: (updater) => {
 			if (typeof updater === "function") {
 				columnFilters = updater(columnFilters);
@@ -126,7 +115,6 @@
 		},
 		manualPagination: true,
 		manualFiltering: true,
-		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			get pagination() {
 				return pagination;

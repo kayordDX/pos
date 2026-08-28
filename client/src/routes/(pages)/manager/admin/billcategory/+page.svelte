@@ -3,8 +3,8 @@
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
 	import { Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
-	import { type ColumnDef } from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
+	import { type ColumnDef } from "@tanstack/svelte-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import AddEditBillCategory from "./AddEditBillCategory.svelte";
 	import Search from "$lib/components/Search.svelte";
@@ -19,7 +19,7 @@
 		isDialogOpen = true;
 	};
 
-	const columns: ColumnDef<EntitiesBillCategory>[] = [
+	const columns: ColumnDef<DataTableFeatures, EntitiesBillCategory>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",

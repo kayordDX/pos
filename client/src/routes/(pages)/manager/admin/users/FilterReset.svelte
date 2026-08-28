@@ -1,16 +1,17 @@
-<script lang="ts" generics="T">
+<script lang="ts" generics="T extends RowData">
 	import { Button } from "@kayord/ui";
-	import { type Table } from "@tanstack/table-core";
+	import { type Table } from "@tanstack/svelte-table";
 	import { XIcon } from "@lucide/svelte";
+	import type { DataTableFeatures, RowData } from "@kayord/ui/data-table";
 
-	interface Props<T> {
-		table: Table<T>;
+	interface Props<T extends RowData> {
+		table: Table<DataTableFeatures, T>;
 		cb?: () => void;
 	}
 
 	let { table, cb }: Props<T> = $props();
 
-	const isFiltered = $derived(table.getState().columnFilters.length > 0);
+	const isFiltered = $derived(table.store.state.columnFilters.length > 0);
 </script>
 
 {#if isFiltered}

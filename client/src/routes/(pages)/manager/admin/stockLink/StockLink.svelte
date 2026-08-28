@@ -2,8 +2,8 @@
 	import { createStockLinkGetAll, type StockLinkGetAllResponse } from "$lib/api";
 	import { LinkType } from "$lib/types";
 	import { Button, Dialog } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
-	import type { ColumnDef } from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
+	import type { ColumnDef } from "@tanstack/svelte-table";
 	import Actions from "./Actions.svelte";
 	import { LinkIcon } from "@lucide/svelte";
 	import AddLinkStock from "./AddLinkStock.svelte";
@@ -29,7 +29,7 @@
 		}
 	});
 
-	const columns: ColumnDef<StockLinkGetAllResponse>[] = [
+	const columns: ColumnDef<DataTableFeatures, StockLinkGetAllResponse>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",

@@ -9,9 +9,8 @@
 	import { cn } from "@kayord/ui/utils";
 	import { Badge, Button } from "@kayord/ui";
 	import { status } from "$lib/stores/status.svelte";
-	import { CircleSmallIcon, HomeIcon, LogOutIcon } from "@lucide/svelte";
+	import { CircleSmallIcon, LogOutIcon } from "@lucide/svelte";
 	import { getInitials } from "$lib/util";
-	import { info } from "$lib/stores/info.svelte";
 	import { mode } from "$lib/stores/mode.svelte";
 
 	interface Props {
@@ -30,10 +29,8 @@
 	<div class={cn("bg-secondary border-secondary flex h-14 items-center justify-between border-b-2 p-2", className)} transition:slide>
 		{#if !hideHeader}
 			<button class="flex items-center" onclick={() => goto("/")}>
-				<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="logo" class="h-10" />
-				<span class="hidden text-lg font-bold md:block">
-					{info.isKayord() ? "kayord" : "aviate"}
-				</span>
+				<img src="/logo.svg" alt="logo" class="h-10" />
+				<span class="hidden text-lg font-bold md:block">aviate</span>
 			</button>
 		{/if}
 		{#if leftHeader}

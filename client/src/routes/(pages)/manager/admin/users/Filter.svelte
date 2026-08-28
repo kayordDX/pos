@@ -1,14 +1,15 @@
-<script lang="ts" generics="TData, TValue">
-	import { PlusCircle, Check } from "@lucide/svelte";
+<script lang="ts" generics="TData extends RowData, TValue">
+	import { Check, CirclePlusIcon } from "@lucide/svelte";
 
-	import type { Column } from "@tanstack/table-core";
+	import type { Column, RowData } from "@tanstack/svelte-table";
 	import type { Component } from "svelte";
 	import { SvelteSet } from "svelte/reactivity";
 	import { Command, Popover, Button, Separator, Badge } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
+	import type { DataTableFeatures } from "@kayord/ui/data-table";
 
-	type Props<TData, TValue> = {
-		column: Column<TData, TValue>;
+	type Props<TData extends RowData, TValue> = {
+		column: Column<DataTableFeatures, TData, TValue>;
 		title: string;
 		options: {
 			label: string;
@@ -27,7 +28,7 @@
 	<Popover.Trigger>
 		{#snippet child({ props }: any)}
 			<Button {...props} variant="outline" size="sm" class="h-8 border-dashed">
-				<PlusCircle class="mr-2 h-4 w-4" />
+				<CirclePlusIcon class="mr-2 h-4 w-4" />
 				{title}
 				{#if selectedValues.size > 0}
 					<Separator orientation="vertical" class="mx-2 h-4" />
@@ -40,7 +41,7 @@
 								{selectedValues.size} selected
 							</Badge>
 						{:else}
-							{#each options.filter((opt) => selectedValues.has(opt.value)) as option}
+							{#each options.filter((opt) => selectedValues.has(opt.value)) as option (option)}
 								<Badge variant="secondary" class="rounded-sm px-1 font-normal">
 									{option.label}
 								</Badge>
@@ -51,13 +52,13 @@
 			</Button>
 		{/snippet}
 	</Popover.Trigger>
-	<Popover.Content class="w-[200px] p-0" align="start">
+	<Popover.Content class="w-50 p-0" align="start">
 		<Command.Root>
 			<Command.Input placeholder={title} />
 			<Command.List>
 				<Command.Empty>No results found.</Command.Empty>
 				<Command.Group>
-					{#each options as option}
+					{#each options as option (option)}
 						{@const isSelected = selectedValues.has(option.value)}
 						<Command.Item
 							onSelect={() => {

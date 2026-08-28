@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createStockItemsGetAll, type StockItemsGetAllResponse } from "$lib/api";
 	import { Dialog } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
-	import type { ColumnDef } from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
+	import type { ColumnDef } from "@tanstack/svelte-table";
 	import StockItemActions from "./StockItemActions.svelte";
 
 	interface Props {
@@ -26,7 +26,7 @@
 		}
 	});
 
-	const columns: ColumnDef<StockItemsGetAllResponse>[] = [
+	const columns: ColumnDef<DataTableFeatures, StockItemsGetAllResponse>[] = [
 		{
 			header: "Division",
 			accessorKey: "divisionName",

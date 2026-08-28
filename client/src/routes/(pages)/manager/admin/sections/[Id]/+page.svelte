@@ -1,11 +1,11 @@
 <script lang="ts">
 	import { createSectionTableGetAll, type EntitiesTable } from "$lib/api";
-	import { type ColumnDef } from "@tanstack/table-core";
+	import { type ColumnDef } from "@tanstack/svelte-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import { page } from "$app/state";
 	import Actions from "./Actions.svelte";
 	import { Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, useTableUrlSync, type DataTableFeatures } from "@kayord/ui/data-table";
 	import AddEditTable from "./AddEditTable.svelte";
 	import Search from "$lib/components/Search.svelte";
 	const query = createSectionTableGetAll(() => ({ sectionId: Number(page.params.Id) }));
@@ -17,7 +17,7 @@
 		selectedTable = undefined;
 		isDialogOpen = true;
 	};
-	const columns: ColumnDef<EntitiesTable>[] = [
+	const columns: ColumnDef<DataTableFeatures, EntitiesTable>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
@@ -54,13 +54,13 @@
 			return data;
 		},
 		enableRowSelection: false,
-		useURLSearchParams: true,
 		state: {
 			get globalFilter() {
 				return search;
 			},
 		},
 	});
+	useTableUrlSync(table);
 </script>
 
 {#snippet header()}

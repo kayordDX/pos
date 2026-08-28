@@ -30,7 +30,7 @@
 			></div>
 		</div>
 	</DropdownMenu.Trigger>
-	<DropdownMenu.Content>
+	<DropdownMenu.Content class="w-48">
 		<DropdownMenu.Label>{session.user?.displayName ?? "My Account"}</DropdownMenu.Label>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Group>

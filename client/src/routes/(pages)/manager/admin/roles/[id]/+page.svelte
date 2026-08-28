@@ -2,8 +2,8 @@
 	import { createRoleDivisionGetAll, type EntitiesRole } from "$lib/api";
 	import Search from "$lib/components/Search.svelte";
 	import { Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
-	import { type ColumnDef } from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
+	import { type ColumnDef } from "@tanstack/svelte-table";
 	import Actions from "./Actions.svelte";
 	import { page } from "$app/state";
 	import AddRole from "./AddRole.svelte";
@@ -14,7 +14,7 @@
 	let isDialogOpen = $state(false);
 	let divisionId = $state(Number(page.params.id));
 	let open: boolean = $state(false);
-	const columns: ColumnDef<EntitiesRole>[] = [
+	const columns: ColumnDef<DataTableFeatures, EntitiesRole>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",

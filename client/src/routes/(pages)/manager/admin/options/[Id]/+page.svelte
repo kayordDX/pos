@@ -2,11 +2,11 @@
 	import { page } from "$app/state";
 	import { createOptionItems, type DTOOptionDTO } from "$lib/api";
 	import { Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditOption from "./EditOption.svelte";
-	import type { ColumnDef } from "@tanstack/table-core";
+	import type { ColumnDef } from "@tanstack/svelte-table";
 	import Search from "$lib/components/Search.svelte";
 
 	const query = createOptionItems(() => Number(page.params.Id));
@@ -14,7 +14,7 @@
 
 	const groupName = $derived((query.data ?? [])[0]?.optionGroup.name);
 
-	const columns: ColumnDef<DTOOptionDTO>[] = [
+	const columns: ColumnDef<DataTableFeatures, DTOOptionDTO>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",

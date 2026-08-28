@@ -2,18 +2,8 @@
 	import { createStockGetAll, type StockGetAllResponse } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
-	import {
-		type ColumnDef,
-		getCoreRowModel,
-		type Updater,
-		type PaginationState,
-		type SortingState,
-		type ColumnFiltersState,
-		getPaginationRowModel,
-		getFilteredRowModel,
-		getSortedRowModel,
-	} from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
+	import { type ColumnDef, type Updater, type PaginationState, type SortingState, type ColumnFiltersState } from "@tanstack/svelte-table";
 	import QueryBuilder from "fluent-querykit";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
@@ -21,7 +11,7 @@
 	import AddStock from "./AddStock.svelte";
 	import Search from "$lib/components/Search.svelte";
 
-	const columns: ColumnDef<StockGetAllResponse>[] = [
+	const columns: ColumnDef<DataTableFeatures, StockGetAllResponse>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
@@ -99,8 +89,6 @@
 		get data() {
 			return data;
 		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
 		onColumnFiltersChange: (updater) => {
 			if (typeof updater === "function") {
 				columnFilters = updater(columnFilters);
@@ -111,8 +99,6 @@
 		manualPagination: true,
 		manualFiltering: true,
 		manualSorting: true,
-		getSortedRowModel: getSortedRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			get pagination() {
 				return pagination;

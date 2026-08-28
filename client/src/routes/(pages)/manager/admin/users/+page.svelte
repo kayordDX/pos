@@ -1,16 +1,8 @@
 <script lang="ts">
 	import { createRoleGetAll, createUserUsers, type UserUserResponse } from "$lib/api";
 	import { Actions, InputGroup } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
-	import {
-		type ColumnDef,
-		getCoreRowModel,
-		type Updater,
-		type PaginationState,
-		type ColumnFiltersState,
-		getPaginationRowModel,
-		getFilteredRowModel,
-	} from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
+	import { type ColumnDef, type Updater, type PaginationState, type ColumnFiltersState } from "@tanstack/svelte-table";
 	import Current from "./Current.svelte";
 	import Avatar from "./Avatar.svelte";
 	import Roles from "./Roles.svelte";
@@ -22,7 +14,7 @@
 	import { PlusIcon, SearchIcon } from "@lucide/svelte";
 	import AddRole from "./AddRole.svelte";
 
-	const columns: ColumnDef<UserUserResponse>[] = [
+	const columns: ColumnDef<DataTableFeatures, UserUserResponse>[] = [
 		{
 			accessorKey: "image",
 			header: "Image",
@@ -108,8 +100,6 @@
 		get data() {
 			return data;
 		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
 		onColumnFiltersChange: (updater) => {
 			if (typeof updater === "function") {
 				columnFilters = updater(columnFilters);
@@ -119,7 +109,6 @@
 		},
 		manualPagination: true,
 		manualFiltering: true,
-		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			get pagination() {
 				return pagination;

@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { createMenuGetSectionsGetMenusSections, type DTOMenuSectionDTO } from "$lib/api";
 	import { Button } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditSection from "./EditSection.svelte";
 	import { page } from "$app/state";
-	import type { ColumnDef } from "@tanstack/table-core";
+	import type { ColumnDef } from "@tanstack/svelte-table";
 	import Search from "$lib/components/Search.svelte";
 
 	const query = createMenuGetSectionsGetMenusSections(() => ({
@@ -15,7 +15,7 @@
 	}));
 	let addOpen = $state(false);
 
-	const columns: ColumnDef<DTOMenuSectionDTO>[] = [
+	const columns: ColumnDef<DataTableFeatures, DTOMenuSectionDTO>[] = [
 		{
 			header: "Section",
 			accessorKey: "name",

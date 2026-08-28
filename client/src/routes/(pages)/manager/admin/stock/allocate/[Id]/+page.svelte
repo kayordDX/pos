@@ -3,11 +3,11 @@
 	import { createStockAllocateGet, createStockAllocateUpdate, type DTOStockAllocateItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { Alert, Badge, Button, Card, Loader } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent, renderSnippet } from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, renderSnippet, type DataTableFeatures } from "@kayord/ui/data-table";
 	import { MoveRightIcon, PlusIcon, WorkflowIcon } from "@lucide/svelte";
 	import AddAllocationItem from "./AddAllocationItem.svelte";
 	import Actions from "./Actions.svelte";
-	import { type ColumnDef, type RowSelectionState } from "@tanstack/table-core";
+	import { type ColumnDef, type RowSelectionState } from "@tanstack/svelte-table";
 	import { stringToFDate } from "$lib/util";
 	import { status } from "$lib/stores/status.svelte";
 
@@ -29,7 +29,7 @@
 	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
 	const canEdit = $derived(query.data?.stockAllocateStatusId === 1 && hasOpenSalesPeriod);
 
-	const columns: ColumnDef<DTOStockAllocateItemDTO>[] = [
+	const columns: ColumnDef<DataTableFeatures, DTOStockAllocateItemDTO>[] = [
 		{
 			header: "Stock",
 			accessorKey: "stock.name",
@@ -83,7 +83,7 @@
 			},
 		},
 		enableRowSelection: false,
-		enablePaging: false,
+		manualPagination: true,
 		onRowSelectionChange: (updater) => {
 			if (updater instanceof Function) {
 				rowSelection = updater(rowSelection);

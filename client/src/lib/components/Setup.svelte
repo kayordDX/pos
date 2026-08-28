@@ -9,11 +9,10 @@
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
 	import { networkInformation } from "$lib/stores/network.svelte";
-	import { AlertCircleIcon, CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon, UserCheckIcon } from "@lucide/svelte";
+	import { CircleAlertIcon, CircleCheckIcon, CircleXIcon, MessageCircleWarningIcon, UserCheckIcon } from "@lucide/svelte";
 	import { requestNotificationPermission } from "$lib/util";
 	import { onMount } from "svelte";
 	import { hub } from "$lib/stores/hub.svelte";
-	import { info } from "$lib/stores/info.svelte";
 
 	const query = createOutletList();
 
@@ -70,7 +69,7 @@
 		navigator.serviceWorker.ready.then((registration) => {
 			registration.showNotification("Test Notification", {
 				body: "The very interesting detail that the test entails",
-				icon: `${info.isKayord() ? "/kayord" : ""}/logo.svg`,
+				icon: "/logo.svg",
 			});
 		});
 	};
@@ -86,7 +85,7 @@
 {#if status.value.statusId == 0}
 	<div class="p-5">
 		<Alert.Root variant="destructive">
-			<AlertCircleIcon />
+			<CircleAlertIcon />
 			<Alert.Title>No access</Alert.Title>
 			<Alert.Description>You have not requested access to any outlet</Alert.Description>
 		</Alert.Root>
@@ -96,7 +95,7 @@
 {#if status.value.statusId == 1}
 	<div class="p-5">
 		<Alert.Root>
-			<AlertCircleIcon />
+			<CircleAlertIcon />
 			<Alert.Title>Applied for access</Alert.Title>
 			<Alert.Description
 				>You have applied for access pending approval
@@ -125,7 +124,7 @@
 			<li class="flex items-center gap-2">
 				2.
 				{#if networkInformation.isOnline()}
-					<CheckCircleIcon class="text-green-400" />
+					<CircleCheckIcon class="text-green-400" />
 				{:else}
 					<MessageCircleWarningIcon class="text-amber-400" />
 				{/if}
@@ -135,7 +134,7 @@
 			<li class="flex items-center gap-2">
 				3.
 				{#if isChrome}
-					<CheckCircleIcon class="text-green-400" />
+					<CircleCheckIcon class="text-green-400" />
 				{:else}
 					<CircleXIcon class="text-red-400" />
 				{/if}
@@ -145,7 +144,7 @@
 			<li class="flex items-center gap-2">
 				4.
 				{#if isAndroid}
-					<CheckCircleIcon class="text-green-400" />
+					<CircleCheckIcon class="text-green-400" />
 				{:else}
 					<CircleXIcon class="text-red-400" />
 				{/if}
@@ -155,7 +154,7 @@
 			<li class="flex items-center gap-2">
 				6.
 				{#if serviceWorker?.active?.state == "activated"}
-					<CheckCircleIcon class="text-green-400" />
+					<CircleCheckIcon class="text-green-400" />
 				{:else}
 					<CircleXIcon class="text-red-400" />
 				{/if}
@@ -166,7 +165,7 @@
 				<div class="flex flex-row items-center gap-2">
 					7.
 					{#if hasNotifyPermission}
-						<CheckCircleIcon class="text-green-400" />
+						<CircleCheckIcon class="text-green-400" />
 					{:else}
 						<CircleXIcon class="text-red-400" />
 						<Button onclick={requestNotificationPermission}>Request Access</Button>
@@ -179,7 +178,7 @@
 			<li class="flex items-center gap-2">
 				8.
 				{#if hub.state == "Connected"}
-					<CheckCircleIcon class="text-green-400" />
+					<CircleCheckIcon class="text-green-400" />
 				{:else}
 					<CircleXIcon class="text-red-400" />
 				{/if}
@@ -212,7 +211,7 @@
 								{outletList}
 							</Select.Trigger>
 							<Select.Content>
-								{#each query.data ?? [] as outlet}
+								{#each query.data ?? [] as outlet (outlet.id)}
 									<Select.Item value={outlet.id.toString()}>{outlet.name}</Select.Item>
 								{/each}
 							</Select.Content>

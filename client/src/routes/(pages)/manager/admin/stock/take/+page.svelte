@@ -3,18 +3,8 @@
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
 	import { Select, Label } from "@kayord/ui";
-	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
-	import {
-		type ColumnDef,
-		getCoreRowModel,
-		type Updater,
-		type PaginationState,
-		type SortingState,
-		type ColumnFiltersState,
-		getPaginationRowModel,
-		getFilteredRowModel,
-		getSortedRowModel,
-	} from "@tanstack/table-core";
+	import { DataTable, createShadTable, renderComponent, type DataTableFeatures } from "@kayord/ui/data-table";
+	import { type ColumnDef, type Updater, type PaginationState, type SortingState, type ColumnFiltersState } from "@tanstack/svelte-table";
 	import QueryBuilder from "fluent-querykit";
 	import Search from "$lib/components/Search.svelte";
 	import { stringToFDate } from "$lib/util";
@@ -36,7 +26,7 @@
 	});
 	const divisionValue = $derived(divisionList.find((i) => i.value == divisionId.toString())?.label);
 
-	const columns: ColumnDef<StockGetAllDivisionResponse>[] = [
+	const columns: ColumnDef<DataTableFeatures, StockGetAllDivisionResponse>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
@@ -116,8 +106,6 @@
 		get data() {
 			return data;
 		},
-		getCoreRowModel: getCoreRowModel(),
-		getFilteredRowModel: getFilteredRowModel(),
 		onColumnFiltersChange: (updater) => {
 			if (typeof updater === "function") {
 				columnFilters = updater(columnFilters);
@@ -128,8 +116,6 @@
 		manualPagination: true,
 		manualFiltering: true,
 		manualSorting: true,
-		getSortedRowModel: getSortedRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
 		state: {
 			get pagination() {
 				return pagination;
@@ -163,8 +149,6 @@
 			pagination.pageIndex = 0;
 		}
 	});
-
-	let addOpen = $state(false);
 </script>
 
 {#snippet header()}
@@ -179,7 +163,7 @@
 					{divisionValue ? divisionValue : "Select Division"}
 				</Select.Trigger>
 				<Select.Content>
-					{#each divisionList as division}
+					{#each divisionList as division (division)}
 						<Select.Item value={division.value}>{division.label}</Select.Item>
 					{/each}
 				</Select.Content>

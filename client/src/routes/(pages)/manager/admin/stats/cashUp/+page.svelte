@@ -1,15 +1,15 @@
 <script lang="ts">
 	import { createStatsCashUp, type StatsCashUpResponse } from "$lib/api";
-	import { DataTable, createShadTable, aggregationFns } from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, aggregationFns, type DataTableFeatures } from "@kayord/ui/data-table";
 	import Top5SalesPeriod from "../Top5SalesPeriod.svelte";
-	import { type ColumnDef } from "@tanstack/table-core";
+	import { type ColumnDef } from "@tanstack/svelte-table";
 	import GrafanaLink from "../GrafanaLink.svelte";
 	let salesPeriod = $state(0);
 
 	const query = createStatsCashUp(() => ({ salesPeriodId: salesPeriod }));
 	const data = $derived(query.data ?? []);
 
-	const columns: ColumnDef<StatsCashUpResponse>[] = [
+	const columns: ColumnDef<DataTableFeatures, StatsCashUpResponse>[] = [
 		{
 			header: "Name",
 			accessorKey: "name",
@@ -59,7 +59,7 @@
 			return data;
 		},
 		enableRowSelection: false,
-		enablePaging: false,
+		manualPagination: true,
 	});
 </script>
 
