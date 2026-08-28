@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Pos.Api/Pos.Api.csproj" />
+  <Project Path="Pos.ServiceDefaults/Pos.ServiceDefaults.csproj" />
+</Solution>
