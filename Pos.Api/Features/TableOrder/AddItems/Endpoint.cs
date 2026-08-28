@@ -3,18 +3,12 @@ using Pos.Api.Entities;
 using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Pos.Api.Features.Order.AddItems;
+namespace Pos.Api.Features.TableOrder.AddItems;
 
-public class Endpoint : Endpoint<Request, OrderItem>
+public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<Request, OrderItem>
 {
-    private readonly AppDbContext _dbContext;
-    private readonly CurrentUserService _cu;
-
-    public Endpoint(AppDbContext dbContext, CurrentUserService cu)
-    {
-        _dbContext = dbContext;
-        _cu = cu;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
+    private readonly CurrentUserService _cu = cu;
 
     public override void Configure()
     {
@@ -25,7 +19,7 @@ public class Endpoint : Endpoint<Request, OrderItem>
     {
         var tableBooking = await _dbContext.TableBooking
             .Include(x => x.SalesPeriod)
-            .FirstOrDefaultAsync(x => x.Id == req.TableBookingId);
+            .FirstOrDefaultAsync(x => x.Id == req.TableBookingId, ct);
 
         if (tableBooking == null)
         {
@@ -53,7 +47,7 @@ public class Endpoint : Endpoint<Request, OrderItem>
 
                 if (menuItem == null)
                 {
-                    await Send.NotFoundAsync();
+                    await Send.NotFoundAsync(ct);
                     return;
                 }
 
@@ -64,7 +58,7 @@ public class Endpoint : Endpoint<Request, OrderItem>
                     throw new Exception("Outlet mismatch");
                 }
 
-                List<Entities.Option> Options = new List<Entities.Option>();
+                List<Entities.Option> Options = [];
 
                 orderItem = new OrderItem()
                 {
@@ -77,7 +71,7 @@ public class Endpoint : Endpoint<Request, OrderItem>
 
                 if (order.OptionIds != null)
                 {
-                    List<OrderItemOption> orderItemOptions = new();
+                    List<OrderItemOption> orderItemOptions = [];
 
                     foreach (var i in order.OptionIds)
                     {
@@ -88,7 +82,7 @@ public class Endpoint : Endpoint<Request, OrderItem>
                 }
                 if (order.ExtraIds != null)
                 {
-                    List<OrderItemExtra> orderItemExtra = new();
+                    List<OrderItemExtra> orderItemExtra = [];
                     foreach (int i in order.ExtraIds)
                     {
                         OrderItemExtra e = new() { OrderItemId = orderItem.OrderItemId, ExtraId = i };
@@ -97,15 +91,15 @@ public class Endpoint : Endpoint<Request, OrderItem>
                     orderItem.OrderItemExtras = orderItemExtra;
                 }
 
-                await _dbContext.OrderItem.AddAsync(orderItem);
+                await _dbContext.OrderItem.AddAsync(orderItem, ct);
             }
         }
 
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
 
         if (orderItem.OrderItemId > 0)
-            await Send.NoContentAsync();
+            await Send.NoContentAsync(ct);
         else
-            await Send.ErrorsAsync(500);
+            await Send.ErrorsAsync(500, ct);
     }
 }

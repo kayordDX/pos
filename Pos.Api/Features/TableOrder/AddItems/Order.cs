@@ -1,4 +1,4 @@
-namespace Pos.Api.Features.Order.AddItems;
+namespace Pos.Api.Features.TableOrder.AddItems;
 
 public class Order
 {
