@@ -3,16 +3,11 @@ using Pos.Api.Hubs;
 using Pos.Api.Services;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Pos.Api.Features.Notification;
+namespace Pos.Api.Features.Notification.Sound;
 
-public class SoundHandler : IEventHandler<SoundEvent>
+public class SoundHandler(IServiceScopeFactory scopeFactory) : IEventHandler<SoundEvent>
 {
-    private readonly IServiceScopeFactory _scopeFactory;
-
-    public SoundHandler(IServiceScopeFactory scopeFactory)
-    {
-        _scopeFactory = scopeFactory;
-    }
+    private readonly IServiceScopeFactory _scopeFactory = scopeFactory;
 
     public async Task HandleAsync(SoundEvent eventModel, CancellationToken ct)
     {

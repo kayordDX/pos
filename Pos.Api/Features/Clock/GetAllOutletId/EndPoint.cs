@@ -1,16 +1,11 @@
 using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Pos.Api.Features.Clock.List;
+namespace Pos.Api.Features.Clock.GetAllOutletId;
 
-public class Endpoint : Endpoint<Request, List<Entities.User>>
+public class Endpoint(AppDbContext dbContext) : Endpoint<Request, List<Entities.User>>
 {
-    private readonly AppDbContext _dbContext;
-
-    public Endpoint(AppDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
 
     public override void Configure()
     {
@@ -19,29 +14,16 @@ public class Endpoint : Endpoint<Request, List<Entities.User>>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        List<Entities.User> staffList = new List<Entities.User>();
-        List<Entities.User> preStaffList = new List<Entities.User>();
+        List<Entities.User> staffList = [];
+        List<Entities.User> preStaffList = [];
 
         if (req.StatusId == 1) // Clocked Out
         {
-            // Get staff with no corresponding clock records for the day (not clocked in or out)
-            // var allStaff = await _dbContext.User
-            //     .Where(s => s.OutletId == req.OutletId)
-            //     .ToListAsync();
-
             // Get staff who are clocked in
             var clockedInStaff = await _dbContext.Clock
                 .Where(c => c.OutletId == req.OutletId && c.EndDate == null)
                 .Select(c => c.User)
-                .ToListAsync();
-
-            // foreach (var item in allStaff)
-            // {
-            //     if (!clockedInStaff.Any(x => x.Id == item.Id))
-            //     {
-            //         staffList.Add(item);
-            //     }
-            // }
+                .ToListAsync(ct);
 
         }
         else if (req.StatusId == 2) // Clocked In
@@ -49,9 +31,9 @@ public class Endpoint : Endpoint<Request, List<Entities.User>>
             staffList = await _dbContext.Clock
                 .Where(c => c.OutletId == req.OutletId && c.EndDate == null)
                 .Select(c => c.User)
-                .ToListAsync();
+                .ToListAsync(ct);
         }
 
-        await Send.OkAsync(staffList);
+        await Send.OkAsync(staffList, ct);
     }
 }

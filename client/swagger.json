@@ -9589,7 +9589,7 @@
         "tags": [
           "Clock"
         ],
-        "operationId": "ClockList",
+        "operationId": "ClockGetAllOutletId",
         "parameters": [
           {
             "name": "outletId",
@@ -20641,7 +20641,7 @@
           }
         }
       },
-      "ClockListRequest": {
+      "ClockGetAllOutletIdRequest": {
         "type": "object",
         "additionalProperties": false
       },

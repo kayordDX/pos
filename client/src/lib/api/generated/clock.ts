@@ -20,7 +20,7 @@ import type {
 import type {
 	ClockClockInRequest,
 	ClockClockOutRequest,
-	ClockListParams,
+	ClockGetAllOutletIdParams,
 	EntitiesUser,
 	ErrorResponse,
 	InternalErrorResponse,
@@ -31,7 +31,7 @@ import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-export const getClockListUrl = (params: ClockListParams) => {
+export const getClockGetAllOutletIdUrl = (params: ClockGetAllOutletIdParams) => {
 	const normalizedParams = new URLSearchParams();
 
 	Object.entries(params || {}).forEach(([key, value]) => {
@@ -45,60 +45,66 @@ export const getClockListUrl = (params: ClockListParams) => {
 	return stringifiedParams.length > 0 ? `/clock/list?${stringifiedParams}` : `/clock/list`;
 };
 
-export const clockList = async (
-	params: ClockListParams,
+export const clockGetAllOutletId = async (
+	params: ClockGetAllOutletIdParams,
 	options?: RequestInit
 ): Promise<EntitiesUser[]> => {
-	return customInstance<EntitiesUser[]>(getClockListUrl(params), {
+	return customInstance<EntitiesUser[]>(getClockGetAllOutletIdUrl(params), {
 		...options,
 		method: "GET",
 	});
 };
 
-export const getClockListQueryKey = (params?: ClockListParams) => {
+export const getClockGetAllOutletIdQueryKey = (params?: ClockGetAllOutletIdParams) => {
 	return [`/clock/list`, ...(params ? [params] : [])] as const;
 };
 
-export const getClockListQueryOptions = <
-	TData = Awaited<ReturnType<typeof clockList>>,
+export const getClockGetAllOutletIdQueryOptions = <
+	TData = Awaited<ReturnType<typeof clockGetAllOutletId>>,
 	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 >(
-	params: ClockListParams,
+	params: ClockGetAllOutletIdParams,
 	options?: {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof clockList>>, TError, TData>>;
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof clockGetAllOutletId>>, TError, TData>
+		>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
 	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-	const queryKey = queryOptions?.queryKey ?? getClockListQueryKey(params);
+	const queryKey = queryOptions?.queryKey ?? getClockGetAllOutletIdQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof clockList>>> = () =>
-		clockList(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof clockGetAllOutletId>>> = () =>
+		clockGetAllOutletId(params, requestOptions);
 
 	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof clockList>>,
+		Awaited<ReturnType<typeof clockGetAllOutletId>>,
 		TError,
 		TData
 	> & { queryKey: DataTag<QueryKey, TData, TError> };
 };
 
-export type ClockListQueryResult = NonNullable<Awaited<ReturnType<typeof clockList>>>;
-export type ClockListQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type ClockGetAllOutletIdQueryResult = NonNullable<
+	Awaited<ReturnType<typeof clockGetAllOutletId>>
+>;
+export type ClockGetAllOutletIdQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export function createClockList<
-	TData = Awaited<ReturnType<typeof clockList>>,
+export function createClockGetAllOutletId<
+	TData = Awaited<ReturnType<typeof clockGetAllOutletId>>,
 	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
 >(
-	params: () => ClockListParams,
+	params: () => ClockGetAllOutletIdParams,
 	options?: () => {
-		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof clockList>>, TError, TData>>;
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof clockGetAllOutletId>>, TError, TData>
+		>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
 	const query = createQuery(
-		() => getClockListQueryOptions(params(), options?.()),
+		() => getClockGetAllOutletIdQueryOptions(params(), options?.()),
 		queryClient
 	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
 

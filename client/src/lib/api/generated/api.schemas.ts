@@ -2795,7 +2795,7 @@ export interface DivisionCreateRequest {
 	name: string;
 }
 
-export interface ClockListRequest {
+export interface ClockGetAllOutletIdRequest {
 	[key: string]: unknown;
 }
 
@@ -3450,7 +3450,7 @@ export type DivisionGetAllParams = {
 	outletId: number;
 };
 
-export type ClockListParams = {
+export type ClockGetAllOutletIdParams = {
 	outletId: number;
 	statusId: number;
 };

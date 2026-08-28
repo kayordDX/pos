@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Pos.Api.Features.Clock.List;
+namespace Pos.Api.Features.Clock.GetAllOutletId;
 
 public class Request
 {
