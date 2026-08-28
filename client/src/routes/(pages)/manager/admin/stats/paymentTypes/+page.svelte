@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { scaleBand } from "d3-scale";
-	import { BarChart, PieChart, type ChartContextValue } from "layerchart";
+	import { BarChart, PieChart } from "layerchart";
 	import { Card } from "@kayord/ui";
 	import { Chart } from "@kayord/ui/chart";
 	import { createStatsPaymentTypes } from "$lib/api";
@@ -18,8 +18,6 @@
 		amount: { label: "Amount", color: "var(--chart-1)" },
 		averageAmount: { label: "Average", color: "var(--chart-3)" },
 	} satisfies Chart.ChartConfig;
-
-	let context = $state<ChartContextValue>();
 </script>
 
 <div class="m-2 flex flex-col items-center gap-2">
@@ -47,7 +45,6 @@
 			<Card.Content>
 				<Chart.Container config={chartConfig}>
 					<BarChart
-						bind:context
 						data={chartData}
 						xScale={scaleBand().padding(0.25)}
 						x="paymentType"
@@ -73,7 +70,6 @@
 								strokeWidth: 0,
 								rounded: "all",
 								radius: 8,
-								initialY: context?.height,
 								initialHeight: 0,
 								motion: {
 									y: { type: "tween", duration: 500, easing: cubicInOut },
