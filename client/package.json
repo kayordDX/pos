@@ -2,6 +2,7 @@
 	"name": "pos",
 	"version": "0.0.1",
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"dev": "vite dev --host",
 		"build": "vite build",
@@ -57,15 +58,5 @@
 		"vaul-svelte": "1.0.0-next.7",
 		"vite": "^7.3.1",
 		"zod": "^4.3.6"
-	},
-	"type": "module",
-	"packageManager": "pnpm@10.28.1",
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"@firebase/util",
-			"@tailwindcss/oxide",
-			"esbuild",
-			"protobufjs"
-		]
 	}
 }
