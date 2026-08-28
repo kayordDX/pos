@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createOrderAddItems, type DTOMenuItemDTO, type DTOOptionDTO } from "$lib/api";
+	import { createTableOrderAddItems, type DTOMenuItemDTO, type DTOOptionDTO } from "$lib/api";
 	import { Button, Checkbox, Textarea } from "@kayord/ui";
 	import { Drawer } from "@kayord/ui/drawer";
 	import { toast } from "@kayord/ui/sonner";
@@ -58,7 +58,7 @@
 	});
 	type FormSchema = z.infer<typeof schema>;
 
-	const mutation = createOrderAddItems();
+	const mutation = createTableOrderAddItems();
 
 	let isSubmitting = $state(false);
 

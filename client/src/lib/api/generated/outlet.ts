@@ -174,139 +174,6 @@ export function createOutletGet<
 	return query;
 }
 
-export const getOutletGetPaymentTypeUrl = (id: number) => {
-	return `/outlet/paymentTypes/${id}`;
-};
-
-export const outletGetPaymentType = async (
-	id: number,
-	options?: RequestInit
-): Promise<EntitiesPaymentType[]> => {
-	return customInstance<EntitiesPaymentType[]>(getOutletGetPaymentTypeUrl(id), {
-		...options,
-		method: "GET",
-	});
-};
-
-export const getOutletGetPaymentTypeQueryKey = (id: number) => {
-	return [`/outlet/paymentTypes/${id}`] as const;
-};
-
-export const getOutletGetPaymentTypeQueryOptions = <
-	TData = Awaited<ReturnType<typeof outletGetPaymentType>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	id: number,
-	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof outletGetPaymentType>>, TError, TData>
-		>;
-		request?: SecondParameter<typeof customInstance>;
-	}
-) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getOutletGetPaymentTypeQueryKey(id);
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGetPaymentType>>> = () =>
-		outletGetPaymentType(id, requestOptions);
-
-	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof outletGetPaymentType>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type OutletGetPaymentTypeQueryResult = NonNullable<
-	Awaited<ReturnType<typeof outletGetPaymentType>>
->;
-export type OutletGetPaymentTypeQueryError = ErrorType<void | InternalErrorResponse>;
-
-export function createOutletGetPaymentType<
-	TData = Awaited<ReturnType<typeof outletGetPaymentType>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	id: () => number,
-	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof outletGetPaymentType>>, TError, TData>
-		>;
-		request?: SecondParameter<typeof customInstance>;
-	},
-	queryClient?: () => QueryClient
-): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getOutletGetPaymentTypeQueryOptions(id(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-	return query;
-}
-
-export const getOutletGetAllAssignedUrl = () => {
-	return `/outlet/assigned`;
-};
-
-export const outletGetAllAssigned = async (options?: RequestInit): Promise<DTOOutletDTOBasic[]> => {
-	return customInstance<DTOOutletDTOBasic[]>(getOutletGetAllAssignedUrl(), {
-		...options,
-		method: "GET",
-	});
-};
-
-export const getOutletGetAllAssignedQueryKey = () => {
-	return [`/outlet/assigned`] as const;
-};
-
-export const getOutletGetAllAssignedQueryOptions = <
-	TData = Awaited<ReturnType<typeof outletGetAllAssigned>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
-	query?: Partial<
-		CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>
-	>;
-	request?: SecondParameter<typeof customInstance>;
-}) => {
-	const { query: queryOptions, request: requestOptions } = options ?? {};
-
-	const queryKey = queryOptions?.queryKey ?? getOutletGetAllAssignedQueryKey();
-
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGetAllAssigned>>> = () =>
-		outletGetAllAssigned(requestOptions);
-
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof outletGetAllAssigned>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
-};
-
-export type OutletGetAllAssignedQueryResult = NonNullable<
-	Awaited<ReturnType<typeof outletGetAllAssigned>>
->;
-export type OutletGetAllAssignedQueryError = ErrorType<void | InternalErrorResponse>;
-
-export function createOutletGetAllAssigned<
-	TData = Awaited<ReturnType<typeof outletGetAllAssigned>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
-	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>
-		>;
-		request?: SecondParameter<typeof customInstance>;
-	},
-	queryClient?: () => QueryClient
-): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getOutletGetAllAssignedQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-	return query;
-}
-
 export const getOutletListUrl = () => {
 	return `/outlet`;
 };
@@ -442,6 +309,139 @@ export const createOutletCreate = <
 > => {
 	return createMutation(() => ({ ...getOutletCreateMutationOptions(options?.()) }), queryClient);
 };
+export const getOutletGetPaymentTypeUrl = (id: number) => {
+	return `/outlet/paymentTypes/${id}`;
+};
+
+export const outletGetPaymentType = async (
+	id: number,
+	options?: RequestInit
+): Promise<EntitiesPaymentType[]> => {
+	return customInstance<EntitiesPaymentType[]>(getOutletGetPaymentTypeUrl(id), {
+		...options,
+		method: "GET",
+	});
+};
+
+export const getOutletGetPaymentTypeQueryKey = (id: number) => {
+	return [`/outlet/paymentTypes/${id}`] as const;
+};
+
+export const getOutletGetPaymentTypeQueryOptions = <
+	TData = Awaited<ReturnType<typeof outletGetPaymentType>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof outletGetPaymentType>>, TError, TData>
+		>;
+		request?: SecondParameter<typeof customInstance>;
+	}
+) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getOutletGetPaymentTypeQueryKey(id);
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGetPaymentType>>> = () =>
+		outletGetPaymentType(id, requestOptions);
+
+	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof outletGetPaymentType>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type OutletGetPaymentTypeQueryResult = NonNullable<
+	Awaited<ReturnType<typeof outletGetPaymentType>>
+>;
+export type OutletGetPaymentTypeQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createOutletGetPaymentType<
+	TData = Awaited<ReturnType<typeof outletGetPaymentType>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	id: () => number,
+	options?: () => {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof outletGetPaymentType>>, TError, TData>
+		>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(
+		() => getOutletGetPaymentTypeQueryOptions(id(), options?.()),
+		queryClient
+	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+	return query;
+}
+
+export const getOutletGetAllAssignedUrl = () => {
+	return `/outlet/assigned`;
+};
+
+export const outletGetAllAssigned = async (options?: RequestInit): Promise<DTOOutletDTOBasic[]> => {
+	return customInstance<DTOOutletDTOBasic[]>(getOutletGetAllAssignedUrl(), {
+		...options,
+		method: "GET",
+	});
+};
+
+export const getOutletGetAllAssignedQueryKey = () => {
+	return [`/outlet/assigned`] as const;
+};
+
+export const getOutletGetAllAssignedQueryOptions = <
+	TData = Awaited<ReturnType<typeof outletGetAllAssigned>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<
+		CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>
+	>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
+
+	const queryKey = queryOptions?.queryKey ?? getOutletGetAllAssignedQueryKey();
+
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGetAllAssigned>>> = () =>
+		outletGetAllAssigned(requestOptions);
+
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof outletGetAllAssigned>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
+
+export type OutletGetAllAssignedQueryResult = NonNullable<
+	Awaited<ReturnType<typeof outletGetAllAssigned>>
+>;
+export type OutletGetAllAssignedQueryError = ErrorType<void | InternalErrorResponse>;
+
+export function createOutletGetAllAssigned<
+	TData = Awaited<ReturnType<typeof outletGetAllAssigned>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	options?: () => {
+		query?: Partial<
+			CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>
+		>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(
+		() => getOutletGetAllAssignedQueryOptions(options?.()),
+		queryClient
+	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+
+	return query;
+}
+
 export const getOutletCounterGetAllUrl = () => {
 	return `/outlet/counter`;
 };
