@@ -83,7 +83,7 @@
 									{typeSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each query.data ?? [] as item}
+									{#each query.data ?? [] as item (item.id)}
 										<Select.Item value={item.id.toString()}>{item.itemType}</Select.Item>
 									{/each}
 								</Select.Content>

@@ -7,6 +7,7 @@
 	import { getInitials } from "$lib/util";
 	import CounterPin from "./CounterPin.svelte";
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 
 	const deleteMutation = createOutletCounterDelete();
 
@@ -15,7 +16,7 @@
 			await deleteMutation.mutateAsync({ deviceId: mode.value.deviceId });
 		} finally {
 			mode.remove();
-			goto("/");
+			goto(resolve("/"));
 		}
 	};
 

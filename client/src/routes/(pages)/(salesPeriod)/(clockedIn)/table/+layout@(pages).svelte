@@ -1,9 +1,10 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import { HomeIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "@lucide/svelte";
+	import { HouseIcon, MenuIcon, ReceiptTextIcon, ShoppingBasketIcon } from "@lucide/svelte";
 	import { createTableBookingGet } from "$lib/api";
 	import { Header } from "$lib/components/Header";
 	import type { Snippet } from "svelte";
+	import { resolve } from "$app/paths";
 	let { children }: { children?: Snippet } = $props();
 
 	const menuActive = $derived(page.route.id?.includes("menu") ?? false);
@@ -34,12 +35,12 @@
 {/if}
 <div class="fixed bottom-0 mb-2 flex w-full items-center justify-center">
 	<div class="bg-secondary flex items-center gap-2 rounded-md px-2 py-1">
-		<a class="text-muted-foreground flex items-center" href="/waiter"><HomeIcon class="h-4 w-4" /> </a>
+		<a class="text-muted-foreground flex items-center" href={resolve("/waiter")}><HouseIcon class="h-4 w-4" /> </a>
 		<a
 			class="text-muted-foreground flex items-center rounded-sm p-1 px-3"
 			class:bg-background={menuActive}
 			class:!text-foreground={menuActive}
-			href={`/table/menu/${page.params.id}`}
+			href={resolve(`/table/menu/${page.params.id}`)}
 		>
 			<MenuIcon class="mr-2 h-4 w-4" /> <span class="text-sm">Menu</span>
 		</a>
@@ -47,7 +48,7 @@
 			class="text-muted-foreground flex items-center rounded-sm p-1 px-3"
 			class:bg-background={basketActive}
 			class:!text-foreground={basketActive}
-			href={`/table/basket/${page.params.id}`}
+			href={resolve(`/table/basket/${page.params.id}`)}
 		>
 			<ShoppingBasketIcon class="mr-2 h-4 w-4" />
 			<span class="text-sm">Basket</span>
@@ -56,7 +57,7 @@
 			class="text-muted-foreground flex items-center rounded-sm p-1 px-3"
 			class:bg-background={billActive}
 			class:!text-foreground={billActive}
-			href={`/table/bill/${page.params.id}`}
+			href={resolve(`/table/bill/${page.params.id}`)}
 		>
 			<ReceiptTextIcon class="mr-2 h-4 w-4" />
 			<span class="text-sm">Bill</span>

@@ -9,6 +9,7 @@
 	import { signInCustomToken } from "$lib/firebase.svelte";
 	import { goto } from "$app/navigation";
 	import { mode } from "$lib/stores/mode.svelte";
+	import { resolve } from "$app/paths";
 
 	interface Props {
 		open: boolean;
@@ -44,8 +45,8 @@
 				data: { pin: data.pin, userId, outletId, deviceId: mode.value.deviceId },
 			});
 			await signInCustomToken(loginResult.token);
-			goto("/");
-		} catch (err) {
+			goto(resolve("/"));
+		} catch {
 			toast.error("Error Logging in");
 		} finally {
 			isLoading = false;

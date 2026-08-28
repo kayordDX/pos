@@ -1,6 +1,5 @@
 <script lang="ts" generics="T">
 	import { flip } from "svelte/animate";
-	import type { HTMLAttributes } from "svelte/elements";
 	import { fade } from "svelte/transition";
 	import type { Snippet } from "svelte";
 
@@ -64,10 +63,10 @@
 </script>
 
 <div class="box-border flex justify-center break-normal {className}" bind:clientWidth={masonryWidth} style="gap: {gap}px;">
-	{#each itemsToCols as col}
+	{#each itemsToCols as col (col)}
 		<div class="grid w-full {columnClass}" style={itemStyles}>
 			{#if animate}
-				{#each col as [item, idx] (getId(item))}
+				{#each col as [item] (getId(item))}
 					<div in:fade={{ delay: 100, duration }} out:fade={{ delay: 0, duration }} animate:flip={{ duration }}>
 						{#if itemChild}
 							{@render itemChild(item)}
@@ -77,7 +76,7 @@
 					</div>
 				{/each}
 			{:else}
-				{#each col as [item, idx] (getId(item))}
+				{#each col as [item] (getId(item))}
 					{#if itemChild}
 						{@render itemChild(item)}
 					{:else}

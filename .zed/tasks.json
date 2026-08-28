@@ -11,4 +11,11 @@
     "hide": "on_success",
     "args": ["build", "./Pos.Api/Pos.Api.csproj"],
   },
+  {
+    "label": "lint",
+    "command": "pnpm",
+    "hide": "on_success",
+    "cwd": "./client",
+    "args": ["lint"],
+  },
 ]

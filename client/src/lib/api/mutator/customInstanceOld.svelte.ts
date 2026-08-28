@@ -9,7 +9,6 @@ export const customInstance = async <T>({
 	params,
 	headers,
 	data,
-	responseType,
 }: {
 	url: string;
 	method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";

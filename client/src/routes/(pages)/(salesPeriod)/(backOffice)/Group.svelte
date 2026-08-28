@@ -75,7 +75,7 @@
 						{/if}
 					</div>
 					<div class="mt-2 flex flex-col gap-2">
-						{#each group.orderItems ?? [] as item}
+						{#each group.orderItems ?? [] as item (item.orderItemId)}
 							<Item {item} {refetch} {isHistory} />
 						{/each}
 					</div>

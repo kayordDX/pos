@@ -52,7 +52,7 @@
 			{#if (item.orderItemOptions ?? []).length > 0}
 				<div class="text-muted-foreground mt-1">
 					<div class="ml-4">
-						{#each item.orderItemOptions ?? [] as option}
+						{#each item.orderItemOptions ?? [] as option (option.orderItemOptionId)}
 							<div>
 								&gt;
 								<span class="text-foreground">{option.option.optionGroup.name}:</span>
@@ -66,7 +66,7 @@
 			{#if (item.orderItemExtras ?? []).length > 0}
 				<div class="text-muted-foreground mt-1">
 					<div class="ml-4">
-						{#each item.orderItemExtras ?? [] as extra}
+						{#each item.orderItemExtras ?? [] as extra (extra.orderItemExtraId)}
 							<div>
 								+
 								<span class="text-foreground">{extra.extra.extraGroup.name}:</span>

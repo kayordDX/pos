@@ -12,6 +12,7 @@
 	import { CircleSmallIcon, LogOutIcon } from "@lucide/svelte";
 	import { getInitials } from "$lib/util";
 	import { mode } from "$lib/stores/mode.svelte";
+	import { resolve } from "$app/paths";
 
 	interface Props {
 		children?: Snippet;
@@ -28,7 +29,7 @@
 {#if header.value || !hideHeaderPages}
 	<div class={cn("bg-secondary border-secondary flex h-14 items-center justify-between border-b-2 p-2", className)} transition:slide>
 		{#if !hideHeader}
-			<button class="flex items-center" onclick={() => goto("/")}>
+			<button class="flex items-center" onclick={() => goto(resolve("/"))}>
 				<img src="/logo.svg" alt="logo" class="h-10" />
 				<span class="hidden text-lg font-bold md:block">aviate</span>
 			</button>
@@ -63,7 +64,7 @@
 				</Button>
 			{:else}
 				{#if status.value.outletName}
-					<button onclick={() => goto("/switch")}>
+					<button onclick={() => goto(resolve("/switch"))}>
 						<Badge variant="outline" class="hidden sm:block">
 							{status.value.outletName}
 						</Badge>

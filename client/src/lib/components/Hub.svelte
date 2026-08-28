@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { session } from "$lib/firebase.svelte";
 	import { hub } from "$lib/stores/hub.svelte";
 	import { menu } from "$lib/stores/menu.svelte";
@@ -34,7 +35,7 @@
 			if (status.value.outletId != outletId) {
 				menu.value = { menuId: 0 };
 				await status.getStatus();
-				await goto("/", { replaceState: true, invalidateAll: true });
+				await goto(resolve("/"), { replaceState: true, invalidateAll: true });
 			}
 		}
 	};

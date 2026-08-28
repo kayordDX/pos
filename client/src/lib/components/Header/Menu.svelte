@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { Avatar, Badge, Button, DropdownMenu } from "@kayord/ui";
-	import { LogOutIcon, MoonIcon, SunIcon, WrenchIcon, NetworkIcon, InboxIcon, ArrowRightLeft, ShieldUserIcon, TvMinimalIcon } from "@lucide/svelte";
+	import { Avatar, Button, DropdownMenu } from "@kayord/ui";
+	import { LogOutIcon, WrenchIcon, NetworkIcon, InboxIcon, ArrowRightLeft, ShieldUserIcon, TvMinimalIcon } from "@lucide/svelte";
 	import { getInitials } from "$lib/util";
-	import { toggleMode, mode } from "mode-watcher";
 	import { logout, session } from "$lib/firebase.svelte";
 	import { networkInformation } from "$lib/stores/network.svelte";
 	import { goto } from "$app/navigation";
 	import { status } from "$lib/stores/status.svelte";
+	import { resolve } from "$app/paths";
 </script>
 
 <Button
@@ -34,21 +34,21 @@
 		<DropdownMenu.Label>{session.user?.displayName ?? "My Account"}</DropdownMenu.Label>
 		<DropdownMenu.Separator />
 		<DropdownMenu.Group>
-			<DropdownMenu.Item onclick={() => goto("/switch")}>
+			<DropdownMenu.Item onclick={() => goto(resolve("/switch"))}>
 				<ArrowRightLeft class="mr-2 h-4 w-4" />Switch Outlet
 			</DropdownMenu.Item>
-			<DropdownMenu.Item onclick={() => goto("/setup")}>
+			<DropdownMenu.Item onclick={() => goto(resolve("/setup"))}>
 				<WrenchIcon class="mr-2 h-4 w-4" />Setup Device
 			</DropdownMenu.Item>
 			{#if status.hasFeature("counter mode")}
-				<DropdownMenu.Item onclick={() => goto("/counter-mode")}>
+				<DropdownMenu.Item onclick={() => goto(resolve("/counter-mode"))}>
 					<TvMinimalIcon class="mr-2 h-4 w-4" />Counter Mode
 				</DropdownMenu.Item>
 			{/if}
-			<DropdownMenu.Item onclick={() => goto("/link-account")}>
+			<DropdownMenu.Item onclick={() => goto(resolve("/link-account"))}>
 				<ShieldUserIcon class="mr-2 h-4 w-4" />Link Account
 			</DropdownMenu.Item>
-			<DropdownMenu.Item onclick={() => goto("/network")}>
+			<DropdownMenu.Item onclick={() => goto(resolve("/network"))}>
 				<NetworkIcon class="mr-2 h-4 w-4" />Network Information
 			</DropdownMenu.Item>
 			<!-- <DropdownMenu.Item onclick={toggleMode}>
