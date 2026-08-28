@@ -1,6 +1,6 @@
 using Pos.Api.Features.TableOrder.Office;
 
-namespace Pos.Api.Features.TableOrder.BackOffice;
+namespace Pos.Api.Features.TableOrder.Office.TableBased.Back;
 
 public class Response
 {

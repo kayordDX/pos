@@ -1441,7 +1441,7 @@
         "tags": [
           "Frontoffice"
         ],
-        "operationId": "TableOrderFrontOffice",
+        "operationId": "TableOrderOfficeTableBasedFront",
         "parameters": [
           {
             "name": "roleIds",
@@ -1468,7 +1468,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TableOrderFrontOfficeResponse"
+                  "$ref": "#/components/schemas/TableOrderOfficeTableBasedFrontResponse"
                 }
               }
             }
@@ -1484,7 +1484,7 @@
         "tags": [
           "Backoffice"
         ],
-        "operationId": "TableOrderBackOffice",
+        "operationId": "TableOrderOfficeTableBasedBack",
         "parameters": [
           {
             "name": "roleIds",
@@ -1511,7 +1511,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TableOrderBackOfficeResponse"
+                  "$ref": "#/components/schemas/TableOrderOfficeTableBasedBackResponse"
                 }
               }
             }
@@ -12505,7 +12505,7 @@
           }
         }
       },
-      "TableOrderFrontOfficeResponse": {
+      "TableOrderOfficeTableBasedFrontResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -12963,11 +12963,11 @@
           }
         }
       },
-      "TableOrderFrontOfficeRequest": {
+      "TableOrderOfficeTableBasedFrontRequest": {
         "type": "object",
         "additionalProperties": false
       },
-      "TableOrderBackOfficeResponse": {
+      "TableOrderOfficeTableBasedBackResponse": {
         "type": "object",
         "additionalProperties": false,
         "required": [
@@ -12997,7 +12997,7 @@
           }
         }
       },
-      "TableOrderBackOfficeRequest": {
+      "TableOrderOfficeTableBasedBackRequest": {
         "type": "object",
         "additionalProperties": false
       },

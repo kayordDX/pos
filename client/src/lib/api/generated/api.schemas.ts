@@ -566,7 +566,7 @@ export interface TableOrderOfficeTableBookingDTO {
 	salesPeriod: DTOSalesPeriodDTO;
 }
 
-export interface TableOrderFrontOfficeResponse {
+export interface TableOrderOfficeTableBasedFrontResponse {
 	/** @nullable */
 	tables?: TableOrderOfficeTableBookingDTO[] | null;
 	lastRefresh: string;
@@ -574,11 +574,11 @@ export interface TableOrderFrontOfficeResponse {
 	pendingItems: number;
 }
 
-export interface TableOrderFrontOfficeRequest {
+export interface TableOrderOfficeTableBasedFrontRequest {
 	[key: string]: unknown;
 }
 
-export interface TableOrderBackOfficeResponse {
+export interface TableOrderOfficeTableBasedBackResponse {
 	/** @nullable */
 	tables?: TableOrderOfficeTableBookingDTO[] | null;
 	lastRefresh: string;
@@ -586,7 +586,7 @@ export interface TableOrderBackOfficeResponse {
 	pendingItems: number;
 }
 
-export interface TableOrderBackOfficeRequest {
+export interface TableOrderOfficeTableBasedBackRequest {
 	[key: string]: unknown;
 }
 
@@ -3087,14 +3087,14 @@ export type UserGetCounterUsersParams = {
 	outletId: number;
 };
 
-export type TableOrderFrontOfficeParams = {
+export type TableOrderOfficeTableBasedFrontParams = {
 	/**
 	 * @nullable
 	 */
 	roleIds?: string | null;
 };
 
-export type TableOrderBackOfficeParams = {
+export type TableOrderOfficeTableBasedBackParams = {
 	/**
 	 * @nullable
 	 */

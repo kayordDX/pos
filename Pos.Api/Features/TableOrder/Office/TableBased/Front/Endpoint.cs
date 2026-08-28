@@ -4,7 +4,7 @@ using Pos.Api.Features.Role;
 using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Pos.Api.Features.TableOrder.FrontOffice;
+namespace Pos.Api.Features.TableOrder.Office.TableBased.Front;
 
 public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<Request, Response>
 {
@@ -49,13 +49,12 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
 
         result.ForEach(dto =>
         {
-            dto.OrderItems = dto.OrderItems!
+            dto.OrderItems = [.. dto.OrderItems!
                 .Where(oi =>
                     statusIds.Contains(oi.OrderItemStatusId) &&
                     divisionIds.Contains(oi.MenuItem.DivisionId) &&
                     oi.OrderItemStatusId != 1 &&
-                    oi.OrderItemStatusId != 6)
-                .ToList();
+                    oi.OrderItemStatusId != 6)];
         });
 
         Response response = new()

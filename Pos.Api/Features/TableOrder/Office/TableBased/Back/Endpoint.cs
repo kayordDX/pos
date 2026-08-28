@@ -4,19 +4,12 @@ using Pos.Api.Features.Role;
 using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Pos.Api.Features.TableOrder.BackOffice;
+namespace Pos.Api.Features.TableOrder.Office.TableBased.Back;
 
-public class Endpoint : Endpoint<Request, Response>
+public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<Request, Response>
 {
-    private readonly AppDbContext _dbContext;
-    private readonly CurrentUserService _cu;
-
-    public Endpoint(AppDbContext dbContext, CurrentUserService cu)
-    {
-        _dbContext = dbContext;
-        _cu = cu;
-
-    }
+    private readonly AppDbContext _dbContext = dbContext;
+    private readonly CurrentUserService _cu = cu;
 
     public override void Configure()
     {
@@ -25,10 +18,10 @@ public class Endpoint : Endpoint<Request, Response>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        UserOutlet? userOutlet = await _dbContext.UserOutlet.FirstOrDefaultAsync(x => x.UserId == _cu.UserId && x.IsCurrent == true);
+        UserOutlet? userOutlet = await _dbContext.UserOutlet.FirstOrDefaultAsync(x => x.UserId == _cu.UserId && x.IsCurrent == true, ct);
         if (userOutlet == null)
         {
-            await Send.NotFoundAsync();
+            await Send.NotFoundAsync(ct);
             return;
         }
 
@@ -42,17 +35,16 @@ public class Endpoint : Endpoint<Request, Response>
         var result = await _dbContext.TableBooking
             .Where(x => x.SalesPeriod.OutletId == userOutlet.Id && x.CloseDate == null)
             .ProjectToDto()
-            .ToListAsync();
+            .ToListAsync(ct);
 
         result.ForEach(dto =>
         {
-            dto.OrderItems = dto.OrderItems!
+            dto.OrderItems = [.. dto.OrderItems!
             .Where(oi => statusIds.Contains(oi.OrderItemStatusId) &&
-                divisionIds.Contains(oi.MenuItem.DivisionId))
-            .ToList();
+                divisionIds.Contains(oi.MenuItem.DivisionId))];
         });
 
-        result = result.Where(x => x.OrderItems!.Any()).Where(x => x.CloseDate == null && x.OrderItems!.Where(y => y.OrderItemStatusId != 1 && y.OrderItemStatusId != 6).Count() > 0).ToList();
+        result = [.. result.Where(x => x.OrderItems?.Count > 0).Where(x => x.CloseDate == null && x.OrderItems!.Any(y => y.OrderItemStatusId != 1 && y.OrderItemStatusId != 6))];
 
         Response response = new()
         {
@@ -61,6 +53,6 @@ public class Endpoint : Endpoint<Request, Response>
             PendingTables = result.Count,
             Tables = result
         };
-        await Send.OkAsync(response);
+        await Send.OkAsync(response, ct);
     }
 }

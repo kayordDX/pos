@@ -1,11 +1,11 @@
 <script lang="ts">
-	import { createTableOrderFrontOffice } from "$lib/api";
+	import { createTableOrderOfficeTableBasedFront } from "$lib/api";
 	import { Card, Loader } from "@kayord/ui";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import Item from "./Item.svelte";
 
-	const query = createTableOrderFrontOffice(
+	const query = createTableOrderOfficeTableBasedFront(
 		() => ({}),
 		() => ({ query: { refetchInterval: 20000 } })
 	);

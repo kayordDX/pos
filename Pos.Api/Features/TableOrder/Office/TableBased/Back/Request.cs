@@ -1,4 +1,4 @@
-namespace Pos.Api.Features.TableOrder.BackOffice;
+namespace Pos.Api.Features.TableOrder.Office.TableBased.Back;
 
 public class Request
 {
