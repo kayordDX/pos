@@ -8,6 +8,7 @@
 	import { z } from "zod";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
+	import { untrack } from "svelte";
 
 	const createMutation = createPrinterCreate();
 	const editMutation = createPrinterEdit();
@@ -77,17 +78,22 @@
 		}
 	};
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		id: `printer-${printer?.id ?? 0}`,
-		onUpdate({ form }) {
-			if (form.valid) {
-				createPrinter(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			id: untrack(() => `printer-${printer?.id ?? 0}`),
+			onUpdate({ form }) {
+				if (form.valid) {
+					createPrinter(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

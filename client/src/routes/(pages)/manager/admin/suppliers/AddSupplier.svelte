@@ -8,6 +8,7 @@
 	import { z } from "zod";
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
+	import { untrack } from "svelte";
 
 	interface Props {
 		isOpen: boolean;
@@ -68,17 +69,22 @@
 		}
 	};
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		id: supplier?.id.toString() ?? "0",
-		validators: zod4(schema),
-		onUpdate({ form }) {
-			if (form.valid) {
-				onSubmit(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			id: untrack(() => supplier?.id.toString() ?? "0"),
+			validators: zod4(schema),
+			onUpdate({ form }) {
+				if (form.valid) {
+					onSubmit(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

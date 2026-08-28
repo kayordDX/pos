@@ -9,6 +9,7 @@
 	import { z } from "zod";
 	import { getError } from "$lib/types";
 	import type { EntitiesDivision } from "$lib/api";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -64,15 +65,20 @@
 		divisionTypeId: division?.divisionTypeId ?? 0,
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		id: `section-form-${division?.divisionId}`,
-		validators: zod4(schema),
-		onUpdate({ form }) {
-			if (form.valid) handleSubmit({ name: form.data.name, divisionTypeId: Number(form.data?.divisionTypeId) });
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			id: untrack(() => `section-form-${division?.divisionId}`),
+			validators: zod4(schema),
+			onUpdate({ form }) {
+				if (form.valid) handleSubmit({ name: form.data.name, divisionTypeId: Number(form.data?.divisionTypeId) });
+			},
+		}
+	);
 	let selectedDivisionTypeId = $derived(() => $formData.divisionTypeId.toString());
 
 	$effect(() => {
@@ -131,7 +137,7 @@
 									{divTypeValue ? divTypeValue : "Select Divsion Type"}
 								</Select.Trigger>
 								<Select.Content>
-									{#each divTypeList as divType}
+									{#each divTypeList as divType (divType.value)}
 										<Select.Item value={divType.value}>{divType.label}</Select.Item>
 									{/each}
 								</Select.Content>

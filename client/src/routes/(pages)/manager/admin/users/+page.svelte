@@ -167,7 +167,7 @@
 
 {#snippet header()}
 	<div class="flex gap-2">
-		<InputGroup.Root class="h-8 w-[150px] lg:w-[250px]">
+		<InputGroup.Root class="h-8 w-37.5 lg:w-62.5">
 			<InputGroup.Input
 				value={col?.getFilterValue()}
 				onchange={(e) => debouncedCb(e.currentTarget.value)}

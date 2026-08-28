@@ -10,6 +10,7 @@
 	import { createStockDivisionGetAll, createStockAllocateCreate, createBusinessGetOutlets, createDivisionGetUsers } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { session } from "$lib/firebase.svelte";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -88,16 +89,21 @@
 		assignedUserId: allocate?.assignedUserId,
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		onUpdate({ form }) {
-			if (form.valid) {
-				updateMenu(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			onUpdate({ form }) {
+				if (form.valid) {
+					updateMenu(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 
@@ -161,7 +167,7 @@
 										{outletSelect}
 									</Select.Trigger>
 									<Select.Content>
-										{#each outlets ?? [] as result}
+										{#each outlets ?? [] as result (result.id)}
 											<Select.Item value={result.id.toString()}>
 												{result.name}
 											</Select.Item>

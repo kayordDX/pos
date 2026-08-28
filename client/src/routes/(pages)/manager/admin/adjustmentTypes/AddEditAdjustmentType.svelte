@@ -9,6 +9,7 @@
 	import { z } from "zod";
 	import { getError } from "$lib/types";
 	import type { EntitiesAdjustmentType } from "$lib/api";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -64,14 +65,19 @@
 		description: adjustmentType?.description ?? "",
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		onUpdate({ form }) {
-			if (form.valid) handleSubmit(form.data);
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			onUpdate({ form }) {
+				if (form.valid) handleSubmit(form.data);
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

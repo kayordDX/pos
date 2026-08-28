@@ -9,6 +9,7 @@
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { createUserUsersType, type TableGetBookedResponse, createTableBookingTransfer } from "$lib/api";
+	import { untrack } from "svelte";
 
 	interface Props {
 		otherTable: TableGetBookedResponse;
@@ -49,10 +50,9 @@
 		}
 	};
 
-	// svelte-ignore state_referenced_locally
 	const form = superForm(defaults({}, zod4(schema)), {
 		SPA: true,
-		id: `transfer-table-${otherTable.id}`,
+		id: untrack(() => `transfer-table-${otherTable.id}`),
 		validators: zod4(schema),
 		onUpdate({ form }) {
 			if (form.valid) {

@@ -8,6 +8,7 @@
 	import { getError } from "$lib/types";
 	import Error from "$lib/components/Error.svelte";
 	import { status } from "$lib/stores/status.svelte";
+	import { untrack } from "svelte";
 
 	const mutation = createRoleDivisionCreate();
 	const rolesQuery = createRoleGetAll(() => status.value.outletId);
@@ -36,7 +37,7 @@
 	const form = superForm(defaults({}, zod4(schema)), {
 		SPA: true,
 		validators: zod4(schema),
-		id: `add-role-${divisionId}`,
+		id: untrack(() => `add-role-${divisionId}`),
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);

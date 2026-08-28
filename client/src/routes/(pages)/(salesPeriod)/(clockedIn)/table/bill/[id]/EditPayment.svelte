@@ -9,6 +9,7 @@
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
+	import { untrack } from "svelte";
 
 	interface Props {
 		paymentId: number;
@@ -46,7 +47,9 @@
 		}
 	};
 
-	const form = superForm(defaults({ paymentTypeId, amount }, zod4(schema)), {
+	const defaultValues = { paymentTypeId: untrack(() => paymentTypeId), amount: untrack(() => amount) };
+
+	const form = superForm(defaults(defaultValues, zod4(schema)), {
 		SPA: true,
 		validators: zod4(schema),
 		resetForm: false,
@@ -99,7 +102,7 @@
 									{paymentTypeSelect}
 								</Select.Trigger>
 								<Select.Content>
-									{#each paymentTypeQuery.data ?? [] as paymentType}
+									{#each paymentTypeQuery.data ?? [] as paymentType (paymentType.paymentTypeId)}
 										{#if paymentType.canEdit}
 											<Select.Item value={paymentType.paymentTypeId.toString()}>
 												{paymentType.paymentTypeName}

@@ -43,7 +43,7 @@
 		</span>
 		<div class="flex items-center gap-2">
 			{#if mode.value.mode == "counter" && mode.value.deviceId.length > 0}
-				<div class="flex max-w-[120px] flex-col items-start gap-1">
+				<div class="flex max-w-30 flex-col items-start gap-1">
 					<Badge variant="outline" class="hidden flex-row items-center sm:flex">
 						<CircleSmallIcon class="text-destructive" />
 						Counter Mode

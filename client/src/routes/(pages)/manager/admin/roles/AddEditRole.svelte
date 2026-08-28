@@ -9,6 +9,7 @@
 	import { z } from "zod";
 	import { getError } from "$lib/types";
 	import type { EntitiesRole } from "$lib/api";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -69,21 +70,26 @@
 		description: role?.description ?? "",
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		id: `section-form-${role?.roleId}`,
-		validators: zod4(schema),
-		onUpdate({ form }) {
-			if (form.valid)
-				handleSubmit({
-					name: form.data.name,
-					description: form.data.description,
-					roleTypeId: Number(form.data?.roleTypeId),
-					outletId: status.value.outletId,
-				});
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			id: untrack(() => `section-form-${role?.roleId}`),
+			validators: zod4(schema),
+			onUpdate({ form }) {
+				if (form.valid)
+					handleSubmit({
+						name: form.data.name,
+						description: form.data.description,
+						roleTypeId: Number(form.data?.roleTypeId),
+						outletId: status.value.outletId,
+					});
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

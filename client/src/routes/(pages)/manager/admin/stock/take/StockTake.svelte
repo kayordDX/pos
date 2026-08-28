@@ -7,6 +7,7 @@
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -42,14 +43,14 @@
 	};
 
 	const defaultValues = {
-		threshold: stockItem?.threshold,
-		actual: stockItem?.actual,
+		threshold: untrack(() => stockItem?.threshold),
+		actual: untrack(() => stockItem?.actual),
 	};
 
 	const form = superForm(defaults(defaultValues, zod4(schema)), {
 		SPA: true,
 		validators: zod4(schema),
-		id: `stock-item-${stockItem.stockItemId}`,
+		id: untrack(() => `stock-item-${stockItem.stockItemId}`),
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);

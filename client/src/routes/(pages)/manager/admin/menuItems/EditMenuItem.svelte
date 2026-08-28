@@ -20,6 +20,7 @@
 	import Extras from "./Extras.svelte";
 	import Options from "./Options.svelte";
 	import { ChevronsUpDownIcon, WandSparklesIcon } from "@lucide/svelte";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -109,18 +110,24 @@
 		extraGroupIds: menuItem?.menuItemExtraGroups.map((i) => i.extraGroupId) ?? new Array<number>(),
 		optionGroupIds: menuItem?.menuItemOptionGroups.map((i) => i.optionGroupId) ?? new Array<number>(),
 	});
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		id: `menu-item-${menuItem?.menuItemId ?? 0}`,
-		resetForm: false,
-		onUpdate({ form }) {
-			if (form.valid) {
-				updateMenu(form.data);
-			}
-		},
-	});
+
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			id: untrack(() => `menu-item-${menuItem?.menuItemId ?? 0}`),
+			resetForm: false,
+			onUpdate({ form }) {
+				if (form.valid) {
+					updateMenu(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

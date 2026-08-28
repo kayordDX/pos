@@ -188,7 +188,7 @@
 {#snippet header()}
 	<div class="flex items-center justify-between gap-2">
 		<div class="flex items-center gap-2">
-			<InputGroup.Root class="h-8 w-[150px] lg:w-[250px]">
+			<InputGroup.Root class="h-8 w-37.5 lg:w-62.5">
 				<InputGroup.Input
 					value={col?.getFilterValue()}
 					onchange={(e) => debouncedCb(e.currentTarget.value)}

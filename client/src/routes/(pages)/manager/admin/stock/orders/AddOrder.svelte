@@ -9,6 +9,7 @@
 	import { z } from "zod";
 	import { createStockOrderCreate, createStockOrderUpdate, createSupplierGetAll, createStockDivisionGetAll } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -72,16 +73,21 @@
 		supplierId: order?.supplierId,
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		onUpdate({ form }) {
-			if (form.valid) {
-				updateMenu(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			onUpdate({ form }) {
+				if (form.valid) {
+					updateMenu(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

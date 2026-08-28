@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { untrack } from "svelte";
 	import { Dialog, Select } from "@kayord/ui";
 	import { Form } from "@kayord/ui/form";
 	import { createUserAddUserOutletRole, createRoleGetAll } from "$lib/api";
@@ -36,7 +37,7 @@
 	const form = superForm(defaults({}, zod4(schema)), {
 		SPA: true,
 		validators: zod4(schema),
-		id: `add-role-${userId}`,
+		id: untrack(() => `add-role-${userId}`),
 		onUpdate({ form }) {
 			if (form.valid) {
 				onSubmit(form.data);
@@ -68,7 +69,7 @@
 							>
 								<Select.Trigger {...props}>{roleSelect}</Select.Trigger>
 								<Select.Content>
-									{#each rolesQuery.data ?? [] as item}
+									{#each rolesQuery.data ?? [] as item (item.roleId)}
 										<Select.Item value={item.roleId.toString()} label={item.name}>{item.name}</Select.Item>
 									{/each}
 								</Select.Content>

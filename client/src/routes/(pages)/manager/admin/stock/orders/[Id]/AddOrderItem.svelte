@@ -17,6 +17,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { QueryBuilder } from "fluent-querykit";
 	import { page } from "$app/state";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -85,17 +86,22 @@
 		statusId: orderItem?.stockOrderItemStatusId ?? 1,
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		id: `order-item-${orderItem?.stockId ?? 0}-${orderItem?.stockOrderId ?? 0}`,
-		onUpdate({ form }) {
-			if (form.valid) {
-				updateMenu(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			id: untrack(() => `order-item-${orderItem?.stockId ?? 0}-${orderItem?.stockOrderId ?? 0}`),
+			onUpdate({ form }) {
+				if (form.valid) {
+					updateMenu(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset, validateForm } = form;
 
@@ -248,7 +254,7 @@
 										{itemStatusValue ? itemStatusValue : "Select Status"}
 									</Select.Trigger>
 									<Select.Content>
-										{#each itemStatus as status}
+										{#each itemStatus as status (status.id)}
 											<Select.Item value={status.id.toString()}>{status.name}</Select.Item>
 										{/each}
 									</Select.Content>

@@ -9,6 +9,7 @@
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
+	import { untrack } from "svelte";
 
 	interface Props {
 		open: boolean;
@@ -69,17 +70,22 @@
 		quantity: quantity ?? 0,
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		id: `stock-link-${id}-${stockId}`,
-		onUpdate({ form }) {
-			if (form.valid) {
-				onSubmit(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			id: untrack(() => `stock-link-${id}-${stockId}`),
+			onUpdate({ form }) {
+				if (form.valid) {
+					onSubmit(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

@@ -7,6 +7,7 @@
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { z } from "zod";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -48,17 +49,22 @@
 		actual: stockItem?.actual,
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		id: `stock-item-${stockItem?.id ?? 0}-${stockItem?.divisionId ?? 0}`,
-		onUpdate({ form }) {
-			if (form.valid) {
-				onSubmit(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			id: untrack(() => `stock-item-${stockItem?.id ?? 0}-${stockItem?.divisionId ?? 0}`),
+			onUpdate({ form }) {
+				if (form.valid) {
+					onSubmit(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

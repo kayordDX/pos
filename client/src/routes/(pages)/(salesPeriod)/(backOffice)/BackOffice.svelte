@@ -12,6 +12,8 @@
 	import Hub from "./Hub.svelte";
 	import Filter from "./Filter.svelte";
 	import { status } from "$lib/stores/status.svelte";
+	import { untrack } from "svelte";
+	import { resolve } from "$app/paths";
 
 	interface Props {
 		isHistory?: boolean;
@@ -32,16 +34,12 @@
 		return new Date(date).toLocaleTimeString();
 	};
 
-	const capitalizeFirstLetter = (string: string) => {
-		return string.charAt(0).toUpperCase() + string.slice(1);
-	};
-
 	const maxColHeight = $derived(backOffice.value.itemHeight ?? 500);
 
 	let [minColWidth, maxColWidth, gap] = [500, 600, 10];
 	let screenWidth = $state(0);
 
-	let selectedDivisions = $state<string[]>(divisionIds?.split(",") ?? []);
+	let selectedDivisions = $state<string[]>(untrack(() => divisionIds?.split(",") ?? []));
 </script>
 
 <div class="m-1" bind:clientWidth={screenWidth}>
@@ -64,7 +62,7 @@
 				/>
 				{#if isHistory}
 					<div class="flex flex-wrap items-center gap-1">
-						<a class="flex items-center gap-1" href={`/backOffice${divisionIds ? "/" + divisionIds : ""}`}>
+						<a class="flex items-center gap-1" href={resolve(`/backOffice${divisionIds ? "/" + divisionIds : ""}`)}>
 							<Badge>Live View</Badge>
 						</a>
 					</div>
@@ -77,7 +75,7 @@
 			<div class="flex items-center gap-1">
 				<div class="flex flex-wrap items-center gap-1">
 					{#if !isHistory}
-						<a href={`/backOffice${divisionIds ? "/" + divisionIds : ""}/history`}>
+						<a href={resolve(`/backOffice${divisionIds ? "/" + divisionIds : ""}/history`)}>
 							<Badge variant="secondary" class="truncate">History</Badge>
 						</a>
 					{/if}

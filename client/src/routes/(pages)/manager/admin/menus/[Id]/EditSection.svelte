@@ -9,6 +9,7 @@
 	import { z } from "zod";
 	import { createMenuSectionsCreate, createMenuSectionsUpdate } from "$lib/api";
 	import { page } from "$app/state";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -53,17 +54,22 @@
 		position: section?.positionId ?? 0,
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		id: `sections-${section?.menuSectionId ?? 0}`,
-		onUpdate({ form }) {
-			if (form.valid) {
-				updateMenuSection(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			id: untrack(() => `sections-${section?.menuSectionId ?? 0}`),
+			onUpdate({ form }) {
+				if (form.valid) {
+					updateMenuSection(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

@@ -22,7 +22,7 @@
 <div class="mt-12 flex flex-col items-center justify-center">
 	<Card.Root class="w-full max-w-md">
 		<Card.Header class="flex flex-row">
-			<div class="flex flex-grow flex-col">
+			<div class="flex grow flex-col">
 				<Card.Title>POS</Card.Title>
 				<Card.Description>Powered by kayord</Card.Description>
 			</div>

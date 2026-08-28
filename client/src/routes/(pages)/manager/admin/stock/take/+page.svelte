@@ -159,7 +159,7 @@
 		<div class="flex items-center gap-2">
 			<Label>Division:</Label>
 			<Select.Root type="single" name="divisionId" bind:value={() => divisionId.toString(), (v) => (divisionId = Number(v))} allowDeselect={false}>
-				<Select.Trigger class="min-w-[100px]">
+				<Select.Trigger class="min-w-25">
 					{divisionValue ? divisionValue : "Select Division"}
 				</Select.Trigger>
 				<Select.Content>

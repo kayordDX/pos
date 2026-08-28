@@ -8,6 +8,7 @@
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
 	import { createExtraGroupCreate, createExtraGroupUpdate } from "$lib/api";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -56,17 +57,22 @@
 		isGlobal: extraGroup?.isGlobal ?? false,
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		id: `extras-${extraGroup?.extraGroupId ?? 0}`,
-		onUpdate({ form }) {
-			if (form.valid) {
-				updateExtra(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			id: untrack(() => `extras-${extraGroup?.extraGroupId ?? 0}`),
+			onUpdate({ form }) {
+				if (form.valid) {
+					updateExtra(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 

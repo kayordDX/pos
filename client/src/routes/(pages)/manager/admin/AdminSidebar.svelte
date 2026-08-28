@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
 	import { page } from "$app/state";
 	import { status } from "$lib/stores/status.svelte";
 	import { Collapsible, Sidebar } from "@kayord/ui";
@@ -224,7 +225,7 @@
 	<Sidebar.Header class="bg-secondary flex h-14 items-center justify-center">
 		<Sidebar.Menu>
 			<Sidebar.MenuItem class="flex items-center justify-start">
-				<button class="flex items-center rounded-full" onclick={() => goto("/")}>
+				<button class="flex items-center rounded-full" onclick={() => goto(resolve("/"))}>
 					<img src="/logo.svg" alt="kayord-logo" class="h-10" />
 					<span class="hidden text-lg font-bold md:block">aviate</span>
 				</button>
@@ -243,7 +244,7 @@
 									<Collapsible.Trigger class="flex w-full items-center justify-between">
 										<Sidebar.MenuButton>
 											{#if item.icon}
-												<item.icon class="!size-5" />
+												<item.icon class="size-5!" />
 											{/if}
 											{item.title}
 											<Plus class="ml-auto group-data-[state=open]/collapsible:hidden" />
@@ -266,7 +267,7 @@
 															isActive={activeItem?.title === subItem.title}
 														>
 															{#if subItem.icon}
-																<subItem.icon class={`!size-5 ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`} />
+																<subItem.icon class={`size-5! ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`} />
 															{/if}
 															<span>{subItem.title}</span>
 														</Sidebar.MenuSubButton>
@@ -293,7 +294,7 @@
 									isActive={activeItem?.title === item.title}
 								>
 									{#if item.icon}
-										<item.icon class="!size-5" />
+										<item.icon class="size-5!" />
 									{/if}
 									<span>{item.title}</span>
 								</Sidebar.MenuButton>

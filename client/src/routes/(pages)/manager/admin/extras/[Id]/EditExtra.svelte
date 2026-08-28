@@ -10,6 +10,7 @@
 	import { createExtraCreate, createExtraUpdate } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { page } from "$app/state";
+	import { untrack } from "svelte";
 
 	interface Props {
 		refetch: () => void;
@@ -69,17 +70,22 @@
 		position: extra?.positionId,
 	});
 
-	// svelte-ignore state_referenced_locally
-	const form = superForm(defaults(defaultValues, zod4(schema)), {
-		SPA: true,
-		validators: zod4(schema),
-		id: `extra-item-${extra?.extraId ?? 0}`,
-		onUpdate({ form }) {
-			if (form.valid) {
-				updateExtra(form.data);
-			}
-		},
-	});
+	const form = superForm(
+		defaults(
+			untrack(() => defaultValues),
+			zod4(schema)
+		),
+		{
+			SPA: true,
+			validators: zod4(schema),
+			id: untrack(() => `extra-item-${extra?.extraId ?? 0}`),
+			onUpdate({ form }) {
+				if (form.valid) {
+					updateExtra(form.data);
+				}
+			},
+		}
+	);
 
 	const { form: formData, enhance, reset } = form;
 
