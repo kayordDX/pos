@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Clock.ClockIn;
+namespace Pos.Api.Features.Clock.ClockIn;
 
 public class Endpoint : Endpoint<Request>
 {

@@ -1,4 +1,4 @@
-﻿namespace Kayord.Pos.Common.Printer.Emitters.BaseCommandValues;
+﻿namespace Pos.Api.Common.Printer.Emitters.BaseCommandValues;
 
 public static class Chars
 {
@@ -10,4 +10,3 @@ public static class Chars
     public static readonly byte CodePage = 0x74;
     public static readonly byte Color = 0x72;
 }
-

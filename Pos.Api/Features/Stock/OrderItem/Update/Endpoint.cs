@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Stock.OrderItem.Update;
+namespace Pos.Api.Features.Stock.OrderItem.Update;
 
 public class Endpoint : Endpoint<Request, StockOrderItem>
 {

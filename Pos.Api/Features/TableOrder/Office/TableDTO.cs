@@ -1,4 +1,5 @@
-namespace Kayord.Pos.Features.TableOrder.Office;
+namespace Pos.Api.Features.TableOrder.Office;
+
 public class TableDTO
 {
     public int TableId { get; set; }

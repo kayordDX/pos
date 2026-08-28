@@ -1,10 +1,10 @@
 using System.Web;
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.DTO;
+using Pos.Api.Entities;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Menu.GetItems;
+namespace Pos.Api.Features.Menu.GetItems;
 
 public class GetMenuItemsEndpoint : Endpoint<Request, List<MenuItemDTOBasic>>
 {
@@ -75,6 +75,3 @@ public class GetMenuItemsEndpoint : Endpoint<Request, List<MenuItemDTOBasic>>
         return searchString.Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
     }
 }
-
-
-

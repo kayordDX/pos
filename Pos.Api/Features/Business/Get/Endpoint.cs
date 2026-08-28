@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Business.Create;
+using Pos.Api.Data;
+using Pos.Api.Features.Business.Create;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Business.Get;
+namespace Pos.Api.Features.Business.Get;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.Business>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.Business>
 {
     private readonly AppDbContext _dbContext;
 

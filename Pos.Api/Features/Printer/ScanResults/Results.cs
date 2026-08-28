@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Printer.ScanResults;
+namespace Pos.Api.Features.Printer.ScanResults;
 
 public class Results
 {

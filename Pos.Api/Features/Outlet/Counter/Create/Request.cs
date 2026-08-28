@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Outlet.Counter.Create;
+namespace Pos.Api.Features.Outlet.Counter.Create;
 
 public class Request
 {

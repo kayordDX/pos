@@ -1,7 +1,7 @@
 using NSwag.Generation.Processors;
 using NSwag.Generation.Processors.Contexts;
 
-namespace Kayord.Pos.Common.Extensions.Swagger;
+namespace Pos.Api.Common.Extensions.Swagger;
 
 public class CustomOperationsProcessor : IOperationProcessor
 {

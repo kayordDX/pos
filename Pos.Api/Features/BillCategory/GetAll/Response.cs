@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.BillCategory.GetAll;
+namespace Pos.Api.Features.BillCategory.GetAll;
 
 public class Response
 {

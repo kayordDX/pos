@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Pay.PayConfig.Create;
+namespace Pos.Api.Features.Pay.PayConfig.Create;
 
 public class Request
 {

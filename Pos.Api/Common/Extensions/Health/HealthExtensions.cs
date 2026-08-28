@@ -1,7 +1,7 @@
 using HealthChecks.UI.Client;
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-namespace Kayord.Pos.Common.Extensions.Health;
+namespace Pos.Api.Common.Extensions.Health;
 
 public static class HealthExtensions
 {

@@ -1,9 +1,9 @@
-using Kayord.Pos.Common.Wrapper;
-using Kayord.Pos.Events;
-using Kayord.Pos.Services;
+using Pos.Api.Common.Wrapper;
+using Pos.Api.Events;
+using Pos.Api.Services;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Kayord.Pos.Hubs;
+namespace Pos.Api.Hubs;
 
 public interface IKayordHub
 {

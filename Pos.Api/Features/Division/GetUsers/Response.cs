@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Division.GetUsers;
+namespace Pos.Api.Features.Division.GetUsers;
 
 public class Response
 {

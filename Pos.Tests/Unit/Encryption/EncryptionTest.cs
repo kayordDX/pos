@@ -1,5 +1,5 @@
-using Kayord.Pos.Config;
-using Kayord.Pos.Services;
+using Pos.Api.Config;
+using Pos.Api.Services;
 using Microsoft.Extensions.Options;
 
 namespace Unit.Encryption;

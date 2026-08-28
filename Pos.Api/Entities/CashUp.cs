@@ -1,7 +1,7 @@
-using Kayord.Pos.DTO;
-using Kayord.Pos.Entities;
+using Pos.Api.DTO;
+using Pos.Api.Entities;
 
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
 
 public class CashUp
 {

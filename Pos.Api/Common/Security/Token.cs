@@ -3,7 +3,7 @@ using System.Text;
 using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Kayord.Pos.Common.Security;
+namespace Pos.Api.Common.Security;
 
 public static class Token
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Cors.Infrastructure;
 
-namespace Kayord.Pos.Common.Extensions.Cors;
+namespace Pos.Api.Common.Extensions.Cors;
 
 public static class CorsExtensions
 {

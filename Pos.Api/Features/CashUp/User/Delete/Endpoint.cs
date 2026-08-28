@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 
-namespace Kayord.Pos.Features.CashUp.User.Delete;
+namespace Pos.Api.Features.CashUp.User.Delete;
 
 public class Endpoint : Endpoint<Request, CashUpUserItem>
 {

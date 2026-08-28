@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Menu.GetOutletMenu;
+namespace Pos.Api.Features.Menu.GetOutletMenu;
 
-public class GetOutletMenusEndpoint : Endpoint<Request, List<Kayord.Pos.Entities.Menu>>
+public class GetOutletMenusEndpoint : Endpoint<Request, List<Pos.Api.Entities.Menu>>
 {
     private readonly AppDbContext _dbContext;
 

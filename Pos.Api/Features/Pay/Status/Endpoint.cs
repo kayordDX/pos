@@ -1,8 +1,8 @@
-using Kayord.Pos.Common.Wrapper;
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Common.Wrapper;
+using Pos.Api.Data;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.Pay.Status;
+namespace Pos.Api.Features.Pay.Status;
 
 public class Endpoint : Endpoint<Request, Result<Dto.StatusResultDto>>
 {

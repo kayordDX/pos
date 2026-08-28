@@ -1,4 +1,5 @@
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
+
 public class OrderItemStatus
 {
     public int OrderItemStatusId { get; set; }

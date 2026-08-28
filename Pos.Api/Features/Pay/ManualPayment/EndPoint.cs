@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.Pay.ManualPayment;
+namespace Pos.Api.Features.Pay.ManualPayment;
 
 public class Endpoint : Endpoint<Request, Entities.Payment>
 {

@@ -9,7 +9,7 @@ using TickerQ.EntityFrameworkCore.DbContextFactory;
 
 #nullable disable
 
-namespace Kayord.Pos.Data.TickerQMigrations
+namespace Pos.Api.Data.TickerQMigrations
 {
     [DbContext(typeof(TickerQDbContext))]
     [Migration("20260331205414_TickerQUpdate")]

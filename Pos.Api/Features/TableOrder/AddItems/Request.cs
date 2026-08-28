@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Order.AddItems;
+namespace Pos.Api.Features.Order.AddItems;
 
 public class Request
 {

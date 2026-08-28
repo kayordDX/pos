@@ -1,8 +1,8 @@
-using Kayord.Pos.Common.Extensions;
-using Kayord.Pos.Common.Models;
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
-namespace Kayord.Pos.Features.Stock.Allocate.GetAll;
+using Pos.Api.Common.Extensions;
+using Pos.Api.Common.Models;
+using Pos.Api.Data;
+using Pos.Api.DTO;
+namespace Pos.Api.Features.Stock.Allocate.GetAll;
 
 public class Endpoint : Endpoint<Request, PaginatedList<StockAllocateDTOBasic>>
 {

@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.Adjustment.Create;
+namespace Pos.Api.Features.Adjustment.Create;
 
 public class Endpoint : Endpoint<Request>
 {

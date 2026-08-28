@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Notification;
+namespace Pos.Api.Features.Notification;
 
 public class NotificationDTO
 {

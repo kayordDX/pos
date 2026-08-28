@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.StockCategory.Create;
+namespace Pos.Api.Features.StockCategory.Create;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.StockCategory>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.StockCategory>
 {
     private readonly AppDbContext _dbContext;
 
@@ -18,7 +18,7 @@ public class Endpoint : Endpoint<Request, Pos.Entities.StockCategory>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        Pos.Entities.StockCategory entity = new Pos.Entities.StockCategory()
+        Pos.Api.Entities.StockCategory entity = new Pos.Api.Entities.StockCategory()
         {
             Name = req.Name,
             ParentId = req.ParentId,

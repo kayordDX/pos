@@ -1,16 +1,16 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
-using Kayord.Pos.Common.Extensions;
-using Kayord.Pos.Common.Wrapper;
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Events;
-using Kayord.Pos.Features.Pay.Dto;
-using Kayord.Pos.Services;
+using Pos.Api.Common.Extensions;
+using Pos.Api.Common.Wrapper;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Events;
+using Pos.Api.Features.Pay.Dto;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Pay;
+namespace Pos.Api.Features.Pay;
 
 public class HaloService
 {

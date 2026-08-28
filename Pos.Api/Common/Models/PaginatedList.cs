@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Common.Models;
+namespace Pos.Api.Common.Models;
 
 public class PaginatedList<T>
 {

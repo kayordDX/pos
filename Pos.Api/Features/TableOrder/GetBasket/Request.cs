@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.TableOrder.GetBasket;
+namespace Pos.Api.Features.TableOrder.GetBasket;
 
 public class Request
 {

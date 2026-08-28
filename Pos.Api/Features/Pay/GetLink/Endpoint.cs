@@ -1,10 +1,10 @@
-using Kayord.Pos.Common.Wrapper;
-using Kayord.Pos.Data;
-using Kayord.Pos.Events;
-using Kayord.Pos.Services;
+using Pos.Api.Common.Wrapper;
+using Pos.Api.Data;
+using Pos.Api.Events;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Pay.GetLink;
+namespace Pos.Api.Features.Pay.GetLink;
 
 public class Endpoint : Endpoint<Request, Result<Response>>
 {

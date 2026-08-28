@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Adjustment.GetAll;
+namespace Pos.Api.Features.Adjustment.GetAll;
 
 public class Endpoint : Endpoint<Request, List<Entities.AdjustmentType>>
 {

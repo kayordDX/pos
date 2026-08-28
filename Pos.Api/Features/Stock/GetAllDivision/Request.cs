@@ -1,6 +1,6 @@
-using Kayord.Pos.Common.Models;
+using Pos.Api.Common.Models;
 
-namespace Kayord.Pos.Features.Stock.GetAllDivision;
+namespace Pos.Api.Features.Stock.GetAllDivision;
 
 public class Request : QueryModel
 {

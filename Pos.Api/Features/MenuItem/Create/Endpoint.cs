@@ -1,11 +1,11 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.MenuItem.Create;
+namespace Pos.Api.Features.MenuItem.Create;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.MenuItem>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuItem>
 {
     private readonly AppDbContext _dbContext;
     private readonly RedisClient _redisClient;

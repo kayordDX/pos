@@ -1,6 +1,6 @@
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.CashUp.User.Create;
+namespace Pos.Api.Features.CashUp.User.Create;
 
 public class Response
 {

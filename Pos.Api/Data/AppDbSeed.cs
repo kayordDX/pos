@@ -1,7 +1,7 @@
 using Bogus;
-using Kayord.Pos.Entities;
+using Pos.Api.Entities;
 
-namespace Kayord.Pos.Data;
+namespace Pos.Api.Data;
 
 public static class AppDbSeed
 {

@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill;
-namespace Kayord.Pos.Features.Test;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill;
+namespace Pos.Api.Features.Test;
 
 public class TotalTest : EndpointWithoutRequest<TableTotal?>
 {

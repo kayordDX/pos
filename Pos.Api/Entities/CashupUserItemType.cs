@@ -1,6 +1,6 @@
-using Kayord.Pos.Common.Enums;
+using Pos.Api.Common.Enums;
 
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
 
 public class CashUpUserItemType
 {

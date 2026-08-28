@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.Option.Group.Delete;
+namespace Pos.Api.Features.Option.Group.Delete;
 
 public class Endpoint : Endpoint<Request>
 {

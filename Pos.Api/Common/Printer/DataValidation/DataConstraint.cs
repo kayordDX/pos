@@ -1,4 +1,4 @@
-﻿namespace Kayord.Pos.Common.Printer.DataValidation;
+﻿namespace Pos.Api.Common.Printer.DataValidation;
 
 public class DataConstraint
 {
@@ -10,4 +10,3 @@ public class DataConstraint
 
     public string ValidChars { get; set; } = string.Empty;
 }
-

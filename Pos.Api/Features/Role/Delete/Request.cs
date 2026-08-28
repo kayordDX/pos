@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Role.Delete;
+namespace Pos.Api.Features.Role.Delete;
 
 public class Request
 {

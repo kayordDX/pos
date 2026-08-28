@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
 public class Menu : AuditableEntity
 {
     public int Id { get; set; }

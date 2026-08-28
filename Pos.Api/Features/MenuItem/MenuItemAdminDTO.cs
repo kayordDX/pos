@@ -1,6 +1,6 @@
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.MenuItem;
+namespace Pos.Api.Features.MenuItem;
 
 public class MenuItemAdminDTO
 {

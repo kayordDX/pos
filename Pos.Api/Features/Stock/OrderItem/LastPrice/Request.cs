@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Stock.OrderItem.LastPrice;
+namespace Pos.Api.Features.Stock.OrderItem.LastPrice;
 
 public class Request
 {

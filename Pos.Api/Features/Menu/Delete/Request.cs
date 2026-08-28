@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Menu.Delete;
+namespace Pos.Api.Features.Menu.Delete;
 
 public class Request
 {

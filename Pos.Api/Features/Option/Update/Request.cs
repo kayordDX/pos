@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Option.Update;
+namespace Pos.Api.Features.Option.Update;
 
 public class Request
 {

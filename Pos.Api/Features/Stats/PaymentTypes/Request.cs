@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stats.PaymentTypes;
+namespace Pos.Api.Features.Stats.PaymentTypes;
 
 public class Request
 {

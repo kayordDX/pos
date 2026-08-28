@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Printer.List;
+namespace Pos.Api.Features.Printer.List;
 
 public class Request
 {

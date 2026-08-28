@@ -1,6 +1,6 @@
-using Kayord.Pos.Services;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.Notification.AddUser;
+namespace Pos.Api.Features.Notification.AddUser;
 
 public class Endpoint : Endpoint<Request, bool>
 {

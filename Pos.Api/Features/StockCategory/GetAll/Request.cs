@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.StockCategory.GetAll;
+namespace Pos.Api.Features.StockCategory.GetAll;
 
 public class Request
 {

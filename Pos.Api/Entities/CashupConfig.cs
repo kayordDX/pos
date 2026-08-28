@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
 
 public class CashUpConfig
 {
@@ -7,4 +7,3 @@ public class CashUpConfig
     public int OutletId { get; set; }
     public decimal Value { get; set; }
 }
-

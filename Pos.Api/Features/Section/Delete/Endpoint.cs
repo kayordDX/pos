@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Section.Delete;
+namespace Pos.Api.Features.Section.Delete;
 
 public class Endpoint : Endpoint<Request>
 {

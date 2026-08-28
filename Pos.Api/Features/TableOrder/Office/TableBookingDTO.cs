@@ -1,7 +1,7 @@
 using Humanizer;
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.TableOrder.Office;
+namespace Pos.Api.Features.TableOrder.Office;
 
 public class TableBookingDTO
 {

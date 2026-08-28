@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.SalesPeriod.Create;
+namespace Pos.Api.Features.SalesPeriod.Create;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.SalesPeriod>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.SalesPeriod>
 {
     private readonly AppDbContext _dbContext;
 

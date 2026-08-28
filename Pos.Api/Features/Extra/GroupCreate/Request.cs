@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Extra.GroupCreate;
+namespace Pos.Api.Features.Extra.GroupCreate;
 
 public class Request
 {

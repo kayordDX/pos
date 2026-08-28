@@ -1,6 +1,7 @@
-using Kayord.Pos.Entities;
+using Pos.Api.Entities;
 
-namespace Kayord.Pos.DTO;
+namespace Pos.Api.DTO;
+
 public class OrderItemExtraDTO
 {
     public int OrderItemExtraId { get; set; }

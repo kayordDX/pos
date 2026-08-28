@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Events;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Events;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.SalesPeriod.Close;
+namespace Pos.Api.Features.SalesPeriod.Close;
 
 public class Endpoint : Endpoint<Request, Entities.SalesPeriod>
 {

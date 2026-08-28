@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill.DownloadBill;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill.DownloadBill;
+using Pos.Api.Services;
 using MimeKit;
 using QuestPDF.Fluent;
 
-namespace Kayord.Pos.Features.Bill.EmailBill;
+namespace Pos.Api.Features.Bill.EmailBill;
 
 public class Endpoint : Endpoint<Request, bool>
 {

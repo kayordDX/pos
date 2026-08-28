@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Pay.PayConfig.SetActive;
+namespace Pos.Api.Features.Pay.PayConfig.SetActive;
 
 public class Endpoint : Endpoint<Request>
 {

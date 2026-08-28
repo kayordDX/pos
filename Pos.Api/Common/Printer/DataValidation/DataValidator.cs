@@ -1,6 +1,6 @@
-﻿using Kayord.Pos.Common.Printer.Emitters;
+﻿using Pos.Api.Common.Printer.Emitters;
 
-namespace Kayord.Pos.Common.Printer.DataValidation;
+namespace Pos.Api.Common.Printer.DataValidation;
 
 public abstract class BaseDataValidator<T> where T : Enum
 {

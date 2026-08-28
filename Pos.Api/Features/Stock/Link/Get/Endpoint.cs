@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Stock.Link.Get;
+namespace Pos.Api.Features.Stock.Link.Get;
 
 public class Endpoint : Endpoint<Request, List<Response>>
 {
@@ -22,7 +22,7 @@ public class Endpoint : Endpoint<Request, List<Response>>
         var results = await _dbContext.Database.SqlQuery<Response>($"""
 
         select name, description, type, quantity from (
-            select m.name, ms.name description, 'Menu Item' type, s.quantity 
+            select m.name, ms.name description, 'Menu Item' type, s.quantity
             from menu_item_stock s
             join menu_item m
             on m.menu_item_id = s.menu_item_id
@@ -30,7 +30,7 @@ public class Endpoint : Endpoint<Request, List<Response>>
             on ms.menu_section_id = m.menu_section_id
             where s.stock_id = {req.StockId}
             union
-            select m.name, ms.name description, 'Bulk' type, s.quantity 
+            select m.name, ms.name description, 'Bulk' type, s.quantity
             from menu_item_bulk_stock s
             join menu_item m
             on m.menu_item_id = s.menu_item_id
@@ -52,13 +52,10 @@ public class Endpoint : Endpoint<Request, List<Response>>
             on o.option_id = s.option_id
             join option_group og
             on og.option_group_id = o.option_group_id
-            where s.stock_id = {req.StockId} 
+            where s.stock_id = {req.StockId}
         )
         """).ToListAsync(ct);
 
         await Send.OkAsync(results);
     }
 }
-
-
-

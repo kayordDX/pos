@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stock.Items.Update;
+namespace Pos.Api.Features.Stock.Items.Update;
 
 public class Request
 {

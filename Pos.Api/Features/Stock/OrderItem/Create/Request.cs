@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stock.OrderItem.Create;
+namespace Pos.Api.Features.Stock.OrderItem.Create;
 
 public class Request
 {

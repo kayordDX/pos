@@ -1,11 +1,11 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Data.Migrations;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Data.Migrations;
+using Pos.Api.Entities;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.Extra.GroupDelete;
+namespace Pos.Api.Features.Extra.GroupDelete;
 
 public class Endpoint : Endpoint<Request>
 {
@@ -57,4 +57,3 @@ public class Endpoint : Endpoint<Request>
 
 
 }
-

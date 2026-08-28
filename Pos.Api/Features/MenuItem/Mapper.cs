@@ -1,6 +1,6 @@
 using Riok.Mapperly.Abstractions;
 
-namespace Kayord.Pos.Features.MenuItem;
+namespace Pos.Api.Features.MenuItem;
 
 [Mapper]
 public static partial class Mapper

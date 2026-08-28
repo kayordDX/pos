@@ -1,6 +1,6 @@
-using Kayord.Pos.Features.Manager.OrderView;
+using Pos.Api.Features.Manager.OrderView;
 
-namespace Kayord.Pos.DTO;
+namespace Pos.Api.DTO;
 
 public class StockAllocateDTOBasic
 {

@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stock.Category;
+namespace Pos.Api.Features.Stock.Category;
 
 public class Request
 {

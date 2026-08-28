@@ -1,5 +1,5 @@
 using DotNet.Testcontainers.Builders;
-using Kayord.Pos.Services;
+using Pos.Api.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Testcontainers.PostgreSql;
 

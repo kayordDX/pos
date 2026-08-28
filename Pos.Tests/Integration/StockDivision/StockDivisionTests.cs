@@ -1,5 +1,5 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -19,7 +19,7 @@ public class StockDivisionTests(App app) : TestBase<App>
         var activeDivisionName = $"Active Stock Division {suffix}";
         var deletedDivisionName = $"Deleted Stock Division {suffix}";
 
-        var activeDivision = new Kayord.Pos.Entities.Division
+        var activeDivision = new Pos.Api.Entities.Division
         {
             DivisionName = activeDivisionName,
             OutletId = outlet.Id,
@@ -28,7 +28,7 @@ public class StockDivisionTests(App app) : TestBase<App>
         };
         dbContext.Division.Add(activeDivision);
 
-        var deletedDivision = new Kayord.Pos.Entities.Division
+        var deletedDivision = new Pos.Api.Entities.Division
         {
             DivisionName = deletedDivisionName,
             OutletId = outlet.Id,
@@ -39,7 +39,7 @@ public class StockDivisionTests(App app) : TestBase<App>
         await dbContext.SaveChangesAsync();
 
         // Act
-        var (rsp, res) = await app.ClientAuth.GETAsync<Kayord.Pos.Features.Stock.Division.GetAll.Endpoint, Kayord.Pos.Features.Stock.Division.GetAll.Request, List<Kayord.Pos.Entities.Division>>(
+        var (rsp, res) = await app.ClientAuth.GETAsync<Pos.Api.Features.Stock.Division.GetAll.Endpoint, Pos.Api.Features.Stock.Division.GetAll.Request, List<Pos.Api.Entities.Division>>(
             new() { OutletId = outlet.Id });
 
         // Assert

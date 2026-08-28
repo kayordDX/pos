@@ -1,7 +1,7 @@
-using Kayord.Pos.Services;
+using Pos.Api.Services;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Kayord.Pos.Hubs;
+namespace Pos.Api.Hubs;
 
 public class UserProvider : IUserIdProvider
 {

@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Events;
-using Kayord.Pos.Features.Stock;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Events;
+using Pos.Api.Features.Stock;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableOrder.UpdateOrderItem;
+namespace Pos.Api.Features.TableOrder.UpdateOrderItem;
 
 public class Endpoint : Endpoint<Request, Response>
 {

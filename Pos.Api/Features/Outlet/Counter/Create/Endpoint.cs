@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 
-namespace Kayord.Pos.Features.Outlet.Counter.Create;
+namespace Pos.Api.Features.Outlet.Counter.Create;
 
 public class Endpoint : Endpoint<Request, Guid>
 {

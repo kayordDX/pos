@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableBooking.Create;
+namespace Pos.Api.Features.TableBooking.Create;
 
 public class Endpoint : Endpoint<Request, Entities.TableBooking>
 {

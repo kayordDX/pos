@@ -1,6 +1,6 @@
 
 
-namespace Kayord.Pos.Features.CashUp.User.Get;
+namespace Pos.Api.Features.CashUp.User.Get;
 
 public class Response
 {

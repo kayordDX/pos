@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Events;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Events;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.Stock;
+namespace Pos.Api.Features.Stock;
 
 public class StockHandler : IEventHandler<StockEvent>
 {

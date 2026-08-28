@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
+using Pos.Api.Data;
+using Pos.Api.DTO;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Printer.Edit;
+namespace Pos.Api.Features.Printer.Edit;
 
 public class Endpoint : Endpoint<Request, PrinterDTO>
 {

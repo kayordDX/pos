@@ -1,4 +1,4 @@
-﻿namespace Kayord.Pos.Common.Printer.Emitters.BaseCommandValues;
+﻿namespace Pos.Api.Common.Printer.Emitters.BaseCommandValues;
 
 public static class Functions
 {

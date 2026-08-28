@@ -1,5 +1,6 @@
 
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
+
 public class OrderGroup
 {
     public int OrderGroupId { get; set; }

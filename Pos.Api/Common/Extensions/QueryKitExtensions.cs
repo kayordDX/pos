@@ -1,8 +1,8 @@
-using Kayord.Pos.Common.Models;
+using Pos.Api.Common.Models;
 using Microsoft.EntityFrameworkCore;
 using QueryKit;
 using QueryKit.Configuration;
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class QueryKitExtensions
 {

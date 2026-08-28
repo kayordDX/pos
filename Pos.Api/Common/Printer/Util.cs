@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Common.Printer;
+namespace Pos.Api.Common.Printer;
 
 public static class Util
 {

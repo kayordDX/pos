@@ -3,7 +3,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class TelemetryExtensions
 {

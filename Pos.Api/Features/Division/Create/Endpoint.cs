@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Division.Create;
+namespace Pos.Api.Features.Division.Create;
 
 public class Endpoint : Endpoint<Request, Entities.Division>
 {

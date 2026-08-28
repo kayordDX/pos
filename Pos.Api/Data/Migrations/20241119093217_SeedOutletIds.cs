@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class SeedOutletIds : Migration
@@ -15,7 +15,7 @@ namespace Kayord.Pos.Data.Migrations
                 UPDATE "Extra" SET "OutletId" = 1;
 
                 INSERT INTO "ExtraGroup" ("Name", "OutletId")
-                SELECT 
+                SELECT
                     eg."Name",
                 o."Id" "OutletId"
                 FROM "ExtraGroup" eg
@@ -44,7 +44,7 @@ namespace Kayord.Pos.Data.Migrations
                 UPDATE "Option" SET "OutletId" = 1;
 
                 INSERT INTO "OptionGroup" ("Name", "MinSelections", "MaxSelections", "OutletId")
-                SELECT 
+                SELECT
                     eg."Name",
                 eg."MinSelections",
                 eg."MaxSelections",

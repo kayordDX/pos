@@ -1,6 +1,6 @@
 
 
-namespace Kayord.Pos.Features.Menu.Sections.Update;
+namespace Pos.Api.Features.Menu.Sections.Update;
 
 public class Request
 {
@@ -11,4 +11,3 @@ public class Request
     public int? PositionId { get; set; }
 
 }
-

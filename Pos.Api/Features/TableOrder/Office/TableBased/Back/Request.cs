@@ -1,8 +1,6 @@
-namespace Kayord.Pos.Features.TableOrder.BackOffice;
+namespace Pos.Api.Features.TableOrder.BackOffice;
 
 public class Request
 {
     public string? RoleIds { get; set; }
 }
-
-

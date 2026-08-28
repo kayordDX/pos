@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.SalesPeriod.CashUp;
+namespace Pos.Api.Features.SalesPeriod.CashUp;
 
 public class Request
 {

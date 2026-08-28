@@ -1,7 +1,7 @@
 using Humanizer;
-using Kayord.Pos.Common.Printer;
+using Pos.Api.Common.Printer;
 
-namespace Kayord.Pos.Features.Printer;
+namespace Pos.Api.Features.Printer;
 
 public class PrinterStatus
 {

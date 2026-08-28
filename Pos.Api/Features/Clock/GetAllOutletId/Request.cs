@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Clock.List;
+namespace Pos.Api.Features.Clock.List;
 
 public class Request
 {

@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Stats.PaymentTypes;
+namespace Pos.Api.Features.Stats.PaymentTypes;
 
 public class Endpoint : Endpoint<Request, List<Response>>
 {
@@ -30,36 +30,36 @@ public class Endpoint : Endpoint<Request, List<Response>>
         }
 
         var results = await _dbContext.Database.SqlQuery<Response>($"""
-            SELECT 
+            SELECT
                 a.payment_type,
                 a.amount,
                 AVG(b.amount) average_amount
             FROM (
-                SELECT 
+                SELECT
                     pt.payment_type_name payment_type,
                     SUM(p.amount) amount
                 FROM payment p
-                JOIN payment_type pt 
+                JOIN payment_type pt
                     ON p.payment_type_id = pt.payment_type_id
-                JOIN table_booking tb 
+                JOIN table_booking tb
                 ON tb.id = p.table_booking_id
-                JOIN sales_period sp 
+                JOIN sales_period sp
                 ON tb.sales_period_id = sp.id
                 WHERE tb.sales_period_id = {r.SalesPeriodId}
                 AND sp.outlet_id = {userOutlet.OutletId}
                 GROUP BY pt.payment_type_name
             ) a
             JOIN (
-                SELECT 
+                SELECT
                 pt.payment_type_name payment_type,
                     sp.id,
                     SUM(p.amount) amount
                 FROM payment p
-                JOIN payment_type pt 
+                JOIN payment_type pt
                     ON p.payment_type_id = pt.payment_type_id
-                JOIN table_booking tb 
+                JOIN table_booking tb
                     ON tb.id = p.table_booking_id
-                JOIN sales_period sp 
+                JOIN sales_period sp
                     ON tb.sales_period_id = sp.id
                 WHERE tb.sales_period_id IN (select id from sales_period where outlet_id = {userOutlet.OutletId} order by id desc limit 5)
                     AND sp.outlet_id = {userOutlet.OutletId}

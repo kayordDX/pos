@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Role.Type.GetAll;
+namespace Pos.Api.Features.Role.Type.GetAll;
 
 public class Endpoint : Endpoint<Request, List<Entities.RoleType>>
 {

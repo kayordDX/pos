@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stock.Allocate.Item.Action;
+namespace Pos.Api.Features.Stock.Allocate.Item.Action;
 
 public class Request
 {

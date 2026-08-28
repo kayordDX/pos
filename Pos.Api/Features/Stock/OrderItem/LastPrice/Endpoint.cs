@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Stock.OrderItem.LastPrice;
+namespace Pos.Api.Features.Stock.OrderItem.LastPrice;
 
 public class Endpoint : Endpoint<Request, Response>
 {

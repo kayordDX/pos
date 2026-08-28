@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Extra.GroupDelete;
+namespace Pos.Api.Features.Extra.GroupDelete;
 
 public class Request
 {

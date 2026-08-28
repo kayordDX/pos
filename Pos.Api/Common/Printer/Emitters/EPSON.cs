@@ -1,6 +1,5 @@
-﻿namespace Kayord.Pos.Common.Printer.Emitters;
+﻿namespace Pos.Api.Common.Printer.Emitters;
 
 public class EPSON : BaseCommandEmitter
 {
 }
-

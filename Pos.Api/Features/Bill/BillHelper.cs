@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill.EmailBill;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill.EmailBill;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Bill;
+namespace Pos.Api.Features.Bill;
 
 public static class BillHelper
 {

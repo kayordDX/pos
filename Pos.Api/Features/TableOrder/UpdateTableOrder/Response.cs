@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.TableOrder.UpdateTableOrder;
+namespace Pos.Api.Features.TableOrder.UpdateTableOrder;
 
 public class Response
 {

@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Hubs;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Hubs;
+using Pos.Api.Services;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Kayord.Pos.Features.User.AssignOutlet;
+namespace Pos.Api.Features.User.AssignOutlet;
 
 public class Endpoint : Endpoint<Request, Entities.UserOutlet>
 {

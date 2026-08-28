@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using TickerQ.EntityFrameworkCore.DbContextFactory;
 
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class DataExtensions
 {

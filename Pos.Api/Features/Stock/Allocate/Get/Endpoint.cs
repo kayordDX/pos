@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
+using Pos.Api.Data;
+using Pos.Api.DTO;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Stock.Allocate.Get;
+namespace Pos.Api.Features.Stock.Allocate.Get;
 
 public class Endpoint : Endpoint<Request, StockAllocateDTO>
 {
@@ -33,6 +33,3 @@ public class Endpoint : Endpoint<Request, StockAllocateDTO>
         await Send.OkAsync(results);
     }
 }
-
-
-

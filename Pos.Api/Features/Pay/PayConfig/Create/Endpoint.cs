@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Pay.PayConfig.Create;
+namespace Pos.Api.Features.Pay.PayConfig.Create;
 
 public class Endpoint : Endpoint<Request, Entities.HaloConfig>
 {

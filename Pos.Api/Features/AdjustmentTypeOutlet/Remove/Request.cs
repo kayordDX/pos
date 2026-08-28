@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.AdjustmentTypeOutlet.Remove;
+namespace Pos.Api.Features.AdjustmentTypeOutlet.Remove;
 
 public class Request
 {

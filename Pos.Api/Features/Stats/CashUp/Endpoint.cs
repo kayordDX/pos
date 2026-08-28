@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Stats.CashUp;
+namespace Pos.Api.Features.Stats.CashUp;
 
 public class Endpoint : Endpoint<Request, List<Response>>
 {
@@ -48,16 +48,16 @@ public class Endpoint : Endpoint<Request, List<Response>>
                     sum(tb.total_tips) as total_tips,
                     sum(tb.total_payments) as total_payments
                 from  table_booking tb
-                join "user" u 
+                join "user" u
                     on tb.user_id = u.user_id
-                join sales_period sp 
+                join sales_period sp
                     on sp.id = tb.sales_period_id
                 where sp.outlet_id = {userOutlet.OutletId}
                 and  tb.sales_period_id = {r.SalesPeriodId}
                     group by
                     tb.id,
                     u.name
-            ) t 
+            ) t
             LEFT JOIN vw_adjustment a on a.table_booking_id = t.id
             group by t.name
             """).ToListAsync(ct);

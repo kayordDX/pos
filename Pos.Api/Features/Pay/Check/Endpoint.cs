@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Pay.Check;
+namespace Pos.Api.Features.Pay.Check;
 
 public class Endpoint : Endpoint<Request, Response>
 {

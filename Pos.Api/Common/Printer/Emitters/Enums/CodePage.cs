@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Common.Printer.Emitters;
+namespace Pos.Api.Common.Printer.Emitters;
 
 #pragma warning disable SA1602 // Enumeration items should be documented
 #pragma warning disable SA1600 // Elements should be documented

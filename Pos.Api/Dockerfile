@@ -8,17 +8,17 @@ USER app
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["src/Kayord.Pos/Kayord.Pos.csproj", "Directory.Build.props", "Directory.Packages.props", "src/Kayord.Pos/"]
-RUN dotnet restore "src/Kayord.Pos/Kayord.Pos.csproj"
+COPY ["src/Pos.Api/Pos.Api.csproj", "Directory.Build.props", "Directory.Packages.props", "src/Pos.Api/"]
+RUN dotnet restore "src/Pos.Api/Pos.Api.csproj"
 COPY . .
-WORKDIR "/src/src/Kayord.Pos"
-RUN dotnet build "Kayord.Pos.csproj" -c $configuration -o /app/build
+WORKDIR "/src/src/Pos.Api"
+RUN dotnet build "Pos.Api.csproj" -c $configuration -o /app/build
 
 FROM build AS publish
 ARG configuration=Release
-RUN dotnet publish "Kayord.Pos.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Pos.Api.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Kayord.Pos.dll"]
+ENTRYPOINT ["dotnet", "Pos.Api.dll"]

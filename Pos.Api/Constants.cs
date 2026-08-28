@@ -1,4 +1,4 @@
-namespace Kayord.Pos;
+namespace Pos.Api;
 
 public static class Constants
 {

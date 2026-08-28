@@ -1,6 +1,6 @@
 using Microsoft.SemanticKernel.ChatCompletion;
 
-namespace Kayord.Pos.Features.AI.GenerateStream;
+namespace Pos.Api.Features.AI.GenerateStream;
 
 public class Endpoint : Endpoint<Request, string?>
 {

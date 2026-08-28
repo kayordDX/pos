@@ -1,5 +1,5 @@
 
-namespace Kayord.Pos.Features.TableOrder.SendToKitchen;
+namespace Pos.Api.Features.TableOrder.SendToKitchen;
 
 public class Request
 {

@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Bill;
+namespace Pos.Api.Features.Bill;
 public class BillMenuItemDTO
 {
     public int MenuItemId { get; set; }

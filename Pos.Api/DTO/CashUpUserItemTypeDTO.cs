@@ -1,7 +1,7 @@
-using Kayord.Pos.Common.Enums;
-using Kayord.Pos.Entities;
+using Pos.Api.Common.Enums;
+using Pos.Api.Entities;
 
-namespace Kayord.Pos.DTO;
+namespace Pos.Api.DTO;
 
 public class CashUpUserItemTypeDTO
 {

@@ -1,6 +1,6 @@
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.Table.GetMyBooked;
+namespace Pos.Api.Features.Table.GetMyBooked;
 
 public class Response
 {

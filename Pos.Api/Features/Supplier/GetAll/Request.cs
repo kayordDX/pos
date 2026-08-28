@@ -1,6 +1,6 @@
-using Kayord.Pos.Common.Models;
+using Pos.Api.Common.Models;
 
-namespace Kayord.Pos.Features.Supplier.GetAll;
+namespace Pos.Api.Features.Supplier.GetAll;
 
 public class Request
 {

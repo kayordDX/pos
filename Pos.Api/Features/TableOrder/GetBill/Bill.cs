@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableOrder.GetBill;
+namespace Pos.Api.Features.TableOrder.GetBill;
 
 public static class Bill
 {

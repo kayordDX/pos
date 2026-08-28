@@ -1,6 +1,6 @@
 using MimeKit;
 
-namespace Kayord.Pos.Services;
+namespace Pos.Api.Services;
 
 public interface IEmailSender
 {

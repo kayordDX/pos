@@ -1,9 +1,9 @@
-using Kayord.Pos.Common.Extensions;
-using Kayord.Pos.Common.Models;
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.TableBooking.History;
+using Pos.Api.Common.Extensions;
+using Pos.Api.Common.Models;
+using Pos.Api.Data;
+using Pos.Api.Features.TableBooking.History;
 
-namespace Kayord.Pos.Features.TableBooking.PeriodHistory;
+namespace Pos.Api.Features.TableBooking.PeriodHistory;
 
 public class Endpoint(AppDbContext dbContext) : Endpoint<Request, PaginatedList<Response>>
 {

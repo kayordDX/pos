@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Common.Enums;
+namespace Pos.Api.Common.Enums;
 
 public enum CashUpUserItemRule
 {

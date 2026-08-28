@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Auth;
+namespace Pos.Api.Features.Auth;
 
 public class FeatureHandler : AuthorizationHandler<FeatureRequirement>
 {

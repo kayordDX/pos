@@ -1,7 +1,7 @@
-using Kayord.Pos.Hubs;
+using Pos.Api.Hubs;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Kayord.Pos.Features.Notification.Test;
+namespace Pos.Api.Features.Notification.Test;
 
 public class Endpoint : Endpoint<Request, bool>
 {

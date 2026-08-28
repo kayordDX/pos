@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.User.GetCounterUsers;
+namespace Pos.Api.Features.User.GetCounterUsers;
 
 public class Endpoint : Endpoint<Request, List<Response>>
 {

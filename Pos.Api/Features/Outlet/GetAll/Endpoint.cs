@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Outlet.List;
+namespace Pos.Api.Features.Outlet.List;
 
-public class Endpoint : EndpointWithoutRequest<List<Pos.Entities.Outlet>>
+public class Endpoint : EndpointWithoutRequest<List<Pos.Api.Entities.Outlet>>
 {
     private readonly AppDbContext _dbContext;
 

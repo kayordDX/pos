@@ -1,10 +1,10 @@
 using System.Globalization;
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.DTO;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.SalesPeriod.CashUp;
+namespace Pos.Api.Features.SalesPeriod.CashUp;
 
 
 public class Endpoint : Endpoint<Request, CashUp>

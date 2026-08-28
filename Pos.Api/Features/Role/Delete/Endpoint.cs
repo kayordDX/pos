@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Role.Delete;
+namespace Pos.Api.Features.Role.Delete;
 
 public class Endpoint : Endpoint<Request, Entities.Role>
 {

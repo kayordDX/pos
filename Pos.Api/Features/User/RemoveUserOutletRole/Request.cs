@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.User.RemoveUserOutletRole;
+namespace Pos.Api.Features.User.RemoveUserOutletRole;
 
 public class Request
 {

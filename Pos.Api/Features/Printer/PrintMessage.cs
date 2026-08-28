@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Printer;
+namespace Pos.Api.Features.Printer;
 
 public class PrintMessage
 {

@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 
-namespace Kayord.Pos.Features.Auth;
+namespace Pos.Api.Features.Auth;
 
 public class FeatureRequirement : IAuthorizationRequirement
 {

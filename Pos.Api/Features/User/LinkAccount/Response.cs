@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.LinkAccount;
+namespace Pos.Api.Features.User.LinkAccount;
 
 public class Response
 {

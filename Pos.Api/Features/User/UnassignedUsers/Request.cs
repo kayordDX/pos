@@ -1,6 +1,6 @@
-using Kayord.Pos.Common.Models;
+using Pos.Api.Common.Models;
 
-namespace Kayord.Pos.Features.User.UnassignedUsers;
+namespace Pos.Api.Features.User.UnassignedUsers;
 
 public class Request : QueryModel
 {

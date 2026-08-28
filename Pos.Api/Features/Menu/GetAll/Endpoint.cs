@@ -1,9 +1,9 @@
 
 
-using Kayord.Pos.Services;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Menu.List;
+namespace Pos.Api.Features.Menu.List;
 
 public class Endpoint : Endpoint<Request, List<Entities.Menu>>
 {

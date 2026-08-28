@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.UsersType;
+namespace Pos.Api.Features.User.UsersType;
 
 public class Request
 {

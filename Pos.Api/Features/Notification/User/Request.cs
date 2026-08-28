@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Notification.User;
+namespace Pos.Api.Features.Notification.User;
 
 public class Request
 {

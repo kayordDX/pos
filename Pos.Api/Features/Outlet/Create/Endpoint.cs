@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Outlet.Create;
+namespace Pos.Api.Features.Outlet.Create;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.Outlet>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.Outlet>
 {
     private readonly AppDbContext _dbContext;
 
@@ -18,7 +18,7 @@ public class Endpoint : Endpoint<Request, Pos.Entities.Outlet>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        Pos.Entities.Outlet entity = new Pos.Entities.Outlet()
+        Pos.Api.Entities.Outlet entity = new Pos.Api.Entities.Outlet()
         {
             Name = req.Name,
             BusinessId = req.BusinessId

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class IsUpdateStockReverse : Migration
@@ -22,7 +22,7 @@ namespace Kayord.Pos.Data.Migrations
             """);
 
             // migrationBuilder.Sql("""
-            //     update order_item_status set is_update_stock_reverse = true, is_update_stock = true where order_item_status_id = 4                
+            //     update order_item_status set is_update_stock_reverse = true, is_update_stock = true where order_item_status_id = 4
             // """);
         }
 
@@ -34,7 +34,7 @@ namespace Kayord.Pos.Data.Migrations
                 table: "order_item_status");
 
             migrationBuilder.Sql("""
-                delete from order_item_status where order_item_status_id = 8;                
+                delete from order_item_status where order_item_status_id = 8;
             """);
         }
     }

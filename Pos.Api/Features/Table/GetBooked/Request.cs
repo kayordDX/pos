@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Table.GetMyBooked;
+namespace Pos.Api.Features.Table.GetMyBooked;
 
 public class Request
 {

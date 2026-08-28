@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Pay.PayConfig.TestConfig;
+namespace Pos.Api.Features.Pay.PayConfig.TestConfig;
 
 public class Endpoint : Endpoint<Request, bool>
 {

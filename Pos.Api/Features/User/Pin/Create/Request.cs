@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.Pin.Create;
+namespace Pos.Api.Features.User.Pin.Create;
 
 public class Request
 {

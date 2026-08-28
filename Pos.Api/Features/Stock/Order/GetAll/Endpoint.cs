@@ -1,9 +1,9 @@
-using Kayord.Pos.Common.Extensions;
-using Kayord.Pos.Common.Models;
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
+using Pos.Api.Common.Extensions;
+using Pos.Api.Common.Models;
+using Pos.Api.Data;
+using Pos.Api.DTO;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Stock.Order.GetAll;
+namespace Pos.Api.Features.Stock.Order.GetAll;
 
 public class Endpoint : Endpoint<Request, PaginatedList<StockOrderResponseDTO>>
 {
@@ -43,6 +43,3 @@ public class Endpoint : Endpoint<Request, PaginatedList<StockOrderResponseDTO>>
         await Send.OkAsync(results);
     }
 }
-
-
-

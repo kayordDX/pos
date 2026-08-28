@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Events;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Events;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Pay;
+namespace Pos.Api.Features.Pay;
 
 public class PaymentCompletedHandler : IEventHandler<PaymentCompletedEvent>
 {

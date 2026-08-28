@@ -1,5 +1,5 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -12,7 +12,7 @@ public class RoleDivisionTests(App app) : TestBase<App>
     public async Task CreateRoleDivision_Duplicate_ReturnsNoContent()
     {
         // Arrange - Create the initial link
-        var (rsp1, _) = await app.ClientAuth.POSTAsync<Kayord.Pos.Features.Role.Division.Create.Endpoint, Kayord.Pos.Features.Role.Division.Create.Request, Kayord.Pos.Entities.Division>(
+        var (rsp1, _) = await app.ClientAuth.POSTAsync<Pos.Api.Features.Role.Division.Create.Endpoint, Pos.Api.Features.Role.Division.Create.Request, Pos.Api.Entities.Division>(
             new()
             {
                 DivisionId = 1,
@@ -21,7 +21,7 @@ public class RoleDivisionTests(App app) : TestBase<App>
         rsp1.IsSuccessStatusCode.ShouldBeTrue();
 
         // Act - Try to create the same link again
-        var (rsp2, _) = await app.ClientAuth.POSTAsync<Kayord.Pos.Features.Role.Division.Create.Endpoint, Kayord.Pos.Features.Role.Division.Create.Request, Kayord.Pos.Entities.Division>(
+        var (rsp2, _) = await app.ClientAuth.POSTAsync<Pos.Api.Features.Role.Division.Create.Endpoint, Pos.Api.Features.Role.Division.Create.Request, Pos.Api.Entities.Division>(
             new()
             {
                 DivisionId = 1,
@@ -39,7 +39,7 @@ public class RoleDivisionTests(App app) : TestBase<App>
         await using var scope = app.Services.CreateAsyncScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        var link1 = new Kayord.Pos.Entities.RoleDivision
+        var link1 = new Pos.Api.Entities.RoleDivision
         {
             DivisionId = 1,
             RoleId = 8888
@@ -47,7 +47,7 @@ public class RoleDivisionTests(App app) : TestBase<App>
         dbContext.RoleDivision.Add(link1);
         await dbContext.SaveChangesAsync();
 
-        var link2 = new Kayord.Pos.Entities.RoleDivision
+        var link2 = new Pos.Api.Entities.RoleDivision
         {
             DivisionId = 1,
             RoleId = 8888

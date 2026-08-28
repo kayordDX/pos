@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Outlet.GetPaymentType;
+namespace Pos.Api.Features.Outlet.GetPaymentType;
 
 public class Request
 {

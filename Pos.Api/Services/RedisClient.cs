@@ -2,7 +2,7 @@ using System.Net;
 using System.Text.Json;
 using StackExchange.Redis;
 
-namespace Kayord.Pos.Services;
+namespace Pos.Api.Services;
 
 public class RedisClient
 {

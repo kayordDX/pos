@@ -1,7 +1,7 @@
-using Kayord.Pos.Services;
+using Pos.Api.Services;
 using StackExchange.Redis;
 
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class PrintExtensions
 {

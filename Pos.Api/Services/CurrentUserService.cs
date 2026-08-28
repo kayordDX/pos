@@ -1,6 +1,6 @@
 using System.Security.Claims;
 
-namespace Kayord.Pos.Services;
+namespace Pos.Api.Services;
 
 public class CurrentUserService
 {

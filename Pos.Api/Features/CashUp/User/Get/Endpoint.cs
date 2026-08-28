@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.CashUp.User.Get;
+namespace Pos.Api.Features.CashUp.User.Get;
 
 public class Endpoint : Endpoint<Request, Response>
 {

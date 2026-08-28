@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Stock.Order.Update;
+namespace Pos.Api.Features.Stock.Order.Update;
 
 public class Request
 {

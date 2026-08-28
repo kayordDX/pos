@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.CashUp.User.ItemType;
+namespace Pos.Api.Features.CashUp.User.ItemType;
 
 public class Endpoint : Endpoint<Request, List<Entities.CashUpUserItemType>>
 {

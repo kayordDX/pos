@@ -1,8 +1,8 @@
 using System.Text.Json;
-using Kayord.Pos.Features.Printer;
+using Pos.Api.Features.Printer;
 using StackExchange.Redis;
 
-namespace Kayord.Pos.Services;
+namespace Pos.Api.Services;
 
 public class PrintService
 {

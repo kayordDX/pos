@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.CreateRole;
+namespace Pos.Api.Features.User.CreateRole;
 
 public class Request
 {

@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class AuthExtensions
 {

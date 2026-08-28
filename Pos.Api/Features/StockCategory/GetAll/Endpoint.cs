@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.StockCategory.GetAll;
+namespace Pos.Api.Features.StockCategory.GetAll;
 
 public class Endpoint : Endpoint<Request, List<Entities.StockCategory>>
 {

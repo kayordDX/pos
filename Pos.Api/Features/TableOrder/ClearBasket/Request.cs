@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Order.ClearBasket;
+namespace Pos.Api.Features.Order.ClearBasket;
 
 public class Request
 {

@@ -1,9 +1,9 @@
-using Kayord.Pos.Events;
-using Kayord.Pos.Hubs;
-using Kayord.Pos.Services;
+using Pos.Api.Events;
+using Pos.Api.Hubs;
+using Pos.Api.Services;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Kayord.Pos.Features.Notification;
+namespace Pos.Api.Features.Notification;
 
 public class SoundHandler : IEventHandler<SoundEvent>
 {

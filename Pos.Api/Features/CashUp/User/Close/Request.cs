@@ -1,4 +1,5 @@
-namespace Kayord.Pos.Features.CashUp.User.Close;
+namespace Pos.Api.Features.CashUp.User.Close;
+
 public class Request
 {
     public int OutletId { get; set; }

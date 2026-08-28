@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.TableOrder.RemoveItem;
+namespace Pos.Api.Features.TableOrder.RemoveItem;
 
 public class Request
 {

@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Common.Models;
+namespace Pos.Api.Common.Models;
 
 using QueryKit.Configuration;
 

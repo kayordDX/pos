@@ -1,10 +1,10 @@
-using Kayord.Pos.Common.Extensions;
-using Kayord.Pos.Common.Models;
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Common.Extensions;
+using Pos.Api.Common.Models;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.User.Tasks;
+namespace Pos.Api.Features.User.Tasks;
 
 public class Endpoint : Endpoint<Request, PaginatedList<Response>>
 {

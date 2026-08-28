@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.Pin.Login;
+namespace Pos.Api.Features.User.Pin.Login;
 
 public class Response
 {

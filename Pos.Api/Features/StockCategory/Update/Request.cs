@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.StockCategory.Update;
+namespace Pos.Api.Features.StockCategory.Update;
 
 public class Request
 {

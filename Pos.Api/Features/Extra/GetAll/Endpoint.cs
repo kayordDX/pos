@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Extra.GetAll;
+namespace Pos.Api.Features.Extra.GetAll;
 
-public class Endpoint : EndpointWithoutRequest<List<Pos.Entities.Extra>>
+public class Endpoint : EndpointWithoutRequest<List<Pos.Api.Entities.Extra>>
 {
     private readonly AppDbContext _dbContext;
     private readonly CurrentUserService _user;

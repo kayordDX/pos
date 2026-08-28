@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Menu.GetOutletMenu;
+namespace Pos.Api.Features.Menu.GetOutletMenu;
 
 public class Request
 {

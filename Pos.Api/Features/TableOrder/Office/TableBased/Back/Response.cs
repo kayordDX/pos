@@ -1,6 +1,6 @@
-using Kayord.Pos.Features.TableOrder.Office;
+using Pos.Api.Features.TableOrder.Office;
 
-namespace Kayord.Pos.Features.TableOrder.BackOffice;
+namespace Pos.Api.Features.TableOrder.BackOffice;
 
 public class Response
 {

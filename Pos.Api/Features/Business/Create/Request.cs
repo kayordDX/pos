@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Business.Create;
+namespace Pos.Api.Features.Business.Create;
 
 public class Request
 {

@@ -1,9 +1,9 @@
 using System.Security.Cryptography;
 using System.Text;
-using Kayord.Pos.Config;
+using Pos.Api.Config;
 using Microsoft.Extensions.Options;
 
-namespace Kayord.Pos.Services;
+namespace Pos.Api.Services;
 
 public class EncryptionService
 {

@@ -1,6 +1,6 @@
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.TableOrder.GetBasket;
+namespace Pos.Api.Features.TableOrder.GetBasket;
 
 public class Response
 {

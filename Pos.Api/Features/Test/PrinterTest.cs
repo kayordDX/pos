@@ -1,10 +1,10 @@
-using Kayord.Pos.Common.Printer.Emitters;
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill;
-using Kayord.Pos.Features.Bill.EmailBill;
-using Kayord.Pos.Features.Bill.PrintBill;
+using Pos.Api.Common.Printer.Emitters;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill;
+using Pos.Api.Features.Bill.EmailBill;
+using Pos.Api.Features.Bill.PrintBill;
 
-namespace Kayord.Pos.Features.Test;
+namespace Pos.Api.Features.Test;
 
 public class PrinterTest : EndpointWithoutRequest<bool>
 {

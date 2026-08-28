@@ -1,11 +1,11 @@
-using Kayord.Pos.Common.Extensions;
-using Kayord.Pos.Common.Models;
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.TableBooking.History;
-using Kayord.Pos.Services;
+using Pos.Api.Common.Extensions;
+using Pos.Api.Common.Models;
+using Pos.Api.Data;
+using Pos.Api.Features.TableBooking.History;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableBooking.HistoryAll;
+namespace Pos.Api.Features.TableBooking.HistoryAll;
 
 public class Endpoint(AppDbContext dbContext, UserService user) : Endpoint<Request, PaginatedList<Response>>
 {

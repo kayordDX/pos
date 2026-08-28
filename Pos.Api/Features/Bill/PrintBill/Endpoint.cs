@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill.EmailBill;
-using Kayord.Pos.Features.Printer;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill.EmailBill;
+using Pos.Api.Features.Printer;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Bill.PrintBill;
+namespace Pos.Api.Features.Bill.PrintBill;
 
 public class Endpoint : Endpoint<Request, bool>
 {

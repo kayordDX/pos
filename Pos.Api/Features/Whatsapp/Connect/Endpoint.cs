@@ -1,6 +1,6 @@
-using Kayord.Pos.Services.Whatsapp;
+using Pos.Api.Services.Whatsapp;
 
-namespace Kayord.Pos.Features.Whatsapp.Connect;
+namespace Pos.Api.Features.Whatsapp.Connect;
 
 public class Endpoint : EndpointWithoutRequest<WResponse<SessionConnectResponse>>
 {

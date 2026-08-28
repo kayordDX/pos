@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableBooking.Close;
+namespace Pos.Api.Features.TableBooking.Close;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.TableBooking>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.TableBooking>
 {
     private readonly AppDbContext _dbContext;
     private readonly CurrentUserService _user;

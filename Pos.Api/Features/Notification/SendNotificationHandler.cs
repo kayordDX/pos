@@ -1,7 +1,7 @@
-using Kayord.Pos.Events;
-using Kayord.Pos.Services;
+using Pos.Api.Events;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.Notification;
+namespace Pos.Api.Features.Notification;
 
 public class SendNotificationHandler : IEventHandler<NotificationEvent>
 {

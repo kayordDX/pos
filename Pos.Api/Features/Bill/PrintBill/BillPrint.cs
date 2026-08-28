@@ -1,7 +1,7 @@
-using Kayord.Pos.Common.Printer.Emitters;
-using Kayord.Pos.Features.Bill.EmailBill;
+using Pos.Api.Common.Printer.Emitters;
+using Pos.Api.Features.Bill.EmailBill;
 
-namespace Kayord.Pos.Features.Bill.PrintBill;
+namespace Pos.Api.Features.Bill.PrintBill;
 
 public static class BillPrint
 {

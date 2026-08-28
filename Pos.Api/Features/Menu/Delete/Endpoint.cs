@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Menu.Delete;
+namespace Pos.Api.Features.Menu.Delete;
 
 public class Endpoint : Endpoint<Request>
 {

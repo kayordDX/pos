@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stock.Division.GetAll;
+namespace Pos.Api.Features.Stock.Division.GetAll;
 
 public class Request
 {

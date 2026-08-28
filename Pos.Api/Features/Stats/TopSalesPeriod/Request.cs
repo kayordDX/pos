@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stats.TopSalesPeriod;
+namespace Pos.Api.Features.Stats.TopSalesPeriod;
 
 public class Request
 {

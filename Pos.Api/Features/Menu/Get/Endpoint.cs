@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Menu.Get;
+namespace Pos.Api.Features.Menu.Get;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.Menu>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.Menu>
 {
     private readonly AppDbContext _dbContext;
 

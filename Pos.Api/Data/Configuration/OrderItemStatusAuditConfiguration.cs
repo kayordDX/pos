@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Kayord.Pos.Data.Configuration;
+namespace Pos.Api.Data.Configuration;
 
 public class OrderItemStatusAuditConfiguration : IEntityTypeConfiguration<OrderItemStatusAudit>
 {

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class RoleIdentity : Migration
@@ -27,7 +27,7 @@ namespace Kayord.Pos.Data.Migrations
 
             migrationBuilder.Sql("""
                 insert into role(name, description, outlet_id, role_type_id)
-                select 
+                select
                     r.name,
                     r.description,
                     o.id outlet_id,
@@ -59,7 +59,7 @@ namespace Kayord.Pos.Data.Migrations
                     join role rr
                     on d.outlet_id = rr.outlet_id
                     and rr.name = r.name
-                ) a  
+                ) a
                 where role_division.role_id = a.old_role_id
                 and role_division.id = a.id;
             """);

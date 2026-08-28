@@ -3,7 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class OrderGroup : Migration

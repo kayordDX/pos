@@ -1,6 +1,6 @@
 using Microsoft.SemanticKernel.ChatCompletion;
 
-namespace Kayord.Pos.Features.AI.GenerateMenuDescription;
+namespace Pos.Api.Features.AI.GenerateMenuDescription;
 
 public class Endpoint : Endpoint<Request, string?>
 {
@@ -21,7 +21,7 @@ public class Endpoint : Endpoint<Request, string?>
         string prompt = $"""
             You are a restaurant manager for a restaurant in South Africa.
 
-            Generate a description for a restaurant menu item. 
+            Generate a description for a restaurant menu item.
             The menu it is on is called {req.Menu}.
             And the section is {req.Section}.
             Menu item is called {req.Name}.

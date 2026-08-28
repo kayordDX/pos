@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Outlet.Counter.GetAll;
+namespace Pos.Api.Features.Outlet.Counter.GetAll;
 
 public class Endpoint : EndpointWithoutRequest<List<OutletCounter>>
 {

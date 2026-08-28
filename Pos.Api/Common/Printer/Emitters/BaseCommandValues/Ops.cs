@@ -1,4 +1,4 @@
-﻿namespace Kayord.Pos.Common.Printer.Emitters.BaseCommandValues;
+﻿namespace Pos.Api.Common.Printer.Emitters.BaseCommandValues;
 
 public static class Ops
 {
@@ -8,4 +8,3 @@ public static class Ops
     public static readonly byte CashDrawerPulse = 0x70;
     public static readonly byte StandardMode = 0x1B;
 }
-

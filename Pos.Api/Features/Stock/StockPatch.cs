@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stock;
+namespace Pos.Api.Features.Stock;
 
 public class StockPatch
 {

@@ -1,6 +1,6 @@
 
 
-namespace Kayord.Pos.Features.Bill.DownloadBill;
+namespace Pos.Api.Features.Bill.DownloadBill;
 
 public class Request
 {

@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Business.Delete;
+namespace Pos.Api.Features.Business.Delete;
 
 public class Endpoint : Endpoint<Request>
 {

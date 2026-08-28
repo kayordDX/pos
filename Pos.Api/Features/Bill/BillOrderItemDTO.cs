@@ -1,6 +1,6 @@
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.Bill;
+namespace Pos.Api.Features.Bill;
 
 public class BillOrderItemDTO
 {

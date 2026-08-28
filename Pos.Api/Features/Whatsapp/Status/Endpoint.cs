@@ -1,6 +1,6 @@
-using Kayord.Pos.Services.Whatsapp;
+using Pos.Api.Services.Whatsapp;
 
-namespace Kayord.Pos.Features.Whatsapp.Status;
+namespace Pos.Api.Features.Whatsapp.Status;
 
 public class Endpoint : EndpointWithoutRequest<WResponse<SessionStatus>>
 {

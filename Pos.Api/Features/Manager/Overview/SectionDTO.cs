@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Manager.OrderView;
+namespace Pos.Api.Features.Manager.OrderView;
 
 public class SectionDTO
 {

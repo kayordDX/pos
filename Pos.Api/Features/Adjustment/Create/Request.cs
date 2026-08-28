@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Adjustment.Create;
+namespace Pos.Api.Features.Adjustment.Create;
 
 public class Request
 {
@@ -7,5 +7,3 @@ public class Request
     public decimal Amount { get; set; }
     public string? Note { get; set; }
 }
-
-

@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Extra.GetAllMenu;
+namespace Pos.Api.Features.Extra.GetAllMenu;
 
 public class SpecialExtrasDTO
 {

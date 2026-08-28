@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Stats.TopSalesPeriod;
+namespace Pos.Api.Features.Stats.TopSalesPeriod;
 
 public class Endpoint : Endpoint<Request, List<Response>>
 {

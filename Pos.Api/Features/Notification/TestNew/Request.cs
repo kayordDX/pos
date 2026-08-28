@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Notification.TestNew;
+namespace Pos.Api.Features.Notification.TestNew;
 
 public class Request
 {

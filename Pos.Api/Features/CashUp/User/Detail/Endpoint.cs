@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.CashUp.User.Detail;
+namespace Pos.Api.Features.CashUp.User.Detail;
 
 public class Endpoint : Endpoint<Request, Response>
 {

@@ -1,8 +1,8 @@
-using Kayord.Pos.Entities;
-using Kayord.Pos.Features.TableOrder.GetBill;
+using Pos.Api.Entities;
+using Pos.Api.Features.TableOrder.GetBill;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Data;
+namespace Pos.Api.Data;
 
 public static class ProdSeed
 {

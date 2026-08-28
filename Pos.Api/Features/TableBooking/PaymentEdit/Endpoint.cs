@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableBooking.PaymentEdit;
+namespace Pos.Api.Features.TableBooking.PaymentEdit;
 
 public class Endpoint : Endpoint<Request, CashUpUserItem>
 {

@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Features.Role;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Features.Role;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableOrder.BackOffice;
+namespace Pos.Api.Features.TableOrder.BackOffice;
 
 public class Endpoint : Endpoint<Request, Response>
 {

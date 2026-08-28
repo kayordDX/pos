@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.DTO;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Outlet.GetAllAssigned;
+namespace Pos.Api.Features.Outlet.GetAllAssigned;
 
 public class Endpoint : EndpointWithoutRequest<List<OutletDTOBasic>>
 {
@@ -25,11 +25,11 @@ public class Endpoint : EndpointWithoutRequest<List<OutletDTOBasic>>
     {
         var results = await _dbContext.Database.SqlQuery<OutletDTOBasic>($"""
             select distinct
-                o.id, 
-                o.name, 
-                o.vat_number, 
-                o.address, 
-                o.company, 
+                o.id,
+                o.name,
+                o.vat_number,
+                o.address,
+                o.company,
                 o.registration
                 from outlet o
             join user_role_outlet ur

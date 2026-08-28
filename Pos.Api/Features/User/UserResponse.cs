@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User;
+namespace Pos.Api.Features.User;
 
 public class UserResponse
 {

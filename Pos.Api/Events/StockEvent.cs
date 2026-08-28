@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Events;
+namespace Pos.Api.Events;
 
 public class StockEvent : IEvent
 {

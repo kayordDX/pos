@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class SnakeExtras : Migration
@@ -17,7 +17,7 @@ namespace Kayord.Pos.Data.Migrations
             create or replace function "get_menu_section_children" (
                 "p_menu_id" int,
                 "p_menu_section_id" int
-            ) 
+            )
             returns table (
                 "id" int
             )
@@ -25,7 +25,7 @@ namespace Kayord.Pos.Data.Migrations
             as $$
             begin
             return query
-            with RECURSIVE cte as 
+            with RECURSIVE cte as
             (
                 select * from "menu_section" where "menu_id"="p_menu_id" AND "menu_section_id"="p_menu_section_id"
                 union all
@@ -36,10 +36,10 @@ namespace Kayord.Pos.Data.Migrations
             """);
 
             migrationBuilder.Sql("""
-            create or replace function "get_menu_section_parents" ("p_menu_id" integer, "p_menu_section_id" integer) 
+            create or replace function "get_menu_section_parents" ("p_menu_id" integer, "p_menu_section_id" integer)
             returns table (
             "id" integer
-            ) 
+            )
             language plpgsql AS $function$
             begin
                 return query
@@ -87,7 +87,7 @@ namespace Kayord.Pos.Data.Migrations
                     create or replace function "getMenuSectionChildren" (
                         "p_menuId" int,
                         "p_menuSectionId" int
-                    ) 
+                    )
                     returns table (
                         "Id" int
                     )
@@ -95,7 +95,7 @@ namespace Kayord.Pos.Data.Migrations
                     as $$
                     begin
                     	return query
-                      with RECURSIVE cte as 
+                      with RECURSIVE cte as
                       (
                         select * from "MenuSection" where "MenuId"="p_menuId" AND "MenuSectionId"="p_menuSectionId"
                         union all

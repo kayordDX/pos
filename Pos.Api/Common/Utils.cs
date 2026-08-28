@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Kayord.Pos.Common;
+namespace Pos.Api.Common;
 
 public static class Utils
 {

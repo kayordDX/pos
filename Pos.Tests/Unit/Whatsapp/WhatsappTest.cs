@@ -1,4 +1,4 @@
-using Kayord.Pos.Services.Whatsapp;
+using Pos.Api.Services.Whatsapp;
 using Xunit;
 
 namespace Unit.Whatsapp;

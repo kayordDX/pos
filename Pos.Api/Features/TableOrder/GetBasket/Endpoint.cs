@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.DTO;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableOrder.GetBasket;
+namespace Pos.Api.Features.TableOrder.GetBasket;
 
 public class Endpoint : Endpoint<Request, Response>
 {

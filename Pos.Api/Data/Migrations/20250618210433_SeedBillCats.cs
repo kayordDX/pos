@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class SeedBillCats : Migration
@@ -29,7 +29,7 @@ namespace Kayord.Pos.Data.Migrations
              WHERE bc.name = d.friendly_name
               AND bc.outlet_id = s.outlet_id
                 );
-  
+
             UPDATE menu_item
             SET bill_category_id = bc.id
             FROM division d, section s, bill_category bc

@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.TableOrder.CopyItem;
+namespace Pos.Api.Features.TableOrder.CopyItem;
 
 public class Request
 {

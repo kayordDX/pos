@@ -1,4 +1,5 @@
-namespace Kayord.Pos.Features.MenuItem;
+namespace Pos.Api.Features.MenuItem;
+
 public class MenuSectionAdminDTO
 {
     public int MenuSectionId { get; set; }

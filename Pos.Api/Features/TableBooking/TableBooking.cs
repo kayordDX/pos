@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableBooking;
+namespace Pos.Api.Features.TableBooking;
 
 public static class TableBooking
 {

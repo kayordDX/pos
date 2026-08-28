@@ -1,6 +1,6 @@
-using Kayord.Pos.Features.Pay;
+using Pos.Api.Features.Pay;
 
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class HaloExtensions
 {

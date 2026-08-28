@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Pay.PayConfig.Delete;
+namespace Pos.Api.Features.Pay.PayConfig.Delete;
 public class Request
 {
     public int Id { get; set; }

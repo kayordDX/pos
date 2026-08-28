@@ -1,10 +1,10 @@
 using FastEndpoints.Swagger;
-using Kayord.Pos.Common.Extensions.Swagger;
-using Kayord.Pos.Features.Auth;
+using Pos.Api.Common.Extensions.Swagger;
+using Pos.Api.Features.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Scalar.AspNetCore;
 
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class ApiExtensions
 {

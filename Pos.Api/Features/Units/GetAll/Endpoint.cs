@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Units.GetAll;
+namespace Pos.Api.Features.Units.GetAll;
 
 public class Endpoint : EndpointWithoutRequest<List<Unit>>
 {

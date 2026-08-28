@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using Kayord.Pos.Common.Printer.Emitters.BaseCommandValues;
+using Pos.Api.Common.Printer.Emitters.BaseCommandValues;
 
-namespace Kayord.Pos.Common.Printer.Emitters;
+namespace Pos.Api.Common.Printer.Emitters;
 
 public abstract partial class BaseCommandEmitter : ICommandEmitter
 {

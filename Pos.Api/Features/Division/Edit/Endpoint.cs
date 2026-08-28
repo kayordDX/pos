@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Division.Edit;
+namespace Pos.Api.Features.Division.Edit;
 
 public class Endpoint : Endpoint<Request>
 {

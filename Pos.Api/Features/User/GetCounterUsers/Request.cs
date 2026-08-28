@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.GetCounterUsers;
+namespace Pos.Api.Features.User.GetCounterUsers;
 
 public class Request
 {

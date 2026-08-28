@@ -1,4 +1,4 @@
-﻿namespace Kayord.Pos.Common.Printer.Emitters.BaseCommandValues;
+﻿namespace Pos.Api.Common.Printer.Emitters.BaseCommandValues;
 
 public static class Whitespace
 {
@@ -10,4 +10,3 @@ public static class Whitespace
     public static readonly byte ResetLineSpacing = 0x32;
     public static readonly byte LineSpacingInDots = 0x33;
 }
-

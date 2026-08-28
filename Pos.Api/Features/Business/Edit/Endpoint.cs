@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Business.Edit;
+namespace Pos.Api.Features.Business.Edit;
 
 public class Endpoint : Endpoint<Request>
 {

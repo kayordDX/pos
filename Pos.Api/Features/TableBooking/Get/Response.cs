@@ -1,7 +1,7 @@
-using Kayord.Pos.DTO;
-using Kayord.Pos.Features.Manager.OrderView;
+using Pos.Api.DTO;
+using Pos.Api.Features.Manager.OrderView;
 
-namespace Kayord.Pos.Features.TableBooking.Get;
+namespace Pos.Api.Features.TableBooking.Get;
 
 public class Response
 {

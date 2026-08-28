@@ -1,6 +1,6 @@
-namespace Kayord.Pos.DTO;
+namespace Pos.Api.DTO;
 
-using Kayord.Pos.Entities;
+using Pos.Api.Entities;
 
 public class MenuItemDTOBasic
 {

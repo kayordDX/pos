@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Table.GetAvailable;
+namespace Pos.Api.Features.Table.GetAvailable;
 
 public class Request
 {

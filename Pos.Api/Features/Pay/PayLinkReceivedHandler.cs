@@ -1,6 +1,6 @@
-using Kayord.Pos.Events;
+using Pos.Api.Events;
 
-namespace Kayord.Pos.Features.Pay;
+namespace Pos.Api.Features.Pay;
 
 public class PayLinkReceivedHandler : IEventHandler<PayLinkReceivedEvent>
 {

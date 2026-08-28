@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Data.Migrations;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Data.Migrations;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.Extra.GroupUpdate;
+namespace Pos.Api.Features.Extra.GroupUpdate;
 
 public class Endpoint : Endpoint<Request>
 {
@@ -65,4 +65,3 @@ public class Endpoint : Endpoint<Request>
 
 
 }
-

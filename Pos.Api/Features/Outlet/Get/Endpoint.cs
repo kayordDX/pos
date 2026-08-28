@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Outlet.Get;
+namespace Pos.Api.Features.Outlet.Get;
 
 public class Endpoint : Endpoint<Request, Entities.Outlet>
 {

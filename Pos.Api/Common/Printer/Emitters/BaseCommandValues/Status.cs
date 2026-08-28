@@ -1,4 +1,4 @@
-﻿namespace Kayord.Pos.Common.Printer.Emitters.BaseCommandValues;
+﻿namespace Pos.Api.Common.Printer.Emitters.BaseCommandValues;
 
 public static class Status
 {
@@ -7,4 +7,3 @@ public static class Status
     public static readonly byte RequestStatus = 0x72;
     public static readonly byte RealtimeStatus = 0x04;
 }
-

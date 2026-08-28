@@ -1,6 +1,6 @@
 
 
-namespace Kayord.Pos.Features.TableBooking.Close;
+namespace Pos.Api.Features.TableBooking.Close;
 
 public class Request
 {

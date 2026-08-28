@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Stock.Link.Delete;
+namespace Pos.Api.Features.Stock.Link.Delete;
 
 public class Endpoint : Endpoint<Request>
 {
@@ -38,6 +38,3 @@ public class Endpoint : Endpoint<Request>
         await Send.NoContentAsync();
     }
 }
-
-
-

@@ -1,6 +1,6 @@
-using Kayord.Pos.Features.TableOrder.GetBill;
+using Pos.Api.Features.TableOrder.GetBill;
 
-namespace Kayord.Pos.Features.Bill.EmailBill;
+namespace Pos.Api.Features.Bill.EmailBill;
 
 
 public class PdfRequest

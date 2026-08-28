@@ -1,8 +1,8 @@
 
-using Kayord.Pos.Entities;
-using Kayord.Pos.DTO;
+using Pos.Api.Entities;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.SalesPeriod.CashUp;
+namespace Pos.Api.Features.SalesPeriod.CashUp;
 
 public class TableCashUp
 {

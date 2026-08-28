@@ -1,11 +1,11 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Services;
 
 
-namespace Kayord.Pos.Features.AdjutmentTypeOutlet.Create;
+namespace Pos.Api.Features.AdjutmentTypeOutlet.Create;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.Menu>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.Menu>
 {
     private readonly AppDbContext _dbContext;
     private readonly RedisClient _redisClient;

@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Pay.Check;
+namespace Pos.Api.Features.Pay.Check;
 
 public class Request
 {

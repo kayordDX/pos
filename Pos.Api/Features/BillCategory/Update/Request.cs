@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.BillCategory.Update;
+namespace Pos.Api.Features.BillCategory.Update;
 
 public class Request
 {

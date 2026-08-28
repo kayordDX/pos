@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Option.Group.Update;
+namespace Pos.Api.Features.Option.Group.Update;
 
 public class Endpoint : Endpoint<Request>
 {

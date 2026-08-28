@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class ExtraGroupMapToNew : Migration
@@ -12,7 +12,7 @@ namespace Kayord.Pos.Data.Migrations
         {
             migrationBuilder.Sql("""
                 UPDATE "MenuItemExtraGroup" mg
-                    SET "ExtraGroupId" = a."ExtraGroupId" 
+                    SET "ExtraGroupId" = a."ExtraGroupId"
                 FROM (
                 SELECT
                     mg."MenuItemId",
@@ -24,7 +24,7 @@ namespace Kayord.Pos.Data.Migrations
                 LEFT JOIN "ExtraGroup" e
                     ON e."ExtraGroupId" = mg."ExtraGroupId"
                 LEFT JOIN "MenuSection" s
-                    ON mi."MenuSectionId" = s."MenuSectionId"  
+                    ON mi."MenuSectionId" = s."MenuSectionId"
                 LEFT JOIN "Menu" mm
                     ON mm."Id" = s."MenuId"
                 LEFT JOIN "ExtraGroup" ee
@@ -40,7 +40,7 @@ namespace Kayord.Pos.Data.Migrations
 
             migrationBuilder.Sql("""
                 UPDATE "MenuItemOptionGroup" mg
-                    SET "OptionGroupId" = a."OptionGroupId" 
+                    SET "OptionGroupId" = a."OptionGroupId"
                 FROM (
                 SELECT
                     mg."MenuItemId",
@@ -52,7 +52,7 @@ namespace Kayord.Pos.Data.Migrations
                 LEFT JOIN "OptionGroup" e
                     ON e."OptionGroupId" = mg."OptionGroupId"
                 LEFT JOIN "MenuSection" s
-                    ON mi."MenuSectionId" = s."MenuSectionId"  
+                    ON mi."MenuSectionId" = s."MenuSectionId"
                 LEFT JOIN "Menu" mm
                     ON mm."Id" = s."MenuId"
                 LEFT JOIN "OptionGroup" ee

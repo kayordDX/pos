@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.DTO;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Extra.Group;
+namespace Pos.Api.Features.Extra.Group;
 
 public class Endpoint : EndpointWithoutRequest<List<ExtraGroupAdminDTO>>
 {

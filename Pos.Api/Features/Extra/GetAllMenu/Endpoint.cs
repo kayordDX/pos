@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Extra.GetAllMenu;
+namespace Pos.Api.Features.Extra.GetAllMenu;
 
 public class Endpoint : Endpoint<Request, List<SpecialExtrasDTO>>
 {

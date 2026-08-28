@@ -1,9 +1,9 @@
-using Kayord.Pos.Common.Printer.Emitters;
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Common.Printer.Emitters;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Printer.Test;
+namespace Pos.Api.Features.Printer.Test;
 
 public class Endpoint : Endpoint<Request, bool>
 {

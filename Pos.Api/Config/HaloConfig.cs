@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Config;
+namespace Pos.Api.Config;
 
 public class HaloConfig
 {

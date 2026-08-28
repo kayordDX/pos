@@ -1,11 +1,11 @@
 
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill;
-using Kayord.Pos.Features.Bill.EmailBill;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill;
+using Pos.Api.Features.Bill.EmailBill;
+using Pos.Api.Services;
 using QuestPDF.Fluent;
 
-namespace Kayord.Pos.Features.Test;
+namespace Pos.Api.Features.Test;
 
 public class Endpoint : EndpointWithoutRequest<bool>
 {

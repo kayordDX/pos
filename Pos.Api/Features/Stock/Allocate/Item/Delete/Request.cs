@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Stock.Allocate.Item.Delete;
+namespace Pos.Api.Features.Stock.Allocate.Item.Delete;
 
 public class Request
 {

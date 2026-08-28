@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.Extra.Update;
+namespace Pos.Api.Features.Extra.Update;
 
 public class Endpoint : Endpoint<Request>
 {
@@ -53,4 +53,3 @@ public class Endpoint : Endpoint<Request>
 
 
 }
-

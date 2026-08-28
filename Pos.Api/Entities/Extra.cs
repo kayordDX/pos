@@ -1,5 +1,5 @@
 
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
 
 public class Extra
 {

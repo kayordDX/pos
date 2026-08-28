@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.User.ApplyOutlet;
+namespace Pos.Api.Features.User.ApplyOutlet;
 
 public class Endpoint : Endpoint<Request>
 {

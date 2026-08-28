@@ -1,7 +1,7 @@
-using Kayord.Pos.Entities;
+using Pos.Api.Entities;
 using Riok.Mapperly.Abstractions;
 
-namespace Kayord.Pos.Features.TableOrder.GetBasket;
+namespace Pos.Api.Features.TableOrder.GetBasket;
 
 [Mapper]
 public static partial class MapperStatic

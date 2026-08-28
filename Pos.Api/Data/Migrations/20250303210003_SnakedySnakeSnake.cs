@@ -3,7 +3,7 @@ using NpgsqlTypes;
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class SnakedySnakeSnake : Migration

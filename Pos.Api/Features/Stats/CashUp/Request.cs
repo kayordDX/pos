@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stats.CashUp;
+namespace Pos.Api.Features.Stats.CashUp;
 
 public class Request
 {

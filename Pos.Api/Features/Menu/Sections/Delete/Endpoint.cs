@@ -1,11 +1,11 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.Menu.Sections.Delete;
+namespace Pos.Api.Features.Menu.Sections.Delete;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.MenuSection>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuSection>
 {
     private readonly AppDbContext _dbContext;
     private readonly RedisClient _redisClient;

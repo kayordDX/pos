@@ -1,6 +1,6 @@
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.TableOrder.Office.OrderBased.Back;
+namespace Pos.Api.Features.TableOrder.Office.OrderBased.Back;
 public class TableBookingDTO
 {
     public int Id { get; set; }

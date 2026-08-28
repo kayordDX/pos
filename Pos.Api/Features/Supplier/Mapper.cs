@@ -1,7 +1,7 @@
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 using Riok.Mapperly.Abstractions;
 
-namespace Kayord.Pos.Features.Supplier;
+namespace Pos.Api.Features.Supplier;
 
 [Mapper]
 public static partial class Mapper

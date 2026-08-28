@@ -1,6 +1,7 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.SalesPeriod.CreateCashUp;
+namespace Pos.Api.Features.SalesPeriod.CreateCashUp;
+
 public class Request
 {
     public decimal CashUpTotal { get; set; } = 0;

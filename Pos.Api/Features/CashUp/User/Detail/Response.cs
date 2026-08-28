@@ -1,6 +1,6 @@
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.CashUp.User.Detail;
+namespace Pos.Api.Features.CashUp.User.Detail;
 
 public class Response
 {
@@ -26,4 +26,3 @@ public class PaymentTotal
     public decimal Levy { get; set; }
 
 }
-

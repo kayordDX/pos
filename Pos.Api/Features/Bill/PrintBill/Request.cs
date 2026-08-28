@@ -1,6 +1,6 @@
 
 
-namespace Kayord.Pos.Features.Bill.PrintBill;
+namespace Pos.Api.Features.Bill.PrintBill;
 
 public class Request
 {

@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Role.Create;
+namespace Pos.Api.Features.Role.Create;
 
 public class Request
 {
@@ -10,4 +10,3 @@ public class Request
     public int RoleTypeId { get; set; }
 
 }
-

@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.Validate;
+namespace Pos.Api.Features.User.Validate;
 
 public class Request
 {

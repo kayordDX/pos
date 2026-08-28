@@ -1,6 +1,6 @@
-using Kayord.Pos.Common.Models;
+using Pos.Api.Common.Models;
 
-namespace Kayord.Pos.Features.User.Tasks;
+namespace Pos.Api.Features.User.Tasks;
 
 public class Request : QueryModel
 {

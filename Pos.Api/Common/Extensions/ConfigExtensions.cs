@@ -1,6 +1,6 @@
-using Kayord.Pos.Config;
+using Pos.Api.Config;
 
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class ConfigExtensions
 {

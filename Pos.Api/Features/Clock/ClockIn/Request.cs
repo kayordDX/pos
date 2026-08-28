@@ -1,9 +1,8 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Clock.ClockIn;
+namespace Pos.Api.Features.Clock.ClockIn;
 
 public class Request
 {
     public int OutletId { get; set; }
 }
-

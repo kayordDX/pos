@@ -1,6 +1,6 @@
-using Kayord.Pos.Common.Models;
+using Pos.Api.Common.Models;
 
-namespace Kayord.Pos.Features.TableBooking.PeriodHistory;
+namespace Pos.Api.Features.TableBooking.PeriodHistory;
 
 public class Request : QueryModel
 {

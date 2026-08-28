@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Menu.GetSections;
+namespace Pos.Api.Features.Menu.GetSections;
 
 public class Request
 {

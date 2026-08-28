@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.TableOrder.UpdateOrderItem;
+namespace Pos.Api.Features.TableOrder.UpdateOrderItem;
 
 public class Request
 {

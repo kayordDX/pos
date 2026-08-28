@@ -1,9 +1,9 @@
 ﻿using System.Text;
-using Kayord.Pos.Common.Printer;
-using Kayord.Pos.Common.Printer.DataValidation;
-using Kayord.Pos.Common.Printer.Emitters.BaseCommandValues;
+using Pos.Api.Common.Printer;
+using Pos.Api.Common.Printer.DataValidation;
+using Pos.Api.Common.Printer.Emitters.BaseCommandValues;
 
-namespace Kayord.Pos.Common.Printer.Emitters;
+namespace Pos.Api.Common.Printer.Emitters;
 
 public abstract partial class BaseCommandEmitter : ICommandEmitter
 {

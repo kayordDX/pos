@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.User.UsersType;
+namespace Pos.Api.Features.User.UsersType;
 
 public class Endpoint : Endpoint<Request, List<UserResponse>>
 {
@@ -46,14 +46,14 @@ public class Endpoint : Endpoint<Request, List<UserResponse>>
                     ON uo.outlet_id = ur.outlet_id
                     AND u.user_Id = ur.user_Id
                 JOIN role r
-                    ON r.role_id = ur.role_id 
+                    ON r.role_id = ur.role_id
                 JOIN role_type rt
                     ON r.role_type_id = rt.id
-                WHERE 
+                WHERE
                     uo.outlet_id = {userOutlet.OutletId}
                     AND rt.is_front_line = {req.IsFrontLine}
                     AND rt.is_back_office = {req.IsBackOffice}
-                GROUP BY 
+                GROUP BY
                     uo.is_current,
                     u.user_id,
                     u.email,

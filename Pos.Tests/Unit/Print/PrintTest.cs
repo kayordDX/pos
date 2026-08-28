@@ -1,4 +1,4 @@
-using Kayord.Pos.Common.Printer.Emitters;
+using Pos.Api.Common.Printer.Emitters;
 
 namespace Unit.Print;
 

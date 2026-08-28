@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Events;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Events;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableOrder.UpdateGroupOrder;
+namespace Pos.Api.Features.TableOrder.UpdateGroupOrder;
 
 public class Endpoint : Endpoint<Request, Response>
 {

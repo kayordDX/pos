@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Division.Edit;
+namespace Pos.Api.Features.Division.Edit;
 
 public class Request
 {

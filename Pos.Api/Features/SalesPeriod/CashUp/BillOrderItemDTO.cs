@@ -1,6 +1,6 @@
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.SalesPeriod.CashUp;
+namespace Pos.Api.Features.SalesPeriod.CashUp;
 public class BillOrderItemDTO
 {
     public int OrderItemId { get; set; }

@@ -1,4 +1,5 @@
-namespace Kayord.Pos.Features.TableOrder.GetBasket;
+namespace Pos.Api.Features.TableOrder.GetBasket;
+
 public class BillMenuItemDTO
 {
     public int MenuItemId { get; set; }

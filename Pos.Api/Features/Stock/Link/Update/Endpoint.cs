@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Stock.Link.Update;
+namespace Pos.Api.Features.Stock.Link.Update;
 
 public class Endpoint : Endpoint<Request>
 {
@@ -64,6 +64,3 @@ public class Endpoint : Endpoint<Request>
         await Send.NoContentAsync();
     }
 }
-
-
-

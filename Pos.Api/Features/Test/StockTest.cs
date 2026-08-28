@@ -1,14 +1,14 @@
 
 using System.Diagnostics;
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill.EmailBill;
-using Kayord.Pos.Features.Stock;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill.EmailBill;
+using Pos.Api.Features.Stock;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Org.BouncyCastle.Asn1.Cms;
 using QuestPDF.Fluent;
 
-namespace Kayord.Pos.Features.Test;
+namespace Pos.Api.Features.Test;
 
 public class Result
 {

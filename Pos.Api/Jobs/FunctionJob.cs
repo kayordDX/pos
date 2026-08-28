@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Stock;
+using Pos.Api.Data;
+using Pos.Api.Features.Stock;
 using Microsoft.EntityFrameworkCore;
 using TickerQ.Utilities.Base;
 
-namespace Kayord.Pos.Jobs;
+namespace Pos.Api.Jobs;
 
 public class FunctionJob(AppDbContext dbContext)
 {

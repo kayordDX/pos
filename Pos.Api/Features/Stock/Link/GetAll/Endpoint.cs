@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Stock.Link.GetAll;
+namespace Pos.Api.Features.Stock.Link.GetAll;
 
 public class Endpoint : Endpoint<Request, List<Response>>
 {
@@ -24,10 +24,10 @@ public class Endpoint : Endpoint<Request, List<Response>>
         {
             query = _dbContext.Database.SqlQuery<Response>($"""
             select
-                i.menu_item_id id, 
+                i.menu_item_id id,
                 i.stock_id,
-                s.name, 
-                s.unit_id, 
+                s.name,
+                s.unit_id,
                 u.name unit_name,
                 i.quantity,
                 coalesce(sum(si.actual),0) total_actual
@@ -51,11 +51,11 @@ public class Endpoint : Endpoint<Request, List<Response>>
         else if (req.LinkType == 1)
         {
             query = _dbContext.Database.SqlQuery<Response>($"""
-                select 
-                    i.extra_id id, 
-                    i.stock_id, 
-                    s.name, 
-                    s.unit_id, 
+                select
+                    i.extra_id id,
+                    i.stock_id,
+                    s.name,
+                    s.unit_id,
                     u.name unit_name,
                     i.quantity,
                     coalesce(sum(si.actual),0) total_actual
@@ -67,11 +67,11 @@ public class Endpoint : Endpoint<Request, List<Response>>
                 left join stock_item si
                     on s.id = si.stock_id
                 where i.extra_id = {req.Id}
-                group by 
-                    i.extra_id, 
-                    i.stock_id, 
-                    s.name, 
-                    s.unit_id, 
+                group by
+                    i.extra_id,
+                    i.stock_id,
+                    s.name,
+                    s.unit_id,
                     u.name,
                     i.quantity
             """);
@@ -79,11 +79,11 @@ public class Endpoint : Endpoint<Request, List<Response>>
         else if (req.LinkType == 2)
         {
             query = _dbContext.Database.SqlQuery<Response>($"""
-                select 
-                    i.option_id id, 
-                    i.stock_id, 
-                    s.name, 
-                    s.unit_id, 
+                select
+                    i.option_id id,
+                    i.stock_id,
+                    s.name,
+                    s.unit_id,
                     u.name unit_name,
                     i.quantity,
                         coalesce(sum(si.actual),0) total_actual
@@ -94,12 +94,12 @@ public class Endpoint : Endpoint<Request, List<Response>>
                     on u.id = s.unit_id
                 left join stock_item si
                     on s.id = si.stock_id
-                where i.option_id = {req.Id} 
+                where i.option_id = {req.Id}
                 group by
-                    i.option_id, 
-                    i.stock_id, 
-                    s.name, 
-                    s.unit_id, 
+                    i.option_id,
+                    i.stock_id,
+                    s.name,
+                    s.unit_id,
                     u.name,
                     i.quantity
             """);
@@ -108,10 +108,10 @@ public class Endpoint : Endpoint<Request, List<Response>>
         {
             query = _dbContext.Database.SqlQuery<Response>($"""
                 select
-                    i.menu_item_id id, 
+                    i.menu_item_id id,
                     i.stock_id,
-                    s.name, 
-                    s.unit_id, 
+                    s.name,
+                    s.unit_id,
                     u.name unit_name,
                     i.quantity,
                     coalesce(sum(si.actual),0) total_actual
@@ -124,10 +124,10 @@ public class Endpoint : Endpoint<Request, List<Response>>
                     on s.id = si.stock_id
                 where i.menu_item_id = {req.Id}
                 group by
-                i.menu_item_id, 
+                i.menu_item_id,
                     i.stock_id,
-                    s.name, 
-                    s.unit_id, 
+                    s.name,
+                    s.unit_id,
                     u.name,
                     i.quantity
             """);
@@ -143,6 +143,3 @@ public class Endpoint : Endpoint<Request, List<Response>>
         await Send.OkAsync(results);
     }
 }
-
-
-

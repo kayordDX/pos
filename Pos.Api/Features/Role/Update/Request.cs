@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Role.Update;
+namespace Pos.Api.Features.Role.Update;
 
 public class Request
 {

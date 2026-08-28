@@ -1,11 +1,11 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Events;
-using Kayord.Pos.Hubs;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Events;
+using Pos.Api.Hubs;
+using Pos.Api.Services;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Kayord.Pos.Features.User.LinkAccount;
+namespace Pos.Api.Features.User.LinkAccount;
 
 public class Endpoint : Endpoint<Request, Response>
 {

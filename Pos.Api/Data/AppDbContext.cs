@@ -1,10 +1,10 @@
 using System.Reflection;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Services;
+using Pos.Api.Entities;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Kayord.Pos.Data;
+namespace Pos.Api.Data;
 
 public class AppDbContext : DbContext
 {

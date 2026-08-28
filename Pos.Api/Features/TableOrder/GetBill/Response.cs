@@ -1,6 +1,6 @@
-using Kayord.Pos.Entities;
+using Pos.Api.Entities;
 
-namespace Kayord.Pos.Features.TableOrder.GetBill;
+namespace Pos.Api.Features.TableOrder.GetBill;
 
 public class Response
 {

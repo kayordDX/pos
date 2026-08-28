@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Order.ClearBasket;
+namespace Pos.Api.Features.Order.ClearBasket;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.OrderItem>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.OrderItem>
 {
     private readonly AppDbContext _dbContext;
 

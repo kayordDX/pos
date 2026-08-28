@@ -1,8 +1,8 @@
-using Kayord.Pos.DTO;
-using Kayord.Pos.Entities;
+using Pos.Api.DTO;
+using Pos.Api.Entities;
 using Riok.Mapperly.Abstractions;
 
-namespace Kayord.Pos.Features.SalesPeriod.CashUp;
+namespace Pos.Api.Features.SalesPeriod.CashUp;
 
 [Mapper]
 public static partial class MapperStatic

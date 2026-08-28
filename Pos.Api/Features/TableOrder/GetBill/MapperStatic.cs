@@ -1,9 +1,9 @@
-using Kayord.Pos.Entities;
+using Pos.Api.Entities;
 using Riok.Mapperly.Abstractions;
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
 
-namespace Kayord.Pos.Features.TableOrder.GetBill;
+namespace Pos.Api.Features.TableOrder.GetBill;
 
 [Mapper]
 public static partial class MapperStatic

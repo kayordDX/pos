@@ -1,6 +1,6 @@
 
 
-namespace Kayord.Pos.Features.Division.Create;
+namespace Pos.Api.Features.Division.Create;
 
 public class Request
 {

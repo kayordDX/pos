@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Pay.GetLink;
+namespace Pos.Api.Features.Pay.GetLink;
 
 public class Response
 {

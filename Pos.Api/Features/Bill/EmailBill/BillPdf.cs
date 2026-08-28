@@ -2,7 +2,7 @@ using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 
-namespace Kayord.Pos.Features.Bill.EmailBill;
+namespace Pos.Api.Features.Bill.EmailBill;
 
 public class BillPdf
 {

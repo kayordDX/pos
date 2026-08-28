@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.Option.Create;
+namespace Pos.Api.Features.Option.Create;
 
 public class Endpoint : Endpoint<Request>
 {

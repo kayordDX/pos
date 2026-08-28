@@ -1,6 +1,6 @@
-using Kayord.Pos.Services;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.User.GetRoles;
+namespace Pos.Api.Features.User.GetRoles;
 
 public class Endpoint : Endpoint<Request, List<string>>
 {

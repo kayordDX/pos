@@ -1,10 +1,10 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Events;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Events;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 
-namespace Kayord.Pos.Features.Stock.Allocate.Update;
+namespace Pos.Api.Features.Stock.Allocate.Update;
 
 public class Endpoint : Endpoint<Request>
 {

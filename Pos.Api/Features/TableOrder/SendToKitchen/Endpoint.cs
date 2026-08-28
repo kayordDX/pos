@@ -1,11 +1,11 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Events;
-using Kayord.Pos.Features.Stock;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Events;
+using Pos.Api.Features.Stock;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableOrder.SendToKitchen;
+namespace Pos.Api.Features.TableOrder.SendToKitchen;
 
 public class Endpoint : Endpoint<Request, Response>
 {

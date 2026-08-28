@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class Functions : Migration
@@ -35,7 +35,7 @@ namespace Kayord.Pos.Data.Migrations
                     create or replace function "getMenuSectionChildren" (
                         "p_menuId" int,
                         "p_menuSectionId" int
-                    ) 
+                    )
                     returns table (
                         "Id" int
                     )
@@ -43,7 +43,7 @@ namespace Kayord.Pos.Data.Migrations
                     as $$
                     begin
                     	return query
-                      with RECURSIVE cte as 
+                      with RECURSIVE cte as
                       (
                         select * from "MenuSection" where "MenuId"="p_menuId" AND "MenuSectionId"="p_menuSectionId"
                         union all

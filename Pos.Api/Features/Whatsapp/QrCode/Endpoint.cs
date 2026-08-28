@@ -1,6 +1,6 @@
-using Kayord.Pos.Services.Whatsapp;
+using Pos.Api.Services.Whatsapp;
 
-namespace Kayord.Pos.Features.Whatsapp.QrCode;
+namespace Pos.Api.Features.Whatsapp.QrCode;
 
 public class Endpoint : EndpointWithoutRequest<WResponse<QrResponse>>
 {

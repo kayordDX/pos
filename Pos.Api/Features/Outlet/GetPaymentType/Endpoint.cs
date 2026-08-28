@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Outlet.GetPaymentType;
+namespace Pos.Api.Features.Outlet.GetPaymentType;
 
 public class Endpoint : Endpoint<Request, List<Entities.PaymentType>>
 {

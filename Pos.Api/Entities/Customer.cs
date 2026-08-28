@@ -1,4 +1,5 @@
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
+
 public class Customer
 {
     public int CustomerId { get; set; }

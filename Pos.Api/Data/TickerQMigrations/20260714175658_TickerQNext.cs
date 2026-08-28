@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.TickerQMigrations
+namespace Pos.Api.Data.TickerQMigrations
 {
     /// <inheritdoc />
     public partial class TickerQNext : Migration

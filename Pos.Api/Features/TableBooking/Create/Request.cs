@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.TableBooking.Create;
+namespace Pos.Api.Features.TableBooking.Create;
 
 public class Request
 {

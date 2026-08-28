@@ -1,9 +1,9 @@
-namespace Kayord.Pos.Features.CashUp.User.Detail;
+namespace Pos.Api.Features.CashUp.User.Detail;
 
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.DTO;
+using Pos.Api.Entities;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 public static class CashUp
@@ -441,7 +441,7 @@ public static class CashUp
                 }
                 cashUpUser.ClosingBalance = response.NetBalance;
                 cashUpUser.CompleterUserId = _cu.UserId ?? "";
-                // TODO: Double check with Steff 
+                // TODO: Double check with Steff
                 CashUpUser c = new()
                 {
                     UserId = UserId,

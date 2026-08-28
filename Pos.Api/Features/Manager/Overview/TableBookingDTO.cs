@@ -1,7 +1,8 @@
 using Humanizer;
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
-namespace Kayord.Pos.Features.Manager.OrderView;
+namespace Pos.Api.Features.Manager.OrderView;
+
 public class TableBookingDTO
 {
     public int Id { get; set; }

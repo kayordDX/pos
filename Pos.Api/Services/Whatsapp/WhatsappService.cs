@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Services.Whatsapp;
+namespace Pos.Api.Services.Whatsapp;
 
 public class WhatsappService
 {

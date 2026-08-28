@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Section.Create;
+namespace Pos.Api.Features.Section.Create;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.Section>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.Section>
 {
     private readonly AppDbContext _dbContext;
 

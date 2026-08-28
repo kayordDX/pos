@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Extra.Delete;
+namespace Pos.Api.Features.Extra.Delete;
 
 public class Request
 {
@@ -14,4 +14,3 @@ public class Validator : Validator<Request>
         RuleFor(v => v.Id).NotEmpty().WithMessage("Id is required");
     }
 }
-

@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.DTO;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Menu.GetItem;
+namespace Pos.Api.Features.Menu.GetItem;
 
 public class GetMenuItemsEndpoint : Endpoint<Request, MenuItemDTO>
 {

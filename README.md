@@ -5,18 +5,18 @@ The backend and front end for kayord point of sale
 Backend for kayord pos
 
 ```bash
-dotnet ef migrations add StockPeriodSnapshot --context AppDbContext --project src/Kayord.Pos --startup-project src/Kayord.Pos --output-dir Data/Migrations
+dotnet ef migrations add StockPeriodSnapshot --context AppDbContext --project src/Pos.Api --startup-project src/Pos.Api --output-dir Data/Migrations
 
-dotnet ef migrations remove --context AppDbContext --project src/Kayord.Pos --startup-project src/Kayord.Pos
+dotnet ef migrations remove --context AppDbContext --project src/Pos.Api --startup-project src/Pos.Api
 
-dotnet ef database update StockPeriodSnapshot --context AppDbContext --project src/Kayord.Pos --startup-project src/Kayord.Pos
+dotnet ef database update StockPeriodSnapshot --context AppDbContext --project src/Pos.Api --startup-project src/Pos.Api
 
-dotnet ef database update --project src/Kayord.Pos --startup-project src/Kayord.Pos
+dotnet ef database update --project src/Pos.Api --startup-project src/Pos.Api
 
-dotnet run --project src/Kayord.Pos
+dotnet run --project src/Pos.Api
 
 # TickerQ Migration
-dotnet ef migrations add TickerQUpdate --context TickerQDbContext --project src/Kayord.Pos --startup-project src/Kayord.Pos --output-dir Data/TickerQMigrations
+dotnet ef migrations add TickerQUpdate --context TickerQDbContext --project src/Pos.Api --startup-project src/Pos.Api --output-dir Data/TickerQMigrations
 ```
 
 ## Postgres
@@ -34,14 +34,14 @@ dotnet tool restore
 ## Secrets
 
 ```bash
-dotnet user-secrets init --project src/Kayord.Pos
-dotnet user-secrets set "Halo:MerchantId" "secret" --project src/Kayord.Pos
-dotnet user-secrets set "Halo:XApiKey" "secret" --project src/Kayord.Pos
-dotnet user-secrets set "Email:Host" "secret" --project src/Kayord.Pos
-dotnet user-secrets set "Email:Email" "secret" --project src/Kayord.Pos
-dotnet user-secrets set "Email:Password" "secret" --project src/Kayord.Pos
-dotnet user-secrets set "Whatsapp:Host" "secret" --project src/Kayord.Pos
-dotnet user-secrets set "Whatsapp:XApiKey" "secret" --project src/Kayord.Pos
-dotnet user-secrets set "App:GeminiKey" "secret" --project src/Kayord.Pos
-dotnet user-secrets list --project src/Kayord.Pos
+dotnet user-secrets init --project src/Pos.Api
+dotnet user-secrets set "Halo:MerchantId" "secret" --project src/Pos.Api
+dotnet user-secrets set "Halo:XApiKey" "secret" --project src/Pos.Api
+dotnet user-secrets set "Email:Host" "secret" --project src/Pos.Api
+dotnet user-secrets set "Email:Email" "secret" --project src/Pos.Api
+dotnet user-secrets set "Email:Password" "secret" --project src/Pos.Api
+dotnet user-secrets set "Whatsapp:Host" "secret" --project src/Pos.Api
+dotnet user-secrets set "Whatsapp:XApiKey" "secret" --project src/Pos.Api
+dotnet user-secrets set "App:GeminiKey" "secret" --project src/Pos.Api
+dotnet user-secrets list --project src/Pos.Api
 ```

@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Events;
+using Pos.Api.Data;
+using Pos.Api.Events;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.SalesPeriod.Close;
+namespace Pos.Api.Features.SalesPeriod.Close;
 
 public class StockPeriodSnapshotHandler : IEventHandler<StockPeriodSnapshotEvent>
 {

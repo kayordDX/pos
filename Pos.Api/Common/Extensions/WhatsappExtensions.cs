@@ -1,6 +1,6 @@
-using Kayord.Pos.Services.Whatsapp;
+using Pos.Api.Services.Whatsapp;
 
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class WhatsappExtensions
 {

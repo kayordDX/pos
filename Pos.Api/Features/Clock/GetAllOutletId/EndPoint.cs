@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Clock.List;
+namespace Pos.Api.Features.Clock.List;
 
 public class Endpoint : Endpoint<Request, List<Entities.User>>
 {

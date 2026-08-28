@@ -1,14 +1,14 @@
 
 using System.Net;
-using Kayord.Pos.Config;
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Config;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
 
-namespace Kayord.Pos.Services;
+namespace Pos.Api.Services;
 
 public class EmailService : IEmailSender
 {

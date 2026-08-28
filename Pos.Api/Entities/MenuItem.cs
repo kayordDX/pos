@@ -1,6 +1,6 @@
 using NpgsqlTypes;
 
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
 
 public class MenuItem : AuditableEntity
 {

@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Supplier.Delete;
+namespace Pos.Api.Features.Supplier.Delete;
 
 public class Request
 {

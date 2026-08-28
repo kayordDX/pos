@@ -1,11 +1,11 @@
 using System.Text.Json;
 using FirebaseAdmin.Auth;
 using Google.Apis.Auth.OAuth2;
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 
 
-namespace Kayord.Pos.Features.Test;
+namespace Pos.Api.Features.Test;
 
 public class TokenResult
 {

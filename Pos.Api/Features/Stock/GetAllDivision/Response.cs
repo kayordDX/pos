@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stock.GetAllDivision;
+namespace Pos.Api.Features.Stock.GetAllDivision;
 
 public class Response
 {

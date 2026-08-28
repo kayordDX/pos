@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.AI.GenerateMenuDescription;
+namespace Pos.Api.Features.AI.GenerateMenuDescription;
 
 public class Request
 {

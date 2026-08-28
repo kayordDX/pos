@@ -1,11 +1,11 @@
 using System.Text.Json;
 using FirebaseAdmin.Messaging;
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-using Kayord.Pos.Features.Notification;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Features.Notification;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Services;
+namespace Pos.Api.Services;
 
 public class NotificationService
 {

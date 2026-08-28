@@ -1,7 +1,7 @@
 
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
-namespace Kayord.Pos.Features.CashUp.User.Close;
+using Pos.Api.Data;
+using Pos.Api.Services;
+namespace Pos.Api.Features.CashUp.User.Close;
 
 public class Endpoint : Endpoint<Request, Detail.Response>
 {

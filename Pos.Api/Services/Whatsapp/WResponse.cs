@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Services.Whatsapp;
+namespace Pos.Api.Services.Whatsapp;
 
 public class WResponse<T> where T : new()
 {

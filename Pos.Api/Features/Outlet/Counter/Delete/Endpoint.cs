@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Outlet.Counter.Delete;
+namespace Pos.Api.Features.Outlet.Counter.Delete;
 
 public class Endpoint : Endpoint<Request, Guid>
 {

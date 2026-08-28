@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Extra.Update;
+namespace Pos.Api.Features.Extra.Update;
 
 public class Request
 {
@@ -10,4 +10,3 @@ public class Request
     public int ExtraGroupId { get; set; }
     public int OutletId { get; set; }
 }
-

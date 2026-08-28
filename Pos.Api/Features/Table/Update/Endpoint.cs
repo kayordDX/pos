@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Table.Update;
+namespace Pos.Api.Features.Table.Update;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.Table>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.Table>
 {
     private readonly AppDbContext _dbContext;
 

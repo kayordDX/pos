@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class OrderItemStatusWasteHistory : Migration
@@ -22,7 +22,7 @@ namespace Kayord.Pos.Data.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.Sql("""
-                delete from order_item_status where order_item_status_id > 8                
+                delete from order_item_status where order_item_status_id > 8
             """);
         }
     }

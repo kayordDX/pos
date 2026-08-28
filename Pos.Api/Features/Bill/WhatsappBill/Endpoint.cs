@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill.EmailBill;
-using Kayord.Pos.Services.Whatsapp;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill.EmailBill;
+using Pos.Api.Services.Whatsapp;
 using QuestPDF.Fluent;
 
-namespace Kayord.Pos.Features.Bill.WhatsappBill;
+namespace Pos.Api.Features.Bill.WhatsappBill;
 
 public class Endpoint : Endpoint<Request, bool>
 {

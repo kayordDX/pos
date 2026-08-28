@@ -1,9 +1,9 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.Menu.Update;
+namespace Pos.Api.Features.Menu.Update;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.Menu>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.Menu>
 {
     private readonly AppDbContext _dbContext;
     private readonly RedisClient _redisClient;

@@ -1,8 +1,8 @@
-using Kayord.Pos.Events;
-using Kayord.Pos.Hubs;
+using Pos.Api.Events;
+using Pos.Api.Hubs;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Kayord.Pos.Features.Notification;
+namespace Pos.Api.Features.Notification;
 
 public class SendSignalHandler : IEventHandler<SignalEvent>
 {

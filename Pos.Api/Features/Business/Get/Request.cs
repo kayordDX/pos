@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Business.Get;
+namespace Pos.Api.Features.Business.Get;
 
 public class Request
 {

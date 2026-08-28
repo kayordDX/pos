@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Bill.WhatsappBill;
+namespace Pos.Api.Features.Bill.WhatsappBill;
 
 public class Request
 {

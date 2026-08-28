@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Common.Wrapper;
+namespace Pos.Api.Common.Wrapper;
 
 public class Result
 {

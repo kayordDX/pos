@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Table.Create;
+namespace Pos.Api.Features.Table.Create;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.Table>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.Table>
 {
     private readonly AppDbContext _dbContext;
 
@@ -18,7 +18,7 @@ public class Endpoint : Endpoint<Request, Pos.Entities.Table>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        Pos.Entities.Table entity = new Pos.Entities.Table()
+        Pos.Api.Entities.Table entity = new Pos.Api.Entities.Table()
         {
             Name = req.Name,
             SectionId = req.SectionId,

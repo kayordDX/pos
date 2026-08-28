@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Supplier.GetAll;
+namespace Pos.Api.Features.Supplier.GetAll;
 
 public class Endpoint : Endpoint<Request, List<DTO.SupplierDTO>>
 {
@@ -25,6 +25,3 @@ public class Endpoint : Endpoint<Request, List<DTO.SupplierDTO>>
         await Send.OkAsync(results);
     }
 }
-
-
-

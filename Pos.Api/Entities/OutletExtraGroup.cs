@@ -1,6 +1,6 @@
-using Kayord.Pos.Entities;
+using Pos.Api.Entities;
 
-namespace Kayord.Pos.Entities;
+namespace Pos.Api.Entities;
 
 public class OutletExtraGroup
 {

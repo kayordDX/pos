@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.TableOrder.FrontOffice;
+namespace Pos.Api.Features.TableOrder.FrontOffice;
 
 public class Request
 {

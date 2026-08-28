@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.BillCategory.Create;
+namespace Pos.Api.Features.BillCategory.Create;
 
 public class Endpoint : Endpoint<Request, Entities.BillCategory>
 {
@@ -18,7 +18,7 @@ public class Endpoint : Endpoint<Request, Entities.BillCategory>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        Pos.Entities.BillCategory entity = new Pos.Entities.BillCategory()
+        Pos.Api.Entities.BillCategory entity = new Pos.Api.Entities.BillCategory()
         {
             Name = req.Name,
             OutletId = req.OutletId

@@ -1,6 +1,6 @@
-using Kayord.Pos.Services;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.Admin.Token;
+namespace Pos.Api.Features.Admin.Token;
 
 public class Endpoint : Endpoint<Request, Response>
 {

@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.ApplyOutlet;
+namespace Pos.Api.Features.User.ApplyOutlet;
 
 public class Request
 {

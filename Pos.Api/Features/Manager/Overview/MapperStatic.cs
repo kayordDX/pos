@@ -1,6 +1,6 @@
 using Riok.Mapperly.Abstractions;
 
-namespace Kayord.Pos.Features.Manager.OrderView;
+namespace Pos.Api.Features.Manager.OrderView;
 
 [Mapper]
 public static partial class MapperStatic

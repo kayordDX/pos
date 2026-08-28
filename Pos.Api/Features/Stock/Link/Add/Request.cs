@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Stock.Link.Add;
+namespace Pos.Api.Features.Stock.Link.Add;
 
 public class Request
 {

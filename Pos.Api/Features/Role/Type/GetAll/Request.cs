@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Role.Type.GetAll;
+namespace Pos.Api.Features.Role.Type.GetAll;
 
 public class Request
 {

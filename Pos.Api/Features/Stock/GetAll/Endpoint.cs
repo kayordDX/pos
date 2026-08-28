@@ -1,9 +1,9 @@
-using Kayord.Pos.Common.Extensions;
-using Kayord.Pos.Common.Models;
-using Kayord.Pos.Data;
-using Kayord.Pos.DTO;
+using Pos.Api.Common.Extensions;
+using Pos.Api.Common.Models;
+using Pos.Api.Data;
+using Pos.Api.DTO;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Stock.GetAll;
+namespace Pos.Api.Features.Stock.GetAll;
 
 public class Endpoint : Endpoint<Request, PaginatedList<Response>>
 {

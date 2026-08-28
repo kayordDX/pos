@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Stock.Link.GetAll;
+namespace Pos.Api.Features.Stock.Link.GetAll;
 
 public class Response
 {

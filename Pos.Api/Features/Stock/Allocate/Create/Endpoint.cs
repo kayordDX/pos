@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 
 
-namespace Kayord.Pos.Features.Stock.Allocate.Create;
+namespace Pos.Api.Features.Stock.Allocate.Create;
 
 public class Endpoint : Endpoint<Request, Entities.StockOrder>
 {

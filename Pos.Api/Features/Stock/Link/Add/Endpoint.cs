@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
-namespace Kayord.Pos.Features.Stock.Link.Add;
+using Pos.Api.Data;
+using Pos.Api.Entities;
+namespace Pos.Api.Features.Stock.Link.Add;
 
 public class Endpoint : Endpoint<Request>
 {

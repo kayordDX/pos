@@ -1,10 +1,10 @@
 using System.Text.Json;
 using FirebaseAdmin.Auth;
-using Kayord.Pos.Data;
-using Kayord.Pos.Features;
+using Pos.Api.Data;
+using Pos.Api.Features;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Services;
+namespace Pos.Api.Services;
 
 public class UserService
 {

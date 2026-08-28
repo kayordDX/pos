@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.AddUserOutletRole;
+namespace Pos.Api.Features.User.AddUserOutletRole;
 
 public class Request
 {

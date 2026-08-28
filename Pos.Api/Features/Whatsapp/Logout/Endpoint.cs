@@ -1,6 +1,6 @@
-using Kayord.Pos.Services.Whatsapp;
+using Pos.Api.Services.Whatsapp;
 
-namespace Kayord.Pos.Features.Whatsapp.Logout;
+namespace Pos.Api.Features.Whatsapp.Logout;
 
 public class Endpoint : EndpointWithoutRequest<WResponse<SessionLogout>>
 {

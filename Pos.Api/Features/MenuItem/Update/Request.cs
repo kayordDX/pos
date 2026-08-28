@@ -1,6 +1,6 @@
 
 
-namespace Kayord.Pos.Features.MenuItem.Update;
+namespace Pos.Api.Features.MenuItem.Update;
 
 public class Request
 {

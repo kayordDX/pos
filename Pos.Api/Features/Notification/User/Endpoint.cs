@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Hubs;
+using Pos.Api.Data;
+using Pos.Api.Hubs;
 using Microsoft.AspNetCore.SignalR;
 
-namespace Kayord.Pos.Features.Notification.User;
+namespace Pos.Api.Features.Notification.User;
 
 public class Endpoint : Endpoint<Request, bool>
 {

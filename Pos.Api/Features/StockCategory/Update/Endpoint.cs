@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.StockCategory.Update;
+namespace Pos.Api.Features.StockCategory.Update;
 
-public class Endpoint : Endpoint<Request, Pos.Entities.StockCategory>
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.StockCategory>
 {
     private readonly AppDbContext _dbContext;
 

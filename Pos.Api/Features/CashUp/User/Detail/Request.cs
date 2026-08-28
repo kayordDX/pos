@@ -1,4 +1,5 @@
-namespace Kayord.Pos.Features.CashUp.User.Detail;
+namespace Pos.Api.Features.CashUp.User.Detail;
+
 public class Request
 {
     public int OutletId { get; set; }

@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
-namespace Kayord.Pos.Features.Stock.Items.Get;
+namespace Pos.Api.Features.Stock.Items.Get;
 
 public class Endpoint : Endpoint<Request, Response>
 {
@@ -50,6 +50,3 @@ public class Endpoint : Endpoint<Request, Response>
         await Send.OkAsync(results);
     }
 }
-
-
-

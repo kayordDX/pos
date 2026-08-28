@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.Role.Create;
+namespace Pos.Api.Features.Role.Create;
 
 public class Endpoint : Endpoint<Request, Entities.Role>
 {

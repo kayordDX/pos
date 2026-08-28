@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Adjustment.GetAll;
+namespace Pos.Api.Features.Adjustment.GetAll;
 
 public class Request
 {

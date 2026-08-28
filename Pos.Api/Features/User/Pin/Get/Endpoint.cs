@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.User.Pin.Get;
+namespace Pos.Api.Features.User.Pin.Get;
 
 public class Endpoint : EndpointWithoutRequest<Response>
 {

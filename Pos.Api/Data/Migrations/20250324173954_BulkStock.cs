@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class BulkStock : Migration
@@ -46,12 +46,12 @@ namespace Kayord.Pos.Data.Migrations
             BEGIN
                 RETURN QUERY
                 WITH RECURSIVE cte AS (
-                    SELECT ms.menu_section_id 
-                    FROM menu_section ms 
+                    SELECT ms.menu_section_id
+                    FROM menu_section ms
                     WHERE ms.menu_id = p_menu_id AND ms.menu_section_id = p_menu_section_id
                     UNION ALL
-                    SELECT ms2.menu_section_id 
-                    FROM menu_section ms2 
+                    SELECT ms2.menu_section_id
+                    FROM menu_section ms2
                     INNER JOIN cte ON ms2.parent_id = cte.menu_section_id
                 )
                 SELECT menu_section_id FROM cte;

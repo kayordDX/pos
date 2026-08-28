@@ -1,4 +1,5 @@
-namespace Kayord.Pos.Features.CashUp.User.Create;
+namespace Pos.Api.Features.CashUp.User.Create;
+
 public class Request
 {
     public int CashUpUserId { get; set; }

@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Printer.Test;
+namespace Pos.Api.Features.Printer.Test;
 
 public class Request
 {

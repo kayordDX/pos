@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Stock.Order.Cancel;
+namespace Pos.Api.Features.Stock.Order.Cancel;
 
 public class Request
 {

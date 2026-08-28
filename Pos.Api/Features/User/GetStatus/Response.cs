@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.User.GetStatus;
+namespace Pos.Api.Features.User.GetStatus;
 
 public class Response
 {

@@ -1,7 +1,7 @@
-using Kayord.Pos.Events;
-using Kayord.Pos.Services;
+using Pos.Api.Events;
+using Pos.Api.Services;
 
-namespace Kayord.Pos.Features.Notification.TestNew;
+namespace Pos.Api.Features.Notification.TestNew;
 
 public class Endpoint : Endpoint<Request, bool>
 {

@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class StockItemAuditTypes : Migration
@@ -10,7 +10,7 @@ namespace Kayord.Pos.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("""                
+            migrationBuilder.Sql("""
                 delete from stock_item_audit_type;
                 insert into stock_item_audit_type(id, name) values(1, 'Order Menu Item');
                 insert into stock_item_audit_type(id, name) values(2, 'Order Extra');

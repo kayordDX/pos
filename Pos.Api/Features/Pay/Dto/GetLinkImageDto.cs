@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Pay.Dto;
+namespace Pos.Api.Features.Pay.Dto;
 
 public class GetLinkImageDto
 {

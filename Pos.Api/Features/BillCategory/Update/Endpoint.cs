@@ -1,6 +1,6 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 
-namespace Kayord.Pos.Features.BillCategory.Update;
+namespace Pos.Api.Features.BillCategory.Update;
 
 public class Endpoint : Endpoint<Request, Entities.BillCategory>
 {

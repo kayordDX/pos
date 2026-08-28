@@ -1,10 +1,10 @@
-using Kayord.Pos.Common.Extensions;
-using Kayord.Pos.Common.Models;
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Common.Extensions;
+using Pos.Api.Common.Models;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.User.Users;
+namespace Pos.Api.Features.User.Users;
 
 public class Endpoint : Endpoint<Request, PaginatedList<UserResponse>>
 {
@@ -47,9 +47,9 @@ public class Endpoint : Endpoint<Request, PaginatedList<UserResponse>>
                 ON uo.outlet_id = ur.outlet_id
             AND u.user_Id = ur.user_Id
             JOIN role r
-                ON r.role_id = ur.role_id 
+                ON r.role_id = ur.role_id
             WHERE uo.outlet_id = {userOutlet.OutletId}
-            GROUP BY 
+            GROUP BY
                 uo.is_current,
                 u.user_id,
                 u.email,

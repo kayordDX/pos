@@ -1,7 +1,7 @@
 using System.Text;
 using NJsonSchema.Generation;
 
-namespace Kayord.Pos.Common.Extensions.Swagger;
+namespace Pos.Api.Common.Extensions.Swagger;
 
 internal class CustomSchemaNameGenerator : DefaultSchemaNameGenerator, ISchemaNameGenerator
 {

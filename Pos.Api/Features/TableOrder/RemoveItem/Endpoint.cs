@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 
-namespace Kayord.Pos.Features.TableOrder.RemoveItem;
+namespace Pos.Api.Features.TableOrder.RemoveItem;
 
 public class Endpoint : Endpoint<Request, Response>
 {

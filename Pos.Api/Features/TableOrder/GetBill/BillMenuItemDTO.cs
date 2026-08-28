@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.TableOrder.GetBill;
+namespace Pos.Api.Features.TableOrder.GetBill;
 
 public class BillMenuItemDTO
 {

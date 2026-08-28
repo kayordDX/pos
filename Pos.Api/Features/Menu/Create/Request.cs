@@ -1,7 +1,7 @@
 using FluentValidation;
-using Kayord.Pos.Common.Enums;
+using Pos.Api.Common.Enums;
 
-namespace Kayord.Pos.Features.Menu.Create;
+namespace Pos.Api.Features.Menu.Create;
 
 public class Request
 {

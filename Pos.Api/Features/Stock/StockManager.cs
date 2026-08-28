@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Stock;
+namespace Pos.Api.Features.Stock;
 
 public static class StockManager
 {

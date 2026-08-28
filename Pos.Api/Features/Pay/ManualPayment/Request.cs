@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Pay.ManualPayment;
+namespace Pos.Api.Features.Pay.ManualPayment;
 
 public class Request
 {
@@ -9,4 +9,3 @@ public class Request
     public decimal Amount { get; set; }
 
 }
-

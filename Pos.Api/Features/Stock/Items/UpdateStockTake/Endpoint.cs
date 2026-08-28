@@ -1,7 +1,7 @@
-using Kayord.Pos.Data;
+using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.Stock.Items.UpdateStockTake;
+namespace Pos.Api.Features.Stock.Items.UpdateStockTake;
 
 public class Endpoint : Endpoint<Request>
 {

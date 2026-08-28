@@ -1,7 +1,7 @@
-using Kayord.Pos.Common.Extensions;
-using Kayord.Pos.Common.Extensions.Cors;
-using Kayord.Pos.Common.Extensions.Health;
-using Kayord.Pos.Hubs;
+using Pos.Api.Common.Extensions;
+using Pos.Api.Common.Extensions.Cors;
+using Pos.Api.Common.Extensions.Health;
+using Pos.Api.Hubs;
 using TickerQ.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);

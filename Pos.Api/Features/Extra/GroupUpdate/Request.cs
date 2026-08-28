@@ -1,4 +1,4 @@
-namespace Kayord.Pos.Features.Extra.GroupUpdate;
+namespace Pos.Api.Features.Extra.GroupUpdate;
 
 public class Request
 {

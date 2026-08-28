@@ -1,6 +1,6 @@
-﻿using Kayord.Pos.Common.Printer.Emitters.BaseCommandValues;
+﻿using Pos.Api.Common.Printer.Emitters.BaseCommandValues;
 
-namespace Kayord.Pos.Common.Printer.Emitters;
+namespace Pos.Api.Common.Printer.Emitters;
 
 public abstract partial class BaseCommandEmitter : ICommandEmitter
 {
@@ -8,4 +8,3 @@ public abstract partial class BaseCommandEmitter : ICommandEmitter
 
     public virtual byte[] SetLineSpacingInDots(int dots) => new byte[] { Cmd.ESC, Whitespace.LineSpacingInDots, (byte)dots };
 }
-

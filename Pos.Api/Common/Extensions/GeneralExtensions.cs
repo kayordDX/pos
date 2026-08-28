@@ -1,9 +1,9 @@
-using Kayord.Pos.Hubs;
-using Kayord.Pos.Services;
+using Pos.Api.Hubs;
+using Pos.Api.Services;
 using Microsoft.AspNetCore.SignalR;
 using QuestPDF.Infrastructure;
 
-namespace Kayord.Pos.Common.Extensions;
+namespace Pos.Api.Common.Extensions;
 
 public static class GeneralExtensions
 {

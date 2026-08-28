@@ -3,12 +3,12 @@
     "label": "Run",
     "command": "dotnet",
     "hide": "on_success",
-    "args": ["run", "--project", "./src/Kayord.Pos"],
+    "args": ["run", "--project", "./Pos.Api"],
   },
   {
     "label": "build",
     "command": "dotnet",
     "hide": "on_success",
-    "args": ["build", "./src/Kayord.Pos/Kayord.Pos.csproj"],
+    "args": ["build", "./Pos.Api/Pos.Api.csproj"],
   },
 ]

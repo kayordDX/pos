@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Entities;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace Kayord.Pos.Features.TableOrder.CopyItem;
+namespace Pos.Api.Features.TableOrder.CopyItem;
 
 public class Endpoint : Endpoint<Request, Response>
 {

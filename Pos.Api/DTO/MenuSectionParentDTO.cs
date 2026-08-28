@@ -1,4 +1,5 @@
-namespace Kayord.Pos.DTO;
+namespace Pos.Api.DTO;
+
 public class MenuSectionParentDTO
 {
     public int MenuSectionId { get; set; }

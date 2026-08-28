@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Section.List;
+namespace Pos.Api.Features.Section.List;
 
 public class Request
 {

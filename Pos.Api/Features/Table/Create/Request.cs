@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Kayord.Pos.Features.Table.Create;
+namespace Pos.Api.Features.Table.Create;
 
 public class Request
 {

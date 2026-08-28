@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Features.Bill.EmailBill;
+using Pos.Api.Data;
+using Pos.Api.Features.Bill.EmailBill;
 using QuestPDF.Fluent;
 
-namespace Kayord.Pos.Features.Bill.DownloadBill;
+namespace Pos.Api.Features.Bill.DownloadBill;
 
 public class Endpoint : Endpoint<Request>
 {

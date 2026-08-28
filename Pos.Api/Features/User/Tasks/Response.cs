@@ -1,6 +1,6 @@
-namespace Kayord.Pos.Features.User.Tasks;
+namespace Pos.Api.Features.User.Tasks;
 
-using Kayord.Pos.DTO;
+using Pos.Api.DTO;
 
 public class Response
 {

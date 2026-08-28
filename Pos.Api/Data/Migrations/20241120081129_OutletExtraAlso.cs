@@ -2,7 +2,7 @@
 
 #nullable disable
 
-namespace Kayord.Pos.Data.Migrations
+namespace Pos.Api.Data.Migrations
 {
     /// <inheritdoc />
     public partial class OutletExtraAlso : Migration
@@ -16,7 +16,7 @@ namespace Kayord.Pos.Data.Migrations
                         o."Id", o."OutletId", o."ExtraGroupId" "OldExtraGroupId", ee."ExtraGroupId"
                     FROM "OutletExtraGroup" o
                     JOIN "ExtraGroup" e
-                        ON e."ExtraGroupId" = o."ExtraGroupId"  
+                        ON e."ExtraGroupId" = o."ExtraGroupId"
                     JOIN "ExtraGroup" ee
                         ON ee."Name" = e."Name"
                         AND o."OutletId" = ee."OutletId"

@@ -1,8 +1,8 @@
-using Kayord.Pos.Data;
-using Kayord.Pos.Services;
+using Pos.Api.Data;
+using Pos.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Kayord.Pos.Features.Auth;
+namespace Pos.Api.Features.Auth;
 
 public class RoleTypeHandler : AuthorizationHandler<RoleTypeRequirement>
 {
