@@ -1,9 +1,5 @@
 <script lang="ts">
-	import {
-		createStockLinkGet,
-		type StockGetAllResponse,
-		type StockLinkGetResponse,
-	} from "$lib/api";
+	import { createStockLinkGet, type StockGetAllResponse, type StockLinkGetResponse } from "$lib/api";
 	import { Badge, Dialog } from "@kayord/ui";
 	import { DataTable, createShadTable, renderSnippet } from "@kayord/ui/data-table";
 	import type { ColumnDef } from "@tanstack/table-core";
@@ -79,15 +75,9 @@
 {/snippet}
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%] overflow-auto p-2 w-[100%] md:min-w-[48rem]">
-		<div class="flex flex-col gap-4 p-0 mt-0">
-			<DataTable
-				{table}
-				{header}
-				headerClass="pb-2"
-				isLoading={query.isPending}
-				noDataMessage="No linked items"
-			/>
+	<Dialog.Content class="max-h-[98%] w-[100%] overflow-auto p-2 md:min-w-[48rem]">
+		<div class="mt-0 flex flex-col gap-4 p-0">
+			<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No linked items" />
 		</div>
 	</Dialog.Content>
 </Dialog.Root>

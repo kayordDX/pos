@@ -52,9 +52,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete Table?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete the table if there are no active bookings.
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will delete the table if there are no active bookings.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

@@ -22,16 +22,7 @@
 		children?: Snippet;
 	}
 
-	let {
-		id,
-		quantity,
-		price,
-		note = undefined,
-		options,
-		extras,
-		refetch,
-		children,
-	}: Props = $props();
+	let { id, quantity, price, note = undefined, options, extras, refetch, children }: Props = $props();
 
 	const removeItem = createTableOrderRemoveItem();
 	const copyItem = createTableOrderCopyItem();
@@ -47,9 +38,9 @@
 	};
 </script>
 
-<Card.Root class="p-4 flex justify-between relative flex-row">
+<Card.Root class="relative flex flex-row justify-between p-4">
 	<ItemCount value={quantity} />
-	<div class="flex flex-col gap-2 justify-center">
+	<div class="flex flex-col justify-center gap-2">
 		{@render children?.()}
 		{#if (options ?? []).length > 0}
 			<div class="text-muted-foreground mt-2">
@@ -85,8 +76,8 @@
 			</div>
 		{/if}
 	</div>
-	<div class="flex items-center gap-2 mr-1">
-		<div class="font-bold mr-2">R {price.toFixed(2)}</div>
+	<div class="mr-1 flex items-center gap-2">
+		<div class="mr-2 font-bold">R {price.toFixed(2)}</div>
 		<Button variant="outline" onclick={copy} size="icon">
 			<CopyIcon class="h-4 w-4" />
 		</Button>

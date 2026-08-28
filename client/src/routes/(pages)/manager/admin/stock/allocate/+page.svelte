@@ -1,12 +1,6 @@
 <script lang="ts">
 	import { Badge, Button } from "@kayord/ui";
-	import {
-		DataTable,
-		createShadTable,
-		renderComponent,
-		renderSnippet,
-		decodeColumnFilters,
-	} from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, renderSnippet, decodeColumnFilters } from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 
 	import AddAllocation from "./AddAllocation.svelte";
@@ -104,9 +98,7 @@
 	let filters = $state("");
 
 	// Replacing _ with . to fix sorting issue
-	const sorts = $derived(
-		sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id.replaceAll("_", ".")}`).join(",")
-	);
+	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id.replaceAll("_", ".")}`).join(","));
 
 	const query = createStockAllocateGetAll(() => ({
 		page: pagination.pageIndex + 1,
@@ -174,12 +166,7 @@
 </script>
 
 {#snippet statusCol(allocate: DTOStockAllocateDTO)}
-	{@const v =
-		allocate.stockAllocateStatusId == 1
-			? "secondary"
-			: allocate.stockAllocateStatusId == 2
-				? "default"
-				: "outline"}
+	{@const v = allocate.stockAllocateStatusId == 1 ? "secondary" : allocate.stockAllocateStatusId == 2 ? "default" : "outline"}
 	<Badge variant={v}>{allocate.stockAllocateStatus.name}</Badge>
 {/snippet}
 
@@ -200,14 +187,14 @@
 {/snippet}
 
 {#snippet header()}
-	<div class="flex gap-2 justify-between items-center">
-		<div class="flex gap-2 items-center">
+	<div class="flex items-center justify-between gap-2">
+		<div class="flex items-center gap-2">
 			<div class="flex flex-col gap-1">
 				<h2>Allocate</h2>
 				<Search bind:search name="Allocations" />
 			</div>
 		</div>
-		<div class="flex gap-2 items-center">
+		<div class="flex items-center gap-2">
 			{#if hasOpenSalesPeriod}
 				<AddAllocation bind:open={addAllocateOpen} refetch={query.refetch} />
 				<Button size="sm" onclick={() => (addAllocateOpen = true)}>
@@ -219,11 +206,5 @@
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		{table}
-		{header}
-		headerClass="pb-2"
-		isLoading={query.isPending}
-		noDataMessage="No allocations"
-	/>
+	<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No allocations" />
 </div>

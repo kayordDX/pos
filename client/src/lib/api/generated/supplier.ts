@@ -36,10 +36,7 @@ export const getSupplierUpdateUrl = () => {
 	return `/supplier`;
 };
 
-export const supplierUpdate = async (
-	supplierUpdateRequest: SupplierUpdateRequest,
-	options?: RequestInit
-): Promise<void> => {
+export const supplierUpdate = async (supplierUpdateRequest: SupplierUpdateRequest, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getSupplierUpdateUrl(), {
 		...options,
 		method: "PUT",
@@ -48,23 +45,10 @@ export const supplierUpdate = async (
 	});
 };
 
-export const getSupplierUpdateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof supplierUpdate>>,
-		TError,
-		{ data: BodyType<SupplierUpdateRequest> },
-		TContext
-	>;
+export const getSupplierUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof supplierUpdate>>, TError, { data: BodyType<SupplierUpdateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof supplierUpdate>>,
-	TError,
-	{ data: BodyType<SupplierUpdateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof supplierUpdate>>, TError, { data: BodyType<SupplierUpdateRequest> }, TContext> => {
 	const mutationKey = ["supplierUpdate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -72,10 +56,7 @@ export const getSupplierUpdateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof supplierUpdate>>,
-		{ data: BodyType<SupplierUpdateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof supplierUpdate>>, { data: BodyType<SupplierUpdateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return supplierUpdate(data, requestOptions);
@@ -88,26 +69,13 @@ export type SupplierUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof
 export type SupplierUpdateMutationBody = BodyType<SupplierUpdateRequest>;
 export type SupplierUpdateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createSupplierUpdate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createSupplierUpdate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof supplierUpdate>>,
-			TError,
-			{ data: BodyType<SupplierUpdateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof supplierUpdate>>, TError, { data: BodyType<SupplierUpdateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof supplierUpdate>>,
-	TError,
-	{ data: BodyType<SupplierUpdateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof supplierUpdate>>, TError, { data: BodyType<SupplierUpdateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getSupplierUpdateMutationOptions(options?.()) }), queryClient);
 };
 export const getSupplierGetAllUrl = (params: SupplierGetAllParams) => {
@@ -124,10 +92,7 @@ export const getSupplierGetAllUrl = (params: SupplierGetAllParams) => {
 	return stringifiedParams.length > 0 ? `/supplier?${stringifiedParams}` : `/supplier`;
 };
 
-export const supplierGetAll = async (
-	params: SupplierGetAllParams,
-	options?: RequestInit
-): Promise<DTOSupplierDTO[]> => {
+export const supplierGetAll = async (params: SupplierGetAllParams, options?: RequestInit): Promise<DTOSupplierDTO[]> => {
 	return customInstance<DTOSupplierDTO[]>(getSupplierGetAllUrl(params), {
 		...options,
 		method: "GET",
@@ -138,10 +103,7 @@ export const getSupplierGetAllQueryKey = (params?: SupplierGetAllParams) => {
 	return [`/supplier`, ...(params ? [params] : [])] as const;
 };
 
-export const getSupplierGetAllQueryOptions = <
-	TData = Awaited<ReturnType<typeof supplierGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getSupplierGetAllQueryOptions = <TData = Awaited<ReturnType<typeof supplierGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params: SupplierGetAllParams,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof supplierGetAll>>, TError, TData>>;
@@ -152,23 +114,17 @@ export const getSupplierGetAllQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getSupplierGetAllQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof supplierGetAll>>> = () =>
-		supplierGetAll(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof supplierGetAll>>> = () => supplierGetAll(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof supplierGetAll>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof supplierGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type SupplierGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof supplierGetAll>>>;
 export type SupplierGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createSupplierGetAll<
-	TData = Awaited<ReturnType<typeof supplierGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createSupplierGetAll<TData = Awaited<ReturnType<typeof supplierGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params: () => SupplierGetAllParams,
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof supplierGetAll>>, TError, TData>>;
@@ -176,10 +132,9 @@ export function createSupplierGetAll<
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getSupplierGetAllQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getSupplierGetAllQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -188,10 +143,7 @@ export const getSupplierCreateUrl = () => {
 	return `/supplier`;
 };
 
-export const supplierCreate = async (
-	supplierCreateRequest: SupplierCreateRequest,
-	options?: RequestInit
-): Promise<EntitiesSupplier> => {
+export const supplierCreate = async (supplierCreateRequest: SupplierCreateRequest, options?: RequestInit): Promise<EntitiesSupplier> => {
 	return customInstance<EntitiesSupplier>(getSupplierCreateUrl(), {
 		...options,
 		method: "POST",
@@ -200,23 +152,10 @@ export const supplierCreate = async (
 	});
 };
 
-export const getSupplierCreateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof supplierCreate>>,
-		TError,
-		{ data: BodyType<SupplierCreateRequest> },
-		TContext
-	>;
+export const getSupplierCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof supplierCreate>>, TError, { data: BodyType<SupplierCreateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof supplierCreate>>,
-	TError,
-	{ data: BodyType<SupplierCreateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof supplierCreate>>, TError, { data: BodyType<SupplierCreateRequest> }, TContext> => {
 	const mutationKey = ["supplierCreate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -224,10 +163,7 @@ export const getSupplierCreateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof supplierCreate>>,
-		{ data: BodyType<SupplierCreateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof supplierCreate>>, { data: BodyType<SupplierCreateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return supplierCreate(data, requestOptions);
@@ -240,26 +176,13 @@ export type SupplierCreateMutationResult = NonNullable<Awaited<ReturnType<typeof
 export type SupplierCreateMutationBody = BodyType<SupplierCreateRequest>;
 export type SupplierCreateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createSupplierCreate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createSupplierCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof supplierCreate>>,
-			TError,
-			{ data: BodyType<SupplierCreateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof supplierCreate>>, TError, { data: BodyType<SupplierCreateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof supplierCreate>>,
-	TError,
-	{ data: BodyType<SupplierCreateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof supplierCreate>>, TError, { data: BodyType<SupplierCreateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getSupplierCreateMutationOptions(options?.()) }), queryClient);
 };
 export const getSupplierDeleteUrl = (id: number) => {
@@ -273,23 +196,10 @@ export const supplierDelete = async (id: number, options?: RequestInit): Promise
 	});
 };
 
-export const getSupplierDeleteMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof supplierDelete>>,
-		TError,
-		{ id: number },
-		TContext
-	>;
+export const getSupplierDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof supplierDelete>>, TError, { id: number }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof supplierDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof supplierDelete>>, TError, { id: number }, TContext> => {
 	const mutationKey = ["supplierDelete"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -297,9 +207,7 @@ export const getSupplierDeleteMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<Awaited<ReturnType<typeof supplierDelete>>, { id: number }> = (
-		props
-	) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof supplierDelete>>, { id: number }> = (props) => {
 		const { id } = props ?? {};
 
 		return supplierDelete(id, requestOptions);
@@ -312,25 +220,12 @@ export type SupplierDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof
 
 export type SupplierDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createSupplierDelete = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createSupplierDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof supplierDelete>>,
-			TError,
-			{ id: number },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof supplierDelete>>, TError, { id: number }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof supplierDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof supplierDelete>>, TError, { id: number }, TContext> => {
 	return createMutation(() => ({ ...getSupplierDeleteMutationOptions(options?.()) }), queryClient);
 };

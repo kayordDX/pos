@@ -2,13 +2,7 @@
 	import type { DTOExtraDTO } from "$lib/api";
 	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import {
-		BookOpenTextIcon,
-		EllipsisVerticalIcon,
-		EqualIcon,
-		PencilIcon,
-		Trash2Icon,
-	} from "@lucide/svelte";
+	import { BookOpenTextIcon, EllipsisVerticalIcon, EqualIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import { createExtraDelete } from "$lib/api";
 	import { getError, LinkType } from "$lib/types";
 	import EditExtra from "./EditExtra.svelte";

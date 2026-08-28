@@ -52,9 +52,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete Menu?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete menu only if it does not contain any sections.
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will delete menu only if it does not contain any sections.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

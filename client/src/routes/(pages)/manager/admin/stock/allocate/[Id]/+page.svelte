@@ -1,18 +1,9 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import {
-		createStockAllocateGet,
-		createStockAllocateUpdate,
-		type DTOStockAllocateItemDTO,
-	} from "$lib/api";
+	import { createStockAllocateGet, createStockAllocateUpdate, type DTOStockAllocateItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { Alert, Badge, Button, Card, Loader } from "@kayord/ui";
-	import {
-		DataTable,
-		createShadTable,
-		renderComponent,
-		renderSnippet,
-	} from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, renderSnippet } from "@kayord/ui/data-table";
 	import { MoveRightIcon, PlusIcon, WorkflowIcon } from "@lucide/svelte";
 	import AddAllocationItem from "./AddAllocationItem.svelte";
 	import Actions from "./Actions.svelte";
@@ -102,12 +93,7 @@
 </script>
 
 {#snippet statusSnippet(item: DTOStockAllocateItemDTO)}
-	{@const variant =
-		item.stockAllocateItemStatusId === 1
-			? "default"
-			: item.stockAllocateItemStatusId === 2
-				? "secondary"
-				: "outline"}
+	{@const variant = item.stockAllocateItemStatusId === 1 ? "default" : item.stockAllocateItemStatusId === 2 ? "secondary" : "outline"}
 	<Badge {variant} class="w-fit">
 		{item.stockAllocateItemStatus.name}
 	</Badge>
@@ -123,23 +109,21 @@
 <div class="m-2">
 	<Loader isLoading={query.isPending} />
 	{#if query.data}
-		<Card.Root class="bg-secondar flex-row p-0 w-full">
-			<div
-				class="border-2 border-secondary p-2 gap-2 rounded-md flex-col justify-between items-center text-secondary-foreground w-full"
-			>
-				<div class="flex items-center gap-2 justify-center">
-					<div class="bg-background/60 py-1 px-2 rounded-md">
+		<Card.Root class="bg-secondar w-full flex-row p-0">
+			<div class="border-secondary text-secondary-foreground w-full flex-col items-center justify-between gap-2 rounded-md border-2 p-2">
+				<div class="flex items-center justify-center gap-2">
+					<div class="bg-background/60 rounded-md px-2 py-1">
 						<div class="font-bold">{query.data.fromDivision.divisionName}</div>
 					</div>
 					<MoveRightIcon />
-					<div class="bg-background/60 py-1 px-2 rounded-md">
+					<div class="bg-background/60 rounded-md px-2 py-1">
 						<div class="font-bold">{query.data.toDivision.divisionName}</div>
 					</div>
-					<div class="bg-background/60 py-1 px-2 rounded-md">
+					<div class="bg-background/60 rounded-md px-2 py-1">
 						<div class="font-bold">{query.data.toOutlet.name}</div>
 					</div>
 				</div>
-				<div class="flex items-center gap-2 justify-between">
+				<div class="flex items-center justify-between gap-2">
 					<div class="flex flex-col">
 						<h1 class="text-xl">{query.data.comment}</h1>
 						<Badge class="w-fit">{query.data.stockAllocateStatus.name}</Badge>
@@ -169,21 +153,12 @@
 			</div>
 		</div>
 
-		<DataTable
-			{table}
-			headerClass="pb-2"
-			isLoading={query.isPending}
-			noDataMessage="No order items"
-		/>
+		<DataTable {table} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No order items" />
 	{:else if !query.isPending}
 		{@render errorMessage("An error occurred while fetching order items")}
 	{/if}
 	{#if query.error}
 		{@render errorMessage(getError(query.error).message)}
 	{/if}
-	<AddAllocationItem
-		bind:open={addOrderItemOpen}
-		refetch={query.refetch}
-		divisionId={query.data?.fromDivisionId ?? 0}
-	/>
+	<AddAllocationItem bind:open={addOrderItemOpen} refetch={query.refetch} divisionId={query.data?.fromDivisionId ?? 0} />
 </div>

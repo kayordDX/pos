@@ -14,13 +14,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import { today, getLocalTimeZone, CalendarDate, parseDate } from "@internationalized/date";
 
-	import {
-		type ColumnDef,
-		type ColumnFiltersState,
-		type PaginationState,
-		type SortingState,
-		type Updater,
-	} from "@tanstack/table-core";
+	import { type ColumnDef, type ColumnFiltersState, type PaginationState, type SortingState, type Updater } from "@tanstack/table-core";
 	import { CalendarRangeIcon, FunnelIcon } from "@lucide/svelte";
 	import { page } from "$app/state";
 	import { onMount } from "svelte";
@@ -211,18 +205,18 @@
 </script>
 
 {#snippet header()}
-	<div class="flex justify-between w-full">
-		<div class="sm:flex flex-col mb-2 w-full hidden">
-			<h1 class="flex font-bold text-lg">History</h1>
+	<div class="flex w-full justify-between">
+		<div class="mb-2 hidden w-full flex-col sm:flex">
+			<h1 class="flex text-lg font-bold">History</h1>
 
 			{#if historyType == "all"}
-				<h2 class="flex text-muted-foreground text-xs">Bill history all</h2>
+				<h2 class="text-muted-foreground flex text-xs">Bill history all</h2>
 			{:else if historyType == "waiter"}
-				<h2 class="flex text-muted-foreground text-xs">Bill history</h2>
+				<h2 class="text-muted-foreground flex text-xs">Bill history</h2>
 			{:else if historyType == "cashUpUser"}
-				<h2 class="flex text-muted-foreground text-xs">Bill history user</h2>
+				<h2 class="text-muted-foreground flex text-xs">Bill history user</h2>
 			{:else}
-				<h2 class="flex text-muted-foreground text-xs">Sales period Bill history all users</h2>
+				<h2 class="text-muted-foreground flex text-xs">Sales period Bill history all users</h2>
 			{/if}
 		</div>
 		<div class="flex items-center gap-2">
@@ -234,7 +228,7 @@
 						</Popover.Trigger>
 						<Popover.Content class="w-auto overflow-hidden p-0" align="center">
 							<RangeCalendar bind:value={dateValue} minDays={1} />
-							<div class="p-2 flex justify-between">
+							<div class="flex justify-between p-2">
 								<Button class="w-full" onclick={filter}><FunnelIcon /> Filter</Button>
 							</div>
 						</Popover.Content>
@@ -250,11 +244,5 @@
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		{table}
-		{header}
-		isLoading={query.isPending}
-		headerClass="pb-2"
-		noDataMessage="No history available"
-	/>
+	<DataTable {table} {header} isLoading={query.isPending} headerClass="pb-2" noDataMessage="No history available" />
 </div>

@@ -80,36 +80,36 @@
 						<XIcon class="text-destructive" />
 					{/if}
 				</div>
-				<div class="text-sm text-muted-foreground">Success: {query.data?.success}</div>
-				<div class="text-sm text-muted-foreground">Code: {query.data?.code}</div>
+				<div class="text-muted-foreground text-sm">Success: {query.data?.success}</div>
+				<div class="text-muted-foreground text-sm">Code: {query.data?.code}</div>
 				{#if !canWhatsapp}
-					<div class="text-sm text-destructive">Whatsapp is not enabled</div>
+					<div class="text-destructive text-sm">Whatsapp is not enabled</div>
 				{/if}
 			</Card.Header>
-			<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
+			<div class="mx-auto flex w-full flex-col gap-2 overflow-auto rounded-t-[10px] p-4">
 				<Field {form} name="name">
 					<Control>
 						<Form.Label>Name</Form.Label>
 						<Input bind:value={$formData.name} />
 					</Control>
-					<FieldErrors class="text-sm text-destructive" />
+					<FieldErrors class="text-destructive text-sm" />
 				</Field>
 				<Field {form} name="phoneNumber">
 					<Control>
 						<Form.Label>Phone Number</Form.Label>
 						<Input bind:value={$formData.phoneNumber} />
 					</Control>
-					<FieldErrors class="text-sm text-destructive" />
+					<FieldErrors class="text-destructive text-sm" />
 				</Field>
 				<Field {form} name="countryCode">
 					<Control>
 						<Form.Label>Country Code</Form.Label>
 						<Input bind:value={$formData.countryCode} />
 					</Control>
-					<FieldErrors class="text-sm text-destructive" />
+					<FieldErrors class="text-destructive text-sm" />
 				</Field>
 			</div>
-			<Card.Footer class="flex justify-between items-center">
+			<Card.Footer class="flex items-center justify-between">
 				<Button variant="secondary" onclick={goBack}>Cancel</Button>
 				<Button type="submit" disabled={mutation.isPending || !canWhatsapp}>Send Whatsapp</Button>
 			</Card.Footer>

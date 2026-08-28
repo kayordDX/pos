@@ -46,9 +46,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete Role from Division?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will remove the role from this division
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will remove the role from this division</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

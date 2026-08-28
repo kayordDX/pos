@@ -127,13 +127,9 @@
 		filters = qb.build();
 	});
 
-	const stockListSelect = $derived(
-		stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unitName})` }))
-	);
+	const stockListSelect = $derived(stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unitName})` })));
 
-	const pricePerUnit = $derived(
-		isNaN($formData.price / $formData.orderAmount) ? 0 : $formData.price / $formData.orderAmount
-	);
+	const pricePerUnit = $derived(isNaN($formData.price / $formData.orderAmount) ? 0 : $formData.price / $formData.orderAmount);
 
 	const last = $derived(
 		createStockOrderItemLastPrice(
@@ -164,13 +160,7 @@
 						<Form.Control>
 							{#snippet children({ props })}
 								<Form.Label>Stock</Form.Label>
-								<Combobox
-									bind:value={$formData.stockId}
-									items={stockListSelect}
-									bind:search={stockSearch}
-									shouldFilter={false}
-									{...props}
-								/>
+								<Combobox bind:value={$formData.stockId} items={stockListSelect} bind:search={stockSearch} shouldFilter={false} {...props} />
 							{/snippet}
 						</Form.Control>
 						<Form.FieldErrors />
@@ -180,8 +170,8 @@
 				<Table.Root>
 					<Table.Body>
 						<Table.Row class="border-none">
-							<Table.Cell class="text-sm text-muted-foreground p-1">Current Total Stock</Table.Cell>
-							<Table.Cell class="text-right p-1">{lastPriceData.totalAmount}</Table.Cell>
+							<Table.Cell class="text-muted-foreground p-1 text-sm">Current Total Stock</Table.Cell>
+							<Table.Cell class="p-1 text-right">{lastPriceData.totalAmount}</Table.Cell>
 						</Table.Row>
 					</Table.Body>
 				</Table.Root>
@@ -231,18 +221,14 @@
 					<Table.Root>
 						<Table.Body>
 							<Table.Row class="border-none">
-								<Table.Cell class="text-sm text-muted-foreground p-1">
-									Previous price per unit
-								</Table.Cell>
-								<Table.Cell class="text-right p-1">
+								<Table.Cell class="text-muted-foreground p-1 text-sm">Previous price per unit</Table.Cell>
+								<Table.Cell class="p-1 text-right">
 									R {lastPriceData.lastPrice.toFixed(2)}
 								</Table.Cell>
 							</Table.Row>
 							<Table.Row class="border-none">
-								<Table.Cell class="text-sm text-muted-foreground p-1">
-									Current price per unit
-								</Table.Cell>
-								<Table.Cell class="text-right p-1">R {pricePerUnit.toFixed(2)}</Table.Cell>
+								<Table.Cell class="text-muted-foreground p-1 text-sm">Current price per unit</Table.Cell>
+								<Table.Cell class="p-1 text-right">R {pricePerUnit.toFixed(2)}</Table.Cell>
 							</Table.Row>
 						</Table.Body>
 					</Table.Root>
@@ -255,9 +241,7 @@
 								<Select.Root
 									type="single"
 									name="itemStatusId"
-									bind:value={
-										() => $formData.statusId.toString(), (v) => ($formData.statusId = Number(v))
-									}
+									bind:value={() => $formData.statusId.toString(), (v) => ($formData.statusId = Number(v))}
 									allowDeselect={false}
 								>
 									<Select.Trigger {...props}>

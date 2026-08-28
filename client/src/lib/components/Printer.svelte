@@ -4,16 +4,7 @@
 	import { getError } from "$lib/types";
 	import { Button, Card, Switch, Table, Avatar, DropdownMenu, Tooltip } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import {
-		PrinterIcon,
-		EllipsisVerticalIcon,
-		PencilIcon,
-		TestTubeIcon,
-		Trash,
-		CloudUploadIcon,
-		CloudOffIcon,
-		RadarIcon,
-	} from "@lucide/svelte";
+	import { PrinterIcon, EllipsisVerticalIcon, PencilIcon, TestTubeIcon, Trash, CloudUploadIcon, CloudOffIcon, RadarIcon } from "@lucide/svelte";
 	import AddPrinter from "../../routes/(pages)/manager/admin/printers/AddPrinter.svelte";
 	import DeletePrinter from "../../routes/(pages)/manager/admin/printers/DeletePrinter.svelte";
 	import { page } from "$app/state";
@@ -58,11 +49,9 @@
 	let scanOpen = $state(false);
 </script>
 
-<Card.Root
-	class={`p-0 border-l-8 ${printer.isEnabled ? "border-l-primary" : "border-l-destructive"}`}
->
-	<Card.Header class="flex flex-row items-start bg-muted/50 p-4">
-		<div class="flex items-center justify-between w-full">
+<Card.Root class={`border-l-8 p-0 ${printer.isEnabled ? "border-l-primary" : "border-l-destructive"}`}>
+	<Card.Header class="bg-muted/50 flex flex-row items-start p-4">
+		<div class="flex w-full items-center justify-between">
 			<div class="flex items-center gap-2">
 				<Avatar.Root>
 					<Avatar.Fallback>
@@ -90,7 +79,7 @@
 				<Card.Title>{printer.printerName}</Card.Title>
 			</div>
 		</div>
-		<div class="flex flex-row gap-2 items-center">
+		<div class="flex flex-row items-center gap-2">
 			<Switch bind:checked={showDetail} />
 			{#if isAdmin}
 				<DropdownMenu.Root>
@@ -127,7 +116,7 @@
 	</Card.Header>
 	{#if showDetail}
 		<Card.Content class="p-4 pt-0">
-			<div class="rounded-md mt-4 border">
+			<div class="mt-4 rounded-md border">
 				<Table.Root>
 					<Table.Body>
 						<Table.Row>
@@ -155,8 +144,8 @@
 	{/if}
 	{#if canPrint}
 		<Card.Footer>
-			<Button class="w-full mt-4" onclick={printBill}>
-				<PrinterIcon class="size-4 mr-2" />
+			<Button class="mt-4 w-full" onclick={printBill}>
+				<PrinterIcon class="mr-2 size-4" />
 				Print
 			</Button>
 		</Card.Footer>

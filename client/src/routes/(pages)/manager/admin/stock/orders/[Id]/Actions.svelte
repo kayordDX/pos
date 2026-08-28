@@ -39,9 +39,7 @@
 		</DropdownMenu.Trigger>
 		<DropdownMenu.Content>
 			<DropdownMenu.Item onclick={() => (editOpen = true)}><PencilIcon /> Edit</DropdownMenu.Item>
-			<DropdownMenu.Item onclick={() => (deleteOpen = true)}
-				><Trash2Icon /> Delete</DropdownMenu.Item
-			>
+			<DropdownMenu.Item onclick={() => (deleteOpen = true)}><Trash2Icon /> Delete</DropdownMenu.Item>
 		</DropdownMenu.Content>
 	</DropdownMenu.Root>
 

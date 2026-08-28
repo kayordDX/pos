@@ -1,16 +1,7 @@
 <script lang="ts">
 	import type { MenuItemMenuItemAdminDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import {
-		Button,
-		Checkbox,
-		Collapsible,
-		Dialog,
-		Input,
-		Loader,
-		Select,
-		Textarea,
-	} from "@kayord/ui";
+	import { Button, Checkbox, Collapsible, Dialog, Input, Loader, Select, Textarea } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
 	import { Form } from "@kayord/ui/form";
 	import { defaults, superForm } from "sveltekit-superforms";
@@ -116,8 +107,7 @@
 		positionId: menuItem?.position ?? 0,
 		billCategoryId: menuItem?.billCategoryId ?? 0,
 		extraGroupIds: menuItem?.menuItemExtraGroups.map((i) => i.extraGroupId) ?? new Array<number>(),
-		optionGroupIds:
-			menuItem?.menuItemOptionGroups.map((i) => i.optionGroupId) ?? new Array<number>(),
+		optionGroupIds: menuItem?.menuItemOptionGroups.map((i) => i.optionGroupId) ?? new Array<number>(),
 	});
 	// svelte-ignore state_referenced_locally
 	const form = superForm(defaults(defaultValues, zod4(schema)), {
@@ -184,15 +174,9 @@
 	});
 
 	const menuValue = $derived(menuList.find((i) => i.value == $formData.menuId.toString())?.label);
-	const sectionValue = $derived(
-		sectionList.find((i) => i.value == $formData.menuSectionId.toString())?.label
-	);
-	const divisionValue = $derived(
-		divisionList.find((i) => i.value == $formData.divisionId.toString())?.label
-	);
-	const billCategoryValue = $derived(
-		billCatList.find((i) => i.value == $formData.billCategoryId.toString())?.label
-	);
+	const sectionValue = $derived(sectionList.find((i) => i.value == $formData.menuSectionId.toString())?.label);
+	const divisionValue = $derived(divisionList.find((i) => i.value == $formData.divisionId.toString())?.label);
+	const billCategoryValue = $derived(billCatList.find((i) => i.value == $formData.billCategoryId.toString())?.label);
 
 	const aiGen = createAIGenerateMenuDescription();
 	let aiLoading = $state(false);
@@ -220,8 +204,7 @@
 		<form method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>{isEdit ? "Edit" : "Add"} Menu Item</Dialog.Title>
-				<Dialog.Description>Complete form to {isEdit ? "Edit" : "Add"} menu item</Dialog.Description
-				>
+				<Dialog.Description>Complete form to {isEdit ? "Edit" : "Add"} menu item</Dialog.Description>
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
 				<Form.Field {form} name="menuId">
@@ -231,9 +214,7 @@
 							<Select.Root
 								type="single"
 								name="menuId"
-								bind:value={
-									() => $formData.menuId.toString(), (v) => ($formData.menuId = Number(v))
-								}
+								bind:value={() => $formData.menuId.toString(), (v) => ($formData.menuId = Number(v))}
 								allowDeselect={false}
 							>
 								<Select.Trigger {...props}>
@@ -256,10 +237,7 @@
 							<Select.Root
 								type="single"
 								name="menuSectionId"
-								bind:value={
-									() => $formData.menuSectionId.toString(),
-									(v) => ($formData.menuSectionId = Number(v))
-								}
+								bind:value={() => $formData.menuSectionId.toString(), (v) => ($formData.menuSectionId = Number(v))}
 								allowDeselect={false}
 							>
 								<Select.Trigger {...props}>
@@ -282,9 +260,7 @@
 							<Select.Root
 								type="single"
 								name="divisionId"
-								bind:value={
-									() => $formData.divisionId.toString(), (v) => ($formData.divisionId = Number(v))
-								}
+								bind:value={() => $formData.divisionId.toString(), (v) => ($formData.divisionId = Number(v))}
 								allowDeselect={false}
 							>
 								<Select.Trigger {...props}>
@@ -307,10 +283,7 @@
 							<Select.Root
 								type="single"
 								name="billCategoryId"
-								bind:value={
-									() => $formData.billCategoryId.toString(),
-									(v) => ($formData.billCategoryId = Number(v))
-								}
+								bind:value={() => $formData.billCategoryId.toString(), (v) => ($formData.billCategoryId = Number(v))}
 								allowDeselect={false}
 							>
 								<Select.Trigger {...props}>
@@ -341,12 +314,7 @@
 							<Form.Label>
 								Description
 								{#if status.hasFeature("ai")}
-									<Button
-										onclick={generateDescription}
-										disabled={aiLoading}
-										size="sm"
-										variant="ghost"
-									>
+									<Button onclick={generateDescription} disabled={aiLoading} size="sm" variant="ghost">
 										{#if aiLoading}
 											<Loader class="m-0" />
 										{:else}
@@ -403,7 +371,7 @@
 					<Form.FieldErrors />
 				</Form.Field>
 				<Collapsible.Root>
-					<Collapsible.Trigger class="w-full flex items-center justify-between">
+					<Collapsible.Trigger class="flex w-full items-center justify-between">
 						Extra's and Options <ChevronsUpDownIcon class="size-4" />
 					</Collapsible.Trigger>
 					<Collapsible.Content>

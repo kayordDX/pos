@@ -955,8 +955,7 @@ export interface EntitiesAdjustment {
 	note?: string | null;
 }
 
-export type CommonEnumsCashUpUserItemRule =
-	(typeof CommonEnumsCashUpUserItemRule)[keyof typeof CommonEnumsCashUpUserItemRule];
+export type CommonEnumsCashUpUserItemRule = (typeof CommonEnumsCashUpUserItemRule)[keyof typeof CommonEnumsCashUpUserItemRule];
 
 export const CommonEnumsCashUpUserItemRule = {
 	None: 0,

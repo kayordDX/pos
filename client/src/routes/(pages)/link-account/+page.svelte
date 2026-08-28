@@ -46,26 +46,17 @@
 
 <Header />
 
-<Card.Root class="p-5 m-5 max-w-sm flex justify-self-center">
+<Card.Root class="m-5 flex max-w-sm justify-self-center p-5">
 	<Card.Header>
 		<Card.Title>Link Account</Card.Title>
-		<Card.Description>
-			To link your account, please enter the 6-digit code displayed on your device
-		</Card.Description>
+		<Card.Description>To link your account, please enter the 6-digit code displayed on your device</Card.Description>
 	</Card.Header>
 	<form method="POST" use:enhance>
-		<Card.Content class="flex flex-col gap-2 items-center">
+		<Card.Content class="flex flex-col items-center gap-2">
 			<Form.Field {form} name="token">
 				<Form.Control>
 					{#snippet children({ props })}
-						<InputOTP.Root
-							maxlength={6}
-							type="text"
-							inputmode="text"
-							{...props}
-							bind:value={$formData.token}
-							class="uppercase"
-						>
+						<InputOTP.Root maxlength={6} type="text" inputmode="text" {...props} bind:value={$formData.token} class="uppercase">
 							{#snippet children({ cells })}
 								<InputOTP.Group>
 									{#each cells.slice(0, 3) as cell (cell)}

@@ -1,14 +1,6 @@
 <script lang="ts">
 	import { Badge, Button } from "@kayord/ui";
-	import {
-		DataTable,
-		createShadTable,
-		renderComponent,
-		renderSnippet,
-		decodeColumnFilters,
-		decodeSorting,
-		decodePageIndex,
-	} from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, renderSnippet, decodeColumnFilters, decodeSorting, decodePageIndex } from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 
 	import AddOrder from "./AddOrder.svelte";
@@ -92,9 +84,7 @@
 	let filters = $state("");
 
 	// Replacing _ with . to fix sorting issue
-	const sorts = $derived(
-		sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id.replaceAll("_", ".")}`).join(",")
-	);
+	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id.replaceAll("_", ".")}`).join(","));
 
 	const query = createStockOrderGetAll(() => ({
 		page: pagination.pageIndex + 1,
@@ -164,24 +154,19 @@
 </script>
 
 {#snippet statusCol(stockOrder: DTOStockOrderResponseDTO)}
-	{@const v =
-		stockOrder.stockOrderStatusId == 1
-			? "secondary"
-			: stockOrder.stockOrderStatusId == 2
-				? "default"
-				: "outline"}
+	{@const v = stockOrder.stockOrderStatusId == 1 ? "secondary" : stockOrder.stockOrderStatusId == 2 ? "default" : "outline"}
 	<Badge variant={v}>{stockOrder.stockOrderStatusName}</Badge>
 {/snippet}
 
 {#snippet header()}
-	<div class="flex gap-2 justify-between items-center">
-		<div class="flex gap-2 items-center">
+	<div class="flex items-center justify-between gap-2">
+		<div class="flex items-center gap-2">
 			<div class="flex flex-col gap-1">
 				<h2>Orders</h2>
 				<Search bind:search name="Orders" />
 			</div>
 		</div>
-		<div class="flex gap-2 items-center">
+		<div class="flex items-center gap-2">
 			{#if hasOpenSalesPeriod}
 				<AddOrder bind:open={addOrderOpen} refetch={query.refetch} />
 				<Button size="sm" onclick={() => (addOrderOpen = true)}>
@@ -193,11 +178,5 @@
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		{table}
-		{header}
-		headerClass="pb-2"
-		isLoading={query.isPending}
-		noDataMessage="No menu items"
-	/>
+	<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No menu items" />
 </div>

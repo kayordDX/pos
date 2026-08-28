@@ -1,11 +1,5 @@
 <script lang="ts">
-	import {
-		createUnitsGetAll,
-		createStockCreate,
-		createStockUpdate,
-		createStockCategory,
-		type StockGetAllResponse,
-	} from "$lib/api";
+	import { createUnitsGetAll, createStockCreate, createStockUpdate, createStockCategory, type StockGetAllResponse } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import { Button, Checkbox, Dialog, Input, Select } from "@kayord/ui";
@@ -38,9 +32,7 @@
 
 	const categoryQuery = createStockCategory(() => status.value.outletId);
 	const category = $derived(categoryQuery.data ?? []);
-	const categorySelect = $derived(
-		category.find((i) => i.id === $formData.stockCategoryId)?.displayName ?? "Select Category"
-	);
+	const categorySelect = $derived(category.find((i) => i.id === $formData.stockCategoryId)?.displayName ?? "Select Category");
 
 	const unitsQuery = createUnitsGetAll();
 	const units = $derived(unitsQuery.data ?? []);

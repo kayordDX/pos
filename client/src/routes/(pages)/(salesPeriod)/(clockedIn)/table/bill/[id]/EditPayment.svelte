@@ -58,16 +58,13 @@
 	});
 	const { form: formData, enhance } = form;
 
-	const paymentTypeSelect = $derived(
-		paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
-			?.paymentTypeName ?? "Select payment type"
-	);
+	const paymentTypeSelect = $derived(paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)?.paymentTypeName ?? "Select payment type");
 </script>
 
 <Dialog.Root bind:open>
 	<Dialog.Trigger>
 		<Button class="size-6" variant="secondary" size="icon">
-			<PencilIcon class="size-3 text-secondary-foreground" />
+			<PencilIcon class="text-secondary-foreground size-3" />
 		</Button>
 	</Dialog.Trigger>
 	<Dialog.Content>
@@ -85,13 +82,7 @@
 								<Form.Control>
 									{#snippet children({ props })}
 										<Form.Label>Amount</Form.Label>
-										<Input
-											{...props}
-											type="number"
-											step="0.01"
-											bind:value={$formData.amount}
-											onfocus={(e) => e.currentTarget.select()}
-										/>
+										<Input {...props} type="number" step="0.01" bind:value={$formData.amount} onfocus={(e) => e.currentTarget.select()} />
 									{/snippet}
 								</Form.Control>
 								<Form.Description>Enter amount to pay</Form.Description>
@@ -123,7 +114,7 @@
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
-			<Dialog.Footer class="sm:flex-col gap-2">
+			<Dialog.Footer class="gap-2 sm:flex-col">
 				<Form.Button type="submit">Update</Form.Button>
 			</Dialog.Footer>
 		</form>

@@ -26,16 +26,16 @@
 		{#if query.data.length > 0}
 			<h1>Other Tables</h1>
 			<p class="text-muted-foreground">Tables assigned to other waiters</p>
-			<div class="flex flex-wrap gap-4 mt-4 w-full">
+			<div class="mt-4 flex w-full flex-wrap gap-4">
 				{#each query.data as otherTable (otherTable.id)}
 					<a href={`/table/menu/${otherTable.id}`} class="w-full">
-						<Card.Root class="p-5 w-full gap-1">
-							<div class="flex justify-between gap-2 line-clamp-1 items-center">
+						<Card.Root class="w-full gap-1 p-5">
+							<div class="line-clamp-1 flex items-center justify-between gap-2">
 								<h3>{otherTable.table.name}</h3>
 								<Badge>{otherTable.table.section.name}</Badge>
 							</div>
 
-							<div class="flex items-center gap-2 mt-2 w-full">
+							<div class="mt-2 flex w-full items-center gap-2">
 								<Avatar.Root>
 									<Avatar.Image src={otherTable.user.image} alt="profile" />
 									<Avatar.Fallback class="bg-primary text-primary-foreground">
@@ -54,7 +54,7 @@
 			</div>
 		{:else}
 			<div class="flex items-center justify-center">
-				<Card.Root class="max-w-md w-full">
+				<Card.Root class="w-full max-w-md">
 					<Card.Header class="pb-6">
 						<Card.Title>Booked Tables</Card.Title>
 						<Card.Description>There are no tables booked by other users</Card.Description>

@@ -64,24 +64,19 @@
 </script>
 
 {#snippet header()}
-	<div class="flex justify-between w-full">
-		<div class="sm:flex flex-col mb-2 w-full hidden">
-			<h1 class="flex font-bold text-lg">Cash Up</h1>
-			<h2 class="flex text-muted-foreground text-xs">Waiter Cash Up Summary</h2>
+	<div class="flex w-full justify-between">
+		<div class="mb-2 hidden w-full flex-col sm:flex">
+			<h1 class="flex text-lg font-bold">Cash Up</h1>
+			<h2 class="text-muted-foreground flex text-xs">Waiter Cash Up Summary</h2>
 		</div>
-		<div class="flex items-center gap-2 w-full justify-end">
+		<div class="flex w-full items-center justify-end gap-2">
 			<p class="text-muted-foreground text-sm">Sales Period</p>
 			<Top5SalesPeriod bind:salesPeriod />
 		</div>
 	</div>
 {/snippet}
 
-<div class="m-2 flex flex-col gap-2 items-center">
-	<DataTable
-		{table}
-		{header}
-		isLoading={query.isPending}
-		noDataMessage="No Cash up Data for Sales Period"
-	/>
+<div class="m-2 flex flex-col items-center gap-2">
+	<DataTable {table} {header} isLoading={query.isPending} noDataMessage="No Cash up Data for Sales Period" />
 	<GrafanaLink />
 </div>

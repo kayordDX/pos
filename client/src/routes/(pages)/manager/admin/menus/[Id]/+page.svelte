@@ -55,7 +55,7 @@
 	<div class="flex items-center justify-between">
 		<div class="flex flex-col gap-1">
 			<h1>Menu Sections</h1>
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<Search bind:search name="Sections" />
 			</div>
 		</div>
@@ -68,11 +68,5 @@
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		headerClass="pb-2"
-		{header}
-		{table}
-		isLoading={query.isPending}
-		noDataMessage="No roles for outlet"
-	/>
+	<DataTable headerClass="pb-2" {header} {table} isLoading={query.isPending} noDataMessage="No roles for outlet" />
 </div>

@@ -200,8 +200,8 @@
 </script>
 
 {#snippet header()}
-	<div class="flex gap-2 justify-between items-center">
-		<div class="flex gap-2 items-center">
+	<div class="flex items-center justify-between gap-2">
+		<div class="flex items-center gap-2">
 			<InputGroup.Root class="h-8 w-[150px] lg:w-[250px]">
 				<InputGroup.Input
 					value={col?.getFilterValue()}
@@ -217,7 +217,7 @@
 			<MenuFilter column={menuCol} title="Menu" options={menus} />
 			<FilterReset {table} cb={() => debouncedCb("")} />
 		</div>
-		<div class="flex gap-2 items-center">
+		<div class="flex items-center gap-2">
 			<Button size="sm" onclick={() => (addOpen = true)}>
 				<PlusIcon class="h-5 w-5" /> Add
 			</Button>
@@ -228,11 +228,5 @@
 
 <div class="m-2">
 	<h2>Menu Items</h2>
-	<DataTable
-		{table}
-		{header}
-		headerClass="pb-2"
-		isLoading={query.isPending}
-		noDataMessage="No menu items"
-	/>
+	<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No menu items" />
 </div>

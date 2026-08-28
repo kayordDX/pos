@@ -57,8 +57,8 @@
 {/snippet}
 
 {#snippet header()}
-	<div class="flex gap-2 justify-between items-center">
-		<div class="flex gap-2 items-center">
+	<div class="flex items-center justify-between gap-2">
+		<div class="flex items-center gap-2">
 			<Search bind:search name="Roles" />
 		</div>
 	</div>
@@ -66,11 +66,5 @@
 
 <div class="m-2">
 	<h2>Roles</h2>
-	<DataTable
-		headerClass="pb-2"
-		{table}
-		{header}
-		isLoading={query.isPending}
-		noDataMessage="No roles for outlet"
-	/>
+	<DataTable headerClass="pb-2" {table} {header} isLoading={query.isPending} noDataMessage="No roles for outlet" />
 </div>

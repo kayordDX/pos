@@ -16,10 +16,7 @@
 	const pinMutation = createUserPinCreate();
 
 	export const schema = z.object({
-		pin: z
-			.string()
-			.min(4, { message: "Pin needs to be at least 4 characters long" })
-			.max(12, { message: "Pin cannot be longer than 12 characters" }),
+		pin: z.string().min(4, { message: "Pin needs to be at least 4 characters long" }).max(12, { message: "Pin cannot be longer than 12 characters" }),
 		IsEnabled: z.boolean(),
 	});
 	type FormSchema = z.infer<typeof schema>;
@@ -58,7 +55,7 @@
 <Header />
 
 <form method="POST" use:enhance>
-	<Card.Root class="p-5 m-5">
+	<Card.Root class="m-5 p-5">
 		<Card.Header>
 			<Card.Title>User Settings</Card.Title>
 			<Card.Description>Enable or Disable Counter Mode for current user</Card.Description>
@@ -74,13 +71,7 @@
 				<Form.Control>
 					{#snippet children({ props })}
 						<Form.Label>Pin</Form.Label>
-						<Input
-							{...props}
-							class="max-w-xs"
-							type="password"
-							bind:value={$formData.pin}
-							autocomplete="off"
-						/>
+						<Input {...props} class="max-w-xs" type="password" bind:value={$formData.pin} autocomplete="off" />
 					{/snippet}
 				</Form.Control>
 				<Form.Description>Set pin for counter mode</Form.Description>

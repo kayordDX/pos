@@ -41,7 +41,7 @@
 </script>
 
 <Header />
-<div class="flex gap-8 flex-col p-6">
+<div class="flex flex-col gap-8 p-6">
 	<Select.Root type="single" bind:value={() => theme.current, (v) => setTheme(v ?? "default")}>
 		<Select.Trigger size="sm" class="w-32">
 			{label}
@@ -54,7 +54,7 @@
 	</Select.Root>
 </div>
 
-<div class="flex items-start justify-start gap-2 flex-wrap p-2 rounded-md m-2">
+<div class="m-2 flex flex-wrap items-start justify-start gap-2 rounded-md p-2">
 	{#each colors as color}
 		<div class="flex items-center gap-2">
 			<div style={"background-color: var(--color-" + color + ");"} class="size-7 rounded-md"></div>
@@ -63,7 +63,7 @@
 	{/each}
 </div>
 
-<div class="flex items-start justify-start gap-2 flex-wrap p-2 rounded-md m-2">
+<div class="m-2 flex flex-wrap items-start justify-start gap-2 rounded-md p-2">
 	{#each colors2 as color}
 		<div class="flex items-center gap-2">
 			<div style={"background-color: var(--" + color + ");"} class="size-7 rounded-md"></div>

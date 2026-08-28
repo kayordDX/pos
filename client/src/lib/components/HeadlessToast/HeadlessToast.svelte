@@ -15,11 +15,8 @@
 	};
 </script>
 
-<div
-	class="p-5 shadow-sm rounded-lg border-muted border-2 bg-background"
-	style="width: var(--width); z-index: var(--z-index);"
->
-	<div class="flex gap-3 items-center">
+<div class="border-muted bg-background rounded-lg border-2 p-5 shadow-sm" style="width: var(--width); z-index: var(--z-index);">
+	<div class="flex items-center gap-3">
 		{#if type == "error"}
 			<AlertTriangleIcon class="text-destructive h-6 w-6" />
 		{:else if type == "success"}

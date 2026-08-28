@@ -38,10 +38,7 @@ export const getSalesPeriodGetUrl = (outletId: number) => {
 	return `/salesPeriod/${outletId}`;
 };
 
-export const salesPeriodGet = async (
-	outletId: number,
-	options?: RequestInit
-): Promise<EntitiesSalesPeriod> => {
+export const salesPeriodGet = async (outletId: number, options?: RequestInit): Promise<EntitiesSalesPeriod> => {
 	return customInstance<EntitiesSalesPeriod>(getSalesPeriodGetUrl(outletId), {
 		...options,
 		method: "GET",
@@ -52,10 +49,7 @@ export const getSalesPeriodGetQueryKey = (outletId: number) => {
 	return [`/salesPeriod/${outletId}`] as const;
 };
 
-export const getSalesPeriodGetQueryOptions = <
-	TData = Awaited<ReturnType<typeof salesPeriodGet>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getSalesPeriodGetQueryOptions = <TData = Awaited<ReturnType<typeof salesPeriodGet>>, TError = ErrorType<void | InternalErrorResponse>>(
 	outletId: number,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodGet>>, TError, TData>>;
@@ -66,23 +60,17 @@ export const getSalesPeriodGetQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getSalesPeriodGetQueryKey(outletId);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof salesPeriodGet>>> = () =>
-		salesPeriodGet(outletId, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof salesPeriodGet>>> = () => salesPeriodGet(outletId, requestOptions);
 
-	return { queryKey, queryFn, enabled: !!outletId, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof salesPeriodGet>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, enabled: !!outletId, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodGet>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type SalesPeriodGetQueryResult = NonNullable<Awaited<ReturnType<typeof salesPeriodGet>>>;
 export type SalesPeriodGetQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createSalesPeriodGet<
-	TData = Awaited<ReturnType<typeof salesPeriodGet>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createSalesPeriodGet<TData = Awaited<ReturnType<typeof salesPeriodGet>>, TError = ErrorType<void | InternalErrorResponse>>(
 	outletId: () => number,
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodGet>>, TError, TData>>;
@@ -90,10 +78,9 @@ export function createSalesPeriodGet<
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getSalesPeriodGetQueryOptions(outletId(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getSalesPeriodGetQueryOptions(outletId(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -109,15 +96,10 @@ export const getSalesPeriodCreateCashUpUrl = (params: SalesPeriodCreateCashUpPar
 
 	const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/salesperiod/createCashup?${stringifiedParams}`
-		: `/salesperiod/createCashup`;
+	return stringifiedParams.length > 0 ? `/salesperiod/createCashup?${stringifiedParams}` : `/salesperiod/createCashup`;
 };
 
-export const salesPeriodCreateCashUp = async (
-	params: SalesPeriodCreateCashUpParams,
-	options?: RequestInit
-): Promise<EntitiesCashUp> => {
+export const salesPeriodCreateCashUp = async (params: SalesPeriodCreateCashUpParams, options?: RequestInit): Promise<EntitiesCashUp> => {
 	return customInstance<EntitiesCashUp>(getSalesPeriodCreateCashUpUrl(params), {
 		...options,
 		method: "GET",
@@ -134,9 +116,7 @@ export const getSalesPeriodCreateCashUpQueryOptions = <
 >(
 	params: SalesPeriodCreateCashUpParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -144,38 +124,27 @@ export const getSalesPeriodCreateCashUpQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getSalesPeriodCreateCashUpQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>> = () =>
-		salesPeriodCreateCashUp(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>> = () => salesPeriodCreateCashUp(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof salesPeriodCreateCashUp>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type SalesPeriodCreateCashUpQueryResult = NonNullable<
-	Awaited<ReturnType<typeof salesPeriodCreateCashUp>>
->;
+export type SalesPeriodCreateCashUpQueryResult = NonNullable<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>>;
 export type SalesPeriodCreateCashUpQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createSalesPeriodCreateCashUp<
-	TData = Awaited<ReturnType<typeof salesPeriodCreateCashUp>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createSalesPeriodCreateCashUp<TData = Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params: () => SalesPeriodCreateCashUpParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCreateCashUp>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getSalesPeriodCreateCashUpQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getSalesPeriodCreateCashUpQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -184,10 +153,7 @@ export const getSalesPeriodCreateUrl = () => {
 	return `/salesPeriod`;
 };
 
-export const salesPeriodCreate = async (
-	salesPeriodCreateRequest: SalesPeriodCreateRequest,
-	options?: RequestInit
-): Promise<EntitiesSalesPeriod> => {
+export const salesPeriodCreate = async (salesPeriodCreateRequest: SalesPeriodCreateRequest, options?: RequestInit): Promise<EntitiesSalesPeriod> => {
 	return customInstance<EntitiesSalesPeriod>(getSalesPeriodCreateUrl(), {
 		...options,
 		method: "POST",
@@ -196,23 +162,10 @@ export const salesPeriodCreate = async (
 	});
 };
 
-export const getSalesPeriodCreateMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof salesPeriodCreate>>,
-		TError,
-		{ data: BodyType<SalesPeriodCreateRequest> },
-		TContext
-	>;
+export const getSalesPeriodCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodCreate>>, TError, { data: BodyType<SalesPeriodCreateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof salesPeriodCreate>>,
-	TError,
-	{ data: BodyType<SalesPeriodCreateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodCreate>>, TError, { data: BodyType<SalesPeriodCreateRequest> }, TContext> => {
 	const mutationKey = ["salesPeriodCreate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -220,10 +173,7 @@ export const getSalesPeriodCreateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof salesPeriodCreate>>,
-		{ data: BodyType<SalesPeriodCreateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof salesPeriodCreate>>, { data: BodyType<SalesPeriodCreateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return salesPeriodCreate(data, requestOptions);
@@ -232,47 +182,24 @@ export const getSalesPeriodCreateMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type SalesPeriodCreateMutationResult = NonNullable<
-	Awaited<ReturnType<typeof salesPeriodCreate>>
->;
+export type SalesPeriodCreateMutationResult = NonNullable<Awaited<ReturnType<typeof salesPeriodCreate>>>;
 export type SalesPeriodCreateMutationBody = BodyType<SalesPeriodCreateRequest>;
-export type SalesPeriodCreateMutationError = ErrorType<
-	ErrorResponse | void | InternalErrorResponse
->;
+export type SalesPeriodCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createSalesPeriodCreate = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createSalesPeriodCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof salesPeriodCreate>>,
-			TError,
-			{ data: BodyType<SalesPeriodCreateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodCreate>>, TError, { data: BodyType<SalesPeriodCreateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof salesPeriodCreate>>,
-	TError,
-	{ data: BodyType<SalesPeriodCreateRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getSalesPeriodCreateMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof salesPeriodCreate>>, TError, { data: BodyType<SalesPeriodCreateRequest> }, TContext> => {
+	return createMutation(() => ({ ...getSalesPeriodCreateMutationOptions(options?.()) }), queryClient);
 };
 export const getSalesPeriodCloseUrl = () => {
 	return `/salesPeriod/close`;
 };
 
-export const salesPeriodClose = async (
-	salesPeriodCloseRequest: SalesPeriodCloseRequest,
-	options?: RequestInit
-): Promise<EntitiesSalesPeriod> => {
+export const salesPeriodClose = async (salesPeriodCloseRequest: SalesPeriodCloseRequest, options?: RequestInit): Promise<EntitiesSalesPeriod> => {
 	return customInstance<EntitiesSalesPeriod>(getSalesPeriodCloseUrl(), {
 		...options,
 		method: "POST",
@@ -281,23 +208,10 @@ export const salesPeriodClose = async (
 	});
 };
 
-export const getSalesPeriodCloseMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof salesPeriodClose>>,
-		TError,
-		{ data: BodyType<SalesPeriodCloseRequest> },
-		TContext
-	>;
+export const getSalesPeriodCloseMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodClose>>, TError, { data: BodyType<SalesPeriodCloseRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof salesPeriodClose>>,
-	TError,
-	{ data: BodyType<SalesPeriodCloseRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodClose>>, TError, { data: BodyType<SalesPeriodCloseRequest> }, TContext> => {
 	const mutationKey = ["salesPeriodClose"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -305,10 +219,7 @@ export const getSalesPeriodCloseMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof salesPeriodClose>>,
-		{ data: BodyType<SalesPeriodCloseRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof salesPeriodClose>>, { data: BodyType<SalesPeriodCloseRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return salesPeriodClose(data, requestOptions);
@@ -317,36 +228,18 @@ export const getSalesPeriodCloseMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type SalesPeriodCloseMutationResult = NonNullable<
-	Awaited<ReturnType<typeof salesPeriodClose>>
->;
+export type SalesPeriodCloseMutationResult = NonNullable<Awaited<ReturnType<typeof salesPeriodClose>>>;
 export type SalesPeriodCloseMutationBody = BodyType<SalesPeriodCloseRequest>;
 export type SalesPeriodCloseMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createSalesPeriodClose = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createSalesPeriodClose = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof salesPeriodClose>>,
-			TError,
-			{ data: BodyType<SalesPeriodCloseRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodClose>>, TError, { data: BodyType<SalesPeriodCloseRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof salesPeriodClose>>,
-	TError,
-	{ data: BodyType<SalesPeriodCloseRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getSalesPeriodCloseMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof salesPeriodClose>>, TError, { data: BodyType<SalesPeriodCloseRequest> }, TContext> => {
+	return createMutation(() => ({ ...getSalesPeriodCloseMutationOptions(options?.()) }), queryClient);
 };
 export const getSalesPeriodCashUpUrl = (params: SalesPeriodCashUpParams) => {
 	const normalizedParams = new URLSearchParams();
@@ -359,15 +252,10 @@ export const getSalesPeriodCashUpUrl = (params: SalesPeriodCashUpParams) => {
 
 	const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/salesperiod/cashup?${stringifiedParams}`
-		: `/salesperiod/cashup`;
+	return stringifiedParams.length > 0 ? `/salesperiod/cashup?${stringifiedParams}` : `/salesperiod/cashup`;
 };
 
-export const salesPeriodCashUp = async (
-	params: SalesPeriodCashUpParams,
-	options?: RequestInit
-): Promise<SalesPeriodCashUpCashUp> => {
+export const salesPeriodCashUp = async (params: SalesPeriodCashUpParams, options?: RequestInit): Promise<SalesPeriodCashUpCashUp> => {
 	return customInstance<SalesPeriodCashUpCashUp>(getSalesPeriodCashUpUrl(params), {
 		...options,
 		method: "GET",
@@ -378,15 +266,10 @@ export const getSalesPeriodCashUpQueryKey = (params?: SalesPeriodCashUpParams) =
 	return [`/salesperiod/cashup`, ...(params ? [params] : [])] as const;
 };
 
-export const getSalesPeriodCashUpQueryOptions = <
-	TData = Awaited<ReturnType<typeof salesPeriodCashUp>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getSalesPeriodCashUpQueryOptions = <TData = Awaited<ReturnType<typeof salesPeriodCashUp>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params: SalesPeriodCashUpParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCashUp>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCashUp>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -394,38 +277,27 @@ export const getSalesPeriodCashUpQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getSalesPeriodCashUpQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof salesPeriodCashUp>>> = () =>
-		salesPeriodCashUp(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof salesPeriodCashUp>>> = () => salesPeriodCashUp(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof salesPeriodCashUp>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCashUp>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type SalesPeriodCashUpQueryResult = NonNullable<
-	Awaited<ReturnType<typeof salesPeriodCashUp>>
->;
+export type SalesPeriodCashUpQueryResult = NonNullable<Awaited<ReturnType<typeof salesPeriodCashUp>>>;
 export type SalesPeriodCashUpQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createSalesPeriodCashUp<
-	TData = Awaited<ReturnType<typeof salesPeriodCashUp>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createSalesPeriodCashUp<TData = Awaited<ReturnType<typeof salesPeriodCashUp>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params: () => SalesPeriodCashUpParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCashUp>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof salesPeriodCashUp>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getSalesPeriodCashUpQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getSalesPeriodCashUpQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }

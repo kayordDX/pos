@@ -5,14 +5,7 @@
  * OpenAPI spec version: v1
  */
 import { createQuery } from "@tanstack/svelte-query";
-import type {
-	CreateQueryOptions,
-	CreateQueryResult,
-	DataTag,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-} from "@tanstack/svelte-query";
+import type { CreateQueryOptions, CreateQueryResult, DataTag, QueryClient, QueryFunction, QueryKey } from "@tanstack/svelte-query";
 
 import type { EntitiesUnit, InternalErrorResponse } from "./api.schemas";
 
@@ -36,10 +29,7 @@ export const getUnitsGetAllQueryKey = () => {
 	return [`/unit`] as const;
 };
 
-export const getUnitsGetAllQueryOptions = <
-	TData = Awaited<ReturnType<typeof unitsGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
+export const getUnitsGetAllQueryOptions = <TData = Awaited<ReturnType<typeof unitsGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof unitsGetAll>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -47,33 +37,26 @@ export const getUnitsGetAllQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getUnitsGetAllQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof unitsGetAll>>> = () =>
-		unitsGetAll(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof unitsGetAll>>> = () => unitsGetAll(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof unitsGetAll>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof unitsGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type UnitsGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof unitsGetAll>>>;
 export type UnitsGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createUnitsGetAll<
-	TData = Awaited<ReturnType<typeof unitsGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createUnitsGetAll<TData = Awaited<ReturnType<typeof unitsGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof unitsGetAll>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getUnitsGetAllQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getUnitsGetAllQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }

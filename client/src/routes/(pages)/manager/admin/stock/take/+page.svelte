@@ -1,9 +1,5 @@
 <script lang="ts">
-	import {
-		createStockGetAllDivision,
-		createDivisionGetAll,
-		type StockGetAllDivisionResponse,
-	} from "$lib/api";
+	import { createStockGetAllDivision, createDivisionGetAll, type StockGetAllDivisionResponse } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
 	import { Select, Label } from "@kayord/ui";
@@ -172,18 +168,13 @@
 </script>
 
 {#snippet header()}
-	<div class="flex gap-2 justify-between items-center">
-		<div class="flex gap-2 items-center">
+	<div class="flex items-center justify-between gap-2">
+		<div class="flex items-center gap-2">
 			<Search bind:search name="Stock Items" />
 		</div>
-		<div class="flex gap-2 items-center">
+		<div class="flex items-center gap-2">
 			<Label>Division:</Label>
-			<Select.Root
-				type="single"
-				name="divisionId"
-				bind:value={() => divisionId.toString(), (v) => (divisionId = Number(v))}
-				allowDeselect={false}
-			>
+			<Select.Root type="single" name="divisionId" bind:value={() => divisionId.toString(), (v) => (divisionId = Number(v))} allowDeselect={false}>
 				<Select.Trigger class="min-w-[100px]">
 					{divisionValue ? divisionValue : "Select Division"}
 				</Select.Trigger>
@@ -199,11 +190,5 @@
 
 <div class="m-2">
 	<h2>Stock Take</h2>
-	<DataTable
-		{table}
-		{header}
-		headerClass="pb-2"
-		isLoading={query.isPending}
-		noDataMessage="No stock take items"
-	/>
+	<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No stock take items" />
 </div>

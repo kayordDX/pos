@@ -38,13 +38,9 @@
 		}
 	};
 
-	const manualItems = $derived(
-		query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == false) ?? []
-	);
+	const manualItems = $derived(query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == false) ?? []);
 
-	const autoItems = $derived(
-		query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == true) ?? []
-	);
+	const autoItems = $derived(query?.data?.cashUpUserItems.filter((x) => x.cashUpUserItemType?.isAuto == true) ?? []);
 </script>
 
 <div class="m-2">
@@ -56,9 +52,9 @@
 	{/if}
 
 	{#if query.data}
-		<Card.Root class="overflow-hidden w-full pt-0">
-			<Card.Header class="flex flex-col items-start bg-muted/50 p-4">
-				<div class="flex items-center gap-2 justify-between w-full">
+		<Card.Root class="w-full overflow-hidden pt-0">
+			<Card.Header class="bg-muted/50 flex flex-col items-start p-4">
+				<div class="flex w-full items-center justify-between gap-2">
 					<div class="flex items-center gap-2">
 						<Avatar.Root>
 							<Avatar.Image src={query.data.user?.image} alt="profile" />
@@ -77,8 +73,8 @@
 				</div>
 			</Card.Header>
 			<Card.Content>
-				<div class="font-semibold text-left mt-5">Cash Up Items</div>
-				<div class="flex flex-col gap-2 items-center mt-2">
+				<div class="mt-5 text-left font-semibold">Cash Up Items</div>
+				<div class="mt-2 flex flex-col items-center gap-2">
 					{#each autoItems as item}
 						<CashUpItem {item} />
 					{/each}
@@ -95,7 +91,7 @@
 							<span class="text-muted-foreground">Gross Balance</span>
 							<span>R {query.data.grossBalance.toFixed(2)}</span>
 						</li>
-						<div class="flex flex-col gap-2 items-center">
+						<div class="flex flex-col items-center gap-2">
 							{#each manualItems as item}
 								<CashUpItemManual {item} refetch={query.refetch} />
 							{/each}
@@ -110,7 +106,7 @@
 			<Card.Footer class="flex flex-col gap-2">
 				{#if Number(page.params.cashUpUserId ?? 0) == 0}
 					<Button class="w-full" onclick={cashUpClose}>
-						<BookUpIcon class="size-4 mr-2" /> Cash Up
+						<BookUpIcon class="mr-2 size-4" /> Cash Up
 					</Button>
 				{/if}
 			</Card.Footer>

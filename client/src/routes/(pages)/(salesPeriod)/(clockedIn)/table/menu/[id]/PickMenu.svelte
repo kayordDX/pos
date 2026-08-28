@@ -15,9 +15,9 @@
 {#if (data?.length ?? 0) > 1}
 	<Drawer.Root bind:open>
 		<Drawer.Trigger>
-			<Button variant="outline" size="icon"><SquareMenuIcon class="w-5 h-5" /></Button>
+			<Button variant="outline" size="icon"><SquareMenuIcon class="h-5 w-5" /></Button>
 		</Drawer.Trigger>
-		<Drawer.Content class="fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full">
+		<Drawer.Content class="fixed right-0 bottom-0 left-0 flex max-h-[96%] w-full">
 			<Drawer.Header>
 				<Drawer.Title>Select Menu</Drawer.Title>
 				<Drawer.Description>Choose the menu to view</Drawer.Description>

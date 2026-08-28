@@ -24,12 +24,11 @@
 	}
 </script>
 
-<div class="flex flex-col items-center gap-2 mt-4">
+<div class="mt-4 flex flex-col items-center gap-2">
 	{#each menus as menuItem}
-		{@const extraClass =
-			menuItem.id == menu.value.menuId ? "bg-primary text-primary-foreground" : ""}
+		{@const extraClass = menuItem.id == menu.value.menuId ? "bg-primary text-primary-foreground" : ""}
 		<button onclick={() => setMenu(menuItem.id)} class="w-full">
-			<Card.Root class={cn("p-4 w-full", extraClass)}>
+			<Card.Root class={cn("w-full p-4", extraClass)}>
 				{menuItem.name}
 			</Card.Root>
 		</button>

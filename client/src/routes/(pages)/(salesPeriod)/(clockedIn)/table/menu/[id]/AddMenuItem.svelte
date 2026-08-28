@@ -117,7 +117,7 @@
 </script>
 
 <form use:enhance method="POST">
-	<Drawer.Header class="pt-0 px-0">
+	<Drawer.Header class="px-0 pt-0">
 		<Drawer.Title>{data.name}</Drawer.Title>
 		<Drawer.Description>{data.description}</Drawer.Description>
 		<div class="font-bold">R {data.price.toFixed(2)}</div>
@@ -132,20 +132,19 @@
 					<Legend>
 						{optionGroup.optionGroup.name}
 						{optionGroup.optionGroup.minSelections > 0 ? "*" : ""} -
-						<span class="text-xs text-muted-foreground">
-							min {optionGroup.optionGroup.minSelections}, max {optionGroup.optionGroup
-								.maxSelections}
+						<span class="text-muted-foreground text-xs">
+							min {optionGroup.optionGroup.minSelections}, max {optionGroup.optionGroup.maxSelections}
 						</span>
 					</Legend>
 
 					{#each optionGroup.optionGroup.options as option}
 						{@const checked = $formData.options.includes(option.optionId)}
-						<div class="p-1 flex items-center gap-2">
+						<div class="flex items-center gap-2 p-1">
 							<Control>
 								{#snippet children({ props })}
 									<Checkbox
 										disabled={!option.isAvailable}
-										class="rounded-[4px] w-4 h-4"
+										class="h-4 w-4 rounded-[4px]"
 										{...props}
 										{checked}
 										onCheckedChange={(checked) => {
@@ -156,16 +155,8 @@
 											}
 										}}
 									/>
-									<input
-										hidden
-										type="checkbox"
-										name={props.name}
-										value={option.optionId}
-										{checked}
-									/>
-									<Label class={option.isAvailable ? "" : "text-muted"}
-										>{option.name} - R{option.price.toFixed(2)}</Label
-									>
+									<input hidden type="checkbox" name={props.name} value={option.optionId} {checked} />
+									<Label class={option.isAvailable ? "" : "text-muted"}>{option.name} - R{option.price.toFixed(2)}</Label>
 								{/snippet}
 							</Control>
 						</div>
@@ -183,7 +174,7 @@
 					<Legend>{extraGroup.extraGroup.name}</Legend>
 					{#each extraGroup.extraGroup.extras as extra}
 						{@const checked = $formData.extras.includes(extra.extraId)}
-						<div class="p-1 flex items-center gap-2">
+						<div class="flex items-center gap-2 p-1">
 							<Control>
 								{#snippet children({ props })}
 									<Checkbox
@@ -200,9 +191,7 @@
 										}}
 									/>
 									<input hidden type="checkbox" name={props.name} value={extra.extraId} {checked} />
-									<Label class={extra.isAvailable ? "" : "text-muted"}
-										>{extra.name} - R{extra.price.toFixed(2)}</Label
-									>
+									<Label class={extra.isAvailable ? "" : "text-muted"}>{extra.name} - R{extra.price.toFixed(2)}</Label>
 								{/snippet}
 							</Control>
 						</div>

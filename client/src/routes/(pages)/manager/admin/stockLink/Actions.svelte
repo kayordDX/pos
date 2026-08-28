@@ -49,9 +49,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Unlink Stock Item?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will unlink the stock item from current selection.
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will unlink the stock item from current selection.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
@@ -69,14 +67,5 @@
 </AlertDialog.Root>
 
 {#if linkOpen}
-	<AddLinkStock
-		bind:open={linkOpen}
-		{id}
-		{linkType}
-		{refetch}
-		{stockId}
-		{quantity}
-		{stockName}
-		{unitName}
-	/>
+	<AddLinkStock bind:open={linkOpen} {id} {linkType} {refetch} {stockId} {quantity} {stockName} {unitName} />
 {/if}

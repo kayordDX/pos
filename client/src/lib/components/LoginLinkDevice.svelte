@@ -86,49 +86,41 @@
 
 <Dialog.Root bind:open>
 	<Dialog.Content>
-		<div class="flex flex-col gap-2 items-center">
-			<div class="p-4 bg-primary rounded-full">
+		<div class="flex flex-col items-center gap-2">
+			<div class="bg-primary rounded-full p-4">
 				<ScreenShareIcon class="text-primary-foreground" />
 			</div>
 
 			<h1 class="text-2xl">Connect Your Device</h1>
-			<p class="text-xs text-muted-foreground">Enter this code on logged in device to continue</p>
+			<p class="text-muted-foreground text-xs">Enter this code on logged in device to continue</p>
 			{#if isLoading}
 				<Loader />
 			{:else}
-				<Card.Root class="flex flex-col items-center px-6 mt-4">
-					<div class="text-5xl mt-2 text-center">
+				<Card.Root class="mt-4 flex flex-col items-center px-6">
+					<div class="mt-2 text-center text-5xl">
 						{otp}
 					</div>
 				</Card.Root>
 				<div class="my-5 flex flex-col gap-2">
-					<div class="flex flex-row gap-2 items-center">
-						<div
-							class="bg-primary rounded-full text-primary-foreground w-8 h-8 items-center justify-center flex"
-						>
-							1
-						</div>
-						<div class="flex flex-col gap-1 justify-center">
+					<div class="flex flex-row items-center gap-2">
+						<div class="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full">1</div>
+						<div class="flex flex-col justify-center gap-1">
 							<div>Open app on logged in device</div>
-							<div class="text-xs text-muted-foreground">Go to account and select link account</div>
+							<div class="text-muted-foreground text-xs">Go to account and select link account</div>
 						</div>
 					</div>
-					<div class="flex flex-row gap-2 items-center">
-						<div
-							class="bg-primary rounded-full text-primary-foreground w-8 h-8 items-center justify-center flex"
-						>
-							2
-						</div>
-						<div class="flex flex-col gap-1 justify-center">
+					<div class="flex flex-row items-center gap-2">
+						<div class="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full">2</div>
+						<div class="flex flex-col justify-center gap-1">
 							<div>Enter Code</div>
-							<div class="text-xs text-muted-foreground">Type the 6-digit code</div>
+							<div class="text-muted-foreground text-xs">Type the 6-digit code</div>
 						</div>
 					</div>
 				</div>
 
 				<Separator class="mb-2" />
-				<div class="text-xs text-muted-foreground">Waiting for device connection...</div>
-				<ProgressLoading class="h-1 bg-background" innerClass="bg-secondary" />
+				<div class="text-muted-foreground text-xs">Waiting for device connection...</div>
+				<ProgressLoading class="bg-background h-1" innerClass="bg-secondary" />
 			{/if}
 		</div>
 	</Dialog.Content>

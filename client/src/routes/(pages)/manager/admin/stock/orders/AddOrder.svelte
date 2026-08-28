@@ -7,12 +7,7 @@
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
-	import {
-		createStockOrderCreate,
-		createStockOrderUpdate,
-		createSupplierGetAll,
-		createStockDivisionGetAll,
-	} from "$lib/api";
+	import { createStockOrderCreate, createStockOrderUpdate, createSupplierGetAll, createStockDivisionGetAll } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 
 	interface Props {
@@ -31,12 +26,8 @@
 	const divisionQuery = createStockDivisionGetAll(() => ({ outletId: status.value.outletId }));
 	const suppliers = $derived(suppliersQuery.data ?? []);
 	const divisions = $derived(divisionQuery.data ?? []);
-	const supplierSelect = $derived(
-		suppliers.find((i) => i.id === $formData.supplierId)?.name ?? "Select Supplier"
-	);
-	const divisionSelect = $derived(
-		divisions.find((i) => i.divisionId === $formData.divisionId)?.divisionName ?? "Select Division"
-	);
+	const supplierSelect = $derived(suppliers.find((i) => i.id === $formData.supplierId)?.name ?? "Select Supplier");
+	const divisionSelect = $derived(divisions.find((i) => i.divisionId === $formData.divisionId)?.divisionName ?? "Select Division");
 
 	const schema = z.object({
 		orderNumber: z.string().min(1, { message: "Order Number is Required" }),
@@ -134,9 +125,7 @@
 								</Select.Trigger>
 								<Select.Content>
 									{#each divisions ?? [] as result}
-										<Select.Item value={result.divisionId.toString()}
-											>{result.divisionName}</Select.Item
-										>
+										<Select.Item value={result.divisionId.toString()}>{result.divisionName}</Select.Item>
 									{/each}
 								</Select.Content>
 							</Select.Root>

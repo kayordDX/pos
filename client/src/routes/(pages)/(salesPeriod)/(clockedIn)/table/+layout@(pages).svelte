@@ -21,50 +21,44 @@
 </script>
 
 <Header>
-	<div class="flex mt-1 justify-center">
-		<div
-			class="flex items-center gap-1 bg-secondary/60 text-secondary-foreground py-1 px-4 rounded-sm"
-		>
+	<div class="mt-1 flex justify-center">
+		<div class="bg-secondary/60 text-secondary-foreground flex items-center gap-1 rounded-sm px-4 py-1">
 			<span class="line-clamp-1">{query.data?.table.name}</span>
-			<span class="text-muted-foreground text-sm line-clamp-1"
-				>{query.data?.table.section?.name}</span
-			>
-			<span class="text-sm line-clamp-1">({query.data?.bookingName})</span>
+			<span class="text-muted-foreground line-clamp-1 text-sm">{query.data?.table.section?.name}</span>
+			<span class="line-clamp-1 text-sm">({query.data?.bookingName})</span>
 		</div>
 	</div>
 </Header>
 {#if children}
 	{@render children()}
 {/if}
-<div class="w-full flex mb-2 items-center justify-center fixed bottom-0">
-	<div class="bg-secondary flex items-center py-1 gap-2 rounded-md px-2">
-		<a class="flex items-center text-muted-foreground" href={`/waiter`}
-			><HomeIcon class="w-4 h-4" />
-		</a>
+<div class="fixed bottom-0 mb-2 flex w-full items-center justify-center">
+	<div class="bg-secondary flex items-center gap-2 rounded-md px-2 py-1">
+		<a class="text-muted-foreground flex items-center" href="/waiter"><HomeIcon class="h-4 w-4" /> </a>
 		<a
-			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
+			class="text-muted-foreground flex items-center rounded-sm p-1 px-3"
 			class:bg-background={menuActive}
 			class:!text-foreground={menuActive}
 			href={`/table/menu/${page.params.id}`}
 		>
-			<MenuIcon class="w-4 h-4 mr-2" /> <span class="text-sm">Menu</span>
+			<MenuIcon class="mr-2 h-4 w-4" /> <span class="text-sm">Menu</span>
 		</a>
 		<a
-			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
+			class="text-muted-foreground flex items-center rounded-sm p-1 px-3"
 			class:bg-background={basketActive}
 			class:!text-foreground={basketActive}
 			href={`/table/basket/${page.params.id}`}
 		>
-			<ShoppingBasketIcon class="w-4 h-4 mr-2" />
+			<ShoppingBasketIcon class="mr-2 h-4 w-4" />
 			<span class="text-sm">Basket</span>
 		</a>
 		<a
-			class="flex items-center text-muted-foreground rounded-sm p-1 px-3"
+			class="text-muted-foreground flex items-center rounded-sm p-1 px-3"
 			class:bg-background={billActive}
 			class:!text-foreground={billActive}
 			href={`/table/bill/${page.params.id}`}
 		>
-			<ReceiptTextIcon class="w-4 h-4 mr-2" />
+			<ReceiptTextIcon class="mr-2 h-4 w-4" />
 			<span class="text-sm">Bill</span>
 		</a>
 	</div>

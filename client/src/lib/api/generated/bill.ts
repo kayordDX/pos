@@ -17,13 +17,7 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 
-import type {
-	BillEmailBillRequest,
-	BillPrintBillRequest,
-	BillWhatsappBillRequest,
-	ErrorResponse,
-	InternalErrorResponse,
-} from "./api.schemas";
+import type { BillEmailBillRequest, BillPrintBillRequest, BillWhatsappBillRequest, ErrorResponse, InternalErrorResponse } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
@@ -34,10 +28,7 @@ export const getBillWhatsappBillUrl = () => {
 	return `/bill/whatsapp`;
 };
 
-export const billWhatsappBill = async (
-	billWhatsappBillRequest: BillWhatsappBillRequest,
-	options?: RequestInit
-): Promise<boolean> => {
+export const billWhatsappBill = async (billWhatsappBillRequest: BillWhatsappBillRequest, options?: RequestInit): Promise<boolean> => {
 	return customInstance<boolean>(getBillWhatsappBillUrl(), {
 		...options,
 		method: "POST",
@@ -46,23 +37,10 @@ export const billWhatsappBill = async (
 	});
 };
 
-export const getBillWhatsappBillMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof billWhatsappBill>>,
-		TError,
-		{ data: BodyType<BillWhatsappBillRequest> },
-		TContext
-	>;
+export const getBillWhatsappBillMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billWhatsappBill>>, TError, { data: BodyType<BillWhatsappBillRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof billWhatsappBill>>,
-	TError,
-	{ data: BodyType<BillWhatsappBillRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof billWhatsappBill>>, TError, { data: BodyType<BillWhatsappBillRequest> }, TContext> => {
 	const mutationKey = ["billWhatsappBill"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -70,10 +48,7 @@ export const getBillWhatsappBillMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof billWhatsappBill>>,
-		{ data: BodyType<BillWhatsappBillRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof billWhatsappBill>>, { data: BodyType<BillWhatsappBillRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return billWhatsappBill(data, requestOptions);
@@ -82,45 +57,24 @@ export const getBillWhatsappBillMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type BillWhatsappBillMutationResult = NonNullable<
-	Awaited<ReturnType<typeof billWhatsappBill>>
->;
+export type BillWhatsappBillMutationResult = NonNullable<Awaited<ReturnType<typeof billWhatsappBill>>>;
 export type BillWhatsappBillMutationBody = BodyType<BillWhatsappBillRequest>;
 export type BillWhatsappBillMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createBillWhatsappBill = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createBillWhatsappBill = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof billWhatsappBill>>,
-			TError,
-			{ data: BodyType<BillWhatsappBillRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billWhatsappBill>>, TError, { data: BodyType<BillWhatsappBillRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof billWhatsappBill>>,
-	TError,
-	{ data: BodyType<BillWhatsappBillRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getBillWhatsappBillMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof billWhatsappBill>>, TError, { data: BodyType<BillWhatsappBillRequest> }, TContext> => {
+	return createMutation(() => ({ ...getBillWhatsappBillMutationOptions(options?.()) }), queryClient);
 };
 export const getBillPrintBillUrl = () => {
 	return `/bill/print`;
 };
 
-export const billPrintBill = async (
-	billPrintBillRequest: BillPrintBillRequest,
-	options?: RequestInit
-): Promise<boolean> => {
+export const billPrintBill = async (billPrintBillRequest: BillPrintBillRequest, options?: RequestInit): Promise<boolean> => {
 	return customInstance<boolean>(getBillPrintBillUrl(), {
 		...options,
 		method: "POST",
@@ -129,23 +83,10 @@ export const billPrintBill = async (
 	});
 };
 
-export const getBillPrintBillMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof billPrintBill>>,
-		TError,
-		{ data: BodyType<BillPrintBillRequest> },
-		TContext
-	>;
+export const getBillPrintBillMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billPrintBill>>, TError, { data: BodyType<BillPrintBillRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof billPrintBill>>,
-	TError,
-	{ data: BodyType<BillPrintBillRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof billPrintBill>>, TError, { data: BodyType<BillPrintBillRequest> }, TContext> => {
 	const mutationKey = ["billPrintBill"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -153,10 +94,7 @@ export const getBillPrintBillMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof billPrintBill>>,
-		{ data: BodyType<BillPrintBillRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof billPrintBill>>, { data: BodyType<BillPrintBillRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return billPrintBill(data, requestOptions);
@@ -169,36 +107,20 @@ export type BillPrintBillMutationResult = NonNullable<Awaited<ReturnType<typeof 
 export type BillPrintBillMutationBody = BodyType<BillPrintBillRequest>;
 export type BillPrintBillMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createBillPrintBill = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createBillPrintBill = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof billPrintBill>>,
-			TError,
-			{ data: BodyType<BillPrintBillRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billPrintBill>>, TError, { data: BodyType<BillPrintBillRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof billPrintBill>>,
-	TError,
-	{ data: BodyType<BillPrintBillRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof billPrintBill>>, TError, { data: BodyType<BillPrintBillRequest> }, TContext> => {
 	return createMutation(() => ({ ...getBillPrintBillMutationOptions(options?.()) }), queryClient);
 };
 export const getBillEmailBillUrl = () => {
 	return `/bill/email`;
 };
 
-export const billEmailBill = async (
-	billEmailBillRequest: BillEmailBillRequest,
-	options?: RequestInit
-): Promise<boolean> => {
+export const billEmailBill = async (billEmailBillRequest: BillEmailBillRequest, options?: RequestInit): Promise<boolean> => {
 	return customInstance<boolean>(getBillEmailBillUrl(), {
 		...options,
 		method: "POST",
@@ -207,23 +129,10 @@ export const billEmailBill = async (
 	});
 };
 
-export const getBillEmailBillMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof billEmailBill>>,
-		TError,
-		{ data: BodyType<BillEmailBillRequest> },
-		TContext
-	>;
+export const getBillEmailBillMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billEmailBill>>, TError, { data: BodyType<BillEmailBillRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof billEmailBill>>,
-	TError,
-	{ data: BodyType<BillEmailBillRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof billEmailBill>>, TError, { data: BodyType<BillEmailBillRequest> }, TContext> => {
 	const mutationKey = ["billEmailBill"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -231,10 +140,7 @@ export const getBillEmailBillMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof billEmailBill>>,
-		{ data: BodyType<BillEmailBillRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof billEmailBill>>, { data: BodyType<BillEmailBillRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return billEmailBill(data, requestOptions);
@@ -247,36 +153,20 @@ export type BillEmailBillMutationResult = NonNullable<Awaited<ReturnType<typeof 
 export type BillEmailBillMutationBody = BodyType<BillEmailBillRequest>;
 export type BillEmailBillMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createBillEmailBill = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createBillEmailBill = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof billEmailBill>>,
-			TError,
-			{ data: BodyType<BillEmailBillRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billEmailBill>>, TError, { data: BodyType<BillEmailBillRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof billEmailBill>>,
-	TError,
-	{ data: BodyType<BillEmailBillRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof billEmailBill>>, TError, { data: BodyType<BillEmailBillRequest> }, TContext> => {
 	return createMutation(() => ({ ...getBillEmailBillMutationOptions(options?.()) }), queryClient);
 };
 export const getBillDownloadBillUrl = (tableBookingId: number) => {
 	return `/bill/download/${tableBookingId}`;
 };
 
-export const billDownloadBill = async (
-	tableBookingId: number,
-	options?: RequestInit
-): Promise<void> => {
+export const billDownloadBill = async (tableBookingId: number, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getBillDownloadBillUrl(tableBookingId), {
 		...options,
 		method: "GET",
@@ -287,15 +177,10 @@ export const getBillDownloadBillQueryKey = (tableBookingId: number) => {
 	return [`/bill/download/${tableBookingId}`] as const;
 };
 
-export const getBillDownloadBillQueryOptions = <
-	TData = Awaited<ReturnType<typeof billDownloadBill>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getBillDownloadBillQueryOptions = <TData = Awaited<ReturnType<typeof billDownloadBill>>, TError = ErrorType<void | InternalErrorResponse>>(
 	tableBookingId: number,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof billDownloadBill>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof billDownloadBill>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -303,8 +188,7 @@ export const getBillDownloadBillQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getBillDownloadBillQueryKey(tableBookingId);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof billDownloadBill>>> = () =>
-		billDownloadBill(tableBookingId, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof billDownloadBill>>> = () => billDownloadBill(tableBookingId, requestOptions);
 
 	return { queryKey, queryFn, enabled: !!tableBookingId, ...queryOptions } as CreateQueryOptions<
 		Awaited<ReturnType<typeof billDownloadBill>>,
@@ -316,23 +200,17 @@ export const getBillDownloadBillQueryOptions = <
 export type BillDownloadBillQueryResult = NonNullable<Awaited<ReturnType<typeof billDownloadBill>>>;
 export type BillDownloadBillQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createBillDownloadBill<
-	TData = Awaited<ReturnType<typeof billDownloadBill>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createBillDownloadBill<TData = Awaited<ReturnType<typeof billDownloadBill>>, TError = ErrorType<void | InternalErrorResponse>>(
 	tableBookingId: () => number,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof billDownloadBill>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof billDownloadBill>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getBillDownloadBillQueryOptions(tableBookingId(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getBillDownloadBillQueryOptions(tableBookingId(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }

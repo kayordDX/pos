@@ -22,10 +22,7 @@
 	let isLoading = $state(false);
 
 	export const schema = z.object({
-		pin: z
-			.string()
-			.min(4, { message: "Pin needs to be at least 4 characters long" })
-			.max(12, { message: "Pin cannot be longer than 12 characters" }),
+		pin: z.string().min(4, { message: "Pin needs to be at least 4 characters long" }).max(12, { message: "Pin cannot be longer than 12 characters" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
 

@@ -19,9 +19,7 @@
 			<Alert.Root>
 				<TriangleAlertIcon class="size-4" />
 				<Alert.Title>No halo config available</Alert.Title>
-				<Alert.Description
-					>You will not be able to accept halo payments for this outlet</Alert.Description
-				>
+				<Alert.Description>You will not be able to accept halo payments for this outlet</Alert.Description>
 			</Alert.Root>
 		{:else}
 			<div class="flex flex-col gap-4">

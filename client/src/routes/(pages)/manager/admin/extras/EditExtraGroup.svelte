@@ -82,9 +82,7 @@
 		<form method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>{isEdit ? "Edit" : "Add"} Extra Group</Dialog.Title>
-				<Dialog.Description
-					>Complete form to {isEdit ? "Edit" : "Add"} extra group</Dialog.Description
-				>
+				<Dialog.Description>Complete form to {isEdit ? "Edit" : "Add"} extra group</Dialog.Description>
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
 				<Form.Field {form} name="name">

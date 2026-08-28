@@ -86,7 +86,7 @@
 </script>
 
 {#snippet header()}
-	<Dialog.Header class="pr-6 flex-row w-full justify-between">
+	<Dialog.Header class="w-full flex-row justify-between pr-6">
 		<div>
 			<Dialog.Title>Stock</Dialog.Title>
 			{#if linkType === LinkType.Bulk}
@@ -104,15 +104,9 @@
 <AddLinkStock bind:open={linkOpen} {id} {linkType} refetch={query.refetch} />
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%] overflow-auto p-2 w-[100%] md:min-w-[48rem]">
-		<div class="flex flex-col gap-4 p-0 mt-0">
-			<DataTable
-				{table}
-				{header}
-				headerClass="pb-2"
-				isLoading={query.isPending}
-				noDataMessage="No linked items"
-			/>
+	<Dialog.Content class="max-h-[98%] w-[100%] overflow-auto p-2 md:min-w-[48rem]">
+		<div class="mt-0 flex flex-col gap-4 p-0">
+			<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No linked items" />
 		</div>
 	</Dialog.Content>
 </Dialog.Root>

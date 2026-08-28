@@ -3,12 +3,7 @@
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
 	import { Button } from "@kayord/ui";
-	import {
-		DataTable,
-		createShadTable,
-		renderComponent,
-		decodeGlobalFilter,
-	} from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, decodeGlobalFilter } from "@kayord/ui/data-table";
 	import { type ColumnDef } from "@tanstack/table-core";
 	import { PlusIcon } from "@lucide/svelte";
 	import AddEditSection from "./AddEditSection.svelte";
@@ -67,7 +62,7 @@
 	<div class="flex items-center justify-between">
 		<div class="flex flex-col gap-1">
 			<h1>Sections</h1>
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<Search bind:search name="Sections" />
 			</div>
 		</div>
@@ -80,11 +75,5 @@
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		headerClass="pb-2"
-		{header}
-		{table}
-		isLoading={query.isPending}
-		noDataMessage="No sections for outlet"
-	/>
+	<DataTable headerClass="pb-2" {header} {table} isLoading={query.isPending} noDataMessage="No sections for outlet" />
 </div>

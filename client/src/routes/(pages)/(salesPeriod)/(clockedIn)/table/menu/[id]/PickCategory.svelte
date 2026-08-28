@@ -45,11 +45,11 @@
 		<Button size="icon" class="relative" variant="secondary">
 			<FilterIcon class="h-5 w-5" />
 			{#if hasFilter}
-				<span class="absolute -top-1 -right-1 h-4 w-4 rounded-full bg-primary"></span>
+				<span class="bg-primary absolute -top-1 -right-1 h-4 w-4 rounded-full"></span>
 			{/if}
 		</Button>
 	</Drawer.Trigger>
-	<Drawer.Content class="fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full">
+	<Drawer.Content class="fixed right-0 bottom-0 left-0 flex max-h-[96%] w-full">
 		<Drawer.Header class="flex flex-col items-center">
 			<Drawer.Title>Select Category</Drawer.Title>
 			<Drawer.Description>Choose the category to filter on</Drawer.Description>
@@ -57,15 +57,8 @@
 		<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] px-4">
 			<CategoriesList {sections}>
 				{#each sections?.sections ?? [] as section, i}
-					{@const extraClass =
-						section.menuSectionId == menuSection.sectionId
-							? "bg-primary text-primary-foreground"
-							: ""}
-					<Button
-						onclick={() => setSection(section.menuSectionId)}
-						class={cn("p-2 w-full", extraClass)}
-						variant="outline"
-					>
+					{@const extraClass = section.menuSectionId == menuSection.sectionId ? "bg-primary text-primary-foreground" : ""}
+					<Button onclick={() => setSection(section.menuSectionId)} class={cn("w-full p-2", extraClass)} variant="outline">
 						{section.name}
 					</Button>
 				{/each}

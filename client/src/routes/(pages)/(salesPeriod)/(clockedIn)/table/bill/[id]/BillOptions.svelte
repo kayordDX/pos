@@ -11,29 +11,29 @@
 </script>
 
 <Button class="w-full" onclick={() => (dialogOpen = true)}>
-	<ReceiptTextIcon class="size-4 mr-2" />
+	<ReceiptTextIcon class="mr-2 size-4" />
 	Bill
 </Button>
 
 <Drawer.Root bind:open={dialogOpen}>
 	<Drawer.Trigger />
-	<Drawer.Content class="flex flex-col fixed bottom-0 left-0 right-0 max-h-[96%] w-full">
+	<Drawer.Content class="fixed right-0 bottom-0 left-0 flex max-h-[96%] w-full flex-col">
 		<Drawer.Header>
 			<Drawer.Title>Bill Options #{bookingId}</Drawer.Title>
 			<Drawer.Description>Choose bill action to perform</Drawer.Description>
 		</Drawer.Header>
-		<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
+		<div class="mx-auto flex w-full flex-col gap-2 overflow-auto rounded-t-[10px] p-4">
 			<DownloadBill {bookingId} />
 			<Button class="w-full" href={`/table/bill/${bookingId}/actions/email`}>
-				<MailIcon class="size-4 mr-2" />
+				<MailIcon class="mr-2 size-4" />
 				Email
 			</Button>
 			<Button class="w-full" href={`/table/bill/${bookingId}/actions/print`}>
-				<PrinterIcon class="size-4 mr-2" />
+				<PrinterIcon class="mr-2 size-4" />
 				Print
 			</Button>
 			<Button class="w-full" href={`/table/bill/${bookingId}/actions/whatsapp`}>
-				<MessageCircleMoreIcon class="size-4 mr-2" />
+				<MessageCircleMoreIcon class="mr-2 size-4" />
 				Whatsapp
 			</Button>
 		</div>

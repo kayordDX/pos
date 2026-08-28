@@ -5,18 +5,9 @@
  * OpenAPI spec version: v1
  */
 import { createMutation } from "@tanstack/svelte-query";
-import type {
-	CreateMutationOptions,
-	CreateMutationResult,
-	MutationFunction,
-	QueryClient,
-} from "@tanstack/svelte-query";
+import type { CreateMutationOptions, CreateMutationResult, MutationFunction, QueryClient } from "@tanstack/svelte-query";
 
-import type {
-	AdjustmentTypeOutletRemoveRequest,
-	EntitiesAdjustmentTypeOutlet,
-	InternalErrorResponse,
-} from "./api.schemas";
+import type { AdjustmentTypeOutletRemoveRequest, EntitiesAdjustmentTypeOutlet, InternalErrorResponse } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
@@ -39,10 +30,7 @@ export const adjustmentTypeOutletRemove = async (
 	});
 };
 
-export const getAdjustmentTypeOutletRemoveMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
+export const getAdjustmentTypeOutletRemoveMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>,
 		TError,
@@ -50,12 +38,7 @@ export const getAdjustmentTypeOutletRemoveMutationOptions = <
 		TContext
 	>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>,
-	TError,
-	{ data: BodyType<AdjustmentTypeOutletRemoveRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>, TError, { data: BodyType<AdjustmentTypeOutletRemoveRequest> }, TContext> => {
 	const mutationKey = ["adjustmentTypeOutletRemove"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -63,10 +46,9 @@ export const getAdjustmentTypeOutletRemoveMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>,
-		{ data: BodyType<AdjustmentTypeOutletRemoveRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>, { data: BodyType<AdjustmentTypeOutletRemoveRequest> }> = (
+		props
+	) => {
 		const { data } = props ?? {};
 
 		return adjustmentTypeOutletRemove(data, requestOptions);
@@ -75,16 +57,11 @@ export const getAdjustmentTypeOutletRemoveMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type AdjustmentTypeOutletRemoveMutationResult = NonNullable<
-	Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>
->;
+export type AdjustmentTypeOutletRemoveMutationResult = NonNullable<Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>>;
 export type AdjustmentTypeOutletRemoveMutationBody = BodyType<AdjustmentTypeOutletRemoveRequest>;
 export type AdjustmentTypeOutletRemoveMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createAdjustmentTypeOutletRemove = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createAdjustmentTypeOutletRemove = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
 		mutation?: CreateMutationOptions<
 			Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>,
@@ -95,14 +72,6 @@ export const createAdjustmentTypeOutletRemove = <
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>,
-	TError,
-	{ data: BodyType<AdjustmentTypeOutletRemoveRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getAdjustmentTypeOutletRemoveMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof adjustmentTypeOutletRemove>>, TError, { data: BodyType<AdjustmentTypeOutletRemoveRequest> }, TContext> => {
+	return createMutation(() => ({ ...getAdjustmentTypeOutletRemoveMutationOptions(options?.()) }), queryClient);
 };

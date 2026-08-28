@@ -27,17 +27,11 @@
 </script>
 
 {#if header.value || !hideHeaderPages}
-	<div
-		class={cn(
-			"bg-secondary p-2 flex justify-between h-14 items-center border-b-2 border-secondary",
-			className
-		)}
-		transition:slide
-	>
+	<div class={cn("bg-secondary border-secondary flex h-14 items-center justify-between border-b-2 p-2", className)} transition:slide>
 		{#if !hideHeader}
 			<button class="flex items-center" onclick={() => goto("/")}>
 				<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="logo" class="h-10" />
-				<span class="hidden md:block font-bold text-lg">
+				<span class="hidden text-lg font-bold md:block">
 					{info.isKayord() ? "kayord" : "aviate"}
 				</span>
 			</button>
@@ -50,15 +44,15 @@
 				{@render children()}
 			{/if}
 		</span>
-		<div class="flex gap-2 items-center">
+		<div class="flex items-center gap-2">
 			{#if mode.value.mode == "counter" && mode.value.deviceId.length > 0}
-				<div class="flex flex-col gap-1 items-start max-w-[120px]">
-					<Badge variant="outline" class="hidden sm:flex flex-row items-center">
+				<div class="flex max-w-[120px] flex-col items-start gap-1">
+					<Badge variant="outline" class="hidden flex-row items-center sm:flex">
 						<CircleSmallIcon class="text-destructive" />
 						Counter Mode
 					</Badge>
 					<Badge variant="outline" class="sm:hidden">CM</Badge>
-					<Badge variant="outline" class="hidden sm:flex flex-row flex-1 w-full truncate">
+					<Badge variant="outline" class="hidden w-full flex-1 flex-row truncate sm:flex">
 						{session.user?.displayName}
 					</Badge>
 					<Badge variant="outline" class="sm:hidden">

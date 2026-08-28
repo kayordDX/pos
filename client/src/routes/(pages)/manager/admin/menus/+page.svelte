@@ -2,12 +2,7 @@
 	import { createMenuList, type EntitiesMenu } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Button } from "@kayord/ui";
-	import {
-		DataTable,
-		createShadTable,
-		renderComponent,
-		decodeGlobalFilter,
-	} from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, decodeGlobalFilter } from "@kayord/ui/data-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Actions from "./Actions.svelte";
 	import EditMenu from "./EditMenu.svelte";
@@ -58,7 +53,7 @@
 	<div class="flex items-center justify-between">
 		<div class="flex flex-col gap-1">
 			<h1>Menus</h1>
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<Search bind:search name="Menus" />
 			</div>
 		</div>
@@ -71,11 +66,5 @@
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		headerClass="pb-2"
-		{header}
-		{table}
-		isLoading={query.isPending}
-		noDataMessage="No roles for outlet"
-	/>
+	<DataTable headerClass="pb-2" {header} {table} isLoading={query.isPending} noDataMessage="No roles for outlet" />
 </div>

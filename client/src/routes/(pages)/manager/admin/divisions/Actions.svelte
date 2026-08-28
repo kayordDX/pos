@@ -59,15 +59,11 @@
 		<AlertDialog.Content>
 			<AlertDialog.Header>
 				<AlertDialog.Title>Delete Division?</AlertDialog.Title>
-				<AlertDialog.Description>
-					This will remove the division and all its items
-				</AlertDialog.Description>
+				<AlertDialog.Description>This will remove the division and all its items</AlertDialog.Description>
 			</AlertDialog.Header>
 			<AlertDialog.Footer>
 				<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-				<AlertDialog.Action class="bg-destructive" onclick={deleteDivision}>
-					Delete
-				</AlertDialog.Action>
+				<AlertDialog.Action class="bg-destructive" onclick={deleteDivision}>Delete</AlertDialog.Action>
 			</AlertDialog.Footer>
 		</AlertDialog.Content>
 	</AlertDialog.Root>

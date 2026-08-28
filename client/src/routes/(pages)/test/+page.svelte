@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { session } from "$lib/firebase.svelte";
-	import { hub } from "$lib/stores/hub.svelte";
 	import { info } from "$lib/stores/info.svelte";
 	import { Button } from "@kayord/ui";
 

@@ -22,7 +22,7 @@
 	{#if cashUpQuery.data}
 		{@const d = cashUpQuery.data}
 		<div class="flex flex-col gap-4">
-			<div class="flex flex-row gap-4 flex-wrap items-center justify-center">
+			<div class="flex flex-row flex-wrap items-center justify-center gap-4">
 				<Card.Root class="min-w-52">
 					<Card.Header class="pb-6">
 						<Card.Title>R{d.cashUpTotal.toFixed(2)}</Card.Title>

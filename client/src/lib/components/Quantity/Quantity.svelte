@@ -20,19 +20,13 @@
 
 <div class="flex items-center justify-center">
 	<Card.Root class="w-44 p-1">
-		<div class="flex items-center w-full gap-2">
-			<Button
-				variant="outline"
-				size="icon"
-				class="s-10 shrink-0 rounded-full"
-				onclick={decrement}
-				disabled={value <= 1}
-			>
+		<div class="flex w-full items-center gap-2">
+			<Button variant="outline" size="icon" class="s-10 shrink-0 rounded-full" onclick={decrement} disabled={value <= 1}>
 				<MinusIcon class="h-4 w-4" />
 				<span class="sr-only">Decrease</span>
 			</Button>
 			<div class="flex-1 text-center">
-				<Input bind:value class="text-3xl font-bold tracking-tighter text-center" />
+				<Input bind:value class="text-center text-3xl font-bold tracking-tighter" />
 			</div>
 			<Button variant="outline" size="icon" class="s-10 shrink-0 rounded-full" onclick={increment}>
 				<PlusIcon class="h-4 w-4" />

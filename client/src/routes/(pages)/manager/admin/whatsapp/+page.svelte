@@ -1,20 +1,8 @@
 <script lang="ts">
-	import {
-		createWhatsappStatus,
-		createWhatsappQrCode,
-		createWhatsappLogout,
-		createWhatsappConnect,
-	} from "$lib/api";
+	import { createWhatsappStatus, createWhatsappQrCode, createWhatsappLogout, createWhatsappConnect } from "$lib/api";
 	import { Button, Card, Loader } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import {
-		CheckIcon,
-		LogOutIcon,
-		NetworkIcon,
-		QrCodeIcon,
-		RefreshCwIcon,
-		XIcon,
-	} from "@lucide/svelte";
+	import { CheckIcon, LogOutIcon, NetworkIcon, QrCodeIcon, RefreshCwIcon, XIcon } from "@lucide/svelte";
 
 	const query = createWhatsappStatus();
 	const qrQuery = createWhatsappQrCode(() => ({ query: { enabled: false } }));
@@ -71,29 +59,19 @@
 					<XIcon class="text-destructive" />
 				{/if}
 			</div>
-			<div class="text-sm text-muted-foreground">Success: {query.data?.success}</div>
-			<div class="text-sm text-muted-foreground">Code: {query.data?.code}</div>
+			<div class="text-muted-foreground text-sm">Success: {query.data?.success}</div>
+			<div class="text-muted-foreground text-sm">Code: {query.data?.code}</div>
 		</Card.Content>
 		<Card.Footer class="flex flex-col gap-2">
 			<Button class="w-full" variant="outline" onclick={() => query.refetch()}>
 				<RefreshCwIcon />
 				Refresh
 			</Button>
-			<Button
-				class="w-full"
-				variant="default"
-				onclick={connect}
-				disabled={connectMutation.isPending}
-			>
+			<Button class="w-full" variant="default" onclick={connect} disabled={connectMutation.isPending}>
 				<NetworkIcon />
 				Connect
 			</Button>
-			<Button
-				class="w-full"
-				variant="destructive"
-				onclick={logout}
-				disabled={logoutMutation.isPending}
-			>
+			<Button class="w-full" variant="destructive" onclick={logout} disabled={logoutMutation.isPending}>
 				<LogOutIcon />
 				Logout
 			</Button>

@@ -76,9 +76,7 @@
 							<Input {...props} bind:value={$formData.merchantId} />
 						{/snippet}
 					</Form.Control>
-					<Form.Description>
-						This is the merchant id. You can get it from the halo dashboard
-					</Form.Description>
+					<Form.Description>This is the merchant id. You can get it from the halo dashboard</Form.Description>
 					<Form.FieldErrors />
 				</Form.Field>
 				<Form.Field {form} name="xApiKey">
@@ -88,13 +86,11 @@
 							<Input {...props} bind:value={$formData.xApiKey} />
 						{/snippet}
 					</Form.Control>
-					<Form.Description>
-						This is api key to generate from halo. Can only be seen once.
-					</Form.Description>
+					<Form.Description>This is api key to generate from halo. Can only be seen once.</Form.Description>
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>
-			<Dialog.Footer class="sm:flex-col gap-2">
+			<Dialog.Footer class="gap-2 sm:flex-col">
 				<Button type="submit">Submit</Button>
 				<Dialog.Close type="reset">Cancel</Dialog.Close>
 			</Dialog.Footer>

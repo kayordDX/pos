@@ -58,28 +58,22 @@
 	});
 </script>
 
-<div class="flex justify-center flex-col mb-12 mt-2 items-center">
-	<div class="flex flex-col w-full sticky top-0 z-10 bg-background p-1">
+<div class="mt-2 mb-12 flex flex-col items-center justify-center">
+	<div class="bg-background sticky top-0 z-10 flex w-full flex-col p-1">
 		<div class="flex w-full justify-center gap-2 px-2">
-			<div class="relative flex items-center max-w-2xl w-full">
+			<div class="relative flex w-full max-w-2xl items-center">
 				{#if itemsQuery.isFetching}
-					<Loader class="absolute left-1 top-0.5 size-5" />
+					<Loader class="absolute top-0.5 left-1 size-5" />
 				{:else}
-					<SearchIcon class="absolute left-2.5 top-2.5 h-4 w-4 text-muted-foreground" />
+					<SearchIcon class="text-muted-foreground absolute top-2.5 left-2.5 h-4 w-4" />
 				{/if}
-				<Input
-					type="search"
-					placeholder="Search..."
-					oninput={(value) => debouncedHandleInput(value)}
-					value={search}
-					class="pl-8"
-				/>
+				<Input type="search" placeholder="Search..." oninput={(value) => debouncedHandleInput(value)} value={search} class="pl-8" />
 			</div>
 			<PickMenu data={query.data} />
 			<PickCategory sections={sectionsQuery.data} />
 		</div>
 
-		<div class="flex gap-2 flex-wrap items-center w-full">
+		<div class="flex w-full flex-wrap items-center gap-2">
 			{#if sectionsQuery.isPending}
 				<div class="w-full">
 					<Loader />
@@ -96,7 +90,7 @@
 		<Error message={getError(sectionsQuery.error).message} />
 	{/if}
 
-	<div class="flex justify-center w-full">
+	<div class="flex w-full justify-center">
 		<MenuItems data={itemsQuery.data ?? []} tableBookingId={Number(page.params.id)} />
 	</div>
 </div>

@@ -21,12 +21,12 @@
 	};
 </script>
 
-<div class="flex items-center justify-between py-1 w-full">
+<div class="flex w-full items-center justify-between py-1">
 	<div class="flex items-center">
 		<span class="text-muted-foreground">{item.cashUpUserItemType?.itemType}</span>
 		{#if !isCashedUp}
 			<Button class="ml-2 size-6" variant="destructive" size="icon" onclick={deleteItem}>
-				<Trash2Icon class="size-4 text-background" />
+				<Trash2Icon class="text-background size-4" />
 			</Button>
 		{/if}
 	</div>

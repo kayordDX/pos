@@ -21,10 +21,10 @@
 	};
 </script>
 
-<div class="flex flex-col items-center justify-center mt-12">
-	<Card.Root class="max-w-md w-full">
+<div class="mt-12 flex flex-col items-center justify-center">
+	<Card.Root class="w-full max-w-md">
 		<Card.Header class="flex flex-row">
-			<div class="flex flex-col flex-grow">
+			<div class="flex flex-grow flex-col">
 				<Card.Title>POS</Card.Title>
 				<Card.Description>Powered by kayord</Card.Description>
 			</div>
@@ -32,24 +32,16 @@
 		</Card.Header>
 		<Card.Content>
 			<div class="flex flex-col items-center">
-				<img
-					src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`}
-					alt="logo"
-					class="h-28 hover:animate-pulse"
-				/>
-				<div class="text-muted-foreground mt-4">
-					Get started by signing in with your google account.
-				</div>
+				<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="logo" class="h-28 hover:animate-pulse" />
+				<div class="text-muted-foreground mt-4">Get started by signing in with your google account.</div>
 			</div>
 		</Card.Content>
 		<Card.Footer class="flex flex-col items-center gap-2">
 			<Button class="w-full" variant="secondary" onclick={login} disabled={isLoading}>
-				<GoogleSvg class="w-5 h-5 mr-2 fill-white" />
+				<GoogleSvg class="mr-2 h-5 w-5 fill-white" />
 				{isLoading ? "Signing in..." : "Google"}
 			</Button>
 		</Card.Footer>
 	</Card.Root>
-	<Button variant="link" class="text-xs text-muted-foreground" href="/privacy-policy">
-		Privacy Policy
-	</Button>
+	<Button variant="link" class="text-muted-foreground text-xs" href="/privacy-policy">Privacy Policy</Button>
 </div>

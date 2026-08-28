@@ -48,15 +48,11 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete Section?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete section only if it does not contain any menu items.
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will delete section only if it does not contain any menu items.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action class="bg-destructive" onclick={deleteMenuSection}>
-				Delete
-			</AlertDialog.Action>
+			<AlertDialog.Action class="bg-destructive" onclick={deleteMenuSection}>Delete</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

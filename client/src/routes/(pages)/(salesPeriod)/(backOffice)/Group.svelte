@@ -1,8 +1,5 @@
 <script lang="ts">
-	import {
-		createTableOrderUpdateGroupOrder,
-		type TableOrderOfficeOrderBasedBackOrderGroupDTO,
-	} from "$lib/api";
+	import { createTableOrderUpdateGroupOrder, type TableOrderOfficeOrderBasedBackOrderGroupDTO } from "$lib/api";
 	import { getInitials } from "$lib/util";
 	import { Avatar, Badge, Button, Card, Popover, ScrollArea } from "@kayord/ui";
 	import { Drawer } from "@kayord/ui/drawer";
@@ -32,40 +29,27 @@
 	const showMore = $derived(clientHeight > height);
 </script>
 
-<div
-	style={`height: ${height}px; font-size: ${backOffice.value.fontSize / 1000}rem`}
-	class="w-full"
->
-	<ScrollArea class="overflow-hidden h-full">
-		<Card.Root
-			class={`p-2 ${group.priority > 10 ? "border-4 border-destructive" : ""}`}
-			style={`min-height: ${height}px`}
-		>
+<div style={`height: ${height}px; font-size: ${backOffice.value.fontSize / 1000}rem`} class="w-full">
+	<ScrollArea class="h-full overflow-hidden">
+		<Card.Root class={`p-2 ${group.priority > 10 ? "border-destructive border-4" : ""}`} style={`min-height: ${height}px`}>
 			<div>
 				<div bind:clientHeight>
-					<div class="flex justify-between items-center">
+					<div class="flex items-center justify-between">
 						<div class="flex items-center gap-2">
 							<Popover.Root>
 								<Popover.Trigger>
 									<Avatar.Root>
-										<Avatar.Image
-											src={group.tableBooking?.user.image}
-											alt={group.tableBooking?.user.name}
-										/>
-										<Avatar.Fallback
-											>{getInitials(group.tableBooking?.user.name ?? "")}</Avatar.Fallback
-										>
+										<Avatar.Image src={group.tableBooking?.user.image} alt={group.tableBooking?.user.name} />
+										<Avatar.Fallback>{getInitials(group.tableBooking?.user.name ?? "")}</Avatar.Fallback>
 									</Avatar.Root>
 								</Popover.Trigger>
 								<Popover.Content>{group.tableBooking?.user.name}</Popover.Content>
 							</Popover.Root>
-							<div class="max-w-64 line-clamp-2 flex flex-col">
+							<div class="line-clamp-2 flex max-w-64 flex-col">
 								<div class="leading-none"># {group.orderGroupId}</div>
 								<div class="font-bold">
 									{group.tableBooking?.table.name} - {group.tableBooking?.table.section?.name}
-									<span class="text-muted-foreground text-xs"
-										>({group.tableBooking?.bookingName})</span
-									>
+									<span class="text-muted-foreground text-xs">({group.tableBooking?.bookingName})</span>
 								</div>
 							</div>
 						</div>
@@ -82,9 +66,7 @@
 										</Drawer.Header>
 										<Drawer.Footer>
 											<Drawer.Close>
-												<Button class="w-full" onclick={() => readyAll(group.orderGroupId, 5)}
-													>Ready All</Button
-												>
+												<Button class="w-full" onclick={() => readyAll(group.orderGroupId, 5)}>Ready All</Button>
 											</Drawer.Close>
 										</Drawer.Footer>
 									</Drawer.Content>
@@ -92,18 +74,15 @@
 							</div>
 						{/if}
 					</div>
-					<div class="flex flex-col gap-2 mt-2">
+					<div class="mt-2 flex flex-col gap-2">
 						{#each group.orderItems ?? [] as item}
 							<Item {item} {refetch} {isHistory} />
 						{/each}
 					</div>
 				</div>
 				{#if showMore}
-					<div class="flex justify-center mt-6">
-						<Badge
-							variant="secondary"
-							class="flex justify-center absolute left-0 right-0 bottom-0 h-5 w-full"
-						>
+					<div class="mt-6 flex justify-center">
+						<Badge variant="secondary" class="absolute right-0 bottom-0 left-0 flex h-5 w-full justify-center">
 							<EllipsisIcon class="size-5" />
 						</Badge>
 					</div>

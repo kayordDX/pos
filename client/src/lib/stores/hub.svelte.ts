@@ -1,9 +1,4 @@
-import {
-	HubConnection,
-	HubConnectionBuilder,
-	LogLevel,
-	HubConnectionState,
-} from "@microsoft/signalr";
+import { HubConnection, HubConnectionBuilder, LogLevel, HubConnectionState } from "@microsoft/signalr";
 import { session } from "$lib/firebase.svelte";
 import { info } from "./info.svelte";
 

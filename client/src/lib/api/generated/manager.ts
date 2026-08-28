@@ -5,20 +5,9 @@
  * OpenAPI spec version: v1
  */
 import { createQuery } from "@tanstack/svelte-query";
-import type {
-	CreateQueryOptions,
-	CreateQueryResult,
-	DataTag,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-} from "@tanstack/svelte-query";
+import type { CreateQueryOptions, CreateQueryResult, DataTag, QueryClient, QueryFunction, QueryKey } from "@tanstack/svelte-query";
 
-import type {
-	InternalErrorResponse,
-	ManagerOrderViewParams,
-	ManagerOrderViewResponse,
-} from "./api.schemas";
+import type { InternalErrorResponse, ManagerOrderViewParams, ManagerOrderViewResponse } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType } from "../mutator/customInstance.svelte";
@@ -36,15 +25,10 @@ export const getManagerOrderViewUrl = (params?: ManagerOrderViewParams) => {
 
 	const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/manager/viewOrders?${stringifiedParams}`
-		: `/manager/viewOrders`;
+	return stringifiedParams.length > 0 ? `/manager/viewOrders?${stringifiedParams}` : `/manager/viewOrders`;
 };
 
-export const managerOrderView = async (
-	params?: ManagerOrderViewParams,
-	options?: RequestInit
-): Promise<ManagerOrderViewResponse[]> => {
+export const managerOrderView = async (params?: ManagerOrderViewParams, options?: RequestInit): Promise<ManagerOrderViewResponse[]> => {
 	return customInstance<ManagerOrderViewResponse[]>(getManagerOrderViewUrl(params), {
 		...options,
 		method: "GET",
@@ -55,15 +39,10 @@ export const getManagerOrderViewQueryKey = (params?: ManagerOrderViewParams) => 
 	return [`/manager/viewOrders`, ...(params ? [params] : [])] as const;
 };
 
-export const getManagerOrderViewQueryOptions = <
-	TData = Awaited<ReturnType<typeof managerOrderView>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getManagerOrderViewQueryOptions = <TData = Awaited<ReturnType<typeof managerOrderView>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params?: ManagerOrderViewParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof managerOrderView>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof managerOrderView>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -71,36 +50,27 @@ export const getManagerOrderViewQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getManagerOrderViewQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof managerOrderView>>> = () =>
-		managerOrderView(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof managerOrderView>>> = () => managerOrderView(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof managerOrderView>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof managerOrderView>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type ManagerOrderViewQueryResult = NonNullable<Awaited<ReturnType<typeof managerOrderView>>>;
 export type ManagerOrderViewQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createManagerOrderView<
-	TData = Awaited<ReturnType<typeof managerOrderView>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createManagerOrderView<TData = Awaited<ReturnType<typeof managerOrderView>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params?: () => ManagerOrderViewParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof managerOrderView>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof managerOrderView>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getManagerOrderViewQueryOptions(params?.(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getManagerOrderViewQueryOptions(params?.(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }

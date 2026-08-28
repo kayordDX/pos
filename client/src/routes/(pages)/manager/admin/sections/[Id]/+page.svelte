@@ -67,7 +67,7 @@
 	<div class="flex items-center justify-between">
 		<div class="flex flex-col gap-1">
 			<h1>Section Tables</h1>
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<Search bind:search name="Tables" />
 			</div>
 		</div>
@@ -75,19 +75,9 @@
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
 
-		<AddEditTable
-			bind:open={isDialogOpen}
-			sectionId={Number(page.params.Id)}
-			refetch={query.refetch}
-		/>
+		<AddEditTable bind:open={isDialogOpen} sectionId={Number(page.params.Id)} refetch={query.refetch} />
 	</div>
 {/snippet}
 <div class="m-2">
-	<DataTable
-		headerClass="pb-2"
-		{header}
-		{table}
-		isLoading={query.isPending}
-		noDataMessage="No tables in section"
-	/>
+	<DataTable headerClass="pb-2" {header} {table} isLoading={query.isPending} noDataMessage="No tables in section" />
 </div>

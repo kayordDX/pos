@@ -52,12 +52,10 @@
 	});
 	const { form: formData, enhance } = form;
 
-	const outletList = $derived(
-		query.data?.find((i) => i.id === $formData.outletId)?.name ?? "Select outlet to link to device"
-	);
+	const outletList = $derived(query.data?.find((i) => i.id === $formData.outletId)?.name ?? "Select outlet to link to device");
 </script>
 
-<Card.Root class="p-5 m-5">
+<Card.Root class="m-5 p-5">
 	<Card.Header>
 		<Card.Title>
 			<h3 class="text-lg">Switch Outlet</h3>

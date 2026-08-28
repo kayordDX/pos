@@ -33,9 +33,7 @@
 				<Card.Root>
 					<Card.Header>
 						<Card.Title>Scanning in Progress</Card.Title>
-						<Card.Description class="mb-2">
-							This process may take several minutes to complete
-						</Card.Description>
+						<Card.Description class="mb-2">This process may take several minutes to complete</Card.Description>
 						<Card.Description class="whitespace-pre-wrap">{results?.status}</Card.Description>
 						<ProgressLoading class="h-1" />
 					</Card.Header>

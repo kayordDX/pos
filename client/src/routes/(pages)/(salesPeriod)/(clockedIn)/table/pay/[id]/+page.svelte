@@ -80,12 +80,7 @@
 
 	// Set Default Value
 	$effect(() => {
-		if (
-			$formData.paymentTypeId == 0 &&
-			paymentTypeQuery.data &&
-			paymentTypeQuery.data.length > 0 &&
-			paymentTypeQuery.data[0]?.paymentTypeId != undefined
-		) {
+		if ($formData.paymentTypeId == 0 && paymentTypeQuery.data && paymentTypeQuery.data.length > 0 && paymentTypeQuery.data[0]?.paymentTypeId != undefined) {
 			$formData.paymentTypeId = paymentTypeQuery.data[0]?.paymentTypeId;
 		}
 	});
@@ -93,16 +88,13 @@
 	const total = Number(page.url.searchParams.get("total") ?? "0").toFixed(2);
 	const balance = Number(page.url.searchParams.get("balance") ?? "0").toFixed(2);
 
-	const paymentTypeSelect = $derived(
-		paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)
-			?.paymentTypeName ?? "Select payment type"
-	);
+	const paymentTypeSelect = $derived(paymentTypeQuery.data?.find((i) => i.paymentTypeId === $formData.paymentTypeId)?.paymentTypeName ?? "Select payment type");
 </script>
 
 <form method="POST" use:enhance>
 	<Card.Root class="m-4 mb-12">
 		<Card.Header>
-			<div class="flex items-center gap-2 justify-end">
+			<div class="flex items-center justify-end gap-2">
 				<Card.Description>Total: <Badge>R {total}</Badge></Card.Description>
 				<Card.Description>Balance: <Badge>R {balance}</Badge></Card.Description>
 			</div>
@@ -110,13 +102,7 @@
 				<Form.Control>
 					{#snippet children({ props })}
 						<Form.Label>Amount</Form.Label>
-						<Input
-							{...props}
-							type="number"
-							step="0.01"
-							bind:value={$formData.amount}
-							onfocus={(e) => e.currentTarget.select()}
-						/>
+						<Input {...props} type="number" step="0.01" bind:value={$formData.amount} onfocus={(e) => e.currentTarget.select()} />
 					{/snippet}
 				</Form.Control>
 				<Form.Description>Enter amount to pay</Form.Description>
@@ -138,9 +124,7 @@
 							</Select.Trigger>
 							<Select.Content>
 								{#each paymentTypeQuery.data ?? [] as paymentType}
-									<Select.Item value={paymentType.paymentTypeId.toString()}
-										>{paymentType.paymentTypeName}</Select.Item
-									>
+									<Select.Item value={paymentType.paymentTypeId.toString()}>{paymentType.paymentTypeName}</Select.Item>
 								{/each}
 							</Select.Content>
 						</Select.Root>
@@ -152,9 +136,7 @@
 		</Card.Header>
 		<Card.Footer class="flex flex-col gap-2">
 			<Button class="w-full" type="submit">Pay</Button>
-			<Button class="w-full" href={`/table/bill/${page.params.id}`} variant="outline">
-				Cancel
-			</Button>
+			<Button class="w-full" href={`/table/bill/${page.params.id}`} variant="outline">Cancel</Button>
 		</Card.Footer>
 	</Card.Root>
 </form>

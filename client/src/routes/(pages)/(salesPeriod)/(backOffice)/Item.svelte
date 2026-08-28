@@ -45,8 +45,8 @@
 	};
 </script>
 
-<Card.Root class="p-2 relative">
-	<div class="flex justify-between items-center">
+<Card.Root class="relative p-2">
+	<div class="flex items-center justify-between">
 		<div>
 			<div>{item.menuItem.name}</div>
 			{#if (item.orderItemOptions ?? []).length > 0}
@@ -54,7 +54,7 @@
 					<div class="ml-4">
 						{#each item.orderItemOptions ?? [] as option}
 							<div>
-								{">"}
+								&gt;
 								<span class="text-foreground">{option.option.optionGroup.name}:</span>
 								<span>{option.option.name}</span>
 							</div>
@@ -68,7 +68,7 @@
 					<div class="ml-4">
 						{#each item.orderItemExtras ?? [] as extra}
 							<div>
-								{"+"}
+								+
 								<span class="text-foreground">{extra.extra.extraGroup.name}:</span>
 								<span> {extra.extra.name}</span>
 							</div>
@@ -78,7 +78,7 @@
 			{/if}
 
 			{#if (item.note?.length ?? 0) > 0}
-				<div class="flex items-center gap-2 mt-2">
+				<div class="mt-2 flex items-center gap-2">
 					<div class="text-muted-foreground">Note:</div>
 					{item.note}
 				</div>
@@ -86,8 +86,8 @@
 		</div>
 		<div class="flex items-center gap-2">
 			<div class="flex flex-col gap-1">
-				<Badge class="truncate self-end">{item.orderItemStatus?.status}</Badge>
-				<Badge class="truncate animate-pulse" style={getStatus()}>
+				<Badge class="self-end truncate">{item.orderItemStatus?.status}</Badge>
+				<Badge class="animate-pulse truncate" style={getStatus()}>
 					{item.orderUpdatedFormatted}
 				</Badge>
 			</div>
@@ -104,33 +104,21 @@
 					<Drawer.Footer>
 						{#if isHistory}
 							<Drawer.Close>
-								<Button onclick={() => setStatus(7, item.orderItemId)} class="w-full"
-									>Recall Item
-								</Button>
+								<Button onclick={() => setStatus(7, item.orderItemId)} class="w-full">Recall Item</Button>
 							</Drawer.Close>
 						{:else}
 							<Drawer.Close>
-								<Button onclick={() => setStatus(5, item.orderItemId)} class="w-full"
-									>Ready <CheckIcon /></Button
-								>
+								<Button onclick={() => setStatus(5, item.orderItemId)} class="w-full">Ready <CheckIcon /></Button>
 							</Drawer.Close>
 						{/if}
 						{#if !isHistory}
 							<Drawer.Close>
-								<Button
-									variant="destructive"
-									onclick={() => setStatus(4, item.orderItemId)}
-									class="w-full">Cancel <XIcon /></Button
-								>
+								<Button variant="destructive" onclick={() => setStatus(4, item.orderItemId)} class="w-full">Cancel <XIcon /></Button>
 							</Drawer.Close>
 						{/if}
 						{#if !isHistory}
 							<Drawer.Close>
-								<Button
-									variant="destructive"
-									onclick={() => setStatus(8, item.orderItemId)}
-									class="w-full">Waste<Trash2Icon /></Button
-								>
+								<Button variant="destructive" onclick={() => setStatus(8, item.orderItemId)} class="w-full">Waste<Trash2Icon /></Button>
 							</Drawer.Close>
 						{/if}
 					</Drawer.Footer>

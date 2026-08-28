@@ -17,14 +17,7 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 
-import type {
-	ClockClockInRequest,
-	ClockClockOutRequest,
-	ClockGetAllOutletIdParams,
-	EntitiesUser,
-	ErrorResponse,
-	InternalErrorResponse,
-} from "./api.schemas";
+import type { ClockClockInRequest, ClockClockOutRequest, ClockGetAllOutletIdParams, EntitiesUser, ErrorResponse, InternalErrorResponse } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
@@ -45,10 +38,7 @@ export const getClockGetAllOutletIdUrl = (params: ClockGetAllOutletIdParams) => 
 	return stringifiedParams.length > 0 ? `/clock/list?${stringifiedParams}` : `/clock/list`;
 };
 
-export const clockGetAllOutletId = async (
-	params: ClockGetAllOutletIdParams,
-	options?: RequestInit
-): Promise<EntitiesUser[]> => {
+export const clockGetAllOutletId = async (params: ClockGetAllOutletIdParams, options?: RequestInit): Promise<EntitiesUser[]> => {
 	return customInstance<EntitiesUser[]>(getClockGetAllOutletIdUrl(params), {
 		...options,
 		method: "GET",
@@ -65,9 +55,7 @@ export const getClockGetAllOutletIdQueryOptions = <
 >(
 	params: ClockGetAllOutletIdParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof clockGetAllOutletId>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof clockGetAllOutletId>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -75,19 +63,14 @@ export const getClockGetAllOutletIdQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getClockGetAllOutletIdQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof clockGetAllOutletId>>> = () =>
-		clockGetAllOutletId(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof clockGetAllOutletId>>> = () => clockGetAllOutletId(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof clockGetAllOutletId>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof clockGetAllOutletId>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type ClockGetAllOutletIdQueryResult = NonNullable<
-	Awaited<ReturnType<typeof clockGetAllOutletId>>
->;
+export type ClockGetAllOutletIdQueryResult = NonNullable<Awaited<ReturnType<typeof clockGetAllOutletId>>>;
 export type ClockGetAllOutletIdQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export function createClockGetAllOutletId<
@@ -96,17 +79,14 @@ export function createClockGetAllOutletId<
 >(
 	params: () => ClockGetAllOutletIdParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof clockGetAllOutletId>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof clockGetAllOutletId>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getClockGetAllOutletIdQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getClockGetAllOutletIdQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -115,10 +95,7 @@ export const getClockClockOutUrl = () => {
 	return `/clock/out`;
 };
 
-export const clockClockOut = async (
-	clockClockOutRequest: ClockClockOutRequest,
-	options?: RequestInit
-): Promise<void> => {
+export const clockClockOut = async (clockClockOutRequest: ClockClockOutRequest, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getClockClockOutUrl(), {
 		...options,
 		method: "POST",
@@ -127,23 +104,10 @@ export const clockClockOut = async (
 	});
 };
 
-export const getClockClockOutMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof clockClockOut>>,
-		TError,
-		{ data: BodyType<ClockClockOutRequest> },
-		TContext
-	>;
+export const getClockClockOutMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof clockClockOut>>, TError, { data: BodyType<ClockClockOutRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof clockClockOut>>,
-	TError,
-	{ data: BodyType<ClockClockOutRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof clockClockOut>>, TError, { data: BodyType<ClockClockOutRequest> }, TContext> => {
 	const mutationKey = ["clockClockOut"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -151,10 +115,7 @@ export const getClockClockOutMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof clockClockOut>>,
-		{ data: BodyType<ClockClockOutRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof clockClockOut>>, { data: BodyType<ClockClockOutRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return clockClockOut(data, requestOptions);
@@ -167,36 +128,20 @@ export type ClockClockOutMutationResult = NonNullable<Awaited<ReturnType<typeof 
 export type ClockClockOutMutationBody = BodyType<ClockClockOutRequest>;
 export type ClockClockOutMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createClockClockOut = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createClockClockOut = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof clockClockOut>>,
-			TError,
-			{ data: BodyType<ClockClockOutRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof clockClockOut>>, TError, { data: BodyType<ClockClockOutRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof clockClockOut>>,
-	TError,
-	{ data: BodyType<ClockClockOutRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof clockClockOut>>, TError, { data: BodyType<ClockClockOutRequest> }, TContext> => {
 	return createMutation(() => ({ ...getClockClockOutMutationOptions(options?.()) }), queryClient);
 };
 export const getClockClockInUrl = () => {
 	return `/clock/in`;
 };
 
-export const clockClockIn = async (
-	clockClockInRequest: ClockClockInRequest,
-	options?: RequestInit
-): Promise<void> => {
+export const clockClockIn = async (clockClockInRequest: ClockClockInRequest, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getClockClockInUrl(), {
 		...options,
 		method: "POST",
@@ -205,23 +150,10 @@ export const clockClockIn = async (
 	});
 };
 
-export const getClockClockInMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof clockClockIn>>,
-		TError,
-		{ data: BodyType<ClockClockInRequest> },
-		TContext
-	>;
+export const getClockClockInMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof clockClockIn>>, TError, { data: BodyType<ClockClockInRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof clockClockIn>>,
-	TError,
-	{ data: BodyType<ClockClockInRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof clockClockIn>>, TError, { data: BodyType<ClockClockInRequest> }, TContext> => {
 	const mutationKey = ["clockClockIn"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -229,10 +161,7 @@ export const getClockClockInMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof clockClockIn>>,
-		{ data: BodyType<ClockClockInRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof clockClockIn>>, { data: BodyType<ClockClockInRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return clockClockIn(data, requestOptions);
@@ -245,25 +174,12 @@ export type ClockClockInMutationResult = NonNullable<Awaited<ReturnType<typeof c
 export type ClockClockInMutationBody = BodyType<ClockClockInRequest>;
 export type ClockClockInMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createClockClockIn = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createClockClockIn = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof clockClockIn>>,
-			TError,
-			{ data: BodyType<ClockClockInRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof clockClockIn>>, TError, { data: BodyType<ClockClockInRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof clockClockIn>>,
-	TError,
-	{ data: BodyType<ClockClockInRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof clockClockIn>>, TError, { data: BodyType<ClockClockInRequest> }, TContext> => {
 	return createMutation(() => ({ ...getClockClockInMutationOptions(options?.()) }), queryClient);
 };

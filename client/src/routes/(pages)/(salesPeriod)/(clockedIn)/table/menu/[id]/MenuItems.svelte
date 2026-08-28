@@ -40,7 +40,7 @@
 	</Dialog.Content>
 </Dialog.Root>
 
-<div class="flex justify-center gap-2 my-2 flex-wrap p-2 w-full">
+<div class="my-2 flex w-full flex-wrap justify-center gap-2 p-2">
 	{#each data as item, i (item.menuItemId)}
 		<MenuItem menuItem={item} bind:open bind:menuItemId bind:divisionId />
 	{/each}

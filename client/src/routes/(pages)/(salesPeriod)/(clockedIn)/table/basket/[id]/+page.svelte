@@ -4,11 +4,7 @@
 	import BasketItem from "./BasketItem.svelte";
 	import EmptyBasket from "./EmptyBasket.svelte";
 	import { ChefHatIcon } from "@lucide/svelte";
-	import {
-		createTableOrderGetBasket,
-		createTableOrderSendToKitchen,
-		createTableOrderUpdateOrderItem,
-	} from "$lib/api";
+	import { createTableOrderGetBasket, createTableOrderSendToKitchen, createTableOrderUpdateOrderItem } from "$lib/api";
 	import { goto } from "$app/navigation";
 	import { page } from "$app/state";
 	import { defaults, superForm } from "sveltekit-superforms/client";
@@ -38,18 +34,15 @@
 			toast.error(getError(err).message);
 		}
 	};
-	const form = superForm(
-		defaults(zod4(schema), { defaults: { orderItemIds: [], orderItemStatusId: 2 } }),
-		{
-			SPA: true,
-			validators: zod4(schema),
-			onUpdate({ form }) {
-				if (form.valid) {
-					onSubmit(form.data);
-				}
-			},
-		}
-	);
+	const form = superForm(defaults(zod4(schema), { defaults: { orderItemIds: [], orderItemStatusId: 2 } }), {
+		SPA: true,
+		validators: zod4(schema),
+		onUpdate({ form }) {
+			if (form.valid) {
+				onSubmit(form.data);
+			}
+		},
+	});
 	const { form: formData, enhance } = form;
 
 	const mutation = createTableOrderSendToKitchen();
@@ -96,7 +89,7 @@
 					quantity={item.quantity}
 					{refetch}
 				>
-					<div class="p-1 flex items-center gap-2">
+					<div class="flex items-center gap-2 p-1">
 						<Control>
 							{#snippet children({ props })}
 								<Checkbox
@@ -111,13 +104,7 @@
 										}
 									}}
 								/>
-								<input
-									hidden
-									type="checkbox"
-									name={props.name}
-									value={item.orderItemId}
-									{checked}
-								/>
+								<input hidden type="checkbox" name={props.name} value={item.orderItemId} {checked} />
 								<Label class="font-bold">{item.menuItem.name}</Label>
 							{/snippet}
 						</Control>
@@ -129,18 +116,18 @@
 		{#if (query.data?.orderItems.length ?? 0) <= 0}
 			<EmptyBasket />
 		{:else}
-			<div class="flex flex-col mt-4 gap-2 w-full items-end">
+			<div class="mt-4 flex w-full flex-col items-end gap-2">
 				<div class="flex items-center gap-2">
 					<div class="text-muted-foreground">Total:</div>
 					<h2>R{query.data?.total.toFixed(2)}</h2>
 				</div>
 				{#if $formData.orderItemIds.length > 0}
-					<Button type="submit" variant="secondary" class="w-full border-2 border-primary">
-						Send Selected to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" />
+					<Button type="submit" variant="secondary" class="border-primary w-full border-2">
+						Send Selected to Kitchen <ChefHatIcon class="ml-2 h-4 w-4" />
 					</Button>
 				{:else}
 					<Button onclick={sendAllToKitchen} class="w-full">
-						Send All to Kitchen <ChefHatIcon class="h-4 w-4 ml-2" />
+						Send All to Kitchen <ChefHatIcon class="ml-2 h-4 w-4" />
 					</Button>
 				{/if}
 			</div>

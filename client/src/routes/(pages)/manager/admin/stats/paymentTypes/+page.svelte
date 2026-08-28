@@ -21,26 +21,22 @@
 </script>
 
 <div class="m-2 flex flex-col items-center gap-2">
-	<div class="flex justify-between w-full">
-		<div class="sm:flex flex-col mb-2 w-full hidden">
-			<h1 class="flex font-bold text-lg">Payment Types</h1>
-			<h2 class="flex text-muted-foreground text-xs">
-				Sales Period Payment Type vs Average of last 5 Sales Periods
-			</h2>
+	<div class="flex w-full justify-between">
+		<div class="mb-2 hidden w-full flex-col sm:flex">
+			<h1 class="flex text-lg font-bold">Payment Types</h1>
+			<h2 class="text-muted-foreground flex text-xs">Sales Period Payment Type vs Average of last 5 Sales Periods</h2>
 		</div>
-		<div class="flex items-center gap-2 w-full justify-end">
+		<div class="flex w-full items-center justify-end gap-2">
 			<p class="text-muted-foreground text-sm">Sales Period</p>
 			<Top5SalesPeriod bind:salesPeriod />
 		</div>
 	</div>
 
-	<div class="m-2 flex items-center flex-wrap justify-center gap-4 w-full mt-8">
+	<div class="m-2 mt-8 flex w-full flex-wrap items-center justify-center gap-4">
 		<Card.Root class="w-xl">
 			<Card.Header>
 				<Card.Title>Payment Types</Card.Title>
-				<Card.Description
-					>Sales Period Payment Type vs Average of last 5 Sales Periods</Card.Description
-				>
+				<Card.Description>Sales Period Payment Type vs Average of last 5 Sales Periods</Card.Description>
 			</Card.Header>
 			<Card.Content>
 				<Chart.Container config={chartConfig}>
@@ -103,13 +99,7 @@
 						innerRadius={40}
 						padding={20}
 						c="color"
-						cRange={[
-							"var(--chart-1)",
-							"var(--chart-2)",
-							"var(--chart-3)",
-							"var(--chart-4)",
-							"var(--chart-5)",
-						]}
+						cRange={["var(--chart-1)", "var(--chart-2)", "var(--chart-3)", "var(--chart-4)", "var(--chart-5)"]}
 						cornerRadius={5}
 						padAngle={0.02}
 						props={{

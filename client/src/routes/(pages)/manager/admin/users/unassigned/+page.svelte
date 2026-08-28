@@ -1,9 +1,5 @@
 <script lang="ts">
-	import {
-		createUserRemoveUserOutlet,
-		createUserUnassignedUsers,
-		type UserUserResponse,
-	} from "$lib/api";
+	import { createUserRemoveUserOutlet, createUserUnassignedUsers, type UserUserResponse } from "$lib/api";
 	import { Actions } from "@kayord/ui";
 	import { DataTable, createShadTable, renderComponent } from "@kayord/ui/data-table";
 	import { toast } from "@kayord/ui/sonner";
@@ -175,11 +171,5 @@
 
 <div class="m-2">
 	<h2>Unassigned Users</h2>
-	<DataTable
-		{table}
-		{header}
-		headerClass="pb-2"
-		isLoading={query.isPending}
-		noDataMessage="No unassigned users for outlet"
-	/>
+	<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No unassigned users for outlet" />
 </div>

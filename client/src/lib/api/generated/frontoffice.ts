@@ -5,29 +5,16 @@
  * OpenAPI spec version: v1
  */
 import { createQuery } from "@tanstack/svelte-query";
-import type {
-	CreateQueryOptions,
-	CreateQueryResult,
-	DataTag,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-} from "@tanstack/svelte-query";
+import type { CreateQueryOptions, CreateQueryResult, DataTag, QueryClient, QueryFunction, QueryKey } from "@tanstack/svelte-query";
 
-import type {
-	InternalErrorResponse,
-	TableOrderOfficeTableBasedFrontParams,
-	TableOrderOfficeTableBasedFrontResponse,
-} from "./api.schemas";
+import type { InternalErrorResponse, TableOrderOfficeTableBasedFrontParams, TableOrderOfficeTableBasedFrontResponse } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-export const getTableOrderOfficeTableBasedFrontUrl = (
-	params?: TableOrderOfficeTableBasedFrontParams
-) => {
+export const getTableOrderOfficeTableBasedFrontUrl = (params?: TableOrderOfficeTableBasedFrontParams) => {
 	const normalizedParams = new URLSearchParams();
 
 	Object.entries(params || {}).forEach(([key, value]) => {
@@ -38,27 +25,20 @@ export const getTableOrderOfficeTableBasedFrontUrl = (
 
 	const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/frontOffice/getOrders?${stringifiedParams}`
-		: `/frontOffice/getOrders`;
+	return stringifiedParams.length > 0 ? `/frontOffice/getOrders?${stringifiedParams}` : `/frontOffice/getOrders`;
 };
 
 export const tableOrderOfficeTableBasedFront = async (
 	params?: TableOrderOfficeTableBasedFrontParams,
 	options?: RequestInit
 ): Promise<TableOrderOfficeTableBasedFrontResponse> => {
-	return customInstance<TableOrderOfficeTableBasedFrontResponse>(
-		getTableOrderOfficeTableBasedFrontUrl(params),
-		{
-			...options,
-			method: "GET",
-		}
-	);
+	return customInstance<TableOrderOfficeTableBasedFrontResponse>(getTableOrderOfficeTableBasedFrontUrl(params), {
+		...options,
+		method: "GET",
+	});
 };
 
-export const getTableOrderOfficeTableBasedFrontQueryKey = (
-	params?: TableOrderOfficeTableBasedFrontParams
-) => {
+export const getTableOrderOfficeTableBasedFrontQueryKey = (params?: TableOrderOfficeTableBasedFrontParams) => {
 	return [`/frontOffice/getOrders`, ...(params ? [params] : [])] as const;
 };
 
@@ -68,9 +48,7 @@ export const getTableOrderOfficeTableBasedFrontQueryOptions = <
 >(
 	params?: TableOrderOfficeTableBasedFrontParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -78,19 +56,14 @@ export const getTableOrderOfficeTableBasedFrontQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getTableOrderOfficeTableBasedFrontQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>> = () =>
-		tableOrderOfficeTableBasedFront(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>> = () => tableOrderOfficeTableBasedFront(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type TableOrderOfficeTableBasedFrontQueryResult = NonNullable<
-	Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>
->;
+export type TableOrderOfficeTableBasedFrontQueryResult = NonNullable<Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>>;
 export type TableOrderOfficeTableBasedFrontQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createTableOrderOfficeTableBasedFront<
@@ -99,17 +72,14 @@ export function createTableOrderOfficeTableBasedFront<
 >(
 	params?: () => TableOrderOfficeTableBasedFrontParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedFront>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getTableOrderOfficeTableBasedFrontQueryOptions(params?.(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getTableOrderOfficeTableBasedFrontQueryOptions(params?.(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }

@@ -37,11 +37,7 @@ export const getSectionUpdateUrl = (sectionId: number) => {
 	return `/section/${sectionId}`;
 };
 
-export const sectionUpdate = async (
-	sectionId: number,
-	sectionUpdateRequest: SectionUpdateRequest,
-	options?: RequestInit
-): Promise<EntitiesSection> => {
+export const sectionUpdate = async (sectionId: number, sectionUpdateRequest: SectionUpdateRequest, options?: RequestInit): Promise<EntitiesSection> => {
 	return customInstance<EntitiesSection>(getSectionUpdateUrl(sectionId), {
 		...options,
 		method: "PUT",
@@ -50,23 +46,10 @@ export const sectionUpdate = async (
 	});
 };
 
-export const getSectionUpdateMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof sectionUpdate>>,
-		TError,
-		{ sectionId: number; data: BodyType<SectionUpdateRequest> },
-		TContext
-	>;
+export const getSectionUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof sectionUpdate>>, TError, { sectionId: number; data: BodyType<SectionUpdateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof sectionUpdate>>,
-	TError,
-	{ sectionId: number; data: BodyType<SectionUpdateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof sectionUpdate>>, TError, { sectionId: number; data: BodyType<SectionUpdateRequest> }, TContext> => {
 	const mutationKey = ["sectionUpdate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -74,10 +57,7 @@ export const getSectionUpdateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof sectionUpdate>>,
-		{ sectionId: number; data: BodyType<SectionUpdateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof sectionUpdate>>, { sectionId: number; data: BodyType<SectionUpdateRequest> }> = (props) => {
 		const { sectionId, data } = props ?? {};
 
 		return sectionUpdate(sectionId, data, requestOptions);
@@ -90,36 +70,20 @@ export type SectionUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof 
 export type SectionUpdateMutationBody = BodyType<SectionUpdateRequest>;
 export type SectionUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createSectionUpdate = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createSectionUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof sectionUpdate>>,
-			TError,
-			{ sectionId: number; data: BodyType<SectionUpdateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof sectionUpdate>>, TError, { sectionId: number; data: BodyType<SectionUpdateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof sectionUpdate>>,
-	TError,
-	{ sectionId: number; data: BodyType<SectionUpdateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof sectionUpdate>>, TError, { sectionId: number; data: BodyType<SectionUpdateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getSectionUpdateMutationOptions(options?.()) }), queryClient);
 };
 export const getSectionGetUrl = (sectionId: number) => {
 	return `/section/${sectionId}`;
 };
 
-export const sectionGet = async (
-	sectionId: number,
-	options?: RequestInit
-): Promise<EntitiesSection> => {
+export const sectionGet = async (sectionId: number, options?: RequestInit): Promise<EntitiesSection> => {
 	return customInstance<EntitiesSection>(getSectionGetUrl(sectionId), {
 		...options,
 		method: "GET",
@@ -130,10 +94,7 @@ export const getSectionGetQueryKey = (sectionId: number) => {
 	return [`/section/${sectionId}`] as const;
 };
 
-export const getSectionGetQueryOptions = <
-	TData = Awaited<ReturnType<typeof sectionGet>>,
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
->(
+export const getSectionGetQueryOptions = <TData = Awaited<ReturnType<typeof sectionGet>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(
 	sectionId: number,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof sectionGet>>, TError, TData>>;
@@ -144,23 +105,17 @@ export const getSectionGetQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getSectionGetQueryKey(sectionId);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof sectionGet>>> = () =>
-		sectionGet(sectionId, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof sectionGet>>> = () => sectionGet(sectionId, requestOptions);
 
-	return { queryKey, queryFn, enabled: !!sectionId, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof sectionGet>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, enabled: !!sectionId, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof sectionGet>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type SectionGetQueryResult = NonNullable<Awaited<ReturnType<typeof sectionGet>>>;
 export type SectionGetQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export function createSectionGet<
-	TData = Awaited<ReturnType<typeof sectionGet>>,
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
->(
+export function createSectionGet<TData = Awaited<ReturnType<typeof sectionGet>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(
 	sectionId: () => number,
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof sectionGet>>, TError, TData>>;
@@ -168,10 +123,9 @@ export function createSectionGet<
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getSectionGetQueryOptions(sectionId(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getSectionGetQueryOptions(sectionId(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -190,10 +144,7 @@ export const getSectionTableGetAllUrl = (params: SectionTableGetAllParams) => {
 	return stringifiedParams.length > 0 ? `/section/tables?${stringifiedParams}` : `/section/tables`;
 };
 
-export const sectionTableGetAll = async (
-	params: SectionTableGetAllParams,
-	options?: RequestInit
-): Promise<EntitiesTable[]> => {
+export const sectionTableGetAll = async (params: SectionTableGetAllParams, options?: RequestInit): Promise<EntitiesTable[]> => {
 	return customInstance<EntitiesTable[]>(getSectionTableGetAllUrl(params), {
 		...options,
 		method: "GET",
@@ -210,9 +161,7 @@ export const getSectionTableGetAllQueryOptions = <
 >(
 	params: SectionTableGetAllParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof sectionTableGetAll>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof sectionTableGetAll>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -220,19 +169,14 @@ export const getSectionTableGetAllQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getSectionTableGetAllQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof sectionTableGetAll>>> = () =>
-		sectionTableGetAll(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof sectionTableGetAll>>> = () => sectionTableGetAll(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof sectionTableGetAll>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof sectionTableGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type SectionTableGetAllQueryResult = NonNullable<
-	Awaited<ReturnType<typeof sectionTableGetAll>>
->;
+export type SectionTableGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof sectionTableGetAll>>>;
 export type SectionTableGetAllQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export function createSectionTableGetAll<
@@ -241,17 +185,14 @@ export function createSectionTableGetAll<
 >(
 	params: () => SectionTableGetAllParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof sectionTableGetAll>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof sectionTableGetAll>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getSectionTableGetAllQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getSectionTableGetAllQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -270,10 +211,7 @@ export const getSectionListUrl = (params: SectionListParams) => {
 	return stringifiedParams.length > 0 ? `/section?${stringifiedParams}` : `/section`;
 };
 
-export const sectionList = async (
-	params: SectionListParams,
-	options?: RequestInit
-): Promise<EntitiesSection[]> => {
+export const sectionList = async (params: SectionListParams, options?: RequestInit): Promise<EntitiesSection[]> => {
 	return customInstance<EntitiesSection[]>(getSectionListUrl(params), {
 		...options,
 		method: "GET",
@@ -284,10 +222,7 @@ export const getSectionListQueryKey = (params?: SectionListParams) => {
 	return [`/section`, ...(params ? [params] : [])] as const;
 };
 
-export const getSectionListQueryOptions = <
-	TData = Awaited<ReturnType<typeof sectionList>>,
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
->(
+export const getSectionListQueryOptions = <TData = Awaited<ReturnType<typeof sectionList>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(
 	params: SectionListParams,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof sectionList>>, TError, TData>>;
@@ -298,23 +233,17 @@ export const getSectionListQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getSectionListQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof sectionList>>> = () =>
-		sectionList(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof sectionList>>> = () => sectionList(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof sectionList>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof sectionList>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type SectionListQueryResult = NonNullable<Awaited<ReturnType<typeof sectionList>>>;
 export type SectionListQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export function createSectionList<
-	TData = Awaited<ReturnType<typeof sectionList>>,
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
->(
+export function createSectionList<TData = Awaited<ReturnType<typeof sectionList>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(
 	params: () => SectionListParams,
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof sectionList>>, TError, TData>>;
@@ -322,10 +251,9 @@ export function createSectionList<
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getSectionListQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getSectionListQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -334,10 +262,7 @@ export const getSectionCreateUrl = () => {
 	return `/section`;
 };
 
-export const sectionCreate = async (
-	sectionCreateRequest: SectionCreateRequest,
-	options?: RequestInit
-): Promise<EntitiesSection> => {
+export const sectionCreate = async (sectionCreateRequest: SectionCreateRequest, options?: RequestInit): Promise<EntitiesSection> => {
 	return customInstance<EntitiesSection>(getSectionCreateUrl(), {
 		...options,
 		method: "POST",
@@ -346,23 +271,10 @@ export const sectionCreate = async (
 	});
 };
 
-export const getSectionCreateMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof sectionCreate>>,
-		TError,
-		{ data: BodyType<SectionCreateRequest> },
-		TContext
-	>;
+export const getSectionCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof sectionCreate>>, TError, { data: BodyType<SectionCreateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof sectionCreate>>,
-	TError,
-	{ data: BodyType<SectionCreateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof sectionCreate>>, TError, { data: BodyType<SectionCreateRequest> }, TContext> => {
 	const mutationKey = ["sectionCreate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -370,10 +282,7 @@ export const getSectionCreateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof sectionCreate>>,
-		{ data: BodyType<SectionCreateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof sectionCreate>>, { data: BodyType<SectionCreateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return sectionCreate(data, requestOptions);
@@ -386,26 +295,13 @@ export type SectionCreateMutationResult = NonNullable<Awaited<ReturnType<typeof 
 export type SectionCreateMutationBody = BodyType<SectionCreateRequest>;
 export type SectionCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createSectionCreate = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createSectionCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof sectionCreate>>,
-			TError,
-			{ data: BodyType<SectionCreateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof sectionCreate>>, TError, { data: BodyType<SectionCreateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof sectionCreate>>,
-	TError,
-	{ data: BodyType<SectionCreateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof sectionCreate>>, TError, { data: BodyType<SectionCreateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getSectionCreateMutationOptions(options?.()) }), queryClient);
 };
 export const getSectionDeleteUrl = (id: number) => {
@@ -419,23 +315,10 @@ export const sectionDelete = async (id: number, options?: RequestInit): Promise<
 	});
 };
 
-export const getSectionDeleteMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof sectionDelete>>,
-		TError,
-		{ id: number },
-		TContext
-	>;
+export const getSectionDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof sectionDelete>>, TError, { id: number }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof sectionDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof sectionDelete>>, TError, { id: number }, TContext> => {
 	const mutationKey = ["sectionDelete"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -443,9 +326,7 @@ export const getSectionDeleteMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<Awaited<ReturnType<typeof sectionDelete>>, { id: number }> = (
-		props
-	) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof sectionDelete>>, { id: number }> = (props) => {
 		const { id } = props ?? {};
 
 		return sectionDelete(id, requestOptions);
@@ -458,25 +339,12 @@ export type SectionDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof 
 
 export type SectionDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createSectionDelete = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createSectionDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof sectionDelete>>,
-			TError,
-			{ id: number },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof sectionDelete>>, TError, { id: number }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof sectionDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof sectionDelete>>, TError, { id: number }, TContext> => {
 	return createMutation(() => ({ ...getSectionDeleteMutationOptions(options?.()) }), queryClient);
 };

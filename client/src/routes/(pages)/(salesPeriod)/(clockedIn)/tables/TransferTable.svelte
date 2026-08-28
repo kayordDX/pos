@@ -8,11 +8,7 @@
 	import { getError } from "$lib/types";
 	import { defaults, superForm } from "sveltekit-superforms/client";
 	import { zod4 } from "sveltekit-superforms/adapters";
-	import {
-		createUserUsersType,
-		type TableGetBookedResponse,
-		createTableBookingTransfer,
-	} from "$lib/api";
+	import { createUserUsersType, type TableGetBookedResponse, createTableBookingTransfer } from "$lib/api";
 
 	interface Props {
 		otherTable: TableGetBookedResponse;
@@ -71,7 +67,7 @@
 </script>
 
 {#if isManager}
-	<div class="w-full flex items-center justify-end">
+	<div class="flex w-full items-center justify-end">
 		<Button
 			size="sm"
 			variant="outline"
@@ -99,12 +95,7 @@
 							<Form.Control>
 								{#snippet children({ props })}
 									<Form.Label>Transfer to User</Form.Label>
-									<Combobox
-										{...props}
-										bind:value={$formData.transferUserId}
-										name="User"
-										items={users.map((i) => ({ value: i.userId, label: i.name }))}
-									/>
+									<Combobox {...props} bind:value={$formData.transferUserId} name="User" items={users.map((i) => ({ value: i.userId, label: i.name }))} />
 								{/snippet}
 							</Form.Control>
 							<Form.FieldErrors class="text-destructive text-sm" />

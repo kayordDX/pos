@@ -55,7 +55,7 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<Card.Root class="p-5 m-5">
+<Card.Root class="m-5 p-5">
 	<Card.Header>
 		<Card.Title>Device Settings enable Counter Mode</Card.Title>
 		<Card.Description>This will log you out and activate counter mode on device</Card.Description>

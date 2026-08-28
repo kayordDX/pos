@@ -61,8 +61,8 @@
 </script>
 
 {#snippet header()}
-	<div class="flex gap-2 justify-between items-center">
-		<div class="flex gap-2 items-center">
+	<div class="flex items-center justify-between gap-2">
+		<div class="flex items-center gap-2">
 			<Search bind:search name="Stock Categories" />
 		</div>
 		<Button onclick={openAdd}>
@@ -75,11 +75,5 @@
 
 <div class="m-2">
 	<h2>Stock Categories</h2>
-	<DataTable
-		headerClass="pb-2"
-		{header}
-		{table}
-		isLoading={query.isPending}
-		noDataMessage="No categories for Outlet"
-	/>
+	<DataTable headerClass="pb-2" {header} {table} isLoading={query.isPending} noDataMessage="No categories for Outlet" />
 </div>

@@ -34,9 +34,7 @@ export const getWhatsappStatusUrl = () => {
 	return `/whatsapp/status`;
 };
 
-export const whatsappStatus = async (
-	options?: RequestInit
-): Promise<ServicesWhatsappWResponseOfSessionStatus> => {
+export const whatsappStatus = async (options?: RequestInit): Promise<ServicesWhatsappWResponseOfSessionStatus> => {
 	return customInstance<ServicesWhatsappWResponseOfSessionStatus>(getWhatsappStatusUrl(), {
 		...options,
 		method: "GET",
@@ -47,10 +45,7 @@ export const getWhatsappStatusQueryKey = () => {
 	return [`/whatsapp/status`] as const;
 };
 
-export const getWhatsappStatusQueryOptions = <
-	TData = Awaited<ReturnType<typeof whatsappStatus>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
+export const getWhatsappStatusQueryOptions = <TData = Awaited<ReturnType<typeof whatsappStatus>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof whatsappStatus>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -58,33 +53,26 @@ export const getWhatsappStatusQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getWhatsappStatusQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof whatsappStatus>>> = () =>
-		whatsappStatus(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof whatsappStatus>>> = () => whatsappStatus(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof whatsappStatus>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof whatsappStatus>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type WhatsappStatusQueryResult = NonNullable<Awaited<ReturnType<typeof whatsappStatus>>>;
 export type WhatsappStatusQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createWhatsappStatus<
-	TData = Awaited<ReturnType<typeof whatsappStatus>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createWhatsappStatus<TData = Awaited<ReturnType<typeof whatsappStatus>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof whatsappStatus>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getWhatsappStatusQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getWhatsappStatusQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -93,9 +81,7 @@ export const getWhatsappQrCodeUrl = () => {
 	return `/whatsapp/qr`;
 };
 
-export const whatsappQrCode = async (
-	options?: RequestInit
-): Promise<ServicesWhatsappWResponseOfQrResponse> => {
+export const whatsappQrCode = async (options?: RequestInit): Promise<ServicesWhatsappWResponseOfQrResponse> => {
 	return customInstance<ServicesWhatsappWResponseOfQrResponse>(getWhatsappQrCodeUrl(), {
 		...options,
 		method: "GET",
@@ -106,10 +92,7 @@ export const getWhatsappQrCodeQueryKey = () => {
 	return [`/whatsapp/qr`] as const;
 };
 
-export const getWhatsappQrCodeQueryOptions = <
-	TData = Awaited<ReturnType<typeof whatsappQrCode>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
+export const getWhatsappQrCodeQueryOptions = <TData = Awaited<ReturnType<typeof whatsappQrCode>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof whatsappQrCode>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -117,33 +100,26 @@ export const getWhatsappQrCodeQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getWhatsappQrCodeQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof whatsappQrCode>>> = () =>
-		whatsappQrCode(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof whatsappQrCode>>> = () => whatsappQrCode(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof whatsappQrCode>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof whatsappQrCode>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type WhatsappQrCodeQueryResult = NonNullable<Awaited<ReturnType<typeof whatsappQrCode>>>;
 export type WhatsappQrCodeQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createWhatsappQrCode<
-	TData = Awaited<ReturnType<typeof whatsappQrCode>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createWhatsappQrCode<TData = Awaited<ReturnType<typeof whatsappQrCode>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof whatsappQrCode>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getWhatsappQrCodeQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getWhatsappQrCodeQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -152,25 +128,15 @@ export const getWhatsappLogoutUrl = () => {
 	return `/whatsapp/logout`;
 };
 
-export const whatsappLogout = async (
-	options?: RequestInit
-): Promise<ServicesWhatsappWResponseOfSessionLogout> => {
+export const whatsappLogout = async (options?: RequestInit): Promise<ServicesWhatsappWResponseOfSessionLogout> => {
 	return customInstance<ServicesWhatsappWResponseOfSessionLogout>(getWhatsappLogoutUrl(), {
 		...options,
 		method: "POST",
 	});
 };
 
-export const getWhatsappLogoutMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof whatsappLogout>>,
-		TError,
-		void,
-		TContext
-	>;
+export const getWhatsappLogoutMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof whatsappLogout>>, TError, void, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof whatsappLogout>>, TError, void, TContext> => {
 	const mutationKey = ["whatsappLogout"];
@@ -191,17 +157,9 @@ export type WhatsappLogoutMutationResult = NonNullable<Awaited<ReturnType<typeof
 
 export type WhatsappLogoutMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createWhatsappLogout = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createWhatsappLogout = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof whatsappLogout>>,
-			TError,
-			void,
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof whatsappLogout>>, TError, void, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
@@ -212,28 +170,15 @@ export const getWhatsappConnectUrl = () => {
 	return `/whatsapp/connect`;
 };
 
-export const whatsappConnect = async (
-	options?: RequestInit
-): Promise<ServicesWhatsappWResponseOfSessionConnectResponse> => {
-	return customInstance<ServicesWhatsappWResponseOfSessionConnectResponse>(
-		getWhatsappConnectUrl(),
-		{
-			...options,
-			method: "POST",
-		}
-	);
+export const whatsappConnect = async (options?: RequestInit): Promise<ServicesWhatsappWResponseOfSessionConnectResponse> => {
+	return customInstance<ServicesWhatsappWResponseOfSessionConnectResponse>(getWhatsappConnectUrl(), {
+		...options,
+		method: "POST",
+	});
 };
 
-export const getWhatsappConnectMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof whatsappConnect>>,
-		TError,
-		void,
-		TContext
-	>;
+export const getWhatsappConnectMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof whatsappConnect>>, TError, void, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof whatsappConnect>>, TError, void, TContext> => {
 	const mutationKey = ["whatsappConnect"];
@@ -250,23 +195,13 @@ export const getWhatsappConnectMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type WhatsappConnectMutationResult = NonNullable<
-	Awaited<ReturnType<typeof whatsappConnect>>
->;
+export type WhatsappConnectMutationResult = NonNullable<Awaited<ReturnType<typeof whatsappConnect>>>;
 
 export type WhatsappConnectMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createWhatsappConnect = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createWhatsappConnect = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof whatsappConnect>>,
-			TError,
-			void,
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof whatsappConnect>>, TError, void, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient

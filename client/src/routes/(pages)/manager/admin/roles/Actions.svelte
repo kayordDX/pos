@@ -57,9 +57,7 @@
 		<AlertDialog.Content>
 			<AlertDialog.Header>
 				<AlertDialog.Title>Delete Role?</AlertDialog.Title>
-				<AlertDialog.Description>
-					This will remove the role and users assigned to it will lose access
-				</AlertDialog.Description>
+				<AlertDialog.Description>This will remove the role and users assigned to it will lose access</AlertDialog.Description>
 			</AlertDialog.Header>
 			<AlertDialog.Footer>
 				<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

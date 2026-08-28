@@ -7,9 +7,7 @@
 </script>
 
 {#if value > 1}
-	<div
-		class="flex justify-center size-5 bg-secondary absolute top-0.5 right-0.5 rounded-full text-xs items-center text-muted-foreground"
-	>
+	<div class="bg-secondary text-muted-foreground absolute top-0.5 right-0.5 flex size-5 items-center justify-center rounded-full text-xs">
 		{value}
 	</div>
 {/if}

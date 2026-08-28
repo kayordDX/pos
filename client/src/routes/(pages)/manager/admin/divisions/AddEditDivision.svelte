@@ -70,8 +70,7 @@
 		id: `section-form-${division?.divisionId}`,
 		validators: zod4(schema),
 		onUpdate({ form }) {
-			if (form.valid)
-				handleSubmit({ name: form.data.name, divisionTypeId: Number(form.data?.divisionTypeId) });
+			if (form.valid) handleSubmit({ name: form.data.name, divisionTypeId: Number(form.data?.divisionTypeId) });
 		},
 	});
 	let selectedDivisionTypeId = $derived(() => $formData.divisionTypeId.toString());
@@ -96,9 +95,7 @@
 			})) ?? []
 		);
 	});
-	const divTypeValue = $derived(
-		divTypeList.find((i) => i.value == $formData.divisionTypeId.toString())?.label
-	);
+	const divTypeValue = $derived(divTypeList.find((i) => i.value == $formData.divisionTypeId.toString())?.label);
 </script>
 
 <Dialog.Root bind:open>
@@ -127,10 +124,7 @@
 							<Select.Root
 								type="single"
 								name="divisionTypeId"
-								bind:value={
-									() => $formData.divisionTypeId.toString(),
-									(v) => ($formData.divisionTypeId = Number(v))
-								}
+								bind:value={() => $formData.divisionTypeId.toString(), (v) => ($formData.divisionTypeId = Number(v))}
 								allowDeselect={false}
 							>
 								<Select.Trigger {...props}>

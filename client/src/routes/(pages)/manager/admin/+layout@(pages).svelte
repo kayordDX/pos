@@ -4,14 +4,7 @@
 	import { Header } from "$lib/components/Header";
 	import { Button, Sidebar } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
-	import {
-		PrinterIcon,
-		MessageCircleIcon,
-		UserRoundSearchIcon,
-		UsersIcon,
-		ArrowLeftIcon,
-		MenuIcon,
-	} from "@lucide/svelte";
+	import { PrinterIcon, MessageCircleIcon, UserRoundSearchIcon, UsersIcon, ArrowLeftIcon, MenuIcon } from "@lucide/svelte";
 	import type { Snippet } from "svelte";
 	import AdminSidebar from "./AdminSidebar.svelte";
 	import { info } from "$lib/stores/info.svelte";
@@ -20,8 +13,7 @@
 
 	let { children }: { children?: Snippet } = $props();
 
-	const activeClass =
-		"bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground";
+	const activeClass = "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground";
 
 	const menuItems = {
 		top: [
@@ -61,12 +53,9 @@
 	<div>
 		<Header class="z-20 border-none" hideHeader leftHeader={leftMenu} />
 		{#if showSidebar}
-			<div class="bg-secondary fixed bottom-0 top-0 left-0 z-0 w-14 flex flex-col justify-between">
+			<div class="bg-secondary fixed top-0 bottom-0 left-0 z-0 flex w-14 flex-col justify-between">
 				<div class="flex flex-col gap-4 p-2">
-					<button
-						class="flex items-center bg-background p-2 rounded-full"
-						onclick={() => goto("/")}
-					>
+					<button class="bg-background flex items-center rounded-full p-2" onclick={() => goto("/")}>
 						<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="logo" class="h-6" />
 					</button>
 					{#each menuItems.top as item}
@@ -74,9 +63,7 @@
 							href={item.href}
 							variant="ghost"
 							size="icon"
-							class={page.url.pathname === item.href
-								? cn(activeClass)
-								: "hover:bg-primary hover:text-primary-foreground"}
+							class={page.url.pathname === item.href ? cn(activeClass) : "hover:bg-primary hover:text-primary-foreground"}
 						>
 							<item.icon class="h-6 w-6" />
 						</Button>

@@ -31,9 +31,9 @@
 
 <Button class="w-full" onclick={downloadBill} disabled={isLoading}>
 	{#if isLoading}
-		<Loader class="size-4 mr-2" />
+		<Loader class="mr-2 size-4" />
 	{:else}
-		<DownloadIcon class="size-4 mr-2" />
+		<DownloadIcon class="mr-2 size-4" />
 	{/if}
 	Download
 </Button>

@@ -1,14 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { faro } from "./faro";
-import {
-	getAuth,
-	GoogleAuthProvider,
-	onIdTokenChanged,
-	signInWithCustomToken,
-	signInWithPopup,
-	signOut,
-	type User,
-} from "firebase/auth";
+import { getAuth, GoogleAuthProvider, onIdTokenChanged, signInWithCustomToken, signInWithPopup, signOut, type User } from "firebase/auth";
 import { getMessaging, getToken } from "firebase/messaging";
 import { PUBLIC_VAPID_KEY } from "$env/static/public";
 

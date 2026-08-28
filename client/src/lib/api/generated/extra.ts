@@ -38,10 +38,7 @@ export const getExtraUpdateUrl = () => {
 	return `/extra`;
 };
 
-export const extraUpdate = async (
-	extraUpdateRequest: ExtraUpdateRequest,
-	options?: RequestInit
-): Promise<void> => {
+export const extraUpdate = async (extraUpdateRequest: ExtraUpdateRequest, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getExtraUpdateUrl(), {
 		...options,
 		method: "PUT",
@@ -50,23 +47,10 @@ export const extraUpdate = async (
 	});
 };
 
-export const getExtraUpdateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof extraUpdate>>,
-		TError,
-		{ data: BodyType<ExtraUpdateRequest> },
-		TContext
-	>;
+export const getExtraUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError, { data: BodyType<ExtraUpdateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof extraUpdate>>,
-	TError,
-	{ data: BodyType<ExtraUpdateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError, { data: BodyType<ExtraUpdateRequest> }, TContext> => {
 	const mutationKey = ["extraUpdate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -74,10 +58,7 @@ export const getExtraUpdateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof extraUpdate>>,
-		{ data: BodyType<ExtraUpdateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraUpdate>>, { data: BodyType<ExtraUpdateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return extraUpdate(data, requestOptions);
@@ -90,26 +71,13 @@ export type ExtraUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof ex
 export type ExtraUpdateMutationBody = BodyType<ExtraUpdateRequest>;
 export type ExtraUpdateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createExtraUpdate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createExtraUpdate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof extraUpdate>>,
-			TError,
-			{ data: BodyType<ExtraUpdateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError, { data: BodyType<ExtraUpdateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof extraUpdate>>,
-	TError,
-	{ data: BodyType<ExtraUpdateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof extraUpdate>>, TError, { data: BodyType<ExtraUpdateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getExtraUpdateMutationOptions(options?.()) }), queryClient);
 };
 export const getExtraGroupUrl = () => {
@@ -127,10 +95,7 @@ export const getExtraGroupQueryKey = () => {
 	return [`/extra`] as const;
 };
 
-export const getExtraGroupQueryOptions = <
-	TData = Awaited<ReturnType<typeof extraGroup>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
+export const getExtraGroupQueryOptions = <TData = Awaited<ReturnType<typeof extraGroup>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -138,33 +103,26 @@ export const getExtraGroupQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getExtraGroupQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGroup>>> = () =>
-		extraGroup(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGroup>>> = () => extraGroup(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof extraGroup>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type ExtraGroupQueryResult = NonNullable<Awaited<ReturnType<typeof extraGroup>>>;
 export type ExtraGroupQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createExtraGroup<
-	TData = Awaited<ReturnType<typeof extraGroup>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createExtraGroup<TData = Awaited<ReturnType<typeof extraGroup>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getExtraGroupQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getExtraGroupQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -173,10 +131,7 @@ export const getExtraCreateUrl = () => {
 	return `/extra`;
 };
 
-export const extraCreate = async (
-	extraCreateRequest: ExtraCreateRequest,
-	options?: RequestInit
-): Promise<void> => {
+export const extraCreate = async (extraCreateRequest: ExtraCreateRequest, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getExtraCreateUrl(), {
 		...options,
 		method: "POST",
@@ -185,23 +140,10 @@ export const extraCreate = async (
 	});
 };
 
-export const getExtraCreateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof extraCreate>>,
-		TError,
-		{ data: BodyType<ExtraCreateRequest> },
-		TContext
-	>;
+export const getExtraCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError, { data: BodyType<ExtraCreateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof extraCreate>>,
-	TError,
-	{ data: BodyType<ExtraCreateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError, { data: BodyType<ExtraCreateRequest> }, TContext> => {
 	const mutationKey = ["extraCreate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -209,10 +151,7 @@ export const getExtraCreateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof extraCreate>>,
-		{ data: BodyType<ExtraCreateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraCreate>>, { data: BodyType<ExtraCreateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return extraCreate(data, requestOptions);
@@ -225,26 +164,13 @@ export type ExtraCreateMutationResult = NonNullable<Awaited<ReturnType<typeof ex
 export type ExtraCreateMutationBody = BodyType<ExtraCreateRequest>;
 export type ExtraCreateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createExtraCreate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createExtraCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof extraCreate>>,
-			TError,
-			{ data: BodyType<ExtraCreateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError, { data: BodyType<ExtraCreateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof extraCreate>>,
-	TError,
-	{ data: BodyType<ExtraCreateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof extraCreate>>, TError, { data: BodyType<ExtraCreateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getExtraCreateMutationOptions(options?.()) }), queryClient);
 };
 export const getExtraItemsUrl = (id: number) => {
@@ -262,10 +188,7 @@ export const getExtraItemsQueryKey = (id: number) => {
 	return [`/extra/${id}`] as const;
 };
 
-export const getExtraItemsQueryOptions = <
-	TData = Awaited<ReturnType<typeof extraItems>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getExtraItemsQueryOptions = <TData = Awaited<ReturnType<typeof extraItems>>, TError = ErrorType<void | InternalErrorResponse>>(
 	id: number,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData>>;
@@ -276,23 +199,17 @@ export const getExtraItemsQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getExtraItemsQueryKey(id);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraItems>>> = () =>
-		extraItems(id, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraItems>>> = () => extraItems(id, requestOptions);
 
-	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof extraItems>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type ExtraItemsQueryResult = NonNullable<Awaited<ReturnType<typeof extraItems>>>;
 export type ExtraItemsQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createExtraItems<
-	TData = Awaited<ReturnType<typeof extraItems>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createExtraItems<TData = Awaited<ReturnType<typeof extraItems>>, TError = ErrorType<void | InternalErrorResponse>>(
 	id: () => number,
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData>>;
@@ -300,10 +217,9 @@ export function createExtraItems<
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getExtraItemsQueryOptions(id(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getExtraItemsQueryOptions(id(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -319,23 +235,10 @@ export const extraDelete = async (id: number, options?: RequestInit): Promise<vo
 	});
 };
 
-export const getExtraDeleteMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof extraDelete>>,
-		TError,
-		{ id: number },
-		TContext
-	>;
+export const getExtraDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError, { id: number }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof extraDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError, { id: number }, TContext> => {
 	const mutationKey = ["extraDelete"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -343,9 +246,7 @@ export const getExtraDeleteMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraDelete>>, { id: number }> = (
-		props
-	) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraDelete>>, { id: number }> = (props) => {
 		const { id } = props ?? {};
 
 		return extraDelete(id, requestOptions);
@@ -358,26 +259,13 @@ export type ExtraDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof ex
 
 export type ExtraDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createExtraDelete = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createExtraDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof extraDelete>>,
-			TError,
-			{ id: number },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError, { id: number }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof extraDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof extraDelete>>, TError, { id: number }, TContext> => {
 	return createMutation(() => ({ ...getExtraDeleteMutationOptions(options?.()) }), queryClient);
 };
 export const getExtraGetAllMenuUrl = (params: ExtraGetAllMenuParams) => {
@@ -394,10 +282,7 @@ export const getExtraGetAllMenuUrl = (params: ExtraGetAllMenuParams) => {
 	return stringifiedParams.length > 0 ? `/extra/menu?${stringifiedParams}` : `/extra/menu`;
 };
 
-export const extraGetAllMenu = async (
-	params: ExtraGetAllMenuParams,
-	options?: RequestInit
-): Promise<ExtraGetAllMenuSpecialExtrasDTO[]> => {
+export const extraGetAllMenu = async (params: ExtraGetAllMenuParams, options?: RequestInit): Promise<ExtraGetAllMenuSpecialExtrasDTO[]> => {
 	return customInstance<ExtraGetAllMenuSpecialExtrasDTO[]>(getExtraGetAllMenuUrl(params), {
 		...options,
 		method: "GET",
@@ -408,10 +293,7 @@ export const getExtraGetAllMenuQueryKey = (params?: ExtraGetAllMenuParams) => {
 	return [`/extra/menu`, ...(params ? [params] : [])] as const;
 };
 
-export const getExtraGetAllMenuQueryOptions = <
-	TData = Awaited<ReturnType<typeof extraGetAllMenu>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getExtraGetAllMenuQueryOptions = <TData = Awaited<ReturnType<typeof extraGetAllMenu>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params: ExtraGetAllMenuParams,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData>>;
@@ -422,23 +304,17 @@ export const getExtraGetAllMenuQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getExtraGetAllMenuQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAllMenu>>> = () =>
-		extraGetAllMenu(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAllMenu>>> = () => extraGetAllMenu(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof extraGetAllMenu>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type ExtraGetAllMenuQueryResult = NonNullable<Awaited<ReturnType<typeof extraGetAllMenu>>>;
 export type ExtraGetAllMenuQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createExtraGetAllMenu<
-	TData = Awaited<ReturnType<typeof extraGetAllMenu>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createExtraGetAllMenu<TData = Awaited<ReturnType<typeof extraGetAllMenu>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params: () => ExtraGetAllMenuParams,
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData>>;
@@ -446,10 +322,9 @@ export function createExtraGetAllMenu<
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getExtraGetAllMenuQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getExtraGetAllMenuQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -469,10 +344,7 @@ export const getExtraGetAllQueryKey = () => {
 	return [`/extra/all`] as const;
 };
 
-export const getExtraGetAllQueryOptions = <
-	TData = Awaited<ReturnType<typeof extraGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
+export const getExtraGetAllQueryOptions = <TData = Awaited<ReturnType<typeof extraGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -480,33 +352,26 @@ export const getExtraGetAllQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getExtraGetAllQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAll>>> = () =>
-		extraGetAll(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAll>>> = () => extraGetAll(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof extraGetAll>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type ExtraGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof extraGetAll>>>;
 export type ExtraGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createExtraGetAll<
-	TData = Awaited<ReturnType<typeof extraGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createExtraGetAll<TData = Awaited<ReturnType<typeof extraGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getExtraGetAllQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getExtraGetAllQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }

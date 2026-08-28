@@ -7,12 +7,7 @@
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
-	import {
-		createStockAllocateItemCreate,
-		createStockAllocateItemUpdate,
-		createStockGetAllDivision,
-		createStockItemsGet,
-	} from "$lib/api";
+	import { createStockAllocateItemCreate, createStockAllocateItemUpdate, createStockGetAllDivision, createStockItemsGet } from "$lib/api";
 
 	import QueryBuilder from "fluent-querykit";
 	import { page } from "$app/state";
@@ -112,9 +107,7 @@
 		filters = qb.build();
 	});
 
-	const stockListSelect = $derived(
-		stockList.map((s) => ({ value: s.stockId, label: `${s.name} - (${s.unitName})` }))
-	);
+	const stockListSelect = $derived(stockList.map((s) => ({ value: s.stockId, label: `${s.name} - (${s.unitName})` })));
 
 	const last = createStockItemsGet(
 		() => $formData.stockId ?? 0,
@@ -131,9 +124,7 @@
 		<form method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>{isEdit ? "Edit" : "Add"} Allocation Item</Dialog.Title>
-				<Dialog.Description
-					>Complete form to {isEdit ? "Edit" : "Add"} allocation</Dialog.Description
-				>
+				<Dialog.Description>Complete form to {isEdit ? "Edit" : "Add"} allocation</Dialog.Description>
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
 				{#if isEdit}
@@ -145,13 +136,7 @@
 						<Form.Control>
 							{#snippet children({ props })}
 								<Form.Label>Stock</Form.Label>
-								<Combobox
-									bind:value={$formData.stockId}
-									items={stockListSelect}
-									bind:search={stockSearch}
-									shouldFilter={false}
-									{...props}
-								/>
+								<Combobox bind:value={$formData.stockId} items={stockListSelect} bind:search={stockSearch} shouldFilter={false} {...props} />
 							{/snippet}
 						</Form.Control>
 						<Form.FieldErrors />
@@ -161,10 +146,8 @@
 				<Table.Root>
 					<Table.Body>
 						<Table.Row class="border-none">
-							<Table.Cell class="text-sm text-muted-foreground p-1">
-								Current Division Stock
-							</Table.Cell>
-							<Table.Cell class="text-right p-1">{lastData?.actual ?? 0}</Table.Cell>
+							<Table.Cell class="text-muted-foreground p-1 text-sm">Current Division Stock</Table.Cell>
+							<Table.Cell class="p-1 text-right">{lastData?.actual ?? 0}</Table.Cell>
 						</Table.Row>
 					</Table.Body>
 				</Table.Root>

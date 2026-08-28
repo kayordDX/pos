@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import {
-		BookOpenTextIcon,
-		EllipsisVerticalIcon,
-		PencilIcon,
-		SquareStackIcon,
-		Trash2Icon,
-	} from "@lucide/svelte";
+	import { BookOpenTextIcon, EllipsisVerticalIcon, PencilIcon, SquareStackIcon, Trash2Icon } from "@lucide/svelte";
 	import EditMenuItem from "./EditMenuItem.svelte";
 	import { createMenuItemDelete, type MenuItemMenuItemAdminDTO } from "$lib/api";
 	import { getError, LinkType } from "$lib/types";
@@ -70,9 +64,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete Menu Item?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete the menu item and all its configured options.
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will delete the menu item and all its configured options.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

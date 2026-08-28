@@ -7,12 +7,7 @@
 	import { defaults, superForm } from "sveltekit-superforms";
 	import { zod4 } from "sveltekit-superforms/adapters";
 	import { z } from "zod";
-	import {
-		createStockDivisionGetAll,
-		createStockAllocateCreate,
-		createBusinessGetOutlets,
-		createDivisionGetUsers,
-	} from "$lib/api";
+	import { createStockDivisionGetAll, createStockAllocateCreate, createBusinessGetOutlets, createDivisionGetUsers } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { session } from "$lib/firebase.svelte";
 
@@ -31,9 +26,7 @@
 	const outletsQuery = createBusinessGetOutlets(() => status.value.outletId);
 	const outlets = $derived(outletsQuery.data ?? []);
 
-	const outletSelect = $derived(
-		outlets.find((i) => i.id === $formData.toOutletId)?.name ?? "Select Outlet"
-	);
+	const outletSelect = $derived(outlets.find((i) => i.id === $formData.toOutletId)?.name ?? "Select Outlet");
 
 	const schema = z.object({
 		comment: z.string().min(1, { message: "Comment is Required" }),
@@ -118,17 +111,11 @@
 
 	const fromDivisionQuery = createStockDivisionGetAll(() => ({ outletId: status.value.outletId }));
 	const fromDivisions = $derived(fromDivisionQuery.data ?? []);
-	const fromDivisionSelect = $derived(
-		fromDivisions.find((i) => i.divisionId === $formData.fromDivisionId)?.divisionName ??
-			"Select Division"
-	);
+	const fromDivisionSelect = $derived(fromDivisions.find((i) => i.divisionId === $formData.fromDivisionId)?.divisionName ?? "Select Division");
 
 	const toDivisionQuery = createStockDivisionGetAll(() => ({ outletId: $formData.toOutletId }));
 	const toDivisions = $derived(toDivisionQuery.data ?? []);
-	const toDivisionSelect = $derived(
-		toDivisions.find((i) => i.divisionId === $formData.toDivisionId)?.divisionName ??
-			"Select Division"
-	);
+	const toDivisionSelect = $derived(toDivisions.find((i) => i.divisionId === $formData.toDivisionId)?.divisionName ?? "Select Division");
 
 	const divisionUsersQuery = createDivisionGetUsers(
 		() => $formData.toDivisionId,
@@ -142,9 +129,7 @@
 		<form method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>{isEdit ? "Edit" : "Add"} Allocation</Dialog.Title>
-				<Dialog.Description
-					>Complete form to {isEdit ? "Edit" : "Add"} allocation
-				</Dialog.Description>
+				<Dialog.Description>Complete form to {isEdit ? "Edit" : "Add"} allocation</Dialog.Description>
 			</Dialog.Header>
 			<div class="flex flex-col gap-4 p-4">
 				<Form.Field {form} name="comment">
@@ -244,12 +229,7 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Assigned User</Form.Label>
-							<Combobox
-								{...props}
-								bind:value={$formData.assignedUserId}
-								name="User"
-								items={divisionUsers.map((i) => ({ value: i.userId, label: i.name }))}
-							/>
+							<Combobox {...props} bind:value={$formData.assignedUserId} name="User" items={divisionUsers.map((i) => ({ value: i.userId, label: i.name }))} />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors class="text-destructive text-sm" />

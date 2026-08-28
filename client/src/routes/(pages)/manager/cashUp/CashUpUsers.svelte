@@ -17,7 +17,7 @@
 {/if}
 
 {#if query.data}
-	<div class="flex flex-col gap-2 items-center">
+	<div class="flex flex-col items-center gap-2">
 		{#each query.data.items as cash}
 			<CashUpUser {cash} />
 		{/each}

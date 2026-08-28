@@ -68,14 +68,14 @@
 <AddSupplier bind:isOpen refetch={query.refetch} />
 
 {#snippet header()}
-	<div class="flex gap-2 justify-between items-center">
+	<div class="flex items-center justify-between gap-2">
 		<div class="flex flex-col gap-1">
 			<h2>Suppliers</h2>
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<Search bind:search name="Supplier" />
 			</div>
 		</div>
-		<div class="flex gap-2 items-center">
+		<div class="flex items-center gap-2">
 			<Button size="sm" onclick={() => (isOpen = true)}>
 				<PlusIcon class="h-5 w-5" /> Add
 			</Button>
@@ -84,11 +84,5 @@
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		{table}
-		{header}
-		headerClass="pb-2"
-		isLoading={query.isPending}
-		noDataMessage="No suppliers"
-	/>
+	<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No suppliers" />
 </div>

@@ -10,7 +10,7 @@
 
 <Popover.Root>
 	<Popover.Trigger>
-		<Badge variant="secondary" class="truncate flex">
+		<Badge variant="secondary" class="flex truncate">
 			<Settings2Icon class="size-4" />
 		</Badge>
 	</Popover.Trigger>
@@ -38,6 +38,6 @@
 				backOffice.value.fontSize = v ?? 1000;
 			}}
 		/>
-		<Button class="w-full mt-4" onclick={reset}>Reset</Button>
+		<Button class="mt-4 w-full" onclick={reset}>Reset</Button>
 	</Popover.Content>
 </Popover.Root>

@@ -45,9 +45,7 @@
 	});
 	const { form: formData, enhance } = form;
 
-	const roleSelect = $derived(
-		rolesQuery.data?.find((i) => i.roleId === $formData.roleId)?.name ?? "Select Role"
-	);
+	const roleSelect = $derived(rolesQuery.data?.find((i) => i.roleId === $formData.roleId)?.name ?? "Select Role");
 </script>
 
 <Dialog.Root bind:open>
@@ -66,16 +64,12 @@
 								type="single"
 								allowDeselect={false}
 								name={props.name}
-								bind:value={
-									() => $formData.roleId.toString(), (v) => ($formData.roleId = Number(v))
-								}
+								bind:value={() => $formData.roleId.toString(), (v) => ($formData.roleId = Number(v))}
 							>
 								<Select.Trigger {...props}>{roleSelect}</Select.Trigger>
 								<Select.Content>
 									{#each rolesQuery.data ?? [] as item}
-										<Select.Item value={item.roleId.toString()} label={item.name}
-											>{item.name}</Select.Item
-										>
+										<Select.Item value={item.roleId.toString()} label={item.name}>{item.name}</Select.Item>
 									{/each}
 								</Select.Content>
 							</Select.Root>
@@ -86,13 +80,11 @@
 				</Form.Field>
 			</div>
 			<Dialog.Footer>
-				<div class="flex flex-col gap-2 w-full">
+				<div class="flex w-full flex-col gap-2">
 					{#if mutation.isError}
 						<Error message={getError(mutation.error).message} />
 					{/if}
-					<Form.Button type="submit" class="w-full" disabled={mutation.isPending}>
-						Add Role
-					</Form.Button>
+					<Form.Button type="submit" class="w-full" disabled={mutation.isPending}>Add Role</Form.Button>
 				</div>
 			</Dialog.Footer>
 		</form>

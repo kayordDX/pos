@@ -36,7 +36,7 @@
 
 <div>
 	<Button variant="secondary" onclick={() => (specialExtraOpen = true)}>
-		<CirclePlusIcon class="size-4 mr-2" /> More Extras
+		<CirclePlusIcon class="mr-2 size-4" /> More Extras
 	</Button>
 	<div class="mt-2 flex flex-wrap gap-2">
 		{#each currentExtras as current}
@@ -48,7 +48,7 @@
 			>
 				<Badge variant="outline" class="p-2 pl-3">
 					{getItem(current)?.name}
-					<CircleXIcon class="size-4 ml-2" />
+					<CircleXIcon class="ml-2 size-4" />
 				</Badge>
 			</button>
 		{/each}
@@ -61,16 +61,12 @@
 		<Command.Empty>No results found.</Command.Empty>
 		<Command.Group heading="Special Extras">
 			{#each query.data ?? [] as extra}
-				<Command.Item
-					onSelect={() => selectItem(extra.extraId)}
-					disabled={!extra.isAvailable}
-					class={!extra.isAvailable ? "text-muted" : ""}
-				>
-					<div class="flex w-full items-center flex-row justify-between">
-						<div class="whitespace-nowrap overflow-hidden text-ellipsis">
+				<Command.Item onSelect={() => selectItem(extra.extraId)} disabled={!extra.isAvailable} class={!extra.isAvailable ? "text-muted" : ""}>
+					<div class="flex w-full flex-row items-center justify-between">
+						<div class="overflow-hidden text-ellipsis whitespace-nowrap">
 							{extra.name.replace(/[^a-zA-Z0-9 -]*/g, "")}
 						</div>
-						<div class="flex flex-shrink-0 text-xs ml-2">R {extra.price.toFixed(2)}</div>
+						<div class="ml-2 flex flex-shrink-0 text-xs">R {extra.price.toFixed(2)}</div>
 					</div>
 				</Command.Item>
 			{/each}

@@ -50,14 +50,14 @@
 			{#if status.value.salesPeriodId > 0}
 				<Card.Root class="m-4 p-2">
 					<Button class="w-full" onclick={closeSalesPeriod}>
-						<CalendarClockIcon class="size-5 mr-2" />
+						<CalendarClockIcon class="mr-2 size-5" />
 						Close Sales Period
 					</Button>
 				</Card.Root>
 			{/if}
 		{/if}
 		<!-- <CashUpSummary /> -->
-		<div class="flex flex-col gap-2 items-center">
+		<div class="flex flex-col items-center gap-2">
 			{#each query.data.items as cash}
 				<CashUpUser {cash} />
 			{/each}

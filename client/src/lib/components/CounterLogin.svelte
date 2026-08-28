@@ -34,29 +34,25 @@
 	let userId: string | undefined = $state();
 </script>
 
-<div class="flex flex-col items-center justify-center mt-8">
+<div class="mt-8 flex flex-col items-center justify-center">
 	<div class="flex items-center gap-4">
-		<img
-			src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`}
-			alt="logo"
-			class="h-12 hover:animate-pulse"
-		/>
+		<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="logo" class="h-12 hover:animate-pulse" />
 		<div class="flex flex-col">
-			<h1 class="text-2xl text-primary">Counter Login</h1>
-			<div class="text-xs text-muted-foreground">Select User to Login</div>
+			<h1 class="text-primary text-2xl">Counter Login</h1>
+			<div class="text-muted-foreground text-xs">Select User to Login</div>
 		</div>
 	</div>
 </div>
 
-<div class="flex flex-col mt-4 p-4 gap-2">
+<div class="mt-4 flex flex-col gap-2 p-4">
 	<div class="flex w-full items-center justify-between">
-		<div class="text-lg text-muted-foreground">Select Users</div>
+		<div class="text-muted-foreground text-lg">Select Users</div>
 		{@render exitCounter()}
 	</div>
 	{#if data.length > 0}
 		{#each data as user (user.userId)}
 			<button onclick={() => pinLogin(user.userId, user.name)}>
-				<Card.Root class="p-4 flex flex-row items-center gap-2">
+				<Card.Root class="flex flex-row items-center gap-2 p-4">
 					<Avatar.Root>
 						<Avatar.Image src={user.image} alt={user.name} />
 						<Avatar.Fallback>{getInitials(user.name)}</Avatar.Fallback>
@@ -77,10 +73,10 @@
 	{/if}
 </div>
 
-<div class="flex flex-col items-center justify-center mt-8">
+<div class="mt-8 flex flex-col items-center justify-center">
 	<div class="flex items-center gap-2">
 		<img src="/kayord/logo.svg" alt="logo" class="h-5 hover:animate-pulse" />
-		<div class="text-xs text-muted-foreground">Powered by kayord</div>
+		<div class="text-muted-foreground text-xs">Powered by kayord</div>
 	</div>
 </div>
 

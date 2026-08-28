@@ -37,10 +37,7 @@ export const getMenuItemUpdateUrl = () => {
 	return `/menuItem`;
 };
 
-export const menuItemUpdate = async (
-	menuItemUpdateRequest: MenuItemUpdateRequest,
-	options?: RequestInit
-): Promise<EntitiesMenuItem> => {
+export const menuItemUpdate = async (menuItemUpdateRequest: MenuItemUpdateRequest, options?: RequestInit): Promise<EntitiesMenuItem> => {
 	return customInstance<EntitiesMenuItem>(getMenuItemUpdateUrl(), {
 		...options,
 		method: "PUT",
@@ -49,23 +46,10 @@ export const menuItemUpdate = async (
 	});
 };
 
-export const getMenuItemUpdateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof menuItemUpdate>>,
-		TError,
-		{ data: BodyType<MenuItemUpdateRequest> },
-		TContext
-	>;
+export const getMenuItemUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuItemUpdate>>, TError, { data: BodyType<MenuItemUpdateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof menuItemUpdate>>,
-	TError,
-	{ data: BodyType<MenuItemUpdateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof menuItemUpdate>>, TError, { data: BodyType<MenuItemUpdateRequest> }, TContext> => {
 	const mutationKey = ["menuItemUpdate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -73,10 +57,7 @@ export const getMenuItemUpdateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof menuItemUpdate>>,
-		{ data: BodyType<MenuItemUpdateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuItemUpdate>>, { data: BodyType<MenuItemUpdateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return menuItemUpdate(data, requestOptions);
@@ -89,26 +70,13 @@ export type MenuItemUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof
 export type MenuItemUpdateMutationBody = BodyType<MenuItemUpdateRequest>;
 export type MenuItemUpdateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createMenuItemUpdate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createMenuItemUpdate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof menuItemUpdate>>,
-			TError,
-			{ data: BodyType<MenuItemUpdateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuItemUpdate>>, TError, { data: BodyType<MenuItemUpdateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof menuItemUpdate>>,
-	TError,
-	{ data: BodyType<MenuItemUpdateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof menuItemUpdate>>, TError, { data: BodyType<MenuItemUpdateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getMenuItemUpdateMutationOptions(options?.()) }), queryClient);
 };
 export const getMenuItemGetAllUrl = (params?: MenuItemGetAllParams) => {
@@ -125,10 +93,7 @@ export const getMenuItemGetAllUrl = (params?: MenuItemGetAllParams) => {
 	return stringifiedParams.length > 0 ? `/menuItem?${stringifiedParams}` : `/menuItem`;
 };
 
-export const menuItemGetAll = async (
-	params?: MenuItemGetAllParams,
-	options?: RequestInit
-): Promise<CommonModelsPaginatedListOfMenuItemAdminDTO> => {
+export const menuItemGetAll = async (params?: MenuItemGetAllParams, options?: RequestInit): Promise<CommonModelsPaginatedListOfMenuItemAdminDTO> => {
 	return customInstance<CommonModelsPaginatedListOfMenuItemAdminDTO>(getMenuItemGetAllUrl(params), {
 		...options,
 		method: "GET",
@@ -139,10 +104,7 @@ export const getMenuItemGetAllQueryKey = (params?: MenuItemGetAllParams) => {
 	return [`/menuItem`, ...(params ? [params] : [])] as const;
 };
 
-export const getMenuItemGetAllQueryOptions = <
-	TData = Awaited<ReturnType<typeof menuItemGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getMenuItemGetAllQueryOptions = <TData = Awaited<ReturnType<typeof menuItemGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params?: MenuItemGetAllParams,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuItemGetAll>>, TError, TData>>;
@@ -153,23 +115,17 @@ export const getMenuItemGetAllQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getMenuItemGetAllQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuItemGetAll>>> = () =>
-		menuItemGetAll(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuItemGetAll>>> = () => menuItemGetAll(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof menuItemGetAll>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof menuItemGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type MenuItemGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof menuItemGetAll>>>;
 export type MenuItemGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createMenuItemGetAll<
-	TData = Awaited<ReturnType<typeof menuItemGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createMenuItemGetAll<TData = Awaited<ReturnType<typeof menuItemGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params?: () => MenuItemGetAllParams,
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuItemGetAll>>, TError, TData>>;
@@ -177,10 +133,9 @@ export function createMenuItemGetAll<
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getMenuItemGetAllQueryOptions(params?.(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getMenuItemGetAllQueryOptions(params?.(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -189,10 +144,7 @@ export const getMenuItemCreateUrl = () => {
 	return `/menuItem`;
 };
 
-export const menuItemCreate = async (
-	menuItemCreateRequest: MenuItemCreateRequest,
-	options?: RequestInit
-): Promise<EntitiesMenuItem> => {
+export const menuItemCreate = async (menuItemCreateRequest: MenuItemCreateRequest, options?: RequestInit): Promise<EntitiesMenuItem> => {
 	return customInstance<EntitiesMenuItem>(getMenuItemCreateUrl(), {
 		...options,
 		method: "POST",
@@ -201,23 +153,10 @@ export const menuItemCreate = async (
 	});
 };
 
-export const getMenuItemCreateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof menuItemCreate>>,
-		TError,
-		{ data: BodyType<MenuItemCreateRequest> },
-		TContext
-	>;
+export const getMenuItemCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuItemCreate>>, TError, { data: BodyType<MenuItemCreateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof menuItemCreate>>,
-	TError,
-	{ data: BodyType<MenuItemCreateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof menuItemCreate>>, TError, { data: BodyType<MenuItemCreateRequest> }, TContext> => {
 	const mutationKey = ["menuItemCreate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -225,10 +164,7 @@ export const getMenuItemCreateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof menuItemCreate>>,
-		{ data: BodyType<MenuItemCreateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuItemCreate>>, { data: BodyType<MenuItemCreateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return menuItemCreate(data, requestOptions);
@@ -241,59 +177,30 @@ export type MenuItemCreateMutationResult = NonNullable<Awaited<ReturnType<typeof
 export type MenuItemCreateMutationBody = BodyType<MenuItemCreateRequest>;
 export type MenuItemCreateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createMenuItemCreate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createMenuItemCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof menuItemCreate>>,
-			TError,
-			{ data: BodyType<MenuItemCreateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuItemCreate>>, TError, { data: BodyType<MenuItemCreateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof menuItemCreate>>,
-	TError,
-	{ data: BodyType<MenuItemCreateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof menuItemCreate>>, TError, { data: BodyType<MenuItemCreateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getMenuItemCreateMutationOptions(options?.()) }), queryClient);
 };
 export const getMenuItemDeleteUrl = (id: number) => {
 	return `/menuItem/${id}`;
 };
 
-export const menuItemDelete = async (
-	id: number,
-	options?: RequestInit
-): Promise<EntitiesMenuSection> => {
+export const menuItemDelete = async (id: number, options?: RequestInit): Promise<EntitiesMenuSection> => {
 	return customInstance<EntitiesMenuSection>(getMenuItemDeleteUrl(id), {
 		...options,
 		method: "DELETE",
 	});
 };
 
-export const getMenuItemDeleteMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof menuItemDelete>>,
-		TError,
-		{ id: number },
-		TContext
-	>;
+export const getMenuItemDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuItemDelete>>, TError, { id: number }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof menuItemDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof menuItemDelete>>, TError, { id: number }, TContext> => {
 	const mutationKey = ["menuItemDelete"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -301,9 +208,7 @@ export const getMenuItemDeleteMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuItemDelete>>, { id: number }> = (
-		props
-	) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuItemDelete>>, { id: number }> = (props) => {
 		const { id } = props ?? {};
 
 		return menuItemDelete(id, requestOptions);
@@ -316,25 +221,12 @@ export type MenuItemDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof
 
 export type MenuItemDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createMenuItemDelete = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createMenuItemDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof menuItemDelete>>,
-			TError,
-			{ id: number },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuItemDelete>>, TError, { id: number }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof menuItemDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof menuItemDelete>>, TError, { id: number }, TContext> => {
 	return createMutation(() => ({ ...getMenuItemDeleteMutationOptions(options?.()) }), queryClient);
 };

@@ -38,11 +38,7 @@ export const getTableUpdateUrl = (tableId: number) => {
 	return `/table/${tableId}`;
 };
 
-export const tableUpdate = async (
-	tableId: number,
-	tableUpdateRequest: TableUpdateRequest,
-	options?: RequestInit
-): Promise<EntitiesTable> => {
+export const tableUpdate = async (tableId: number, tableUpdateRequest: TableUpdateRequest, options?: RequestInit): Promise<EntitiesTable> => {
 	return customInstance<EntitiesTable>(getTableUpdateUrl(tableId), {
 		...options,
 		method: "PUT",
@@ -51,23 +47,10 @@ export const tableUpdate = async (
 	});
 };
 
-export const getTableUpdateMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof tableUpdate>>,
-		TError,
-		{ tableId: number; data: BodyType<TableUpdateRequest> },
-		TContext
-	>;
+export const getTableUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableUpdate>>, TError, { tableId: number; data: BodyType<TableUpdateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof tableUpdate>>,
-	TError,
-	{ tableId: number; data: BodyType<TableUpdateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableUpdate>>, TError, { tableId: number; data: BodyType<TableUpdateRequest> }, TContext> => {
 	const mutationKey = ["tableUpdate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -75,10 +58,7 @@ export const getTableUpdateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof tableUpdate>>,
-		{ tableId: number; data: BodyType<TableUpdateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableUpdate>>, { tableId: number; data: BodyType<TableUpdateRequest> }> = (props) => {
 		const { tableId, data } = props ?? {};
 
 		return tableUpdate(tableId, data, requestOptions);
@@ -91,26 +71,13 @@ export type TableUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof ta
 export type TableUpdateMutationBody = BodyType<TableUpdateRequest>;
 export type TableUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createTableUpdate = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createTableUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof tableUpdate>>,
-			TError,
-			{ tableId: number; data: BodyType<TableUpdateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableUpdate>>, TError, { tableId: number; data: BodyType<TableUpdateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof tableUpdate>>,
-	TError,
-	{ tableId: number; data: BodyType<TableUpdateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof tableUpdate>>, TError, { tableId: number; data: BodyType<TableUpdateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getTableUpdateMutationOptions(options?.()) }), queryClient);
 };
 export const getTableGetBookedUrl = (params: TableGetBookedParams) => {
@@ -127,10 +94,7 @@ export const getTableGetBookedUrl = (params: TableGetBookedParams) => {
 	return stringifiedParams.length > 0 ? `/table/booked?${stringifiedParams}` : `/table/booked`;
 };
 
-export const tableGetBooked = async (
-	params: TableGetBookedParams,
-	options?: RequestInit
-): Promise<TableGetBookedResponse[]> => {
+export const tableGetBooked = async (params: TableGetBookedParams, options?: RequestInit): Promise<TableGetBookedResponse[]> => {
 	return customInstance<TableGetBookedResponse[]>(getTableGetBookedUrl(params), {
 		...options,
 		method: "GET",
@@ -155,23 +119,17 @@ export const getTableGetBookedQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getTableGetBookedQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableGetBooked>>> = () =>
-		tableGetBooked(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableGetBooked>>> = () => tableGetBooked(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof tableGetBooked>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof tableGetBooked>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type TableGetBookedQueryResult = NonNullable<Awaited<ReturnType<typeof tableGetBooked>>>;
 export type TableGetBookedQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export function createTableGetBooked<
-	TData = Awaited<ReturnType<typeof tableGetBooked>>,
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
->(
+export function createTableGetBooked<TData = Awaited<ReturnType<typeof tableGetBooked>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(
 	params: () => TableGetBookedParams,
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableGetBooked>>, TError, TData>>;
@@ -179,10 +137,9 @@ export function createTableGetBooked<
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getTableGetBookedQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getTableGetBookedQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -198,15 +155,10 @@ export const getTableGetAvailableUrl = (params: TableGetAvailableParams) => {
 
 	const stringifiedParams = normalizedParams.toString();
 
-	return stringifiedParams.length > 0
-		? `/table/available?${stringifiedParams}`
-		: `/table/available`;
+	return stringifiedParams.length > 0 ? `/table/available?${stringifiedParams}` : `/table/available`;
 };
 
-export const tableGetAvailable = async (
-	params: TableGetAvailableParams,
-	options?: RequestInit
-): Promise<TableGetAvailableResponse[]> => {
+export const tableGetAvailable = async (params: TableGetAvailableParams, options?: RequestInit): Promise<TableGetAvailableResponse[]> => {
 	return customInstance<TableGetAvailableResponse[]>(getTableGetAvailableUrl(params), {
 		...options,
 		method: "GET",
@@ -223,9 +175,7 @@ export const getTableGetAvailableQueryOptions = <
 >(
 	params: TableGetAvailableParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableGetAvailable>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableGetAvailable>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -233,19 +183,14 @@ export const getTableGetAvailableQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getTableGetAvailableQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableGetAvailable>>> = () =>
-		tableGetAvailable(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableGetAvailable>>> = () => tableGetAvailable(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof tableGetAvailable>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof tableGetAvailable>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type TableGetAvailableQueryResult = NonNullable<
-	Awaited<ReturnType<typeof tableGetAvailable>>
->;
+export type TableGetAvailableQueryResult = NonNullable<Awaited<ReturnType<typeof tableGetAvailable>>>;
 export type TableGetAvailableQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export function createTableGetAvailable<
@@ -254,17 +199,14 @@ export function createTableGetAvailable<
 >(
 	params: () => TableGetAvailableParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof tableGetAvailable>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableGetAvailable>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getTableGetAvailableQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getTableGetAvailableQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -280,23 +222,10 @@ export const tableDelete = async (id: number, options?: RequestInit): Promise<vo
 	});
 };
 
-export const getTableDeleteMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof tableDelete>>,
-		TError,
-		{ id: number },
-		TContext
-	>;
+export const getTableDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableDelete>>, TError, { id: number }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof tableDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableDelete>>, TError, { id: number }, TContext> => {
 	const mutationKey = ["tableDelete"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -304,9 +233,7 @@ export const getTableDeleteMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableDelete>>, { id: number }> = (
-		props
-	) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableDelete>>, { id: number }> = (props) => {
 		const { id } = props ?? {};
 
 		return tableDelete(id, requestOptions);
@@ -319,36 +246,20 @@ export type TableDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof ta
 
 export type TableDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createTableDelete = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createTableDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof tableDelete>>,
-			TError,
-			{ id: number },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableDelete>>, TError, { id: number }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof tableDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof tableDelete>>, TError, { id: number }, TContext> => {
 	return createMutation(() => ({ ...getTableDeleteMutationOptions(options?.()) }), queryClient);
 };
 export const getTableCreateUrl = () => {
 	return `/table`;
 };
 
-export const tableCreate = async (
-	tableCreateRequest: TableCreateRequest,
-	options?: RequestInit
-): Promise<EntitiesTable> => {
+export const tableCreate = async (tableCreateRequest: TableCreateRequest, options?: RequestInit): Promise<EntitiesTable> => {
 	return customInstance<EntitiesTable>(getTableCreateUrl(), {
 		...options,
 		method: "POST",
@@ -357,23 +268,10 @@ export const tableCreate = async (
 	});
 };
 
-export const getTableCreateMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof tableCreate>>,
-		TError,
-		{ data: BodyType<TableCreateRequest> },
-		TContext
-	>;
+export const getTableCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableCreate>>, TError, { data: BodyType<TableCreateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof tableCreate>>,
-	TError,
-	{ data: BodyType<TableCreateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableCreate>>, TError, { data: BodyType<TableCreateRequest> }, TContext> => {
 	const mutationKey = ["tableCreate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -381,10 +279,7 @@ export const getTableCreateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof tableCreate>>,
-		{ data: BodyType<TableCreateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableCreate>>, { data: BodyType<TableCreateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return tableCreate(data, requestOptions);
@@ -397,25 +292,12 @@ export type TableCreateMutationResult = NonNullable<Awaited<ReturnType<typeof ta
 export type TableCreateMutationBody = BodyType<TableCreateRequest>;
 export type TableCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createTableCreate = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createTableCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof tableCreate>>,
-			TError,
-			{ data: BodyType<TableCreateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableCreate>>, TError, { data: BodyType<TableCreateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof tableCreate>>,
-	TError,
-	{ data: BodyType<TableCreateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof tableCreate>>, TError, { data: BodyType<TableCreateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getTableCreateMutationOptions(options?.()) }), queryClient);
 };

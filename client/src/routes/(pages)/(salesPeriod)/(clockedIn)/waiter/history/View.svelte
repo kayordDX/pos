@@ -10,5 +10,5 @@
 </script>
 
 <Button variant="outline" href={`/waiter/history/${id}`}>
-	<ViewIcon class="size-4 mr-2" />View
+	<ViewIcon class="mr-2 size-4" />View
 </Button>

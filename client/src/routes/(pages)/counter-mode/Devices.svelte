@@ -32,7 +32,7 @@
 	};
 </script>
 
-<Card.Root class="p-5 m-5">
+<Card.Root class="m-5 p-5">
 	<Card.Header>
 		<Card.Title>Outlet Counter Devices</Card.Title>
 		<Card.Description>Current active counter mode devices</Card.Description>
@@ -46,10 +46,10 @@
 			</Alert.Root>
 		{/if}
 		{#each data as counter (counter.id)}
-			<Card.Root class="flex flex-row items-center gap-2 justify-between p-4">
+			<Card.Root class="flex flex-row items-center justify-between gap-2 p-4">
 				<div>
 					<div class="font-bold">{counter.deviceName}</div>
-					<div class="text-xs text-muted-foreground">
+					<div class="text-muted-foreground text-xs">
 						Created: {stringToFDate(counter.created)}
 					</div>
 				</div>
@@ -66,9 +66,8 @@
 			</Card.Root>
 		{/each}
 	</Card.Content>
-	<Card.Footer class="mt-4 text-xs text-muted-foreground"
-		>Please note removing devices from counter devices list will stop all counter mode logins from
-		the device
+	<Card.Footer class="text-muted-foreground mt-4 text-xs"
+		>Please note removing devices from counter devices list will stop all counter mode logins from the device
 	</Card.Footer>
 </Card.Root>
 
@@ -76,18 +75,11 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Are you absolutely sure?</AlertDialog.Title>
-			<AlertDialog.Description>
-				Users will not be able to login to device using counter mode for this device.
-			</AlertDialog.Description>
+			<AlertDialog.Description>Users will not be able to login to device using counter mode for this device.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<AlertDialog.Action
-				class="bg-destructive text-destructive-foreground"
-				onclick={removeCounterDevice}
-			>
-				Delete
-			</AlertDialog.Action>
+			<AlertDialog.Action class="bg-destructive text-destructive-foreground" onclick={removeCounterDevice}>Delete</AlertDialog.Action>
 		</AlertDialog.Footer>
 	</AlertDialog.Content>
 </AlertDialog.Root>

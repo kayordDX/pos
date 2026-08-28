@@ -1,10 +1,5 @@
 <script lang="ts">
-	import {
-		createPayPayConfigSetActive,
-		type EntitiesHaloConfig,
-		createPayPayConfigDelete,
-		createPayPayConfigTestConfig,
-	} from "$lib/api";
+	import { createPayPayConfigSetActive, type EntitiesHaloConfig, createPayPayConfigDelete, createPayPayConfigTestConfig } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { getError } from "$lib/types";
 	import { Card, Button } from "@kayord/ui";
@@ -64,9 +59,7 @@
 			const result = await testMutation.mutateAsync({
 				data: { id: config.id },
 			});
-			const message = result
-				? "Config Tested and XAPIKey Authenticated Successfully"
-				: "Halo Config Test Failed";
+			const message = result ? "Config Tested and XAPIKey Authenticated Successfully" : "Halo Config Test Failed";
 			toast.info(message);
 		} catch (err) {
 			toast.error(getError(err).message);
@@ -76,18 +69,16 @@
 	};
 </script>
 
-<Card.Root class="p-4 data-[enabled=true]:border-primary" data-enabled={config.isEnabled}>
-	<div class="flex flex-col sm:flex-row justify-between items-center gap-2">
-		<div
-			class={`h-14 w-14 rounded-full flex items-center justify-center ${config.isEnabled ? "bg-primary" : "bg-secondary"}`}
-		>
+<Card.Root class="data-[enabled=true]:border-primary p-4" data-enabled={config.isEnabled}>
+	<div class="flex flex-col items-center justify-between gap-2 sm:flex-row">
+		<div class={`flex h-14 w-14 items-center justify-center rounded-full ${config.isEnabled ? "bg-primary" : "bg-secondary"}`}>
 			{#if config.isEnabled}
 				<CheckIcon class="text-primary-foreground" />
 			{:else}
 				<XIcon class="text-secondary-foreground" />
 			{/if}
 		</div>
-		<div class="flex flex-col gap-2 flex-grow">
+		<div class="flex flex-grow flex-col gap-2">
 			<div>
 				<span class="text-muted-foreground">Merchant Id:</span>
 				{config.merchantId}
@@ -98,15 +89,9 @@
 			</div>
 		</div>
 
-		<div class="flex flex-col gap-2 w-full sm:w-fit">
+		<div class="flex w-full flex-col gap-2 sm:w-fit">
 			{#if !config.isEnabled}
-				<Button
-					size="sm"
-					variant="destructive"
-					class="w-full"
-					onclick={deleteConfig}
-					disabled={isDeleting}
-				>
+				<Button size="sm" variant="destructive" class="w-full" onclick={deleteConfig} disabled={isDeleting}>
 					<Trash2Icon />
 					Delete
 				</Button>

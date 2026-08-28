@@ -33,11 +33,7 @@
 	};
 
 	const paymentCheck = () => {
-		if (
-			(query.data?.value?.transactionId.length ?? 0) > 0 &&
-			query.data?.value?.responseCode == 0 &&
-			(query.data?.value?.authorisationCode.length ?? 0) > 0
-		) {
+		if ((query.data?.value?.transactionId.length ?? 0) > 0 && query.data?.value?.responseCode == 0 && (query.data?.value?.authorisationCode.length ?? 0) > 0) {
 			paymentDone(query.data?.value?.amount ?? 0);
 		}
 	};
@@ -69,8 +65,8 @@
 
 		{#if query.data}
 			<div class="flex flex-col gap-1">
-				<div class="flex gap-2 items-center">
-					<div class="text-sm text-muted-foreground">Amount:</div>
+				<div class="flex items-center gap-2">
+					<div class="text-muted-foreground text-sm">Amount:</div>
 					<div class="text-lg">R{query.data.value?.amount.toFixed(2)}</div>
 				</div>
 
@@ -83,27 +79,27 @@
 					{/if}
 				</Button>
 
-				<div class="flex gap-2 items-center">
-					<div class="text-sm text-muted-foreground">QR Code Status:</div>
+				<div class="flex items-center gap-2">
+					<div class="text-muted-foreground text-sm">QR Code Status:</div>
 					<Badge>{query.data?.value?.qrCodeState}</Badge>
 				</div>
 
-				<div class="flex gap-2 items-center">
-					<div class="text-sm text-muted-foreground">Payment Reference:</div>
+				<div class="flex items-center gap-2">
+					<div class="text-muted-foreground text-sm">Payment Reference:</div>
 					<div class="text-sm">{query.data?.value?.paymentReference}</div>
 				</div>
 
 				{#if query.data.value?.status}
-					<div class="flex gap-2 items-center">
-						<div class="text-sm text-muted-foreground">Status:</div>
+					<div class="flex items-center gap-2">
+						<div class="text-muted-foreground text-sm">Status:</div>
 						<Badge>{query.data.value?.status}</Badge>
 					</div>
-					<div class="flex gap-2 items-center">
-						<div class="text-sm text-muted-foreground">Currency:</div>
+					<div class="flex items-center gap-2">
+						<div class="text-muted-foreground text-sm">Currency:</div>
 						<div class="text-sm">{query.data.value?.currency}</div>
 					</div>
-					<div class="flex gap-2 items-center">
-						<div class="text-sm text-muted-foreground">Disposition:</div>
+					<div class="flex items-center gap-2">
+						<div class="text-muted-foreground text-sm">Disposition:</div>
 						<Badge>{query.data.value?.disposition}</Badge>
 					</div>
 				{/if}

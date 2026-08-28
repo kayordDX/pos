@@ -37,10 +37,7 @@ export const getOptionUpdateUrl = () => {
 	return `/option`;
 };
 
-export const optionUpdate = async (
-	optionUpdateRequest: OptionUpdateRequest,
-	options?: RequestInit
-): Promise<void> => {
+export const optionUpdate = async (optionUpdateRequest: OptionUpdateRequest, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getOptionUpdateUrl(), {
 		...options,
 		method: "PUT",
@@ -49,23 +46,10 @@ export const optionUpdate = async (
 	});
 };
 
-export const getOptionUpdateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof optionUpdate>>,
-		TError,
-		{ data: BodyType<OptionUpdateRequest> },
-		TContext
-	>;
+export const getOptionUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionUpdate>>, TError, { data: BodyType<OptionUpdateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof optionUpdate>>,
-	TError,
-	{ data: BodyType<OptionUpdateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof optionUpdate>>, TError, { data: BodyType<OptionUpdateRequest> }, TContext> => {
 	const mutationKey = ["optionUpdate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -73,10 +57,7 @@ export const getOptionUpdateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof optionUpdate>>,
-		{ data: BodyType<OptionUpdateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof optionUpdate>>, { data: BodyType<OptionUpdateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return optionUpdate(data, requestOptions);
@@ -89,26 +70,13 @@ export type OptionUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof o
 export type OptionUpdateMutationBody = BodyType<OptionUpdateRequest>;
 export type OptionUpdateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createOptionUpdate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createOptionUpdate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof optionUpdate>>,
-			TError,
-			{ data: BodyType<OptionUpdateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionUpdate>>, TError, { data: BodyType<OptionUpdateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof optionUpdate>>,
-	TError,
-	{ data: BodyType<OptionUpdateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof optionUpdate>>, TError, { data: BodyType<OptionUpdateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getOptionUpdateMutationOptions(options?.()) }), queryClient);
 };
 export const getOptionGroupUrl = () => {
@@ -126,10 +94,7 @@ export const getOptionGroupQueryKey = () => {
 	return [`/option`] as const;
 };
 
-export const getOptionGroupQueryOptions = <
-	TData = Awaited<ReturnType<typeof optionGroup>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
+export const getOptionGroupQueryOptions = <TData = Awaited<ReturnType<typeof optionGroup>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof optionGroup>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -137,33 +102,26 @@ export const getOptionGroupQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getOptionGroupQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof optionGroup>>> = () =>
-		optionGroup(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof optionGroup>>> = () => optionGroup(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof optionGroup>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof optionGroup>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type OptionGroupQueryResult = NonNullable<Awaited<ReturnType<typeof optionGroup>>>;
 export type OptionGroupQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createOptionGroup<
-	TData = Awaited<ReturnType<typeof optionGroup>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createOptionGroup<TData = Awaited<ReturnType<typeof optionGroup>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof optionGroup>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getOptionGroupQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getOptionGroupQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -172,10 +130,7 @@ export const getOptionCreateUrl = () => {
 	return `/option`;
 };
 
-export const optionCreate = async (
-	optionCreateRequest: OptionCreateRequest,
-	options?: RequestInit
-): Promise<void> => {
+export const optionCreate = async (optionCreateRequest: OptionCreateRequest, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getOptionCreateUrl(), {
 		...options,
 		method: "POST",
@@ -184,23 +139,10 @@ export const optionCreate = async (
 	});
 };
 
-export const getOptionCreateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof optionCreate>>,
-		TError,
-		{ data: BodyType<OptionCreateRequest> },
-		TContext
-	>;
+export const getOptionCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionCreate>>, TError, { data: BodyType<OptionCreateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof optionCreate>>,
-	TError,
-	{ data: BodyType<OptionCreateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof optionCreate>>, TError, { data: BodyType<OptionCreateRequest> }, TContext> => {
 	const mutationKey = ["optionCreate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -208,10 +150,7 @@ export const getOptionCreateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof optionCreate>>,
-		{ data: BodyType<OptionCreateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof optionCreate>>, { data: BodyType<OptionCreateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return optionCreate(data, requestOptions);
@@ -224,26 +163,13 @@ export type OptionCreateMutationResult = NonNullable<Awaited<ReturnType<typeof o
 export type OptionCreateMutationBody = BodyType<OptionCreateRequest>;
 export type OptionCreateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createOptionCreate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createOptionCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof optionCreate>>,
-			TError,
-			{ data: BodyType<OptionCreateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionCreate>>, TError, { data: BodyType<OptionCreateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof optionCreate>>,
-	TError,
-	{ data: BodyType<OptionCreateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof optionCreate>>, TError, { data: BodyType<OptionCreateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getOptionCreateMutationOptions(options?.()) }), queryClient);
 };
 export const getOptionItemsUrl = (id: number) => {
@@ -261,10 +187,7 @@ export const getOptionItemsQueryKey = (id: number) => {
 	return [`/option/${id}`] as const;
 };
 
-export const getOptionItemsQueryOptions = <
-	TData = Awaited<ReturnType<typeof optionItems>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getOptionItemsQueryOptions = <TData = Awaited<ReturnType<typeof optionItems>>, TError = ErrorType<void | InternalErrorResponse>>(
 	id: number,
 	options?: {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof optionItems>>, TError, TData>>;
@@ -275,23 +198,17 @@ export const getOptionItemsQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getOptionItemsQueryKey(id);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof optionItems>>> = () =>
-		optionItems(id, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof optionItems>>> = () => optionItems(id, requestOptions);
 
-	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof optionItems>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, enabled: !!id, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof optionItems>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type OptionItemsQueryResult = NonNullable<Awaited<ReturnType<typeof optionItems>>>;
 export type OptionItemsQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createOptionItems<
-	TData = Awaited<ReturnType<typeof optionItems>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createOptionItems<TData = Awaited<ReturnType<typeof optionItems>>, TError = ErrorType<void | InternalErrorResponse>>(
 	id: () => number,
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof optionItems>>, TError, TData>>;
@@ -299,10 +216,9 @@ export function createOptionItems<
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getOptionItemsQueryOptions(id(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getOptionItemsQueryOptions(id(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -318,23 +234,10 @@ export const optionDelete = async (id: number, options?: RequestInit): Promise<v
 	});
 };
 
-export const getOptionDeleteMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof optionDelete>>,
-		TError,
-		{ id: number },
-		TContext
-	>;
+export const getOptionDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionDelete>>, TError, { id: number }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof optionDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof optionDelete>>, TError, { id: number }, TContext> => {
 	const mutationKey = ["optionDelete"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -342,9 +245,7 @@ export const getOptionDeleteMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<Awaited<ReturnType<typeof optionDelete>>, { id: number }> = (
-		props
-	) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof optionDelete>>, { id: number }> = (props) => {
 		const { id } = props ?? {};
 
 		return optionDelete(id, requestOptions);
@@ -357,36 +258,20 @@ export type OptionDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof o
 
 export type OptionDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createOptionDelete = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createOptionDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof optionDelete>>,
-			TError,
-			{ id: number },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionDelete>>, TError, { id: number }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof optionDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof optionDelete>>, TError, { id: number }, TContext> => {
 	return createMutation(() => ({ ...getOptionDeleteMutationOptions(options?.()) }), queryClient);
 };
 export const getOptionGroupUpdateUrl = () => {
 	return `/option/group`;
 };
 
-export const optionGroupUpdate = async (
-	optionGroupUpdateRequest: OptionGroupUpdateRequest,
-	options?: RequestInit
-): Promise<void> => {
+export const optionGroupUpdate = async (optionGroupUpdateRequest: OptionGroupUpdateRequest, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getOptionGroupUpdateUrl(), {
 		...options,
 		method: "PUT",
@@ -395,23 +280,10 @@ export const optionGroupUpdate = async (
 	});
 };
 
-export const getOptionGroupUpdateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof optionGroupUpdate>>,
-		TError,
-		{ data: BodyType<OptionGroupUpdateRequest> },
-		TContext
-	>;
+export const getOptionGroupUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionGroupUpdate>>, TError, { data: BodyType<OptionGroupUpdateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof optionGroupUpdate>>,
-	TError,
-	{ data: BodyType<OptionGroupUpdateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof optionGroupUpdate>>, TError, { data: BodyType<OptionGroupUpdateRequest> }, TContext> => {
 	const mutationKey = ["optionGroupUpdate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -419,10 +291,7 @@ export const getOptionGroupUpdateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof optionGroupUpdate>>,
-		{ data: BodyType<OptionGroupUpdateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof optionGroupUpdate>>, { data: BodyType<OptionGroupUpdateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return optionGroupUpdate(data, requestOptions);
@@ -431,45 +300,24 @@ export const getOptionGroupUpdateMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type OptionGroupUpdateMutationResult = NonNullable<
-	Awaited<ReturnType<typeof optionGroupUpdate>>
->;
+export type OptionGroupUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof optionGroupUpdate>>>;
 export type OptionGroupUpdateMutationBody = BodyType<OptionGroupUpdateRequest>;
 export type OptionGroupUpdateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createOptionGroupUpdate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createOptionGroupUpdate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof optionGroupUpdate>>,
-			TError,
-			{ data: BodyType<OptionGroupUpdateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionGroupUpdate>>, TError, { data: BodyType<OptionGroupUpdateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof optionGroupUpdate>>,
-	TError,
-	{ data: BodyType<OptionGroupUpdateRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getOptionGroupUpdateMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof optionGroupUpdate>>, TError, { data: BodyType<OptionGroupUpdateRequest> }, TContext> => {
+	return createMutation(() => ({ ...getOptionGroupUpdateMutationOptions(options?.()) }), queryClient);
 };
 export const getOptionGroupCreateUrl = () => {
 	return `/option/group`;
 };
 
-export const optionGroupCreate = async (
-	optionGroupCreateRequest: OptionGroupCreateRequest,
-	options?: RequestInit
-): Promise<void> => {
+export const optionGroupCreate = async (optionGroupCreateRequest: OptionGroupCreateRequest, options?: RequestInit): Promise<void> => {
 	return customInstance<void>(getOptionGroupCreateUrl(), {
 		...options,
 		method: "POST",
@@ -478,23 +326,10 @@ export const optionGroupCreate = async (
 	});
 };
 
-export const getOptionGroupCreateMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof optionGroupCreate>>,
-		TError,
-		{ data: BodyType<OptionGroupCreateRequest> },
-		TContext
-	>;
+export const getOptionGroupCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionGroupCreate>>, TError, { data: BodyType<OptionGroupCreateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof optionGroupCreate>>,
-	TError,
-	{ data: BodyType<OptionGroupCreateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof optionGroupCreate>>, TError, { data: BodyType<OptionGroupCreateRequest> }, TContext> => {
 	const mutationKey = ["optionGroupCreate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -502,10 +337,7 @@ export const getOptionGroupCreateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof optionGroupCreate>>,
-		{ data: BodyType<OptionGroupCreateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof optionGroupCreate>>, { data: BodyType<OptionGroupCreateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return optionGroupCreate(data, requestOptions);
@@ -514,36 +346,18 @@ export const getOptionGroupCreateMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type OptionGroupCreateMutationResult = NonNullable<
-	Awaited<ReturnType<typeof optionGroupCreate>>
->;
+export type OptionGroupCreateMutationResult = NonNullable<Awaited<ReturnType<typeof optionGroupCreate>>>;
 export type OptionGroupCreateMutationBody = BodyType<OptionGroupCreateRequest>;
 export type OptionGroupCreateMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createOptionGroupCreate = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createOptionGroupCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof optionGroupCreate>>,
-			TError,
-			{ data: BodyType<OptionGroupCreateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionGroupCreate>>, TError, { data: BodyType<OptionGroupCreateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof optionGroupCreate>>,
-	TError,
-	{ data: BodyType<OptionGroupCreateRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getOptionGroupCreateMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof optionGroupCreate>>, TError, { data: BodyType<OptionGroupCreateRequest> }, TContext> => {
+	return createMutation(() => ({ ...getOptionGroupCreateMutationOptions(options?.()) }), queryClient);
 };
 export const getOptionGroupDeleteUrl = (id: number) => {
 	return `/option/group/${id}`;
@@ -556,23 +370,10 @@ export const optionGroupDelete = async (id: number, options?: RequestInit): Prom
 	});
 };
 
-export const getOptionGroupDeleteMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof optionGroupDelete>>,
-		TError,
-		{ id: number },
-		TContext
-	>;
+export const getOptionGroupDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionGroupDelete>>, TError, { id: number }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof optionGroupDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof optionGroupDelete>>, TError, { id: number }, TContext> => {
 	const mutationKey = ["optionGroupDelete"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -580,10 +381,7 @@ export const getOptionGroupDeleteMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof optionGroupDelete>>,
-		{ id: number }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof optionGroupDelete>>, { id: number }> = (props) => {
 		const { id } = props ?? {};
 
 		return optionGroupDelete(id, requestOptions);
@@ -592,36 +390,16 @@ export const getOptionGroupDeleteMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type OptionGroupDeleteMutationResult = NonNullable<
-	Awaited<ReturnType<typeof optionGroupDelete>>
->;
+export type OptionGroupDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof optionGroupDelete>>>;
 
-export type OptionGroupDeleteMutationError = ErrorType<
-	ErrorResponse | void | InternalErrorResponse
->;
+export type OptionGroupDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createOptionGroupDelete = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createOptionGroupDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof optionGroupDelete>>,
-			TError,
-			{ id: number },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionGroupDelete>>, TError, { id: number }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof optionGroupDelete>>,
-	TError,
-	{ id: number },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getOptionGroupDeleteMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof optionGroupDelete>>, TError, { id: number }, TContext> => {
+	return createMutation(() => ({ ...getOptionGroupDeleteMutationOptions(options?.()) }), queryClient);
 };

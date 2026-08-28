@@ -68,16 +68,13 @@
 		() => status.value.outletId,
 		() => ({ query: { enabled: open } })
 	);
-	const typeSelect = $derived(
-		query.data?.find((i) => i.adjustmentTypeId === $formData.adjustmentTypeId)?.name ??
-			"Select adjustment type"
-	);
+	const typeSelect = $derived(query.data?.find((i) => i.adjustmentTypeId === $formData.adjustmentTypeId)?.name ?? "Select adjustment type");
 </script>
 
 <Dialog.Root bind:open>
 	<Dialog.Trigger>
 		<Button class="w-full" variant="secondary">
-			<SquareDotIcon class="size-4 mr-2" /> Manual Adjustment
+			<SquareDotIcon class="mr-2 size-4" /> Manual Adjustment
 		</Button>
 	</Dialog.Trigger>
 	<!-- fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full -->
@@ -85,9 +82,7 @@
 		<form use:enhance method="POST">
 			<Dialog.Header class="mb-4">
 				<Dialog.Title>Make Adjustment</Dialog.Title>
-				<Dialog.Description>
-					This will apply a discount or change the price of the bill
-				</Dialog.Description>
+				<Dialog.Description>This will apply a discount or change the price of the bill</Dialog.Description>
 			</Dialog.Header>
 			<div class="flex flex-col gap-5 p-4 pt-0">
 				<Field {form} name="adjustmentTypeId">
@@ -106,9 +101,7 @@
 								</Select.Trigger>
 								<Select.Content>
 									{#each query.data ?? [] as result}
-										<Select.Item value={result.adjustmentTypeId.toString()}
-											>{result.name}</Select.Item
-										>
+										<Select.Item value={result.adjustmentTypeId.toString()}>{result.name}</Select.Item>
 									{/each}
 								</Select.Content>
 							</Select.Root>
@@ -121,20 +114,13 @@
 					<Control>
 						{#snippet children({ props })}
 							<Form.Label>Amount</Form.Label>
-							<Input
-								{...props}
-								bind:value={$formData.amount}
-								tabindex={0}
-								type="number"
-								step="0.01"
-								onfocus={(e) => e.currentTarget.select()}
-							/>
+							<Input {...props} bind:value={$formData.amount} tabindex={0} type="number" step="0.01" onfocus={(e) => e.currentTarget.select()} />
 						{/snippet}
 					</Control>
 					<FieldErrors class="text-destructive text-sm" />
 				</Field>
 				<Alert.Root class="border-primary">
-					<MessageCircleWarningIcon class="size-5 animate-bounce text-primary" />
+					<MessageCircleWarningIcon class="text-primary size-5 animate-bounce" />
 					<Alert.Title>Heads up!</Alert.Title>
 					<Alert.Description>
 						The amount of <span class="font-semibold">R{Number($formData.amount).toFixed(2)}</span>
@@ -152,7 +138,7 @@
 					<FieldErrors class="text-destructive text-sm" />
 				</Field>
 			</div>
-			<Dialog.Footer class="sm:flex-col gap-2">
+			<Dialog.Footer class="gap-2 sm:flex-col">
 				{#if mutation.isError}
 					<Error message={getError(mutation.error).message} />
 				{/if}

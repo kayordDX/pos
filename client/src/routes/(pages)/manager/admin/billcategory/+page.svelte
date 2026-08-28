@@ -1,9 +1,5 @@
 <script lang="ts">
-	import {
-		createBillCategoryGetAll,
-		type EntitiesBillCategory,
-		type EntitiesSection,
-	} from "$lib/api";
+	import { createBillCategoryGetAll, type EntitiesBillCategory, type EntitiesSection } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import Actions from "./Actions.svelte";
 	import { Button } from "@kayord/ui";
@@ -65,7 +61,7 @@
 	<div class="flex items-center justify-between">
 		<div class="flex flex-col gap-1">
 			<h1>Bill Categories</h1>
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<Search bind:search name="Bill Categories" />
 			</div>
 		</div>
@@ -78,11 +74,5 @@
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		headerClass="pb-2"
-		{header}
-		{table}
-		isLoading={query.isPending}
-		noDataMessage="No sections for outlet"
-	/>
+	<DataTable headerClass="pb-2" {header} {table} isLoading={query.isPending} noDataMessage="No sections for outlet" />
 </div>

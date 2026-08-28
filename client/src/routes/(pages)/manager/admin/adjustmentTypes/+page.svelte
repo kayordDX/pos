@@ -67,7 +67,7 @@
 	<div class="flex items-center justify-between">
 		<div class="flex flex-col gap-1">
 			<h1>Adjustment Types</h1>
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<Search bind:search name="Adjustment" />
 			</div>
 		</div>
@@ -75,19 +75,9 @@
 			<PlusIcon class="h-5 w-5" /> Add
 		</Button>
 	</div>
-	<AddEditAdjustmentType
-		bind:open={isDialogOpen}
-		adjustmentType={selectedAdjustmentType}
-		refetch={query.refetch}
-	/>
+	<AddEditAdjustmentType bind:open={isDialogOpen} adjustmentType={selectedAdjustmentType} refetch={query.refetch} />
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		headerClass="pb-2"
-		{header}
-		{table}
-		isLoading={query.isPending}
-		noDataMessage="No adjustment types for outlet"
-	/>
+	<DataTable headerClass="pb-2" {header} {table} isLoading={query.isPending} noDataMessage="No adjustment types for outlet" />
 </div>

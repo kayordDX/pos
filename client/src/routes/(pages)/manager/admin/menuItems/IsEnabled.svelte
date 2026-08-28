@@ -5,15 +5,11 @@
 </script>
 
 {#if isEnabled}
-	<div
-		class="flex h-8 w-8 bg-primary justify-center items-center rounded-full text-primary-foreground"
-	>
+	<div class="bg-primary text-primary-foreground flex h-8 w-8 items-center justify-center rounded-full">
 		<CheckIcon />
 	</div>
 {:else}
-	<div
-		class="flex h-8 w-8 bg-secondary justify-center items-center rounded-full text-secondary-foreground"
-	>
+	<div class="bg-secondary text-secondary-foreground flex h-8 w-8 items-center justify-center rounded-full">
 		<XIcon />
 	</div>
 {/if}

@@ -10,13 +10,13 @@
 	let { table }: Props<T> = $props();
 </script>
 
-<div class="flex gap-2 mb-2">
+<div class="mb-2 flex gap-2">
 	{#each table.getAllColumns() as col}
 		{#if col.getFilterValue()}
 			<Badge variant="secondary">
 				<Popover.Root>
 					<Popover.Trigger>
-						<div class="whitespace-nowrap overflow-hidden text-ellipsis max-w-36">
+						<div class="max-w-36 overflow-hidden text-ellipsis whitespace-nowrap">
 							{col.columnDef.header}: {col.getFilterValue()}
 						</div>
 					</Popover.Trigger>
@@ -42,7 +42,7 @@
 						col.setFilterValue(undefined);
 					}}
 				>
-					<XIcon class="size-4 ml-2" />
+					<XIcon class="ml-2 size-4" />
 				</button>
 			</Badge>
 		{/if}

@@ -2,12 +2,7 @@
 	import { Button, Card } from "@kayord/ui";
 	import { stringToFDate } from "$lib/util";
 	import { status } from "$lib/stores/status.svelte";
-	import {
-		ReceiptTextIcon,
-		WalletCardsIcon,
-		MessageCircleIcon,
-		Settings2Icon,
-	} from "@lucide/svelte";
+	import { ReceiptTextIcon, WalletCardsIcon, MessageCircleIcon, Settings2Icon } from "@lucide/svelte";
 </script>
 
 <div class="m-2">
@@ -19,10 +14,10 @@
 			</Card.Header>
 			<Card.Footer class="flex items-center gap-2">
 				<Button href="manager/cashUp">
-					<WalletCardsIcon class="size-4 mr-2" /> Cash Up
+					<WalletCardsIcon class="mr-2 size-4" /> Cash Up
 				</Button>
 				<Button variant="outline" class="m-2" href="manager/history">
-					<ReceiptTextIcon class="size-4 mr-2" /> Sales Period Bills
+					<ReceiptTextIcon class="mr-2 size-4" /> Sales Period Bills
 				</Button>
 			</Card.Footer>
 		</Card.Root>
@@ -32,7 +27,7 @@
 				<Card.Title>Sales Period</Card.Title>
 				<Card.Description>No active sales period</Card.Description>
 			</Card.Header>
-			<Card.Footer class="flex items-center gap-2 mt-2">
+			<Card.Footer class="mt-2 flex items-center gap-2">
 				<Button href="/manager/salesPeriod" class="w-full">Open Sales Period</Button>
 			</Card.Footer>
 		</Card.Root>
@@ -43,9 +38,9 @@
 			<Card.Title>Admin</Card.Title>
 			<Card.Description>Additional admin configuration</Card.Description>
 		</Card.Header>
-		<Card.Footer class="flex items-center gap-2 mt-2">
+		<Card.Footer class="mt-2 flex items-center gap-2">
 			<Button class="m-2 w-full" href="manager/admin">
-				<Settings2Icon class="size-4 mr-2" />
+				<Settings2Icon class="mr-2 size-4" />
 				Admin
 			</Button>
 		</Card.Footer>

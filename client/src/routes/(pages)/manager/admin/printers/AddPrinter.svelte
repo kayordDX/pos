@@ -123,9 +123,7 @@
 							<Input {...props} bind:value={$formData.iPAddress} />
 						{/snippet}
 					</Form.Control>
-					<Form.Description>
-						Make sure you enter a valid IP Address. Example 10.0.0.52
-					</Form.Description>
+					<Form.Description>Make sure you enter a valid IP Address. Example 10.0.0.52</Form.Description>
 					<Form.FieldErrors />
 				</Form.Field>
 				<Form.Field {form} name="port">

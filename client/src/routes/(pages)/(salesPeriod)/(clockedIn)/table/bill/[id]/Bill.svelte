@@ -63,9 +63,9 @@
 	let showDetail = $state(false);
 </script>
 
-<Card.Root class="overflow-hidden m-2 mb-12 p-0">
-	<Card.Header class="flex flex-col bg-muted/30 dark:bg-background/30 p-4">
-		<div class="flex flex-row w-full justify-between">
+<Card.Root class="m-2 mb-12 overflow-hidden p-0">
+	<Card.Header class="bg-muted/30 dark:bg-background/30 flex flex-col p-4">
+		<div class="flex w-full flex-row justify-between">
 			<div class="flex flex-col">
 				<Card.Title class="group flex items-center gap-2 text-lg">
 					Bill #{bookingId}
@@ -76,7 +76,7 @@
 		</div>
 		{#if showDetail}
 			<Separator class="mt-2" />
-			<div class="text-muted-foreground flex flex-row text-sm justify-between w-full">
+			<div class="text-muted-foreground flex w-full flex-row justify-between text-sm">
 				<div class="flex flex-col">
 					<div>{data.tableName}</div>
 					<div>Waiter {data.waiter}</div>
@@ -85,7 +85,7 @@
 				<div class="flex flex-col justify-center">
 					{#if !isReadOnly}
 						<Button disabled={recheckHaloLoading} onclick={recheckHaloPayments}>
-							<RotateCcwIcon class="size-4 mr-2" />
+							<RotateCcwIcon class="mr-2 size-4" />
 							Re-Check Halo Payment
 						</Button>
 					{/if}
@@ -144,17 +144,12 @@
 				<dl class="grid gap-3">
 					{#each data.paymentsReceived as payment}
 						<div class="flex items-center justify-between">
-							<div class="flex items-center gap-1 text-muted-foreground w-full justify-start">
+							<div class="text-muted-foreground flex w-full items-center justify-start gap-1">
 								<PaymentTypeIcon type={payment.paymentType.paymentTypeName} />
 								{#if isManager}
-									<EditPayment
-										paymentId={payment.id}
-										amount={payment.amount}
-										{refetch}
-										paymentTypeId={payment.paymentTypeId ?? 0}
-									/>
+									<EditPayment paymentId={payment.id} amount={payment.amount} {refetch} paymentTypeId={payment.paymentTypeId ?? 0} />
 								{/if}
-								<div class="truncate w-full">{payment.paymentType.paymentTypeName}</div>
+								<div class="w-full truncate">{payment.paymentType.paymentTypeName}</div>
 							</div>
 							<div>{payment.amount.toFixed(2)}</div>
 						</div>
@@ -179,24 +174,19 @@
 			</div>
 		{/if}
 	</Card.Content>
-	<Card.Footer class="flex flex-col items-center border-t p-4 bg-muted/30 dark:bg-background/30">
-		<div class="flex flex-col gap-2 w-full">
+	<Card.Footer class="bg-muted/30 dark:bg-background/30 flex flex-col items-center border-t p-4">
+		<div class="flex w-full flex-col gap-2">
 			{#if isManager && showAdjustment}
 				<Adjustment tableBookingId={bookingId} bind:open={adjustmentOpen} {refetch} />
 			{/if}
 			{#if !isReadOnly}
 				<Button href={`/table/pay/${bookingId}?total=${data.total}&balance=${data?.balance}`}>
-					<WalletCardsIcon class="size-4 mr-2" />
+					<WalletCardsIcon class="mr-2 size-4" />
 					Pay
 				</Button>
 				{#if data?.balance == 0}
-					<Button
-						class="w-full"
-						disabled={closeTableMut.isPending}
-						variant="destructive"
-						onclick={closeTable}
-					>
-						<DoorOpenIcon class="size-4 mr-2" />
+					<Button class="w-full" disabled={closeTableMut.isPending} variant="destructive" onclick={closeTable}>
+						<DoorOpenIcon class="mr-2 size-4" />
 						Close Table
 					</Button>
 				{/if}

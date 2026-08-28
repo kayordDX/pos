@@ -3,13 +3,7 @@
 	import type { DTOOptionGroupBasicDTO } from "$lib/api";
 	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import {
-		EllipsisVerticalIcon,
-		EqualIcon,
-		ListCollapseIcon,
-		PencilIcon,
-		Trash2Icon,
-	} from "@lucide/svelte";
+	import { EllipsisVerticalIcon, EqualIcon, ListCollapseIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import { createOptionGroupDelete } from "$lib/api";
 	import { getError } from "$lib/types";
 	import EditOptionGroup from "./EditOptionGroup.svelte";
@@ -58,9 +52,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete Option Group?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete the option group only if it does not contain any options.
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will delete the option group only if it does not contain any options.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

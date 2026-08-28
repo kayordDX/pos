@@ -58,9 +58,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete Section?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete the section if no tables or items depend on it.
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will delete the section if no tables or items depend on it.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

@@ -55,9 +55,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Cancel Stock Order?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will cancel all stock order items and move this order to done
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will cancel all stock order items and move this order to done</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

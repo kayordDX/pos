@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { createOptionGroup, type DTOOptionGroupBasicDTO } from "$lib/api";
 	import { Badge, Button, Card } from "@kayord/ui";
-	import {
-		DataTable,
-		renderComponent,
-		renderSnippet,
-		createShadTable,
-		decodeGlobalFilter,
-	} from "@kayord/ui/data-table";
+	import { DataTable, renderComponent, renderSnippet, createShadTable, decodeGlobalFilter } from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import EditOptionGroup from "./EditOptionGroup.svelte";
@@ -64,7 +58,7 @@
 	<div class="flex items-center justify-between">
 		<div class="flex flex-col gap-1">
 			<h1>Option Groups</h1>
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<Search bind:search name="Option Groups" />
 			</div>
 		</div>
@@ -76,18 +70,12 @@
 {/snippet}
 
 {#snippet selection(optionGroup: DTOOptionGroupBasicDTO)}
-	<Card.Root class="p-2 flex items-center gap-2 flex-row">
+	<Card.Root class="flex flex-row items-center gap-2 p-2">
 		min: <Badge>{optionGroup.maxSelections}</Badge>
 		max: <Badge>{optionGroup.minSelections}</Badge>
 	</Card.Root>
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		headerClass="pb-2"
-		{header}
-		{table}
-		isLoading={query.isPending}
-		noDataMessage="No roles for outlet"
-	/>
+	<DataTable headerClass="pb-2" {header} {table} isLoading={query.isPending} noDataMessage="No roles for outlet" />
 </div>

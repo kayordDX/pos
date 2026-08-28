@@ -48,23 +48,10 @@ export const billCategoryUpdate = async (
 	});
 };
 
-export const getBillCategoryUpdateMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof billCategoryUpdate>>,
-		TError,
-		{ id: number; data: BodyType<BillCategoryUpdateRequest> },
-		TContext
-	>;
+export const getBillCategoryUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError, { id: number; data: BodyType<BillCategoryUpdateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof billCategoryUpdate>>,
-	TError,
-	{ id: number; data: BodyType<BillCategoryUpdateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError, { id: number; data: BodyType<BillCategoryUpdateRequest> }, TContext> => {
 	const mutationKey = ["billCategoryUpdate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -72,10 +59,7 @@ export const getBillCategoryUpdateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof billCategoryUpdate>>,
-		{ id: number; data: BodyType<BillCategoryUpdateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof billCategoryUpdate>>, { id: number; data: BodyType<BillCategoryUpdateRequest> }> = (props) => {
 		const { id, data } = props ?? {};
 
 		return billCategoryUpdate(id, data, requestOptions);
@@ -84,18 +68,11 @@ export const getBillCategoryUpdateMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type BillCategoryUpdateMutationResult = NonNullable<
-	Awaited<ReturnType<typeof billCategoryUpdate>>
->;
+export type BillCategoryUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof billCategoryUpdate>>>;
 export type BillCategoryUpdateMutationBody = BodyType<BillCategoryUpdateRequest>;
-export type BillCategoryUpdateMutationError = ErrorType<
-	ErrorResponse | void | InternalErrorResponse
->;
+export type BillCategoryUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createBillCategoryUpdate = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createBillCategoryUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
 		mutation?: CreateMutationOptions<
 			Awaited<ReturnType<typeof billCategoryUpdate>>,
@@ -106,16 +83,8 @@ export const createBillCategoryUpdate = <
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof billCategoryUpdate>>,
-	TError,
-	{ id: number; data: BodyType<BillCategoryUpdateRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getBillCategoryUpdateMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof billCategoryUpdate>>, TError, { id: number; data: BodyType<BillCategoryUpdateRequest> }, TContext> => {
+	return createMutation(() => ({ ...getBillCategoryUpdateMutationOptions(options?.()) }), queryClient);
 };
 export const getBillCategoryGetAllUrl = (params: BillCategoryGetAllParams) => {
 	const normalizedParams = new URLSearchParams();
@@ -131,10 +100,7 @@ export const getBillCategoryGetAllUrl = (params: BillCategoryGetAllParams) => {
 	return stringifiedParams.length > 0 ? `/BillCategory?${stringifiedParams}` : `/BillCategory`;
 };
 
-export const billCategoryGetAll = async (
-	params: BillCategoryGetAllParams,
-	options?: RequestInit
-): Promise<EntitiesBillCategory[]> => {
+export const billCategoryGetAll = async (params: BillCategoryGetAllParams, options?: RequestInit): Promise<EntitiesBillCategory[]> => {
 	return customInstance<EntitiesBillCategory[]>(getBillCategoryGetAllUrl(params), {
 		...options,
 		method: "GET",
@@ -145,15 +111,10 @@ export const getBillCategoryGetAllQueryKey = (params?: BillCategoryGetAllParams)
 	return [`/BillCategory`, ...(params ? [params] : [])] as const;
 };
 
-export const getBillCategoryGetAllQueryOptions = <
-	TData = Awaited<ReturnType<typeof billCategoryGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export const getBillCategoryGetAllQueryOptions = <TData = Awaited<ReturnType<typeof billCategoryGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params: BillCategoryGetAllParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -161,38 +122,27 @@ export const getBillCategoryGetAllQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getBillCategoryGetAllQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof billCategoryGetAll>>> = () =>
-		billCategoryGetAll(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof billCategoryGetAll>>> = () => billCategoryGetAll(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof billCategoryGetAll>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
-export type BillCategoryGetAllQueryResult = NonNullable<
-	Awaited<ReturnType<typeof billCategoryGetAll>>
->;
+export type BillCategoryGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof billCategoryGetAll>>>;
 export type BillCategoryGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createBillCategoryGetAll<
-	TData = Awaited<ReturnType<typeof billCategoryGetAll>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createBillCategoryGetAll<TData = Awaited<ReturnType<typeof billCategoryGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
 	params: () => BillCategoryGetAllParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getBillCategoryGetAllQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getBillCategoryGetAllQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -201,10 +151,7 @@ export const getBillCategoryCreateUrl = () => {
 	return `/billCategory`;
 };
 
-export const billCategoryCreate = async (
-	billCategoryCreateRequest: BillCategoryCreateRequest,
-	options?: RequestInit
-): Promise<EntitiesBillCategory> => {
+export const billCategoryCreate = async (billCategoryCreateRequest: BillCategoryCreateRequest, options?: RequestInit): Promise<EntitiesBillCategory> => {
 	return customInstance<EntitiesBillCategory>(getBillCategoryCreateUrl(), {
 		...options,
 		method: "POST",
@@ -213,23 +160,10 @@ export const billCategoryCreate = async (
 	});
 };
 
-export const getBillCategoryCreateMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof billCategoryCreate>>,
-		TError,
-		{ data: BodyType<BillCategoryCreateRequest> },
-		TContext
-	>;
+export const getBillCategoryCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError, { data: BodyType<BillCategoryCreateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof billCategoryCreate>>,
-	TError,
-	{ data: BodyType<BillCategoryCreateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError, { data: BodyType<BillCategoryCreateRequest> }, TContext> => {
 	const mutationKey = ["billCategoryCreate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -237,10 +171,7 @@ export const getBillCategoryCreateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof billCategoryCreate>>,
-		{ data: BodyType<BillCategoryCreateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof billCategoryCreate>>, { data: BodyType<BillCategoryCreateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return billCategoryCreate(data, requestOptions);
@@ -249,36 +180,16 @@ export const getBillCategoryCreateMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type BillCategoryCreateMutationResult = NonNullable<
-	Awaited<ReturnType<typeof billCategoryCreate>>
->;
+export type BillCategoryCreateMutationResult = NonNullable<Awaited<ReturnType<typeof billCategoryCreate>>>;
 export type BillCategoryCreateMutationBody = BodyType<BillCategoryCreateRequest>;
-export type BillCategoryCreateMutationError = ErrorType<
-	ErrorResponse | void | InternalErrorResponse
->;
+export type BillCategoryCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createBillCategoryCreate = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createBillCategoryCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof billCategoryCreate>>,
-			TError,
-			{ data: BodyType<BillCategoryCreateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError, { data: BodyType<BillCategoryCreateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof billCategoryCreate>>,
-	TError,
-	{ data: BodyType<BillCategoryCreateRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getBillCategoryCreateMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof billCategoryCreate>>, TError, { data: BodyType<BillCategoryCreateRequest> }, TContext> => {
+	return createMutation(() => ({ ...getBillCategoryCreateMutationOptions(options?.()) }), queryClient);
 };

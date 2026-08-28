@@ -31,16 +31,8 @@
 		filters = qb.build();
 	});
 
-	const stockListSelect = $derived(
-		stockList.map((s) => ({ value: s.stockId, label: `${s.name} - (${s.unitName})` }))
-	);
+	const stockListSelect = $derived(stockList.map((s) => ({ value: s.stockId, label: `${s.name} - (${s.unitName})` })));
 </script>
 
 <Label>Stock Id</Label>
-<Combobox
-	bind:value
-	items={stockListSelect}
-	bind:search={stockSearch}
-	shouldFilter={false}
-	name="Stock Id"
-/>
+<Combobox bind:value items={stockListSelect} bind:search={stockSearch} shouldFilter={false} name="Stock Id" />

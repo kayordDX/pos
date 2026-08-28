@@ -8,7 +8,7 @@
 	let { item }: Props = $props();
 </script>
 
-<div class="flex items-center justify-between py-1 w-full">
+<div class="flex w-full items-center justify-between py-1">
 	<div class="flex items-center">
 		<span class="text-muted-foreground">{item.cashUpUserItemType?.itemType}</span>
 	</div>

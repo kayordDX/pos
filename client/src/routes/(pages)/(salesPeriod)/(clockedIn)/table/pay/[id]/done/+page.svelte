@@ -18,7 +18,7 @@
 		</div>
 	</Card.Header>
 	<Card.Content>
-		<div class="mt-2 text-muted-foreground text-sm">Amount Paid:</div>
+		<div class="text-muted-foreground mt-2 text-sm">Amount Paid:</div>
 		<div class="text-foreground text-lg">R{amount.toFixed(2)}</div>
 	</Card.Content>
 	<Card.Footer>

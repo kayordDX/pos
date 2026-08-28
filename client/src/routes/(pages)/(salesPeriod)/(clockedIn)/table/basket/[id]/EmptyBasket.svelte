@@ -11,7 +11,7 @@
 			<Card.Description>Add items from menu to basket</Card.Description>
 		</Card.Header>
 		<Card.Content class="flex justify-center">
-			<ShoppingBasketIcon class="w-20 h-20" />
+			<ShoppingBasketIcon class="h-20 w-20" />
 		</Card.Content>
 	</Card.Root>
 </div>

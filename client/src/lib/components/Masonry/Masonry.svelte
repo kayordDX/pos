@@ -42,9 +42,7 @@
 		return (item as Record<string, string | number>)[idKey] ?? "";
 	};
 
-	const nCols = $derived(
-		Math.min(items.length, Math.floor((masonryWidth + gap) / (minColWidth + gap)) || 1)
-	);
+	const nCols = $derived(Math.min(items.length, Math.floor((masonryWidth + gap) / (minColWidth + gap)) || 1));
 
 	const itemsToCols = $derived(
 		items.reduce(
@@ -65,20 +63,12 @@
 	});
 </script>
 
-<div
-	class="flex break-normal justify-center box-border {className}"
-	bind:clientWidth={masonryWidth}
-	style="gap: {gap}px;"
->
+<div class="box-border flex justify-center break-normal {className}" bind:clientWidth={masonryWidth} style="gap: {gap}px;">
 	{#each itemsToCols as col}
 		<div class="grid w-full {columnClass}" style={itemStyles}>
 			{#if animate}
 				{#each col as [item, idx] (getId(item))}
-					<div
-						in:fade={{ delay: 100, duration }}
-						out:fade={{ delay: 0, duration }}
-						animate:flip={{ duration }}
-					>
+					<div in:fade={{ delay: 100, duration }} out:fade={{ delay: 0, duration }} animate:flip={{ duration }}>
 						{#if itemChild}
 							{@render itemChild(item)}
 						{:else}

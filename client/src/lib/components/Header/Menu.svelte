@@ -1,16 +1,6 @@
 <script lang="ts">
 	import { Avatar, Badge, Button, DropdownMenu } from "@kayord/ui";
-	import {
-		LogOutIcon,
-		MoonIcon,
-		SunIcon,
-		WrenchIcon,
-		NetworkIcon,
-		InboxIcon,
-		ArrowRightLeft,
-		ShieldUserIcon,
-		TvMinimalIcon,
-	} from "@lucide/svelte";
+	import { LogOutIcon, MoonIcon, SunIcon, WrenchIcon, NetworkIcon, InboxIcon, ArrowRightLeft, ShieldUserIcon, TvMinimalIcon } from "@lucide/svelte";
 	import { getInitials } from "$lib/util";
 	import { toggleMode, mode } from "mode-watcher";
 	import { logout, session } from "$lib/firebase.svelte";
@@ -20,7 +10,7 @@
 </script>
 
 <Button
-	class={`bg-background/40 text-primary hover:text-primary-foreground ${status.value.hasNotification ? "animate-pulse bg-destructive text-primary-foreground" : ""}`}
+	class={`bg-background/40 text-primary hover:text-primary-foreground ${status.value.hasNotification ? "bg-destructive text-primary-foreground animate-pulse" : ""}`}
 	href="/tasks"
 >
 	<InboxIcon />
@@ -36,7 +26,7 @@
 				</Avatar.Fallback>
 			</Avatar.Root>
 			<div
-				class={`size-3 rounded-md absolute top-0 right-0 ${networkInformation.isOnline() ? "bg-success" : networkInformation.isOnline() ? "bg-destructive animate-pulse" : "bg-muted-foreground"}`}
+				class={`absolute top-0 right-0 size-3 rounded-md ${networkInformation.isOnline() ? "bg-success" : networkInformation.isOnline() ? "bg-destructive animate-pulse" : "bg-muted-foreground"}`}
 			></div>
 		</div>
 	</DropdownMenu.Trigger>

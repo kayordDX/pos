@@ -23,10 +23,7 @@
 	};
 
 	const schema = z.object({
-		email: z
-			.string()
-			.min(1, { message: "Email is Required" })
-			.email({ message: "This is not a valid email" }),
+		email: z.string().min(1, { message: "Email is Required" }).email({ message: "This is not a valid email" }),
 		name: z.string().min(1, { message: "Name is Required" }),
 	});
 	type FormSchema = z.infer<typeof schema>;
@@ -63,23 +60,23 @@
 				<Card.Title>Email bill #{bookingId}</Card.Title>
 				<Card.Description>This will send email with bill attached</Card.Description>
 			</Card.Header>
-			<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
+			<div class="mx-auto flex w-full flex-col gap-2 overflow-auto rounded-t-[10px] p-4">
 				<Field {form} name="name">
 					<Control>
 						<Form.Label>Name</Form.Label>
 						<Input bind:value={$formData.name} />
 					</Control>
-					<FieldErrors class="text-sm text-destructive" />
+					<FieldErrors class="text-destructive text-sm" />
 				</Field>
 				<Field {form} name="email">
 					<Control>
 						<Form.Label>Email</Form.Label>
 						<Input type="email" bind:value={$formData.email} />
 					</Control>
-					<FieldErrors class="text-sm text-destructive" />
+					<FieldErrors class="text-destructive text-sm" />
 				</Field>
 			</div>
-			<Card.Footer class="flex justify-between items-center">
+			<Card.Footer class="flex items-center justify-between">
 				<Button variant="secondary" onclick={goBack}>Cancel</Button>
 				<Button type="submit" disabled={mutation.isPending}>Send Email</Button>
 			</Card.Footer>

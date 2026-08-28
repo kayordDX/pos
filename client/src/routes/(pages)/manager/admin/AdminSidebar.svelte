@@ -223,16 +223,12 @@
 </script>
 
 <Sidebar.Root>
-	<Sidebar.Header class="bg-secondary h-14 flex items-center justify-center">
+	<Sidebar.Header class="bg-secondary flex h-14 items-center justify-center">
 		<Sidebar.Menu>
 			<Sidebar.MenuItem class="flex items-center justify-start">
 				<button class="flex items-center rounded-full" onclick={() => goto("/")}>
-					<img
-						src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`}
-						alt="kayord-logo"
-						class="h-10"
-					/>
-					<span class="hidden md:block font-bold text-lg">
+					<img src={`${info.isKayord() ? "/kayord" : ""}/logo.svg`} alt="kayord-logo" class="h-10" />
+					<span class="hidden text-lg font-bold md:block">
 						{info.isKayord() ? "kayord" : "aviate"}
 					</span>
 				</button>
@@ -248,7 +244,7 @@
 						{#if (item.items?.length ?? 0) > 0}
 							<Collapsible.Root class="group/collapsible">
 								<Sidebar.MenuItem>
-									<Collapsible.Trigger class="w-full flex items-center justify-between">
+									<Collapsible.Trigger class="flex w-full items-center justify-between">
 										<Sidebar.MenuButton>
 											{#if item.icon}
 												<item.icon class="!size-5" />
@@ -264,7 +260,7 @@
 												{#each item.items as subItem (subItem.title)}
 													<Sidebar.MenuSubItem>
 														<Sidebar.MenuSubButton
-															class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground rounded-sm cursor-pointer"
+															class="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground cursor-pointer rounded-sm"
 															onclick={() => {
 																goto(subItem.href);
 																if (sidebar.isMobile) {
@@ -274,9 +270,7 @@
 															isActive={activeItem?.title === subItem.title}
 														>
 															{#if subItem.icon}
-																<subItem.icon
-																	class={`!size-5 ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`}
-																/>
+																<subItem.icon class={`!size-5 ${activeItem?.title === subItem.title ? "stroke-primary-foreground" : ""}`} />
 															{/if}
 															<span>{subItem.title}</span>
 														</Sidebar.MenuSubButton>
@@ -315,7 +309,5 @@
 		</Sidebar.GroupContent>
 		<Sidebar.Group />
 	</Sidebar.Content>
-	<Sidebar.Footer class="bg-secondary text-sm text-muted-foreground">
-		Powered by Kayord
-	</Sidebar.Footer>
+	<Sidebar.Footer class="bg-secondary text-muted-foreground text-sm">Powered by Kayord</Sidebar.Footer>
 </Sidebar.Root>

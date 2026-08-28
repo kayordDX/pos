@@ -18,13 +18,7 @@
 		isHistory: boolean;
 	};
 
-	let {
-		selected = $bindable(),
-		title,
-		options,
-		showValue = false,
-		isHistory,
-	}: Props<TData, TValue> = $props();
+	let { selected = $bindable(), title, options, showValue = false, isHistory }: Props<TData, TValue> = $props();
 
 	$effect(() => {
 		if (page.params.divisionIds != selected.join(",")) {
@@ -46,7 +40,7 @@
 					</Badge>
 					<div class="hidden space-x-1 lg:flex">
 						{#each options.filter((opt) => selected.includes(opt.value)) as option}
-							<Badge variant="secondary" class="rounded-sm px-1 py-1 font-normal h-4">
+							<Badge variant="secondary" class="h-4 rounded-sm px-1 py-1 font-normal">
 								{option.label}
 							</Badge>
 						{/each}
@@ -80,7 +74,7 @@
 									isSelected ? "bg-primary text-primary-foreground" : "opacity-50 [&_svg]:invisible"
 								)}
 							>
-								<Check class={cn("h-4 w-4 stroke-primary-foreground")} />
+								<Check class={cn("stroke-primary-foreground h-4 w-4")} />
 							</div>
 							{#if option.icon}
 								{@const Icon = option.icon}

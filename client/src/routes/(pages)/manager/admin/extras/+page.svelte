@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { createExtraGroup, type DTOExtraGroupAdminDTO } from "$lib/api";
 	import { Button, Tooltip } from "@kayord/ui";
-	import {
-		DataTable,
-		createShadTable,
-		renderComponent,
-		renderSnippet,
-		decodeGlobalFilter,
-	} from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, renderSnippet, decodeGlobalFilter } from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 	import EditExtraGroup from "./EditExtraGroup.svelte";
@@ -59,7 +53,7 @@
 	<div class="flex items-center justify-between">
 		<div class="flex flex-col gap-1">
 			<h1>Extra Groups</h1>
-			<div class="flex gap-2 items-center">
+			<div class="flex items-center gap-2">
 				<Search bind:search name="Extra Groups" />
 			</div>
 		</div>
@@ -71,22 +65,14 @@
 {/snippet}
 
 <div class="m-2">
-	<DataTable
-		headerClass="pb-2"
-		{header}
-		{table}
-		isLoading={query.isPending}
-		noDataMessage="No roles for outlet"
-	/>
+	<DataTable headerClass="pb-2" {header} {table} isLoading={query.isPending} noDataMessage="No roles for outlet" />
 </div>
 
 {#snippet extraGroup(extraGroup: DTOExtraGroupAdminDTO)}
 	<Tooltip.Provider>
 		<Tooltip.Root>
 			<Tooltip.Trigger>
-				<div
-					class={`size-3 ${extraGroup.isGlobal ? "bg-primary animate-pulse" : "bg-secondary"} rounded-full`}
-				></div>
+				<div class={`size-3 ${extraGroup.isGlobal ? "bg-primary animate-pulse" : "bg-secondary"} rounded-full`}></div>
 			</Tooltip.Trigger>
 			<Tooltip.Content>
 				<p class="font-bold">Global Extra Group</p>

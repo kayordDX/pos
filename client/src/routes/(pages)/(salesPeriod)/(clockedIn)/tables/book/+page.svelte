@@ -68,10 +68,10 @@
 	{/if}
 
 	{#if query.isSuccess}
-		<div class="flex flex-wrap gap-4 mt-4 w-full">
+		<div class="mt-4 flex w-full flex-wrap gap-4">
 			{#each query.data as table}
-				<button class="text-start w-full md:max-w-md" onclick={() => selectTable(table.tableId)}>
-					<Card.Root class="p-4 gap-0">
+				<button class="w-full text-start md:max-w-md" onclick={() => selectTable(table.tableId)}>
+					<Card.Root class="gap-0 p-4">
 						<div class="flex justify-between gap-2">
 							<h3>{table.name}</h3>
 							<Badge>{table.capacity}</Badge>
@@ -92,7 +92,7 @@
 					<Dialog.Title>Book Table</Dialog.Title>
 					<Dialog.Description>This will book the table and assign it to you</Dialog.Description>
 				</Dialog.Header>
-				<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] p-4 gap-2">
+				<div class="mx-auto flex w-full flex-col gap-2 overflow-auto rounded-t-[10px] p-4">
 					{#if mutate.isPending}
 						<Loader />
 					{/if}
@@ -102,7 +102,7 @@
 							<Form.Label>Booking Name</Form.Label>
 							<Input bind:value={$formData.bookingName} />
 						</Control>
-						<FieldErrors class="text-sm text-destructive" />
+						<FieldErrors class="text-destructive text-sm" />
 					</Field>
 				</div>
 

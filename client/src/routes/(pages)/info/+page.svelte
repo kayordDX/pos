@@ -5,7 +5,7 @@
 </script>
 
 <Header />
-<div class="m-8 flex flex-col gap-2 items-baseline">
+<div class="m-8 flex flex-col items-baseline gap-2">
 	{#if !session.idToken}
 		<Loader />
 	{:else}
@@ -15,7 +15,7 @@
 				<Card.Description class="overflow-hidden">Auth</Card.Description>
 			</Card.Header>
 			<Card.Content>
-				<div class="overflow-hidden text-xs text-muted-foreground">
+				<div class="text-muted-foreground overflow-hidden text-xs">
 					{session.idToken}
 				</div>
 			</Card.Content>

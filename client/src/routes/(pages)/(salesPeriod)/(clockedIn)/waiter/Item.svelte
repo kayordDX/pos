@@ -41,8 +41,8 @@
 	};
 </script>
 
-<Card.Root class="p-2 relative">
-	<div class="flex justify-between items-center">
+<Card.Root class="relative p-2">
+	<div class="flex items-center justify-between">
 		<div>
 			<div>{item.menuItem.name}</div>
 			{#if (item.orderItemOptions ?? []).length > 0}
@@ -74,16 +74,16 @@
 			{/if}
 
 			{#if (item.note?.length ?? 0) > 0}
-				<div class="flex items-center gap-2 mt-2">
+				<div class="mt-2 flex items-center gap-2">
 					<div class="text-muted-foreground">Note:</div>
 					{item.note}
 				</div>
 			{/if}
 		</div>
-		<div class="flex gap-2 flex-col justify-end items-end sm:flex-row sm:items-center">
+		<div class="flex flex-col items-end justify-end gap-2 sm:flex-row sm:items-center">
 			<div class="flex flex-col gap-1">
-				<Badge class="truncate self-end">{item.orderItemStatus?.status}</Badge>
-				<Badge class="truncate animate-pulse self-end" style={getStatus()}>
+				<Badge class="self-end truncate">{item.orderItemStatus?.status}</Badge>
+				<Badge class="animate-pulse self-end truncate" style={getStatus()}>
 					{item.orderReceivedFormatted}
 				</Badge>
 			</div>

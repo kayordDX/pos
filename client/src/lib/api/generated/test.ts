@@ -5,21 +5,9 @@
  * OpenAPI spec version: v1
  */
 import { createQuery } from "@tanstack/svelte-query";
-import type {
-	CreateQueryOptions,
-	CreateQueryResult,
-	DataTag,
-	QueryClient,
-	QueryFunction,
-	QueryKey,
-} from "@tanstack/svelte-query";
+import type { CreateQueryOptions, CreateQueryResult, DataTag, QueryClient, QueryFunction, QueryKey } from "@tanstack/svelte-query";
 
-import type {
-	BillTableTotal,
-	InternalErrorResponse,
-	TestResult,
-	TestTokenResult,
-} from "./api.schemas";
+import type { BillTableTotal, InternalErrorResponse, TestResult, TestTokenResult } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType } from "../mutator/customInstance.svelte";
@@ -41,10 +29,7 @@ export const getTestQueryKey = () => {
 	return [`/test`] as const;
 };
 
-export const getTestQueryOptions = <
-	TData = Awaited<ReturnType<typeof test>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
+export const getTestQueryOptions = <TData = Awaited<ReturnType<typeof test>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof test>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -54,30 +39,24 @@ export const getTestQueryOptions = <
 
 	const queryFn: QueryFunction<Awaited<ReturnType<typeof test>>> = () => test(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof test>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof test>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type TestQueryResult = NonNullable<Awaited<ReturnType<typeof test>>>;
 export type TestQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createTest<
-	TData = Awaited<ReturnType<typeof test>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createTest<TData = Awaited<ReturnType<typeof test>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof test>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getTestQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getTestQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -108,33 +87,26 @@ export const getTestPrinterTestQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getTestPrinterTestQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof testPrinterTest>>> = () =>
-		testPrinterTest(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof testPrinterTest>>> = () => testPrinterTest(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof testPrinterTest>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof testPrinterTest>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type TestPrinterTestQueryResult = NonNullable<Awaited<ReturnType<typeof testPrinterTest>>>;
 export type TestPrinterTestQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createTestPrinterTest<
-	TData = Awaited<ReturnType<typeof testPrinterTest>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createTestPrinterTest<TData = Awaited<ReturnType<typeof testPrinterTest>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testPrinterTest>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getTestPrinterTestQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getTestPrinterTestQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -154,10 +126,7 @@ export const getTestStockTestQueryKey = () => {
 	return [`/test/stock`] as const;
 };
 
-export const getTestStockTestQueryOptions = <
-	TData = Awaited<ReturnType<typeof testStockTest>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
+export const getTestStockTestQueryOptions = <TData = Awaited<ReturnType<typeof testStockTest>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testStockTest>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -165,33 +134,26 @@ export const getTestStockTestQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getTestStockTestQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof testStockTest>>> = () =>
-		testStockTest(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof testStockTest>>> = () => testStockTest(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof testStockTest>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof testStockTest>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type TestStockTestQueryResult = NonNullable<Awaited<ReturnType<typeof testStockTest>>>;
 export type TestStockTestQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createTestStockTest<
-	TData = Awaited<ReturnType<typeof testStockTest>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createTestStockTest<TData = Awaited<ReturnType<typeof testStockTest>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testStockTest>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getTestStockTestQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getTestStockTestQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -211,10 +173,7 @@ export const getTestTokenTestQueryKey = () => {
 	return [`/test/token`] as const;
 };
 
-export const getTestTokenTestQueryOptions = <
-	TData = Awaited<ReturnType<typeof testTokenTest>>,
-	TError = ErrorType<InternalErrorResponse>,
->(options?: {
+export const getTestTokenTestQueryOptions = <TData = Awaited<ReturnType<typeof testTokenTest>>, TError = ErrorType<InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testTokenTest>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -222,33 +181,26 @@ export const getTestTokenTestQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getTestTokenTestQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof testTokenTest>>> = () =>
-		testTokenTest(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof testTokenTest>>> = () => testTokenTest(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof testTokenTest>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof testTokenTest>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type TestTokenTestQueryResult = NonNullable<Awaited<ReturnType<typeof testTokenTest>>>;
 export type TestTokenTestQueryError = ErrorType<InternalErrorResponse>;
 
-export function createTestTokenTest<
-	TData = Awaited<ReturnType<typeof testTokenTest>>,
-	TError = ErrorType<InternalErrorResponse>,
->(
+export function createTestTokenTest<TData = Awaited<ReturnType<typeof testTokenTest>>, TError = ErrorType<InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testTokenTest>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getTestTokenTestQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getTestTokenTestQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -268,10 +220,7 @@ export const getTestTotalTestQueryKey = () => {
 	return [`/test/total`] as const;
 };
 
-export const getTestTotalTestQueryOptions = <
-	TData = Awaited<ReturnType<typeof testTotalTest>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(options?: {
+export const getTestTotalTestQueryOptions = <TData = Awaited<ReturnType<typeof testTotalTest>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
 	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testTotalTest>>, TError, TData>>;
 	request?: SecondParameter<typeof customInstance>;
 }) => {
@@ -279,33 +228,26 @@ export const getTestTotalTestQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getTestTotalTestQueryKey();
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof testTotalTest>>> = () =>
-		testTotalTest(requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof testTotalTest>>> = () => testTotalTest(requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof testTotalTest>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof testTotalTest>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type TestTotalTestQueryResult = NonNullable<Awaited<ReturnType<typeof testTotalTest>>>;
 export type TestTotalTestQueryError = ErrorType<void | InternalErrorResponse>;
 
-export function createTestTotalTest<
-	TData = Awaited<ReturnType<typeof testTotalTest>>,
-	TError = ErrorType<void | InternalErrorResponse>,
->(
+export function createTestTotalTest<TData = Awaited<ReturnType<typeof testTotalTest>>, TError = ErrorType<void | InternalErrorResponse>>(
 	options?: () => {
 		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof testTotalTest>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getTestTotalTestQueryOptions(options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getTestTotalTestQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }

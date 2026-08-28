@@ -43,7 +43,7 @@
 				>
 					<Badge variant="outline" class="p-2 pl-3">
 						{getItem(current)?.name}
-						<CircleXIcon class="size-4 ml-2" />
+						<CircleXIcon class="ml-2 size-4" />
 					</Badge>
 				</button>
 			{/each}
@@ -58,14 +58,12 @@
 		<Command.Group heading="Extras Groups">
 			{#each query.data ?? [] as extraGroup}
 				<Command.Item onSelect={() => selectItem(extraGroup.extraGroupId)}>
-					<div class="flex w-full items-center flex-row justify-between">
-						<div class="whitespace-nowrap overflow-hidden text-ellipsis">
+					<div class="flex w-full flex-row items-center justify-between">
+						<div class="overflow-hidden text-ellipsis whitespace-nowrap">
 							{extraGroup.name.replace(/[^a-zA-Z0-9 -]*/g, "")}
 						</div>
-						<div class="flex flex-shrink-0 text-xs ml-2">
-							<div
-								class={`size-3 ${extraGroup.isGlobal ? "bg-primary animate-pulse" : "bg-secondary"} rounded-full`}
-							></div>
+						<div class="ml-2 flex flex-shrink-0 text-xs">
+							<div class={`size-3 ${extraGroup.isGlobal ? "bg-primary animate-pulse" : "bg-secondary"} rounded-full`}></div>
 						</div>
 					</div>
 				</Command.Item>

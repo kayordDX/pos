@@ -11,12 +11,10 @@
 </script>
 
 <Card.Root
-	class={`overflow-hidden pt-0 w-full ${hasOpenTables ? "border-4 border-destructive" : ""} ${cash.cashUpUserId > 0 ? "bg-background border-secondary/40 border-2" : ""}`}
+	class={`w-full overflow-hidden pt-0 ${hasOpenTables ? "border-destructive border-4" : ""} ${cash.cashUpUserId > 0 ? "bg-background border-secondary/40 border-2" : ""}`}
 >
-	<Card.Header
-		class={`flex flex-col items-start  ${cash.cashUpUserId > 0 ? "bg-muted/20" : "bg-muted/50"} p-4`}
-	>
-		<div class="flex items-center gap-2 justify-between w-full">
+	<Card.Header class={`flex flex-col items-start  ${cash.cashUpUserId > 0 ? "bg-muted/20" : "bg-muted/50"} p-4`}>
+		<div class="flex w-full items-center justify-between gap-2">
 			<div class="flex items-center gap-2">
 				<Avatar.Root>
 					<Avatar.Image src={cash.user?.image} alt="profile" />
@@ -29,27 +27,24 @@
 					<Card.Description>{cash.user.email}</Card.Description>
 				</div>
 			</div>
-			<div class="flex gap-2 flex-col items-end sm:items-center sm:flex-row">
-				<Button
-					variant="outline"
-					href={`/manager/history/user/${cash.userId}/${cash.cashUpUserId}`}
-				>
-					<ReceiptTextIcon class="size-4 mr-2" /> Bills
+			<div class="flex flex-col items-end gap-2 sm:flex-row sm:items-center">
+				<Button variant="outline" href={`/manager/history/user/${cash.userId}/${cash.cashUpUserId}`}>
+					<ReceiptTextIcon class="mr-2 size-4" /> Bills
 				</Button>
 				{#if cash.cashUpUserId > 0}
 					<Button variant="secondary" href={`/manager/cashUp/${cash.userId}/${cash.cashUpUserId}`}>
-						<WalletCardsIcon class="size-4 mr-2" /> View Cash Up
+						<WalletCardsIcon class="mr-2 size-4" /> View Cash Up
 					</Button>
 				{:else if !hasOpenTables}
 					<Button href={`/manager/cashUp/${cash.userId}/${cash.cashUpUserId}`}>
-						<WalletCardsIcon class="size-4 mr-2" /> Cash Up
+						<WalletCardsIcon class="mr-2 size-4" /> Cash Up
 					</Button>
 				{/if}
 			</div>
 		</div>
 	</Card.Header>
 	<Card.Content>
-		<div class="grid gap-3 mt-3">
+		<div class="mt-3 grid gap-3">
 			<ul class="grid gap-3">
 				<li class="flex items-center justify-between">
 					<span class="text-muted-foreground">Sales</span>

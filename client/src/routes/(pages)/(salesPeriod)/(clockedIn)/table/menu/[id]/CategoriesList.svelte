@@ -21,7 +21,7 @@
 	let { sections, class: className = undefined, children }: Props = $props();
 </script>
 
-<div class="w-full flex flex-col gap-2 items-center">
+<div class="flex w-full flex-col items-center gap-2">
 	{#if sections != null}
 		{#if menuSection.sectionId > 0}
 			<Breadcrumb.Root class={cn(className)}>

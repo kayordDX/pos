@@ -43,7 +43,7 @@
 				>
 					<Badge variant="outline" class="p-2 pl-3">
 						{getItem(current)?.name}
-						<CircleXIcon class="size-4 ml-2" />
+						<CircleXIcon class="ml-2 size-4" />
 					</Badge>
 				</button>
 			{/each}
@@ -58,11 +58,11 @@
 		<Command.Group heading="Option Groups">
 			{#each query.data ?? [] as optionGroup}
 				<Command.Item onSelect={() => selectItem(optionGroup.optionGroupId)}>
-					<div class="flex w-full items-center flex-row justify-between">
-						<div class="whitespace-nowrap overflow-hidden text-ellipsis">
+					<div class="flex w-full flex-row items-center justify-between">
+						<div class="overflow-hidden text-ellipsis whitespace-nowrap">
 							{optionGroup.name.replace(/[^a-zA-Z0-9 -]*/g, "")}
 						</div>
-						<div class="flex flex-shrink-0 text-xs ml-2">
+						<div class="ml-2 flex flex-shrink-0 text-xs">
 							({optionGroup.minSelections}-{optionGroup.maxSelections})
 						</div>
 					</div>

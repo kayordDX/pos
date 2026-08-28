@@ -199,11 +199,5 @@
 
 <div class="m-2">
 	<h2>Users</h2>
-	<DataTable
-		headerClass="pb-2"
-		{table}
-		{header}
-		isLoading={query.isPending}
-		noDataMessage="No unassigned users for outlet"
-	/>
+	<DataTable headerClass="pb-2" {table} {header} isLoading={query.isPending} noDataMessage="No unassigned users for outlet" />
 </div>

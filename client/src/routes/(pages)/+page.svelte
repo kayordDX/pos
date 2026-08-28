@@ -7,10 +7,7 @@
 	let init = $state(false);
 
 	const redirect = async () => {
-		if (
-			status.value.roles.length == 0 ||
-			(status.value.roles.length == 1 && status.hasRole("guest"))
-		) {
+		if (status.value.roles.length == 0 || (status.value.roles.length == 1 && status.hasRole("guest"))) {
 			await goto("/guest");
 		} else if (status.value.roles.length == 1) {
 			if (status.hasRole("front")) {
@@ -33,14 +30,14 @@
 	<Loader />
 {:else}
 	<Header />
-	<div class="flex flex-col gap-4 m-4">
+	<div class="m-4 flex flex-col gap-4">
 		{#if status.hasRole("front")}
-			<div class="border-1 border-muted p-2 border-dashed rounded-md">
+			<div class="border-muted rounded-md border-1 border-dashed p-2">
 				<Button class="w-full" href="/waiter">Waiter</Button>
 			</div>
 		{/if}
 		{#if status.hasRole("back")}
-			<div class="border-1 border-muted p-2 border-dashed rounded-md flex flex-col gap-2">
+			<div class="border-muted flex flex-col gap-2 rounded-md border-1 border-dashed p-2">
 				{#each status.value.divisions as division}
 					<Button href={`/backOffice/${division.id}`} class="w-full" variant="outline">
 						{division.name}
@@ -49,7 +46,7 @@
 			</div>
 		{/if}
 		{#if status.hasRole("manager")}
-			<div class="border-1 border-muted p-2 border-dashed rounded-md">
+			<div class="border-muted rounded-md border-1 border-dashed p-2">
 				<Button href="/manager" class="w-full" variant="destructive">Manager</Button>
 			</div>
 		{/if}

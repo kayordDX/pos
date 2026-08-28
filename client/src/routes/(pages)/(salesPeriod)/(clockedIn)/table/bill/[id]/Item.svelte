@@ -12,24 +12,24 @@
 <Table.Body>
 	{#each data as item}
 		<Table.Row class="border-none">
-			<Table.Cell class="font-medium w-full py-2">
+			<Table.Cell class="w-full py-2 font-medium">
 				<div class="line-clamp-1">{item.menuItem.name}</div>
 				{#each item.orderItemOptions ?? [] as option}
 					<div class="ml-4 flex items-center gap-1">
-						{">"}
+						&gt;
 						<span>{option.option.optionGroup.name}:</span>
 						<span>{option.option.name}</span>
 					</div>
 				{/each}
 				{#each item.orderItemExtras ?? [] as extra}
 					<div class="ml-4 flex items-center gap-1">
-						{"+"}
+						+
 						<span class="text-foreground">{extra.extra.extraGroup.name}:</span>
 						<span>{extra.extra.name}</span>
 					</div>
 				{/each}
 			</Table.Cell>
-			<Table.Cell class="text-right w-full py-2"
+			<Table.Cell class="w-full py-2 text-right"
 				>{item.menuItem.price.toFixed(2)}
 				{#each item.orderItemOptions ?? [] as option}
 					<div>{option.option.price.toFixed(2)}</div>

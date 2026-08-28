@@ -97,9 +97,7 @@
 			})) ?? []
 	);
 
-	const divTypeValue = $derived(
-		divTypeList.find((i) => i.value == $formData.roleTypeId.toString())?.label
-	);
+	const divTypeValue = $derived(divTypeList.find((i) => i.value == $formData.roleTypeId.toString())?.label);
 
 	$effect(() => {
 		if (open) {
@@ -143,9 +141,7 @@
 							<Select.Root
 								type="single"
 								name="roleTypeId"
-								bind:value={
-									() => $formData.roleTypeId.toString(), (v) => ($formData.roleTypeId = Number(v))
-								}
+								bind:value={() => $formData.roleTypeId.toString(), (v) => ($formData.roleTypeId = Number(v))}
 								allowDeselect={false}
 							>
 								<Select.Trigger {...props}>

@@ -26,7 +26,7 @@
 <DropdownMenu.Root>
 	<DropdownMenu.Trigger>
 		<Button variant="outline" size="icon">
-			<SquareMenuIcon class="w-5 h-5" />
+			<SquareMenuIcon class="h-5 w-5" />
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content class="w-56">

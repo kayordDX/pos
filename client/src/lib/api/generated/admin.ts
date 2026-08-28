@@ -5,12 +5,7 @@
  * OpenAPI spec version: v1
  */
 import { createMutation } from "@tanstack/svelte-query";
-import type {
-	CreateMutationOptions,
-	CreateMutationResult,
-	MutationFunction,
-	QueryClient,
-} from "@tanstack/svelte-query";
+import type { CreateMutationOptions, CreateMutationResult, MutationFunction, QueryClient } from "@tanstack/svelte-query";
 
 import type { AdminTokenRequest, AdminTokenResponse, InternalErrorResponse } from "./api.schemas";
 
@@ -23,10 +18,7 @@ export const getAdminTokenUrl = () => {
 	return `/admin/token`;
 };
 
-export const adminToken = async (
-	adminTokenRequest: AdminTokenRequest,
-	options?: RequestInit
-): Promise<AdminTokenResponse> => {
+export const adminToken = async (adminTokenRequest: AdminTokenRequest, options?: RequestInit): Promise<AdminTokenResponse> => {
 	return customInstance<AdminTokenResponse>(getAdminTokenUrl(), {
 		...options,
 		method: "POST",
@@ -35,23 +27,10 @@ export const adminToken = async (
 	});
 };
 
-export const getAdminTokenMutationOptions = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof adminToken>>,
-		TError,
-		{ data: BodyType<AdminTokenRequest> },
-		TContext
-	>;
+export const getAdminTokenMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof adminToken>>, TError, { data: BodyType<AdminTokenRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof adminToken>>,
-	TError,
-	{ data: BodyType<AdminTokenRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof adminToken>>, TError, { data: BodyType<AdminTokenRequest> }, TContext> => {
 	const mutationKey = ["adminToken"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -59,10 +38,7 @@ export const getAdminTokenMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof adminToken>>,
-		{ data: BodyType<AdminTokenRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof adminToken>>, { data: BodyType<AdminTokenRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return adminToken(data, requestOptions);
@@ -75,25 +51,12 @@ export type AdminTokenMutationResult = NonNullable<Awaited<ReturnType<typeof adm
 export type AdminTokenMutationBody = BodyType<AdminTokenRequest>;
 export type AdminTokenMutationError = ErrorType<void | InternalErrorResponse>;
 
-export const createAdminToken = <
-	TError = ErrorType<void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createAdminToken = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof adminToken>>,
-			TError,
-			{ data: BodyType<AdminTokenRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof adminToken>>, TError, { data: BodyType<AdminTokenRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof adminToken>>,
-	TError,
-	{ data: BodyType<AdminTokenRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof adminToken>>, TError, { data: BodyType<AdminTokenRequest> }, TContext> => {
 	return createMutation(() => ({ ...getAdminTokenMutationOptions(options?.()) }), queryClient);
 };

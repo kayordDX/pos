@@ -16,7 +16,7 @@
 	const debouncedCb = debounce((value: string) => (search = value), 300);
 </script>
 
-<div class="flex gap-2 items-center">
+<div class="flex items-center gap-2">
 	<InputGroup.Root>
 		<InputGroup.Input
 			value={search}

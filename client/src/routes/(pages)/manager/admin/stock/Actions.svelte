@@ -57,9 +57,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete Stock Item?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete the stock item and all its stock in all division.
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will delete the stock item and all its stock in all division.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

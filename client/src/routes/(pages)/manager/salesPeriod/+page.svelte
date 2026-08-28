@@ -24,7 +24,7 @@
 	};
 </script>
 
-<Card.Root class="p-5 m-5">
+<Card.Root class="m-5 p-5">
 	<Card.Header>
 		<Card.Title>Open Sales Period</Card.Title>
 	</Card.Header>

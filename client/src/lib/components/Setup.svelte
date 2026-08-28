@@ -9,13 +9,7 @@
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
 	import { networkInformation } from "$lib/stores/network.svelte";
-	import {
-		AlertCircleIcon,
-		CheckCircleIcon,
-		CircleXIcon,
-		MessageCircleWarningIcon,
-		UserCheckIcon,
-	} from "@lucide/svelte";
+	import { AlertCircleIcon, CheckCircleIcon, CircleXIcon, MessageCircleWarningIcon, UserCheckIcon } from "@lucide/svelte";
 	import { requestNotificationPermission } from "$lib/util";
 	import { onMount } from "svelte";
 	import { hub } from "$lib/stores/hub.svelte";
@@ -86,9 +80,7 @@
 		audio.play();
 	};
 
-	const outletList = $derived(
-		query.data?.find((i) => i.id === $formData.outletId)?.name ?? "Select outlet to link to device"
-	);
+	const outletList = $derived(query.data?.find((i) => i.id === $formData.outletId)?.name ?? "Select outlet to link to device");
 </script>
 
 {#if status.value.statusId == 0}
@@ -117,12 +109,10 @@
 	</div>
 {/if}
 
-<Card.Root class="p-5 m-5">
+<Card.Root class="m-5 p-5">
 	<Card.Header>
 		<Card.Title>Setup</Card.Title>
-		<Card.Description>
-			Follow to the below items to make sure your device is compatible
-		</Card.Description>
+		<Card.Description>Follow to the below items to make sure your device is compatible</Card.Description>
 	</Card.Header>
 	<Card.Content>
 		<ul class="flex flex-col gap-2">
@@ -130,13 +120,9 @@
 				<div class="mb-2">
 					1. To accept payments make sure <span class="font-bold">Halo.Go</span> is installed
 				</div>
-				<Button
-					href="https://play.google.com/store/apps/details?id=za.co.synthesis.halo.mpos.go&pcampaignid=web_share"
-				>
-					Halo.Go
-				</Button>
+				<Button href="https://play.google.com/store/apps/details?id=za.co.synthesis.halo.mpos.go&pcampaignid=web_share">Halo.Go</Button>
 			</li>
-			<li class="flex gap-2 items-center">
+			<li class="flex items-center gap-2">
 				2.
 				{#if networkInformation.isOnline()}
 					<CheckCircleIcon class="text-green-400" />
@@ -146,7 +132,7 @@
 				Network
 			</li>
 
-			<li class="flex gap-2 items-center">
+			<li class="flex items-center gap-2">
 				3.
 				{#if isChrome}
 					<CheckCircleIcon class="text-green-400" />
@@ -156,7 +142,7 @@
 				Browser
 			</li>
 
-			<li class="flex gap-2 items-center">
+			<li class="flex items-center gap-2">
 				4.
 				{#if isAndroid}
 					<CheckCircleIcon class="text-green-400" />
@@ -166,7 +152,7 @@
 				Android
 			</li>
 
-			<li class="flex gap-2 items-center">
+			<li class="flex items-center gap-2">
 				6.
 				{#if serviceWorker?.active?.state == "activated"}
 					<CheckCircleIcon class="text-green-400" />
@@ -176,8 +162,8 @@
 				Service Worker
 			</li>
 
-			<li class="flex flex-col gap-2 items-start">
-				<div class="flex flex-row gap-2 items-center">
+			<li class="flex flex-col items-start gap-2">
+				<div class="flex flex-row items-center gap-2">
 					7.
 					{#if hasNotifyPermission}
 						<CheckCircleIcon class="text-green-400" />
@@ -190,7 +176,7 @@
 				<Button onclick={testNotification}>Test Notification</Button>
 			</li>
 
-			<li class="flex gap-2 items-center">
+			<li class="flex items-center gap-2">
 				8.
 				{#if hub.state == "Connected"}
 					<CheckCircleIcon class="text-green-400" />
@@ -203,7 +189,7 @@
 	</Card.Content>
 </Card.Root>
 
-<Card.Root class="p-5 m-5">
+<Card.Root class="m-5 p-5">
 	<Card.Header>
 		<Card.Title>
 			<h3 class="text-lg">Setup Device</h3>
@@ -244,7 +230,7 @@
 	</Card.Content>
 </Card.Root>
 
-<Card.Root class="p-5 m-5">
+<Card.Root class="m-5 p-5">
 	<Card.Header>
 		<Card.Title>Sound</Card.Title>
 		<Card.Description>Play Sound</Card.Description>

@@ -23,14 +23,14 @@
 				<div class="line-clamp-1">{item.quantity} {item.menuItem.name}</div>
 				{#each item.orderItemOptions ?? [] as option}
 					<div class="ml-4 flex items-center gap-1">
-						{">"}
+						&gt;
 						<span>{option.option.optionGroup.name}:</span>
 						<span>{option.option.name}</span>
 					</div>
 				{/each}
 				{#each item.orderItemExtras ?? [] as extra}
 					<div class="ml-4 flex items-center gap-1">
-						{"+"}
+						+
 						<span class="font-light">{extra.extra.extraGroup.name}:</span>
 						<span>{extra.extra.name}</span>
 					</div>
@@ -40,9 +40,9 @@
 				{#if showDetail}
 					<div class="h-3"></div>
 				{/if}
-				<div class="grid grid-cols-2 gap-4 text-muted-foreground w-48">
+				<div class="text-muted-foreground grid w-48 grid-cols-2 gap-4">
 					{item.menuItem.price.toFixed(2)}
-					<span class="font-semibold text-foreground">{item.total.toFixed(2)}</span>
+					<span class="text-foreground font-semibold">{item.total.toFixed(2)}</span>
 					<div>
 						{#each item.orderItemOptions ?? [] as option}
 							<div>{option.option.price.toFixed(2)}</div>

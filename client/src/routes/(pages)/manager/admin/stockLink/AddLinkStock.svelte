@@ -20,16 +20,7 @@
 		unitName?: string;
 		quantity?: number;
 	}
-	let {
-		open = $bindable(false),
-		id,
-		linkType,
-		refetch,
-		stockId,
-		quantity,
-		stockName,
-		unitName,
-	}: Props = $props();
+	let { open = $bindable(false), id, linkType, refetch, stockId, quantity, stockName, unitName }: Props = $props();
 
 	const schema = z.object({
 		stockId: z.number().min(1, { message: "Stock is Required" }),
@@ -128,9 +119,7 @@
 		filters = qb.build();
 	});
 
-	const stockListSelect = $derived(
-		stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unitName})` }))
-	);
+	const stockListSelect = $derived(stockList.map((s) => ({ value: s.id, label: `${s.name} - (${s.unitName})` })));
 </script>
 
 <Dialog.Root
@@ -139,7 +128,7 @@
 		if (o == false) stockSearch = "";
 	}}
 >
-	<Dialog.Content class="max-h-[98%] overflow-auto flex-col z-60">
+	<Dialog.Content class="z-60 max-h-[98%] flex-col overflow-auto">
 		<form method="POST" use:enhance>
 			<Dialog.Header>
 				<Dialog.Title>Link Stock</Dialog.Title>
@@ -172,21 +161,14 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Quantity</Form.Label>
-							<Input
-								{...props}
-								bind:value={$formData.quantity}
-								tabindex={0}
-								type="number"
-								step="any"
-								onfocus={(e) => e.currentTarget.select()}
-							/>
+							<Input {...props} bind:value={$formData.quantity} tabindex={0} type="number" step="any" onfocus={(e) => e.currentTarget.select()} />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors class="text-destructive text-sm" />
 				</Form.Field>
 			</div>
 			<Dialog.Footer>
-				<div class="gap-2 flex flex-col w-full">
+				<div class="flex w-full flex-col gap-2">
 					<Button type="submit">{isEdit ? "Edit" : "Link"}</Button>
 				</div>
 			</Dialog.Footer>

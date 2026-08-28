@@ -28,9 +28,7 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Delete Printer?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will delete the printer configuration for this outlet.
-			</AlertDialog.Description>
+			<AlertDialog.Description>This will delete the printer configuration for this outlet.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>

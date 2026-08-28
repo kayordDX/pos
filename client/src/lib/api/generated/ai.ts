@@ -17,13 +17,7 @@ import type {
 	QueryKey,
 } from "@tanstack/svelte-query";
 
-import type {
-	AIGenerateMenuDescriptionRequest,
-	AIGenerateRequest,
-	AIGenerateStreamParams,
-	ErrorResponse,
-	InternalErrorResponse,
-} from "./api.schemas";
+import type { AIGenerateMenuDescriptionRequest, AIGenerateRequest, AIGenerateStreamParams, ErrorResponse, InternalErrorResponse } from "./api.schemas";
 
 import { customInstance } from "../mutator/customInstance.svelte";
 import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
@@ -44,10 +38,7 @@ export const getAIGenerateStreamUrl = (params: AIGenerateStreamParams) => {
 	return stringifiedParams.length > 0 ? `/ai/stream?${stringifiedParams}` : `/ai/stream`;
 };
 
-export const aIGenerateStream = async (
-	params: AIGenerateStreamParams,
-	options?: RequestInit
-): Promise<string> => {
+export const aIGenerateStream = async (params: AIGenerateStreamParams, options?: RequestInit): Promise<string> => {
 	return customInstance<string>(getAIGenerateStreamUrl(params), {
 		...options,
 		method: "GET",
@@ -64,9 +55,7 @@ export const getAIGenerateStreamQueryOptions = <
 >(
 	params: AIGenerateStreamParams,
 	options?: {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof aIGenerateStream>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof aIGenerateStream>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	}
 ) => {
@@ -74,36 +63,27 @@ export const getAIGenerateStreamQueryOptions = <
 
 	const queryKey = queryOptions?.queryKey ?? getAIGenerateStreamQueryKey(params);
 
-	const queryFn: QueryFunction<Awaited<ReturnType<typeof aIGenerateStream>>> = () =>
-		aIGenerateStream(params, requestOptions);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof aIGenerateStream>>> = () => aIGenerateStream(params, requestOptions);
 
-	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<
-		Awaited<ReturnType<typeof aIGenerateStream>>,
-		TError,
-		TData
-	> & { queryKey: DataTag<QueryKey, TData, TError> };
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof aIGenerateStream>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 };
 
 export type AIGenerateStreamQueryResult = NonNullable<Awaited<ReturnType<typeof aIGenerateStream>>>;
 export type AIGenerateStreamQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export function createAIGenerateStream<
-	TData = Awaited<ReturnType<typeof aIGenerateStream>>,
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
->(
+export function createAIGenerateStream<TData = Awaited<ReturnType<typeof aIGenerateStream>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(
 	params: () => AIGenerateStreamParams,
 	options?: () => {
-		query?: Partial<
-			CreateQueryOptions<Awaited<ReturnType<typeof aIGenerateStream>>, TError, TData>
-		>;
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof aIGenerateStream>>, TError, TData>>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
 ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-	const query = createQuery(
-		() => getAIGenerateStreamQueryOptions(params(), options?.()),
-		queryClient
-	) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
+	const query = createQuery(() => getAIGenerateStreamQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
 	return query;
 }
@@ -112,10 +92,7 @@ export const getAIGenerateMenuDescriptionUrl = () => {
 	return `/ai/menu-description`;
 };
 
-export const aIGenerateMenuDescription = async (
-	aIGenerateMenuDescriptionRequest: AIGenerateMenuDescriptionRequest,
-	options?: RequestInit
-): Promise<string> => {
+export const aIGenerateMenuDescription = async (aIGenerateMenuDescriptionRequest: AIGenerateMenuDescriptionRequest, options?: RequestInit): Promise<string> => {
 	return customInstance<string>(getAIGenerateMenuDescriptionUrl(), {
 		...options,
 		method: "POST",
@@ -124,10 +101,7 @@ export const aIGenerateMenuDescription = async (
 	});
 };
 
-export const getAIGenerateMenuDescriptionMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
+export const getAIGenerateMenuDescriptionMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<
 		Awaited<ReturnType<typeof aIGenerateMenuDescription>>,
 		TError,
@@ -135,12 +109,7 @@ export const getAIGenerateMenuDescriptionMutationOptions = <
 		TContext
 	>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof aIGenerateMenuDescription>>,
-	TError,
-	{ data: BodyType<AIGenerateMenuDescriptionRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof aIGenerateMenuDescription>>, TError, { data: BodyType<AIGenerateMenuDescriptionRequest> }, TContext> => {
 	const mutationKey = ["aIGenerateMenuDescription"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -148,10 +117,7 @@ export const getAIGenerateMenuDescriptionMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof aIGenerateMenuDescription>>,
-		{ data: BodyType<AIGenerateMenuDescriptionRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof aIGenerateMenuDescription>>, { data: BodyType<AIGenerateMenuDescriptionRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return aIGenerateMenuDescription(data, requestOptions);
@@ -160,18 +126,11 @@ export const getAIGenerateMenuDescriptionMutationOptions = <
 	return { mutationFn, ...mutationOptions };
 };
 
-export type AIGenerateMenuDescriptionMutationResult = NonNullable<
-	Awaited<ReturnType<typeof aIGenerateMenuDescription>>
->;
+export type AIGenerateMenuDescriptionMutationResult = NonNullable<Awaited<ReturnType<typeof aIGenerateMenuDescription>>>;
 export type AIGenerateMenuDescriptionMutationBody = BodyType<AIGenerateMenuDescriptionRequest>;
-export type AIGenerateMenuDescriptionMutationError = ErrorType<
-	ErrorResponse | void | InternalErrorResponse
->;
+export type AIGenerateMenuDescriptionMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createAIGenerateMenuDescription = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createAIGenerateMenuDescription = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
 		mutation?: CreateMutationOptions<
 			Awaited<ReturnType<typeof aIGenerateMenuDescription>>,
@@ -182,25 +141,14 @@ export const createAIGenerateMenuDescription = <
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof aIGenerateMenuDescription>>,
-	TError,
-	{ data: BodyType<AIGenerateMenuDescriptionRequest> },
-	TContext
-> => {
-	return createMutation(
-		() => ({ ...getAIGenerateMenuDescriptionMutationOptions(options?.()) }),
-		queryClient
-	);
+): CreateMutationResult<Awaited<ReturnType<typeof aIGenerateMenuDescription>>, TError, { data: BodyType<AIGenerateMenuDescriptionRequest> }, TContext> => {
+	return createMutation(() => ({ ...getAIGenerateMenuDescriptionMutationOptions(options?.()) }), queryClient);
 };
 export const getAIGenerateUrl = () => {
 	return `/ai/generate`;
 };
 
-export const aIGenerate = async (
-	aIGenerateRequest: AIGenerateRequest,
-	options?: RequestInit
-): Promise<string> => {
+export const aIGenerate = async (aIGenerateRequest: AIGenerateRequest, options?: RequestInit): Promise<string> => {
 	return customInstance<string>(getAIGenerateUrl(), {
 		...options,
 		method: "POST",
@@ -209,23 +157,10 @@ export const aIGenerate = async (
 	});
 };
 
-export const getAIGenerateMutationOptions = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(options?: {
-	mutation?: CreateMutationOptions<
-		Awaited<ReturnType<typeof aIGenerate>>,
-		TError,
-		{ data: BodyType<AIGenerateRequest> },
-		TContext
-	>;
+export const getAIGenerateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof aIGenerate>>, TError, { data: BodyType<AIGenerateRequest> }, TContext>;
 	request?: SecondParameter<typeof customInstance>;
-}): CreateMutationOptions<
-	Awaited<ReturnType<typeof aIGenerate>>,
-	TError,
-	{ data: BodyType<AIGenerateRequest> },
-	TContext
-> => {
+}): CreateMutationOptions<Awaited<ReturnType<typeof aIGenerate>>, TError, { data: BodyType<AIGenerateRequest> }, TContext> => {
 	const mutationKey = ["aIGenerate"];
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
@@ -233,10 +168,7 @@ export const getAIGenerateMutationOptions = <
 			: { ...options, mutation: { ...options.mutation, mutationKey } }
 		: { mutation: { mutationKey }, request: undefined };
 
-	const mutationFn: MutationFunction<
-		Awaited<ReturnType<typeof aIGenerate>>,
-		{ data: BodyType<AIGenerateRequest> }
-	> = (props) => {
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof aIGenerate>>, { data: BodyType<AIGenerateRequest> }> = (props) => {
 		const { data } = props ?? {};
 
 		return aIGenerate(data, requestOptions);
@@ -249,25 +181,12 @@ export type AIGenerateMutationResult = NonNullable<Awaited<ReturnType<typeof aIG
 export type AIGenerateMutationBody = BodyType<AIGenerateRequest>;
 export type AIGenerateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-export const createAIGenerate = <
-	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-	TContext = unknown,
->(
+export const createAIGenerate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
 	options?: () => {
-		mutation?: CreateMutationOptions<
-			Awaited<ReturnType<typeof aIGenerate>>,
-			TError,
-			{ data: BodyType<AIGenerateRequest> },
-			TContext
-		>;
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof aIGenerate>>, TError, { data: BodyType<AIGenerateRequest> }, TContext>;
 		request?: SecondParameter<typeof customInstance>;
 	},
 	queryClient?: () => QueryClient
-): CreateMutationResult<
-	Awaited<ReturnType<typeof aIGenerate>>,
-	TError,
-	{ data: BodyType<AIGenerateRequest> },
-	TContext
-> => {
+): CreateMutationResult<Awaited<ReturnType<typeof aIGenerate>>, TError, { data: BodyType<AIGenerateRequest> }, TContext> => {
 	return createMutation(() => ({ ...getAIGenerateMutationOptions(options?.()) }), queryClient);
 };

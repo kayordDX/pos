@@ -52,15 +52,13 @@
 	});
 	const { form: formData, enhance } = form;
 
-	const typeSelect = $derived(
-		query.data?.find((i) => i.id === $formData.cashUpUserItemTypeId)?.itemType ?? "Select type"
-	);
+	const typeSelect = $derived(query.data?.find((i) => i.id === $formData.cashUpUserItemTypeId)?.itemType ?? "Select type");
 </script>
 
 <Dialog.Root bind:open>
 	<Dialog.Trigger>
 		<Button class="p-4" variant="secondary">
-			<PlusIcon class="size-4 mr-2 hidden sm:block" /> Add Cash Up Item
+			<PlusIcon class="mr-2 hidden size-4 sm:block" /> Add Cash Up Item
 		</Button>
 	</Dialog.Trigger>
 	<Dialog.Content class="max-h-[98%] overflow-auto">
@@ -99,19 +97,13 @@
 					<Form.Control>
 						{#snippet children({ props })}
 							<Form.Label>Value</Form.Label>
-							<Input
-								{...props}
-								type="number"
-								step="0.01"
-								bind:value={$formData.value}
-								onfocus={(e) => e.currentTarget.select()}
-							/>
+							<Input {...props} type="number" step="0.01" bind:value={$formData.value} onfocus={(e) => e.currentTarget.select()} />
 						{/snippet}
 					</Form.Control>
 					<Form.FieldErrors />
 				</Form.Field>
 				<Alert.Root class="border-primary">
-					<MessageCircleWarningIcon class="size-5 animate-bounce text-primary" />
+					<MessageCircleWarningIcon class="text-primary size-5 animate-bounce" />
 					<Alert.Title>Heads up!</Alert.Title>
 					<Alert.Description>
 						The amount of <span class="font-semibold">R{Number($formData.value).toFixed(2)}</span>
@@ -120,7 +112,7 @@
 					</Alert.Description>
 				</Alert.Root>
 			</div>
-			<Dialog.Footer class="sm:flex-col gap-2">
+			<Dialog.Footer class="gap-2 sm:flex-col">
 				<Form.Button type="submit">Add</Form.Button>
 				<Dialog.Close type="reset">Cancel</Dialog.Close>
 			</Dialog.Footer>

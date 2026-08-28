@@ -52,8 +52,8 @@
 		<Error message={getError(query.error).message} />
 	{/if}
 	{#if query.data}
-		<div class="flex justify-between mb-2 items-center">
-			<div class="flex items-center gap-1 flex-wrap">
+		<div class="mb-2 flex items-center justify-between">
+			<div class="flex flex-wrap items-center gap-1">
 				<Filter
 					title="Division"
 					options={status.value.divisions.map((x) => {
@@ -63,22 +63,19 @@
 					bind:selected={selectedDivisions}
 				/>
 				{#if isHistory}
-					<div class="flex items-center gap-1 flex-wrap">
-						<a
-							class="flex items-center gap-1"
-							href={`/backOffice${divisionIds ? "/" + divisionIds : ""}`}
-						>
+					<div class="flex flex-wrap items-center gap-1">
+						<a class="flex items-center gap-1" href={`/backOffice${divisionIds ? "/" + divisionIds : ""}`}>
 							<Badge>Live View</Badge>
 						</a>
 					</div>
 				{:else}
-					<Badge class="sm:block hidden">{query.data.pendingOrders} pending order(s)</Badge>
-					<Badge class="sm:block hidden">{query.data.pendingItems} pending items(s)</Badge>
+					<Badge class="hidden sm:block">{query.data.pendingOrders} pending order(s)</Badge>
+					<Badge class="hidden sm:block">{query.data.pendingItems} pending items(s)</Badge>
 				{/if}
 			</div>
 			<NotifyIndicator />
-			<div class="flex gap-1 items-center">
-				<div class="flex items-center gap-1 flex-wrap">
+			<div class="flex items-center gap-1">
+				<div class="flex flex-wrap items-center gap-1">
 					{#if !isHistory}
 						<a href={`/backOffice${divisionIds ? "/" + divisionIds : ""}/history`}>
 							<Badge variant="secondary" class="truncate">History</Badge>
@@ -96,14 +93,7 @@
 		</div>
 		<Hub refetch={query.refetch} {divisionIds} />
 
-		<Masonry
-			items={query.data?.orderGroups ?? []}
-			{minColWidth}
-			{maxColWidth}
-			{maxColHeight}
-			{gap}
-			idKey="orderGroupId"
-		>
+		<Masonry items={query.data?.orderGroups ?? []} {minColWidth} {maxColWidth} {maxColHeight} {gap} idKey="orderGroupId">
 			{#snippet itemChild(item)}
 				<Group group={item} refetch={query.refetch} {isHistory} {divisionIds} />
 			{/snippet}

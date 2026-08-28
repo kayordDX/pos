@@ -1,20 +1,10 @@
 <script lang="ts">
 	import { page } from "$app/state";
-	import {
-		createStockOrderGet,
-		createStockOrderItemUpdateBulk,
-		type DTOStockOrderItemDTO,
-	} from "$lib/api";
+	import { createStockOrderGet, createStockOrderItemUpdateBulk, type DTOStockOrderItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { Alert, Badge, Button, Card, Loader } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import {
-		DataTable,
-		createShadTable,
-		renderComponent,
-		aggregationFns,
-		renderSnippet,
-	} from "@kayord/ui/data-table";
+	import { DataTable, createShadTable, renderComponent, aggregationFns, renderSnippet } from "@kayord/ui/data-table";
 	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
 	import Actions from "./Actions.svelte";
@@ -123,17 +113,12 @@
 </script>
 
 {#snippet statusSnippet(item: DTOStockOrderItemDTO)}
-	{@const variant =
-		item.stockOrderItemStatusId === 1
-			? "default"
-			: item.stockOrderItemStatusId === 2
-				? "secondary"
-				: "outline"}
+	{@const variant = item.stockOrderItemStatusId === 1 ? "default" : item.stockOrderItemStatusId === 2 ? "secondary" : "outline"}
 	{@const isPartial = item.orderAmount > item.actual && item.actual > 0}
 	<Badge {variant}>
 		{item.stockOrderItemStatus.name}
 		{#if isPartial}
-			<span class="text-xs ml-1">
+			<span class="ml-1 text-xs">
 				({item.actual}/{item.orderAmount})
 			</span>
 		{/if}
@@ -159,9 +144,7 @@
 	<Loader isLoading={query.isPending} />
 	{#if query.data}
 		<Card.Root class="bg-secondary p-0">
-			<div
-				class="border-2 border-secondary p-2 rounded-md flex justify-between items-center bg-background/60 text-secondary-foreground"
-			>
+			<div class="border-secondary bg-background/60 text-secondary-foreground flex items-center justify-between rounded-md border-2 p-2">
 				<div class="flex flex-col">
 					<h2 class="font-bold">Order: {query.data.orderNumber}</h2>
 					<div>
@@ -178,7 +161,7 @@
 				</div>
 			</div>
 
-			<div class="flex justify-between m-2">
+			<div class="m-2 flex justify-between">
 				<div class="flex gap-2">
 					{#if Object.keys(rowSelection).length > 0 && showActions}
 						<Button size="sm" onclick={() => updateSelected(false)}>
@@ -195,12 +178,7 @@
 			</div>
 		</Card.Root>
 
-		<DataTable
-			{table}
-			headerClass="pb-2"
-			isLoading={query.isPending}
-			noDataMessage="No order items"
-		/>
+		<DataTable {table} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No order items" />
 	{:else if !query.isPending}
 		{@render errorMessage("An error occurred while fetching order items")}
 	{/if}
@@ -208,7 +186,7 @@
 		{@render errorMessage(getError(query.error).message)}
 	{/if}
 	{#if Object.keys(rowSelection).length > 0 && showActions}
-		<div class="flex gap-2 mt-2">
+		<div class="mt-2 flex gap-2">
 			{#if Object.keys(rowSelection).length > 0}
 				<Button size="sm" onclick={() => updateSelected(false)}>
 					<NotebookPenIcon />

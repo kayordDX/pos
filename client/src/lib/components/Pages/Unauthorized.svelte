@@ -13,9 +13,7 @@
 			</div>
 		</Card.Header>
 		<Card.Content>
-			<div class="text-muted-foreground text-sm">
-				You do not have permission to access this page
-			</div>
+			<div class="text-muted-foreground text-sm">You do not have permission to access this page</div>
 		</Card.Content>
 	</Card.Root>
 </div>
