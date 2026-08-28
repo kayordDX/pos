@@ -1,4 +1,4 @@
-namespace Pos.Api.Features.AdjutmentTypeOutlet.Create;
+namespace Pos.Api.Features.AdjustmentTypeOutlet.Create;
 
 public class Request
 {

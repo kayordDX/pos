@@ -10915,14 +10915,14 @@
         "tags": [
           "Adjustmenttype"
         ],
-        "operationId": "AdjutmentTypeOutletCreate",
+        "operationId": "AdjustmentTypeOutletCreate",
         "requestBody": {
           "x-name": "Request",
           "description": "",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AdjutmentTypeOutletCreateRequest"
+                "$ref": "#/components/schemas/AdjustmentTypeOutletCreateRequest"
               }
             }
           },
@@ -21268,7 +21268,7 @@
           }
         }
       },
-      "AdjutmentTypeOutletCreateRequest": {
+      "AdjustmentTypeOutletCreateRequest": {
         "type": "object",
         "additionalProperties": false,
         "required": [

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createAdjutmentTypeOutletCreate } from "$lib/api";
+	import { createAdjustmentTypeOutletCreate } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import { Button, Dialog, Input } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
@@ -28,8 +28,8 @@
 
 	type FormSchema = z.infer<typeof schema>;
 
-	const createMutation = createAdjutmentTypeOutletCreate();
-	const editMutation = createAdjutmentTypeOutletCreate(); //TODO
+	const createMutation = createAdjustmentTypeOutletCreate();
+	const editMutation = createAdjustmentTypeOutletCreate();
 
 	const handleSubmit = async (data: FormSchema) => {
 		try {

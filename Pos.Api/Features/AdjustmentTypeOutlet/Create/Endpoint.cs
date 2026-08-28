@@ -3,21 +3,13 @@ using Pos.Api.Entities;
 using Pos.Api.Services;
 
 
-namespace Pos.Api.Features.AdjutmentTypeOutlet.Create;
+namespace Pos.Api.Features.AdjustmentTypeOutlet.Create;
 
-public class Endpoint : Endpoint<Request, Pos.Api.Entities.Menu>
+public class Endpoint(AppDbContext dbContext, RedisClient redisClient, UserService userService) : Endpoint<Request, Pos.Api.Entities.Menu>
 {
-    private readonly AppDbContext _dbContext;
-    private readonly RedisClient _redisClient;
-    private readonly UserService _userService;
-
-
-    public Endpoint(AppDbContext dbContext, RedisClient redisClient, UserService userService)
-    {
-        _dbContext = dbContext;
-        _redisClient = redisClient;
-        _userService = userService;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
+    private readonly RedisClient _redisClient = redisClient;
+    private readonly UserService _userService = userService;
 
     public override void Configure()
     {
@@ -28,7 +20,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.Menu>
     {
         if (!await _userService.IsManager(req.OutletId))
         {
-            await Send.ForbiddenAsync();
+            await Send.ForbiddenAsync(ct);
             return;
         }
 
@@ -38,18 +30,18 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.Menu>
             Description = req.Description
         };
 
-        await _dbContext.AdjustmentType.AddAsync(adjustmentTypeEntity);
+        await _dbContext.AdjustmentType.AddAsync(adjustmentTypeEntity, ct);
 
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
         var adjustmentTypeOutlet = new Entities.AdjustmentTypeOutlet
         {
             OutletId = req.OutletId,
             AdjustmentTypeId = adjustmentTypeEntity.AdjustmentTypeId
         };
-        await _dbContext.AdjustmentTypeOutlet.AddAsync(adjustmentTypeOutlet);
+        await _dbContext.AdjustmentTypeOutlet.AddAsync(adjustmentTypeOutlet, ct);
 
 
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
         CashUpUserItemType cashUpUserItemType = new()
         {
             AdjustmentTypeId = adjustmentTypeEntity.AdjustmentTypeId,
@@ -60,8 +52,8 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.Menu>
             ItemType = adjustmentTypeEntity.Name
         };
 
-        await _dbContext.CashUpUserItemType.AddAsync(cashUpUserItemType);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.CashUpUserItemType.AddAsync(cashUpUserItemType, ct);
+        await _dbContext.SaveChangesAsync(ct);
 
         await Helper.ClearCacheOutlet(_dbContext, _redisClient, req.OutletId);
     }

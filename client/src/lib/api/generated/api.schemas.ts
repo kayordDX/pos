@@ -2999,7 +2999,7 @@ export interface AdjustmentTypeOutletRemoveRequest {
 	outletId: number;
 }
 
-export interface AdjutmentTypeOutletCreateRequest {
+export interface AdjustmentTypeOutletCreateRequest {
 	outletId: number;
 	name: string;
 	description: string;
