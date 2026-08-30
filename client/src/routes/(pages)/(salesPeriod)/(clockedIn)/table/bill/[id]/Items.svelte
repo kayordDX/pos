@@ -1,0 +1,61 @@
+<script lang="ts">
+	import type { TableOrderGetBillResponse } from "$lib/api";
+
+	interface Props {
+		bill: TableOrderGetBillResponse;
+		showDetail?: boolean;
+	}
+
+	let { bill, showDetail = false }: Props = $props();
+
+	const data = $derived(bill.summaryOrderItems ?? []);
+</script>
+
+<ul class="grid gap-3">
+	{#each data as item (item.orderItemId)}
+		<li class="flex items-center justify-between">
+			<span class="text-muted-foreground">
+				<!-- {#if showDetail}
+					<div class="line-clamp-1 text-xs">
+						{new Date(item.orderReceived).toLocaleTimeString()}
+					</div>
+				{/if} -->
+				<div class="line-clamp-1">{item.quantity} {item.menuItem.name}</div>
+				{#each item.orderItemOptions ?? [] as option (option.orderItemOptionId)}
+					<div class="ml-4 flex items-center gap-1">
+						&gt;
+						<span>{option.option.optionGroup.name}:</span>
+						<span>{option.option.name}</span>
+					</div>
+				{/each}
+				{#each item.orderItemExtras ?? [] as extra (extra.orderItemExtraId)}
+					<div class="ml-4 flex items-center gap-1">
+						+
+						<span class="font-light">{extra.extra.extraGroup.name}:</span>
+						<span>{extra.extra.name}</span>
+					</div>
+				{/each}
+			</span>
+			<span class="text-right">
+				{#if showDetail}
+					<div class="h-3"></div>
+				{/if}
+				<div class="text-muted-foreground grid w-48 grid-cols-2 gap-4">
+					{item.menuItem.price.toFixed(2)}
+					<span class="text-foreground font-semibold">{item.total.toFixed(2)}</span>
+					<div>
+						{#each item.orderItemOptions ?? [] as option (option.orderItemOptionId)}
+							<div>{option.option.price.toFixed(2)}</div>
+						{/each}
+						{#each item.orderItemExtras ?? [] as extra (extra.orderItemExtraId)}
+							<div>{extra.extra.price.toFixed(2)}</div>
+						{/each}
+					</div>
+				</div>
+			</span>
+		</li>
+	{/each}
+	{#if data.length == 0}
+		<div class="text-muted-foreground">Add Items to Order to get started</div>
+	{/if}
+</ul>

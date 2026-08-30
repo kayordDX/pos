@@ -1,0 +1,86 @@
+<script lang="ts">
+	import { Button, Card, Input } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
+	import { Control, Field, FieldErrors } from "formsnap";
+	import { zod4 } from "sveltekit-superforms/adapters";
+	import { defaults, superForm } from "sveltekit-superforms/client";
+	import { z } from "zod";
+	import { createBillEmailBill } from "$lib/api";
+	import { page } from "$app/state";
+	import { getError } from "$lib/types";
+	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
+
+	interface Props {
+		bookingId: number;
+	}
+	let { bookingId }: Props = $props();
+
+	const mutation = createBillEmailBill();
+
+	const goBack = () => {
+		goto(resolve(`/table/bill/${bookingId}`));
+	};
+
+	const schema = z.object({
+		email: z.string().min(1, { message: "Email is Required" }).email({ message: "This is not a valid email" }),
+		name: z.string().min(1, { message: "Name is Required" }),
+	});
+	type FormSchema = z.infer<typeof schema>;
+	const onSubmit = async (data: FormSchema) => {
+		try {
+			await mutation.mutateAsync({
+				data: { email: data.email, name: data.name, tableBookingId: Number(page.params.id) },
+			});
+			toast.info(`Sending email to ${data.email}`);
+			await goBack();
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
+	};
+
+	const form = superForm(defaults(zod4(schema)), {
+		SPA: true,
+		resetForm: false,
+		validators: zod4(schema),
+		onUpdate({ form }) {
+			if (form.valid) {
+				onSubmit(form.data);
+			}
+		},
+	});
+
+	const { form: formData, enhance } = form;
+</script>
+
+<Card.Root class="m-4">
+	<div class="flex flex-col gap-2">
+		<form use:enhance method="POST">
+			<Card.Header>
+				<Card.Title>Email bill #{bookingId}</Card.Title>
+				<Card.Description>This will send email with bill attached</Card.Description>
+			</Card.Header>
+			<div class="mx-auto flex w-full flex-col gap-2 overflow-auto rounded-t-[10px] p-4">
+				<Field {form} name="name">
+					<Control>
+						<Form.Label>Name</Form.Label>
+						<Input bind:value={$formData.name} />
+					</Control>
+					<FieldErrors class="text-destructive text-sm" />
+				</Field>
+				<Field {form} name="email">
+					<Control>
+						<Form.Label>Email</Form.Label>
+						<Input type="email" bind:value={$formData.email} />
+					</Control>
+					<FieldErrors class="text-destructive text-sm" />
+				</Field>
+			</div>
+			<Card.Footer class="flex items-center justify-between">
+				<Button variant="secondary" onclick={goBack}>Cancel</Button>
+				<Button type="submit" disabled={mutation.isPending}>Send Email</Button>
+			</Card.Footer>
+		</form>
+	</div>
+</Card.Root>

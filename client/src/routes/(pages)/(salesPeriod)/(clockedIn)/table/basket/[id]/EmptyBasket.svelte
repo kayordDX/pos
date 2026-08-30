@@ -1,0 +1,17 @@
+<script lang="ts">
+	import Header from "$lib/components/Header/Header.svelte";
+	import { Card } from "@kayord/ui";
+	import { ShoppingBasketIcon } from "@lucide/svelte";
+</script>
+
+<div class="flex justify-center">
+	<Card.Root class="w-100">
+		<Card.Header>
+			<Card.Title>No items</Card.Title>
+			<Card.Description>Add items from menu to basket</Card.Description>
+		</Card.Header>
+		<Card.Content class="flex justify-center">
+			<ShoppingBasketIcon class="h-20 w-20" />
+		</Card.Content>
+	</Card.Root>
+</div>

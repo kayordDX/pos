@@ -1,0 +1,21 @@
+[
+  {
+    "label": "Run",
+    "command": "dotnet",
+    "hide": "on_success",
+    "args": ["run", "--project", "./Pos.Api"],
+  },
+  {
+    "label": "build",
+    "command": "dotnet",
+    "hide": "on_success",
+    "args": ["build", "./Pos.Api/Pos.Api.csproj"],
+  },
+  {
+    "label": "lint",
+    "command": "pnpm",
+    "hide": "on_success",
+    "cwd": "./client",
+    "args": ["lint"],
+  },
+]

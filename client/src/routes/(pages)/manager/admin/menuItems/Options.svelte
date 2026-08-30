@@ -1,0 +1,73 @@
+<script lang="ts">
+	import { arrayUnique } from "$lib/util";
+	import { Badge, Button, Card, Command } from "@kayord/ui";
+	import { CirclePlusIcon, CircleXIcon } from "@lucide/svelte";
+	import { createOptionGroup } from "$lib/api";
+
+	const query = createOptionGroup();
+
+	let specialExtraOpen = $state(false);
+	interface Props {
+		options?: Array<number>;
+	}
+
+	let { options = $bindable([]) }: Props = $props();
+
+	const selectItem = (id: number) => {
+		options.push(id);
+		options = arrayUnique(options);
+		specialExtraOpen = false;
+	};
+
+	const removeItem = (id: number) => {
+		options = options.filter((s) => s !== id);
+	};
+
+	const getItem = (id: number) => {
+		return query.data?.find((s) => s.optionGroupId === id);
+	};
+</script>
+
+<Card.Root class="bg-background p-2">
+	<div>
+		<Button variant="secondary" onclick={() => (specialExtraOpen = true)}>
+			<CirclePlusIcon class="size-4" /> Option Groups
+		</Button>
+		<div class="mt-2 flex flex-wrap gap-2">
+			{#each options as current (current)}
+				<button
+					onclick={(e) => {
+						removeItem(current);
+						e.preventDefault();
+					}}
+				>
+					<Badge variant="outline" class="p-2 pl-3">
+						{getItem(current)?.name}
+						<CircleXIcon class="ml-2 size-4" />
+					</Badge>
+				</button>
+			{/each}
+		</div>
+	</div>
+</Card.Root>
+
+<Command.Dialog bind:open={specialExtraOpen}>
+	<Command.Input placeholder="Type a command or search..." />
+	<Command.List>
+		<Command.Empty>No results found.</Command.Empty>
+		<Command.Group heading="Option Groups">
+			{#each query.data ?? [] as optionGroup (optionGroup.optionGroupId)}
+				<Command.Item onSelect={() => selectItem(optionGroup.optionGroupId)}>
+					<div class="flex w-full flex-row items-center justify-between">
+						<div class="overflow-hidden text-ellipsis whitespace-nowrap">
+							{optionGroup.name.replace(/[^a-zA-Z0-9 -]*/g, "")}
+						</div>
+						<div class="ml-2 flex flex-shrink-0 text-xs">
+							({optionGroup.minSelections}-{optionGroup.maxSelections})
+						</div>
+					</div>
+				</Command.Item>
+			{/each}
+		</Command.Group>
+	</Command.List>
+</Command.Dialog>

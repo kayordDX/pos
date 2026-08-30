@@ -1,0 +1,82 @@
+<script lang="ts">
+	import { createStatsCashUp, type StatsCashUpResponse } from "$lib/api";
+	import { DataTable, createShadTable, aggregationFns, type DataTableFeatures } from "@kayord/ui/data-table";
+	import Top5SalesPeriod from "../Top5SalesPeriod.svelte";
+	import { type ColumnDef } from "@tanstack/svelte-table";
+	import GrafanaLink from "../GrafanaLink.svelte";
+	let salesPeriod = $state(0);
+
+	const query = createStatsCashUp(() => ({ salesPeriodId: salesPeriod }));
+	const data = $derived(query.data ?? []);
+
+	const columns: ColumnDef<DataTableFeatures, StatsCashUpResponse>[] = [
+		{
+			header: "Name",
+			accessorKey: "name",
+			size: 100000,
+		},
+		{
+			header: "Revenue",
+			accessorKey: "revenue",
+			size: 10,
+			footer: () => aggregationFns.sum(data, "revenue").toFixed(2),
+		},
+		{
+			header: "Adjustments",
+			accessorKey: "adjustments",
+			size: 10,
+			footer: () => aggregationFns.sum(data, "adjustments").toFixed(2),
+		},
+		{
+			header: "Actual Sales",
+			accessorKey: "actualSales",
+			size: 10,
+			footer: () => aggregationFns.sum(data, "actualSales").toFixed(2),
+		},
+		{
+			header: "Tips",
+			accessorKey: "tips",
+			size: 10,
+			footer: () => aggregationFns.sum(data, "tips").toFixed(2),
+		},
+		{
+			header: "Tips %",
+			accessorKey: "tipsPercentage",
+			size: 10,
+			footer: () => aggregationFns.mean(data, "tipsPercentage")?.toFixed(2),
+		},
+		{
+			header: "Payments",
+			accessorKey: "payments",
+			size: 10,
+			footer: () => aggregationFns.sum(data, "payments").toFixed(2),
+		},
+	];
+
+	const table = createShadTable({
+		columns,
+		get data() {
+			return data;
+		},
+		enableRowSelection: false,
+		manualPagination: true,
+	});
+</script>
+
+{#snippet header()}
+	<div class="flex w-full justify-between">
+		<div class="mb-2 hidden w-full flex-col sm:flex">
+			<h1 class="flex text-lg font-bold">Cash Up</h1>
+			<h2 class="text-muted-foreground flex text-xs">Waiter Cash Up Summary</h2>
+		</div>
+		<div class="flex w-full items-center justify-end gap-2">
+			<p class="text-muted-foreground text-sm">Sales Period</p>
+			<Top5SalesPeriod bind:salesPeriod />
+		</div>
+	</div>
+{/snippet}
+
+<div class="m-2 flex flex-col items-center gap-2">
+	<DataTable {table} {header} isLoading={query.isPending} noDataMessage="No Cash up Data for Sales Period" pagination={false} />
+	<GrafanaLink />
+</div>

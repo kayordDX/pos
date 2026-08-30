@@ -1,0 +1,164 @@
+<script lang="ts">
+	import { page } from "$app/state";
+	import { createStockAllocateGet, createStockAllocateUpdate, type DTOStockAllocateItemDTO } from "$lib/api";
+	import { getError } from "$lib/types";
+	import { Alert, Badge, Button, Card, Loader } from "@kayord/ui";
+	import { DataTable, createShadTable, renderComponent, renderSnippet, type DataTableFeatures } from "@kayord/ui/data-table";
+	import { MoveRightIcon, PlusIcon, WorkflowIcon } from "@lucide/svelte";
+	import AddAllocationItem from "./AddAllocationItem.svelte";
+	import Actions from "./Actions.svelte";
+	import { type ColumnDef, type RowSelectionState } from "@tanstack/svelte-table";
+	import { stringToFDate } from "$lib/util";
+	import { status } from "$lib/stores/status.svelte";
+
+	const query = createStockAllocateGet(() => Number(page.params.Id));
+
+	let addOrderItemOpen = $state(false);
+
+	const stockAllocateMutation = createStockAllocateUpdate();
+	const sendToApprover = async () => {
+		await stockAllocateMutation.mutateAsync({
+			data: {
+				id: Number(page.params.Id),
+				stockAllocateStatusId: 2,
+			},
+		});
+		query.refetch();
+	};
+
+	const hasOpenSalesPeriod = status.value.salesPeriodId > 0;
+	const canEdit = $derived(query.data?.stockAllocateStatusId === 1 && hasOpenSalesPeriod);
+
+	const columns: ColumnDef<DataTableFeatures, DTOStockAllocateItemDTO>[] = [
+		{
+			header: "Stock",
+			accessorKey: "stock.name",
+			size: 1000,
+		},
+		{
+			header: "Allocate Actual",
+			accessorKey: "actual",
+			size: 1000,
+		},
+		{
+			header: "Status",
+			accessorKey: "stockOrderItemStatus.name",
+			size: 1000,
+			cell: (item) => renderSnippet(statusSnippet, item.row.original),
+		},
+		{
+			header: "Completed",
+			accessorFn: (item) => stringToFDate(item.completed),
+			// accessorKey: "completed",
+			size: 1000,
+		},
+		{
+			header: "",
+			accessorKey: "id",
+			enableSorting: false,
+			cell: (item) =>
+				renderComponent(Actions, {
+					canEdit: canEdit,
+					item: item.row.original,
+					refetch: query.refetch,
+					divisionId: query.data?.fromDivisionId ?? 0,
+				}),
+			size: 10,
+		},
+	];
+
+	let data = $derived(query.data?.stockAllocateItems ?? []);
+
+	let rowSelection: RowSelectionState = $state({});
+
+	const table = createShadTable({
+		columns,
+		getRowId: (row) => row.stockId.toString(),
+		get data() {
+			return data;
+		},
+		state: {
+			get rowSelection() {
+				return rowSelection;
+			},
+		},
+		enableRowSelection: false,
+		manualPagination: true,
+		onRowSelectionChange: (updater) => {
+			if (updater instanceof Function) {
+				rowSelection = updater(rowSelection);
+			} else rowSelection = updater;
+		},
+	});
+</script>
+
+{#snippet statusSnippet(item: DTOStockAllocateItemDTO)}
+	{@const variant = item.stockAllocateItemStatusId === 1 ? "default" : item.stockAllocateItemStatusId === 2 ? "secondary" : "outline"}
+	<Badge {variant} class="w-fit">
+		{item.stockAllocateItemStatus.name}
+	</Badge>
+{/snippet}
+
+{#snippet errorMessage(message: string)}
+	<Alert.Root variant="destructive">
+		<Alert.Title>Error</Alert.Title>
+		<Alert.Description>{message}</Alert.Description>
+	</Alert.Root>
+{/snippet}
+
+<div class="m-2">
+	<Loader isLoading={query.isPending} />
+	{#if query.data}
+		<Card.Root class="bg-secondar w-full flex-row p-0">
+			<div class="border-secondary text-secondary-foreground w-full flex-col items-center justify-between gap-2 rounded-md border-2 p-2">
+				<div class="flex items-center justify-center gap-2">
+					<div class="bg-background/60 rounded-md px-2 py-1">
+						<div class="font-bold">{query.data.fromDivision.divisionName}</div>
+					</div>
+					<MoveRightIcon />
+					<div class="bg-background/60 rounded-md px-2 py-1">
+						<div class="font-bold">{query.data.toDivision.divisionName}</div>
+					</div>
+					<div class="bg-background/60 rounded-md px-2 py-1">
+						<div class="font-bold">{query.data.toOutlet.name}</div>
+					</div>
+				</div>
+				<div class="flex items-center justify-between gap-2">
+					<div class="flex flex-col">
+						<h1 class="text-xl">{query.data.comment}</h1>
+						<Badge class="w-fit">{query.data.stockAllocateStatus.name}</Badge>
+					</div>
+					<div class="flex flex-col gap-1">
+						<Badge variant="outline">Requested: {query.data.fromUser?.name}</Badge>
+						<Badge variant="outline">Assigned: {query.data.assignedUser?.name}</Badge>
+					</div>
+				</div>
+			</div>
+		</Card.Root>
+
+		<div class="mt-2 flex items-center justify-between">
+			<div>
+				{#if canEdit && data.length > 0}
+					<Button size="sm" variant="destructive" onclick={sendToApprover}>
+						<WorkflowIcon class="h-5 w-5" /> Send to Approver
+					</Button>
+				{/if}
+			</div>
+			<div>
+				{#if canEdit}
+					<Button size="sm" onclick={() => (addOrderItemOpen = true)}>
+						<PlusIcon class="h-5 w-5" /> Add Item
+					</Button>
+				{/if}
+			</div>
+		</div>
+
+		<DataTable {table} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No order items" />
+	{:else if !query.isPending}
+		{@render errorMessage("An error occurred while fetching order items")}
+	{/if}
+	{#if query.error}
+		{@render errorMessage(getError(query.error).message)}
+	{/if}
+	<AddAllocationItem bind:open={addOrderItemOpen} refetch={query.refetch} divisionId={query.data?.fromDivisionId ?? 0} />
+</div>

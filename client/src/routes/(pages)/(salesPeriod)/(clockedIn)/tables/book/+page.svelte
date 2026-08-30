@@ -1,0 +1,116 @@
+<script lang="ts">
+	import { Badge, Button, Card, Dialog, Input, Label, Loader } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
+	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
+	import Error from "$lib/components/Error.svelte";
+	import { getError } from "$lib/types";
+	import { createTableBookingCreate, createTableGetAvailable } from "$lib/api";
+	import { status } from "$lib/stores/status.svelte";
+	import { z } from "zod";
+	import { defaults, superForm } from "sveltekit-superforms/client";
+	import { zod4 } from "sveltekit-superforms/adapters";
+	import { Control, Field, FieldErrors } from "formsnap";
+
+	const query = createTableGetAvailable(() => ({ outletId: status.value?.outletId ?? 0 }));
+	let dialogOpen = $state(false);
+	let tableId: number = 0;
+
+	const selectTable = (id: number) => {
+		dialogOpen = true;
+		tableId = id;
+	};
+
+	const mutate = createTableBookingCreate();
+
+	const schema = z.object({
+		bookingName: z.string().min(1, { message: "Booking Name is Required" }),
+	});
+	type FormSchema = z.infer<typeof schema>;
+	const onSubmit = async (data: FormSchema) => {
+		try {
+			await mutate.mutateAsync({
+				data: {
+					bookingName: data.bookingName,
+					salesPeriodId: status.value?.salesPeriodId ?? 0,
+					tableId: tableId,
+				},
+			});
+			dialogOpen = false;
+			goto(resolve("/waiter"));
+			toast.message("Created new booking");
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
+	};
+
+	const form = superForm(defaults(zod4(schema)), {
+		SPA: true,
+		validators: zod4(schema),
+		onUpdate({ form }) {
+			if (form.valid) {
+				onSubmit(form.data);
+			}
+		},
+	});
+	const { form: formData, enhance } = form;
+</script>
+
+<div class="m-8">
+	<h1>Available Tables</h1>
+	<p class="text-muted-foreground">Select table to book</p>
+
+	{#if query.isPending}
+		<Loader />
+	{/if}
+	{#if query.error}
+		<Error message={getError(query.error).message} />
+	{/if}
+
+	{#if query.isSuccess}
+		<div class="mt-4 flex w-full flex-wrap gap-4">
+			{#each query.data as table (table.tableId)}
+				<button class="w-full text-start md:max-w-md" onclick={() => selectTable(table.tableId)}>
+					<Card.Root class="gap-0 p-4">
+						<div class="flex justify-between gap-2">
+							<h3>{table.name}</h3>
+							<Badge>{table.capacity}</Badge>
+						</div>
+						<p class="text-xs">{table.section.name}</p>
+					</Card.Root>
+				</button>
+			{/each}
+		</div>
+	{/if}
+
+	<Dialog.Root bind:open={dialogOpen}>
+		<Dialog.Trigger />
+		<!-- fixed bottom-0 left-0 right-0 flex max-h-[96%] w-full -->
+		<Dialog.Content class="max-h-[98%] overflow-auto">
+			<form use:enhance method="POST">
+				<Dialog.Header>
+					<Dialog.Title>Book Table</Dialog.Title>
+					<Dialog.Description>This will book the table and assign it to you</Dialog.Description>
+				</Dialog.Header>
+				<div class="mx-auto flex w-full flex-col gap-2 overflow-auto rounded-t-[10px] p-4">
+					{#if mutate.isPending}
+						<Loader />
+					{/if}
+
+					<Field {form} name="bookingName">
+						<Control>
+							<Form.Label>Booking Name</Form.Label>
+							<Input bind:value={$formData.bookingName} />
+						</Control>
+						<FieldErrors class="text-destructive text-sm" />
+					</Field>
+				</div>
+
+				<Dialog.Footer>
+					<Button type="submit">Make Booking</Button>
+				</Dialog.Footer>
+			</form>
+		</Dialog.Content>
+	</Dialog.Root>
+</div>

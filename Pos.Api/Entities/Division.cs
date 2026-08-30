@@ -1,0 +1,10 @@
+namespace Pos.Api.Entities;
+
+public class Division : AuditableEntity
+{
+    public int DivisionId { get; set; }
+    public string DivisionName { get; set; } = string.Empty;
+    public int OutletId { get; set; }
+    public int DivisionTypeId { get; set; }
+    public bool IsDeleted { get; set; }
+}

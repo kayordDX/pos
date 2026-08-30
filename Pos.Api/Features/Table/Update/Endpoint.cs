@@ -1,0 +1,36 @@
+using Pos.Api.Data;
+
+namespace Pos.Api.Features.Table.Update;
+
+public class Endpoint : Endpoint<Request, Pos.Api.Entities.Table>
+{
+    private readonly AppDbContext _dbContext;
+
+    public Endpoint(AppDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public override void Configure()
+    {
+        Put("/table/{tableId:int}");
+    }
+
+    public override async Task HandleAsync(Request req, CancellationToken ct)
+    {
+        var entity = await _dbContext.Table.FindAsync(req.TableId);
+        if (entity == null)
+        {
+            await Send.NotFoundAsync();
+            return;
+        }
+
+        entity.Name = req.Name;
+        entity.SectionId = req.SectionId;
+        entity.Capacity = req.Capacity;
+        entity.Position = req.Position;
+
+        await _dbContext.SaveChangesAsync();
+        await Send.OkAsync(entity);
+    }
+}

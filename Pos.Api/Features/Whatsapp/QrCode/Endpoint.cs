@@ -1,0 +1,24 @@
+using Pos.Api.Services.Whatsapp;
+
+namespace Pos.Api.Features.Whatsapp.QrCode;
+
+public class Endpoint : EndpointWithoutRequest<WResponse<QrResponse>>
+{
+    private readonly WhatsappService _whatsappService;
+
+    public Endpoint(WhatsappService whatsappService)
+    {
+        _whatsappService = whatsappService;
+    }
+
+    public override void Configure()
+    {
+        Get("/whatsapp/qr");
+    }
+
+    public override async Task HandleAsync(CancellationToken ct)
+    {
+        var status = await _whatsappService.QrCode();
+        await Send.OkAsync(status);
+    }
+}

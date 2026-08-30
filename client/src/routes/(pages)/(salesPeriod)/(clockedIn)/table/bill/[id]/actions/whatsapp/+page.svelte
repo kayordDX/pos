@@ -1,0 +1,119 @@
+<script lang="ts">
+	import { Button, Card, Input } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import { Form } from "@kayord/ui/form";
+	import { Control, Field, FieldErrors } from "formsnap";
+	import { zod4 } from "sveltekit-superforms/adapters";
+	import { defaults, superForm } from "sveltekit-superforms/client";
+	import { z } from "zod";
+	import { createBillWhatsappBill, createWhatsappStatus } from "$lib/api";
+	import { page } from "$app/state";
+	import { getError } from "$lib/types";
+	import { goto } from "$app/navigation";
+	import { resolve } from "$app/paths";
+	import { CheckIcon, XIcon } from "@lucide/svelte";
+
+	const bookingId = Number(page.params.id);
+
+	const query = createWhatsappStatus();
+	const mutation = createBillWhatsappBill();
+
+	const canWhatsapp = $derived(query.data?.success ?? false);
+
+	const goBack = () => {
+		goto(resolve(`/table/bill/${bookingId}`));
+	};
+
+	const schema = z.object({
+		phoneNumber: z.string().min(1, { message: "Phone number is required" }),
+		countryCode: z.string().default("27"),
+		name: z.string().min(1, { message: "Name is Required" }),
+	});
+	type FormSchema = z.infer<typeof schema>;
+	const onSubmit = async (data: FormSchema) => {
+		try {
+			await mutation.mutateAsync({
+				data: {
+					phoneNumber: data.phoneNumber,
+					countryCode: data.countryCode,
+					name: data.name,
+					tableBookingId: Number(page.params.id),
+				},
+			});
+			toast.info(`Sending whatsapp to ${data.phoneNumber}`);
+			await goBack();
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
+	};
+
+	const form = superForm(defaults(zod4(schema)), {
+		SPA: true,
+		resetForm: false,
+		validators: zod4(schema),
+		onUpdate({ form }) {
+			if (form.valid) {
+				onSubmit(form.data);
+			}
+		},
+	});
+
+	const { form: formData, enhance } = form;
+</script>
+
+<Card.Root class="m-4">
+	<div class="flex flex-col gap-2">
+		<form use:enhance method="POST">
+			<Card.Header>
+				<Card.Title>Whatsapp bill #{bookingId}</Card.Title>
+				<Card.Description>This will send a whatsapp message with bill attached</Card.Description>
+				<div class="flex items-center gap-2">
+					Connected: {#if query.data?.data?.connected}
+						<CheckIcon class="text-success" />
+					{:else}
+						<XIcon class="text-destructive" />
+					{/if}
+				</div>
+				<div class="flex items-center gap-2">
+					Logged In: {#if query.data?.data?.loggedIn}
+						<CheckIcon class="text-success" />
+					{:else}
+						<XIcon class="text-destructive" />
+					{/if}
+				</div>
+				<div class="text-muted-foreground text-sm">Success: {query.data?.success}</div>
+				<div class="text-muted-foreground text-sm">Code: {query.data?.code}</div>
+				{#if !canWhatsapp}
+					<div class="text-destructive text-sm">Whatsapp is not enabled</div>
+				{/if}
+			</Card.Header>
+			<div class="mx-auto flex w-full flex-col gap-2 overflow-auto rounded-t-[10px] p-4">
+				<Field {form} name="name">
+					<Control>
+						<Form.Label>Name</Form.Label>
+						<Input bind:value={$formData.name} />
+					</Control>
+					<FieldErrors class="text-destructive text-sm" />
+				</Field>
+				<Field {form} name="phoneNumber">
+					<Control>
+						<Form.Label>Phone Number</Form.Label>
+						<Input bind:value={$formData.phoneNumber} />
+					</Control>
+					<FieldErrors class="text-destructive text-sm" />
+				</Field>
+				<Field {form} name="countryCode">
+					<Control>
+						<Form.Label>Country Code</Form.Label>
+						<Input bind:value={$formData.countryCode} />
+					</Control>
+					<FieldErrors class="text-destructive text-sm" />
+				</Field>
+			</div>
+			<Card.Footer class="flex items-center justify-between">
+				<Button variant="secondary" onclick={goBack}>Cancel</Button>
+				<Button type="submit" disabled={mutation.isPending || !canWhatsapp}>Send Whatsapp</Button>
+			</Card.Footer>
+		</form>
+	</div>
+</Card.Root>

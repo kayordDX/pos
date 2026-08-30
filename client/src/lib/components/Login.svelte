@@ -1,0 +1,45 @@
+<script lang="ts">
+	import { Button, Card } from "@kayord/ui";
+	import { toast } from "@kayord/ui/sonner";
+	import GoogleSvg from "$lib/SVG/GoogleSVG.svelte";
+	import { signInGoogle } from "$lib/firebase.svelte";
+	import LoginLinkDevice from "./LoginLinkDevice.svelte";
+
+	let isLoading = $state(false);
+
+	const login = async () => {
+		try {
+			isLoading = true;
+			await signInGoogle();
+		} catch (err) {
+			toast.error("Could not login");
+		} finally {
+			isLoading = false;
+		}
+	};
+</script>
+
+<div class="mt-12 flex flex-col items-center justify-center">
+	<Card.Root class="w-full max-w-md">
+		<Card.Header class="flex flex-row">
+			<div class="flex grow flex-col">
+				<Card.Title>POS</Card.Title>
+				<Card.Description>Powered by kayord</Card.Description>
+			</div>
+			<LoginLinkDevice />
+		</Card.Header>
+		<Card.Content>
+			<div class="flex flex-col items-center">
+				<img src="/logo.svg" alt="logo" class="h-28 hover:animate-pulse" />
+				<div class="text-muted-foreground mt-4">Get started by signing in with your google account.</div>
+			</div>
+		</Card.Content>
+		<Card.Footer class="flex flex-col items-center gap-2">
+			<Button class="w-full" variant="secondary" onclick={login} disabled={isLoading}>
+				<GoogleSvg class="mr-2 h-5 w-5 fill-white" />
+				{isLoading ? "Signing in..." : "Google"}
+			</Button>
+		</Card.Footer>
+	</Card.Root>
+	<Button variant="link" class="text-muted-foreground text-xs" href="/privacy-policy">Privacy Policy</Button>
+</div>

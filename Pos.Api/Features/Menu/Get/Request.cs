@@ -1,0 +1,6 @@
+namespace Pos.Api.Features.Menu.Get;
+
+public class Request
+{
+    public int MenuId { get; set; }
+}

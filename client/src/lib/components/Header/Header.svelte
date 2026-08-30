@@ -1,0 +1,82 @@
+<script lang="ts">
+	import Menu from "./Menu.svelte";
+	import { goto } from "$app/navigation";
+	import { logout, session } from "$lib/firebase.svelte";
+	import { header } from "$lib/stores/header.svelte";
+	import { page } from "$app/state";
+	import { slide } from "svelte/transition";
+	import type { Snippet } from "svelte";
+	import { cn } from "@kayord/ui/utils";
+	import { Badge, Button } from "@kayord/ui";
+	import { status } from "$lib/stores/status.svelte";
+	import { CircleSmallIcon, LogOutIcon } from "@lucide/svelte";
+	import { getInitials } from "$lib/util";
+	import { mode } from "$lib/stores/mode.svelte";
+	import { resolve } from "$app/paths";
+
+	interface Props {
+		children?: Snippet;
+		class?: string;
+		hideHeader?: boolean;
+		leftHeader?: Snippet;
+	}
+
+	let { children, class: className, hideHeader = false, leftHeader }: Props = $props();
+
+	const hideHeaderPages = $derived(page.route.id?.includes("backOffice") ?? false);
+</script>
+
+{#if header.value || !hideHeaderPages}
+	<div class={cn("bg-secondary border-secondary flex h-14 items-center justify-between border-b-2 p-2", className)} transition:slide>
+		{#if !hideHeader}
+			<button class="flex items-center" onclick={() => goto(resolve("/"))}>
+				<img src="/logo.svg" alt="logo" class="h-10" />
+				<span class="hidden text-lg font-bold md:block">aviate</span>
+			</button>
+		{/if}
+		{#if leftHeader}
+			{@render leftHeader()}
+		{/if}
+		<span>
+			{#if children}
+				{@render children()}
+			{/if}
+		</span>
+		<div class="flex items-center gap-2">
+			{#if mode.value.mode == "counter" && mode.value.deviceId.length > 0}
+				<div class="flex max-w-30 flex-col items-start gap-1">
+					<Badge variant="outline" class="hidden flex-row items-center sm:flex">
+						<CircleSmallIcon class="text-destructive" />
+						Counter Mode
+					</Badge>
+					<Badge variant="outline" class="sm:hidden">CM</Badge>
+					<Badge variant="outline" class="hidden w-full flex-1 flex-row truncate sm:flex">
+						{session.user?.displayName}
+					</Badge>
+					<Badge variant="outline" class="sm:hidden">
+						{getInitials(session.user?.displayName ?? "")}
+					</Badge>
+				</div>
+
+				<Button variant="destructive" onclick={logout}>
+					<LogOutIcon />
+					<div class="hidden sm:flex">Logout</div>
+				</Button>
+			{:else}
+				{#if status.value.outletName}
+					<button onclick={() => goto(resolve("/switch"))}>
+						<Badge variant="outline" class="hidden sm:block">
+							{status.value.outletName}
+						</Badge>
+						<Badge variant="outline" class="sm:hidden">
+							{getInitials(status.value.outletName)}
+						</Badge>
+					</button>
+				{/if}
+				{#if session.user}
+					<Menu />
+				{/if}
+			{/if}
+		</div>
+	</div>
+{/if}

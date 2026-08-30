@@ -1,0 +1,75 @@
+using Pos.Api.Data;
+using Pos.Api.Entities;
+using Pos.Api.Services;
+using Microsoft.EntityFrameworkCore;
+
+namespace Pos.Api.Features.Stock.Allocate.Item.Action;
+
+public class Endpoint : Endpoint<Request, StockAllocateItem>
+{
+    private readonly AppDbContext _dbContext;
+    private readonly CurrentUserService _currentUserService;
+
+    public Endpoint(AppDbContext dbContext, CurrentUserService currentUserService)
+    {
+        _dbContext = dbContext;
+        _currentUserService = currentUserService;
+    }
+
+    public override void Configure()
+    {
+        Put("/stock/allocate/item/action");
+    }
+
+    public override async Task HandleAsync(Request req, CancellationToken ct)
+    {
+        var entity = await _dbContext.StockAllocateItem
+            .Where(x => x.Id == req.Id)
+            .Include(x => x.StockAllocate)
+            .FirstOrDefaultAsync(ct);
+
+        if (entity == null)
+        {
+            await Send.NotFoundAsync();
+            return;
+        }
+
+        if (entity.Completed != null)
+        {
+            ValidationContext.Instance.ThrowError("Already completed");
+        }
+
+        // Set status to cancelled
+        if (entity.StockAllocateItemStatusId == 1 || entity.StockAllocateItemStatusId == 2)
+        {
+            bool canAllocateStock = true;
+
+            // If Approved update counts and do audit
+            if (req.StockAllocateItemStatusId == 4)
+            {
+                // Check if different outlet with additional checks.
+                if (entity.StockAllocate.OutletId != entity.StockAllocate.ToOutletId)
+                {
+                    if (req.StockId == null)
+                    {
+                        ValidationContext.Instance.ThrowError("Please select stock item");
+                    }
+                }
+                canAllocateStock = await AllocateItemUpdate.StockCount(entity, _dbContext, _currentUserService, ct, req.StockId);
+            }
+
+            if (!canAllocateStock)
+            {
+                ValidationContext.Instance.ThrowError("Not enough stock to allocate");
+            }
+            entity.StockAllocateItemStatusId = req.StockAllocateItemStatusId;
+            entity.Completed = DateTime.Now;
+        }
+
+        await _dbContext.SaveChangesAsync();
+
+        await AllocateItemUpdate.Status(entity.StockAllocateId, _dbContext, ct);
+        await StockManager.StockAvailableCheck(entity.StockId, _dbContext, ct);
+        await Send.OkAsync(entity);
+    }
+}

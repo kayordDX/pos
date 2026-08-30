@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="Pos.AppHost/Pos.AppHost.csproj" />
+  <Project Path="Pos.ServiceDefaults/Pos.ServiceDefaults.csproj" />
+  <Project Path="Pos.Api/Pos.Api.csproj" />
+  <Folder Name="/Pos.Tests/">
+    <Project Path="Pos.Tests/Integration/Integration.csproj" />
+    <Project Path="Pos.Tests/Unit/Unit.csproj" />
+  </Folder>
+</Solution>
