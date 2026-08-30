@@ -11,4 +11,6 @@ public class PrinterDTO
     public int LineCharacters { get; set; } = 64;
     public bool IsEnabled { get; set; }
     public bool IsConnected { get; set; }
+    public bool DeviceOnline { get; set; }
+    public bool? PrinterReachable { get; set; }
 }
