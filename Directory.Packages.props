@@ -29,7 +29,7 @@
     <PackageVersion Include="OpenTelemetry.Instrumentation.Runtime" Version="1.18.0" />
     <PackageVersion Include="QuestPDF" Version="2026.8.0" />
     <PackageVersion Include="Riok.Mapperly" Version="4.3.1" />
-    <PackageVersion Include="Scalar.AspNetCore" Version="2.17.1" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.17.2" />
     <PackageVersion Include="QueryKit" Version="1.14.2" />
     <PackageVersion Include="Microsoft.SemanticKernel" Version="1.80.0" />
     <PackageVersion Include="Microsoft.SemanticKernel.Connectors.Google" Version="1.80.0-alpha" />
