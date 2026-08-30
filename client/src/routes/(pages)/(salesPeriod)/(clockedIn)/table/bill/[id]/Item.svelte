@@ -10,7 +10,7 @@
 </script>
 
 <Table.Body>
-	{#each data as item (item.orderItemId)}
+	{#each data as item (item)}
 		<Table.Row class="border-none">
 			<Table.Cell class="w-full py-2 font-medium">
 				<div class="line-clamp-1">{item.menuItem.name}</div>

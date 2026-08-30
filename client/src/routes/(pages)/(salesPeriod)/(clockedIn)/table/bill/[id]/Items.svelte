@@ -12,7 +12,7 @@
 </script>
 
 <ul class="grid gap-3">
-	{#each data as item (item.orderItemId)}
+	{#each data as item (item)}
 		<li class="flex items-center justify-between">
 			<span class="text-muted-foreground">
 				<!-- {#if showDetail}
