@@ -4,7 +4,7 @@
 	import type { DTOOptionGroupBasicDTO } from "$lib/api";
 	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import { EllipsisVerticalIcon, EqualIcon, ListCollapseIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
+	import { EllipsisVerticalIcon, ListCollapseIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import { createOptionGroupDelete } from "$lib/api";
 	import { getError } from "$lib/types";
 	import EditOptionGroup from "./EditOptionGroup.svelte";

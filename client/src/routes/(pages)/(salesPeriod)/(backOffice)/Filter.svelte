@@ -50,7 +50,7 @@
 			</Button>
 		{/snippet}
 	</Popover.Trigger>
-	<Popover.Content class="w-[200px] p-0" align="start">
+	<Popover.Content class="w-50 p-0" align="start">
 		<Command.Root>
 			<Command.Input placeholder={title} />
 			<Command.List>

@@ -4,6 +4,7 @@
 	import GoogleSvg from "$lib/SVG/GoogleSVG.svelte";
 	import { signInGoogle } from "$lib/firebase.svelte";
 	import LoginLinkDevice from "./LoginLinkDevice.svelte";
+	import { getError } from "$lib/types";
 
 	let isLoading = $state(false);
 
@@ -12,7 +13,7 @@
 			isLoading = true;
 			await signInGoogle();
 		} catch (err) {
-			toast.error("Could not login");
+			toast.error(`Could not login: ${getError(err).message}`);
 		} finally {
 			isLoading = false;
 		}

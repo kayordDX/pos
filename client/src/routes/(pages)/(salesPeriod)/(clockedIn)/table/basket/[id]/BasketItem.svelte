@@ -1,12 +1,6 @@
 <script lang="ts">
-	import { Badge, Button, Card } from "@kayord/ui";
-	import {
-		createTableOrderCopyItem,
-		createTableOrderRemoveItem,
-		createTableOrderUpdateOrderItem,
-		type DTOOrderItemExtraDTO,
-		type DTOOrderItemOptionDTO,
-	} from "$lib/api";
+	import { Button, Card } from "@kayord/ui";
+	import { createTableOrderCopyItem, createTableOrderRemoveItem, type DTOOrderItemExtraDTO, type DTOOrderItemOptionDTO } from "$lib/api";
 	import { CopyIcon, TrashIcon } from "@lucide/svelte";
 	import ItemCount from "./ItemCount.svelte";
 	import type { Snippet } from "svelte";
@@ -46,7 +40,7 @@
 			<div class="text-muted-foreground mt-2">
 				Options
 				<div class="ml-4">
-					{#each options ?? [] as option, i (option.optionId)}
+					{#each options ?? [] as option (option.optionId)}
 						<div>
 							<span class="text-foreground">{option.option.optionGroup.name}:</span>
 							<span>{option.option.name}</span>
@@ -60,7 +54,7 @@
 			<div class="text-muted-foreground mt-2">
 				Extras
 				<div class="ml-4">
-					{#each extras ?? [] as extra, i (extra.extraId)}
+					{#each extras ?? [] as extra (extra.extraId)}
 						<div>
 							<span class="text-foreground">{extra.extra.extraGroup.name}:</span>
 							<span> {extra.extra.name}</span>

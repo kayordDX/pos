@@ -15,7 +15,7 @@
 			await logoutMutation.mutateAsync();
 			toast.success("Whatsapp logged out successfully");
 			await query.refetch();
-		} catch (err) {
+		} catch {
 			toast.error("Could not logout whatsapp");
 		}
 	};
@@ -25,7 +25,7 @@
 			await connectMutation.mutateAsync();
 			toast.success("Whatsapp connected successfully");
 			await query.refetch();
-		} catch (err) {
+		} catch {
 			toast.error("Could not connect whatsapp");
 		}
 	};

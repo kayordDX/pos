@@ -15,7 +15,6 @@
 
 	let url: string | undefined;
 	let reference: string | undefined;
-	let linkLoading = false;
 
 	const paymentTypeQuery = createOutletGetPaymentType(() => status.value?.outletId ?? 0);
 
@@ -34,7 +33,6 @@
 		url = undefined;
 		reference = undefined;
 
-		linkLoading = true;
 		const linkResult = await payGetLink({
 			amount: data.amount,
 			tableBookingId: Number(page.params.id),
@@ -47,7 +45,6 @@
 		} else {
 			toast.error("Could not start payment");
 		}
-		linkLoading = false;
 	};
 
 	const mutation = createPayManualPayment();

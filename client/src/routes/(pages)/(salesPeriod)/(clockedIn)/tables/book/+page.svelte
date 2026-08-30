@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Badge, Button, Card, Dialog, Input, Label, Loader } from "@kayord/ui";
+	import { Badge, Button, Card, Dialog, Input, Loader } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
 	import { Form } from "@kayord/ui/form";
 	import { goto } from "$app/navigation";

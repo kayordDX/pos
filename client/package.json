@@ -22,7 +22,7 @@
 		"@eslint/js": "^10.0.1",
 		"@grafana/faro-web-sdk": "^2.11.0",
 		"@internationalized/date": "^3.12.3",
-		"@kayord/ui": "4.0.2",
+		"@kayord/ui": "4.0.3",
 		"@lucide/svelte": "^1.37.0",
 		"@microsoft/signalr": "^10.0.11",
 		"@sveltejs/adapter-static": "^3.0.10",

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import type { Snippet } from "svelte";
-	import { theme, setTheme } from "mode-watcher";
 	import { Toaster } from "@kayord/ui/sonner";
 	import { browser } from "$app/environment";
 	import { QueryClient, QueryClientProvider } from "@tanstack/svelte-query";

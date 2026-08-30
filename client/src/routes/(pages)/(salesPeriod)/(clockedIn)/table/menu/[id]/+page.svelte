@@ -1,13 +1,7 @@
 <script lang="ts">
 	import { Input, Loader } from "@kayord/ui";
 	import { SearchIcon } from "@lucide/svelte";
-	import {
-		createMenuList,
-		createMenuGetSectionsGetMenusSections,
-		createMenuGetItemsGetMenuItems,
-		type MenuGetSectionsGetMenusSectionsParams,
-		type MenuGetItemsGetMenuItemsParams,
-	} from "$lib/api";
+	import { createMenuList, createMenuGetSectionsGetMenusSections, createMenuGetItemsGetMenuItems } from "$lib/api";
 	import Error from "$lib/components/Error.svelte";
 	import { getError } from "$lib/types";
 	import { page } from "$app/state";

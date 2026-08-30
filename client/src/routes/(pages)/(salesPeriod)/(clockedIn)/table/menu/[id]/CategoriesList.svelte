@@ -35,7 +35,7 @@
 							<Breadcrumb.Link>Home</Breadcrumb.Link>
 						</button>
 					</Breadcrumb.Item>
-					{#each sections.parents ?? [] as parent, i (parent.menuSectionId)}
+					{#each sections.parents ?? [] as parent (parent.menuSectionId)}
 						<Breadcrumb.Separator />
 
 						{#if parent.parent}

@@ -19,7 +19,7 @@
 			await status.getStatus();
 			toast.success("Successfully opened sales period");
 			await goto(resolve("/"), { invalidateAll: true });
-		} catch (err) {
+		} catch {
 			toast.error("Error opening sales period");
 		}
 	};

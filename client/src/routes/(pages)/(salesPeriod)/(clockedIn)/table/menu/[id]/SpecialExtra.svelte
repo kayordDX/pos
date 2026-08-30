@@ -2,8 +2,7 @@
 	import { arrayUnique } from "$lib/util";
 	import { Badge, Button, Command } from "@kayord/ui";
 	import { CirclePlusIcon, CircleXIcon } from "@lucide/svelte";
-	import { createExtraGetAll, createExtraGetAllMenu } from "$lib/api";
-	import { page } from "$app/state";
+	import { createExtraGetAllMenu } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 
 	let specialExtraOpen = $state(false);
@@ -66,7 +65,7 @@
 						<div class="overflow-hidden text-ellipsis whitespace-nowrap">
 							{extra.name.replace(/[^a-zA-Z0-9 -]*/g, "")}
 						</div>
-						<div class="ml-2 flex flex-shrink-0 text-xs">R {extra.price.toFixed(2)}</div>
+						<div class="ml-2 flex shrink-0 text-xs">R {extra.price.toFixed(2)}</div>
 					</div>
 				</Command.Item>
 			{/each}

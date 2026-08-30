@@ -78,7 +78,7 @@
 <div class="m-2 mb-12">
 	<form use:enhance>
 		<Fieldset {form} name="orderItemIds" class="flex flex-col gap-2">
-			{#each query.data?.orderItems ?? [] as item, i (item.orderItemId)}
+			{#each query.data?.orderItems ?? [] as item (item.orderItemId)}
 				{@const checked = $formData.orderItemIds.includes(item.orderItemId)}
 
 				<BasketItem
@@ -94,7 +94,7 @@
 						<Control>
 							{#snippet children({ props })}
 								<Checkbox
-									class="rounded-[4px]"
+									class="rounded-lg"
 									{...props}
 									{checked}
 									onCheckedChange={(v) => {
