@@ -17,16 +17,20 @@
 		refetch: () => void;
 		open: boolean;
 		printer?: DTOPrinterDTO;
+		/** Used to prefill the form when adding a printer from a scan. */
+		defaultIpAddress?: string;
+		defaultPort?: number;
+		defaultDeviceId?: number;
 	}
-	let { refetch, open = $bindable(false), printer }: Props = $props();
+	let { refetch, open = $bindable(false), printer, defaultIpAddress, defaultPort, defaultDeviceId }: Props = $props();
 
 	const defaultValues = $derived({
 		printerName: printer?.printerName,
-		iPAddress: printer?.ipAddress,
-		port: printer?.port ?? 9100,
+		iPAddress: printer?.ipAddress ?? defaultIpAddress,
+		port: printer?.port ?? defaultPort ?? 9100,
 		lineCharacters: printer?.lineCharacters ?? 64,
 		isEnabled: printer?.isEnabled ?? true,
-		deviceId: printer?.deviceId ?? 1,
+		deviceId: printer?.deviceId ?? defaultDeviceId ?? 1,
 	});
 
 	const isEdit = $derived(printer != null);
