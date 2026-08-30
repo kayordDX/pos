@@ -2131,6 +2131,36 @@ export interface PrinterEditRequest {
   deviceId: number;
 }
 
+export interface PrinterDeviceInfoResultsResultsDeviceInterface {
+  name: string;
+  mac: string;
+  ipv4: string[];
+  ipv6: string[];
+}
+
+export interface PrinterDeviceInfoResultsResults {
+  /** @nullable */
+  hostname?: string | null;
+  /** @nullable */
+  platform?: string | null;
+  /** @nullable */
+  osVersion?: string | null;
+  /** @nullable */
+  goVersion?: string | null;
+  /** @nullable */
+  appVersion?: string | null;
+  numCpu: number;
+  uptimeSeconds: number;
+  interfaces: PrinterDeviceInfoResultsResultsDeviceInterface[];
+}
+
+export interface PrinterDeviceInfoResultsRequest { [key: string]: unknown }
+
+export interface PrinterDeviceInfoRequest {
+  /** @exclusiveMinimum 0 */
+  deviceId: number;
+}
+
 export interface PrinterDeleteRequest { [key: string]: unknown }
 
 export interface PrinterCreateRequest {
@@ -3236,6 +3266,11 @@ userId: string;
 };
 
 export type PrinterScanResultsParams = {
+outletId: number;
+deviceId: number;
+};
+
+export type PrinterDeviceInfoResultsParams = {
 outletId: number;
 deviceId: number;
 };
