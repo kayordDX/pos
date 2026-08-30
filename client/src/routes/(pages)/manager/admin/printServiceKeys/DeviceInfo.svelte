@@ -4,6 +4,7 @@
 	import { InfoIcon, RefreshCwIcon } from "@lucide/svelte";
 	import { toast } from "@kayord/ui/sonner";
 	import { getError } from "$lib/types";
+	import { untrack } from "svelte";
 	import { status } from "$lib/stores/status.svelte";
 
 	interface Props {
@@ -34,9 +35,14 @@
 			}
 		}, 15000);
 		try {
-			const started = await deviceInfoMutation.mutateAsync({
-				data: { deviceId },
-			});
+			// Mutation result state is reactive; the effect that calls this must not
+			// track it, or every state change would fire a new request (infinite loop).
+			const started = await untrack(() =>
+				deviceInfoMutation.mutateAsync({
+					data: { deviceId },
+				})
+			);
+			console.log(started);
 			if (!started) {
 				toast.error("No print device available to report its info");
 			}
@@ -103,7 +109,7 @@
 						<div class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 text-sm">
 							{#each summary as row (row.label)}
 								<div class="text-muted-foreground">{row.label}</div>
-								<div class="break-words">{row.value}</div>
+								<div class="wrap-break-word">{row.value}</div>
 							{/each}
 						</div>
 
