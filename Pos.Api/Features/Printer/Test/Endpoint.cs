@@ -57,10 +57,10 @@ public class Endpoint : Endpoint<Request, bool>
             e.UpsideDownMode(false)
         ];
 
-        var printer = await _dbContext.Printer.Where(x => x.Id == req.PrinterId).AsNoTracking().FirstOrDefaultAsync();
+        var printer = await _dbContext.Printer.Where(x => x.Id == req.PrinterId).AsNoTracking().FirstOrDefaultAsync(ct);
         if (printer == null)
         {
-            await Send.OkAsync(false);
+            await Send.OkAsync(false, ct);
             return;
         }
 
@@ -74,6 +74,6 @@ public class Endpoint : Endpoint<Request, bool>
         };
 
         await _printService.Print(printer.OutletId, printer.DeviceId, printMessage);
-        await Send.OkAsync(true);
+        await Send.OkAsync(true, ct);
     }
 }
