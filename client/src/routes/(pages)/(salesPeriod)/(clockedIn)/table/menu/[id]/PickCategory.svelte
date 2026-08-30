@@ -56,7 +56,7 @@
 		</Drawer.Header>
 		<div class="mx-auto flex w-full flex-col overflow-auto rounded-t-[10px] px-4">
 			<CategoriesList {sections}>
-				{#each sections?.sections ?? [] as section, i (section.menuSectionId)}
+				{#each sections?.sections ?? [] as section (section.menuSectionId)}
 					{@const extraClass = section.menuSectionId == menuSection.sectionId ? "bg-primary text-primary-foreground" : ""}
 					<Button onclick={() => setSection(section.menuSectionId)} class={cn("w-full p-2", extraClass)} variant="outline">
 						{section.name}

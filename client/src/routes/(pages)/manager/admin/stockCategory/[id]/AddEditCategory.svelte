@@ -15,10 +15,9 @@
 		refetch: () => void;
 		open: boolean;
 		category?: EntitiesStockCategory;
-		sectionId?: number;
 	}
 
-	let { refetch, open = $bindable(false), category, sectionId }: Props = $props();
+	let { refetch, open = $bindable(false), category }: Props = $props();
 
 	const isEdit = $derived(category != null);
 

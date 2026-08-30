@@ -15,10 +15,9 @@
 		refetch: () => void;
 		open: boolean;
 		adjustmentType?: EntitiesAdjustmentType;
-		adjustmentTypeId?: number;
 	}
 
-	let { refetch, open = $bindable(false), adjustmentType, adjustmentTypeId }: Props = $props();
+	let { refetch, open = $bindable(false), adjustmentType }: Props = $props();
 
 	const isEdit = $derived(adjustmentType != null);
 

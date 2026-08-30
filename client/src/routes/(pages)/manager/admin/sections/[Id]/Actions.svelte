@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { AlertDialog, Button, DropdownMenu } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import { Trash2Icon, PencilIcon, TableIcon, EllipsisVerticalIcon } from "@lucide/svelte";
+	import { Trash2Icon, PencilIcon, EllipsisVerticalIcon } from "@lucide/svelte";
 	import { createTableDelete } from "$lib/api";
 	import { getError } from "$lib/types";
 	import type { EntitiesTable } from "$lib/api";

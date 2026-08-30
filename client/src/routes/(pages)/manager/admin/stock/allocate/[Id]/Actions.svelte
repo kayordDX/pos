@@ -4,7 +4,6 @@
 	import { BanIcon, EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
 	import { createStockAllocateItemCancel, createStockAllocateItemDelete, type DTOStockAllocateItemDTO } from "$lib/api";
 	import { getError } from "$lib/types";
-	import AddOrderItem from "./AddAllocationItem.svelte";
 	import AddAllocationItem from "./AddAllocationItem.svelte";
 
 	interface Props {

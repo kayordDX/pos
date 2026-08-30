@@ -9,9 +9,9 @@
 	import AddRole from "./AddRole.svelte";
 	import { PlusIcon } from "@lucide/svelte";
 
-	const query = createRoleDivisionGetAll(() => Number(page.params.id) ?? 0);
-	let selectedDivision = $state<EntitiesRole | undefined>(undefined);
-	let isDialogOpen = $state(false);
+	const query = createRoleDivisionGetAll(() => Number(page.params.id ?? 0));
+	// let selectedDivision = $state<EntitiesRole | undefined>(undefined);
+	// let isDialogOpen = $state(false);
 	let divisionId = $state(Number(page.params.id));
 	let open: boolean = $state(false);
 	const columns: ColumnDef<DataTableFeatures, EntitiesRole>[] = [
@@ -35,7 +35,7 @@
 					role: row.row.original,
 					refetch: query.refetch,
 					divisionId: Number(page.params.id),
-					openDialog: () => (isDialogOpen = true),
+					// openDialog: () => (isDialogOpen = true),
 				}),
 			size: 10,
 		},

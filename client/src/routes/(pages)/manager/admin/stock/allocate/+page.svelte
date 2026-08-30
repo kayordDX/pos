@@ -69,8 +69,7 @@
 			accessorKey: "menuItemId",
 			cell: (item) =>
 				renderComponent(Actions, {
-					stockAllocate: item.row.original,
-					refetch: query.refetch,
+					stockAllocateId: item.row.original.id,
 				}),
 			size: 10,
 			enableSorting: false,

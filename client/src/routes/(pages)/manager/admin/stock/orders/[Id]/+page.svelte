@@ -5,7 +5,7 @@
 	import { Alert, Badge, Button, Card, Loader } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
 	import { DataTable, createShadTable, renderComponent, aggregationFns, renderSnippet, type DataTableFeatures } from "@kayord/ui/data-table";
-	import { BookXIcon, NotebookPenIcon, PlusIcon, XIcon } from "@lucide/svelte";
+	import { BookXIcon, NotebookPenIcon, PlusIcon } from "@lucide/svelte";
 	import AddOrderItem from "./AddOrderItem.svelte";
 	import Actions from "./Actions.svelte";
 	import { type ColumnDef, type RowSelectionState } from "@tanstack/svelte-table";

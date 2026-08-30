@@ -4,7 +4,7 @@
 	import { getError } from "$lib/types";
 	import type { EntitiesRole } from "$lib/api";
 	import { createRoleDivisionDelete } from "$lib/api";
-	import { EllipsisVerticalIcon, PencilIcon, Trash2Icon } from "@lucide/svelte";
+	import { EllipsisVerticalIcon, Trash2Icon } from "@lucide/svelte";
 
 	interface Props {
 		refetch: () => void;
