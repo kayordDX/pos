@@ -6,5 +6,13 @@ public static class Constants
     {
         public const string Manager = "manager";
         public const string Feature = "feature";
+        public const string PrinterKeyScheme = "PrinterKey";
+    }
+
+    public static class Claim
+    {
+        public const string OutletId = "outlet_id";
+        public const string DeviceId = "device_id";
+        public const string KeyId = "key_id";
     }
 }

@@ -2,6 +2,8 @@ using Pos.Api.Common.Extensions;
 using Pos.Api.Common.Extensions.Cors;
 using Pos.Api.Common.Extensions.Health;
 using Pos.Api.Hubs;
+using Pos.Api;
+using Microsoft.AspNetCore.Authorization;
 using TickerQ.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -46,6 +48,8 @@ app.UseCorsKayord();
 app.UseApi();
 app.UseHealth();
 app.MapHub<KayordHub>("/hub");
+app.MapHub<PrinterHub>("/printer-hub")
+    .RequireAuthorization(new AuthorizeAttribute { AuthenticationSchemes = Constants.Policy.PrinterKeyScheme });
 app.UseTickerQ();
 app.Run();
 

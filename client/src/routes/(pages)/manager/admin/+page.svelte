@@ -1,14 +1,59 @@
 <script lang="ts">
-	import { createPrinterList } from "$lib/api";
+	import { createPrinterList, type DTOPrinterDTO } from "$lib/api";
 	import { Alert, Card, Button } from "@kayord/ui";
 	import TriangleAlertIcon from "@lucide/svelte/icons/triangle-alert";
 	import { status } from "$lib/stores/status.svelte";
 	import Printer from "$lib/components/Printer.svelte";
 	import AddPrinter from "./printers/AddPrinter.svelte";
+	import PrintKeys from "./printers/PrintKeys.svelte";
 	import { PlusIcon, RefreshCwIcon } from "@lucide/svelte";
+	import { hub } from "$lib/stores/hub.svelte";
+	import { HubConnectionState } from "@microsoft/signalr";
 	const query = createPrinterList(() => status.value.outletId);
 
 	let open = $state(false);
+	let printers = $state.raw<DTOPrinterDTO[]>([]);
+
+	type PrinterStatusChanged = {
+		outletId: number;
+		printerId: number;
+		reachable?: boolean | null;
+		online: boolean;
+	};
+
+	const refetchPrinters = async () => {
+		await query.refetch();
+		printers = [...(query.data ?? [])];
+	};
+
+	const handlePrinterStatusChanged = (event: PrinterStatusChanged) => {
+		if (event.outletId !== status.value.outletId) {
+			return;
+		}
+
+		printers = printers.map((printer) =>
+			printer.id === event.printerId
+				? {
+						...printer,
+						deviceOnline: event.online,
+						printerReachable: event.reachable ?? printer.printerReachable,
+					}
+				: printer
+		);
+	};
+
+	$effect(() => {
+		printers = [...(query.data ?? [])];
+	});
+
+	$effect(() => {
+		if (hub.state === HubConnectionState.Connected) {
+			hub.on("PrinterStatusChanged", handlePrinterStatusChanged);
+			return () => {
+				hub.off("PrinterStatusChanged", handlePrinterStatusChanged);
+			};
+		}
+	});
 </script>
 
 <Card.Root class="m-2">
@@ -18,13 +63,13 @@
 			<Card.Description>Printers that can be used in outlet</Card.Description>
 		</div>
 		<div>
-			<Button variant="outline" disabled={query.isPending} onclick={() => query.refetch()}>
+			<Button variant="outline" disabled={query.isPending} onclick={refetchPrinters}>
 				Refresh <RefreshCwIcon />
 			</Button>
 		</div>
 	</Card.Header>
 	<Card.Content>
-		{#if query.data?.length === 0}
+		{#if !query.isPending && printers.length === 0}
 			<Alert.Root>
 				<TriangleAlertIcon class="size-4" />
 				<Alert.Title>No printers available</Alert.Title>
@@ -32,8 +77,8 @@
 			</Alert.Root>
 		{:else}
 			<div class="flex flex-col gap-4">
-				{#each query.data ?? [] as printer (printer.id)}
-					<Printer {printer} refetch={query.refetch} canPrint={false} isAdmin={true} />
+				{#each printers as printer (printer.id)}
+					<Printer {printer} refetch={refetchPrinters} canPrint={false} isAdmin={true} />
 				{/each}
 			</div>
 		{/if}
@@ -45,4 +90,16 @@
 	</Card.Footer>
 </Card.Root>
 
-<AddPrinter refetch={query.refetch} bind:open />
+<Card.Root class="m-2">
+	<Card.Header class="flex flex-row items-center justify-between">
+		<div class="flex flex-col gap-1">
+			<Card.Title>Print devices / keys</Card.Title>
+			<Card.Description>Manage printer service API keys for this outlet</Card.Description>
+		</div>
+	</Card.Header>
+	<Card.Content>
+		<PrintKeys />
+	</Card.Content>
+</Card.Root>
+
+<AddPrinter refetch={refetchPrinters} bind:open />

@@ -11,6 +11,7 @@ public interface IKayordHub
     Task PayMessage(Result<Features.Pay.Dto.StatusResultDto> request);
     Task Notification(SignalEvent notification);
     Task PlaySound(SoundEvent sound);
+    Task PrinterStatusChanged(PrinterStatusChangedEvent status);
     Task RefreshOutlet(int outletId);
     Task DeviceAuth(DeviceAuthEvent deviceAuthEvent);
 }

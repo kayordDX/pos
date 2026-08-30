@@ -1,5 +1,6 @@
 using Pos.Api.Data;
 using Pos.Api.DTO;
+using Pos.Api.Hubs;
 using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -9,11 +10,15 @@ public class Endpoint : Endpoint<Request, List<PrinterDTO>>
 {
     private readonly AppDbContext _dbContext;
     private readonly RedisClient _redisClient;
+    private readonly PrinterConnectionTracker _connectionTracker;
+    private readonly PrinterProbeCache _probeCache;
 
-    public Endpoint(AppDbContext dbContext, RedisClient redisClient)
+    public Endpoint(AppDbContext dbContext, RedisClient redisClient, PrinterConnectionTracker connectionTracker, PrinterProbeCache probeCache)
     {
         _dbContext = dbContext;
         _redisClient = redisClient;
+        _connectionTracker = connectionTracker;
+        _probeCache = probeCache;
     }
 
     public override void Configure()
@@ -63,6 +68,12 @@ public class Endpoint : Endpoint<Request, List<PrinterDTO>>
                 Logger.LogError(ex, ex.Message);
             }
         }
+
+        result.ForEach(x =>
+        {
+            x.DeviceOnline = _connectionTracker.IsOnline(x.OutletId, x.DeviceId);
+            x.PrinterReachable = _probeCache.Get(x.Id)?.Reachable;
+        });
 
         await Send.OkAsync(result);
     }
