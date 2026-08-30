@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { Button, Card, Dialog, Input, ProgressLoading } from "@kayord/ui";
-	import { createPrinterScanResults, createPrinterScan, createPrinterEdit, type DTOPrinterDTO } from "$lib/api";
-	import { RadarIcon, PlugIcon } from "@lucide/svelte";
+	import { createPrinterScanResults, createPrinterEdit, type DTOPrinterDTO } from "$lib/api";
+	import { PlugIcon } from "@lucide/svelte";
 	import { toast } from "@kayord/ui/sonner";
 	import { getError } from "$lib/types";
 
@@ -15,17 +15,11 @@
 		() => ({ deviceId: printer.deviceId, outletId: printer.outletId }),
 		() => ({ query: { refetchInterval: 6000 } })
 	);
-	const printerScanMutation = createPrinterScan();
 	const printerEditMutation = createPrinterEdit();
-
-	const scan = async () => {
-		await printerScanMutation.mutateAsync({ data: { printerId: printer.id } });
-		scanResults.refetch();
-	};
 
 	const results = $derived(scanResults.data);
 
-	// Parse IP addresses from nmap-style output
+	// Parse IP addresses from scan output
 	const discoveredIps = $derived(() => {
 		const output = results?.output;
 		if (!output) return [];
@@ -61,7 +55,7 @@
 	<Dialog.Content class="max-h-[98%] overflow-auto">
 		<Dialog.Header>
 			<Dialog.Title>Scan printers</Dialog.Title>
-			<Dialog.Description>Run nmap for existing IP range</Dialog.Description>
+			<Dialog.Description>Scan results from the printer service</Dialog.Description>
 		</Dialog.Header>
 		<div class="m-4 flex flex-col gap-4">
 			{#if results?.status}
@@ -73,8 +67,6 @@
 						<ProgressLoading class="h-1" />
 					</Card.Header>
 				</Card.Root>
-			{:else}
-				<Button onclick={scan}><RadarIcon /> Scan</Button>
 			{/if}
 			{#if results?.output}
 				<Card.Root class={`${results?.status ? " border-muted" : "border-primary"}`}>
