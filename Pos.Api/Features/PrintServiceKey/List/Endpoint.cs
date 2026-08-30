@@ -4,16 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.PrintServiceKey.List;
 
-public class Endpoint : EndpointWithoutRequest<List<PrintServiceKeyDTO>>
+public class Endpoint(Data.AppDbContext dbContext, UserService userService) : EndpointWithoutRequest<List<PrintServiceKeyDTO>>
 {
-    private readonly Data.AppDbContext _dbContext;
-    private readonly UserService _userService;
-
-    public Endpoint(Data.AppDbContext dbContext, UserService userService)
-    {
-        _dbContext = dbContext;
-        _userService = userService;
-    }
+    private readonly Data.AppDbContext _dbContext = dbContext;
+    private readonly UserService _userService = userService;
 
     public override void Configure()
     {
@@ -26,7 +20,7 @@ public class Endpoint : EndpointWithoutRequest<List<PrintServiceKeyDTO>>
         int outletId = await _userService.GetOutletId();
         var results = await _dbContext.PrintServiceKey
             .AsNoTracking()
-            .Where(x => x.OutletId == outletId)
+            .Where(x => x.OutletId == outletId && x.RevokedAt == null)
             .OrderByDescending(x => x.Created)
             .Select(x => new PrintServiceKeyDTO
             {

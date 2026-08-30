@@ -26,7 +26,7 @@ public class PrintService
         if (transport is "redis" or "both")
         {
             var subscriber = await _redisClient.GetSubscriber();
-            RedisChannel channel = new RedisChannel($"print:{outletId}:{deviceId}", RedisChannel.PatternMode.Auto);
+            RedisChannel channel = new($"print:{outletId}:{deviceId}", RedisChannel.PatternMode.Auto);
             await subscriber.PublishAsync(channel, printInstructionsSerialized);
         }
 

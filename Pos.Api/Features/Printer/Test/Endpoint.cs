@@ -6,16 +6,10 @@ using Pos.Api.Common.Printer.Emitters.Enums;
 
 namespace Pos.Api.Features.Printer.Test;
 
-public class Endpoint : Endpoint<Request, bool>
+public class Endpoint(AppDbContext dbContext, PrintService printService) : Endpoint<Request, bool>
 {
-    private readonly AppDbContext _dbContext;
-    private readonly PrintService _printService;
-
-    public Endpoint(AppDbContext dbContext, PrintService printService)
-    {
-        _dbContext = dbContext;
-        _printService = printService;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
+    private readonly PrintService _printService = printService;
 
     public override void Configure()
     {
@@ -46,7 +40,7 @@ public class Endpoint : Endpoint<Request, bool>
             e.SetStyles(PrintStyle.FontB | PrintStyle.DoubleHeight | PrintStyle.DoubleWidth),
             e.PrintLine("REVERSE MODE: The quick brown fox jumped over the lazy dogs."),
             e.SetStyles(PrintStyle.None),
-                e.ReverseMode(false),
+            e.ReverseMode(false),
             e.SetStyles(PrintStyle.None),
             e.RightCharacterSpacing(5),
             e.PrintLine("Right space 5: The quick brown fox jumped over the lazy dogs."),

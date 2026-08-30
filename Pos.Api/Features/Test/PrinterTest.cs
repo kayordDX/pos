@@ -6,21 +6,14 @@ using Pos.Api.Features.Bill.PrintBill;
 
 namespace Pos.Api.Features.Test;
 
-public class PrinterTest : EndpointWithoutRequest<bool>
+public class PrinterTest(AppDbContext dbContext) : EndpointWithoutRequest<bool>
 {
-    private readonly AppDbContext _dbContext;
-
-    public PrinterTest(AppDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
 
     public override void Configure()
     {
         Get("/test/print");
     }
-
-    private static readonly EPSON e = new();
 
     public override async Task HandleAsync(CancellationToken ct)
     {
@@ -30,8 +23,8 @@ public class PrinterTest : EndpointWithoutRequest<bool>
         var flattenedList = printInstructions.SelectMany(bytes => bytes);
         var bytes = flattenedList.ToArray();
 
-        await File.WriteAllBytesAsync("test.bin", bytes);
+        await File.WriteAllBytesAsync("test.bin", bytes, ct);
 
-        await Send.OkAsync(true);
+        await Send.OkAsync(true, ct);
     }
 }

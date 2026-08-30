@@ -4,6 +4,7 @@
 	import { toast } from "@kayord/ui/sonner";
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
+	import { CopyIcon } from "@lucide/svelte";
 
 	interface Props {
 		open: boolean;
@@ -71,7 +72,7 @@
 			<Dialog.Description>Generate a device key for the outlet print service.</Dialog.Description>
 		</Dialog.Header>
 		{#if fullKey}
-			<div class="flex flex-col gap-4 p-4">
+			<div class="flex flex-col gap-2 p-0">
 				<Card.Root class="border-primary">
 					<Card.Header>
 						<Card.Title>Save this key now</Card.Title>
@@ -83,19 +84,11 @@
 				</Card.Root>
 			</div>
 			<Dialog.Footer class="gap-2">
-				<Button onclick={copyKey}>Copy key</Button>
+				<Button onclick={copyKey}><CopyIcon /> Copy key</Button>
 				<Button variant="outline" onclick={closeDialog}>Close</Button>
 			</Dialog.Footer>
 		{:else}
 			<div class="flex flex-col gap-4 p-4">
-				<label class="flex flex-col gap-2">
-					<span class="text-sm font-medium">Outlet</span>
-					<Input bind:value={outletId} type="number" />
-				</label>
-				<label class="flex flex-col gap-2">
-					<span class="text-sm font-medium">Device ID</span>
-					<Input bind:value={deviceId} type="number" min="1" />
-				</label>
 				<label class="flex flex-col gap-2">
 					<span class="text-sm font-medium">Name</span>
 					<input
@@ -105,6 +98,14 @@
 						placeholder="Front desk Pi"
 						class="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
 					/>
+				</label>
+				<label class="flex flex-col gap-2">
+					<span class="text-sm font-medium">Outlet</span>
+					<Input bind:value={outletId} type="number" />
+				</label>
+				<label class="flex flex-col gap-2">
+					<span class="text-sm font-medium">Device ID</span>
+					<Input bind:value={deviceId} type="number" min="1" />
 				</label>
 			</div>
 			<Dialog.Footer class="gap-2">

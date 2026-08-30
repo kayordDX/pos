@@ -5,7 +5,7 @@
 	import { Header } from "$lib/components/Header";
 	import { Button, Sidebar } from "@kayord/ui";
 	import { cn } from "@kayord/ui/utils";
-	import { PrinterIcon, MessageCircleIcon, UserRoundSearchIcon, UsersIcon, ArrowLeftIcon, MenuIcon } from "@lucide/svelte";
+	import { PrinterIcon, MessageCircleIcon, UserRoundSearchIcon, UsersIcon, ArrowLeftIcon, MenuIcon, LayoutDashboardIcon } from "@lucide/svelte";
 	import type { Snippet } from "svelte";
 	import AdminSidebar from "./AdminSidebar.svelte";
 
@@ -20,6 +20,11 @@
 			{
 				title: "Admin",
 				href: "/manager/admin",
+				icon: LayoutDashboardIcon,
+			},
+			{
+				title: "Printers",
+				href: "/manager/admin/printers",
 				icon: PrinterIcon,
 			},
 			{

@@ -2088,11 +2088,6 @@ export interface PrinterScanResultsResults {
 
 export interface PrinterScanResultsRequest { [key: string]: unknown }
 
-export interface PrinterScanRequest {
-  /** @minLength 1 */
-  printerId: number;
-}
-
 export interface DTOPrinterDTO {
   id: number;
   outletId: number;

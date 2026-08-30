@@ -37,13 +37,31 @@
 		CalculatorIcon,
 		FolderClockIcon,
 		ReceiptIcon,
+		LayoutDashboardIcon,
 	} from "@lucide/svelte";
 
 	const menuItems = [
 		{
-			title: "Printers",
+			title: "Overview",
 			href: "/manager/admin",
+			icon: LayoutDashboardIcon,
+		},
+		{
+			title: "Print",
+			href: "/manager/admin/printers",
 			icon: PrinterIcon,
+			items: [
+				{
+					title: "Printers",
+					href: "/manager/admin/printers",
+					icon: PrinterIcon,
+				},
+				{
+					title: "Print Service Keys",
+					href: "/manager/admin/printServiceKeys",
+					icon: PrinterIcon,
+				},
+			],
 		},
 		{
 			title: "Users",
