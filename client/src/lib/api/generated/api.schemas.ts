@@ -2088,6 +2088,21 @@ export interface PrinterScanResultsResults {
 
 export interface PrinterScanResultsRequest { [key: string]: unknown }
 
+export interface PrinterScanRequest {
+  /** @exclusiveMinimum 0 */
+  deviceId: number;
+  /**
+     * @minLength 0
+     * @maxLength 64
+     */
+  ipAddress: string;
+  /**
+     * @minimum 1
+     * @maximum 65535
+     */
+  port: number;
+}
+
 export interface DTOPrinterDTO {
   id: number;
   outletId: number;

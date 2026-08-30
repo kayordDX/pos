@@ -6,6 +6,8 @@
 	import TriangleAlertIcon from "@lucide/svelte/icons/triangle-alert";
 	import AddPrintKey from "./AddPrintKey.svelte";
 	import RevokePrintKey from "./RevokePrintKey.svelte";
+	import ScanPrinters from "./ScanPrinters.svelte";
+	import AddPrinter from "../printers/AddPrinter.svelte";
 
 	const query = createPrintServiceKeyList();
 
@@ -27,6 +29,29 @@
 	const items = $derived((query.data ?? []) as DTOPrintServiceKeyDTO[]);
 
 	let scanOpen = $state(false);
+	let scanDeviceId = $state<number | null>(null);
+	let scanDeviceName = $state("");
+
+	const openScan = (item: DTOPrintServiceKeyDTO) => {
+		scanDeviceId = item.deviceId;
+		scanDeviceName = item.name;
+		scanOpen = true;
+	};
+
+	let addPrinterOpen = $state(false);
+	let prefillIpAddress = $state("");
+	let prefillPort = $state(9100);
+
+	// The user picked a discovered host in the scan dialog: prefill the
+	// add-printer form (IP, port and the device that did the scan). The
+	// last scan results stay in the query cache, so reopening the dialog
+	// shows them again without rescanning.
+	const handleAddPrinter = (host: { ipAddress: string; port: number }) => {
+		prefillIpAddress = host.ipAddress;
+		prefillPort = host.port;
+		scanOpen = false;
+		addPrinterOpen = true;
+	};
 </script>
 
 <Card.Root class="m-2">
@@ -65,7 +90,7 @@
 											<Button size="icon" variant="secondary" class="h-8"><EllipsisVerticalIcon /></Button>
 										</DropdownMenu.Trigger>
 										<DropdownMenu.Content>
-											<DropdownMenu.Item onclick={() => (scanOpen = true)}>
+											<DropdownMenu.Item onclick={() => openScan(item)}>
 												<RadarIcon class="mr-2 h-4 w-4" />Scan
 											</DropdownMenu.Item>
 											<DropdownMenu.Item onclick={() => (revokeOpenId = item.id)}>
@@ -96,3 +121,9 @@
 </Card.Root>
 
 <AddPrintKey bind:open {refetch} />
+
+{#if scanDeviceId != null}
+	<ScanPrinters bind:open={scanOpen} deviceId={scanDeviceId} deviceName={scanDeviceName} onAddPrinter={handleAddPrinter} />
+{/if}
+
+<AddPrinter {refetch} bind:open={addPrinterOpen} defaultIpAddress={prefillIpAddress} defaultPort={prefillPort} defaultDeviceId={scanDeviceId ?? undefined} />
