@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { Alert, Badge, Button, Card, DropdownMenu } from "@kayord/ui";
-	import { EllipsisVerticalIcon, PlusIcon, RadarIcon, RefreshCwIcon, Trash } from "@lucide/svelte";
+	import { EllipsisVerticalIcon, InfoIcon, PlusIcon, RadarIcon, RefreshCwIcon, Trash } from "@lucide/svelte";
 	import { createPrintServiceKeyList, type DTOPrintServiceKeyDTO } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
 	import TriangleAlertIcon from "@lucide/svelte/icons/triangle-alert";
 	import AddPrintKey from "./AddPrintKey.svelte";
 	import RevokePrintKey from "./RevokePrintKey.svelte";
 	import ScanPrinters from "./ScanPrinters.svelte";
+	import DeviceInfo from "./DeviceInfo.svelte";
 	import AddPrinter from "../printers/AddPrinter.svelte";
 
 	const query = createPrintServiceKeyList();
@@ -36,6 +37,16 @@
 		scanDeviceId = item.deviceId;
 		scanDeviceName = item.name;
 		scanOpen = true;
+	};
+
+	let deviceInfoOpen = $state(false);
+	let deviceInfoDeviceId = $state<number | null>(null);
+	let deviceInfoName = $state("");
+
+	const openDeviceInfo = (item: DTOPrintServiceKeyDTO) => {
+		deviceInfoDeviceId = item.deviceId;
+		deviceInfoName = item.name;
+		deviceInfoOpen = true;
 	};
 
 	let addPrinterOpen = $state(false);
@@ -93,6 +104,9 @@
 											<DropdownMenu.Item onclick={() => openScan(item)}>
 												<RadarIcon class="mr-2 h-4 w-4" />Scan
 											</DropdownMenu.Item>
+											<DropdownMenu.Item onclick={() => openDeviceInfo(item)}>
+												<InfoIcon class="mr-2 h-4 w-4" />Device info
+											</DropdownMenu.Item>
 											<DropdownMenu.Item onclick={() => (revokeOpenId = item.id)}>
 												<Trash class="mr-2 h-4 w-4" />
 												Revoke
@@ -124,6 +138,10 @@
 
 {#if scanDeviceId != null}
 	<ScanPrinters bind:open={scanOpen} deviceId={scanDeviceId} deviceName={scanDeviceName} onAddPrinter={handleAddPrinter} />
+{/if}
+
+{#if deviceInfoDeviceId != null}
+	<DeviceInfo bind:open={deviceInfoOpen} deviceId={deviceInfoDeviceId} deviceName={deviceInfoName} />
 {/if}
 
 <AddPrinter {refetch} bind:open={addPrinterOpen} defaultIpAddress={prefillIpAddress} defaultPort={prefillPort} defaultDeviceId={scanDeviceId ?? undefined} />

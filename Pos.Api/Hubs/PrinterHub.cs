@@ -12,6 +12,7 @@ public interface IPrinterHub
 {
     Task ReceivePrint(Features.Printer.PrintMessage message);
     Task SyncPrinters(List<PrinterTarget> printers);
+    Task ReportDeviceInfo(string info);
 }
 
 public class PrinterHub : Hub<IPrinterHub>
@@ -82,6 +83,13 @@ public class PrinterHub : Hub<IPrinterHub>
         (int outletId, int deviceId, _) = GetIdentity();
         _memoryCache.Remove(PrinterCacheKeys.ScanStatus(outletId, deviceId));
         _memoryCache.Set(PrinterCacheKeys.ScanResult(outletId, deviceId), output, ScanCacheTtl);
+        return Task.CompletedTask;
+    }
+
+    public Task ReportDeviceInfo(string info)
+    {
+        (int outletId, int deviceId, _) = GetIdentity();
+        _memoryCache.Set(PrinterCacheKeys.DeviceInfo(outletId, deviceId), info, ScanCacheTtl);
         return Task.CompletedTask;
     }
 
