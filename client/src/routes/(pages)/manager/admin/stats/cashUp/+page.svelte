@@ -77,6 +77,6 @@
 {/snippet}
 
 <div class="m-2 flex flex-col items-center gap-2">
-	<DataTable {table} {header} isLoading={query.isPending} noDataMessage="No Cash up Data for Sales Period" />
+	<DataTable {table} {header} isLoading={query.isPending} noDataMessage="No Cash up Data for Sales Period" pagination={false} />
 	<GrafanaLink />
 </div>

@@ -54,7 +54,6 @@
 			return data;
 		},
 		enableRowSelection: false,
-		manualPagination: true,
 		state: {
 			get globalFilter() {
 				return search;
