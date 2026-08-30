@@ -24,12 +24,17 @@
 	};
 
 	const height = $derived(backOffice.value.itemHeight ?? 500);
+	const scale = $derived(backOffice.value.fontSize / 1000);
+	const fontSizeStyle = $derived(
+		// @kayord/ui components use Tailwind text-* utilities, which resolve their size from these theme variables
+		`--text-xs: calc(0.75rem * ${scale}); --text-sm: calc(0.875rem * ${scale}); --text-base: calc(1rem * ${scale})`
+	);
 	let clientHeight = $state(0);
 
 	const showMore = $derived(clientHeight > height);
 </script>
 
-<div style={`height: ${height}px; font-size: ${backOffice.value.fontSize / 1000}rem`} class="w-full">
+<div style={`height: ${height}px; font-size: ${scale}rem; ${fontSizeStyle}`} class="w-full">
 	<ScrollArea class="h-full overflow-hidden">
 		<Card.Root class={`p-2 ${group.priority > 10 ? "border-destructive border-4" : ""}`} style={`min-height: ${height}px`}>
 			<div>
