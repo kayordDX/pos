@@ -47,7 +47,7 @@ await app.Services.ApplyMigrations(app.Environment, app.Lifetime.ApplicationStop
 app.UseCorsKayord();
 app.UseApi();
 app.UseHealth();
-app.MapHub<KayordHub>("/hub");
+app.MapHub<KayordHub>("/hub").RequireAuthorization();
 app.MapHub<PrinterHub>("/printer-hub")
     .RequireAuthorization(new AuthorizeAttribute { AuthenticationSchemes = Constants.Policy.PrinterKeyScheme });
 app.UseTickerQ();

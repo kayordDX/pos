@@ -15,7 +15,6 @@ public class Endpoint : Endpoint<Request, Guid>
     public override void Configure()
     {
         Delete("/outlet/counter/{deviceId}");
-        AllowAnonymous();
     }
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
