@@ -4,7 +4,7 @@
 	import { KeyRoundIcon, ScreenShareIcon } from "@lucide/svelte";
 	import { hub } from "$lib/stores/hub.svelte";
 	import { HubConnectionState } from "@microsoft/signalr";
-	import { signInCustomToken } from "$lib/firebase.svelte";
+	import { signInCustomToken, session } from "$lib/firebase.svelte";
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
 	import { untrack } from "svelte";
@@ -14,11 +14,18 @@
 	let otp: string | undefined = $state(undefined);
 	let isLoading = $state(false);
 
-	// Disconnect the device-link connection when the component unmounts
+	// Disconnect the device-link connection when the component unmounts.
+	// The hub is a shared singleton — if the user is logged in, Hub.svelte owns
+	// the connection, so bring it straight back up.
 	$effect(() => {
 		if (init) {
 			return () => {
-				untrack(() => hub.disconnect());
+				untrack(() => {
+					hub.disconnect();
+					if (session.user) {
+						hub.init();
+					}
+				});
 			};
 		}
 	});

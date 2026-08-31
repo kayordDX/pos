@@ -22,6 +22,10 @@ class Hub {
 			.build();
 
 		const onStateUpdatedCallback = () => {
+			// ignore late events from a stale connection after init() was called again
+			if (this.connection !== connection) {
+				return;
+			}
 			this.state = connection.state;
 		};
 
