@@ -43,6 +43,8 @@ var app = builder.Build();
 await app.Services.ApplyMigrations(app.Environment, app.Lifetime.ApplicationStopping);
 
 app.UseCorsKayord();
+app.UseAuthentication();
+app.UseAuthorization();
 app.UseApi();
 app.UseHealth();
 app.MapHub<KayordHub>("/hub").RequireAuthorization();

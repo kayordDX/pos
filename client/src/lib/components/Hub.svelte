@@ -6,27 +6,19 @@
 	import { menu } from "$lib/stores/menu.svelte";
 	import { status } from "$lib/stores/status.svelte";
 	import { HubConnectionState } from "@microsoft/signalr";
+	import { untrack } from "svelte";
 	import { Previous } from "runed";
 
 	const previous = new Previous(() => status.value.outletId);
 
 	$effect(() => {
 		if (session.user) {
-			hub.init();
+			// hub.init/disconnect read+write hub state — keep them untracked so this
+			// effect only re-runs when the user session changes
+			untrack(() => hub.init());
 			return () => {
-				hub.disconnect();
+				untrack(() => hub.disconnect());
 			};
-		}
-	});
-
-	$effect(() => {
-		if (hub.connection?.state == undefined) {
-			hub.state = HubConnectionState.Disconnected;
-			return;
-		}
-
-		if (hub.connection.state !== hub.state) {
-			hub.state = hub.connection.state;
 		}
 	});
 

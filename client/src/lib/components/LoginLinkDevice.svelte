@@ -7,26 +7,18 @@
 	import { signInCustomToken } from "$lib/firebase.svelte";
 	import { goto } from "$app/navigation";
 	import { resolve } from "$app/paths";
+	import { untrack } from "svelte";
 
 	let init = $state(false);
 	let open = $state(false);
 	let otp: string | undefined = $state(undefined);
 	let isLoading = $state(false);
 
-	// Hub State Update
+	// Disconnect the device-link connection when the component unmounts
 	$effect(() => {
 		if (init) {
-			if (hub.connection?.state == undefined) {
-				hub.state = HubConnectionState.Disconnected;
-				return;
-			}
-
-			if (hub.connection.state !== hub.state) {
-				hub.state = hub.connection.state;
-			}
-
 			return () => {
-				hub.disconnect();
+				untrack(() => hub.disconnect());
 			};
 		}
 	});

@@ -7,10 +7,14 @@ class Hub {
 	state: HubConnectionState = $state(HubConnectionState.Disconnected);
 
 	public async init() {
-		const token = await session.user?.getIdToken();
-		this.connection = new HubConnectionBuilder()
+		if (this.connection && this.connection.state !== HubConnectionState.Disconnected) {
+			return;
+		}
+
+		const connection = new HubConnectionBuilder()
 			.withUrl(`${info.kayordURL()}/hub`, {
-				accessTokenFactory: () => token ?? "",
+				// fetch a fresh token on every (re)connect — Firebase tokens expire after 1 hour
+				accessTokenFactory: async () => (await session.user?.getIdToken()) ?? "",
 				withCredentials: false,
 			})
 			.withAutomaticReconnect()
@@ -18,18 +22,21 @@ class Hub {
 			.build();
 
 		const onStateUpdatedCallback = () => {
-			this.state = this.connection?.state ?? HubConnectionState.Disconnected;
+			this.state = connection.state;
 		};
 
-		this.connection.onclose(onStateUpdatedCallback);
-		this.connection.onreconnected(onStateUpdatedCallback);
-		this.connection.onreconnecting(onStateUpdatedCallback);
+		connection.onclose(onStateUpdatedCallback);
+		connection.onreconnected(onStateUpdatedCallback);
+		connection.onreconnecting(onStateUpdatedCallback);
+
+		this.connection = connection;
+		this.state = HubConnectionState.Connecting;
 
 		try {
-			await this.connection.start();
-			onStateUpdatedCallback();
+			await connection.start();
+			this.state = HubConnectionState.Connected;
 		} catch (err) {
-			onStateUpdatedCallback();
+			this.state = HubConnectionState.Disconnected;
 			console.error(err);
 		}
 	}
@@ -52,7 +59,7 @@ class Hub {
 
 	public disconnect() {
 		this.connection?.stop();
-		this.state = this.connection?.state ?? HubConnectionState.Disconnected;
+		this.state = HubConnectionState.Disconnected;
 	}
 }
 export const hub = new Hub();
