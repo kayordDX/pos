@@ -46,6 +46,8 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
                     && oi.OrderItemStatusId != 6
                 )
             )
+            .AsSplitQuery()
+            .TagWith("pos:front-office-orders")
             .ProjectToDto()
             .ToListAsync(ct);
 

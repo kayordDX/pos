@@ -32,7 +32,12 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
             .Select(rd => rd.OrderItemStatusId)
             .ToList();
 
-        var result = await _dbContext.TableBooking.Where(x => x.SalesPeriod.OutletId == userOutlet.Id && x.CloseDate == null).ProjectToDto().ToListAsync(ct);
+        var result = await _dbContext
+            .TableBooking.Where(x => x.SalesPeriod.OutletId == userOutlet.Id && x.CloseDate == null)
+            .AsSplitQuery()
+            .TagWith("pos:back-office-orders")
+            .ProjectToDto()
+            .ToListAsync(ct);
 
         result.ForEach(dto =>
         {

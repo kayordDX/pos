@@ -49,7 +49,7 @@ public class Endpoint : Endpoint<Request, Response>
             return;
         }
 
-        var orderItemDTOs = await orderItems.ProjectToDto().ToListAsync(ct);
+        var orderItemDTOs = await orderItems.AsSplitQuery().TagWith("pos:order-groups").ProjectToDto().ToListAsync(ct);
         var orderGroupQuery = orderItemDTOs
             .GroupBy(x => new { x.OrderGroupId, x.TableBookingId })
             .Select(s => new OrderGroupDTO()
