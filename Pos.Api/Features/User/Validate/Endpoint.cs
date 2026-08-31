@@ -7,45 +7,52 @@ namespace Pos.Api.Features.User.Validate;
 public class Endpoint : Endpoint<Request, Response>
 {
     private readonly AppDbContext _dbContext;
+    private readonly CurrentUserService _cu;
 
-
-    public Endpoint(AppDbContext dbContext)
+    public Endpoint(AppDbContext dbContext, CurrentUserService cu)
     {
         _dbContext = dbContext;
+        _cu = cu;
     }
 
     public override void Configure()
     {
         Post("/user/validate");
-        AllowAnonymous();
     }
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var user = await _dbContext.User.FirstOrDefaultAsync(x => x.UserId == req.UserId);
+        var userId = _cu.UserId;
+        if (string.IsNullOrEmpty(userId))
+        {
+            await Send.UnauthorizedAsync(ct);
+            return;
+        }
+
+        var user = await _dbContext.User.FirstOrDefaultAsync(x => x.UserId == userId, ct);
         if (user == null)
         {
             await _dbContext.User.AddAsync(new Entities.User
             {
                 Email = req.Email,
-                UserId = req.UserId,
+                UserId = userId,
                 Image = req.Image ?? "",
                 Name = req.Name,
                 IsActive = true
-            });
-            await _dbContext.SaveChangesAsync();
+            }, ct);
+            await _dbContext.SaveChangesAsync(ct);
         }
         else
         {
             user.Email = req.Email;
             user.Image = req.Image ?? "";
             user.Name = req.Name;
-            await _dbContext.SaveChangesAsync();
+            await _dbContext.SaveChangesAsync(ct);
         }
 
         Response r = new()
         {
-            UserId = req.UserId ?? ""
+            UserId = userId
         };
         await Send.OkAsync(r);
     }
