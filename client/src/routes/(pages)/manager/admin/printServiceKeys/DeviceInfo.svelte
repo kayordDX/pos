@@ -85,7 +85,7 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%] overflow-auto md:min-w-xl">
+	<Dialog.Content class="max-h-[98%] overflow-auto md:min-w-3xl">
 		<Dialog.Header>
 			<Dialog.Title>Device info</Dialog.Title>
 			<Dialog.Description>
@@ -144,15 +144,6 @@
 								</Table.Root>
 							</div>
 						{/if}
-					</Card.Content>
-				</Card.Root>
-
-				<Card.Root>
-					<Card.Header>
-						<Card.Title>Raw report</Card.Title>
-					</Card.Header>
-					<Card.Content>
-						<pre class="text-muted-foreground bg-muted/50 max-h-48 overflow-auto rounded-md p-3 font-mono text-xs whitespace-pre-wrap">{rawJson}</pre>
 					</Card.Content>
 				</Card.Root>
 			{:else if timedOut}
