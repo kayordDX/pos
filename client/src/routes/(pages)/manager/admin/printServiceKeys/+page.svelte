@@ -92,10 +92,9 @@
 							<div class="flex flex-wrap items-start justify-between gap-3">
 								<div class="flex flex-col gap-1">
 									<div class="font-medium">{item.name}</div>
-									<div class="text-muted-foreground font-mono text-sm">{item.maskedKey}</div>
+									<div class="text-muted-foreground bg-muted/60 rounded-md px-2.5 py-1.5 font-mono text-sm">{item.maskedKey}</div>
 								</div>
 								<div class="flex items-center gap-2">
-									<Badge>{formatDate(item.lastSeenAt)}</Badge>
 									<DropdownMenu.Root>
 										<DropdownMenu.Trigger>
 											<Button size="icon" variant="secondary" class="h-8"><EllipsisVerticalIcon /></Button>
@@ -115,10 +114,9 @@
 									</DropdownMenu.Root>
 								</div>
 							</div>
-							<div class="text-muted-foreground grid gap-1 text-sm">
-								<div>Device ID: {item.deviceId}</div>
-								<div>Created: {formatDate(item.created)}</div>
-								<div>Last seen: {formatDate(item.lastSeenAt)}</div>
+							<div class="flex items-center gap-1 text-sm">
+								<Badge variant="outline">Created {formatDate(item.created)}</Badge>
+								<Badge variant="outline">Last seen {formatDate(item.lastSeenAt)}</Badge>
 							</div>
 						</div>
 						<RevokePrintKey id={item.id} name={item.name} open={revokeOpenId === item.id} onClose={() => (revokeOpenId = null)} {refetch} />
