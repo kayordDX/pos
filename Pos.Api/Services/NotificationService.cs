@@ -1,9 +1,9 @@
 using System.Text.Json;
 using FirebaseAdmin.Messaging;
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Features.Notification;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Services;
 
@@ -29,7 +29,12 @@ public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web
         // Do not send notification when not in prod. For now still sending
         if (!_web.IsProduction())
         {
-            var notificationSummary = new NotificationDTO { Title = title, Body = body, UserId = userId };
+            var notificationSummary = new NotificationDTO
+            {
+                Title = title,
+                Body = body,
+                UserId = userId,
+            };
             string? notificationPayload = JsonSerializer.Serialize(notificationSummary);
             await LogNotification(token, true, notificationPayload, userId, "Non prod did not notify");
             return true;
@@ -44,7 +49,7 @@ public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web
                 {
                     Title = title,
                     Body = body,
-                    ImageUrl = "https://pos.kayord.com/logo.svg"
+                    ImageUrl = "https://pos.kayord.com/logo.svg",
                 },
                 Webpush = new WebpushConfig
                 {
@@ -53,8 +58,8 @@ public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web
                         Title = title,
                         Body = body,
                         Icon = "https://pos.kayord.com/logo.svg",
-                        Vibrate = [100, 200, 100, 200, 400]
-                    }
+                        Vibrate = [100, 200, 100, 200, 400],
+                    },
                 },
                 Android = new AndroidConfig
                 {
@@ -64,17 +69,22 @@ public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web
                         Title = title,
                         Body = body,
                         Icon = "https://pos.kayord.com/logo.svg",
-                        VibrateTimingsMillis = [100, 200, 100, 200, 400]
-                    }
+                        VibrateTimingsMillis = [100, 200, 100, 200, 400],
+                    },
                 },
-                Fid = token
+                Fid = token,
             };
             var response = await FirebaseMessaging.DefaultInstance.SendAsync(message);
             // string? payload = JsonSerializer.Serialize(message);
             bool isSuccess = response.Length > 0;
             result = isSuccess;
 
-            var notificationSummary = new NotificationDTO { Title = title, Body = body, UserId = userId };
+            var notificationSummary = new NotificationDTO
+            {
+                Title = title,
+                Body = body,
+                UserId = userId,
+            };
             string? notificationPayload = JsonSerializer.Serialize(notificationSummary);
 
             await LogNotification(token, isSuccess, notificationPayload, userId, null);
@@ -97,9 +107,9 @@ public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web
                 {
                     Title = title,
                     Body = body,
-                    ImageUrl = "https://pos.kayord.com/logo.svg"
+                    ImageUrl = "https://pos.kayord.com/logo.svg",
                 },
-                Fid = token
+                Fid = token,
             };
             string? payload = JsonSerializer.Serialize(message);
             await LogNotification(token, false, payload, userId, e.Message);
@@ -113,9 +123,9 @@ public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web
                 {
                     Title = title,
                     Body = body,
-                    ImageUrl = "https://pos.kayord.com/logo.svg"
+                    ImageUrl = "https://pos.kayord.com/logo.svg",
                 },
-                Fid = token
+                Fid = token,
             };
             string? payload = JsonSerializer.Serialize(message);
             await LogNotification(token, false, payload, userId, ex.Message);
@@ -125,8 +135,8 @@ public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web
 
     public async Task CheckToken(string userId, string token)
     {
-        var notificationLogs = await _dbContext.NotificationLog
-            .Where(x => x.UserId == userId)
+        var notificationLogs = await _dbContext
+            .NotificationLog.Where(x => x.UserId == userId)
             .Where(x => x.Token == token)
             .OrderByDescending(x => x.DateInserted)
             .Take(5)
@@ -148,11 +158,7 @@ public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web
         var notificationUser = await _dbContext.NotificationUser.FindAsync(userId, token);
         if (notificationUser == null)
         {
-            await _dbContext.NotificationUser.AddAsync(new NotificationUser()
-            {
-                Token = token,
-                UserId = userId
-            });
+            await _dbContext.NotificationUser.AddAsync(new NotificationUser() { Token = token, UserId = userId });
             await _dbContext.SaveChangesAsync();
         }
     }
@@ -169,14 +175,16 @@ public class NotificationService(AppDbContext dbContext, IWebHostEnvironment web
 
     public async Task LogNotification(string token, bool isSuccess, string payload, string? userId, string? error)
     {
-        await _dbContext.NotificationLog.AddAsync(new NotificationLog()
-        {
-            UserId = userId ?? "",
-            Token = token,
-            IsSuccess = isSuccess,
-            Error = error,
-            Payload = payload
-        });
+        await _dbContext.NotificationLog.AddAsync(
+            new NotificationLog()
+            {
+                UserId = userId ?? "",
+                Token = token,
+                IsSuccess = isSuccess,
+                Error = error,
+                Payload = payload,
+            }
+        );
         await _dbContext.SaveChangesAsync();
     }
 }

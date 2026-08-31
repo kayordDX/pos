@@ -12,8 +12,7 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "OrderItemStatusLog");
+            migrationBuilder.DropTable(name: "OrderItemStatusLog");
         }
 
         /// <inheritdoc />
@@ -23,16 +22,18 @@ namespace Pos.Api.Data.Migrations
                 name: "OrderItemStatusLog",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table
+                        .Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     OrderItemId = table.Column<int>(type: "integer", nullable: false),
                     OrderItemStatusId = table.Column<int>(type: "integer", nullable: false),
-                    StatusDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    StatusDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderItemStatusLog", x => x.Id);
-                });
+                }
+            );
         }
     }
 }

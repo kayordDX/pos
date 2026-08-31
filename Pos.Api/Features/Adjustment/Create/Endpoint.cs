@@ -1,8 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Features.Bill;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.Adjustment.Create;
 
@@ -24,10 +23,7 @@ public class Endpoint : Endpoint<Request>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var tableBooking = await _dbContext.TableBooking
-            .Include(x => x.Adjustments)
-            .Where(x => x.Id == req.TableBookingId)
-            .FirstOrDefaultAsync();
+        var tableBooking = await _dbContext.TableBooking.Include(x => x.Adjustments).Where(x => x.Id == req.TableBookingId).FirstOrDefaultAsync();
 
         if (tableBooking == null)
         {
@@ -40,13 +36,15 @@ public class Endpoint : Endpoint<Request>
             tableBooking.Adjustments = new List<Entities.Adjustment>();
         }
 
-        tableBooking.Adjustments.Add(new Entities.Adjustment()
-        {
-            AdjustmentTypeId = req.AdjustmentTypeId,
-            Amount = req.Amount,
-            Note = req.Note,
-            UserId = _cu.UserId ?? ""
-        });
+        tableBooking.Adjustments.Add(
+            new Entities.Adjustment()
+            {
+                AdjustmentTypeId = req.AdjustmentTypeId,
+                Amount = req.Amount,
+                Note = req.Note,
+                UserId = _cu.UserId ?? "",
+            }
+        );
 
         // Update Total for when adjustment is made after table is closed
         tableBooking.Total = (await BillHelper.GetTotal(tableBooking.Id, _dbContext)).Total;

@@ -1,5 +1,6 @@
 using Pos.Api.Data;
 using Pos.Api.Entities;
+
 namespace Pos.Api.Features.Stock.Link.Add;
 
 public class Endpoint : Endpoint<Request>
@@ -21,44 +22,53 @@ public class Endpoint : Endpoint<Request>
     {
         if (req.LinkType == 0)
         {
-            await _dbContext.MenuItemStock.AddAsync(new MenuItemStock
-            {
-                MenuItemId = req.Id,
-                StockId = req.StockId,
-                Quantity = req.Quantity,
-            }, ct);
+            await _dbContext.MenuItemStock.AddAsync(
+                new MenuItemStock
+                {
+                    MenuItemId = req.Id,
+                    StockId = req.StockId,
+                    Quantity = req.Quantity,
+                },
+                ct
+            );
         }
         else if (req.LinkType == 1)
         {
-            await _dbContext.ExtraStock.AddAsync(new ExtraStock
-            {
-                ExtraId = req.Id,
-                StockId = req.StockId,
-                Quantity = req.Quantity,
-            }, ct);
+            await _dbContext.ExtraStock.AddAsync(
+                new ExtraStock
+                {
+                    ExtraId = req.Id,
+                    StockId = req.StockId,
+                    Quantity = req.Quantity,
+                },
+                ct
+            );
         }
         else if (req.LinkType == 2)
         {
-            await _dbContext.OptionStock.AddAsync(new OptionStock
-            {
-                OptionId = req.Id,
-                StockId = req.StockId,
-                Quantity = req.Quantity,
-            }, ct);
+            await _dbContext.OptionStock.AddAsync(
+                new OptionStock
+                {
+                    OptionId = req.Id,
+                    StockId = req.StockId,
+                    Quantity = req.Quantity,
+                },
+                ct
+            );
         }
         else if (req.LinkType == 3)
         {
-            await _dbContext.MenuItemBulkStock.AddAsync(new MenuItemBulkStock
-            {
-                MenuItemId = req.Id,
-                StockId = req.StockId,
-                Quantity = req.Quantity,
-            }, ct);
+            await _dbContext.MenuItemBulkStock.AddAsync(
+                new MenuItemBulkStock
+                {
+                    MenuItemId = req.Id,
+                    StockId = req.StockId,
+                    Quantity = req.Quantity,
+                },
+                ct
+            );
         }
         await _dbContext.SaveChangesAsync();
         await Send.NoContentAsync();
     }
 }
-
-
-

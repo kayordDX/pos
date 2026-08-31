@@ -1,9 +1,9 @@
+using Microsoft.AspNetCore.SignalR;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Events;
 using Pos.Api.Hubs;
 using Pos.Api.Services;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Pos.Api.Features.User.LinkAccount;
 
@@ -34,16 +34,12 @@ public class Endpoint : Endpoint<Request, Response>
         {
             AuditTypeId = 2,
             UserId = _userService.GetCurrentUserService().UserId,
-            Detail = ""
+            Detail = "",
         };
 
         if (result == null)
         {
-            Response failedResponse = new()
-            {
-                IsSuccess = false,
-                Message = result != null ? null : "Enter a valid code"
-            };
+            Response failedResponse = new() { IsSuccess = false, Message = result != null ? null : "Enter a valid code" };
             audit.Detail = failedResponse.Message;
             await _dbContext.Audit.AddAsync(audit);
             await _dbContext.SaveChangesAsync(ct);
@@ -55,11 +51,7 @@ public class Endpoint : Endpoint<Request, Response>
             await _redisClient.DeleteKeyAsync($"auth:{req.OTP}");
             if (_userService.GetCurrentUserService().UserId == null)
             {
-                Response failedResponse = new()
-                {
-                    IsSuccess = false,
-                    Message = result != null ? null : "No valid user found"
-                };
+                Response failedResponse = new() { IsSuccess = false, Message = result != null ? null : "No valid user found" };
                 audit.Detail = failedResponse.Message;
                 await _dbContext.Audit.AddAsync(audit);
                 await _dbContext.SaveChangesAsync(ct);
@@ -68,12 +60,17 @@ public class Endpoint : Endpoint<Request, Response>
             }
             var token = await _userService.GetCustomToken(_userService.GetCurrentUserService().UserId!);
 
-            await _hub.Clients.Group(req.OTP).DeviceAuth(new DeviceAuthEvent() { OTP = req.OTP, Token = token, ExpireDate = DateTime.Now.AddMinutes(5) });
-            Response r = new()
-            {
-                IsSuccess = true,
-                Message = null
-            };
+            await _hub
+                .Clients.Group(req.OTP)
+                .DeviceAuth(
+                    new DeviceAuthEvent()
+                    {
+                        OTP = req.OTP,
+                        Token = token,
+                        ExpireDate = DateTime.Now.AddMinutes(5),
+                    }
+                );
+            Response r = new() { IsSuccess = true, Message = null };
             audit.AuditTypeId = 1;
             await _dbContext.Audit.AddAsync(audit);
             await _dbContext.SaveChangesAsync(ct);

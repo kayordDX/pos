@@ -10,19 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateIndex(
-                name: "IX_Payment_PaymentReference",
-                table: "Payment",
-                column: "PaymentReference",
-                unique: true);
+            migrationBuilder.CreateIndex(name: "IX_Payment_PaymentReference", table: "Payment", column: "PaymentReference", unique: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropIndex(
-                name: "IX_Payment_PaymentReference",
-                table: "Payment");
+            migrationBuilder.DropIndex(name: "IX_Payment_PaymentReference", table: "Payment");
         }
     }
 }

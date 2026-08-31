@@ -1,5 +1,6 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
+
 namespace Pos.Api.Features.StockCategory.GetAll;
 
 public class Endpoint : Endpoint<Request, List<Entities.StockCategory>>
@@ -21,16 +22,21 @@ public class Endpoint : Endpoint<Request, List<Entities.StockCategory>>
         if (req.parentId == 0)
         {
             if (req.parentOnly)
-                await Send.OkAsync(await _dbContext.StockCategory.Where(x => x.IsDeleted == false && x.OutletId == req.OutletId && (x.ParentId == null || x.ParentId == 0)).ToListAsync());
+                await Send.OkAsync(
+                    await _dbContext
+                        .StockCategory.Where(x => x.IsDeleted == false && x.OutletId == req.OutletId && (x.ParentId == null || x.ParentId == 0))
+                        .ToListAsync()
+                );
             else
-                await Send.OkAsync(await _dbContext.StockCategory.Where(x => x.IsDeleted == false && x.OutletId == req.OutletId && x.ParentId != null).ToListAsync());
+                await Send.OkAsync(
+                    await _dbContext.StockCategory.Where(x => x.IsDeleted == false && x.OutletId == req.OutletId && x.ParentId != null).ToListAsync()
+                );
         }
         else
         {
-            await Send.OkAsync(await _dbContext.StockCategory.Where(x => x.IsDeleted == false && x.OutletId == req.OutletId && x.ParentId == req.parentId).ToListAsync());
+            await Send.OkAsync(
+                await _dbContext.StockCategory.Where(x => x.IsDeleted == false && x.OutletId == req.OutletId && x.ParentId == req.parentId).ToListAsync()
+            );
         }
     }
 }
-
-
-

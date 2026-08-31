@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Division.GetUsers;
 
@@ -13,16 +13,18 @@ public class Endpoint : Endpoint<Request, List<Response>>
     {
         _dbContext = dbContext;
         _cu = cu;
-
     }
 
     public override void Configure()
     {
         Get("/division/users/{divisionId}");
     }
+
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var results = await _dbContext.Database.SqlQuery<Response>($"""
+        var results = await _dbContext
+            .Database.SqlQuery<Response>(
+                $"""
                 SELECT
                     u.user_id,
                     u.name,
@@ -38,7 +40,9 @@ public class Endpoint : Endpoint<Request, List<Response>>
                     AND u.is_active = TRUE
                 GROUP BY
                     u.user_id 
-                """).ToListAsync(ct);
+                """
+            )
+            .ToListAsync(ct);
 
         if (req.ExcludeSelf == true)
         {

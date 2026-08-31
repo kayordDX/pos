@@ -18,17 +18,13 @@ public static class TelemetryExtensions
 
     public static void ConfigureTelemetry(this IServiceCollection services)
     {
-        services.AddOpenTelemetry()
+        services
+            .AddOpenTelemetry()
             .ConfigureResource(r => r.AddService("PosApi"))
-            .WithMetrics(metrics => metrics
-                .AddAspNetCoreInstrumentation()
-                .AddRuntimeInstrumentation()
-                .AddHttpClientInstrumentation()
-                .AddProcessInstrumentation())
-            .WithTracing(tracing => tracing
-                .AddHttpClientInstrumentation()
-                .AddAspNetCoreInstrumentation()
-                .AddEntityFrameworkCoreInstrumentation())
+            .WithMetrics(metrics =>
+                metrics.AddAspNetCoreInstrumentation().AddRuntimeInstrumentation().AddHttpClientInstrumentation().AddProcessInstrumentation()
+            )
+            .WithTracing(tracing => tracing.AddHttpClientInstrumentation().AddAspNetCoreInstrumentation().AddEntityFrameworkCoreInstrumentation())
             .UseOtlpExporter();
     }
 }

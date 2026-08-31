@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.User.Validate;
 
@@ -26,14 +26,17 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
         var user = await _dbContext.User.FirstOrDefaultAsync(x => x.UserId == userId, ct);
         if (user == null)
         {
-            await _dbContext.User.AddAsync(new Entities.User
-            {
-                Email = req.Email,
-                UserId = userId,
-                Image = req.Image ?? "",
-                Name = req.Name,
-                IsActive = true
-            }, ct);
+            await _dbContext.User.AddAsync(
+                new Entities.User
+                {
+                    Email = req.Email,
+                    UserId = userId,
+                    Image = req.Image ?? "",
+                    Name = req.Name,
+                    IsActive = true,
+                },
+                ct
+            );
             await _dbContext.SaveChangesAsync(ct);
         }
         else
@@ -44,10 +47,7 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
             await _dbContext.SaveChangesAsync(ct);
         }
 
-        Response r = new()
-        {
-            UserId = userId
-        };
+        Response r = new() { UserId = userId };
         await Send.OkAsync(r, ct);
     }
 }

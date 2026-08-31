@@ -80,14 +80,23 @@ public interface ICommandEmitter
 
     byte[] RequestInkStatus();
 
-
     /* Barcode Commands */
     byte[] PrintBarcode(BarcodeType type, string barcode, BarcodeCode code = BarcodeCode.CODE_B);
 
     /* 2D-Code Commands */
-    byte[] PrintQRCode(string data, TwoDimensionCodeType type = TwoDimensionCodeType.QRCODE_MODEL2, Size2DCode size = Size2DCode.NORMAL, CorrectionLevel2DCode correction = CorrectionLevel2DCode.PERCENT_7);
+    byte[] PrintQRCode(
+        string data,
+        TwoDimensionCodeType type = TwoDimensionCodeType.QRCODE_MODEL2,
+        Size2DCode size = Size2DCode.NORMAL,
+        CorrectionLevel2DCode correction = CorrectionLevel2DCode.PERCENT_7
+    );
 
-    byte[] Print2DCode(TwoDimensionCodeType type, string data, Size2DCode size = Size2DCode.NORMAL, CorrectionLevel2DCode correction = CorrectionLevel2DCode.PERCENT_7);
+    byte[] Print2DCode(
+        TwoDimensionCodeType type,
+        string data,
+        Size2DCode size = Size2DCode.NORMAL,
+        CorrectionLevel2DCode correction = CorrectionLevel2DCode.PERCENT_7
+    );
 
     byte[] SetBarcodeHeightInDots(int height);
 

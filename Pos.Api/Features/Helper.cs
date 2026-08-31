@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features;
 
@@ -25,10 +25,7 @@ public static class Helper
         // Delete Menu Sections
         // menu:sections:1:1
         // menu:items:1:1:search
-        var menus = await dbContext.Menu
-            .Where(x => x.OutletId == outletId)
-            .Select(x => x.Id)
-            .ToListAsync();
+        var menus = await dbContext.Menu.Where(x => x.OutletId == outletId).Select(x => x.Id).ToListAsync();
 
         foreach (var menu in menus)
         {

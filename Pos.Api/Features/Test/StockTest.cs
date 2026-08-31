@@ -1,11 +1,10 @@
-
 using System.Diagnostics;
+using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Asn1.Cms;
 using Pos.Api.Data;
 using Pos.Api.Features.Bill.EmailBill;
 using Pos.Api.Features.Stock;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-using Org.BouncyCastle.Asn1.Cms;
 using QuestPDF.Fluent;
 
 namespace Pos.Api.Features.Test;
@@ -38,10 +37,7 @@ public class StockTest : EndpointWithoutRequest<Result>
         await StockManager.StockUpdate(orderItemIds, _dbContext, "test", false, ct);
         stopwatch.Stop();
 
-        Result result = new()
-        {
-            Time = stopwatch.Elapsed,
-        };
+        Result result = new() { Time = stopwatch.Elapsed };
 
         await Send.OkAsync(result);
     }

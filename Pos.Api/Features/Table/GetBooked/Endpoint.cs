@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Table.GetBooked;
 
@@ -20,9 +20,8 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
         if (req.MyBooking)
         {
             //current bookings
-            results = await _dbContext.TableBooking
-                .Where(booking => booking.Table.Section.OutletId == req.OutletId && booking.UserId == _cu.UserId &&
-                                  booking.CloseDate == null)
+            results = await _dbContext
+                .TableBooking.Where(booking => booking.Table.Section.OutletId == req.OutletId && booking.UserId == _cu.UserId && booking.CloseDate == null)
                 .Where(x => x.Table.Section.OutletId == req.OutletId)
                 .OrderBy(x => x.Table.Position)
                 .ProjectToDto()
@@ -30,12 +29,8 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
         }
         else
         {
-            results = await _dbContext.TableBooking
-                .Where(booking =>
-                    booking.Table.Section.OutletId == req.OutletId &&
-                    booking.UserId != _cu.UserId &&
-                    booking.CloseDate == null
-                )
+            results = await _dbContext
+                .TableBooking.Where(booking => booking.Table.Section.OutletId == req.OutletId && booking.UserId != _cu.UserId && booking.CloseDate == null)
                 .Where(x => x.Table.Section.OutletId == req.OutletId)
                 .OrderBy(x => x.Table.Position)
                 .ProjectToDto()

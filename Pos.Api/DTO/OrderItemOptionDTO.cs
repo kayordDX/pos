@@ -6,6 +6,4 @@ public class OrderItemOptionDTO
     public int OrderItemId { get; set; }
     public int OptionId { get; set; }
     public OptionDTO Option { get; set; } = default!;
-
-
 }

@@ -18,10 +18,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.Business>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        Pos.Api.Entities.Business entity = new Pos.Api.Entities.Business()
-        {
-            Name = req.Name
-        };
+        Pos.Api.Entities.Business entity = new Pos.Api.Entities.Business() { Name = req.Name };
         await _dbContext.Business.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
 

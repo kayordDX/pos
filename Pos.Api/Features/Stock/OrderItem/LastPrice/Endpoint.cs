@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Stock.OrderItem.LastPrice;
 
@@ -20,13 +20,11 @@ public class Endpoint : Endpoint<Request, Response>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        decimal amount = _dbContext.StockItem
-            .Where(x => x.StockId == req.StockId)
-            .Sum(x => x.Actual);
+        decimal amount = _dbContext.StockItem.Where(x => x.StockId == req.StockId).Sum(x => x.Actual);
 
         decimal result = 0;
-        var entity = await _dbContext.StockOrderItem
-            .AsNoTracking()
+        var entity = await _dbContext
+            .StockOrderItem.AsNoTracking()
             .Where(x => x.StockOrderId < req.StockOrderId && x.StockId == req.StockId && x.StockOrderItemStatusId == 2)
             .OrderByDescending(x => x.Created)
             .FirstOrDefaultAsync(ct);

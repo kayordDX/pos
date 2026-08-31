@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Entities;
 using Pos.Api.Events;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableOrder.UpdateTableOrder;
 
@@ -22,14 +22,20 @@ public class Endpoint : Endpoint<Request, Response>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var updateableStatus = await _dbContext.OrderItemStatus.Where(x => x.IsBillable == true && x.IsComplete == false).Select(rd => rd.OrderItemStatusId).ToListAsync();
+        var updateableStatus = await _dbContext
+            .OrderItemStatus.Where(x => x.IsBillable == true && x.IsComplete == false)
+            .Select(rd => rd.OrderItemStatusId)
+            .ToListAsync();
         var ois = await _dbContext.OrderItemStatus.FirstOrDefaultAsync(x => x.OrderItemStatusId == req.OrderItemStatusId);
         Entities.Table table = new();
         bool notify = true;
         NotificationEvent notification = new();
         if (updateableStatus != null && ois != null)
         {
-            List<OrderItemDTO>? entities = await _dbContext.OrderItem.Where(x => updateableStatus.Contains(x.OrderItemStatusId) && x.TableBookingId == req.TableBookingId).ProjectToDto().ToListAsync();
+            List<OrderItemDTO>? entities = await _dbContext
+                .OrderItem.Where(x => updateableStatus.Contains(x.OrderItemStatusId) && x.TableBookingId == req.TableBookingId)
+                .ProjectToDto()
+                .ToListAsync();
             foreach (OrderItemDTO i in entities)
             {
                 OrderItem oi = await _dbContext.OrderItem.FindAsync(i.OrderItemId) ?? new();

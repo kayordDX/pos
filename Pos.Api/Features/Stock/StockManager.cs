@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Stock;
 
@@ -11,64 +11,81 @@ public static class StockManager
         List<int> stockCheck = [];
         foreach (int r in orderItemIds)
         {
-            var orderInfo = await _dbContext.OrderItem
-                .Where(x => x.OrderItemId == r)
+            var orderInfo = await _dbContext
+                .OrderItem.Where(x => x.OrderItemId == r)
                 .Select(x => new { x.MenuItemId, x.MenuItem.DivisionId })
                 .FirstOrDefaultAsync(ct);
 
-            if (orderInfo == null) continue;
+            if (orderInfo == null)
+                continue;
 
             List<StockPatch> stockToUpdate = [];
 
             // Menu Items
-            var menuItemStock = await _dbContext.MenuItemStock
-                .Where(x => x.MenuItemId == orderInfo.MenuItemId)
-                .Select(x => new StockPatch() { StockId = x.StockId, Quantity = x.Quantity, Type = StockItemAuditType.MenuItem })
+            var menuItemStock = await _dbContext
+                .MenuItemStock.Where(x => x.MenuItemId == orderInfo.MenuItemId)
+                .Select(x => new StockPatch()
+                {
+                    StockId = x.StockId,
+                    Quantity = x.Quantity,
+                    Type = StockItemAuditType.MenuItem,
+                })
                 .ToListAsync(ct);
 
             stockToUpdate.AddRange(menuItemStock);
 
             // Extras
-            var extras = await _dbContext.Database.SqlQuery<StockPatch>($"""
-                    select
-                        e.stock_id,
-                        e.quantity,
-                        2 type
-                    from order_item_extra o
-                    join extra_stock e
-                        on o.extra_id = e.extra_id
-                    where o.order_item_id = {r};
-                """).ToListAsync(ct);
+            var extras = await _dbContext
+                .Database.SqlQuery<StockPatch>(
+                    $"""
+                        select
+                            e.stock_id,
+                            e.quantity,
+                            2 type
+                        from order_item_extra o
+                        join extra_stock e
+                            on o.extra_id = e.extra_id
+                        where o.order_item_id = {r};
+                    """
+                )
+                .ToListAsync(ct);
 
             stockToUpdate.AddRange(extras);
 
             // Options
-            var options = await _dbContext.Database.SqlQuery<StockPatch>($"""
-                    select
-                        s.stock_id,
-                        s.quantity,
-                        3 type
-                    from
-                    order_item_option o
-                    join option_stock s
-                        on s.option_id = o.option_id
-                    where o.order_item_id = {r};
-                """).ToListAsync(ct);
+            var options = await _dbContext
+                .Database.SqlQuery<StockPatch>(
+                    $"""
+                        select
+                            s.stock_id,
+                            s.quantity,
+                            3 type
+                        from
+                        order_item_option o
+                        join option_stock s
+                            on s.option_id = o.option_id
+                        where o.order_item_id = {r};
+                    """
+                )
+                .ToListAsync(ct);
 
             stockToUpdate.AddRange(options);
 
             // Bulk Items
-            var menuItemBulkStock = await _dbContext.MenuItemBulkStock
-                .Where(x => x.MenuItemId == orderInfo.MenuItemId)
-                .Select(x => new StockPatch() { StockId = x.StockId, Quantity = x.Quantity, Type = StockItemAuditType.Bulk })
+            var menuItemBulkStock = await _dbContext
+                .MenuItemBulkStock.Where(x => x.MenuItemId == orderInfo.MenuItemId)
+                .Select(x => new StockPatch()
+                {
+                    StockId = x.StockId,
+                    Quantity = x.Quantity,
+                    Type = StockItemAuditType.Bulk,
+                })
                 .ToListAsync(ct);
             stockToUpdate.AddRange(menuItemBulkStock);
 
             foreach (var m in stockToUpdate)
             {
-                var stockItem = await _dbContext.StockItem
-                    .Where(x => x.StockId == m.StockId && x.DivisionId == orderInfo.DivisionId)
-                    .FirstOrDefaultAsync(ct);
+                var stockItem = await _dbContext.StockItem.Where(x => x.StockId == m.StockId && x.DivisionId == orderInfo.DivisionId).FirstOrDefaultAsync(ct);
 
                 if (stockItem == null)
                 {
@@ -77,7 +94,7 @@ public static class StockManager
                         DivisionId = orderInfo.DivisionId,
                         StockId = m.StockId,
                         Actual = 0,
-                        Threshold = 0
+                        Threshold = 0,
                     };
                     await _dbContext.AddAsync(stockItem, ct);
                     await _dbContext.SaveChangesAsync(ct);
@@ -98,16 +115,19 @@ public static class StockManager
                     {
                         stockCheck.Add(stockItem.StockId);
                     }
-                    await _dbContext.StockItemAudit.AddAsync(new StockItemAudit()
-                    {
-                        OrderItemId = r,
-                        FromActual = stockItem.Actual,
-                        ToActual = toActual,
-                        StockItemAuditTypeId = (int)m.Type,
-                        StockItemId = stockItem.Id,
-                        UserId = userId,
-                        Updated = DateTime.Now,
-                    }, ct);
+                    await _dbContext.StockItemAudit.AddAsync(
+                        new StockItemAudit()
+                        {
+                            OrderItemId = r,
+                            FromActual = stockItem.Actual,
+                            ToActual = toActual,
+                            StockItemAuditTypeId = (int)m.Type,
+                            StockItemId = stockItem.Id,
+                            UserId = userId,
+                            Updated = DateTime.Now,
+                        },
+                        ct
+                    );
 
                     // Update Menu Item to be unavailable if stock runs out (Only for menu item)
                     if (toActual == 0 && m.Type == StockItemAuditType.MenuItem)
@@ -129,58 +149,62 @@ public static class StockManager
 
     public static async Task StockAvailableCheck(int stockId, AppDbContext dbContext, CancellationToken ct)
     {
-        await dbContext.Database.ExecuteSqlAsync($"""
+        await dbContext.Database.ExecuteSqlAsync(
+            $"""
+                update menu_item m
+                set is_available = a.is_available
+                from (
+                    select
+                        mi.menu_item_id,
+                        min(((si.actual - mmm.quantity) >= 0)::int)::bool is_available
+                    from menu_item mi
+                    join menu_item_stock mis
+                    on mi.menu_item_id = mis.menu_item_id
+                    join menu_item_stock mmm
+                    on mmm.menu_item_id = mis.menu_item_id
+                    join stock_item si
+                    on si.stock_id = mmm.stock_id
+                    and si.division_id = mi.division_id
+                    where mis.stock_id = {stockId}
+                    group by mi.menu_item_id
+                ) a
+                WHERE m.menu_item_id = a.menu_item_id
+                AND m.is_available <> a.is_available
+            """,
+            ct
+        );
+    }
+
+    public static async Task StockAvailableAllCheck(AppDbContext dbContext, CancellationToken ct)
+    {
+        await dbContext.Database.ExecuteSqlAsync(
+            $"""
             update menu_item m
-            set is_available = a.is_available
+                set is_available = a.is_available
             from (
                 select
                     mi.menu_item_id,
                     min(((si.actual - mmm.quantity) >= 0)::int)::bool is_available
                 from menu_item mi
                 join menu_item_stock mis
-                on mi.menu_item_id = mis.menu_item_id
+                    on mi.menu_item_id = mis.menu_item_id
                 join menu_item_stock mmm
-                on mmm.menu_item_id = mis.menu_item_id
+                    on mmm.menu_item_id = mis.menu_item_id
                 join stock_item si
-                on si.stock_id = mmm.stock_id
-                and si.division_id = mi.division_id
-                where mis.stock_id = {stockId}
+                    on si.stock_id = mmm.stock_id
+                    and si.division_id = mi.division_id
                 group by mi.menu_item_id
             ) a
             WHERE m.menu_item_id = a.menu_item_id
             AND m.is_available <> a.is_available
-        """, ct);
-    }
-
-    public static async Task StockAvailableAllCheck(AppDbContext dbContext, CancellationToken ct)
-    {
-        await dbContext.Database.ExecuteSqlAsync($"""
-        update menu_item m
-            set is_available = a.is_available
-        from (
-            select
-                mi.menu_item_id,
-                min(((si.actual - mmm.quantity) >= 0)::int)::bool is_available
-            from menu_item mi
-            join menu_item_stock mis
-                on mi.menu_item_id = mis.menu_item_id
-            join menu_item_stock mmm
-                on mmm.menu_item_id = mis.menu_item_id
-            join stock_item si
-                on si.stock_id = mmm.stock_id
-                and si.division_id = mi.division_id
-            group by mi.menu_item_id
-        ) a
-        WHERE m.menu_item_id = a.menu_item_id
-        AND m.is_available <> a.is_available
-        """, ct);
+            """,
+            ct
+        );
     }
 
     public static async Task<bool> IsMenuItemAvailable(int menuItemId, AppDbContext dbContext, CancellationToken ct)
     {
-        var isAvailable = await dbContext.MenuItem
-            .Where(x => x.MenuItemId == menuItemId && x.IsAvailable == false)
-            .FirstOrDefaultAsync(ct);
+        var isAvailable = await dbContext.MenuItem.Where(x => x.MenuItemId == menuItemId && x.IsAvailable == false).FirstOrDefaultAsync(ct);
         return isAvailable == null;
     }
 
@@ -196,23 +220,26 @@ public static class StockManager
             return false;
         }
 
-        var stockCheck = await dbContext.Database.SqlQuery<StockCheck>($"""
-            select
-                coalesce(min(((si.actual - es.quantity) >= 0)::int)::bool, true) is_available
-            from order_item oi
-            left join order_item_extra oie
-                on oi.order_item_id = oie.order_item_id
-            left join extra e
-                on e.extra_id = oie.extra_id
-            left join extra_stock es
-                on es.extra_id = e.extra_id
-            left join stock_item si
-                on si.stock_id = es.stock_id
-                and division_id = {divisionId}
-            where oi.order_item_id = {orderItemId}
-            group by oi.order_item_id
-        """)
-        .FirstOrDefaultAsync(ct);
+        var stockCheck = await dbContext
+            .Database.SqlQuery<StockCheck>(
+                $"""
+                    select
+                        coalesce(min(((si.actual - es.quantity) >= 0)::int)::bool, true) is_available
+                    from order_item oi
+                    left join order_item_extra oie
+                        on oi.order_item_id = oie.order_item_id
+                    left join extra e
+                        on e.extra_id = oie.extra_id
+                    left join extra_stock es
+                        on es.extra_id = e.extra_id
+                    left join stock_item si
+                        on si.stock_id = es.stock_id
+                        and division_id = {divisionId}
+                    where oi.order_item_id = {orderItemId}
+                    group by oi.order_item_id
+                """
+            )
+            .FirstOrDefaultAsync(ct);
 
         return stockCheck?.IsAvailable ?? false;
     }
@@ -224,21 +251,25 @@ public static class StockManager
             return false;
         }
 
-        var stockCheck = await dbContext.Database.SqlQuery<StockCheck>($"""
-            select
-                coalesce(min(((si.actual - os.quantity) >= 0)::int)::bool, true) is_available
-            from order_item oi
-            left join order_item_option oio
-                on oi.order_item_id = oio.order_item_id
-            left join option o
-                on o.option_id = oio.option_id
-            left join option_stock os
-                on os.option_id = o.option_id
-            left join stock_item si
-                on si.stock_id = os.stock_id
-                and division_id = {divisionId}
-            where oi.order_item_id = {orderItemId}
-        """).FirstOrDefaultAsync(ct);
+        var stockCheck = await dbContext
+            .Database.SqlQuery<StockCheck>(
+                $"""
+                    select
+                        coalesce(min(((si.actual - os.quantity) >= 0)::int)::bool, true) is_available
+                    from order_item oi
+                    left join order_item_option oio
+                        on oi.order_item_id = oio.order_item_id
+                    left join option o
+                        on o.option_id = oio.option_id
+                    left join option_stock os
+                        on os.option_id = o.option_id
+                    left join stock_item si
+                        on si.stock_id = os.stock_id
+                        and division_id = {divisionId}
+                    where oi.order_item_id = {orderItemId}
+                """
+            )
+            .FirstOrDefaultAsync(ct);
 
         return stockCheck?.IsAvailable ?? false;
     }

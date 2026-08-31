@@ -1,5 +1,3 @@
-
-
 namespace Pos.Api.Features.TableBooking.Close;
 
 public class Request

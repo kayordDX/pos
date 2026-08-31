@@ -1,8 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Common.Extensions;
 using Pos.Api.Common.Models;
 using Pos.Api.Data;
 using Pos.Api.DTO;
-using Microsoft.EntityFrameworkCore;
+
 namespace Pos.Api.Features.Stock.Order.GetAll;
 
 public class Endpoint : Endpoint<Request, PaginatedList<StockOrderResponseDTO>>
@@ -22,8 +23,8 @@ public class Endpoint : Endpoint<Request, PaginatedList<StockOrderResponseDTO>>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var results = await _dbContext.StockOrder
-            .Where(x => x.OutletId == req.OutletId)
+        var results = await _dbContext
+            .StockOrder.Where(x => x.OutletId == req.OutletId)
             .Select(x => new StockOrderResponseDTO()
             {
                 Id = x.Id,
@@ -37,7 +38,7 @@ public class Endpoint : Endpoint<Request, PaginatedList<StockOrderResponseDTO>>
                 OrderNumber = x.OrderNumber,
                 OutletId = x.OutletId,
                 Total = x.StockOrderItems!.Sum(x => x.Price),
-                Created = x.Created
+                Created = x.Created,
             })
             .GetPagedAsync(req, ct);
         await Send.OkAsync(results);

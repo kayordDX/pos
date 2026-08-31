@@ -1,8 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.MenuItem.Delete;
 
@@ -25,11 +24,10 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuSection>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-
-        Entities.MenuItem? menuItem = await _dbContext.MenuItem
-        .Include(x => x.MenuSection)
-        .ThenInclude(x => x.Menu)
-        .FirstOrDefaultAsync(x => x.MenuItemId == req.Id);
+        Entities.MenuItem? menuItem = await _dbContext
+            .MenuItem.Include(x => x.MenuSection)
+                .ThenInclude(x => x.Menu)
+            .FirstOrDefaultAsync(x => x.MenuItemId == req.Id);
 
         if (menuItem != null)
         {
@@ -37,11 +35,9 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuSection>
             await _dbContext.SaveChangesAsync();
             await Helper.ClearCacheOutlet(_dbContext, _redisClient, menuItem.MenuSection.Menu!.OutletId);
         }
-
         else
         {
             throw new Exception("Sorry, the princess is in another castle.");
         }
     }
-
 }

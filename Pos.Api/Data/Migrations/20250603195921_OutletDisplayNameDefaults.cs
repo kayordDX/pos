@@ -10,15 +10,14 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("""
-                update outlet set display_name = name;
-            """);
+            migrationBuilder.Sql(
+                """
+                    update outlet set display_name = name;
+                """
+            );
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
-        }
+        protected override void Down(MigrationBuilder migrationBuilder) { }
     }
 }

@@ -1,7 +1,7 @@
 using FastEndpoints.Swagger;
+using Microsoft.AspNetCore.Authorization;
 using Pos.Api.Common.Extensions.Swagger;
 using Pos.Api.Features.Auth;
-using Microsoft.AspNetCore.Authorization;
 using Scalar.AspNetCore;
 
 namespace Pos.Api.Common.Extensions;

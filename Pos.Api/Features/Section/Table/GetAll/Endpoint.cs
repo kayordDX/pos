@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Section.Table.GetAll;
 
@@ -19,10 +19,7 @@ public class Endpoint : Endpoint<Request, List<Pos.Api.Entities.Table>>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var tables = await _dbContext.Table
-            .Where(s => s.SectionId == req.SectionId && s.IsDeleted != true)
-            .OrderBy(x => x.Name)
-            .ToListAsync();
+        var tables = await _dbContext.Table.Where(s => s.SectionId == req.SectionId && s.IsDeleted != true).OrderBy(x => x.Name).ToListAsync();
 
         await Send.OkAsync(tables);
     }

@@ -10,20 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsBulkRecipe",
-                table: "Stock",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<bool>(name: "IsBulkRecipe", table: "Stock", type: "boolean", nullable: false, defaultValue: false);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "IsBulkRecipe",
-                table: "Stock");
+            migrationBuilder.DropColumn(name: "IsBulkRecipe", table: "Stock");
         }
     }
 }

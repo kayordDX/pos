@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.User.RemoveUserOutlet;
 
@@ -29,9 +29,7 @@ public class Endpoint : Endpoint<Request>
             throw new Exception("Could not find outlet for user");
         }
 
-        var roleEntity = await _dbContext.UserOutlet
-            .Where(x => x.UserId == req.UserId && x.OutletId == userOutlet.OutletId)
-            .FirstOrDefaultAsync(c);
+        var roleEntity = await _dbContext.UserOutlet.Where(x => x.UserId == req.UserId && x.OutletId == userOutlet.OutletId).FirstOrDefaultAsync(c);
 
         if (roleEntity == null)
         {

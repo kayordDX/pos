@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Printer.Scan;
 
@@ -29,8 +29,8 @@ public class Endpoint : Endpoint<Request, bool>
 
         // A scan is executed by a print device, so there must be an active key
         // for the outlet + device pair being asked to scan.
-        bool deviceExists = await _dbContext.PrintServiceKey
-            .Where(x => x.OutletId == outletId && x.DeviceId == req.DeviceId && x.RevokedAt == null)
+        bool deviceExists = await _dbContext
+            .PrintServiceKey.Where(x => x.OutletId == outletId && x.DeviceId == req.DeviceId && x.RevokedAt == null)
             .AnyAsync(ct);
         if (!deviceExists)
         {
@@ -46,7 +46,7 @@ public class Endpoint : Endpoint<Request, bool>
             IPAddress = req.IPAddress.Trim(),
             Port = req.Port,
             PrintInstructions = [],
-            Action = "nmap"
+            Action = "nmap",
         };
 
         await _printService.Print(outletId, req.DeviceId, printMessage);

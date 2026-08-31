@@ -12,41 +12,30 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<decimal>(
-                name: "OrderAmount",
-                table: "StockOrderItem",
-                type: "numeric",
-                nullable: false,
-                defaultValue: 0m);
+            migrationBuilder.AddColumn<decimal>(name: "OrderAmount", table: "StockOrderItem", type: "numeric", nullable: false, defaultValue: 0m);
 
-            migrationBuilder.AddColumn<int>(
-                name: "StockOrderItemStatusId",
-                table: "StockOrderItem",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>(name: "StockOrderItemStatusId", table: "StockOrderItem", type: "integer", nullable: false, defaultValue: 0);
 
             migrationBuilder.CreateTable(
                 name: "StockOrderItemStatus",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table
+                        .Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true)
+                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_StockOrderItemStatus", x => x.Id);
-                });
+                }
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_StockOrderItem_StockOrderItemStatusId",
-                table: "StockOrderItem",
-                column: "StockOrderItemStatusId");
+            migrationBuilder.CreateIndex(name: "IX_StockOrderItem_StockOrderItemStatusId", table: "StockOrderItem", column: "StockOrderItemStatusId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_StockOrderItem_StockOrderItemStatus_StockOrderItemStatusId",
@@ -54,42 +43,38 @@ namespace Pos.Api.Data.Migrations
                 column: "StockOrderItemStatusId",
                 principalTable: "StockOrderItemStatus",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
 
-            migrationBuilder.Sql("""
-                INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (1, 'Pending', NOW());
-                INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (2, 'Received', NOW());
-                INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (3, 'Partial', NOW());
-                INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (4, 'Returned', NOW());
-                INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (5, 'Cancelled', NOW());
-            """);
+            migrationBuilder.Sql(
+                """
+                    INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (1, 'Pending', NOW());
+                    INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (2, 'Received', NOW());
+                    INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (3, 'Partial', NOW());
+                    INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (4, 'Returned', NOW());
+                    INSERT INTO "StockOrderItemStatus" ("Id", "Name", "Created") VALUES (5, 'Cancelled', NOW());
+                """
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_StockOrderItem_StockOrderItemStatus_StockOrderItemStatusId",
-                table: "StockOrderItem");
+            migrationBuilder.DropForeignKey(name: "FK_StockOrderItem_StockOrderItemStatus_StockOrderItemStatusId", table: "StockOrderItem");
 
-            migrationBuilder.DropTable(
-                name: "StockOrderItemStatus");
+            migrationBuilder.DropTable(name: "StockOrderItemStatus");
 
-            migrationBuilder.DropIndex(
-                name: "IX_StockOrderItem_StockOrderItemStatusId",
-                table: "StockOrderItem");
+            migrationBuilder.DropIndex(name: "IX_StockOrderItem_StockOrderItemStatusId", table: "StockOrderItem");
 
-            migrationBuilder.DropColumn(
-                name: "OrderAmount",
-                table: "StockOrderItem");
+            migrationBuilder.DropColumn(name: "OrderAmount", table: "StockOrderItem");
 
-            migrationBuilder.DropColumn(
-                name: "StockOrderItemStatusId",
-                table: "StockOrderItem");
+            migrationBuilder.DropColumn(name: "StockOrderItemStatusId", table: "StockOrderItem");
 
-            migrationBuilder.Sql("""
-                DELETE FROM "StockOrderItemStatus";
-            """);
+            migrationBuilder.Sql(
+                """
+                    DELETE FROM "StockOrderItemStatus";
+                """
+            );
         }
     }
 }

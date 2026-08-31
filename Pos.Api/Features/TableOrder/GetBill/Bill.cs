@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.TableOrder.GetBill;
 
@@ -7,14 +7,10 @@ public static class Bill
 {
     public static async Task<Response> Get(Request req, AppDbContext _dbContext)
     {
-
-        Response response = new()
-        {
-            Total = 0
-        };
+        Response response = new() { Total = 0 };
         decimal TotalPayments = 0m;
-        var tableBooking = await _dbContext.TableBooking
-            .AsNoTracking()
+        var tableBooking = await _dbContext
+            .TableBooking.AsNoTracking()
             .Include(x => x.Adjustments!)
                 .ThenInclude(x => x.AdjustmentType)
             .Include(x => x.Table)
@@ -40,39 +36,40 @@ public static class Bill
 
         response.BillDate = tableBooking.CloseDate ?? tableBooking.BookingDate;
 
-        response.OrderItems = await _dbContext.OrderItem
-            .AsNoTracking()
+        response.OrderItems = await _dbContext
+            .OrderItem.AsNoTracking()
             .Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == req.TableBookingId)
             .ProjectToDto()
             .ToListAsync();
 
-        response.PaymentsReceived = await _dbContext.Payment
-            .AsNoTracking()
+        response.PaymentsReceived = await _dbContext
+            .Payment.AsNoTracking()
             .Where(x => x.TableBookingId == req.TableBookingId)
             .Include(x => x.PaymentType)
             .ToListAsync();
         decimal menuItemPrice = response.OrderItems.Sum(item => item.MenuItem.Price);
         response.Total += menuItemPrice;
 
-        decimal optionPrice = response.OrderItems.Where(item => item.OrderItemOptions != null)
+        decimal optionPrice = response
+            .OrderItems.Where(item => item.OrderItemOptions != null)
             .Sum(item => item.OrderItemOptions!.Sum(option => option.Option.Price));
         response.Total += optionPrice;
 
-        decimal extrasPrice = response.OrderItems.Where(item => item.OrderItemExtras != null)
+        decimal extrasPrice = response
+            .OrderItems.Where(item => item.OrderItemExtras != null)
             .Sum(item => item.OrderItemExtras!.Sum(extra => extra.Extra.Price));
         response.Total += extrasPrice;
 
         response.Total += response.Adjustments!.Sum(x => x.Amount);
 
-        TotalPayments += response.PaymentsReceived.Where(item => item.TableBookingId! == req.TableBookingId)
-            .Sum(item => item.Amount);
+        TotalPayments += response.PaymentsReceived.Where(item => item.TableBookingId! == req.TableBookingId).Sum(item => item.Amount);
 
         response.Total = response.Total < 0 ? 0m : response.Total;
         response.Balance = response.Total - TotalPayments;
         response.TipAmount = (response.Total - TotalPayments) * -1;
 
-        var vatRateEntity = await _dbContext.VATRate
-            .AsNoTracking()
+        var vatRateEntity = await _dbContext
+            .VATRate.AsNoTracking()
             .Where(x => tableBooking.BookingDate >= x.StartDate && tableBooking.BookingDate <= x.EndDate)
             .FirstOrDefaultAsync();
         if (vatRateEntity == null)
@@ -118,7 +115,7 @@ public static class Bill
                     Quantity = 1,
                     Total = totalPerItem,
                     OptionsTotal = optionsPerItem,
-                    ExtrasTotal = extrasPerItem
+                    ExtrasTotal = extrasPerItem,
                 };
 
                 response.SummaryOrderItems.Add(newItem);
@@ -130,12 +127,14 @@ public static class Bill
             }
             else
             {
-                response.BillCategories.Add(new BillCategoryDTO
-                {
-                    BilLCategoryId = x.MenuItem.BillCategoryId,
-                    Name = x.MenuItem.BillCategory?.Name ?? "Other",
-                    Total = totalPerItem
-                });
+                response.BillCategories.Add(
+                    new BillCategoryDTO
+                    {
+                        BilLCategoryId = x.MenuItem.BillCategoryId,
+                        Name = x.MenuItem.BillCategory?.Name ?? "Other",
+                        Total = totalPerItem,
+                    }
+                );
             }
         }
 
@@ -147,8 +146,8 @@ public static class Bill
         decimal total = 0;
         decimal totalPayments = 0;
 
-        var tableBooking = await _dbContext.TableBooking
-            .AsNoTracking()
+        var tableBooking = await _dbContext
+            .TableBooking.AsNoTracking()
             .Include(x => x.Adjustments!)
                 .ThenInclude(x => x.AdjustmentType)
             .FirstOrDefaultAsync(x => x.Id == tableBookingId);
@@ -159,41 +158,35 @@ public static class Bill
             throw new Exception("Table not found");
         }
 
-        var orderItems = await _dbContext.OrderItem
-            .AsNoTracking()
+        var orderItems = await _dbContext
+            .OrderItem.AsNoTracking()
             .Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tableBookingId)
             .ProjectToDto()
             .ToListAsync();
 
-        var payments = await _dbContext.Payment
-            .AsNoTracking()
-            .Where(x => x.TableBookingId == tableBookingId)
-            .Include(x => x.PaymentType)
-            .ToListAsync();
+        var payments = await _dbContext.Payment.AsNoTracking().Where(x => x.TableBookingId == tableBookingId).Include(x => x.PaymentType).ToListAsync();
 
         total += orderItems.Sum(item => item.MenuItem.Price);
 
-        total += orderItems.Where(item => item.OrderItemOptions != null)
-            .Sum(item => item.OrderItemOptions!.Sum(option => option.Option.Price));
+        total += orderItems.Where(item => item.OrderItemOptions != null).Sum(item => item.OrderItemOptions!.Sum(option => option.Option.Price));
 
-        total += orderItems.Where(item => item.OrderItemExtras != null)
-            .Sum(item => item.OrderItemExtras!.Sum(extra => extra.Extra.Price));
+        total += orderItems.Where(item => item.OrderItemExtras != null).Sum(item => item.OrderItemExtras!.Sum(extra => extra.Extra.Price));
 
         total += tableBooking.Adjustments?.Sum(x => x.Amount) ?? 0;
 
-        totalPayments += payments.Where(item => item.TableBookingId! == tableBookingId)
-            .Sum(item => item.Amount);
+        totalPayments += payments.Where(item => item.TableBookingId! == tableBookingId).Sum(item => item.Amount);
 
         total = total < 0 ? 0 : total;
         TableTotal tableTotal = new()
         {
             Total = total,
             TotalPayments = totalPayments,
-            TipTotal = totalPayments - total
+            TipTotal = totalPayments - total,
         };
 
         return tableTotal;
     }
+
     static bool AreEntitiesEqual(BillOrderItemDTO a, BillOrderItemDTO b)
     {
         if (a.MenuItemId != b.MenuItemId)

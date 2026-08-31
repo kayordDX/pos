@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Pay;
 
@@ -9,10 +9,7 @@ public static class Halo
     public static async Task<Entities.HaloConfig> GetHaloConfig(int outletId, AppDbContext dbContext, EncryptionService encryption)
     {
         //TODO: Cache this somehow
-        var result = await dbContext.HaloConfig
-            .Where(x => x.OutletId == outletId && x.IsEnabled)
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
+        var result = await dbContext.HaloConfig.Where(x => x.OutletId == outletId && x.IsEnabled).AsNoTracking().FirstOrDefaultAsync();
         if (result == null)
         {
             throw new Exception("Could not find outlet config");
@@ -23,10 +20,7 @@ public static class Halo
 
     public static async Task<Entities.HaloConfig> GetHaloSpecificConfig(int configId, AppDbContext dbContext, EncryptionService encryption)
     {
-        var result = await dbContext.HaloConfig
-            .Where(x => x.Id == configId)
-            .AsNoTracking()
-            .FirstOrDefaultAsync();
+        var result = await dbContext.HaloConfig.Where(x => x.Id == configId).AsNoTracking().FirstOrDefaultAsync();
         if (result == null)
         {
             throw new Exception("Could not find config");

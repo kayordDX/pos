@@ -27,5 +27,4 @@ public class TableTotal
     public decimal Total { get; set; }
     public decimal TotalPayments { get; set; }
     public decimal TipTotal { get; set; }
-
 }

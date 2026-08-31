@@ -1,6 +1,7 @@
 using Pos.Api.DTO;
 
 namespace Pos.Api.Features.SalesPeriod.CashUp;
+
 public class BillOrderItemDTO
 {
     public int OrderItemId { get; set; }

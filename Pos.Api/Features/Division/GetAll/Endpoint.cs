@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Division.GetAll;
 
@@ -19,9 +19,7 @@ public class Endpoint : Endpoint<Request, List<Entities.Division>>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var results = await _dbContext.Division
-            .Where(x => x.OutletId == req.OutletId && x.IsDeleted == false)
-            .ToListAsync();
+        var results = await _dbContext.Division.Where(x => x.OutletId == req.OutletId && x.IsDeleted == false).ToListAsync();
         await Send.OkAsync(results);
     }
 }

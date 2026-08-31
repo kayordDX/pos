@@ -1,4 +1,5 @@
 namespace Pos.Api.Features.TableBooking.PaymentEdit;
+
 public class Request
 {
     public int PaymentId { get; set; }

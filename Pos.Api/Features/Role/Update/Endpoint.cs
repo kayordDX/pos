@@ -29,7 +29,6 @@ public class Endpoint : Endpoint<Request, Entities.Role>
         entity.OutletId = req.OutletId;
         entity.RoleTypeId = req.RoleTypeId;
 
-
         await _dbContext.SaveChangesAsync();
         await Send.OkAsync(entity);
     }

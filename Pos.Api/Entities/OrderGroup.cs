@@ -1,4 +1,3 @@
-
 namespace Pos.Api.Entities;
 
 public class OrderGroup

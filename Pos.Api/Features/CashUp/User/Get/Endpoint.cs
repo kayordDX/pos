@@ -1,8 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Features.Bill;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.CashUp.User.Get;
 
@@ -30,17 +29,14 @@ public class Endpoint : Endpoint<Request, Response>
             return;
         }
 
-        List<string> userIds = await _dbContext.TableBooking
-            .Include(x => x.SalesPeriod)
+        List<string> userIds = await _dbContext
+            .TableBooking.Include(x => x.SalesPeriod)
             .Where(x => x.CashUpUserId == null && x.SalesPeriod.OutletId == req.OutletId)
             .Select(x => x.UserId)
             .Distinct()
             .ToListAsync();
 
-        Response responses = new()
-        {
-            Items = new()
-        };
+        Response responses = new() { Items = new() };
 
         Entities.SalesPeriod? salesPeriod = await _dbContext.SalesPeriod.FirstOrDefaultAsync(x => x.OutletId == req.OutletId && x.EndDate == null);
         if (salesPeriod != null)
@@ -48,8 +44,8 @@ public class Endpoint : Endpoint<Request, Response>
             var todoItems = await GetUserCashUpItems(userIds, salesPeriod.Id, _dbContext, req.OutletId);
             responses.Items.AddRange(todoItems);
 
-            var cashedUpUserIds = await _dbContext.CashUpUser
-                .Where(x => x.OutletId == req.OutletId)
+            var cashedUpUserIds = await _dbContext
+                .CashUpUser.Where(x => x.OutletId == req.OutletId)
                 .Where(x => x.SalesPeriodId == salesPeriod.Id)
                 .Select(x => x.UserId)
                 .ToListAsync();
@@ -61,12 +57,16 @@ public class Endpoint : Endpoint<Request, Response>
         responses.TotalTips = responses.Items.Sum(x => x.Tips);
         responses.TotalSales = responses.Items.Sum(x => x.Sales);
 
-
         await Send.OkAsync(responses);
-
     }
 
-    public static async Task<List<Items>> GetUserCashUpItems(List<string> userIds, int salesPeriodId, AppDbContext _dbContext, int outletId, bool isCashedUp = false)
+    public static async Task<List<Items>> GetUserCashUpItems(
+        List<string> userIds,
+        int salesPeriodId,
+        AppDbContext _dbContext,
+        int outletId,
+        bool isCashedUp = false
+    )
     {
         List<Items> items = new();
         foreach (var userId in userIds)
@@ -77,9 +77,7 @@ public class Endpoint : Endpoint<Request, Response>
             int openTableCount = 0;
             int userCashUpId = 0;
 
-            var booking = _dbContext.TableBooking
-                .Where(x => x.SalesPeriodId == salesPeriodId)
-                .Where(x => x.UserId == userId);
+            var booking = _dbContext.TableBooking.Where(x => x.SalesPeriodId == salesPeriodId).Where(x => x.UserId == userId);
 
             if (!isCashedUp)
             {
@@ -92,8 +90,8 @@ public class Endpoint : Endpoint<Request, Response>
 
             if (isCashedUp)
             {
-                var cashUp = await _dbContext.CashUpUser
-                    .Where(x => x.OutletId == outletId)
+                var cashUp = await _dbContext
+                    .CashUpUser.Where(x => x.OutletId == outletId)
                     .Where(x => x.UserId == userId)
                     .Where(x => x.SalesPeriodId == salesPeriodId)
                     .FirstOrDefaultAsync();
@@ -119,12 +117,11 @@ public class Endpoint : Endpoint<Request, Response>
                     User = u,
                     UserId = u.UserId,
                     OpenTableCount = openTableCount,
-                    CashUpUserId = userCashUpId
+                    CashUpUserId = userCashUpId,
                 };
                 items.Add(r);
             }
         }
         return items;
     }
-
 }

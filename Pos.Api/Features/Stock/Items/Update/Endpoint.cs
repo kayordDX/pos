@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Stock.Items.Update;
 
@@ -24,9 +24,7 @@ public class Endpoint : Endpoint<Request>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var entity = await _dbContext.StockItem
-            .Where(x => x.DivisionId == req.DivisionId && x.StockId == req.StockId)
-            .FirstOrDefaultAsync(ct);
+        var entity = await _dbContext.StockItem.Where(x => x.DivisionId == req.DivisionId && x.StockId == req.StockId).FirstOrDefaultAsync(ct);
 
         if (entity == null)
         {
@@ -35,7 +33,7 @@ public class Endpoint : Endpoint<Request>
                 DivisionId = req.DivisionId,
                 StockId = req.StockId,
                 Actual = req.Actual,
-                Threshold = req.Threshold
+                Threshold = req.Threshold,
             };
             await _dbContext.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
@@ -45,15 +43,17 @@ public class Endpoint : Endpoint<Request>
         if (entity.Actual != req.Actual)
         {
             checkStock = true;
-            await _dbContext.StockItemAudit.AddAsync(new StockItemAudit()
-            {
-                FromActual = entity.Actual,
-                ToActual = req.Actual,
-                StockItemAuditTypeId = 6,
-                StockItemId = entity.Id,
-                UserId = _currentUserService.UserId ?? "",
-                Updated = DateTime.Now,
-            });
+            await _dbContext.StockItemAudit.AddAsync(
+                new StockItemAudit()
+                {
+                    FromActual = entity.Actual,
+                    ToActual = req.Actual,
+                    StockItemAuditTypeId = 6,
+                    StockItemId = entity.Id,
+                    UserId = _currentUserService.UserId ?? "",
+                    Updated = DateTime.Now,
+                }
+            );
         }
 
         entity.Actual = req.Actual;

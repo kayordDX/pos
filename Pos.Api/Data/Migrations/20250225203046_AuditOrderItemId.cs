@@ -10,28 +10,26 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "OrderItemId",
-                table: "StockItemAudit",
-                type: "integer",
-                nullable: true);
+            migrationBuilder.AddColumn<int>(name: "OrderItemId", table: "StockItemAudit", type: "integer", nullable: true);
 
-            migrationBuilder.Sql("""
-                INSERT INTO "DivisionType" ("Id", "DivisionName") VALUES (1, 'Default');
-                INSERT INTO "DivisionType" ("Id", "DivisionName") VALUES (2, 'Goods Receiving');
-            """);
+            migrationBuilder.Sql(
+                """
+                    INSERT INTO "DivisionType" ("Id", "DivisionName") VALUES (1, 'Default');
+                    INSERT INTO "DivisionType" ("Id", "DivisionName") VALUES (2, 'Goods Receiving');
+                """
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "OrderItemId",
-                table: "StockItemAudit");
+            migrationBuilder.DropColumn(name: "OrderItemId", table: "StockItemAudit");
 
-            migrationBuilder.Sql("""
-                DELETE FROM "DivisionType";
-            """);
+            migrationBuilder.Sql(
+                """
+                    DELETE FROM "DivisionType";
+                """
+            );
         }
     }
 }

@@ -10,19 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "notify",
-                table: "order_item_status",
-                newName: "is_notify");
+            migrationBuilder.RenameColumn(name: "notify", table: "order_item_status", newName: "is_notify");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "is_notify",
-                table: "order_item_status",
-                newName: "notify");
+            migrationBuilder.RenameColumn(name: "is_notify", table: "order_item_status", newName: "notify");
         }
     }
 }

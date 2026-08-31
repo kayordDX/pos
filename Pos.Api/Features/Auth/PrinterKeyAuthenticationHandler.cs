@@ -1,13 +1,13 @@
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text.Encodings.Web;
-using Pos.Api.Common.Printer;
-using Pos.Api.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
+using Pos.Api.Common.Printer;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Auth;
 
@@ -24,7 +24,8 @@ public class PrinterKeyAuthenticationHandler : AuthenticationHandler<Authenticat
         ILoggerFactory logger,
         UrlEncoder encoder,
         AppDbContext dbContext,
-        IMemoryCache memoryCache)
+        IMemoryCache memoryCache
+    )
         : base(options, logger, encoder)
     {
         _dbContext = dbContext;
@@ -66,9 +67,7 @@ public class PrinterKeyAuthenticationHandler : AuthenticationHandler<Authenticat
         }
 
         string secretHash = Convert.ToHexString(SHA256.HashData(secretBytes));
-        if (!CryptographicOperations.FixedTimeEquals(
-                Convert.FromHexString(secretHash),
-                Convert.FromHexString(cachedKey.SecretHash)))
+        if (!CryptographicOperations.FixedTimeEquals(Convert.FromHexString(secretHash), Convert.FromHexString(cachedKey.SecretHash)))
         {
             return AuthenticateResult.Fail("Invalid printer key.");
         }
@@ -79,7 +78,7 @@ public class PrinterKeyAuthenticationHandler : AuthenticationHandler<Authenticat
         {
             new Claim(Constants.Claim.OutletId, cachedKey.OutletId.ToString()),
             new Claim(Constants.Claim.DeviceId, cachedKey.DeviceId.ToString()),
-            new Claim(Constants.Claim.KeyId, cachedKey.KeyId)
+            new Claim(Constants.Claim.KeyId, cachedKey.KeyId),
         };
         var identity = new ClaimsIdentity(claims, Scheme.Name);
         var principal = new ClaimsPrincipal(identity);
@@ -113,8 +112,8 @@ public class PrinterKeyAuthenticationHandler : AuthenticationHandler<Authenticat
             return cachedKey;
         }
 
-        var key = await _dbContext.PrintServiceKey
-            .AsNoTracking()
+        var key = await _dbContext
+            .PrintServiceKey.AsNoTracking()
             .Where(x => x.KeyId == keyId)
             .Select(x => new ValidatedPrinterKey
             {
@@ -123,7 +122,7 @@ public class PrinterKeyAuthenticationHandler : AuthenticationHandler<Authenticat
                 DeviceId = x.DeviceId,
                 KeyId = x.KeyId,
                 SecretHash = x.SecretHash,
-                RevokedAt = x.RevokedAt
+                RevokedAt = x.RevokedAt,
             })
             .FirstOrDefaultAsync();
 
@@ -132,10 +131,7 @@ public class PrinterKeyAuthenticationHandler : AuthenticationHandler<Authenticat
             return null;
         }
 
-        _memoryCache.Set(PrinterCacheKeys.Auth(keyId), key, new MemoryCacheEntryOptions
-        {
-            SlidingExpiration = AuthCacheTtl
-        });
+        _memoryCache.Set(PrinterCacheKeys.Auth(keyId), key, new MemoryCacheEntryOptions { SlidingExpiration = AuthCacheTtl });
 
         return key;
     }

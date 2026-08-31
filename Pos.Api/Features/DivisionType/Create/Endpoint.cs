@@ -1,7 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.DivisionType.Create;
 
@@ -22,10 +21,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.DivisionType>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        Entities.DivisionType entity = new Entities.DivisionType()
-        {
-            DivisionName = req.Name
-        };
+        Entities.DivisionType entity = new Entities.DivisionType() { DivisionName = req.Name };
         await _dbContext.DivisionType.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
         await Send.OkAsync(entity);

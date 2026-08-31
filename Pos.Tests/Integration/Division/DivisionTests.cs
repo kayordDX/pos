@@ -1,7 +1,7 @@
-using Pos.Api.Data;
-using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 
 namespace Integration.Division;
 
@@ -11,13 +11,18 @@ public class DivisionTests(App app) : TestBase<App>
     [Fact, Priority(1)]
     public async Task CreateDivision_Fails_When_Not_Manager()
     {
-        var (rsp, _) = await app.ClientAuth.POSTAsync<Pos.Api.Features.Division.Create.Endpoint, Pos.Api.Features.Division.Create.Request, Pos.Api.Entities.Division>(
+        var (rsp, _) = await app.ClientAuth.POSTAsync<
+            Pos.Api.Features.Division.Create.Endpoint,
+            Pos.Api.Features.Division.Create.Request,
+            Pos.Api.Entities.Division
+        >(
             new()
             {
                 DivisionTypeId = 1,
                 Name = "Test Division",
-                OutletId = 99
-            });
+                OutletId = 99,
+            }
+        );
 
         // User is not a manager, so auth policy rejects the request
         rsp.IsSuccessStatusCode.ShouldBeFalse();
@@ -39,7 +44,7 @@ public class DivisionTests(App app) : TestBase<App>
             DivisionName = activeDivisionName,
             OutletId = outlet.Id,
             DivisionTypeId = 0,
-            IsDeleted = false
+            IsDeleted = false,
         };
         dbContext.Division.Add(division);
 
@@ -48,14 +53,17 @@ public class DivisionTests(App app) : TestBase<App>
             DivisionName = deletedDivisionName,
             OutletId = outlet.Id,
             DivisionTypeId = 0,
-            IsDeleted = true
+            IsDeleted = true,
         };
         dbContext.Division.Add(deletedDivision);
         await dbContext.SaveChangesAsync(app.Context.CancellationToken);
 
         // Act
-        var (rsp, res) = await app.ClientAuth.GETAsync<Pos.Api.Features.Division.GetAll.Endpoint, Pos.Api.Features.Division.GetAll.Request, List<Pos.Api.Entities.Division>>(
-            new() { OutletId = outlet.Id });
+        var (rsp, res) = await app.ClientAuth.GETAsync<
+            Pos.Api.Features.Division.GetAll.Endpoint,
+            Pos.Api.Features.Division.GetAll.Request,
+            List<Pos.Api.Entities.Division>
+        >(new() { OutletId = outlet.Id });
 
         // Assert
         rsp.IsSuccessStatusCode.ShouldBeTrue();
@@ -78,7 +86,7 @@ public class DivisionTests(App app) : TestBase<App>
             DivisionName = duplicateDivisionName,
             OutletId = outlet.Id,
             DivisionTypeId = 0,
-            IsDeleted = false
+            IsDeleted = false,
         };
         dbContext.Division.Add(division1);
         await dbContext.SaveChangesAsync(app.Context.CancellationToken);
@@ -88,7 +96,7 @@ public class DivisionTests(App app) : TestBase<App>
             DivisionName = duplicateDivisionName,
             OutletId = outlet.Id,
             DivisionTypeId = 0,
-            IsDeleted = false
+            IsDeleted = false,
         };
 
         // Saving a duplicate should throw due to the unique index

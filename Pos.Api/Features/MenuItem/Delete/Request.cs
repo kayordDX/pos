@@ -14,4 +14,3 @@ public class Validator : Validator<Request>
         RuleFor(v => v.Id).NotEmpty().WithMessage("Id is required");
     }
 }
-

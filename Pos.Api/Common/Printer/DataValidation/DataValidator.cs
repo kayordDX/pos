@@ -2,7 +2,8 @@
 
 namespace Pos.Api.Common.Printer.DataValidation;
 
-public abstract class BaseDataValidator<T> where T : Enum
+public abstract class BaseDataValidator<T>
+    where T : Enum
 {
     protected Dictionary<T, DataConstraint>? _constraints;
 
@@ -85,22 +86,133 @@ public static class DataValidator
         public BarcodeDataValidator()
         {
             _constraints = new Dictionary<BarcodeType, DataConstraint>()
+            {
                 {
-                    { BarcodeType.UPC_A, new DataConstraint() { MinLength = 11, MaxLength = 12, ValidChars = "0123456789" } },
-                    { BarcodeType.UPC_E, new DataConstraint() { ValidLengths = new List<int>() { 6, 7, 8, 11, 12 }, ValidChars = "0123456789" } },
-                    { BarcodeType.JAN13_EAN13, new DataConstraint() { MinLength = 12, MaxLength = 13, ValidChars = "0123456789" } },
-                    { BarcodeType.JAN8_EAN8, new DataConstraint() { MinLength = 7, MaxLength = 8, ValidChars = "0123456789" } },
-                    { BarcodeType.CODE39, new DataConstraint() { MinLength = 1, MaxLength = 255, ValidChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./" } },
-                    { BarcodeType.ITF, new DataConstraint() { MinLength = 2, MaxLength = 255, ValidChars = "0123456789" } },
-                    { BarcodeType.CODABAR_NW_7, new DataConstraint() { MinLength = 2, MaxLength = 255, ValidChars = "0123456789ABCDabcd$+-./:" } },
-                    { BarcodeType.CODE93, new DataConstraint() { MinLength = 1, MaxLength = 255, ValidChars = "7BIT-ASCII" } },
-                    { BarcodeType.CODE128, new DataConstraint() { MinLength = 1, MaxLength = 253, ValidChars = "7BIT-ASCII" } },
-                    { BarcodeType.GS1_128, new DataConstraint() { MinLength = 1, MaxLength = 253, ValidChars = "7BIT-ASCII" } },
-                    { BarcodeType.GS1_DATABAR_OMNIDIRECTIONAL, new DataConstraint() { MinLength = 13, MaxLength = 13, ValidChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./" } },
-                    { BarcodeType.GS1_DATABAR_TRUNCATED, new DataConstraint() { MinLength = 13, MaxLength = 13, ValidChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./" } },
-                    { BarcodeType.GS1_DATABAR_LIMITED, new DataConstraint() { MinLength = 13, MaxLength = 13, ValidChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./" } },
-                    { BarcodeType.GS1_DATABAR_EXPANDED, new DataConstraint() { MinLength = 2, MaxLength = 255, ValidChars = "0123456789ABCDabcd !\"%$'()*+,-./:;<=>?_{" } },
-                };
+                    BarcodeType.UPC_A,
+                    new DataConstraint()
+                    {
+                        MinLength = 11,
+                        MaxLength = 12,
+                        ValidChars = "0123456789",
+                    }
+                },
+                {
+                    BarcodeType.UPC_E,
+                    new DataConstraint()
+                    {
+                        ValidLengths = new List<int>() { 6, 7, 8, 11, 12 },
+                        ValidChars = "0123456789",
+                    }
+                },
+                {
+                    BarcodeType.JAN13_EAN13,
+                    new DataConstraint()
+                    {
+                        MinLength = 12,
+                        MaxLength = 13,
+                        ValidChars = "0123456789",
+                    }
+                },
+                {
+                    BarcodeType.JAN8_EAN8,
+                    new DataConstraint()
+                    {
+                        MinLength = 7,
+                        MaxLength = 8,
+                        ValidChars = "0123456789",
+                    }
+                },
+                {
+                    BarcodeType.CODE39,
+                    new DataConstraint()
+                    {
+                        MinLength = 1,
+                        MaxLength = 255,
+                        ValidChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./",
+                    }
+                },
+                {
+                    BarcodeType.ITF,
+                    new DataConstraint()
+                    {
+                        MinLength = 2,
+                        MaxLength = 255,
+                        ValidChars = "0123456789",
+                    }
+                },
+                {
+                    BarcodeType.CODABAR_NW_7,
+                    new DataConstraint()
+                    {
+                        MinLength = 2,
+                        MaxLength = 255,
+                        ValidChars = "0123456789ABCDabcd$+-./:",
+                    }
+                },
+                {
+                    BarcodeType.CODE93,
+                    new DataConstraint()
+                    {
+                        MinLength = 1,
+                        MaxLength = 255,
+                        ValidChars = "7BIT-ASCII",
+                    }
+                },
+                {
+                    BarcodeType.CODE128,
+                    new DataConstraint()
+                    {
+                        MinLength = 1,
+                        MaxLength = 253,
+                        ValidChars = "7BIT-ASCII",
+                    }
+                },
+                {
+                    BarcodeType.GS1_128,
+                    new DataConstraint()
+                    {
+                        MinLength = 1,
+                        MaxLength = 253,
+                        ValidChars = "7BIT-ASCII",
+                    }
+                },
+                {
+                    BarcodeType.GS1_DATABAR_OMNIDIRECTIONAL,
+                    new DataConstraint()
+                    {
+                        MinLength = 13,
+                        MaxLength = 13,
+                        ValidChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./",
+                    }
+                },
+                {
+                    BarcodeType.GS1_DATABAR_TRUNCATED,
+                    new DataConstraint()
+                    {
+                        MinLength = 13,
+                        MaxLength = 13,
+                        ValidChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./",
+                    }
+                },
+                {
+                    BarcodeType.GS1_DATABAR_LIMITED,
+                    new DataConstraint()
+                    {
+                        MinLength = 13,
+                        MaxLength = 13,
+                        ValidChars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ $%*+-./",
+                    }
+                },
+                {
+                    BarcodeType.GS1_DATABAR_EXPANDED,
+                    new DataConstraint()
+                    {
+                        MinLength = 2,
+                        MaxLength = 255,
+                        ValidChars = "0123456789ABCDabcd !\"%$'()*+,-./:;<=>?_{",
+                    }
+                },
+            };
         }
 
         protected override void RunSpecificValidations(BarcodeType type, string barcode, BarcodeCode? code)
@@ -168,13 +280,25 @@ public static class DataValidator
         public TwoDimensionCodeDataValidator()
         {
             _constraints = new Dictionary<TwoDimensionCodeType, DataConstraint>()
+            {
+                //Explanation regarding 65532 limit can be found at https://github.com/lukevp/ESC-POS-.NET/issues/253#issuecomment-1895806167
                 {
-                    //Explanation regarding 65532 limit can be found at https://github.com/lukevp/ESC-POS-.NET/issues/253#issuecomment-1895806167
-                    { TwoDimensionCodeType.PDF417, new DataConstraint() { MinLength = 0, MaxLength = 65532 } },
-                    { TwoDimensionCodeType.QRCODE_MODEL1, new DataConstraint() { MinLength = 0, MaxLength = 707 } },
-                    { TwoDimensionCodeType.QRCODE_MODEL2, new DataConstraint() { MinLength = 0, MaxLength = 4296 } },
-                    { TwoDimensionCodeType.QRCODE_MICRO, new DataConstraint() { MinLength = 0, MaxLength = 21 } },
-                };
+                    TwoDimensionCodeType.PDF417,
+                    new DataConstraint() { MinLength = 0, MaxLength = 65532 }
+                },
+                {
+                    TwoDimensionCodeType.QRCODE_MODEL1,
+                    new DataConstraint() { MinLength = 0, MaxLength = 707 }
+                },
+                {
+                    TwoDimensionCodeType.QRCODE_MODEL2,
+                    new DataConstraint() { MinLength = 0, MaxLength = 4296 }
+                },
+                {
+                    TwoDimensionCodeType.QRCODE_MICRO,
+                    new DataConstraint() { MinLength = 0, MaxLength = 21 }
+                },
+            };
         }
 
         // TODO: Research specific validations for QRCode & PDF417

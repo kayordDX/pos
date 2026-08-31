@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Adjustment.GetAll;
 
@@ -19,8 +19,8 @@ public class Endpoint : Endpoint<Request, List<Entities.AdjustmentType>>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var results = await _dbContext.AdjustmentTypeOutlet
-            .Where(x => x.OutletId == req.OutletId)
+        var results = await _dbContext
+            .AdjustmentTypeOutlet.Where(x => x.OutletId == req.OutletId)
             .Include(x => x.AdjustmentType)
             .Select(x => x.AdjustmentType)
             .ToListAsync();

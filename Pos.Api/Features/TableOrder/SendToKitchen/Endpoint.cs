@@ -1,9 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Events;
 using Pos.Api.Features.Stock;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableOrder.SendToKitchen;
 
@@ -25,9 +25,7 @@ public class Endpoint : Endpoint<Request, Response>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var tableBooking = await _dbContext.TableBooking
-            .Include(x => x.SalesPeriod)
-            .Where(x => x.Id == req.TableBookingId).FirstOrDefaultAsync();
+        var tableBooking = await _dbContext.TableBooking.Include(x => x.SalesPeriod).Where(x => x.Id == req.TableBookingId).FirstOrDefaultAsync();
 
         if (tableBooking == null)
         {
@@ -41,8 +39,8 @@ public class Endpoint : Endpoint<Request, Response>
             }
         }
 
-        var orderItemsToUpdate = await _dbContext.OrderItem
-            .Include(x => x.MenuItem)
+        var orderItemsToUpdate = await _dbContext
+            .OrderItem.Include(x => x.MenuItem)
             .Include(x => x.OrderItemExtras)!
                 .ThenInclude(x => x.Extra)
             .Include(x => x.OrderItemOptions)!
@@ -58,7 +56,6 @@ public class Endpoint : Endpoint<Request, Response>
 
         bool isSuccess = true;
         string message = "";
-
 
         foreach (var orderItem in orderItemsToUpdate)
         {

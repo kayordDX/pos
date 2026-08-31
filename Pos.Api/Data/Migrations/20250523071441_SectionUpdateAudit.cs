@@ -16,45 +16,26 @@ namespace Pos.Api.Data.Migrations
                 table: "section",
                 type: "timestamp with time zone",
                 nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+            );
 
-            migrationBuilder.AddColumn<string>(
-                name: "created_by",
-                table: "section",
-                type: "text",
-                nullable: true);
+            migrationBuilder.AddColumn<string>(name: "created_by", table: "section", type: "text", nullable: true);
 
-            migrationBuilder.AddColumn<DateTime>(
-                name: "last_modified",
-                table: "section",
-                type: "timestamp with time zone",
-                nullable: true);
+            migrationBuilder.AddColumn<DateTime>(name: "last_modified", table: "section", type: "timestamp with time zone", nullable: true);
 
-            migrationBuilder.AddColumn<string>(
-                name: "last_modified_by",
-                table: "section",
-                type: "text",
-                nullable: true);
+            migrationBuilder.AddColumn<string>(name: "last_modified_by", table: "section", type: "text", nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "created",
-                table: "section");
+            migrationBuilder.DropColumn(name: "created", table: "section");
 
-            migrationBuilder.DropColumn(
-                name: "created_by",
-                table: "section");
+            migrationBuilder.DropColumn(name: "created_by", table: "section");
 
-            migrationBuilder.DropColumn(
-                name: "last_modified",
-                table: "section");
+            migrationBuilder.DropColumn(name: "last_modified", table: "section");
 
-            migrationBuilder.DropColumn(
-                name: "last_modified_by",
-                table: "section");
+            migrationBuilder.DropColumn(name: "last_modified_by", table: "section");
         }
     }
 }

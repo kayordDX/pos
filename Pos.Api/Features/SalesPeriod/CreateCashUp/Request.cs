@@ -12,6 +12,4 @@ public class Request
     public string UserId { get; set; } = string.Empty;
     public string SignOffUserId { get; set; } = string.Empty;
     public DateTime? SignOffDate { get; set; }
-
-
 }

@@ -1,6 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
-using Microsoft.EntityFrameworkCore;
+
 namespace Pos.Api.Features.Units.GetAll;
 
 public class Endpoint : EndpointWithoutRequest<List<Unit>>
@@ -23,6 +24,3 @@ public class Endpoint : EndpointWithoutRequest<List<Unit>>
         await Send.OkAsync(results);
     }
 }
-
-
-

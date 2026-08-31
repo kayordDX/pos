@@ -1,18 +1,25 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Stock.OrderItem;
 
 public static class OrderItemUpdate
 {
-    public static async Task StockCount(int stockOrderId, decimal fromActual, int divisionId, int stockId, decimal actual, AppDbContext dbContext, CurrentUserService currentUserService, CancellationToken ct)
+    public static async Task StockCount(
+        int stockOrderId,
+        decimal fromActual,
+        int divisionId,
+        int stockId,
+        decimal actual,
+        AppDbContext dbContext,
+        CurrentUserService currentUserService,
+        CancellationToken ct
+    )
     {
-        // Update Stock Item Count 
-        var item = await dbContext.StockItem
-            .Where(x => x.StockId == stockId && x.DivisionId == divisionId)
-            .FirstOrDefaultAsync(ct);
+        // Update Stock Item Count
+        var item = await dbContext.StockItem.Where(x => x.StockId == stockId && x.DivisionId == divisionId).FirstOrDefaultAsync(ct);
 
         bool isNew = false;
         if (item == null)
@@ -37,30 +44,28 @@ public static class OrderItemUpdate
             }
             item.Actual += actual;
 
-
             if (previousActual != item.Actual)
             {
-                await dbContext.StockItemAudit.AddAsync(new StockItemAudit()
-                {
-                    FromActual = previousActual,
-                    ToActual = item.Actual,
-                    StockItemAuditTypeId = 5,
-                    StockItemId = item.Id,
-                    UserId = currentUserService.UserId ?? "",
-                    Updated = DateTime.Now,
-                    StockId = stockId,
-                    StockOrderId = stockOrderId,
-                });
+                await dbContext.StockItemAudit.AddAsync(
+                    new StockItemAudit()
+                    {
+                        FromActual = previousActual,
+                        ToActual = item.Actual,
+                        StockItemAuditTypeId = 5,
+                        StockItemId = item.Id,
+                        UserId = currentUserService.UserId ?? "",
+                        Updated = DateTime.Now,
+                        StockId = stockId,
+                        StockOrderId = stockOrderId,
+                    }
+                );
             }
         }
     }
 
     public static async Task StockOrderStatus(int stockOrderId, AppDbContext dbContext, CancellationToken ct)
     {
-        var orderItems = await dbContext.StockOrderItem
-            .AsNoTracking()
-            .Where(x => x.StockOrderId == stockOrderId)
-            .ToListAsync(ct);
+        var orderItems = await dbContext.StockOrderItem.AsNoTracking().Where(x => x.StockOrderId == stockOrderId).ToListAsync(ct);
 
         int orderStatusId = 1;
         if (orderItems.All(x => x.StockOrderItemStatusId > 1))
@@ -72,9 +77,7 @@ public static class OrderItemUpdate
             orderStatusId = 2;
         }
 
-        var order = await dbContext.StockOrder
-            .Where(x => x.Id == stockOrderId)
-            .FirstOrDefaultAsync(ct);
+        var order = await dbContext.StockOrder.Where(x => x.Id == stockOrderId).FirstOrDefaultAsync(ct);
 
         if (order == null)
         {

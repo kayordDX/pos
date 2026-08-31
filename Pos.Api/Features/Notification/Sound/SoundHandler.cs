@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.SignalR;
 using Pos.Api.Events;
 using Pos.Api.Hubs;
 using Pos.Api.Services;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Pos.Api.Features.Notification.Sound;
 

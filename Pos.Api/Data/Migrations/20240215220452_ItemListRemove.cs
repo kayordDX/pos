@@ -10,22 +10,15 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_OrderItemExtra_Extra_ExtraId",
-                table: "OrderItemExtra");
+            migrationBuilder.DropForeignKey(name: "FK_OrderItemExtra_Extra_ExtraId", table: "OrderItemExtra");
 
-            migrationBuilder.DropIndex(
-                name: "IX_OrderItemExtra_ExtraId",
-                table: "OrderItemExtra");
+            migrationBuilder.DropIndex(name: "IX_OrderItemExtra_ExtraId", table: "OrderItemExtra");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderItemExtra_ExtraId",
-                table: "OrderItemExtra",
-                column: "ExtraId");
+            migrationBuilder.CreateIndex(name: "IX_OrderItemExtra_ExtraId", table: "OrderItemExtra", column: "ExtraId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_OrderItemExtra_Extra_ExtraId",
@@ -33,7 +26,8 @@ namespace Pos.Api.Data.Migrations
                 column: "ExtraId",
                 principalTable: "Extra",
                 principalColumn: "ExtraId",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
     }
 }

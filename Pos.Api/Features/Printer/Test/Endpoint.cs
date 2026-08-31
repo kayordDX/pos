@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Common.Printer.Emitters;
+using Pos.Api.Common.Printer.Emitters.Enums;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-using Pos.Api.Common.Printer.Emitters.Enums;
 
 namespace Pos.Api.Features.Printer.Test;
 
@@ -15,11 +15,13 @@ public class Endpoint(AppDbContext dbContext, PrintService printService) : Endpo
     {
         Post("/printer/test");
     }
+
     private static readonly EPSON e = new();
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        List<byte[]> instructions = [
+        List<byte[]> instructions =
+        [
             e.SetStyles(PrintStyle.None),
             e.Print("Default: The quick brown fox jumped over the lazy dogs.\n"),
             e.SetStyles(PrintStyle.FontB),
@@ -48,7 +50,7 @@ public class Endpoint(AppDbContext dbContext, PrintService printService) : Endpo
             e.SetStyles(PrintStyle.None),
             e.UpsideDownMode(true),
             e.PrintLine("Upside Down Mode: The quick brown fox jumped over the lazy dogs."),
-            e.UpsideDownMode(false)
+            e.UpsideDownMode(false),
         ];
 
         var printer = await _dbContext.Printer.Where(x => x.Id == req.PrinterId).AsNoTracking().FirstOrDefaultAsync(ct);
@@ -58,13 +60,12 @@ public class Endpoint(AppDbContext dbContext, PrintService printService) : Endpo
             return;
         }
 
-
         PrintMessage printMessage = new()
         {
             PrinterName = printer.PrinterName,
             IPAddress = printer.IPAddress,
             Port = printer.Port,
-            PrintInstructions = instructions
+            PrintInstructions = instructions,
         };
 
         await _printService.Print(printer.OutletId, printer.DeviceId, printMessage);

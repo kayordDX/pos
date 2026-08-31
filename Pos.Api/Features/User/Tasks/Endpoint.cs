@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Common.Extensions;
 using Pos.Api.Common.Models;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.User.Tasks;
 
@@ -24,8 +24,8 @@ public class Endpoint : Endpoint<Request, PaginatedList<Response>>
 
     public override async Task HandleAsync(Request r, CancellationToken ct)
     {
-        var notification = await _dbContext.StockAllocateItem
-            .Where(x => x.StockAllocateItemStatusId == 2 && x.AssignedUserId == _cu.UserId)
+        var notification = await _dbContext
+            .StockAllocateItem.Where(x => x.StockAllocateItemStatusId == 2 && x.AssignedUserId == _cu.UserId)
             .Select(x => new Response()
             {
                 Id = x.Id,
@@ -38,14 +38,22 @@ public class Endpoint : Endpoint<Request, PaginatedList<Response>>
                     Name = x.AssignedUser.Name,
                     Email = x.AssignedUser.Email,
                     Image = x.AssignedUser.Image,
-                    IsActive = x.AssignedUser.IsActive
+                    IsActive = x.AssignedUser.IsActive,
                 },
                 Name = x.Stock.Name + " " + "(" + x.Actual + " " + x.Stock.Unit.Name + ")",
                 Status = x.StockAllocateItemStatus.Name,
                 Type = "Stock Allocation",
                 ToDivisionId = x.StockAllocate.ToDivisionId,
-                Description = ((x.StockAllocate.ToOutletId == x.StockAllocate.OutletId) ? "" : x.StockAllocate.Outlet.Name + " -> " + x.StockAllocate.ToOutlet.Name + "-> ") + x.StockAllocate.FromDivision.DivisionName + " to " + x.StockAllocate.ToDivision.DivisionName,
-                LastModified = x.LastModified ?? x.Created
+                Description =
+                    (
+                        (x.StockAllocate.ToOutletId == x.StockAllocate.OutletId)
+                            ? ""
+                            : x.StockAllocate.Outlet.Name + " -> " + x.StockAllocate.ToOutlet.Name + "-> "
+                    )
+                    + x.StockAllocate.FromDivision.DivisionName
+                    + " to "
+                    + x.StockAllocate.ToDivision.DivisionName,
+                LastModified = x.LastModified ?? x.Created,
             })
             .OrderBy(x => x.LastModified)
             .AsNoTracking()

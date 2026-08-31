@@ -10,39 +10,21 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "stock_order_item_id",
-                table: "stock_item_audit",
-                newName: "stock_order_id");
+            migrationBuilder.RenameColumn(name: "stock_order_item_id", table: "stock_item_audit", newName: "stock_order_id");
 
-            migrationBuilder.RenameColumn(
-                name: "stock_allocate_item_id",
-                table: "stock_item_audit",
-                newName: "stock_id");
+            migrationBuilder.RenameColumn(name: "stock_allocate_item_id", table: "stock_item_audit", newName: "stock_id");
 
-            migrationBuilder.AddColumn<int>(
-                name: "stock_allocate_id",
-                table: "stock_item_audit",
-                type: "integer",
-                nullable: true);
+            migrationBuilder.AddColumn<int>(name: "stock_allocate_id", table: "stock_item_audit", type: "integer", nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "stock_allocate_id",
-                table: "stock_item_audit");
+            migrationBuilder.DropColumn(name: "stock_allocate_id", table: "stock_item_audit");
 
-            migrationBuilder.RenameColumn(
-                name: "stock_order_id",
-                table: "stock_item_audit",
-                newName: "stock_order_item_id");
+            migrationBuilder.RenameColumn(name: "stock_order_id", table: "stock_item_audit", newName: "stock_order_item_id");
 
-            migrationBuilder.RenameColumn(
-                name: "stock_id",
-                table: "stock_item_audit",
-                newName: "stock_allocate_item_id");
+            migrationBuilder.RenameColumn(name: "stock_id", table: "stock_item_audit", newName: "stock_allocate_item_id");
         }
     }
 }

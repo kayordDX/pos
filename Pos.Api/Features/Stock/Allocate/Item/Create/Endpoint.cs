@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Stock.Allocate.Item.Create;
 
@@ -26,9 +26,7 @@ public class Endpoint : Endpoint<Request, Entities.StockOrder>
             return;
         }
 
-        var stockItem = await _dbContext.StockItem
-            .Where(x => x.StockId == req.StockId && x.DivisionId == stockAllocate.FromDivisionId)
-            .FirstOrDefaultAsync(ct);
+        var stockItem = await _dbContext.StockItem.Where(x => x.StockId == req.StockId && x.DivisionId == stockAllocate.FromDivisionId).FirstOrDefaultAsync(ct);
 
         if (stockItem == null)
         {

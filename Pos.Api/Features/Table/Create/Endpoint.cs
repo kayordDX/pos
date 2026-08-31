@@ -23,7 +23,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.Table>
             Name = req.Name,
             SectionId = req.SectionId,
             Capacity = req.Capacity,
-            Position = req.Position
+            Position = req.Position,
         };
         await _dbContext.Table.AddAsync(entity);
         await _dbContext.SaveChangesAsync();

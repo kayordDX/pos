@@ -1,9 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Data.Migrations;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.Extra.GroupDelete;
 
@@ -42,7 +41,9 @@ public class Endpoint : Endpoint<Request>
         }
         var outletId = await Helper.GetUserOutlet(_dbContext, _user.UserId ?? "");
 
-        Entities.OutletExtraGroup? outletExtraGroup = await _dbContext.OutletExtraGroup.FirstOrDefaultAsync(x => x.ExtraGroupId == req.Id && x.OutletId == outletId);
+        Entities.OutletExtraGroup? outletExtraGroup = await _dbContext.OutletExtraGroup.FirstOrDefaultAsync(x =>
+            x.ExtraGroupId == req.Id && x.OutletId == outletId
+        );
         if (outletExtraGroup != null)
         {
             _dbContext.OutletExtraGroup.Remove(outletExtraGroup);
@@ -52,8 +53,5 @@ public class Endpoint : Endpoint<Request>
         await _dbContext.SaveChangesAsync();
         await Send.NoContentAsync();
         // await Helper.ClearCacheOutlet(_dbContext, _redisClient, req.OutletId);
-
     }
-
-
 }

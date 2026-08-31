@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.User.ApplyOutlet;
 
@@ -34,11 +34,7 @@ public class Endpoint : Endpoint<Request>
         }
         else
         {
-            await _dbContext.UserOutlet.AddAsync(new()
-            {
-                UserId = _cu.UserId,
-                OutletId = req.OutletId
-            });
+            await _dbContext.UserOutlet.AddAsync(new() { UserId = _cu.UserId, OutletId = req.OutletId });
         }
 
         await _dbContext.SaveChangesAsync();

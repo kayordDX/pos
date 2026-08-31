@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Role;
 
@@ -10,13 +10,16 @@ public static class RoleHelper
         int outletId = await Helper.GetUserOutlet(_dbContext, userId ?? "");
         return await GetDivisionsForRolesOnly(roleIds, _dbContext, outletId, userId);
     }
+
     public static async Task<List<int>> GetDivisionsForRolesOnly(string? roleIds, AppDbContext _dbContext, int outletId, string? userId)
     {
         List<int> divisionIds = new();
         if (roleIds != null)
         {
             var rolesToCheck = roleIds.Split(",").Select(int.Parse).ToList();
-            var canViewRole = await _dbContext.UserRoleOutlet.Where(x => x.UserId == userId && x.OutletId == outletId && rolesToCheck.Contains(x.RoleId)).FirstOrDefaultAsync();
+            var canViewRole = await _dbContext
+                .UserRoleOutlet.Where(x => x.UserId == userId && x.OutletId == outletId && rolesToCheck.Contains(x.RoleId))
+                .FirstOrDefaultAsync();
             if (canViewRole == null)
             {
                 throw new Exception("You do not have access to view role");
@@ -59,7 +62,9 @@ public static class RoleHelper
         if (roleIds != null)
         {
             var rolesToCheck = roleIds.Split(",").Select(int.Parse).ToList();
-            var canViewRole = await _dbContext.UserRoleOutlet.Where(x => x.UserId == userId && x.OutletId == outletId && rolesToCheck.Contains(x.RoleId)).FirstOrDefaultAsync();
+            var canViewRole = await _dbContext
+                .UserRoleOutlet.Where(x => x.UserId == userId && x.OutletId == outletId && rolesToCheck.Contains(x.RoleId))
+                .FirstOrDefaultAsync();
             if (canViewRole == null)
             {
                 throw new Exception("You do not have access to view role");
@@ -69,16 +74,9 @@ public static class RoleHelper
         // Get Role From User
         else
         {
-            var roles = await _dbContext.UserRoleOutlet
-                .Where(x => x.OutletId == outletId)
-                .Select(x => x.RoleId)
-                .ToListAsync();
+            var roles = await _dbContext.UserRoleOutlet.Where(x => x.OutletId == outletId).Select(x => x.RoleId).ToListAsync();
 
-            divisionIds = await _dbContext.RoleDivision
-                .Where(x => roles.Contains(x.RoleId))
-                .Select(x => x.DivisionId)
-                .Distinct()
-                .ToListAsync();
+            divisionIds = await _dbContext.RoleDivision.Where(x => roles.Contains(x.RoleId)).Select(x => x.DivisionId).Distinct().ToListAsync();
         }
         return divisionIds;
     }

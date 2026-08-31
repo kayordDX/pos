@@ -16,17 +16,14 @@ public class Endpoint(AppDbContext dbContext) : Endpoint<Request, PaginatedList<
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var booking = _dbContext.TableBooking
-            .Where(x => x.SalesPeriodId == req.SalesPeriodId);
+        var booking = _dbContext.TableBooking.Where(x => x.SalesPeriodId == req.SalesPeriodId);
 
         if (req.TableBookingId > 0)
         {
             booking = booking.Where(x => x.Id.ToString().StartsWith(req.TableBookingId.ToString()));
         }
 
-        var result = await booking.OrderByDescending(x => x.CloseDate)
-            .ProjectToDto()
-            .GetPagedAsync(req, ct);
+        var result = await booking.OrderByDescending(x => x.CloseDate).ProjectToDto().GetPagedAsync(req, ct);
 
         await Send.OkAsync(result, ct);
     }

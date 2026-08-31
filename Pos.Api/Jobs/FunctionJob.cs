@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Features.Stock;
-using Microsoft.EntityFrameworkCore;
 using TickerQ.Utilities.Base;
 
 namespace Pos.Api.Jobs;
@@ -35,7 +35,8 @@ public class FunctionJob(AppDbContext dbContext)
     {
         _dbContext.Database.SetCommandTimeout(TimeSpan.FromMinutes(5));
         var sql = tickerContext.Request;
-        if (sql == null) return;
+        if (sql == null)
+            return;
         await _dbContext.Database.ExecuteSqlRawAsync(sql, ct);
     }
 }

@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Role.Type.GetAll;
 
@@ -16,12 +16,11 @@ public class Endpoint : Endpoint<Request, List<Entities.RoleType>>
     {
         Get("/role/type/{outletId}");
     }
+
     //exclude type admin and guest
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var roles = await _dbContext.RoleType
-        .Where(x => x.Name.ToLower() != "manager" && x.Name.ToLower() != "guest")
-        .ToListAsync();
+        var roles = await _dbContext.RoleType.Where(x => x.Name.ToLower() != "manager" && x.Name.ToLower() != "guest").ToListAsync();
         await Send.OkAsync(roles);
     }
 }

@@ -1,8 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.Extra.Delete;
 
@@ -25,7 +24,6 @@ public class Endpoint : Endpoint<Request>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-
         Entities.Extra? extra = await _dbContext.Extra.FindAsync(req.Id);
 
         if (extra != null)
@@ -38,5 +36,4 @@ public class Endpoint : Endpoint<Request>
             throw new Exception("Extra Not Found");
         }
     }
-
 }

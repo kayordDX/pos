@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Stock.Allocate.Item;
 
@@ -9,16 +9,11 @@ public static class AllocateItemUpdate
 {
     public static async Task Status(int allocateId, AppDbContext dbContext, CancellationToken ct)
     {
-        var items = await dbContext.StockAllocateItem
-            .AsNoTracking()
-            .Where(x => x.StockAllocateId == allocateId)
-            .ToListAsync(ct);
+        var items = await dbContext.StockAllocateItem.AsNoTracking().Where(x => x.StockAllocateId == allocateId).ToListAsync(ct);
 
         if (items.All(x => x.StockAllocateItemStatusId > 2))
         {
-            var allocate = await dbContext.StockAllocate
-                .Where(x => x.Id == allocateId)
-                .FirstOrDefaultAsync(ct);
+            var allocate = await dbContext.StockAllocate.Where(x => x.Id == allocateId).FirstOrDefaultAsync(ct);
 
             if (allocate != null)
             {
@@ -28,11 +23,17 @@ public static class AllocateItemUpdate
         }
     }
 
-    public static async Task<bool> StockCount(StockAllocateItem allocateItem, AppDbContext dbContext, CurrentUserService currentUserService, CancellationToken ct, int? toStockId)
+    public static async Task<bool> StockCount(
+        StockAllocateItem allocateItem,
+        AppDbContext dbContext,
+        CurrentUserService currentUserService,
+        CancellationToken ct,
+        int? toStockId
+    )
     {
         // From Stock Item
-        var fromItem = await dbContext.StockItem
-            .Where(x => x.StockId == allocateItem.StockId && x.DivisionId == allocateItem.StockAllocate.FromDivisionId)
+        var fromItem = await dbContext
+            .StockItem.Where(x => x.StockId == allocateItem.StockId && x.DivisionId == allocateItem.StockAllocate.FromDivisionId)
             .FirstOrDefaultAsync(ct);
 
         if (fromItem == null)
@@ -49,21 +50,23 @@ public static class AllocateItemUpdate
         decimal fromItemPreviousActual = fromItem.Actual;
         fromItem.Actual = fromItem.Actual - allocateItem.Actual;
 
-        await dbContext.StockItemAudit.AddAsync(new StockItemAudit()
-        {
-            FromActual = fromItemPreviousActual,
-            ToActual = fromItem.Actual,
-            StockItemAuditTypeId = 4,
-            StockItemId = fromItem.Id,
-            UserId = currentUserService.UserId ?? "",
-            Updated = DateTime.Now,
-            StockId = fromItem.StockId,
-            StockAllocateId = allocateItem.StockAllocateId,
-        });
+        await dbContext.StockItemAudit.AddAsync(
+            new StockItemAudit()
+            {
+                FromActual = fromItemPreviousActual,
+                ToActual = fromItem.Actual,
+                StockItemAuditTypeId = 4,
+                StockItemId = fromItem.Id,
+                UserId = currentUserService.UserId ?? "",
+                Updated = DateTime.Now,
+                StockId = fromItem.StockId,
+                StockAllocateId = allocateItem.StockAllocateId,
+            }
+        );
 
         // To Stock Item
-        var toItem = await dbContext.StockItem
-            .Where(x => x.StockId == (toStockId ?? allocateItem.StockId) && x.DivisionId == allocateItem.StockAllocate.ToDivisionId)
+        var toItem = await dbContext
+            .StockItem.Where(x => x.StockId == (toStockId ?? allocateItem.StockId) && x.DivisionId == allocateItem.StockAllocate.ToDivisionId)
             .FirstOrDefaultAsync(ct);
 
         if (toItem == null)
@@ -82,17 +85,19 @@ public static class AllocateItemUpdate
         decimal toItemPreviousActual = toItem.Actual;
         toItem.Actual = toItem.Actual + allocateItem.Actual;
 
-        await dbContext.StockItemAudit.AddAsync(new StockItemAudit()
-        {
-            FromActual = toItemPreviousActual,
-            ToActual = toItem.Actual,
-            StockItemAuditTypeId = 4,
-            StockItemId = toItem.Id,
-            UserId = currentUserService.UserId ?? "",
-            Updated = DateTime.Now,
-            StockId = toItem.StockId,
-            StockAllocateId = allocateItem.StockAllocateId,
-        });
+        await dbContext.StockItemAudit.AddAsync(
+            new StockItemAudit()
+            {
+                FromActual = toItemPreviousActual,
+                ToActual = toItem.Actual,
+                StockItemAuditTypeId = 4,
+                StockItemId = toItem.Id,
+                UserId = currentUserService.UserId ?? "",
+                Updated = DateTime.Now,
+                StockId = toItem.StockId,
+                StockAllocateId = allocateItem.StockAllocateId,
+            }
+        );
 
         await dbContext.SaveChangesAsync(ct);
         return true;

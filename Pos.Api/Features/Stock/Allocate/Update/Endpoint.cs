@@ -1,8 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Events;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.Stock.Allocate.Update;
 
@@ -24,8 +23,8 @@ public class Endpoint : Endpoint<Request>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var entity = await _dbContext.StockAllocate
-            .Where(x => x.Id == req.Id)
+        var entity = await _dbContext
+            .StockAllocate.Where(x => x.Id == req.Id)
             .Include(x => x.Outlet)
             .Include(x => x.FromDivision)
             .Include(x => x.ToDivision)
@@ -54,14 +53,15 @@ public class Endpoint : Endpoint<Request>
             if (users.Count > 0)
             {
                 string title = $"New Allocation from {entity.Outlet.Name}";
-                string body = $"You have received a new allocation for {entity.Outlet.Name}\nFrom: {entity.FromDivision.DivisionName}\nTo: {entity.ToDivision.DivisionName}";
+                string body =
+                    $"You have received a new allocation for {entity.Outlet.Name}\nFrom: {entity.FromDivision.DivisionName}\nTo: {entity.ToDivision.DivisionName}";
                 foreach (var user in users)
                 {
                     await new NotificationEvent
                     {
                         UserId = user,
                         Title = title,
-                        Body = body
+                        Body = body,
                     }.PublishAsync(Mode.WaitForNone);
                 }
             }

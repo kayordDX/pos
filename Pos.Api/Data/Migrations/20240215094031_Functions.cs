@@ -28,7 +28,7 @@ namespace Pos.Api.Data.Migrations
                             from pl;
                         end; $function$
                 """
-                        );
+            );
 
             migrationBuilder.Sql(
                 """

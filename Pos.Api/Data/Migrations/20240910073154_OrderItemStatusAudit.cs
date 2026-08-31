@@ -16,24 +16,25 @@ namespace Pos.Api.Data.Migrations
                 name: "OrderItemStatusAudit",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table
+                        .Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     OrderItemId = table.Column<int>(type: "integer", nullable: false),
                     OrderItemStatusId = table.Column<int>(type: "integer", nullable: false),
                     StatusDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    UserId = table.Column<string>(type: "text", nullable: false)
+                    UserId = table.Column<string>(type: "text", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderItemStatusAudit", x => x.Id);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "OrderItemStatusAudit");
+            migrationBuilder.DropTable(name: "OrderItemStatusAudit");
         }
     }
 }

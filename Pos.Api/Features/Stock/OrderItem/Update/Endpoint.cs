@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Stock.OrderItem.Update;
 
@@ -24,8 +24,8 @@ public class Endpoint : Endpoint<Request, StockOrderItem>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var entity = await _dbContext.StockOrderItem
-            .Where(x => x.StockOrderId == req.StockOrderId && x.StockId == req.StockId)
+        var entity = await _dbContext
+            .StockOrderItem.Where(x => x.StockOrderId == req.StockOrderId && x.StockId == req.StockId)
             .Include(x => x.StockOrder)
             .FirstOrDefaultAsync(ct);
 
@@ -35,7 +35,16 @@ public class Endpoint : Endpoint<Request, StockOrderItem>
             return;
         }
 
-        await OrderItemUpdate.StockCount(req.StockOrderId, entity.Actual, entity.StockOrder.DivisionId, entity.StockId, req.Actual, _dbContext, _currentUserService, ct);
+        await OrderItemUpdate.StockCount(
+            req.StockOrderId,
+            entity.Actual,
+            entity.StockOrder.DivisionId,
+            entity.StockId,
+            req.Actual,
+            _dbContext,
+            _currentUserService,
+            ct
+        );
 
         entity.OrderAmount = req.OrderAmount;
         entity.Actual = req.Actual;

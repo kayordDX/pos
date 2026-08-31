@@ -7,5 +7,4 @@ public class StockCategory : AuditableEntity
     public int OutletId { get; set; }
     public string Name { get; set; } = string.Empty;
     public bool IsDeleted { get; set; }
-
 }

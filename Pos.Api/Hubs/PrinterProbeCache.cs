@@ -13,7 +13,7 @@ public class PrinterProbeCache
         {
             Reachable = reachable,
             LatencyMs = latencyMs,
-            UpdatedAt = DateTime.UtcNow
+            UpdatedAt = DateTime.UtcNow,
         };
     }
 

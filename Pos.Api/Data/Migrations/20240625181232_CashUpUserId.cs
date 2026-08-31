@@ -10,20 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "UserCashUpId",
-                table: "CashUpUserItem");
+            migrationBuilder.DropColumn(name: "UserCashUpId", table: "CashUpUserItem");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "UserCashUpId",
-                table: "CashUpUserItem",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>(name: "UserCashUpId", table: "CashUpUserItem", type: "integer", nullable: false, defaultValue: 0);
         }
     }
 }

@@ -1,5 +1,4 @@
 <Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <IsPackable>false</IsPackable>
@@ -20,5 +19,4 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Pos.Api\Pos.Api.csproj" />
   </ItemGroup>
-
 </Project>

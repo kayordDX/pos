@@ -1,4 +1,3 @@
-
 using FirebaseAdmin;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.Extensions.Logging;
@@ -22,11 +21,7 @@ public static class FirebaseExtensions
                 credential = CredentialFactory.FromFile<ServiceAccountCredential>("private_key.json").ToGoogleCredential();
             }
 
-            FirebaseApp.Create(new AppOptions()
-            {
-                Credential = credential,
-                ProjectId = "kayord-pos",
-            });
+            FirebaseApp.Create(new AppOptions() { Credential = credential, ProjectId = "kayord-pos" });
         }
         catch (Exception ex)
         {

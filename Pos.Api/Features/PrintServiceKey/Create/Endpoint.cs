@@ -1,9 +1,9 @@
 using System.Security.Cryptography;
+using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Services;
-using Microsoft.AspNetCore.WebUtilities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.PrintServiceKey.Create;
 
@@ -43,24 +43,27 @@ public class Endpoint : Endpoint<Request, PrintServiceKeyDTO>
             DeviceId = req.DeviceId,
             KeyId = keyId,
             SecretHash = Convert.ToHexString(SHA256.HashData(secretBytes)),
-            Name = req.Name
+            Name = req.Name,
         };
 
         await _dbContext.PrintServiceKey.AddAsync(entity, ct);
         await _dbContext.SaveChangesAsync(ct);
 
-        await Send.OkAsync(new PrintServiceKeyDTO
-        {
-            Id = entity.Id,
-            KeyId = entity.KeyId,
-            Name = entity.Name,
-            DeviceId = entity.DeviceId,
-            MaskedKey = PrintServiceKeyMask.MaskKey(entity.KeyId),
-            LastSeenAt = entity.LastSeenAt,
-            RevokedAt = entity.RevokedAt,
-            Created = entity.Created,
-            FullKey = $"kpos_{entity.KeyId}.{secret}"
-        }, ct);
+        await Send.OkAsync(
+            new PrintServiceKeyDTO
+            {
+                Id = entity.Id,
+                KeyId = entity.KeyId,
+                Name = entity.Name,
+                DeviceId = entity.DeviceId,
+                MaskedKey = PrintServiceKeyMask.MaskKey(entity.KeyId),
+                LastSeenAt = entity.LastSeenAt,
+                RevokedAt = entity.RevokedAt,
+                Created = entity.Created,
+                FullKey = $"kpos_{entity.KeyId}.{secret}",
+            },
+            ct
+        );
     }
 
     private async Task<string> GenerateKeyIdAsync(CancellationToken ct)

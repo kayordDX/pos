@@ -44,5 +44,4 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.StockCategory>
         await _dbContext.SaveChangesAsync();
         await Send.OkAsync(entity);
     }
-
 }

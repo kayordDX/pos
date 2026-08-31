@@ -9,5 +9,4 @@ public class OutletExtraGroup
     public Outlet Outlet { get; set; } = default!;
     public int ExtraGroupId { get; set; }
     public ExtraGroup ExtraGroup { get; set; } = default!;
-
 }

@@ -7,5 +7,4 @@ public class Request
     public int OutletId { get; set; }
     public int CashUpUserItemTypeId { get; set; }
     public decimal Value { get; set; }
-
 }

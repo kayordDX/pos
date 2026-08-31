@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Common.Extensions;
 using Pos.Api.Common.Models;
 using Pos.Api.Data;
 using Pos.Api.Features.TableBooking.History;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableBooking.HistoryUser;
 
@@ -17,7 +17,8 @@ public class Endpoint(AppDbContext dbContext) : Endpoint<Request, PaginatedList<
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var booking = _dbContext.TableBooking.Include(i => i.SalesPeriod)
+        var booking = _dbContext
+            .TableBooking.Include(i => i.SalesPeriod)
             .Where(x => x.UserId == req.UserId)
             .Where(x => x.SalesPeriod.OutletId == req.OutletId)
             .Where(x => x.CloseDate != null);
@@ -36,9 +37,7 @@ public class Endpoint(AppDbContext dbContext) : Endpoint<Request, PaginatedList<
             booking = booking.Where(x => x.CashUpUserId == null);
         }
 
-        var result = await booking.OrderByDescending(x => x.CloseDate)
-            .ProjectToDto()
-            .GetPagedAsync(req, ct);
+        var result = await booking.OrderByDescending(x => x.CloseDate).ProjectToDto().GetPagedAsync(req, ct);
 
         await Send.OkAsync(result, ct);
     }

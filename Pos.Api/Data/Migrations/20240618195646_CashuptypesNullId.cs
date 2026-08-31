@@ -10,9 +10,7 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CashupUserItemType_CashupConfig_CashupConfigId",
-                table: "CashupUserItemType");
+            migrationBuilder.DropForeignKey(name: "FK_CashupUserItemType_CashupConfig_CashupConfigId", table: "CashupUserItemType");
 
             migrationBuilder.AlterColumn<int>(
                 name: "CashupConfigId",
@@ -20,22 +18,22 @@ namespace Pos.Api.Data.Migrations
                 type: "integer",
                 nullable: true,
                 oldClrType: typeof(int),
-                oldType: "integer");
+                oldType: "integer"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CashupUserItemType_CashupConfig_CashupConfigId",
                 table: "CashupUserItemType",
                 column: "CashupConfigId",
                 principalTable: "CashupConfig",
-                principalColumn: "Id");
+                principalColumn: "Id"
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_CashupUserItemType_CashupConfig_CashupConfigId",
-                table: "CashupUserItemType");
+            migrationBuilder.DropForeignKey(name: "FK_CashupUserItemType_CashupConfig_CashupConfigId", table: "CashupUserItemType");
 
             migrationBuilder.AlterColumn<int>(
                 name: "CashupConfigId",
@@ -45,7 +43,8 @@ namespace Pos.Api.Data.Migrations
                 defaultValue: 0,
                 oldClrType: typeof(int),
                 oldType: "integer",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_CashupUserItemType_CashupConfig_CashupConfigId",
@@ -53,7 +52,8 @@ namespace Pos.Api.Data.Migrations
                 column: "CashupConfigId",
                 principalTable: "CashupConfig",
                 principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
     }
 }

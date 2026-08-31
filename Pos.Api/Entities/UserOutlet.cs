@@ -7,5 +7,4 @@ public class UserOutlet
     public Outlet Outlet { get; set; } = default!;
     public string UserId { get; set; } = string.Empty;
     public bool IsCurrent { get; set; }
-
 }

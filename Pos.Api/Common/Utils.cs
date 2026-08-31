@@ -6,6 +6,7 @@ namespace Pos.Api.Common;
 public static class Utils
 {
     private static readonly char[] chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789".ToCharArray();
+
     public static string GenerateOTP()
     {
         using var rng = RandomNumberGenerator.Create();
@@ -20,5 +21,4 @@ public static class Utils
 
         return result.ToString();
     }
-
 }

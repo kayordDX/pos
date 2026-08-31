@@ -1,6 +1,7 @@
 using System.Net;
 using System.Text;
 using System.Text.Json;
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Common.Extensions;
 using Pos.Api.Common.Wrapper;
 using Pos.Api.Data;
@@ -8,7 +9,6 @@ using Pos.Api.Entities;
 using Pos.Api.Events;
 using Pos.Api.Features.Pay.Dto;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Pay;
 
@@ -28,16 +28,19 @@ public class HaloService
     public async Task<Result<GetLink.Response>> GetLink(decimal amount, int tableBookingId, string userId, int outletId)
     {
         Guid r = Guid.NewGuid();
-        await _dbContext.HaloReference.AddAsync(new HaloReference { Id = r, TableBookingId = tableBookingId, UserId = userId });
+        await _dbContext.HaloReference.AddAsync(
+            new HaloReference
+            {
+                Id = r,
+                TableBookingId = tableBookingId,
+                UserId = userId,
+            }
+        );
         await _dbContext.SaveChangesAsync();
 
         var haloConfig = await Halo.GetHaloConfig(outletId, _dbContext, _encryption);
 
-        HaloLog log = new()
-        {
-            CreatedBy = userId,
-            Type = "GetLink"
-        };
+        HaloLog log = new() { CreatedBy = userId, Type = "GetLink" };
         try
         {
             GetLinkRequestDto requestBody = new()
@@ -48,10 +51,7 @@ public class HaloService
                 Timestamp = DateTime.UtcNow.ToString(),
                 CurrencyCode = "ZAR",
                 IsConsumerApp = false,
-                image = new GetLinkImageDto
-                {
-                    Required = false
-                }
+                image = new GetLinkImageDto { Required = false },
             };
             string? request = JsonSerializer.Serialize(requestBody, new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             log.Request = request;
@@ -95,11 +95,7 @@ public class HaloService
 
     public async Task<Result<StatusResultDto>> GetStatus(string reference, string userId, int outletId)
     {
-        HaloLog log = new()
-        {
-            CreatedBy = userId,
-            Type = "GetStatus"
-        };
+        HaloLog log = new() { CreatedBy = userId, Type = "GetStatus" };
 
         try
         {
@@ -116,7 +112,12 @@ public class HaloService
 
             if (result != null && result.Amount != 0)
             {
-                if (result.ResponseCode == 0 && result.TransactionId != string.Empty && result.AuthorisationCode != string.Empty && result.Disposition == "Approved")
+                if (
+                    result.ResponseCode == 0
+                    && result.TransactionId != string.Empty
+                    && result.AuthorisationCode != string.Empty
+                    && result.Disposition == "Approved"
+                )
                 {
                     Payment? p = await _dbContext.Payment.FirstOrDefaultAsync(x => x.PaymentReference == result.PaymentReference);
                     if (p == null)
@@ -131,7 +132,7 @@ public class HaloService
                                 DateReceived = DateTime.UtcNow,
                                 UserId = userId,
                                 TableBookingId = hRef.TableBookingId,
-                                PaymentTypeId = 1
+                                PaymentTypeId = 1,
                             };
                             await _dbContext.Payment.AddAsync(payment);
                             await _dbContext.SaveChangesAsync();
@@ -141,11 +142,10 @@ public class HaloService
                                 Amount = result.Amount,
                                 PaymentReference = result.PaymentReference,
                                 UserId = userId,
-                                TableBookingId = hRef.TableBookingId
+                                TableBookingId = hRef.TableBookingId,
                             }.PublishAsync(Mode.WaitForNone);
                         }
                     }
-
                 }
                 return Result.Ok(result);
             }

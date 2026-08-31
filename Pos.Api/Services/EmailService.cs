@@ -1,12 +1,11 @@
-
 using System.Net;
-using Pos.Api.Config;
-using Pos.Api.Data;
-using Pos.Api.Entities;
 using MailKit.Net.Smtp;
 using MailKit.Security;
 using Microsoft.Extensions.Options;
 using MimeKit;
+using Pos.Api.Config;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 
 namespace Pos.Api.Services;
 
@@ -38,17 +37,21 @@ public class EmailService(IOptions<EmailConfig> emailConfig, AppDbContext dbCont
 
         var email = string.Join(";", emails.Select(x => x.Address));
 
-        var log = await _dbContext.EmailLog.AddAsync(new EmailLog { Email = email, Subject = subject, Message = message });
+        var log = await _dbContext.EmailLog.AddAsync(
+            new EmailLog
+            {
+                Email = email,
+                Subject = subject,
+                Message = message,
+            }
+        );
 
         var mail = new MimeMessage();
         mail.From.Add(new MailboxAddress(_emailConfig.Name, _emailConfig.Email));
         mail.To.AddRange(emails);
         mail.Subject = subject;
 
-        var builder = new BodyBuilder
-        {
-            TextBody = message
-        };
+        var builder = new BodyBuilder { TextBody = message };
 
         if (attachments != null)
         {
@@ -69,7 +72,6 @@ public class EmailService(IOptions<EmailConfig> emailConfig, AppDbContext dbCont
 
         client.Send(mail);
         client.Disconnect(true);
-
 
         log.Entity.IsSent = true;
         await _dbContext.SaveChangesAsync();

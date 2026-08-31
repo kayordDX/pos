@@ -1,5 +1,5 @@
-using Pos.Api.Config;
 using Microsoft.SemanticKernel;
+using Pos.Api.Config;
 
 namespace Pos.Api.Common.Extensions;
 
@@ -9,15 +9,14 @@ public static class AIExtensions
     {
         var appConfig = configuration.GetSection("App").Get<AppConfig>();
 
-        services.AddGoogleAIGeminiChatCompletion(
-            modelId: appConfig?.GeminiModel ?? "gemini-2.5-flash-lite",
-            apiKey: appConfig?.GeminiKey ?? "no-key"
-        );
+        services.AddGoogleAIGeminiChatCompletion(modelId: appConfig?.GeminiModel ?? "gemini-2.5-flash-lite", apiKey: appConfig?.GeminiKey ?? "no-key");
 
-        services.AddTransient((serviceProvider) =>
-        {
-            return new Kernel(serviceProvider);
-        });
+        services.AddTransient(
+            (serviceProvider) =>
+            {
+                return new Kernel(serviceProvider);
+            }
+        );
 
         return services;
     }

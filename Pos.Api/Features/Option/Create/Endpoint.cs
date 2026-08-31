@@ -1,7 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.Option.Create;
 
@@ -21,7 +20,6 @@ public class Endpoint : Endpoint<Request>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-
         Entities.OptionGroup? optionGroup = await _dbContext.OptionGroup.FirstOrDefaultAsync(x => x.OptionGroupId == req.OptionGroupId);
 
         if (optionGroup == null)

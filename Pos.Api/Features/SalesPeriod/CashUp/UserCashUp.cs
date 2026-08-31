@@ -1,5 +1,5 @@
-
 using Pos.Api.DTO;
+
 namespace Pos.Api.Features.SalesPeriod.CashUp;
 
 public class UserCashUp
@@ -14,6 +14,4 @@ public class UserCashUp
     public decimal UserTipTotal { get; set; } = 0;
 
     public TimeOnly TableTurnaroundTime { get; set; }
-
-
 }

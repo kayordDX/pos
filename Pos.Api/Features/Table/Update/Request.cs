@@ -9,7 +9,6 @@ public class Request
     public int SectionId { get; set; }
     public int Capacity { get; set; }
     public int Position { get; set; }
-
 }
 
 public class Validator : Validator<Request>

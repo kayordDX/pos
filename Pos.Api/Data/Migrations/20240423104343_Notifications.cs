@@ -16,7 +16,8 @@ namespace Pos.Api.Data.Migrations
                 name: "NotificationLog",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table
+                        .Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     UserId = table.Column<string>(type: "text", nullable: false),
                     Token = table.Column<string>(type: "text", nullable: false),
@@ -25,12 +26,13 @@ namespace Pos.Api.Data.Migrations
                     HttpStatusResponse = table.Column<int>(type: "integer", nullable: false),
                     IsSuccess = table.Column<bool>(type: "boolean", nullable: false),
                     Error = table.Column<string>(type: "text", nullable: true),
-                    Payload = table.Column<string>(type: "text", nullable: true)
+                    Payload = table.Column<string>(type: "text", nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NotificationLog", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "NotificationUser",
@@ -38,22 +40,21 @@ namespace Pos.Api.Data.Migrations
                 {
                     UserId = table.Column<string>(type: "text", nullable: false),
                     Token = table.Column<string>(type: "text", nullable: false),
-                    DateInserted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    DateInserted = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NotificationUser", x => new { x.Token, x.UserId });
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "NotificationLog");
+            migrationBuilder.DropTable(name: "NotificationLog");
 
-            migrationBuilder.DropTable(
-                name: "NotificationUser");
+            migrationBuilder.DropTable(name: "NotificationUser");
         }
     }
 }

@@ -1,5 +1,5 @@
-using Pos.Api.Common.Printer;
 using Microsoft.Extensions.Caching.Memory;
+using Pos.Api.Common.Printer;
 
 namespace Pos.Api.Features.Printer.ScanResults;
 

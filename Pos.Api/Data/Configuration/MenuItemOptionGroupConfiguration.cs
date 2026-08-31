@@ -1,6 +1,6 @@
-using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Pos.Api.Entities;
 
 namespace Pos.Api.Data.Configuration;
 
@@ -8,17 +8,10 @@ public class MenuItemOptionGroupConfiguration : IEntityTypeConfiguration<MenuIte
 {
     public void Configure(EntityTypeBuilder<MenuItemOptionGroup> builder)
     {
-        builder
-         .HasKey(k => new { k.OptionGroupId, k.MenuItemId });
+        builder.HasKey(k => new { k.OptionGroupId, k.MenuItemId });
 
-        builder
-            .HasOne(s => s.OptionGroup)
-            .WithMany(m => m.MenuItemOptionGroups)
-            .HasForeignKey(e => e.OptionGroupId);
+        builder.HasOne(s => s.OptionGroup).WithMany(m => m.MenuItemOptionGroups).HasForeignKey(e => e.OptionGroupId);
 
-        builder
-           .HasOne(s => s.MenuItem)
-           .WithMany(m => m.MenuItemOptionGroups)
-           .HasForeignKey(e => e.MenuItemId);
+        builder.HasOne(s => s.MenuItem).WithMany(m => m.MenuItemOptionGroups).HasForeignKey(e => e.MenuItemId);
     }
 }

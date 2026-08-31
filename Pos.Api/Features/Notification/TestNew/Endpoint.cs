@@ -19,12 +19,15 @@ public class Endpoint : Endpoint<Request, bool>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        await PublishAsync(new NotificationEvent()
-        {
-            UserId = req.UserId,
-            Title = req.Title,
-            Body = req.Body
-        }, Mode.WaitForNone);
+        await PublishAsync(
+            new NotificationEvent()
+            {
+                UserId = req.UserId,
+                Title = req.Title,
+                Body = req.Body,
+            },
+            Mode.WaitForNone
+        );
         await Send.OkAsync(true);
     }
 }

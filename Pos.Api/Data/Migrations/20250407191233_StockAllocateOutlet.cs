@@ -10,15 +10,9 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateIndex(
-                name: "ix_stock_allocate_outlet_id",
-                table: "stock_allocate",
-                column: "outlet_id");
+            migrationBuilder.CreateIndex(name: "ix_stock_allocate_outlet_id", table: "stock_allocate", column: "outlet_id");
 
-            migrationBuilder.CreateIndex(
-                name: "ix_stock_allocate_to_outlet_id",
-                table: "stock_allocate",
-                column: "to_outlet_id");
+            migrationBuilder.CreateIndex(name: "ix_stock_allocate_to_outlet_id", table: "stock_allocate", column: "to_outlet_id");
 
             migrationBuilder.AddForeignKey(
                 name: "fk_stock_allocate_outlet_outlet_id",
@@ -26,7 +20,8 @@ namespace Pos.Api.Data.Migrations
                 column: "outlet_id",
                 principalTable: "outlet",
                 principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "fk_stock_allocate_outlet_to_outlet_id",
@@ -34,27 +29,20 @@ namespace Pos.Api.Data.Migrations
                 column: "to_outlet_id",
                 principalTable: "outlet",
                 principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "fk_stock_allocate_outlet_outlet_id",
-                table: "stock_allocate");
+            migrationBuilder.DropForeignKey(name: "fk_stock_allocate_outlet_outlet_id", table: "stock_allocate");
 
-            migrationBuilder.DropForeignKey(
-                name: "fk_stock_allocate_outlet_to_outlet_id",
-                table: "stock_allocate");
+            migrationBuilder.DropForeignKey(name: "fk_stock_allocate_outlet_to_outlet_id", table: "stock_allocate");
 
-            migrationBuilder.DropIndex(
-                name: "ix_stock_allocate_outlet_id",
-                table: "stock_allocate");
+            migrationBuilder.DropIndex(name: "ix_stock_allocate_outlet_id", table: "stock_allocate");
 
-            migrationBuilder.DropIndex(
-                name: "ix_stock_allocate_to_outlet_id",
-                table: "stock_allocate");
+            migrationBuilder.DropIndex(name: "ix_stock_allocate_to_outlet_id", table: "stock_allocate");
         }
     }
 }

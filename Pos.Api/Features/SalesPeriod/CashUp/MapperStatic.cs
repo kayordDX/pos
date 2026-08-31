@@ -8,8 +8,6 @@ namespace Pos.Api.Features.SalesPeriod.CashUp;
 public static partial class MapperStatic
 {
     public static partial IQueryable<BillOrderItemDTO> ProjectToDto(this IQueryable<OrderItem> q);
+
     public static partial IQueryable<UserDTO> ProjectToDto(this IQueryable<Entities.User> q);
-
-
-
 }

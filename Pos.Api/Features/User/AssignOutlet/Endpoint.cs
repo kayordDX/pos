@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.SignalR;
 using Pos.Api.Data;
 using Pos.Api.Hubs;
 using Pos.Api.Services;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Pos.Api.Features.User.AssignOutlet;
 
@@ -53,7 +53,7 @@ public class Endpoint : Endpoint<Request, Entities.UserOutlet>
             {
                 OutletId = req.OutletId,
                 UserId = _cu.UserId,
-                IsCurrent = true
+                IsCurrent = true,
             };
             await _dbContext.AddAsync(outlet);
         }

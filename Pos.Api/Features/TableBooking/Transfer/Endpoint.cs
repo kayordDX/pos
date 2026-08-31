@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableBooking.Transfer;
 
@@ -35,7 +35,7 @@ public class Endpoint : Endpoint<Request>
             ByUserId = _user.UserId ?? "",
             FromUserId = tableBooking.UserId,
             ToUserId = req.TransferUserId,
-            TableBookingId = req.TableBookingId
+            TableBookingId = req.TableBookingId,
         };
 
         tableBooking.UserId = req.TransferUserId;

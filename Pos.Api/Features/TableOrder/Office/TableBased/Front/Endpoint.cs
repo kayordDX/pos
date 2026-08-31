@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Features.Role;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableOrder.Office.TableBased.Front;
 
@@ -27,34 +27,39 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
 
         List<int> divisionIds = await RoleHelper.GetDivisionsForRoles(req.RoleIds, _dbContext, userOutlet.OutletId, _cu.UserId);
 
-        List<int> statusIds = await _dbContext.OrderItemStatus
-            .AsNoTracking()
+        List<int> statusIds = await _dbContext
+            .OrderItemStatus.AsNoTracking()
             .Where(x => x.IsFrontLine && x.IsComplete != true && x.IsCancelled != true)
             .Select(x => x.OrderItemStatusId)
             .ToListAsync(ct);
 
-        var result = await _dbContext.TableBooking
-            .AsNoTracking()
+        var result = await _dbContext
+            .TableBooking.AsNoTracking()
             .Where(x =>
-                x.SalesPeriod.OutletId == userOutlet.OutletId &&
-                x.CloseDate == null &&
-                x.UserId == _cu.UserId &&
-                x.OrderItems!.Any(oi =>
-                    statusIds.Contains(oi.OrderItemStatusId) &&
-                    divisionIds.Contains(oi.MenuItem.DivisionId) &&
-                    oi.OrderItemStatusId != 1 &&
-                    oi.OrderItemStatusId != 6))
+                x.SalesPeriod.OutletId == userOutlet.OutletId
+                && x.CloseDate == null
+                && x.UserId == _cu.UserId
+                && x.OrderItems!.Any(oi =>
+                    statusIds.Contains(oi.OrderItemStatusId)
+                    && divisionIds.Contains(oi.MenuItem.DivisionId)
+                    && oi.OrderItemStatusId != 1
+                    && oi.OrderItemStatusId != 6
+                )
+            )
             .ProjectToDto()
             .ToListAsync(ct);
 
         result.ForEach(dto =>
         {
-            dto.OrderItems = [.. dto.OrderItems!
-                .Where(oi =>
-                    statusIds.Contains(oi.OrderItemStatusId) &&
-                    divisionIds.Contains(oi.MenuItem.DivisionId) &&
-                    oi.OrderItemStatusId != 1 &&
-                    oi.OrderItemStatusId != 6)];
+            dto.OrderItems =
+            [
+                .. dto.OrderItems!.Where(oi =>
+                    statusIds.Contains(oi.OrderItemStatusId)
+                    && divisionIds.Contains(oi.MenuItem.DivisionId)
+                    && oi.OrderItemStatusId != 1
+                    && oi.OrderItemStatusId != 6
+                ),
+            ];
         });
 
         Response response = new()
@@ -62,7 +67,7 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
             LastRefresh = DateTime.Now,
             PendingItems = result.Sum(n => n.OrderItems?.Count) ?? 0,
             PendingTables = result.Count,
-            Tables = result
+            Tables = result,
         };
         await Send.OkAsync(response, ct);
     }

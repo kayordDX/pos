@@ -19,22 +19,16 @@ namespace Pos.Api.Data.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                 oldClrType: typeof(DateTime),
                 oldType: "timestamp with time zone",
-                oldNullable: true);
+                oldNullable: true
+            );
 
-            migrationBuilder.AddColumn<string>(
-                name: "by_user_id",
-                table: "table_booking_transfer",
-                type: "text",
-                nullable: false,
-                defaultValue: "");
+            migrationBuilder.AddColumn<string>(name: "by_user_id", table: "table_booking_transfer", type: "text", nullable: false, defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "by_user_id",
-                table: "table_booking_transfer");
+            migrationBuilder.DropColumn(name: "by_user_id", table: "table_booking_transfer");
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "transfer_date",
@@ -42,7 +36,8 @@ namespace Pos.Api.Data.Migrations
                 type: "timestamp with time zone",
                 nullable: true,
                 oldClrType: typeof(DateTime),
-                oldType: "timestamp with time zone");
+                oldType: "timestamp with time zone"
+            );
         }
     }
 }

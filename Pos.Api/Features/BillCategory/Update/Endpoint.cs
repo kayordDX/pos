@@ -28,5 +28,4 @@ public class Endpoint : Endpoint<Request, Entities.BillCategory>
         await _dbContext.SaveChangesAsync();
         await Send.OkAsync(entity);
     }
-
 }

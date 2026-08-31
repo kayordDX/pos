@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 using TickerQ.EntityFrameworkCore.DbContextFactory;
 
 namespace Pos.Api.Common.Extensions;
@@ -11,10 +11,7 @@ public static class DataExtensions
         services.AddDbContext<AppDbContext>(options =>
         {
             options.UseSnakeCaseNamingConvention();
-            options.UseNpgsql(
-                configuration.GetConnectionString("DefaultConnection"),
-                b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName)
-            );
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), b => b.MigrationsAssembly(typeof(AppDbContext).Assembly.FullName));
             if (environment.IsDevelopment())
             {
                 options.EnableSensitiveDataLogging();

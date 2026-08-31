@@ -2,7 +2,6 @@ namespace Pos.Api.Features.Extra.Update;
 
 public class Request
 {
-
     public int ExtraId { get; set; }
     public string Name { get; set; } = string.Empty;
     public int PositionId { get; set; }

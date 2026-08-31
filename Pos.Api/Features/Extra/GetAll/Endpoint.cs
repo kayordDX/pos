@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Extra.GetAll;
 
@@ -9,12 +9,10 @@ public class Endpoint : EndpointWithoutRequest<List<Pos.Api.Entities.Extra>>
     private readonly AppDbContext _dbContext;
     private readonly CurrentUserService _user;
 
-
     public Endpoint(AppDbContext dbContext, CurrentUserService user)
     {
         _dbContext = dbContext;
         _user = user;
-
     }
 
     public override void Configure()
@@ -30,11 +28,9 @@ public class Endpoint : EndpointWithoutRequest<List<Pos.Api.Entities.Extra>>
             await Send.NotFoundAsync();
             return;
         }
-        var ExtraGroupIds = await _dbContext.OutletExtraGroup.Where(x => x.OutletId == outlet.OutletId).Select(x => x.ExtraGroupId).ToListAsync(); ;
-        var results = await _dbContext.Extra
-        .Where(x => ExtraGroupIds.Contains(x.ExtraGroupId))
-        .OrderBy(x => x.Name)
-        .ToListAsync();
+        var ExtraGroupIds = await _dbContext.OutletExtraGroup.Where(x => x.OutletId == outlet.OutletId).Select(x => x.ExtraGroupId).ToListAsync();
+        ;
+        var results = await _dbContext.Extra.Where(x => ExtraGroupIds.Contains(x.ExtraGroupId)).OrderBy(x => x.Name).ToListAsync();
         await Send.OkAsync(results);
     }
 }

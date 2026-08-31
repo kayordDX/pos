@@ -10,10 +10,7 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateIndex(
-                name: "ix_user_outlet_outlet_id",
-                table: "user_outlet",
-                column: "outlet_id");
+            migrationBuilder.CreateIndex(name: "ix_user_outlet_outlet_id", table: "user_outlet", column: "outlet_id");
 
             migrationBuilder.AddForeignKey(
                 name: "fk_user_outlet_outlet_outlet_id",
@@ -21,19 +18,16 @@ namespace Pos.Api.Data.Migrations
                 column: "outlet_id",
                 principalTable: "outlet",
                 principalColumn: "id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "fk_user_outlet_outlet_outlet_id",
-                table: "user_outlet");
+            migrationBuilder.DropForeignKey(name: "fk_user_outlet_outlet_outlet_id", table: "user_outlet");
 
-            migrationBuilder.DropIndex(
-                name: "ix_user_outlet_outlet_id",
-                table: "user_outlet");
+            migrationBuilder.DropIndex(name: "ix_user_outlet_outlet_id", table: "user_outlet");
         }
     }
 }

@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableBooking.Get;
 
@@ -22,10 +22,7 @@ public class Endpoint : Endpoint<Request, Response>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var result = await _dbContext.TableBooking
-            .Where(x => x.Id == req.Id)
-            .ProjectToDto()
-            .FirstOrDefaultAsync();
+        var result = await _dbContext.TableBooking.Where(x => x.Id == req.Id).ProjectToDto().FirstOrDefaultAsync();
 
         if (result == null)
         {

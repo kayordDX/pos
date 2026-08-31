@@ -28,8 +28,6 @@ public class Endpoint : Endpoint<Request>
         division.DivisionTypeId = req.DivisionTypeId;
         division.OutletId = req.OutletId;
 
-
-
         await _dbContext.SaveChangesAsync();
 
         await Send.NoContentAsync();

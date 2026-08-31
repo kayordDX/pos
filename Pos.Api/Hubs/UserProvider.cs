@@ -1,5 +1,5 @@
-using Pos.Api.Services;
 using Microsoft.AspNetCore.SignalR;
+using Pos.Api.Services;
 
 namespace Pos.Api.Hubs;
 

@@ -7,27 +7,20 @@ namespace Pos.Api.Features.Bill.PrintBill;
 public static class BillPrint
 {
     private static readonly EPSON e = new();
+
     public static List<byte[]> GetBillPrintInstructions(PdfRequest request, int lineCharacters)
     {
-        List<byte[]> printInstructions = [
-            ..Header(request),
-            ..Body(request, lineCharacters),
-            ..Footer(request, lineCharacters)
-        ];
+        List<byte[]> printInstructions = [.. Header(request), .. Body(request, lineCharacters), .. Footer(request, lineCharacters)];
         return printInstructions;
     }
 
     private static List<byte[]> Body(PdfRequest request, int lineCharacters)
     {
-        List<byte[]> body = [
-           e.SetStyles(PrintStyle.FontB),
-            e.FeedLines(3),
-            e.LeftAlign(),
-         ];
+        List<byte[]> body = [e.SetStyles(PrintStyle.FontB), e.FeedLines(3), e.LeftAlign()];
 
         foreach (var item in request.Items)
         {
-            string left = $"{item.Count,-2} {item.Name}";
+            string left = $"{item.Count, -2} {item.Name}";
             body.Add(PrintColumnLine(left, $"{item.Price:0.00}", $"{item.TotalPrice:0.00}", lineCharacters));
             foreach (var subItem in item.Items ?? [])
             {
@@ -45,7 +38,8 @@ public static class BillPrint
     private static List<byte[]> Header(PdfRequest request)
     {
         string billStatus = request.IsClosed ? "Closed" : "Open";
-        List<byte[]> header = [
+        List<byte[]> header =
+        [
             e.CenterAlign(),
             e.PrintLine(""),
             e.SetStyles(PrintStyle.Bold),
@@ -76,9 +70,10 @@ public static class BillPrint
 
         byte[] tip = request.IsClosed ? PrintColumnLine("Tip", $"{request.TipAmount:0.00}", boldLineChars) : [];
 
-        List<byte[]> footer = [
+        List<byte[]> footer =
+        [
             PrintCharLine('-', lineCharacters),
-            ..divisions,
+            .. divisions,
             e.SetStyles(PrintStyle.Bold),
             PrintColumnLine("Total", $"{request.Total:0.00}", boldLineChars),
             e.SetStyles(PrintStyle.None),
@@ -93,7 +88,7 @@ public static class BillPrint
             e.PrintLine(""),
             PrintColumnLine("Total: ", "______________________________", lineCharacters),
             e.FeedLines(5),
-            e.FullCut()
+            e.FullCut(),
         ];
         return footer;
     }
@@ -164,7 +159,8 @@ public static class BillPrint
 
         // Calculate available space for left text (before center)
         int availableForL = centerStart - MIN_SPACE;
-        if (availableForL < 0) availableForL = 0;
+        if (availableForL < 0)
+            availableForL = 0;
 
         // Truncate left if needed (with ellipsis)
         if (fL.Length > availableForL)
@@ -176,7 +172,8 @@ public static class BillPrint
 
         // Calculate available space for center text
         int availableForC = maxLength - centerStart - fR.Length;
-        if (availableForC < 0) availableForC = 0;
+        if (availableForC < 0)
+            availableForC = 0;
 
         // Truncate center if needed
         if (fC.Length > availableForC)

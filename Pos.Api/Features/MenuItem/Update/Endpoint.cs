@@ -1,8 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.MenuItem.Update;
 
@@ -25,7 +24,6 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuItem>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-
         Entities.MenuItem? menuItem = await _dbContext.MenuItem.FindAsync(req.Id);
 
         if (menuItem != null)
@@ -42,60 +40,37 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuItem>
 
             if (req.ExtraGroupIds != null)
             {
-
-                var existingExtraGroups = await _dbContext.MenuItemExtraGroup
-                    .Where(x => x.MenuItemId == menuItem.MenuItemId)
-                    .ToListAsync(ct);
+                var existingExtraGroups = await _dbContext.MenuItemExtraGroup.Where(x => x.MenuItemId == menuItem.MenuItemId).ToListAsync(ct);
 
                 var existingExtraGroupIds = existingExtraGroups.Select(x => x.ExtraGroupId).ToHashSet();
                 var receivedExtraGroupIds = req.ExtraGroupIds.ToHashSet();
-
 
                 var idsToAdd = receivedExtraGroupIds.Except(existingExtraGroupIds);
 
                 var idsToRemove = existingExtraGroupIds.Except(receivedExtraGroupIds);
 
-
-                var newExtraGroups = idsToAdd.Select(id => new MenuItemExtraGroup
-                {
-                    ExtraGroupId = id,
-                    MenuItemId = menuItem.MenuItemId
-                });
+                var newExtraGroups = idsToAdd.Select(id => new MenuItemExtraGroup { ExtraGroupId = id, MenuItemId = menuItem.MenuItemId });
                 await _dbContext.MenuItemExtraGroup.AddRangeAsync(newExtraGroups, ct);
 
-
-                var extraGroupsToRemove = existingExtraGroups
-                    .Where(x => idsToRemove.Contains(x.ExtraGroupId));
+                var extraGroupsToRemove = existingExtraGroups.Where(x => idsToRemove.Contains(x.ExtraGroupId));
                 _dbContext.MenuItemExtraGroup.RemoveRange(extraGroupsToRemove);
             }
 
             if (req.OptionGroupIds != null)
             {
-
-                var existingOptionGroups = await _dbContext.MenuItemOptionGroup
-                    .Where(x => x.MenuItemId == menuItem.MenuItemId)
-                    .ToListAsync(ct);
-
+                var existingOptionGroups = await _dbContext.MenuItemOptionGroup.Where(x => x.MenuItemId == menuItem.MenuItemId).ToListAsync(ct);
 
                 var existingOptionGroupIds = existingOptionGroups.Select(x => x.OptionGroupId).ToHashSet();
                 var receivedOptionGroupIds = req.OptionGroupIds.ToHashSet();
-
 
                 var idsToAdd = receivedOptionGroupIds.Except(existingOptionGroupIds);
 
                 var idsToRemove = existingOptionGroupIds.Except(receivedOptionGroupIds);
 
-
-                var newOptionGroups = idsToAdd.Select(id => new MenuItemOptionGroup
-                {
-                    OptionGroupId = id,
-                    MenuItemId = menuItem.MenuItemId
-                });
+                var newOptionGroups = idsToAdd.Select(id => new MenuItemOptionGroup { OptionGroupId = id, MenuItemId = menuItem.MenuItemId });
                 await _dbContext.MenuItemOptionGroup.AddRangeAsync(newOptionGroups, ct);
 
-
-                var optionGroupsToRemove = existingOptionGroups
-                    .Where(x => idsToRemove.Contains(x.OptionGroupId));
+                var optionGroupsToRemove = existingOptionGroups.Where(x => idsToRemove.Contains(x.OptionGroupId));
                 _dbContext.MenuItemOptionGroup.RemoveRange(optionGroupsToRemove);
             }
 
@@ -108,7 +83,5 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuItem>
         {
             throw new Exception("Sorry, the princess is in another castle.");
         }
-
-
     }
 }

@@ -1,5 +1,6 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
+
 namespace Pos.Api.Features.Stock.Category;
 
 public class Endpoint : Endpoint<Request, List<Response>>
@@ -18,18 +19,22 @@ public class Endpoint : Endpoint<Request, List<Response>>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var results = await _dbContext.Database.SqlQuery<Response>($"""
-            select
-                id,
-                name,
-                parent_id,
-                parent_name,
-                outlet_Id,
-                display_name
-            from
-                vw_stock_category
-            where outlet_id = {req.OutletId} and parent_name is not null
-        """).ToListAsync(ct);
+        var results = await _dbContext
+            .Database.SqlQuery<Response>(
+                $"""
+                    select
+                        id,
+                        name,
+                        parent_id,
+                        parent_name,
+                        outlet_Id,
+                        display_name
+                    from
+                        vw_stock_category
+                    where outlet_id = {req.OutletId} and parent_name is not null
+                """
+            )
+            .ToListAsync(ct);
         await Send.OkAsync(results);
     }
 }

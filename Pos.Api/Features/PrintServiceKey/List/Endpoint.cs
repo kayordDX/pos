@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.DTO;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.PrintServiceKey.List;
 
@@ -18,8 +18,8 @@ public class Endpoint(Data.AppDbContext dbContext, UserService userService) : En
     public override async Task HandleAsync(CancellationToken ct)
     {
         int outletId = await _userService.GetOutletId();
-        var results = await _dbContext.PrintServiceKey
-            .AsNoTracking()
+        var results = await _dbContext
+            .PrintServiceKey.AsNoTracking()
             .Where(x => x.OutletId == outletId && x.RevokedAt == null)
             .OrderByDescending(x => x.Created)
             .Select(x => new PrintServiceKeyDTO
@@ -31,7 +31,7 @@ public class Endpoint(Data.AppDbContext dbContext, UserService userService) : En
                 MaskedKey = PrintServiceKeyMask.MaskKey(x.KeyId),
                 LastSeenAt = x.LastSeenAt,
                 RevokedAt = x.RevokedAt,
-                Created = x.Created
+                Created = x.Created,
             })
             .ToListAsync(ct);
 

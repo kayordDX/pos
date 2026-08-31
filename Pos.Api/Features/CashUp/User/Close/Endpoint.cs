@@ -1,6 +1,6 @@
-
 using Pos.Api.Data;
 using Pos.Api.Services;
+
 namespace Pos.Api.Features.CashUp.User.Close;
 
 public class Endpoint : Endpoint<Request, Detail.Response>

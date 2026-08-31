@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Stock.OrderItem.Status;
 

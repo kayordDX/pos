@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Events;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Pay;
 
@@ -34,7 +34,7 @@ public class PaymentCompletedHandler : IEventHandler<PaymentCompletedEvent>
             DateReceived = DateTime.UtcNow,
             UserId = eventModel.UserId,
             TableBookingId = eventModel.TableBookingId,
-            PaymentTypeId = 1
+            PaymentTypeId = 1,
         };
 
         // Running this in process to prevent duplicates.
@@ -48,7 +48,7 @@ public class PaymentCompletedHandler : IEventHandler<PaymentCompletedEvent>
         {
             UserId = payment.UserId,
             Title = title,
-            Body = body
+            Body = body,
         }.PublishAsync(Mode.WaitForNone);
     }
 }

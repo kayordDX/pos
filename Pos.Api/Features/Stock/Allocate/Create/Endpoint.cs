@@ -1,7 +1,6 @@
 using Pos.Api.Data;
 using Pos.Api.Services;
 
-
 namespace Pos.Api.Features.Stock.Allocate.Create;
 
 public class Endpoint : Endpoint<Request, Entities.StockOrder>

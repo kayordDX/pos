@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Events;
 using Pos.Api.Features.Stock;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableOrder.UpdateOrderItem;
 
@@ -47,8 +47,8 @@ public class Endpoint : Endpoint<Request, Response>
 
         foreach (int r in req.OrderItemIds)
         {
-            OrderItem? entity = await _dbContext.OrderItem
-                .Include(x => x.TableBooking)
+            OrderItem? entity = await _dbContext
+                .OrderItem.Include(x => x.TableBooking)
                     .ThenInclude(x => x.SalesPeriod)
                 .Include(x => x.TableBooking)
                     .ThenInclude(x => x.Table)
@@ -89,7 +89,6 @@ public class Endpoint : Endpoint<Request, Response>
                 }
 
                 status = oIS?.Status;
-
 
                 if (req.OrderItemStatusId == 2)
                 {
@@ -133,7 +132,6 @@ public class Endpoint : Endpoint<Request, Response>
                     }
                 }
 
-
                 if (oIS?.IsNotify ?? false)
                 {
                     Entities.MenuItem? i = await _dbContext.MenuItem.FirstOrDefaultAsync(x => x.MenuItemId == entity.MenuItemId);
@@ -171,18 +169,28 @@ public class Endpoint : Endpoint<Request, Response>
             await PublishAsync(new StockEvent() { OrderItemIds = req.OrderItemIds, IsReverse = oIS?.IsUpdateStockReverse ?? false }, Mode.WaitForNone);
         }
 
-
         if (notification != "")
         {
-            await PublishAsync(new NotificationEvent()
-            {
-                UserId = tUserId,
-                Title = "Item Status",
-                Body = tableName + " - " + notification + " - " + status,
-            }, Mode.WaitForNone);
+            await PublishAsync(
+                new NotificationEvent()
+                {
+                    UserId = tUserId,
+                    Title = "Item Status",
+                    Body = tableName + " - " + notification + " - " + status,
+                },
+                Mode.WaitForNone
+            );
         }
 
-        await PublishAsync(new SoundEvent() { OutletId = outletId, DivisionIds = divisions, IsSilent = !soundNotify }, Mode.WaitForNone);
+        await PublishAsync(
+            new SoundEvent()
+            {
+                OutletId = outletId,
+                DivisionIds = divisions,
+                IsSilent = !soundNotify,
+            },
+            Mode.WaitForNone
+        );
 
         await _dbContext.SaveChangesAsync();
         await Send.OkAsync(new Response() { IsSuccess = isSuccess, Message = message });

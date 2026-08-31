@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableOrder.AddItems;
 
@@ -17,9 +17,7 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var tableBooking = await _dbContext.TableBooking
-            .Include(x => x.SalesPeriod)
-            .FirstOrDefaultAsync(x => x.Id == req.TableBookingId, ct);
+        var tableBooking = await _dbContext.TableBooking.Include(x => x.SalesPeriod).FirstOrDefaultAsync(x => x.Id == req.TableBookingId, ct);
 
         if (tableBooking == null)
         {
@@ -40,8 +38,8 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
         {
             for (int q = 1; q <= order.Quantity; q++)
             {
-                var menuItem = await _dbContext.MenuItem
-                    .Include(x => x.MenuSection)!
+                var menuItem = await _dbContext
+                    .MenuItem.Include(x => x.MenuSection)!
                         .ThenInclude(x => x.Menu)
                     .FirstOrDefaultAsync(x => x.MenuItemId == order.MenuItemId, ct);
 
@@ -66,7 +64,7 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
                     MenuItemId = order.MenuItemId,
                     OrderItemStatusId = 1,
                     Note = order.Note,
-                    UserId = _cu.UserId
+                    UserId = _cu.UserId,
                 };
 
                 if (order.OptionIds != null)

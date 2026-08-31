@@ -24,5 +24,4 @@ public class PaymentTotal
     public decimal Total { get; set; }
     public decimal Tip { get; set; }
     public decimal Levy { get; set; }
-
 }

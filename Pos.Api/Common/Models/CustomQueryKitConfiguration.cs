@@ -10,7 +10,5 @@ public class CustomQueryKitConfiguration : QueryKitConfiguration
             // configure custom global settings here
             // settings.EqualsOperator = "eq";
             configureSettings?.Invoke(settings);
-        })
-    {
-    }
+        }) { }
 }

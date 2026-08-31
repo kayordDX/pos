@@ -1,5 +1,3 @@
-
-
 namespace Pos.Api.Features.Bill.EmailBill;
 
 public class Request

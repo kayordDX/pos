@@ -1,5 +1,6 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
+
 namespace Pos.Api.Features.BillCategory.GetAll;
 
 public class Endpoint : Endpoint<Request, List<Entities.BillCategory>>
@@ -22,6 +23,3 @@ public class Endpoint : Endpoint<Request, List<Entities.BillCategory>>
         await Send.OkAsync(results);
     }
 }
-
-
-

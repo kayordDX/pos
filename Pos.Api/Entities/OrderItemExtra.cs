@@ -7,5 +7,4 @@ public class OrderItemExtra
     public OrderItem OrderItem { get; set; } = default!;
     public int ExtraId { get; set; }
     public Extra Extra { get; set; } = default!;
-
 }

@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Extra.Items;
 
@@ -10,12 +10,10 @@ public class Endpoint : Endpoint<Request, List<ExtraDTO>>
     private readonly AppDbContext _dbContext;
     private readonly CurrentUserService _user;
 
-
     public Endpoint(AppDbContext dbContext, CurrentUserService user)
     {
         _dbContext = dbContext;
         _user = user;
-
     }
 
     public override void Configure()
@@ -27,10 +25,7 @@ public class Endpoint : Endpoint<Request, List<ExtraDTO>>
     {
         var outletId = await Helper.GetUserOutlet(_dbContext, _user.UserId ?? "");
 
-        var results = await _dbContext.Extra
-            .Where(x => x.OutletId == outletId && x.ExtraGroupId == r.Id)
-            .ProjectToDto()
-            .ToListAsync(ct);
+        var results = await _dbContext.Extra.Where(x => x.OutletId == outletId && x.ExtraGroupId == r.Id).ProjectToDto().ToListAsync(ct);
 
         await Send.OkAsync(results);
     }

@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Stock.Allocate.Item.Action;
 
@@ -23,10 +23,7 @@ public class Endpoint : Endpoint<Request, StockAllocateItem>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var entity = await _dbContext.StockAllocateItem
-            .Where(x => x.Id == req.Id)
-            .Include(x => x.StockAllocate)
-            .FirstOrDefaultAsync(ct);
+        var entity = await _dbContext.StockAllocateItem.Where(x => x.Id == req.Id).Include(x => x.StockAllocate).FirstOrDefaultAsync(ct);
 
         if (entity == null)
         {

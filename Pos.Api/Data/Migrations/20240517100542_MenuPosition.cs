@@ -10,20 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "Position",
-                table: "Menu",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>(name: "Position", table: "Menu", type: "integer", nullable: false, defaultValue: 0);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "Position",
-                table: "Menu");
+            migrationBuilder.DropColumn(name: "Position", table: "Menu");
         }
     }
 }

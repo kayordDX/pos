@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.SignalR;
 using Pos.Api.Data;
 using Pos.Api.Hubs;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Pos.Api.Features.Notification.User;
 

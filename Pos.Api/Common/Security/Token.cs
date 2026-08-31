@@ -35,7 +35,7 @@ public static class Token
             IssuedAt = DateTime.UtcNow,
             Subject = new(claimList),
             Expires = expireAt,
-            SigningCredentials = GetSigningCredentials(signingKey)
+            SigningCredentials = GetSigningCredentials(signingKey),
         };
 
 #if NET8_0_OR_GREATER

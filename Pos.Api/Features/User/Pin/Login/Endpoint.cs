@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.User.Pin.Login;
 
@@ -58,10 +58,7 @@ public class Endpoint : Endpoint<Request, Response>
 
         // Generate token
         var token = await _userService.GetCustomToken(r.UserId);
-        Response result = new()
-        {
-            Token = token
-        };
+        Response result = new() { Token = token };
         await Send.OkAsync(result);
     }
 }

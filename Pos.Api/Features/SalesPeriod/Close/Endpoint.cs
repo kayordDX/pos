@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Events;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.SalesPeriod.Close;
 
@@ -36,19 +36,23 @@ public class Endpoint : Endpoint<Request, Entities.SalesPeriod>
         }
 
         // Check if any in progress orders
-        OrderResult? inProgressOrderCount = await _dbContext.Database.SqlQuery<OrderResult>($"""
-            SELECT
-                count(order_item_id) count
-            FROM order_item oi
-            JOIN order_item_status ois
-                ON oi.order_item_status_id = ois.order_item_status_id
-            JOIN table_booking tb
-                ON tb.id = oi.table_booking_id
-            JOIN sales_period s
-                ON s.id = tb.sales_period_id
-            WHERE ois.is_back_office = true
-            AND s.outlet_id = {entity.OutletId}
-        """).FirstOrDefaultAsync(ct);
+        OrderResult? inProgressOrderCount = await _dbContext
+            .Database.SqlQuery<OrderResult>(
+                $"""
+                    SELECT
+                        count(order_item_id) count
+                    FROM order_item oi
+                    JOIN order_item_status ois
+                        ON oi.order_item_status_id = ois.order_item_status_id
+                    JOIN table_booking tb
+                        ON tb.id = oi.table_booking_id
+                    JOIN sales_period s
+                        ON s.id = tb.sales_period_id
+                    WHERE ois.is_back_office = true
+                    AND s.outlet_id = {entity.OutletId}
+                """
+            )
+            .FirstOrDefaultAsync(ct);
 
         if (inProgressOrderCount?.Count > 0)
         {
@@ -58,10 +62,7 @@ public class Endpoint : Endpoint<Request, Entities.SalesPeriod>
         entity.EndDate = DateTime.Now;
 
         // Clock out all users
-        _dbContext.Clock
-            .Where(x => x.OutletId == entity.OutletId && x.EndDate == null)
-            .ToList()
-            .ForEach(x => x.EndDate = DateTime.Now);
+        _dbContext.Clock.Where(x => x.OutletId == entity.OutletId && x.EndDate == null).ToList().ForEach(x => x.EndDate = DateTime.Now);
 
         await _dbContext.SaveChangesAsync(ct);
 
@@ -69,7 +70,7 @@ public class Endpoint : Endpoint<Request, Entities.SalesPeriod>
         {
             SalesPeriodId = entity.Id,
             OutletId = entity.OutletId,
-            CreatedBy = _cu.UserId ?? ""
+            CreatedBy = _cu.UserId ?? "",
         }.PublishAsync(Mode.WaitForNone, ct);
 
         await Send.OkAsync(entity);

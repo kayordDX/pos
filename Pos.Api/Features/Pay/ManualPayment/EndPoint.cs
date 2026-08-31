@@ -7,6 +7,7 @@ public class Endpoint : Endpoint<Request, Entities.Payment>
 {
     private readonly AppDbContext _dbContext;
     private readonly CurrentUserService _cu;
+
     public Endpoint(AppDbContext dbContext, CurrentUserService cu)
     {
         _dbContext = dbContext;
@@ -27,7 +28,7 @@ public class Endpoint : Endpoint<Request, Entities.Payment>
             DateReceived = DateTime.UtcNow,
             UserId = _cu.UserId ?? "",
             TableBookingId = req.TableBookingId,
-            PaymentTypeId = req.PaymentTypeId
+            PaymentTypeId = req.PaymentTypeId,
         };
 
         await _dbContext.Payment.AddAsync(entity);

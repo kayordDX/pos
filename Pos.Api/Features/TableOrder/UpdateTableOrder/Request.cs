@@ -4,5 +4,4 @@ public class Request
 {
     public int TableBookingId { get; set; }
     public int OrderItemStatusId { get; set; }
-
 }

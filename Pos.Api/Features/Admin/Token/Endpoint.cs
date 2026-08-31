@@ -23,10 +23,7 @@ public class Endpoint : Endpoint<Request, Response>
         if (_currentUserService.UserId == "92jlIC3p9uUavQOw5Pf5bX61ck13")
         {
             var token = await _userService.GetCustomToken(r.UserId);
-            Response result = new()
-            {
-                Token = token
-            };
+            Response result = new() { Token = token };
             await Send.OkAsync(result);
         }
         else

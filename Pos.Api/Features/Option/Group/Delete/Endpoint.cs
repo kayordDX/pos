@@ -1,8 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.Option.Group.Delete;
 
@@ -41,5 +40,3 @@ public class Endpoint : Endpoint<Request>
         }
     }
 }
-
-

@@ -10,19 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "TotalPayment",
-                table: "TableBooking",
-                newName: "TotalPayments");
+            migrationBuilder.RenameColumn(name: "TotalPayment", table: "TableBooking", newName: "TotalPayments");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "TotalPayments",
-                table: "TableBooking",
-                newName: "TotalPayment");
+            migrationBuilder.RenameColumn(name: "TotalPayments", table: "TableBooking", newName: "TotalPayment");
         }
     }
 }

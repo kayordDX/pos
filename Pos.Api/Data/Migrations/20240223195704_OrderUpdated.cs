@@ -16,15 +16,14 @@ namespace Pos.Api.Data.Migrations
                 table: "OrderItem",
                 type: "timestamp with time zone",
                 nullable: false,
-                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified));
+                defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified)
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "OrderUpdated",
-                table: "OrderItem");
+            migrationBuilder.DropColumn(name: "OrderUpdated", table: "OrderItem");
         }
     }
 }

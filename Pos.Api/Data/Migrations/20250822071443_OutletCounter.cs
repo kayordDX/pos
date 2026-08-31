@@ -21,7 +21,7 @@ namespace Pos.Api.Data.Migrations
                     created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     created_by = table.Column<string>(type: "text", nullable: true),
                     last_modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    last_modified_by = table.Column<string>(type: "text", nullable: true)
+                    last_modified_by = table.Column<string>(type: "text", nullable: true),
                 },
                 constraints: table =>
                 {
@@ -31,20 +31,18 @@ namespace Pos.Api.Data.Migrations
                         column: x => x.outlet_id,
                         principalTable: "outlet",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "ix_outlet_counter_outlet_id",
-                table: "outlet_counter",
-                column: "outlet_id");
+            migrationBuilder.CreateIndex(name: "ix_outlet_counter_outlet_id", table: "outlet_counter", column: "outlet_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "outlet_counter");
+            migrationBuilder.DropTable(name: "outlet_counter");
         }
     }
 }

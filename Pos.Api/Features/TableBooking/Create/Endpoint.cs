@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableBooking.Create;
 
@@ -37,7 +37,10 @@ public class Endpoint : Endpoint<Request, Entities.TableBooking>
         }
 
         // Check if already open booking for this table.
-        var existing = await _dbContext.TableBooking.FirstOrDefaultAsync(x => x.TableId == req.TableId && x.SalesPeriodId == req.SalesPeriodId && x.CloseDate == null, ct);
+        var existing = await _dbContext.TableBooking.FirstOrDefaultAsync(
+            x => x.TableId == req.TableId && x.SalesPeriodId == req.SalesPeriodId && x.CloseDate == null,
+            ct
+        );
         if (existing != null)
         {
             ValidationContext.Instance.ThrowError("This table is already booked");
@@ -48,7 +51,7 @@ public class Endpoint : Endpoint<Request, Entities.TableBooking>
             TableId = req.TableId,
             BookingName = req.BookingName,
             SalesPeriodId = req.SalesPeriodId,
-            UserId = _user.UserId
+            UserId = _user.UserId,
         };
 
         await _dbContext.TableBooking.AddAsync(entity, ct);

@@ -18,11 +18,7 @@ public class Endpoint : Endpoint<Request, Entities.BillCategory>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        Pos.Api.Entities.BillCategory entity = new Pos.Api.Entities.BillCategory()
-        {
-            Name = req.Name,
-            OutletId = req.OutletId
-        };
+        Pos.Api.Entities.BillCategory entity = new Pos.Api.Entities.BillCategory() { Name = req.Name, OutletId = req.OutletId };
         await _dbContext.BillCategory.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
     }

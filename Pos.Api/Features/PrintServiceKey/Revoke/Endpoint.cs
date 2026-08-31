@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 using Pos.Api.Common.Printer;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.Extensions.Caching.Memory;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.PrintServiceKey.Revoke;
 
@@ -28,9 +28,7 @@ public class Endpoint : Endpoint<Request>
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
         int outletId = await _userService.GetOutletId();
-        var entity = await _dbContext.PrintServiceKey
-            .Where(x => x.Id == req.Id && x.OutletId == outletId)
-            .FirstOrDefaultAsync(ct);
+        var entity = await _dbContext.PrintServiceKey.Where(x => x.Id == req.Id && x.OutletId == outletId).FirstOrDefaultAsync(ct);
 
         if (entity == null)
         {

@@ -1,8 +1,8 @@
 using System.Reflection;
-using Pos.Api.Entities;
-using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Pos.Api.Entities;
+using Pos.Api.Services;
 
 namespace Pos.Api.Data;
 
@@ -10,10 +10,7 @@ public class AppDbContext : DbContext
 {
     private readonly CurrentUserService _currentUserService;
 
-    public AppDbContext(
-        DbContextOptions<AppDbContext> options,
-        CurrentUserService currentUserService
-    )
+    public AppDbContext(DbContextOptions<AppDbContext> options, CurrentUserService currentUserService)
         : base(options)
     {
         _currentUserService = currentUserService;
@@ -103,10 +100,7 @@ public class AppDbContext : DbContext
     {
         base.OnModelCreating(builder);
 
-        var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
-            v => v.ToUniversalTime(),
-            v => DateTime.SpecifyKind(v, DateTimeKind.Utc)
-        );
+        var dateTimeConverter = new ValueConverter<DateTime, DateTime>(v => v.ToUniversalTime(), v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
 
         var nullableDateTimeConverter = new ValueConverter<DateTime?, DateTime?>(
             v => v.HasValue ? v.Value.ToUniversalTime() : v,
@@ -158,18 +152,15 @@ public class AppDbContext : DbContext
         if (returnValue > 0)
         {
             bool saveAudit = false;
-            foreach (
-                Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<OrderItem> entry in ChangeTracker.Entries<OrderItem>()
-            )
+            foreach (Microsoft.EntityFrameworkCore.ChangeTracking.EntityEntry<OrderItem> entry in ChangeTracker.Entries<OrderItem>())
             {
-                OrderItemStatusAudit audit =
-                    new()
-                    {
-                        OrderItemId = entry.Entity.OrderItemId,
-                        OrderItemStatusId = entry.Entity.OrderItemStatusId,
-                        StatusDate = DateTime.UtcNow,
-                        UserId = _currentUserService.UserId ?? "",
-                    };
+                OrderItemStatusAudit audit = new()
+                {
+                    OrderItemId = entry.Entity.OrderItemId,
+                    OrderItemStatusId = entry.Entity.OrderItemStatusId,
+                    StatusDate = DateTime.UtcNow,
+                    UserId = _currentUserService.UserId ?? "",
+                };
                 _ = await AddAsync(audit, ct);
                 saveAudit = true;
             }

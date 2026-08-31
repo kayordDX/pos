@@ -7,6 +7,7 @@ namespace Pos.Api.Features.Bill.EmailBill;
 public class BillPdf
 {
     private readonly PdfRequest _pdfRequest;
+
     public BillPdf(PdfRequest pdfRequest)
     {
         _pdfRequest = pdfRequest;
@@ -29,10 +30,7 @@ public class BillPdf
                     .PaddingVertical(10, Unit.Point)
                     .Column(x =>
                     {
-                        x.Item()
-                            .PaddingVertical(10)
-                            .LineHorizontal(1)
-                            .LineColor(Colors.Black);
+                        x.Item().PaddingVertical(10).LineHorizontal(1).LineColor(Colors.Black);
 
                         x.Item().Element(ComposeTable);
                         x.Item().Element(ComposeTableSummary);
@@ -56,32 +54,35 @@ public class BillPdf
         static IContainer CellStylePlainCenter(IContainer container) => container.AlignCenter().PaddingVertical(5).PaddingHorizontal(2);
         static IContainer CellStyleSub(IContainer container) => container.PaddingHorizontal(2);
 
-        container.PaddingTop(10).PaddingBottom(0).Table(table =>
-        {
-            table.ColumnsDefinition(columns =>
+        container
+            .PaddingTop(10)
+            .PaddingBottom(0)
+            .Table(table =>
             {
-                columns.ConstantColumn(20);
-                columns.RelativeColumn();
-                columns.RelativeColumn();
-                columns.RelativeColumn();
-            });
-
-            foreach (var item in _pdfRequest.Items)
-            {
-                table.Cell().Element(CellStylePlainCenter).Text(item.Count.ToString());
-                table.Cell().Element(CellStylePlain).Text(item.Name);
-                table.Cell().Element(CellStylePlain).AlignRight().Text($"{item.Price:C}").Style(TextStyle.Default.Light());
-                table.Cell().Element(CellStylePlain).AlignRight().Text($"{item.TotalPrice:C}");
-
-                foreach (var subItem in item.Items ?? [])
+                table.ColumnsDefinition(columns =>
                 {
-                    table.Cell().Element(CellStyleSub).Text("");
-                    table.Cell().Element(CellStyleSub).Text(subItem.Name);
-                    table.Cell().Element(CellStyleSub).AlignRight().Text($"{subItem.Price:C}").Style(TextStyle.Default.Light());
-                    table.Cell().Element(CellStyleSub).AlignRight().Text("");
+                    columns.ConstantColumn(20);
+                    columns.RelativeColumn();
+                    columns.RelativeColumn();
+                    columns.RelativeColumn();
+                });
+
+                foreach (var item in _pdfRequest.Items)
+                {
+                    table.Cell().Element(CellStylePlainCenter).Text(item.Count.ToString());
+                    table.Cell().Element(CellStylePlain).Text(item.Name);
+                    table.Cell().Element(CellStylePlain).AlignRight().Text($"{item.Price:C}").Style(TextStyle.Default.Light());
+                    table.Cell().Element(CellStylePlain).AlignRight().Text($"{item.TotalPrice:C}");
+
+                    foreach (var subItem in item.Items ?? [])
+                    {
+                        table.Cell().Element(CellStyleSub).Text("");
+                        table.Cell().Element(CellStyleSub).Text(subItem.Name);
+                        table.Cell().Element(CellStyleSub).AlignRight().Text($"{subItem.Price:C}").Style(TextStyle.Default.Light());
+                        table.Cell().Element(CellStyleSub).AlignRight().Text("");
+                    }
                 }
-            }
-        });
+            });
     }
 
     void ComposeTableSummary(IContainer container)
@@ -92,12 +93,32 @@ public class BillPdf
         {
             if (_pdfRequest.BillCategories.Count > 0)
             {
-                c.Item()
-                    .PaddingVertical(10)
-                    .LineHorizontal(1)
-                    .LineColor(Colors.Black);
+                c.Item().PaddingVertical(10).LineHorizontal(1).LineColor(Colors.Black);
 
-                c.Item().Table(table =>
+                c.Item()
+                    .Table(table =>
+                    {
+                        table.ColumnsDefinition(columns =>
+                        {
+                            columns.RelativeColumn();
+                            columns.RelativeColumn();
+                        });
+
+                        foreach (var cat in _pdfRequest.BillCategories)
+                        {
+                            table.Cell().Element(CellStylePlain).Text(cat.Name);
+                            table.Cell().Element(CellStylePlain).AlignRight().Text($"{cat.Total:C}");
+                        }
+                    });
+                c.Item().PaddingVertical(10).LineHorizontal(1).LineColor(Colors.Black);
+            }
+            else
+            {
+                c.Item().PaddingVertical(10);
+            }
+
+            c.Item()
+                .Table(table =>
                 {
                     table.ColumnsDefinition(columns =>
                     {
@@ -105,52 +126,25 @@ public class BillPdf
                         columns.RelativeColumn();
                     });
 
-                    foreach (var cat in _pdfRequest.BillCategories)
+                    table.Header(header =>
                     {
-                        table.Cell().Element(CellStylePlain).Text(cat.Name);
-                        table.Cell().Element(CellStylePlain).AlignRight().Text($"{cat.Total:C}");
-                    }
+                        table.Cell().Element(CellStylePlain).Text("Total").Style(TextStyle.Default.Bold());
+                        table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.Total:C}").Style(TextStyle.Default.Bold());
+                    });
+
+                    table.Cell().Element(CellStylePlain).Text("Total Excluding VAT");
+                    table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.TotalExVAT:C}");
+
+                    table.Cell().Element(CellStylePlain).Text("VAT");
+                    table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.VAT:C}");
+
+                    table.Cell().Element(CellStylePlain).Text("Payment Received");
+                    table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.PaymentReceived:C}");
+
+                    table.Cell().Element(CellStylePlain).Text("TIP");
+                    table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.TipAmount:C}");
                 });
-                c.Item()
-                    .PaddingVertical(10)
-                    .LineHorizontal(1)
-                    .LineColor(Colors.Black);
-            }
-            else
-            {
-                c.Item()
-                    .PaddingVertical(10);
-            }
-
-            c.Item().Table(table =>
-            {
-                table.ColumnsDefinition(columns =>
-                {
-                    columns.RelativeColumn();
-                    columns.RelativeColumn();
-                });
-
-                table.Header(header =>
-                {
-                    table.Cell().Element(CellStylePlain).Text("Total").Style(TextStyle.Default.Bold());
-                    table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.Total:C}").Style(TextStyle.Default.Bold());
-                });
-
-                table.Cell().Element(CellStylePlain).Text("Total Excluding VAT");
-                table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.TotalExVAT:C}");
-
-                table.Cell().Element(CellStylePlain).Text("VAT");
-                table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.VAT:C}");
-
-                table.Cell().Element(CellStylePlain).Text("Payment Received");
-                table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.PaymentReceived:C}");
-
-                table.Cell().Element(CellStylePlain).Text("TIP");
-                table.Cell().Element(CellStylePlain).AlignRight().Text($"{_pdfRequest.TipAmount:C}");
-            });
         });
-
-
     }
 
     private void ComposeHeader(IContainer container)
@@ -159,64 +153,83 @@ public class BillPdf
 
         container.Row(row =>
         {
-            row.RelativeItem().Column(column =>
-            {
-                column.Item().Text($"Invoice #{_pdfRequest.TableBookingId}").Style(titleStyle);
-
-                column.Item().Text(text =>
+            row.RelativeItem()
+                .Column(column =>
                 {
-                    text.Span($"{_pdfRequest.OutletName}");
-                });
+                    column.Item().Text($"Invoice #{_pdfRequest.TableBookingId}").Style(titleStyle);
 
-                if (_pdfRequest.Address != null)
-                {
-                    column.Item().Text(text =>
+                    column
+                        .Item()
+                        .Text(text =>
+                        {
+                            text.Span($"{_pdfRequest.OutletName}");
+                        });
+
+                    if (_pdfRequest.Address != null)
                     {
-                        text.Span($"{_pdfRequest.Address}");
-                    });
-                }
+                        column
+                            .Item()
+                            .Text(text =>
+                            {
+                                text.Span($"{_pdfRequest.Address}");
+                            });
+                    }
 
-                if (_pdfRequest.Company != null)
-                {
-                    column.Item().Text(text =>
+                    if (_pdfRequest.Company != null)
                     {
-                        text.Span($"{_pdfRequest.Company}");
-                    });
-                }
+                        column
+                            .Item()
+                            .Text(text =>
+                            {
+                                text.Span($"{_pdfRequest.Company}");
+                            });
+                    }
 
-                if (_pdfRequest.Registration != null)
-                {
-                    column.Item().Text(text =>
+                    if (_pdfRequest.Registration != null)
                     {
-                        text.Span($"Reg {_pdfRequest.Registration}");
-                    });
-                }
+                        column
+                            .Item()
+                            .Text(text =>
+                            {
+                                text.Span($"Reg {_pdfRequest.Registration}");
+                            });
+                    }
 
-                column.Item().Text(text =>
-                {
-                    text.Span($"VAT no {_pdfRequest.VATNumber:d}");
-                });
+                    column
+                        .Item()
+                        .Text(text =>
+                        {
+                            text.Span($"VAT no {_pdfRequest.VATNumber:d}");
+                        });
 
-                column.Item().Text(text =>
-                {
-                    text.Span($"{_pdfRequest.TableName}");
-                });
-                column.Item().Text(text =>
-                {
-                    text.Span($"Waiter {_pdfRequest.Waiter}");
-                });
-                column.Item().Text(text =>
-                {
-                    var statusText = _pdfRequest.IsClosed ? "Closed" : "Open";
-                    text.Span($"Bill Status {statusText}");
-                });
+                    column
+                        .Item()
+                        .Text(text =>
+                        {
+                            text.Span($"{_pdfRequest.TableName}");
+                        });
+                    column
+                        .Item()
+                        .Text(text =>
+                        {
+                            text.Span($"Waiter {_pdfRequest.Waiter}");
+                        });
+                    column
+                        .Item()
+                        .Text(text =>
+                        {
+                            var statusText = _pdfRequest.IsClosed ? "Closed" : "Open";
+                            text.Span($"Bill Status {statusText}");
+                        });
 
-                column.Item().Text(text =>
-                {
-                    text.Span("Date: ").SemiBold();
-                    text.Span($"{_pdfRequest.BillDate:d}");
+                    column
+                        .Item()
+                        .Text(text =>
+                        {
+                            text.Span("Date: ").SemiBold();
+                            text.Span($"{_pdfRequest.BillDate:d}");
+                        });
                 });
-            });
         });
     }
 }

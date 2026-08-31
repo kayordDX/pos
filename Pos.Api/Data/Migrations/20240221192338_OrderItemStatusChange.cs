@@ -10,41 +10,21 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "isKitchen",
-                table: "OrderItemStatus",
-                newName: "isComplete");
+            migrationBuilder.RenameColumn(name: "isKitchen", table: "OrderItemStatus", newName: "isComplete");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "isBackOffice",
-                table: "OrderItemStatus",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<bool>(name: "isBackOffice", table: "OrderItemStatus", type: "boolean", nullable: false, defaultValue: false);
 
-            migrationBuilder.AddColumn<bool>(
-                name: "isCancelled",
-                table: "OrderItemStatus",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<bool>(name: "isCancelled", table: "OrderItemStatus", type: "boolean", nullable: false, defaultValue: false);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "isBackOffice",
-                table: "OrderItemStatus");
+            migrationBuilder.DropColumn(name: "isBackOffice", table: "OrderItemStatus");
 
-            migrationBuilder.DropColumn(
-                name: "isCancelled",
-                table: "OrderItemStatus");
+            migrationBuilder.DropColumn(name: "isCancelled", table: "OrderItemStatus");
 
-            migrationBuilder.RenameColumn(
-                name: "isComplete",
-                table: "OrderItemStatus",
-                newName: "isKitchen");
+            migrationBuilder.RenameColumn(name: "isComplete", table: "OrderItemStatus", newName: "isKitchen");
         }
     }
 }

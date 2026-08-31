@@ -1,7 +1,6 @@
 using Pos.Api.Data;
 using Pos.Api.Services;
 
-
 namespace Pos.Api.Features.Stock.Order.Create;
 
 public class Endpoint : Endpoint<Request, Entities.StockOrder>
@@ -34,7 +33,7 @@ public class Endpoint : Endpoint<Request, Entities.StockOrder>
             OrderNumber = req.OrderNumber,
             DivisionId = req.DivisionId,
             SupplierId = req.SupplierId,
-            StockOrderStatusId = 1
+            StockOrderStatusId = 1,
         };
 
         await _dbContext.StockOrder.AddAsync(entity);

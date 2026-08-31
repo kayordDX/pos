@@ -6,5 +6,4 @@ public class TableDTO
     public string Name { get; set; } = string.Empty;
     public int OutletId { get; set; }
     public SectionDTO? Section { get; set; }
-
 }

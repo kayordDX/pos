@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.SalesPeriod.Create;
 
@@ -19,9 +19,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.SalesPeriod>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var exists = await _dbContext.SalesPeriod
-            .Where(x => x.EndDate == null && x.OutletId == req.OutletId)
-            .FirstOrDefaultAsync(ct);
+        var exists = await _dbContext.SalesPeriod.Where(x => x.EndDate == null && x.OutletId == req.OutletId).FirstOrDefaultAsync(ct);
 
         if (exists != null)
         {
@@ -32,7 +30,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.SalesPeriod>
         {
             Name = req.Name,
             OutletId = req.OutletId,
-            StartDate = DateTime.Now
+            StartDate = DateTime.Now,
         };
         await _dbContext.SalesPeriod.AddAsync(entity);
         await _dbContext.SaveChangesAsync();

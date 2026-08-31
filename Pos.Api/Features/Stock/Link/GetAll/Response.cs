@@ -9,5 +9,4 @@ public class Response
     public string UnitName { get; set; } = string.Empty;
     public decimal Quantity { get; set; }
     public decimal TotalActual { get; set; }
-
 }

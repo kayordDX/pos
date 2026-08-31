@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Pay.PayConfig.Create;
 
@@ -28,7 +28,7 @@ public class Endpoint : Endpoint<Request, Entities.HaloConfig>
             MerchantId = req.MerchantId,
             XApiKey = _encryption.Encrypt(req.XApiKey, iv),
             OutletId = req.OutletId,
-            Iv = iv
+            Iv = iv,
         };
         await _dbContext.HaloConfig.AddAsync(entity);
         await _dbContext.SaveChangesAsync();

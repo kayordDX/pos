@@ -1,6 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
-using Microsoft.EntityFrameworkCore;
+
 namespace Pos.Api.Features.Menu.GetOutletMenu;
 
 public class GetOutletMenusEndpoint : Endpoint<Request, List<Pos.Api.Entities.Menu>>
@@ -19,8 +20,8 @@ public class GetOutletMenusEndpoint : Endpoint<Request, List<Pos.Api.Entities.Me
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var menus = await _dbContext.Menu
-            .Where(m => m.OutletId == req.OutletId)
+        var menus = await _dbContext
+            .Menu.Where(m => m.OutletId == req.OutletId)
             .Include(m => m.MenuSections!)
                 .ThenInclude(s => s.MenuItems!)
             // .ThenInclude(mi => mi.Options)
@@ -29,7 +30,6 @@ public class GetOutletMenusEndpoint : Endpoint<Request, List<Pos.Api.Entities.Me
                     .ThenInclude(mi => mi.Tags)
             .Include(m => m.MenuSections!)
                 .ThenInclude(s => s.MenuItems!)
-
             .Include(m => m.MenuSections!)
                 .ThenInclude(s => s.SubMenuSections!)
                     .ThenInclude(ss => ss.MenuItems!)
@@ -41,11 +41,10 @@ public class GetOutletMenusEndpoint : Endpoint<Request, List<Pos.Api.Entities.Me
             .Include(m => m.MenuSections!)
                 .ThenInclude(s => s.SubMenuSections!)
                     .ThenInclude(ss => ss.MenuItems!)
-
             .Include(m => m.MenuSections!)
                 .ThenInclude(s => s.SubMenuSections!)
                     .ThenInclude(ss => ss.MenuItems)
-             .ToListAsync();
+            .ToListAsync();
 
         await Send.OkAsync(menus);
     }

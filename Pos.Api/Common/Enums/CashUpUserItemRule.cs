@@ -10,5 +10,5 @@ public enum CashUpUserItemRule
     Config,
     SalesRevenue,
     CardPaymentTotal,
-    CardTips
+    CardTips,
 }

@@ -18,11 +18,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.Outlet>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        Pos.Api.Entities.Outlet entity = new Pos.Api.Entities.Outlet()
-        {
-            Name = req.Name,
-            BusinessId = req.BusinessId
-        };
+        Pos.Api.Entities.Outlet entity = new Pos.Api.Entities.Outlet() { Name = req.Name, BusinessId = req.BusinessId };
         await _dbContext.Outlet.AddAsync(entity);
         await _dbContext.SaveChangesAsync();
 

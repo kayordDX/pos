@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Stock.OrderItem.UpdateBulk;
 
@@ -33,8 +33,8 @@ public class Endpoint : Endpoint<Request>
 
         foreach (int id in req.StockIds)
         {
-            var entity = await _dbContext.StockOrderItem
-                .Where(x => x.StockOrderId == req.StockOrderId && x.StockId == id)
+            var entity = await _dbContext
+                .StockOrderItem.Where(x => x.StockOrderId == req.StockOrderId && x.StockId == id)
                 .Include(x => x.StockOrder)
                 .FirstOrDefaultAsync(ct);
 
@@ -49,7 +49,16 @@ public class Endpoint : Endpoint<Request>
             {
                 entity.Actual = entity.OrderAmount;
             }
-            await OrderItemUpdate.StockCount(req.StockOrderId, actual, entity.StockOrder.DivisionId, entity.StockId, entity.Actual, _dbContext, _currentUserService, ct);
+            await OrderItemUpdate.StockCount(
+                req.StockOrderId,
+                actual,
+                entity.StockOrder.DivisionId,
+                entity.StockId,
+                entity.Actual,
+                _dbContext,
+                _currentUserService,
+                ct
+            );
             entity.StockOrderItemStatusId = req.StockOrderItemStatusId;
 
             if (!stockCheck.Contains(entity.StockId))

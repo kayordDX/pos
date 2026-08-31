@@ -1,7 +1,5 @@
-
-
-using Pos.Api.Services;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Services;
 
 namespace Pos.Api.Features.Menu.List;
 
@@ -31,10 +29,7 @@ public class Endpoint : Endpoint<Request, List<Entities.Menu>>
             return;
         }
 
-        var menus = await _dbContext.Menu
-            .Where(menu => menu.OutletId == req.OutletId)
-            .OrderBy(x => x.Position)
-            .ToListAsync();
+        var menus = await _dbContext.Menu.Where(menu => menu.OutletId == req.OutletId).OrderBy(x => x.Position).ToListAsync();
 
         _ = _redisClient.SetObjectAsync(cacheKey, menus);
         await Send.OkAsync(menus);

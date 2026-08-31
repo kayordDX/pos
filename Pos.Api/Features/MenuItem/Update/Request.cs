@@ -1,5 +1,3 @@
-
-
 namespace Pos.Api.Features.MenuItem.Update;
 
 public class Request

@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Outlet.GetAllAssigned;
 
@@ -23,19 +23,23 @@ public class Endpoint : EndpointWithoutRequest<List<OutletDTOBasic>>
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var results = await _dbContext.Database.SqlQuery<OutletDTOBasic>($"""
-            select distinct
-                o.id,
-                o.name,
-                o.vat_number,
-                o.address,
-                o.company,
-                o.registration
-                from outlet o
-            join user_role_outlet ur
-                on ur.outlet_id = o.id
-            where ur.user_id = {_cu.UserId}
-        """).ToListAsync(ct);
+        var results = await _dbContext
+            .Database.SqlQuery<OutletDTOBasic>(
+                $"""
+                    select distinct
+                        o.id,
+                        o.name,
+                        o.vat_number,
+                        o.address,
+                        o.company,
+                        o.registration
+                        from outlet o
+                    join user_role_outlet ur
+                        on ur.outlet_id = o.id
+                    where ur.user_id = {_cu.UserId}
+                """
+            )
+            .ToListAsync(ct);
 
         await Send.OkAsync(results);
     }

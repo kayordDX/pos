@@ -10,30 +10,17 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "DecreaseBalance",
-                table: "CashUpUserItemType");
+            migrationBuilder.DropColumn(name: "DecreaseBalance", table: "CashUpUserItemType");
 
-            migrationBuilder.RenameColumn(
-                name: "IncreaseBalance",
-                table: "CashUpUserItemType",
-                newName: "AffectsGrossBalance");
+            migrationBuilder.RenameColumn(name: "IncreaseBalance", table: "CashUpUserItemType", newName: "AffectsGrossBalance");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "AffectsGrossBalance",
-                table: "CashUpUserItemType",
-                newName: "IncreaseBalance");
+            migrationBuilder.RenameColumn(name: "AffectsGrossBalance", table: "CashUpUserItemType", newName: "IncreaseBalance");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "DecreaseBalance",
-                table: "CashUpUserItemType",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<bool>(name: "DecreaseBalance", table: "CashUpUserItemType", type: "boolean", nullable: false, defaultValue: false);
         }
     }
 }

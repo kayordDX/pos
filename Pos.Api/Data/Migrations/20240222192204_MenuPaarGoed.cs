@@ -10,30 +10,17 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "PositionId",
-                table: "Option",
-                type: "integer",
-                nullable: false,
-                defaultValue: 0);
+            migrationBuilder.AddColumn<int>(name: "PositionId", table: "Option", type: "integer", nullable: false, defaultValue: 0);
 
-            migrationBuilder.AddColumn<int>(
-                name: "PositionId",
-                table: "MenuSection",
-                type: "integer",
-                nullable: true);
+            migrationBuilder.AddColumn<int>(name: "PositionId", table: "MenuSection", type: "integer", nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "PositionId",
-                table: "Option");
+            migrationBuilder.DropColumn(name: "PositionId", table: "Option");
 
-            migrationBuilder.DropColumn(
-                name: "PositionId",
-                table: "MenuSection");
+            migrationBuilder.DropColumn(name: "PositionId", table: "MenuSection");
         }
     }
 }

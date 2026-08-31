@@ -1,5 +1,6 @@
 using Pos.Api.Data;
 using Pos.Api.Features.Bill;
+
 namespace Pos.Api.Features.Test;
 
 public class TotalTest : EndpointWithoutRequest<TableTotal?>

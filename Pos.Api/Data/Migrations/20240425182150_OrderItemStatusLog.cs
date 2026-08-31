@@ -15,22 +15,23 @@ namespace Pos.Api.Data.Migrations
                 name: "OrderItemStatusLog",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table
+                        .Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     OrderItemId = table.Column<int>(type: "integer", nullable: false),
-                    OrderItemStatusId = table.Column<int>(type: "integer", nullable: false)
+                    OrderItemStatusId = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OrderItemStatusLog", x => x.Id);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "OrderItemStatusLog");
+            migrationBuilder.DropTable(name: "OrderItemStatusLog");
         }
     }
 }

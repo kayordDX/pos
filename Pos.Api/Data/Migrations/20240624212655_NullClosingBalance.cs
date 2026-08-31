@@ -16,7 +16,8 @@ namespace Pos.Api.Data.Migrations
                 type: "numeric",
                 nullable: true,
                 oldClrType: typeof(decimal),
-                oldType: "numeric");
+                oldType: "numeric"
+            );
         }
 
         /// <inheritdoc />
@@ -30,7 +31,8 @@ namespace Pos.Api.Data.Migrations
                 defaultValue: 0m,
                 oldClrType: typeof(decimal),
                 oldType: "numeric",
-                oldNullable: true);
+                oldNullable: true
+            );
         }
     }
 }

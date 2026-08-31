@@ -12,5 +12,5 @@ public enum StockItemAuditType
     MenuItem = 1,
     Extra,
     Option,
-    Bulk = 7
+    Bulk = 7,
 }

@@ -1,5 +1,6 @@
 using Pos.Api.Data;
 using Pos.Api.Services;
+
 namespace Pos.Api.Features.TableOrder.GetBill;
 
 public class Endpoint : Endpoint<Request, Response>

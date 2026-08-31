@@ -9,14 +9,18 @@ public static class CorsExtensions
     public static void ConfigureCors(this IServiceCollection services, string[] origins)
     {
         string[] origins2 = origins;
-        services.AddCors(delegate (CorsOptions options)
-        {
-            options.AddPolicy(_allowedOrigins, delegate (CorsPolicyBuilder builder)
+        services.AddCors(
+            delegate(CorsOptions options)
             {
-                builder.WithOrigins(origins2).AllowAnyHeader().AllowAnyMethod()
-                    .AllowCredentials();
-            });
-        });
+                options.AddPolicy(
+                    _allowedOrigins,
+                    delegate(CorsPolicyBuilder builder)
+                    {
+                        builder.WithOrigins(origins2).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+                    }
+                );
+            }
+        );
     }
 
     public static IApplicationBuilder UseCorsKayord(this IApplicationBuilder app)

@@ -1,7 +1,7 @@
-using Pos.Api.Data;
-using Pos.Api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
+using Pos.Api.Services;
 
 namespace Pos.Api.Features.Auth;
 
@@ -20,12 +20,10 @@ public class FeatureHandler : AuthorizationHandler<FeatureRequirement>
     {
         int outletId = await _user.GetOutletId();
 
-        var features = await _dbContext.OutletFeature
-            .Where(x => x.OutletId == outletId)
-            .Select(x => x.Feature.Name.ToLower())
-            .ToListAsync();
+        var features = await _dbContext.OutletFeature.Where(x => x.OutletId == outletId).Select(x => x.Feature.Name.ToLower()).ToListAsync();
 
-        if (features.Count == 0) return;
+        if (features.Count == 0)
+            return;
 
         if (features.Contains(requirement.Feature.ToLower()))
         {

@@ -1,9 +1,9 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Common.Extensions;
 using Pos.Api.Common.Models;
 using Pos.Api.Data;
 using Pos.Api.Features.TableBooking.History;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableBooking.HistoryAll;
 
@@ -38,9 +38,7 @@ public class Endpoint(AppDbContext dbContext, UserService user) : Endpoint<Reque
             booking = booking.Where(x => x.Id.ToString().StartsWith(req.TableBookingId.ToString()));
         }
 
-        var result = await booking.OrderByDescending(x => x.CloseDate)
-            .ProjectToDto()
-            .GetPagedAsync(req, ct);
+        var result = await booking.OrderByDescending(x => x.CloseDate).ProjectToDto().GetPagedAsync(req, ct);
 
         await Send.OkAsync(result, ct);
     }

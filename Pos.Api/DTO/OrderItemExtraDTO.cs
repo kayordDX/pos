@@ -8,5 +8,4 @@ public class OrderItemExtraDTO
     public int OrderItemId { get; set; }
     public int ExtraId { get; set; }
     public ExtraDTO Extra { get; set; } = default!;
-
 }

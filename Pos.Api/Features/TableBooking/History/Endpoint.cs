@@ -17,19 +17,14 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService user) : Endpoin
 
     public override async Task HandleAsync(Request r, CancellationToken ct)
     {
-        var bookings = _dbContext.TableBooking
-            .Where(x => x.UserId == _user.UserId)
-            .Where(x => x.CloseDate != null);
+        var bookings = _dbContext.TableBooking.Where(x => x.UserId == _user.UserId).Where(x => x.CloseDate != null);
 
         if (r.TableBookingId > 0)
         {
             bookings = bookings.Where(x => x.Id.ToString().StartsWith(r.TableBookingId.ToString()));
         }
 
-        var result = await bookings
-            .OrderByDescending(x => x.CloseDate)
-            .ProjectToDto()
-            .GetPagedAsync(r, ct);
+        var result = await bookings.OrderByDescending(x => x.CloseDate).ProjectToDto().GetPagedAsync(r, ct);
 
         await Send.OkAsync(result, ct);
     }

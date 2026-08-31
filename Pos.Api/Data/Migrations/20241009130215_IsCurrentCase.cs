@@ -10,19 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "isCurrent",
-                table: "UserOutlet",
-                newName: "IsCurrent");
+            migrationBuilder.RenameColumn(name: "isCurrent", table: "UserOutlet", newName: "IsCurrent");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.RenameColumn(
-                name: "IsCurrent",
-                table: "UserOutlet",
-                newName: "isCurrent");
+            migrationBuilder.RenameColumn(name: "IsCurrent", table: "UserOutlet", newName: "isCurrent");
         }
     }
 }

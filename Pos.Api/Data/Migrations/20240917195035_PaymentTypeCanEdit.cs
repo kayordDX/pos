@@ -10,20 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<bool>(
-                name: "CanEdit",
-                table: "PaymentType",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<bool>(name: "CanEdit", table: "PaymentType", type: "boolean", nullable: false, defaultValue: false);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "CanEdit",
-                table: "PaymentType");
+            migrationBuilder.DropColumn(name: "CanEdit", table: "PaymentType");
         }
     }
 }

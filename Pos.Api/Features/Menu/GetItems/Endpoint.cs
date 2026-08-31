@@ -1,9 +1,10 @@
 using System.Web;
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
+
 namespace Pos.Api.Features.Menu.GetItems;
 
 public class GetMenuItemsEndpoint : Endpoint<Request, List<MenuItemDTOBasic>>
@@ -25,20 +26,20 @@ public class GetMenuItemsEndpoint : Endpoint<Request, List<MenuItemDTOBasic>>
         IQueryable<Entities.MenuItem>? items;
         if (req.SectionId == 0)
         {
-            items = _dbContext.MenuItem
-                .Include(m => m.MenuSection)
-                .Where(x => x.IsEnabled.Equals(true))
-                .Where(s => s.MenuSection.MenuId.Equals(req.MenuId));
+            items = _dbContext.MenuItem.Include(m => m.MenuSection).Where(x => x.IsEnabled.Equals(true)).Where(s => s.MenuSection.MenuId.Equals(req.MenuId));
         }
         else
         {
-            var sectionParents = await _dbContext.Database.SqlQuery<MenuParents>($"""
-            SELECT * FROM "get_menu_section_children"({req.MenuId},{req.SectionId})
-            """).Select(s => s.Id).ToListAsync();
+            var sectionParents = await _dbContext
+                .Database.SqlQuery<MenuParents>(
+                    $"""
+                    SELECT * FROM "get_menu_section_children"({req.MenuId},{req.SectionId})
+                    """
+                )
+                .Select(s => s.Id)
+                .ToListAsync();
 
-            items = _dbContext.MenuItem
-                .Where(x => x.IsEnabled.Equals(true))
-                .Where(e => sectionParents.Contains(e.MenuSectionId));
+            items = _dbContext.MenuItem.Where(x => x.IsEnabled.Equals(true)).Where(e => sectionParents.Contains(e.MenuSectionId));
         }
 
         if (!string.IsNullOrEmpty(req.Search))
@@ -46,10 +47,7 @@ public class GetMenuItemsEndpoint : Endpoint<Request, List<MenuItemDTOBasic>>
             items = items.Where(p => p.SearchVector.Matches(EF.Functions.ToTsQuery(CreateTsQuery(req.Search))));
         }
 
-        var response = await items
-            .Include(m => m.Tags)
-            .ProjectToBasicDto()
-            .ToListAsync();
+        var response = await items.Include(m => m.Tags).ProjectToBasicDto().ToListAsync();
 
         await Send.OkAsync(response);
     }

@@ -1,7 +1,7 @@
+using Microsoft.AspNetCore.SignalR;
 using Pos.Api.Common.Wrapper;
 using Pos.Api.Events;
 using Pos.Api.Services;
-using Microsoft.AspNetCore.SignalR;
 
 namespace Pos.Api.Hubs;
 

@@ -1,6 +1,7 @@
 using Pos.Api.DTO;
 
 namespace Pos.Api.Features.TableOrder.Office.OrderBased.Back;
+
 public class OrderGroupDTO
 {
     public int OrderGroupId { get; set; }

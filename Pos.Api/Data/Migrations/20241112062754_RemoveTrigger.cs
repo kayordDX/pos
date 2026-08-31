@@ -10,16 +10,15 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("""
-                DROP TRIGGER order_item_status_trigger ON "OrderItem"
-            """);
+            migrationBuilder.Sql(
+                """
+                    DROP TRIGGER order_item_status_trigger ON "OrderItem"
+                """
+            );
             migrationBuilder.Sql("DROP FUNCTION public.order_item_status_trigger_function");
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
-        }
+        protected override void Down(MigrationBuilder migrationBuilder) { }
     }
 }

@@ -1,7 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.Menu.Sections.Update;
 
@@ -23,7 +22,6 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuSection>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-
         Entities.MenuSection? menuSection = await _dbContext.MenuSection.FindAsync(req.Id);
 
         if (menuSection != null)
@@ -44,7 +42,5 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuSection>
         {
             throw new Exception("Menu section not found");
         }
-
-
     }
 }

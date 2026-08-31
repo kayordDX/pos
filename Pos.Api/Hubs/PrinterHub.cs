@@ -1,10 +1,10 @@
 using System.Security.Claims;
-using Pos.Api.Common.Printer;
-using Pos.Api.Data;
-using Pos.Api.Events;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
+using Pos.Api.Common.Printer;
+using Pos.Api.Data;
+using Pos.Api.Events;
 
 namespace Pos.Api.Hubs;
 
@@ -31,7 +31,8 @@ public class PrinterHub : Hub<IPrinterHub>
         IMemoryCache memoryCache,
         PrinterConnectionTracker connectionTracker,
         PrinterProbeCache probeCache,
-        IHubContext<KayordHub, IKayordHub> kayordHub)
+        IHubContext<KayordHub, IKayordHub> kayordHub
+    )
     {
         _dbContext = dbContext;
         _memoryCache = memoryCache;
@@ -70,10 +71,7 @@ public class PrinterHub : Hub<IPrinterHub>
     public Task ReportScanStarted()
     {
         (int outletId, int deviceId, _) = GetIdentity();
-        _memoryCache.Set(
-            PrinterCacheKeys.ScanStatus(outletId, deviceId),
-            $"Scan started at {DateTime.UtcNow:O}",
-            ScanCacheTtl);
+        _memoryCache.Set(PrinterCacheKeys.ScanStatus(outletId, deviceId), $"Scan started at {DateTime.UtcNow:O}", ScanCacheTtl);
         _memoryCache.Remove(PrinterCacheKeys.ScanResult(outletId, deviceId));
         return Task.CompletedTask;
     }
@@ -105,13 +103,17 @@ public class PrinterHub : Hub<IPrinterHub>
 
         _probeCache.Set(printerId, reachable, latencyMs);
 
-        await _kayordHub.Clients.Group(KayordOutletGroup(outletId)).PrinterStatusChanged(new PrinterStatusChangedEvent
-        {
-            OutletId = outletId,
-            PrinterId = printerId,
-            Reachable = reachable,
-            Online = _connectionTracker.IsOnline(outletId, deviceId)
-        });
+        await _kayordHub
+            .Clients.Group(KayordOutletGroup(outletId))
+            .PrinterStatusChanged(
+                new PrinterStatusChangedEvent
+                {
+                    OutletId = outletId,
+                    PrinterId = printerId,
+                    Reachable = reachable,
+                    Online = _connectionTracker.IsOnline(outletId, deviceId),
+                }
+            );
     }
 
     public static string DeviceGroup(int outletId, int deviceId) => $"printer-outlet-{outletId}-device-{deviceId}";
@@ -146,9 +148,7 @@ public class PrinterHub : Hub<IPrinterHub>
         string? device = Context.User?.FindFirstValue(Constants.Claim.DeviceId);
         keyId = Context.User?.FindFirstValue(Constants.Claim.KeyId) ?? string.Empty;
 
-        return int.TryParse(outlet, out outletId)
-            && int.TryParse(device, out deviceId)
-            && !string.IsNullOrWhiteSpace(keyId);
+        return int.TryParse(outlet, out outletId) && int.TryParse(device, out deviceId) && !string.IsNullOrWhiteSpace(keyId);
     }
 
     private async Task<List<PrinterTarget>> GetPrinterTargetsAsync(int outletId, int deviceId, CancellationToken ct)
@@ -159,15 +159,15 @@ public class PrinterHub : Hub<IPrinterHub>
             return cachedTargets;
         }
 
-        var printers = await _dbContext.Printer
-            .Where(x => x.OutletId == outletId && x.DeviceId == deviceId)
+        var printers = await _dbContext
+            .Printer.Where(x => x.OutletId == outletId && x.DeviceId == deviceId)
             .OrderBy(x => x.PrinterName)
             .Select(x => new PrinterTarget
             {
                 PrinterId = x.Id,
                 Name = x.PrinterName,
                 IPAddress = x.IPAddress,
-                Port = x.Port
+                Port = x.Port,
             })
             .ToListAsync(ct);
 
@@ -183,13 +183,17 @@ public class PrinterHub : Hub<IPrinterHub>
 
         foreach (var printer in printers)
         {
-            await _kayordHub.Clients.Group(KayordOutletGroup(outletId)).PrinterStatusChanged(new PrinterStatusChangedEvent
-            {
-                OutletId = outletId,
-                PrinterId = printer.PrinterId,
-                Reachable = _probeCache.Get(printer.PrinterId)?.Reachable,
-                Online = online
-            });
+            await _kayordHub
+                .Clients.Group(KayordOutletGroup(outletId))
+                .PrinterStatusChanged(
+                    new PrinterStatusChangedEvent
+                    {
+                        OutletId = outletId,
+                        PrinterId = printer.PrinterId,
+                        Reachable = _probeCache.Get(printer.PrinterId)?.Reachable,
+                        Online = online,
+                    }
+                );
         }
     }
 }

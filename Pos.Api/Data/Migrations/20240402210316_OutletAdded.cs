@@ -10,20 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<string>(
-                name: "VATNumber",
-                table: "Outlet",
-                type: "text",
-                nullable: false,
-                defaultValue: "");
+            migrationBuilder.AddColumn<string>(name: "VATNumber", table: "Outlet", type: "text", nullable: false, defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "VATNumber",
-                table: "Outlet");
+            migrationBuilder.DropColumn(name: "VATNumber", table: "Outlet");
         }
     }
 }

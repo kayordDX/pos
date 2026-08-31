@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableOrder.CopyItem;
 
@@ -20,8 +20,8 @@ public class Endpoint : Endpoint<Request, Response>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        OrderItem? orderItem = await _dbContext.OrderItem
-            .Include(x => x.OrderItemOptions)
+        OrderItem? orderItem = await _dbContext
+            .OrderItem.Include(x => x.OrderItemOptions)
             .Include(x => x.OrderItemExtras)
             .AsNoTracking()
             .FirstOrDefaultAsync(x => x.OrderItemId == req.OrderItemId);

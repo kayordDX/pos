@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Features.Role;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Manager.OrderView;
 
@@ -43,36 +43,40 @@ public class Endpoint : Endpoint<Request, List<Response>>
 
         List<int> divisionIds = await RoleHelper.GetDivisionsForRoles(req.RoleIds, _dbContext, userOutlet.OutletId, _cu.UserId);
 
-        var statusIds = await _dbContext.OrderItemStatus
-            .Where(x => x.IsBackOffice && x.IsComplete != true && x.IsCancelled != true)
+        var statusIds = await _dbContext
+            .OrderItemStatus.Where(x => x.IsBackOffice && x.IsComplete != true && x.IsCancelled != true)
             .Select(rd => rd.OrderItemStatusId)
             .ToListAsync(ct);
 
         foreach (int divisionId in divisionIds)
         {
-            Entities.Division division = await _dbContext.Division
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.DivisionId == divisionId, ct) ?? new();
+            Entities.Division division = await _dbContext.Division.AsNoTracking().FirstOrDefaultAsync(x => x.DivisionId == divisionId, ct) ?? new();
 
-            var result = await _dbContext.TableBooking
-                .AsNoTracking()
+            var result = await _dbContext
+                .TableBooking.AsNoTracking()
                 .Where(x => x.SalesPeriod.OutletId == userOutlet.OutletId && x.CloseDate == null)
                 .ProjectToDto()
                 .ToListAsync(ct);
 
             result.ForEach(dto =>
             {
-                dto.OrderItems = dto.OrderItems!
-                .Where(oi => statusIds.Contains(oi.OrderItemStatusId) && oi.MenuItem.DivisionId == divisionId)
-                .ToList();
+                dto.OrderItems = dto.OrderItems!.Where(oi => statusIds.Contains(oi.OrderItemStatusId) && oi.MenuItem.DivisionId == divisionId).ToList();
             });
 
             if (role!.RoleType.isBackOffice)
-                result = result.Where(x => x.OrderItems!.Any()).Where(x => x.CloseDate == null && x.OrderItems!.Where(y => y.OrderItemStatusId != 1 && y.OrderItemStatusId != 6).Count() > 0).ToList();
+                result = result
+                    .Where(x => x.OrderItems!.Any())
+                    .Where(x => x.CloseDate == null && x.OrderItems!.Where(y => y.OrderItemStatusId != 1 && y.OrderItemStatusId != 6).Count() > 0)
+                    .ToList();
             if (role!.RoleType.isFrontLine)
-                result = result.Where(x => x.OrderItems!.Any())
-                        .Where(y => y.User.UserId == _cu.UserId && y.CloseDate == null
-            && y.OrderItems!.Where(x => x.OrderItemStatusId != 1 && x.OrderItemStatusId != 6).Count() > 0).ToList();
+                result = result
+                    .Where(x => x.OrderItems!.Any())
+                    .Where(y =>
+                        y.User.UserId == _cu.UserId
+                        && y.CloseDate == null
+                        && y.OrderItems!.Where(x => x.OrderItemStatusId != 1 && x.OrderItemStatusId != 6).Count() > 0
+                    )
+                    .ToList();
 
             Response response = new()
             {
@@ -80,7 +84,7 @@ public class Endpoint : Endpoint<Request, List<Response>>
                 PendingItems = result.Sum(n => n.OrderItems?.Count) ?? 0,
                 PendingTables = result.Count,
                 Tables = result,
-                Division = division!
+                Division = division!,
             };
             responses.Add(response);
         }

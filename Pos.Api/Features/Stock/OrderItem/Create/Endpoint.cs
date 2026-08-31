@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Stock.OrderItem.Create;
 
@@ -29,8 +29,7 @@ public class Endpoint : Endpoint<Request, Entities.StockOrder>
             Price = req.Price,
         };
 
-        var exists = await _dbContext.StockOrderItem
-            .FirstOrDefaultAsync(x => x.StockOrderId == entity.StockOrderId && x.StockId == entity.StockId, ct);
+        var exists = await _dbContext.StockOrderItem.FirstOrDefaultAsync(x => x.StockOrderId == entity.StockOrderId && x.StockId == entity.StockId, ct);
 
         if (exists != null)
         {

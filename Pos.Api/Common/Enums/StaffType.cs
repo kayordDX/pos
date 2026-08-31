@@ -4,5 +4,5 @@ public enum StaffType
 {
     Manager = 1,
     Waiter,
-    Chef
+    Chef,
 }

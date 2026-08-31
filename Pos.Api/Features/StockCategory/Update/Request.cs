@@ -8,7 +8,6 @@ public class Request
     public string Name { get; set; } = string.Empty;
     public int? ParentId { get; set; }
     public bool? IsDeleted { get; set; }
-
 }
 
 public class Validator : Validator<Request>

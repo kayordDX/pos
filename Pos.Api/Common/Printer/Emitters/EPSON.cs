@@ -1,5 +1,3 @@
 ﻿namespace Pos.Api.Common.Printer.Emitters;
 
-public class EPSON : BaseCommandEmitter
-{
-}
+public class EPSON : BaseCommandEmitter { }

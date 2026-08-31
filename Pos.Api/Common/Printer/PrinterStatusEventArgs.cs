@@ -18,7 +18,11 @@ public class PrinterStatusEventArgs : EventArgs
 
     public bool? IsPaperOut { get; set; }
 
-    public bool? IsInErrorState => (DidRecoverableErrorOccur ?? false) || (DidUnrecoverableErrorOccur ?? false) || (DidAutocutterErrorOccur ?? false) || (DidRecoverableNonAutocutterErrorOccur ?? false);
+    public bool? IsInErrorState =>
+        (DidRecoverableErrorOccur ?? false)
+        || (DidUnrecoverableErrorOccur ?? false)
+        || (DidAutocutterErrorOccur ?? false)
+        || (DidRecoverableNonAutocutterErrorOccur ?? false);
 
     public bool? DidRecoverableErrorOccur { get; set; }
 

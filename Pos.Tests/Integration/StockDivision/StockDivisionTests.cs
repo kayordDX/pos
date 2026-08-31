@@ -1,7 +1,7 @@
-using Pos.Api.Data;
-using Pos.Api.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Pos.Api.Data;
+using Pos.Api.Entities;
 
 namespace Integration.StockDivision;
 
@@ -24,7 +24,7 @@ public class StockDivisionTests(App app) : TestBase<App>
             DivisionName = activeDivisionName,
             OutletId = outlet.Id,
             DivisionTypeId = 0,
-            IsDeleted = false
+            IsDeleted = false,
         };
         dbContext.Division.Add(activeDivision);
 
@@ -33,14 +33,17 @@ public class StockDivisionTests(App app) : TestBase<App>
             DivisionName = deletedDivisionName,
             OutletId = outlet.Id,
             DivisionTypeId = 0,
-            IsDeleted = true
+            IsDeleted = true,
         };
         dbContext.Division.Add(deletedDivision);
         await dbContext.SaveChangesAsync(app.Context.CancellationToken);
 
         // Act
-        var (rsp, res) = await app.ClientAuth.GETAsync<Pos.Api.Features.Stock.Division.GetAll.Endpoint, Pos.Api.Features.Stock.Division.GetAll.Request, List<Pos.Api.Entities.Division>>(
-            new() { OutletId = outlet.Id });
+        var (rsp, res) = await app.ClientAuth.GETAsync<
+            Pos.Api.Features.Stock.Division.GetAll.Endpoint,
+            Pos.Api.Features.Stock.Division.GetAll.Request,
+            List<Pos.Api.Entities.Division>
+        >(new() { OutletId = outlet.Id });
 
         // Assert
         rsp.IsSuccessStatusCode.ShouldBeTrue();

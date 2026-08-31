@@ -1,7 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.Extra.Update;
 
@@ -23,7 +22,6 @@ public class Endpoint : Endpoint<Request>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-
         Entities.Extra? extraEntity = await _dbContext.Extra.FindAsync(req.ExtraId);
         if (extraEntity == null)
         {
@@ -48,8 +46,5 @@ public class Endpoint : Endpoint<Request>
         await _dbContext.SaveChangesAsync();
         await Send.NoContentAsync();
         // await Helper.ClearCacheOutlet(_dbContext, _redisClient, req.OutletId);
-
     }
-
-
 }

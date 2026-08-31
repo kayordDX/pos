@@ -24,7 +24,7 @@ public class Endpoint : Endpoint<Request, Entities.Role>
             Name = req.Name,
             Description = req.Description,
             RoleTypeId = req.RoleTypeId,
-            OutletId = req.OutletId
+            OutletId = req.OutletId,
         };
         await _dbContext.Role.AddAsync(newRole);
         await _dbContext.SaveChangesAsync();

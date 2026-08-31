@@ -11,56 +11,45 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Supplier_SupplierPlatform_SupplierPlatformId",
-                table: "Supplier");
+            migrationBuilder.DropForeignKey(name: "FK_Supplier_SupplierPlatform_SupplierPlatformId", table: "Supplier");
 
-            migrationBuilder.DropTable(
-                name: "SupplierPlatform");
+            migrationBuilder.DropTable(name: "SupplierPlatform");
 
-            migrationBuilder.DropIndex(
-                name: "IX_Supplier_SupplierPlatformId",
-                table: "Supplier");
+            migrationBuilder.DropIndex(name: "IX_Supplier_SupplierPlatformId", table: "Supplier");
 
-            migrationBuilder.DropColumn(
-                name: "SupplierPlatformId",
-                table: "Supplier");
+            migrationBuilder.DropColumn(name: "SupplierPlatformId", table: "Supplier");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "SupplierPlatformId",
-                table: "Supplier",
-                type: "integer",
-                nullable: true);
+            migrationBuilder.AddColumn<int>(name: "SupplierPlatformId", table: "Supplier", type: "integer", nullable: true);
 
             migrationBuilder.CreateTable(
                 name: "SupplierPlatform",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table
+                        .Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "text", nullable: false),
-                    Url = table.Column<string>(type: "text", nullable: true)
+                    Url = table.Column<string>(type: "text", nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_SupplierPlatform", x => x.Id);
-                });
+                }
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Supplier_SupplierPlatformId",
-                table: "Supplier",
-                column: "SupplierPlatformId");
+            migrationBuilder.CreateIndex(name: "IX_Supplier_SupplierPlatformId", table: "Supplier", column: "SupplierPlatformId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Supplier_SupplierPlatform_SupplierPlatformId",
                 table: "Supplier",
                 column: "SupplierPlatformId",
                 principalTable: "SupplierPlatform",
-                principalColumn: "Id");
+                principalColumn: "Id"
+            );
         }
     }
 }

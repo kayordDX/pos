@@ -15,22 +15,23 @@ namespace Pos.Api.Data.Migrations
                 name: "OutletExtraGroup",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table
+                        .Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     OutletId = table.Column<int>(type: "integer", nullable: false),
-                    ExtraGroupId = table.Column<int>(type: "integer", nullable: false)
+                    ExtraGroupId = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_OutletExtraGroup", x => x.Id);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "OutletExtraGroup");
+            migrationBuilder.DropTable(name: "OutletExtraGroup");
         }
     }
 }

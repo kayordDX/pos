@@ -1,13 +1,15 @@
 using HealthChecks.UI.Client;
-using Pos.Api.Data;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Pos.Api.Data;
+
 namespace Pos.Api.Common.Extensions.Health;
 
 public static class HealthExtensions
 {
     public static void ConfigureHealth(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddHealthChecks()
+        services
+            .AddHealthChecks()
             .AddProcessAllocatedMemoryHealthCheck(2750)
             .AddDbContextCheck<AppDbContext>()
             .AddRedis(configuration.GetConnectionString("Redis")!);
@@ -15,10 +17,7 @@ public static class HealthExtensions
 
     public static IApplicationBuilder UseHealth(this IApplicationBuilder app)
     {
-        app.UseHealthChecks("/health", new HealthCheckOptions
-        {
-            ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
-        });
+        app.UseHealthChecks("/health", new HealthCheckOptions { ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse });
         return app;
     }
 }

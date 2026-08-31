@@ -1,7 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
+
 namespace Pos.Api.Features.Menu.GetSections;
 
 public class GetMenusSectionsEndpoint : Endpoint<Request, Response>
@@ -38,17 +39,13 @@ public class GetMenusSectionsEndpoint : Endpoint<Request, Response>
             parentId = req.SectionId;
         }
 
-        var sections = await _dbContext.MenuSection
-            .Where(x => x.MenuId == req.MenuId && x.ParentId == parentId)
+        var sections = await _dbContext
+            .MenuSection.Where(x => x.MenuId == req.MenuId && x.ParentId == parentId)
             .OrderBy(x => x.PositionId)
             .ProjectToDto()
             .ToListAsync();
 
-        var parents = await _dbContext.MenuSection
-            .Where(x => x.MenuSectionId == req.SectionId)
-            .OrderBy(x => x.PositionId)
-            .ProjectToDto()
-            .ToListAsync();
+        var parents = await _dbContext.MenuSection.Where(x => x.MenuSectionId == req.SectionId).OrderBy(x => x.PositionId).ProjectToDto().ToListAsync();
 
         Response response = new() { Parents = parents, Sections = sections };
         _ = _redisClient.SetObjectAsync(cacheKey, response);

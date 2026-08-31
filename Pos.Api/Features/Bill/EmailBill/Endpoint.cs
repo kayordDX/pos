@@ -1,7 +1,7 @@
+using MimeKit;
 using Pos.Api.Data;
 using Pos.Api.Features.Bill.DownloadBill;
 using Pos.Api.Services;
-using MimeKit;
 using QuestPDF.Fluent;
 
 namespace Pos.Api.Features.Bill.EmailBill;
@@ -31,25 +31,27 @@ public class Endpoint : Endpoint<Request, bool>
         await using var stream = new MemoryStream();
         document.GeneratePdf(stream);
 
-        AttachmentCollection attachment = new()
-        {
-            { $"Invoice{pdfRequest.TableBookingId}.pdf", stream.ToArray() }
-        };
+        AttachmentCollection attachment = new() { { $"Invoice{pdfRequest.TableBookingId}.pdf", stream.ToArray() } };
 
-        await _emailSender.SendEmailAsync(req.Email, req.Name, $"{pdfRequest.OutletName} Invoice #{pdfRequest.TableBookingId} {pdfRequest.BillDate}",
-        $"""
-        Dear {req.Name},
+        await _emailSender.SendEmailAsync(
+            req.Email,
+            req.Name,
+            $"{pdfRequest.OutletName} Invoice #{pdfRequest.TableBookingId} {pdfRequest.BillDate}",
+            $"""
+            Dear {req.Name},
 
-        Thank you for choosing {pdfRequest.OutletName}.
-        We appreciate your recent visit.
+            Thank you for choosing {pdfRequest.OutletName}.
+            We appreciate your recent visit.
 
-        Please find the attached invoice for your reference.
+            Please find the attached invoice for your reference.
 
-        If you have any questions or need further assistance, feel free to reach out.
+            If you have any questions or need further assistance, feel free to reach out.
 
-        Best regards,
-        {pdfRequest.OutletName}
-        """, attachment);
+            Best regards,
+            {pdfRequest.OutletName}
+            """,
+            attachment
+        );
 
         // Send Email
         await Send.OkAsync(true);

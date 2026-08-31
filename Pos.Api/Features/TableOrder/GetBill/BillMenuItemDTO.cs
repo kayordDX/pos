@@ -8,5 +8,4 @@ public class BillMenuItemDTO
 
     public int BillCategoryId { get; set; }
     public BillCategoryDTO? BillCategory { get; set; }
-
 }

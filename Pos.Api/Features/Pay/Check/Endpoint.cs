@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Pay.Check;
 
@@ -32,9 +32,7 @@ public class Endpoint : Endpoint<Request, Response>
 
         Response response = new();
 
-        var haloRequests = await _dbContext.HaloReference
-            .Where(x => x.TableBookingId == req.TableBookingId)
-            .ToListAsync(ct);
+        var haloRequests = await _dbContext.HaloReference.Where(x => x.TableBookingId == req.TableBookingId).ToListAsync(ct);
 
         int outletId = await Helper.GetUserOutlet(_dbContext, _cu.UserId);
 

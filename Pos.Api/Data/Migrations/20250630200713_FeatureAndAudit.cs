@@ -15,21 +15,23 @@ namespace Pos.Api.Data.Migrations
                 name: "feature",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
+                    id = table
+                        .Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "text", nullable: false)
+                    name = table.Column<string>(type: "text", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_feature", x => x.id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "outlet_feature",
                 columns: table => new
                 {
                     feature_id = table.Column<int>(type: "integer", nullable: false),
-                    outlet_id = table.Column<int>(type: "integer", nullable: false)
+                    outlet_id = table.Column<int>(type: "integer", nullable: false),
                 },
                 constraints: table =>
                 {
@@ -39,29 +41,27 @@ namespace Pos.Api.Data.Migrations
                         column: x => x.feature_id,
                         principalTable: "feature",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Cascade
+                    );
                     table.ForeignKey(
                         name: "fk_outlet_feature_outlet_outlet_id",
                         column: x => x.outlet_id,
                         principalTable: "outlet",
                         principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
+                        onDelete: ReferentialAction.Cascade
+                    );
+                }
+            );
 
-            migrationBuilder.CreateIndex(
-                name: "ix_outlet_feature_outlet_id",
-                table: "outlet_feature",
-                column: "outlet_id");
+            migrationBuilder.CreateIndex(name: "ix_outlet_feature_outlet_id", table: "outlet_feature", column: "outlet_id");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "outlet_feature");
+            migrationBuilder.DropTable(name: "outlet_feature");
 
-            migrationBuilder.DropTable(
-                name: "feature");
+            migrationBuilder.DropTable(name: "feature");
         }
     }
 }

@@ -39,11 +39,7 @@ public class PrinterConnectionTracker
 
     public List<int> OnlineDevices(int outletId)
     {
-        return _connections
-            .Where(x => x.Key.OutletId == outletId && x.Value > 0)
-            .Select(x => x.Key.DeviceId)
-            .Distinct()
-            .ToList();
+        return _connections.Where(x => x.Key.OutletId == outletId && x.Value > 0).Select(x => x.Key.DeviceId).Distinct().ToList();
     }
 
     public bool IsOnline(int outletId, int deviceId)

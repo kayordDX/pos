@@ -10,20 +10,20 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("""
-                delete from stock_item_audit_type;
-                insert into stock_item_audit_type(id, name) values(1, 'Order Menu Item');
-                insert into stock_item_audit_type(id, name) values(2, 'Order Extra');
-                insert into stock_item_audit_type(id, name) values(3, 'Order Option');
-                insert into stock_item_audit_type(id, name) values(4, 'Stock Allocate');
-                insert into stock_item_audit_type(id, name) values(5, 'Stock Order');
-                insert into stock_item_audit_type(id, name) values(6, 'Stock Update');
-            """);
+            migrationBuilder.Sql(
+                """
+                    delete from stock_item_audit_type;
+                    insert into stock_item_audit_type(id, name) values(1, 'Order Menu Item');
+                    insert into stock_item_audit_type(id, name) values(2, 'Order Extra');
+                    insert into stock_item_audit_type(id, name) values(3, 'Order Option');
+                    insert into stock_item_audit_type(id, name) values(4, 'Stock Allocate');
+                    insert into stock_item_audit_type(id, name) values(5, 'Stock Order');
+                    insert into stock_item_audit_type(id, name) values(6, 'Stock Update');
+                """
+            );
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-        }
+        protected override void Down(MigrationBuilder migrationBuilder) { }
     }
 }

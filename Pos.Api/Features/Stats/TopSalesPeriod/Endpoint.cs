@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Stats.TopSalesPeriod;
 
@@ -28,17 +28,18 @@ public class Endpoint : Endpoint<Request, List<Response>>
             await Send.NotFoundAsync();
             return;
         }
-        var result = await _dbContext.SalesPeriod
-            .Where(x => x.OutletId == userOutlet.OutletId)
+        var result = await _dbContext
+            .SalesPeriod.Where(x => x.OutletId == userOutlet.OutletId)
             .Select(x => new Response()
             {
                 Id = x.Id,
                 Name = x.Name,
                 EndDate = x.EndDate,
-                StartDate = x.StartDate
+                StartDate = x.StartDate,
             })
             .OrderByDescending(x => x.StartDate)
-            .Take(r.Top).ToListAsync(ct);
+            .Take(r.Top)
+            .ToListAsync(ct);
 
         if (result == null)
         {

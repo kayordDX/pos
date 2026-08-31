@@ -1,9 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Features.Role;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.TableOrder.Office.OrderBased.Back;
 
@@ -16,7 +15,6 @@ public class Endpoint : Endpoint<Request, Response>
     {
         _dbContext = dbContext;
         _cu = cu;
-
     }
 
     public override void Configure()
@@ -34,8 +32,8 @@ public class Endpoint : Endpoint<Request, Response>
         }
         List<int> divisionIds = req.DivisionIds != null ? [.. req.DivisionIds.Split(",").Select(int.Parse)] : [];
 
-        var orderItems = _dbContext.OrderItem
-            .Where(x => x.TableBooking.Table.Section.OutletId == userOutlet.OutletId)
+        var orderItems = _dbContext
+            .OrderItem.Where(x => x.TableBooking.Table.Section.OutletId == userOutlet.OutletId)
             .Where(x => x.OrderGroupId != null)
             .Where(x => x.OrderItemStatus.IsBackOffice == !req.Complete)
             .Where(x => x.OrderItemStatus.IsCancelled != true)
@@ -60,20 +58,16 @@ public class Endpoint : Endpoint<Request, Response>
                 LastDate = s.Max(x => x.OrderUpdated),
                 Priority = s.Max(x => x.OrderItemStatus.Priority),
                 TableBooking = s.FirstOrDefault()?.TableBooking,
-                OrderItems = s.ToList()
+                OrderItems = s.ToList(),
             });
 
         if (req.Complete)
         {
-            orderGroupQuery = orderGroupQuery
-                .OrderByDescending(x => x.Priority).ThenByDescending(x => x.LastDate)
-                .ToList();
+            orderGroupQuery = orderGroupQuery.OrderByDescending(x => x.Priority).ThenByDescending(x => x.LastDate).ToList();
         }
         else
         {
-            orderGroupQuery = orderGroupQuery
-                .OrderByDescending(x => x.Priority).ThenBy(x => x.LastDate)
-                .ToList();
+            orderGroupQuery = orderGroupQuery.OrderByDescending(x => x.Priority).ThenBy(x => x.LastDate).ToList();
         }
 
         var orderGroups = orderGroupQuery.ToList();
@@ -83,7 +77,7 @@ public class Endpoint : Endpoint<Request, Response>
             LastRefresh = DateTime.UtcNow,
             OrderGroups = orderGroups,
             PendingItems = orderGroups.Sum(x => x.OrderItems?.Count ?? 0),
-            PendingOrders = orderGroups.Count
+            PendingOrders = orderGroups.Count,
         };
 
         await Send.OkAsync(r, ct);

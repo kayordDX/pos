@@ -40,8 +40,6 @@ var api = builder
     .WithExternalHttpEndpoints()
     .WithHttpHealthCheck("/health");
 
-web = web.WithReference(api)
-    .WaitFor(api)
-    .WithEnvironment("PUBLIC_API_URL", api.GetEndpoint("http"));
+web = web.WithReference(api).WaitFor(api).WithEnvironment("PUBLIC_API_URL", api.GetEndpoint("http"));
 
 builder.Build().Run();

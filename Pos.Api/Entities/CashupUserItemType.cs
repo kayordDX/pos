@@ -16,5 +16,4 @@ public class CashUpUserItemType
     public AdjustmentType? AdjustmentType { get; set; }
     public int? CashupConfigId { get; set; }
     public CashUpConfig? CashupConfig { get; set; }
-
 }

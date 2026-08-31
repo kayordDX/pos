@@ -4,10 +4,7 @@ namespace Pos.Api.Features.Notification.Sound;
 
 public class Endpoint : EndpointWithoutRequest<bool>
 {
-
-    public Endpoint()
-    {
-    }
+    public Endpoint() { }
 
     public override void Configure()
     {

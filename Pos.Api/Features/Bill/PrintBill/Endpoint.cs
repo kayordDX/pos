@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Features.Bill.EmailBill;
 using Pos.Api.Features.Printer;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Bill.PrintBill;
 
@@ -39,7 +39,7 @@ public class Endpoint : Endpoint<Request, bool>
             PrinterName = printer.PrinterName,
             IPAddress = printer.IPAddress,
             Port = printer.Port,
-            PrintInstructions = printInstructions
+            PrintInstructions = printInstructions,
         };
         await _printService.Print(printer.OutletId, printer.DeviceId, printMessage);
         await Send.OkAsync(true);

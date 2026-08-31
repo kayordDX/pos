@@ -1,25 +1,29 @@
 namespace Pos.Api.Features.CashUp.User.Detail;
 
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 public static class CashUp
 {
-    public static async Task<Response> CashUpProcess(int OutletId, string UserId, AppDbContext _dbContext, CurrentUserService _cu, bool close, int cashUpUserId = 0)
+    public static async Task<Response> CashUpProcess(
+        int OutletId,
+        string UserId,
+        AppDbContext _dbContext,
+        CurrentUserService _cu,
+        bool close,
+        int cashUpUserId = 0
+    )
     {
-
         Response response = new()
         {
             CashUpUserItems = new(),
             IsCashedUp = false,
-            IsError = false
+            IsError = false,
         };
-        var salesPeriod = await _dbContext.SalesPeriod
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x => x.OutletId == OutletId && x.EndDate == null);
+        var salesPeriod = await _dbContext.SalesPeriod.AsNoTracking().FirstOrDefaultAsync(x => x.OutletId == OutletId && x.EndDate == null);
         if (salesPeriod == null)
         {
             response.IsError = true;
@@ -28,7 +32,9 @@ public static class CashUp
         }
         if (close)
         {
-            bool hasOpenTables = await _dbContext.TableBooking.AnyAsync(x => x.SalesPeriodId == salesPeriod.Id && x.UserId == UserId && (x.CloseDate == null || x.Total == null));
+            bool hasOpenTables = await _dbContext.TableBooking.AnyAsync(x =>
+                x.SalesPeriodId == salesPeriod.Id && x.UserId == UserId && (x.CloseDate == null || x.Total == null)
+            );
             if (hasOpenTables)
             {
                 response.IsError = true;
@@ -47,7 +53,11 @@ public static class CashUp
             var items = _dbContext.CashUpUserItem.Where(x => x.CashUpUserId == cashUpUserId).Where(x => x.Value != 0m).ProjectToDto();
             response.CashUpUserItems.AddRange(items);
 
-            response.GrossBalance = Math.Round(response.OpeningBalance + response.CashUpUserItems.Where(x => x.CashUpUserItemType!.AffectsGrossBalance || x.CashUpUserItemType.IsAuto == false).Sum(x => x.Value), 2);
+            response.GrossBalance = Math.Round(
+                response.OpeningBalance
+                    + response.CashUpUserItems.Where(x => x.CashUpUserItemType!.AffectsGrossBalance || x.CashUpUserItemType.IsAuto == false).Sum(x => x.Value),
+                2
+            );
             response.NetBalance = response.GrossBalance;
             response.IsCashedUp = true;
 
@@ -60,7 +70,10 @@ public static class CashUp
             return response;
         }
 
-        CashUpUserDTO? cashUpUser = await _dbContext.CashUpUser.ProjectToDto().OrderByDescending(x => x.Id).FirstOrDefaultAsync(x => x.UserId == UserId && x.ClosingBalance == null && x.OutletId == OutletId);
+        CashUpUserDTO? cashUpUser = await _dbContext
+            .CashUpUser.ProjectToDto()
+            .OrderByDescending(x => x.Id)
+            .FirstOrDefaultAsync(x => x.UserId == UserId && x.ClosingBalance == null && x.OutletId == OutletId);
         int userCashUpId = 0;
 
         if (salesPeriod == null)
@@ -76,7 +89,10 @@ public static class CashUp
         }
         else
         {
-            cashUpUser = await _dbContext.CashUpUser.ProjectToDto().OrderByDescending(x => x.Id).LastOrDefaultAsync(x => x.UserId == UserId && x.ClosingBalance != null && x.OutletId == OutletId);
+            cashUpUser = await _dbContext
+                .CashUpUser.ProjectToDto()
+                .OrderByDescending(x => x.Id)
+                .LastOrDefaultAsync(x => x.UserId == UserId && x.ClosingBalance != null && x.OutletId == OutletId);
             if (cashUpUser != null)
             {
                 // TODO: Double check with Steff
@@ -89,7 +105,9 @@ public static class CashUp
                 _dbContext.CashUpUser.Add(u);
                 await _dbContext.SaveChangesAsync();
                 userCashUpId = u.Id;
-                cashUpUser = await _dbContext.CashUpUser.ProjectToDto().FirstOrDefaultAsync(x => x.UserId == UserId && x.ClosingBalance == null && x.OutletId == OutletId);
+                cashUpUser = await _dbContext
+                    .CashUpUser.ProjectToDto()
+                    .FirstOrDefaultAsync(x => x.UserId == UserId && x.ClosingBalance == null && x.OutletId == OutletId);
             }
             else
             {
@@ -103,7 +121,9 @@ public static class CashUp
                 _dbContext.CashUpUser.Add(u);
                 await _dbContext.SaveChangesAsync();
                 userCashUpId = u.Id;
-                cashUpUser = await _dbContext.CashUpUser.ProjectToDto().FirstOrDefaultAsync(x => x.UserId == UserId && x.ClosingBalance == null && x.OutletId == OutletId);
+                cashUpUser = await _dbContext
+                    .CashUpUser.ProjectToDto()
+                    .FirstOrDefaultAsync(x => x.UserId == UserId && x.ClosingBalance == null && x.OutletId == OutletId);
             }
         }
 
@@ -114,34 +134,21 @@ public static class CashUp
 
         // Fixed: Filter on current outlet only
         // List<CashUpUserItemTypeDTO> cashUpUserItemTypes = await _dbContext.CashUpUserItemType.ProjectToDto().ToListAsync();
-        List<CashUpUserItemTypeDTO> cashUpUserItemTypes = await _dbContext.CashUpUserItemType
-        .AsNoTracking()
-        .GroupJoin(
-            _dbContext.AdjustmentTypeOutlet,
-            c => c.AdjustmentTypeId,
-            a => a.AdjustmentTypeId,
-            (c, a) => new { c, a }
-        )
-        .SelectMany(x => x.a.DefaultIfEmpty(), (x, a) => new { cut = x.c, a })
-        .Where(x => (x.a != null && x.a.OutletId == OutletId) || x.cut.AdjustmentTypeId == null)
-        .Select(x => x.cut)
-        .ProjectToDto()
-        .ToListAsync();
+        List<CashUpUserItemTypeDTO> cashUpUserItemTypes = await _dbContext
+            .CashUpUserItemType.AsNoTracking()
+            .GroupJoin(_dbContext.AdjustmentTypeOutlet, c => c.AdjustmentTypeId, a => a.AdjustmentTypeId, (c, a) => new { c, a })
+            .SelectMany(x => x.a.DefaultIfEmpty(), (x, a) => new { cut = x.c, a })
+            .Where(x => (x.a != null && x.a.OutletId == OutletId) || x.cut.AdjustmentTypeId == null)
+            .Select(x => x.cut)
+            .ProjectToDto()
+            .ToListAsync();
 
         List<PaymentTotal> paymentTotals = new();
 
-        var outletPayTypes = await _dbContext.OutletPaymentType
-            .AsNoTracking()
-            .Where(x => x.OutletId == OutletId)
-            .Include(x => x.PaymentType)
-            .ToListAsync();
+        var outletPayTypes = await _dbContext.OutletPaymentType.AsNoTracking().Where(x => x.OutletId == OutletId).Include(x => x.PaymentType).ToListAsync();
         var outletPayTypeIds = outletPayTypes.Select(x => x.PaymentTypeId).ToList();
 
-        var payTypes = await _dbContext.PaymentType
-            .AsNoTracking()
-            .Where(x => outletPayTypeIds.Contains(x.PaymentTypeId))
-            .ProjectToDto()
-            .ToListAsync();
+        var payTypes = await _dbContext.PaymentType.AsNoTracking().Where(x => outletPayTypeIds.Contains(x.PaymentTypeId)).ProjectToDto().ToListAsync();
 
         foreach (var payType in payTypes)
         {
@@ -151,12 +158,13 @@ public static class CashUp
                 PaymentType = payType,
                 Total = 0,
                 Levy = 0,
-                Tip = 0
+                Tip = 0,
             };
             paymentTotals.Add(paymentTotal);
         }
 
-        var tableBooking = await _dbContext.TableBooking.Where(x => x.UserId == UserId && x.CashUpUserId == null && x.SalesPeriodId == salesPeriod.Id)
+        var tableBooking = await _dbContext
+            .TableBooking.Where(x => x.UserId == UserId && x.CashUpUserId == null && x.SalesPeriodId == salesPeriod.Id)
             .Include(x => x.Payments)
             .Include(x => x.Adjustments!)
                 .ThenInclude(x => x.AdjustmentType)
@@ -183,7 +191,7 @@ public static class CashUp
                     CashUpUserId = userCashUpId,
                     OutletId = OutletId,
                     UserId = UserId,
-                    Value = total
+                    Value = total,
                 };
                 response.CashUpUserItems.Add(riTotal);
             }
@@ -284,7 +292,9 @@ public static class CashUp
         // Create response items for PaymentTip and PaymentLevy
         foreach (var pt in paymentTotals)
         {
-            CashUpUserItemTypeDTO? payCashTip = cashUpUserItemTypes.FirstOrDefault(x => x.PaymentTypeId == pt.PaymentTypeId && x.CashUpUserItemRule == Common.Enums.CashUpUserItemRule.PaymentTip);
+            CashUpUserItemTypeDTO? payCashTip = cashUpUserItemTypes.FirstOrDefault(x =>
+                x.PaymentTypeId == pt.PaymentTypeId && x.CashUpUserItemRule == Common.Enums.CashUpUserItemRule.PaymentTip
+            );
             if (payCashTip != null)
             {
                 CashUpUserItemDTO riTip = new()
@@ -294,12 +304,14 @@ public static class CashUp
                     CashUpUserId = userCashUpId,
                     OutletId = OutletId,
                     UserId = UserId,
-                    Value = pt.Tip
+                    Value = pt.Tip,
                 };
                 response.CashUpUserItems.Add(riTip);
             }
 
-            CashUpUserItemTypeDTO? payCashLevy = cashUpUserItemTypes.FirstOrDefault(x => x.PaymentTypeId == pt.PaymentTypeId && x.CashUpUserItemRule == Common.Enums.CashUpUserItemRule.PaymentLevy);
+            CashUpUserItemTypeDTO? payCashLevy = cashUpUserItemTypes.FirstOrDefault(x =>
+                x.PaymentTypeId == pt.PaymentTypeId && x.CashUpUserItemRule == Common.Enums.CashUpUserItemRule.PaymentLevy
+            );
             if (payCashLevy != null)
             {
                 CashUpUserItemDTO riLevy = new()
@@ -357,7 +369,6 @@ public static class CashUp
 
         foreach (CashUpUserItemTypeDTO cashItem in cashUpUserItemTypes.Where(x => x.CashUpUserItemRule == Common.Enums.CashUpUserItemRule.Config))
         {
-
             CashUpConfig? configItem = await _dbContext.CashUpConfig.FirstOrDefaultAsync(x => x.Id == cashItem.CashupConfigId && x.OutletId == OutletId);
             if (configItem != null)
             {
@@ -384,7 +395,7 @@ public static class CashUp
                     CashUpUserItemTypeId = ci.CashUpUserItemTypeId,
                     Value = ci.Value,
                     OutletId = ci.OutletId,
-                    UserId = ci.UserId
+                    UserId = ci.UserId,
                 };
                 await _dbContext.CashUpUserItem.AddAsync(sci);
             }
@@ -404,8 +415,8 @@ public static class CashUp
             await _dbContext.SaveChangesAsync();
             response.CashUpUserItems = new List<CashUpUserItemDTO>();
         }
-        List<CashUpUserItemDTO> existing = await _dbContext.CashUpUserItem
-            .AsNoTracking()
+        List<CashUpUserItemDTO> existing = await _dbContext
+            .CashUpUserItem.AsNoTracking()
             .Include(x => x.CashUpUserItemType)
             .Where(x => x.CashUpUserId == userCashUpId)
             .ProjectToDto()
@@ -416,7 +427,11 @@ public static class CashUp
         response.CashUpUserItems.AddRange(existing);
         response.CashUpUserId = userCashUpId;
 
-        response.GrossBalance = Math.Round(response.OpeningBalance + response.CashUpUserItems.Where(x => x.CashUpUserItemType!.AffectsGrossBalance || x.CashUpUserItemType.IsAuto == false).Sum(x => x.Value), 2);
+        response.GrossBalance = Math.Round(
+            response.OpeningBalance
+                + response.CashUpUserItems.Where(x => x.CashUpUserItemType!.AffectsGrossBalance || x.CashUpUserItemType.IsAuto == false).Sum(x => x.Value),
+            2
+        );
         response.NetBalance = response.GrossBalance;
 
         if (close)

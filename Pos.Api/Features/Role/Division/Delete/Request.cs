@@ -6,5 +6,4 @@ public class Request
 {
     public int RoleId { get; set; }
     public int DivisionId { get; set; }
-
 }

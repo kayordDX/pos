@@ -23,7 +23,7 @@ public class Endpoint : Endpoint<Request>
             Name = req.Name,
             MinSelections = req.MinSelections,
             MaxSelections = req.MaxSelections,
-            OutletId = req.OutletId
+            OutletId = req.OutletId,
         };
 
         await _dbContext.OptionGroup.AddAsync(optionGroup);

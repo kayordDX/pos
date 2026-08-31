@@ -1,6 +1,6 @@
 using DotNet.Testcontainers.Builders;
-using Pos.Api.Services;
 using Microsoft.Extensions.DependencyInjection;
+using Pos.Api.Services;
 using Testcontainers.PostgreSql;
 
 namespace Integration;

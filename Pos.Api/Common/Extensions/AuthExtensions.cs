@@ -1,7 +1,7 @@
-using Pos.Api.Features.Auth;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using Pos.Api.Features.Auth;
 
 namespace Pos.Api.Common.Extensions;
 
@@ -12,7 +12,8 @@ public static class AuthExtensions
         var firebaseProjectName = "kayord-pos";
 
         services.AddMemoryCache();
-        services.AddAuthentication(options =>
+        services
+            .AddAuthentication(options =>
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -31,7 +32,7 @@ public static class AuthExtensions
                             context.Token = accessToken;
                         }
                         return Task.CompletedTask;
-                    }
+                    },
                 };
                 options.TokenValidationParameters = new TokenValidationParameters
                 {
@@ -39,7 +40,7 @@ public static class AuthExtensions
                     ValidIssuer = $"https://securetoken.google.com/{firebaseProjectName}",
                     ValidateAudience = true,
                     ValidAudience = firebaseProjectName,
-                    ValidateLifetime = true
+                    ValidateLifetime = true,
                 };
             })
             .AddScheme<AuthenticationSchemeOptions, PrinterKeyAuthenticationHandler>(Constants.Policy.PrinterKeyScheme, _ => { });

@@ -6,5 +6,4 @@ public class MenuItemExtraGroup
     public int ExtraGroupId { get; set; }
     public MenuItem MenuItem { get; set; } = default!;
     public ExtraGroup ExtraGroup { get; set; } = default!;
-
 }

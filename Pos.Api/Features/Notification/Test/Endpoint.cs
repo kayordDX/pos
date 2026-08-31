@@ -1,5 +1,5 @@
-using Pos.Api.Hubs;
 using Microsoft.AspNetCore.SignalR;
+using Pos.Api.Hubs;
 
 namespace Pos.Api.Features.Notification.Test;
 

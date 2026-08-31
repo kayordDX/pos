@@ -1,6 +1,7 @@
 using Pos.Api.DTO;
 
 namespace Pos.Api.Features.TableOrder.Office.OrderBased.Back;
+
 public class TableBookingDTO
 {
     public int Id { get; set; }

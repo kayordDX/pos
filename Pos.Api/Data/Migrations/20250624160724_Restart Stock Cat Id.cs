@@ -10,15 +10,14 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("""
-                ALTER TABLE stock_category ALTER id RESTART 300;;
-            """);
+            migrationBuilder.Sql(
+                """
+                    ALTER TABLE stock_category ALTER id RESTART 300;;
+                """
+            );
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
-        }
+        protected override void Down(MigrationBuilder migrationBuilder) { }
     }
 }

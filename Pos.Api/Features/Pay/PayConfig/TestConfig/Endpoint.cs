@@ -3,6 +3,7 @@ namespace Pos.Api.Features.Pay.PayConfig.TestConfig;
 public class Endpoint : Endpoint<Request, bool>
 {
     private readonly HaloService _halo;
+
     public Endpoint(HaloService halo)
     {
         _halo = halo;

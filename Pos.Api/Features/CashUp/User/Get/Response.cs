@@ -1,5 +1,3 @@
-
-
 namespace Pos.Api.Features.CashUp.User.Get;
 
 public class Response

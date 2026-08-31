@@ -1,6 +1,5 @@
-
-using Pos.Api.Entities;
 using Pos.Api.DTO;
+using Pos.Api.Entities;
 
 namespace Pos.Api.Features.SalesPeriod.CashUp;
 
@@ -13,6 +12,4 @@ public class TableCashUp
     public decimal Balance { get; set; } = 0;
     public string? UserId { get; set; }
     public UserDTO? User { get; set; }
-
-
 }

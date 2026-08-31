@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Outlet.Counter.GetAll;
 
@@ -9,7 +9,6 @@ public class Endpoint : EndpointWithoutRequest<List<OutletCounter>>
 {
     private readonly AppDbContext _dbContext;
     private readonly UserService _userService;
-
 
     public Endpoint(AppDbContext dbContext, UserService userService)
     {

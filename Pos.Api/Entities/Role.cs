@@ -1,6 +1,5 @@
 namespace Pos.Api.Entities;
 
-
 public class Role : AuditableEntity
 {
     public int RoleId { get; set; }

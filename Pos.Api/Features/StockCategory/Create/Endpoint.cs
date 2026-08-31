@@ -22,7 +22,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.StockCategory>
         {
             Name = req.Name,
             ParentId = req.ParentId,
-            OutletId = req.OutletId
+            OutletId = req.OutletId,
         };
         await _dbContext.StockCategory.AddAsync(entity);
         await _dbContext.SaveChangesAsync();

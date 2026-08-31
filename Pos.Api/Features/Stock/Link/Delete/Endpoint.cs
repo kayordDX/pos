@@ -1,5 +1,6 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
+
 namespace Pos.Api.Features.Stock.Link.Delete;
 
 public class Endpoint : Endpoint<Request>

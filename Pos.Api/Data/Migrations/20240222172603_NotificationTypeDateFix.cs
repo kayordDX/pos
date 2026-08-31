@@ -17,7 +17,8 @@ namespace Pos.Api.Data.Migrations
                 type: "timestamp with time zone",
                 nullable: true,
                 oldClrType: typeof(DateTime),
-                oldType: "timestamp with time zone");
+                oldType: "timestamp with time zone"
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "DateExpires",
@@ -25,7 +26,8 @@ namespace Pos.Api.Data.Migrations
                 type: "timestamp with time zone",
                 nullable: true,
                 oldClrType: typeof(DateTime),
-                oldType: "timestamp with time zone");
+                oldType: "timestamp with time zone"
+            );
         }
 
         /// <inheritdoc />
@@ -39,7 +41,8 @@ namespace Pos.Api.Data.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                 oldClrType: typeof(DateTime),
                 oldType: "timestamp with time zone",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AlterColumn<DateTime>(
                 name: "DateExpires",
@@ -49,7 +52,8 @@ namespace Pos.Api.Data.Migrations
                 defaultValue: new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                 oldClrType: typeof(DateTime),
                 oldType: "timestamp with time zone",
-                oldNullable: true);
+                oldNullable: true
+            );
         }
     }
 }

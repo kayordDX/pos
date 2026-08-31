@@ -29,11 +29,7 @@ public class Endpoint : Endpoint<Request>
             return;
         }
 
-        Entities.ExtraGroup? extraGroup = new()
-        {
-            Name = req.Name,
-            OutletId = outletId,
-        };
+        Entities.ExtraGroup? extraGroup = new() { Name = req.Name, OutletId = outletId };
 
         await _dbContext.Database.BeginTransactionAsync(ct);
 
@@ -46,7 +42,7 @@ public class Endpoint : Endpoint<Request>
             {
                 OutletId = extraGroup.OutletId,
                 ExtraGroupId = extraGroup.ExtraGroupId,
-                ExtraGroup = extraGroup
+                ExtraGroup = extraGroup,
             };
             await _dbContext.OutletExtraGroup.AddAsync(outletExtraGroup);
             await _dbContext.SaveChangesAsync();

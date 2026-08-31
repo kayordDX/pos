@@ -10,9 +10,7 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "fk_menu_item_division_division_id",
-                table: "menu_item");
+            migrationBuilder.DropForeignKey(name: "fk_menu_item_division_division_id", table: "menu_item");
 
             migrationBuilder.AlterColumn<int>(
                 name: "division_id",
@@ -22,7 +20,8 @@ namespace Pos.Api.Data.Migrations
                 defaultValue: 0,
                 oldClrType: typeof(int),
                 oldType: "integer",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "fk_menu_item_division_division_id",
@@ -30,15 +29,14 @@ namespace Pos.Api.Data.Migrations
                 column: "division_id",
                 principalTable: "division",
                 principalColumn: "division_id",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "fk_menu_item_division_division_id",
-                table: "menu_item");
+            migrationBuilder.DropForeignKey(name: "fk_menu_item_division_division_id", table: "menu_item");
 
             migrationBuilder.AlterColumn<int>(
                 name: "division_id",
@@ -46,14 +44,16 @@ namespace Pos.Api.Data.Migrations
                 type: "integer",
                 nullable: true,
                 oldClrType: typeof(int),
-                oldType: "integer");
+                oldType: "integer"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "fk_menu_item_division_division_id",
                 table: "menu_item",
                 column: "division_id",
                 principalTable: "division",
-                principalColumn: "division_id");
+                principalColumn: "division_id"
+            );
         }
     }
 }

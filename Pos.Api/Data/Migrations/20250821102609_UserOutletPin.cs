@@ -23,27 +23,31 @@ namespace Pos.Api.Data.Migrations
                     created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     created_by = table.Column<string>(type: "text", nullable: true),
                     last_modified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    last_modified_by = table.Column<string>(type: "text", nullable: true)
+                    last_modified_by = table.Column<string>(type: "text", nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_user_outlet_pin", x => new { x.user_id, x.outlet_id });
-                });
+                }
+            );
 
-            migrationBuilder.Sql("""
-                insert into feature(id, name) values(5, 'Counter Mode');
-            """);
+            migrationBuilder.Sql(
+                """
+                    insert into feature(id, name) values(5, 'Counter Mode');
+                """
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "user_outlet_pin");
+            migrationBuilder.DropTable(name: "user_outlet_pin");
 
-            migrationBuilder.Sql("""
-                delete from feature where id = 5;
-            """);
+            migrationBuilder.Sql(
+                """
+                    delete from feature where id = 5;
+                """
+            );
         }
     }
 }

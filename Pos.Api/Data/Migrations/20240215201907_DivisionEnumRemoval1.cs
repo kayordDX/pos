@@ -10,9 +10,7 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_MenuItem_Division_DivisionId",
-                table: "MenuItem");
+            migrationBuilder.DropForeignKey(name: "FK_MenuItem_Division_DivisionId", table: "MenuItem");
 
             migrationBuilder.AlterColumn<int>(
                 name: "DivisionId",
@@ -20,22 +18,22 @@ namespace Pos.Api.Data.Migrations
                 type: "integer",
                 nullable: true,
                 oldClrType: typeof(int),
-                oldType: "integer");
+                oldType: "integer"
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_MenuItem_Division_DivisionId",
                 table: "MenuItem",
                 column: "DivisionId",
                 principalTable: "Division",
-                principalColumn: "DivisionId");
+                principalColumn: "DivisionId"
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_MenuItem_Division_DivisionId",
-                table: "MenuItem");
+            migrationBuilder.DropForeignKey(name: "FK_MenuItem_Division_DivisionId", table: "MenuItem");
 
             migrationBuilder.AlterColumn<int>(
                 name: "DivisionId",
@@ -45,7 +43,8 @@ namespace Pos.Api.Data.Migrations
                 defaultValue: 0,
                 oldClrType: typeof(int),
                 oldType: "integer",
-                oldNullable: true);
+                oldNullable: true
+            );
 
             migrationBuilder.AddForeignKey(
                 name: "FK_MenuItem_Division_DivisionId",
@@ -53,7 +52,8 @@ namespace Pos.Api.Data.Migrations
                 column: "DivisionId",
                 principalTable: "Division",
                 principalColumn: "DivisionId",
-                onDelete: ReferentialAction.Cascade);
+                onDelete: ReferentialAction.Cascade
+            );
         }
     }
 }

@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Division.Create;
 
@@ -20,8 +20,7 @@ public class Endpoint : Endpoint<Request, Entities.Division>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var exists = await _dbContext.Division
-            .AnyAsync(x => x.DivisionName == req.Name && x.OutletId == req.OutletId && !x.IsDeleted, ct);
+        var exists = await _dbContext.Division.AnyAsync(x => x.DivisionName == req.Name && x.OutletId == req.OutletId && !x.IsDeleted, ct);
         if (exists)
         {
             ThrowError("Division name already exists in this outlet");

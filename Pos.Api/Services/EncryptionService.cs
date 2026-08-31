@@ -1,7 +1,7 @@
 using System.Security.Cryptography;
 using System.Text;
-using Pos.Api.Config;
 using Microsoft.Extensions.Options;
+using Pos.Api.Config;
 
 namespace Pos.Api.Services;
 
@@ -9,6 +9,7 @@ public class EncryptionService
 {
     private readonly AppConfig _appConfig;
     private readonly byte[] _key;
+
     public EncryptionService(IOptions<AppConfig> appConfig)
     {
         _appConfig = appConfig.Value;
@@ -19,13 +20,7 @@ public class EncryptionService
     {
         byte[] salt = Encoding.UTF8.GetBytes(_appConfig.EncryptionSalt);
         byte[] passwordBytes = Encoding.UTF8.GetBytes(_appConfig.EncryptionKey);
-        return Rfc2898DeriveBytes.Pbkdf2(
-            passwordBytes,
-            salt,
-            10000,
-            HashAlgorithmName.SHA512,
-            16
-        );
+        return Rfc2898DeriveBytes.Pbkdf2(passwordBytes, salt, 10000, HashAlgorithmName.SHA512, 16);
     }
 
     public string Encrypt(string plainText, byte[] iv)

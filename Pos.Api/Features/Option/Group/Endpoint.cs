@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Option.Group;
 
@@ -10,12 +10,10 @@ public class Endpoint : EndpointWithoutRequest<List<OptionGroupBasicDTO>>
     private readonly AppDbContext _dbContext;
     private readonly CurrentUserService _user;
 
-
     public Endpoint(AppDbContext dbContext, CurrentUserService user)
     {
         _dbContext = dbContext;
         _user = user;
-
     }
 
     public override void Configure()
@@ -27,10 +25,7 @@ public class Endpoint : EndpointWithoutRequest<List<OptionGroupBasicDTO>>
     {
         var outletId = await Helper.GetUserOutlet(_dbContext, _user.UserId ?? "");
 
-        var results = await _dbContext.OptionGroup
-            .Where(x => x.OutletId == outletId)
-            .ProjectToBasicDto()
-            .ToListAsync(ct);
+        var results = await _dbContext.OptionGroup.Where(x => x.OutletId == outletId).ProjectToBasicDto().ToListAsync(ct);
 
         await Send.OkAsync(results);
     }

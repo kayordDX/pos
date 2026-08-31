@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Hubs;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Printer.List;
 
@@ -28,10 +28,10 @@ public class Endpoint : Endpoint<Request, List<PrinterDTO>>
 
     public override async Task HandleAsync(Request r, CancellationToken ct)
     {
-        var result = await _dbContext.Printer
-            .Where(x => x.OutletId == r.OutletId)
+        var result = await _dbContext
+            .Printer.Where(x => x.OutletId == r.OutletId)
             .OrderByDescending(x => x.IsEnabled)
-                .ThenBy(x => x.PrinterName)
+            .ThenBy(x => x.PrinterName)
             .ProjectToDto()
             .ToListAsync();
 
@@ -43,8 +43,7 @@ public class Endpoint : Endpoint<Request, List<PrinterDTO>>
                 var db = await _redisClient.GetDatabaseAsync();
                 var subscribedPrinters = await db.ExecuteAsync("PUBSUB", "CHANNELS", $"print:{r.OutletId}:*");
 
-                List<string> printerChannels = ((StackExchange.Redis.RedisValue[]?)subscribedPrinters)?
-                    .Select(x => x.ToString())?.ToList() ?? [];
+                List<string> printerChannels = ((StackExchange.Redis.RedisValue[]?)subscribedPrinters)?.Select(x => x.ToString())?.ToList() ?? [];
 
                 List<int> onlineDevices = [];
                 foreach (var channel in printerChannels)
@@ -53,10 +52,12 @@ public class Endpoint : Endpoint<Request, List<PrinterDTO>>
                     var subCountList = ((StackExchange.Redis.RedisValue[]?)subCount)?.Select(x => x.ToString()).ToList() ?? [];
                     // Consider a printer connected if it has at least one subscriber. NUMSUB returns
                     // [channel, count], and duplicates/lingering subscriptions can push the count above 1.
-                    if (subCountList.Count > 1
+                    if (
+                        subCountList.Count > 1
                         && int.TryParse(subCountList[1], out int subscriberCount)
                         && subscriberCount > 0
-                        && int.TryParse(channel.Replace($"print:{r.OutletId}:", ""), out int deviceId))
+                        && int.TryParse(channel.Replace($"print:{r.OutletId}:", ""), out int deviceId)
+                    )
                     {
                         onlineDevices.Add(deviceId);
                     }

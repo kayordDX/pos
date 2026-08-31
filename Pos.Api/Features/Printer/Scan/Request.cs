@@ -14,8 +14,7 @@ public class Validator : Validator<Request>
     public Validator()
     {
         RuleFor(x => x.DeviceId).GreaterThan(0).WithMessage("DeviceId is required");
-        RuleFor(x => x.IPAddress).NotEmpty().WithMessage("IPAddress is required")
-            .MaximumLength(64).WithMessage("IPAddress must be 64 characters or fewer");
+        RuleFor(x => x.IPAddress).NotEmpty().WithMessage("IPAddress is required").MaximumLength(64).WithMessage("IPAddress must be 64 characters or fewer");
         RuleFor(x => x.Port).InclusiveBetween(1, 65535).WithMessage("Port must be between 1 and 65535");
     }
 }

@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 
 namespace Pos.Api.Features.Clock.GetAllOutletId;
 
@@ -20,18 +20,11 @@ public class Endpoint(AppDbContext dbContext) : Endpoint<Request, List<Entities.
         if (req.StatusId == 1) // Clocked Out
         {
             // Get staff who are clocked in
-            var clockedInStaff = await _dbContext.Clock
-                .Where(c => c.OutletId == req.OutletId && c.EndDate == null)
-                .Select(c => c.User)
-                .ToListAsync(ct);
-
+            var clockedInStaff = await _dbContext.Clock.Where(c => c.OutletId == req.OutletId && c.EndDate == null).Select(c => c.User).ToListAsync(ct);
         }
         else if (req.StatusId == 2) // Clocked In
         {
-            staffList = await _dbContext.Clock
-                .Where(c => c.OutletId == req.OutletId && c.EndDate == null)
-                .Select(c => c.User)
-                .ToListAsync(ct);
+            staffList = await _dbContext.Clock.Where(c => c.OutletId == req.OutletId && c.EndDate == null).Select(c => c.User).ToListAsync(ct);
         }
 
         await Send.OkAsync(staffList, ct);

@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Common.Extensions;
 using Pos.Api.Common.Models;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.User.UnassignedUsers;
 
@@ -30,26 +30,27 @@ public class Endpoint : Endpoint<Request, PaginatedList<UserResponse>>
             await Send.NotFoundAsync(c);
             return;
         }
-        var results = await _dbContext.Database
-            .SqlQuery<UserResponse>(
-            $"""
-            SELECT
-                uo.is_current,
-                u.user_id,
-                u.email,
-                u.image,
-                u.name,
-                '' roles
-            FROM user_outlet uo
-            JOIN "user" u
-                ON u.user_id = uo.user_id
-            LEFT JOIN user_role_outlet ur
-                ON uo.outlet_id = ur.outlet_id
-            AND u.user_id = ur.user_id
-            WHERE uo.outlet_id = {userOutlet.OutletId}
-            AND ur.id IS NULL
-            """
-            ).GetPagedAsync(req, c);
+        var results = await _dbContext
+            .Database.SqlQuery<UserResponse>(
+                $"""
+                SELECT
+                    uo.is_current,
+                    u.user_id,
+                    u.email,
+                    u.image,
+                    u.name,
+                    '' roles
+                FROM user_outlet uo
+                JOIN "user" u
+                    ON u.user_id = uo.user_id
+                LEFT JOIN user_role_outlet ur
+                    ON uo.outlet_id = ur.outlet_id
+                AND u.user_id = ur.user_id
+                WHERE uo.outlet_id = {userOutlet.OutletId}
+                AND ur.id IS NULL
+                """
+            )
+            .GetPagedAsync(req, c);
 
         await Send.OkAsync(results);
     }

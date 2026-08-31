@@ -1,5 +1,5 @@
-using Pos.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Data;
 using TickerQ.Dashboard.DependencyInjection;
 using TickerQ.DependencyInjection;
 using TickerQ.EntityFrameworkCore.Customizer;
@@ -39,10 +39,10 @@ public static class TickerExtensions
 
             opt.AddDashboard(o =>
             {
-                var username = configuration["TickerQBasicAuth:Username"]
-                        ?? throw new InvalidOperationException("TickerQBasicAuth:Username is not configured.");
-                var password = configuration["TickerQBasicAuth:Password"]
-                        ?? throw new InvalidOperationException("TickerQBasicAuth:Password is not configured.");
+                var username =
+                    configuration["TickerQBasicAuth:Username"] ?? throw new InvalidOperationException("TickerQBasicAuth:Username is not configured.");
+                var password =
+                    configuration["TickerQBasicAuth:Password"] ?? throw new InvalidOperationException("TickerQBasicAuth:Password is not configured.");
                 o.WithBasicAuth(username, password);
             });
         });

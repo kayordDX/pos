@@ -18,7 +18,6 @@ public class Endpoint : Endpoint<Request>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-
         Entities.Option? optionEntity = await _dbContext.Option.FindAsync(req.OptionId);
         if (optionEntity == null)
         {

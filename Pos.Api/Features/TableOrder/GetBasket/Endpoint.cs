@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableOrder.GetBasket;
 
@@ -23,15 +23,12 @@ public class Endpoint : Endpoint<Request, Response>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        Response response = new()
-        {
-            Total = 0
-        };
+        Response response = new() { Total = 0 };
         var tableBooking = await _dbContext.TableBooking.FirstOrDefaultAsync(x => x.Id == req.TableBookingId);
         if (tableBooking == null)
             await Send.NotFoundAsync();
-        response.OrderItems = await _dbContext.OrderItem
-            .Where(x => x.TableBookingId == req.TableBookingId && x.OrderItemStatusId == 1)
+        response.OrderItems = await _dbContext
+            .OrderItem.Where(x => x.TableBookingId == req.TableBookingId && x.OrderItemStatusId == 1)
             .ProjectToDto()
             .ToListAsync();
 

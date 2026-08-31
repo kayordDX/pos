@@ -1,19 +1,16 @@
+using Microsoft.Extensions.Options;
 using Pos.Api.Config;
 using Pos.Api.Services;
-using Microsoft.Extensions.Options;
 
 namespace Unit.Encryption;
 
 public class EncryptionTest
 {
     private readonly EncryptionService _encryptionService;
+
     public EncryptionTest()
     {
-        var options = Options.Create(new AppConfig
-        {
-            EncryptionKey = "Your16CharKeyHere",
-            EncryptionSalt = "Your16CharSaltHere",
-        });
+        var options = Options.Create(new AppConfig { EncryptionKey = "Your16CharKeyHere", EncryptionSalt = "Your16CharSaltHere" });
         _encryptionService = new EncryptionService(options);
     }
 

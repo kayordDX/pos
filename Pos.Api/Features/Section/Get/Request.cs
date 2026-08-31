@@ -5,7 +5,6 @@ namespace Pos.Api.Features.Section.Get;
 public class Request
 {
     public int SectionId { get; set; }
-
 }
 
 public class Validator : Validator<Request>

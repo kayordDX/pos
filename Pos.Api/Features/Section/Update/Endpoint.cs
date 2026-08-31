@@ -27,7 +27,6 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.Section>
 
         entity.Name = req.Name;
 
-
         await _dbContext.SaveChangesAsync();
         await Send.OkAsync(entity);
     }

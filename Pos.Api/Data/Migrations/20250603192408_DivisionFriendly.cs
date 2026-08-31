@@ -10,16 +10,15 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("""
-                update division set friendly_name ='Food' where division_name = 'Kitchen';
-                update division set friendly_name ='Drinks' where division_name = 'Bar';
-            """);
+            migrationBuilder.Sql(
+                """
+                    update division set friendly_name ='Food' where division_name = 'Kitchen';
+                    update division set friendly_name ='Drinks' where division_name = 'Bar';
+                """
+            );
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
-        }
+        protected override void Down(MigrationBuilder migrationBuilder) { }
     }
 }

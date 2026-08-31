@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Features.SalesPeriod.Create;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.SalesPeriod.Get;
 

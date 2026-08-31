@@ -10,30 +10,17 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "JSON",
-                table: "UserNotification");
+            migrationBuilder.DropColumn(name: "JSON", table: "UserNotification");
 
-            migrationBuilder.AddColumn<string>(
-                name: "JSONContent",
-                table: "UserNotification",
-                type: "jsonb",
-                nullable: true);
+            migrationBuilder.AddColumn<string>(name: "JSONContent", table: "UserNotification", type: "jsonb", nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "JSONContent",
-                table: "UserNotification");
+            migrationBuilder.DropColumn(name: "JSONContent", table: "UserNotification");
 
-            migrationBuilder.AddColumn<string>(
-                name: "JSON",
-                table: "UserNotification",
-                type: "text",
-                nullable: false,
-                defaultValue: "");
+            migrationBuilder.AddColumn<string>(name: "JSON", table: "UserNotification", type: "text", nullable: false, defaultValue: "");
         }
     }
 }

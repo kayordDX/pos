@@ -18,11 +18,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.Section>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        var entity = new Entities.Section
-        {
-            Name = req.Name,
-            OutletId = req.OutletId
-        };
+        var entity = new Entities.Section { Name = req.Name, OutletId = req.OutletId };
 
         await _dbContext.Section.AddAsync(entity);
         await _dbContext.SaveChangesAsync(ct);

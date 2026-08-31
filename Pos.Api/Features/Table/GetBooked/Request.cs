@@ -6,7 +6,6 @@ public class Request
 {
     public int OutletId { get; set; }
     public bool MyBooking { get; set; }
-
 }
 
 public class Validator : Validator<Request>

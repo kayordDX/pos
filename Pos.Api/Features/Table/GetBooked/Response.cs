@@ -15,5 +15,4 @@ public class Response
     public TableDto Table { get; set; } = default!;
 
     public UserDTO User { get; set; } = default!;
-
 }

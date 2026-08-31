@@ -5,6 +5,7 @@ namespace Pos.Api.Features.Bill;
 public class Response
 {
     public List<BillOrderItemDTO> OrderItems { get; set; } = [];
+
     // public List<BillItem> BillItems { get; set; } = [];
     public decimal Total { get; set; } = 0;
     public decimal TotalExVAT { get; set; } = 0;
@@ -23,5 +24,4 @@ public class TableTotal
     public decimal Total { get; set; }
     public decimal TotalPayments { get; set; }
     public decimal TipTotal { get; set; }
-
 }

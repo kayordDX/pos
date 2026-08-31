@@ -10,16 +10,14 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-
-            migrationBuilder.Sql("""
-               ALTER TABLE cash_up_user_item_type ALTER id RESTART 200;
-            """);
+            migrationBuilder.Sql(
+                """
+                   ALTER TABLE cash_up_user_item_type ALTER id RESTART 200;
+                """
+            );
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
-        }
+        protected override void Down(MigrationBuilder migrationBuilder) { }
     }
 }

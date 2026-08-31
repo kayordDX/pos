@@ -16,7 +16,8 @@ namespace Pos.Api.Data.Migrations
                 name: "HaloLog",
                 columns: table => new
                 {
-                    Id = table.Column<long>(type: "bigint", nullable: false)
+                    Id = table
+                        .Column<long>(type: "bigint", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Type = table.Column<string>(type: "text", nullable: false),
                     RequestUrl = table.Column<string>(type: "text", nullable: true),
@@ -25,12 +26,13 @@ namespace Pos.Api.Data.Migrations
                     Error = table.Column<string>(type: "text", nullable: true),
                     StatusCode = table.Column<int>(type: "integer", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: false),
-                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                    Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HaloLog", x => x.Id);
-                });
+                }
+            );
 
             migrationBuilder.CreateTable(
                 name: "HaloReference",
@@ -38,22 +40,21 @@ namespace Pos.Api.Data.Migrations
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
                     TableBookingId = table.Column<int>(type: "integer", nullable: false),
-                    UserId = table.Column<string>(type: "text", nullable: false)
+                    UserId = table.Column<string>(type: "text", nullable: false),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HaloReference", x => x.Id);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "HaloLog");
+            migrationBuilder.DropTable(name: "HaloLog");
 
-            migrationBuilder.DropTable(
-                name: "HaloReference");
+            migrationBuilder.DropTable(name: "HaloReference");
         }
     }
 }

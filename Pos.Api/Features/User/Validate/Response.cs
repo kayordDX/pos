@@ -1,4 +1,3 @@
-
 namespace Pos.Api.Features.User.Validate;
 
 public class Response

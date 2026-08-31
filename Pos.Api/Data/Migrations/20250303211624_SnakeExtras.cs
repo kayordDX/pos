@@ -13,48 +13,52 @@ namespace Pos.Api.Data.Migrations
             migrationBuilder.Sql("""DROP FUNCTION "getMenuSectionParents";""");
             migrationBuilder.Sql("""DROP FUNCTION "getMenuSectionChildren";""");
 
-            migrationBuilder.Sql("""
-            create or replace function "get_menu_section_children" (
-                "p_menu_id" int,
-                "p_menu_section_id" int
-            )
-            returns table (
-                "id" int
-            )
-            language plpgsql
-            as $$
-            begin
-            return query
-            with RECURSIVE cte as
-            (
-                select * from "menu_section" where "menu_id"="p_menu_id" AND "menu_section_id"="p_menu_section_id"
-                union all
-                select e.* from "menu_section" e inner join cte on "e"."parent_id"=cte."menu_section_id"
-            )
-            select "menu_section_id" from cte;
-            end; $$
-            """);
-
-            migrationBuilder.Sql("""
-            create or replace function "get_menu_section_parents" ("p_menu_id" integer, "p_menu_section_id" integer)
-            returns table (
-            "id" integer
-            )
-            language plpgsql AS $function$
-            begin
-                return query
-                with recursive pl("menu_section_id", parent) as (
-                    select "menu_section"."menu_section_id", coalesce("parent_id", "menu_section"."menu_section_id")
-                    from "menu_section" WHERE "menu_id"="p_menu_id" AND "menu_section"."menu_section_id" = "p_menu_section_id"
-                    union
-                    select pl."menu_section_id", coalesce("menu_section"."parent_id", pl."menu_section_id")
-                    from pl
-                    join "menu_section" on pl.parent = "menu_section"."menu_section_id"
+            migrationBuilder.Sql(
+                """
+                create or replace function "get_menu_section_children" (
+                    "p_menu_id" int,
+                    "p_menu_section_id" int
                 )
-                select pl.parent
-                from pl;
-            end; $function$
-            """);
+                returns table (
+                    "id" int
+                )
+                language plpgsql
+                as $$
+                begin
+                return query
+                with RECURSIVE cte as
+                (
+                    select * from "menu_section" where "menu_id"="p_menu_id" AND "menu_section_id"="p_menu_section_id"
+                    union all
+                    select e.* from "menu_section" e inner join cte on "e"."parent_id"=cte."menu_section_id"
+                )
+                select "menu_section_id" from cte;
+                end; $$
+                """
+            );
+
+            migrationBuilder.Sql(
+                """
+                create or replace function "get_menu_section_parents" ("p_menu_id" integer, "p_menu_section_id" integer)
+                returns table (
+                "id" integer
+                )
+                language plpgsql AS $function$
+                begin
+                    return query
+                    with recursive pl("menu_section_id", parent) as (
+                        select "menu_section"."menu_section_id", coalesce("parent_id", "menu_section"."menu_section_id")
+                        from "menu_section" WHERE "menu_id"="p_menu_id" AND "menu_section"."menu_section_id" = "p_menu_section_id"
+                        union
+                        select pl."menu_section_id", coalesce("menu_section"."parent_id", pl."menu_section_id")
+                        from pl
+                        join "menu_section" on pl.parent = "menu_section"."menu_section_id"
+                    )
+                    select pl.parent
+                    from pl;
+                end; $function$
+                """
+            );
         }
 
         /// <inheritdoc />
@@ -80,7 +84,7 @@ namespace Pos.Api.Data.Migrations
                             from pl;
                         end; $function$
                 """
-                        );
+            );
 
             migrationBuilder.Sql(
                 """

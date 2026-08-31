@@ -16,7 +16,8 @@ namespace Pos.Api.Data.Migrations
                 type: "text",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "jsonb");
+                oldType: "jsonb"
+            );
         }
 
         /// <inheritdoc />
@@ -28,7 +29,8 @@ namespace Pos.Api.Data.Migrations
                 type: "jsonb",
                 nullable: false,
                 oldClrType: typeof(string),
-                oldType: "text");
+                oldType: "text"
+            );
         }
     }
 }

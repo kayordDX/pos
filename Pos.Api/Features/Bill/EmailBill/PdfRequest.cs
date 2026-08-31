@@ -2,7 +2,6 @@ using Pos.Api.Features.TableOrder.GetBill;
 
 namespace Pos.Api.Features.Bill.EmailBill;
 
-
 public class PdfRequest
 {
     public string OutletName { get; set; } = string.Empty;

@@ -16,7 +16,8 @@ namespace Pos.Api.Data.Migrations
                 name: "HaloConfig",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
+                    Id = table
+                        .Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     OutletId = table.Column<int>(type: "integer", nullable: false),
                     XApiKey = table.Column<string>(type: "text", nullable: false),
@@ -25,19 +26,19 @@ namespace Pos.Api.Data.Migrations
                     Created = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     CreatedBy = table.Column<string>(type: "text", nullable: true),
                     LastModified = table.Column<DateTime>(type: "timestamp with time zone", nullable: true),
-                    LastModifiedBy = table.Column<string>(type: "text", nullable: true)
+                    LastModifiedBy = table.Column<string>(type: "text", nullable: true),
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HaloConfig", x => x.Id);
-                });
+                }
+            );
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "HaloConfig");
+            migrationBuilder.DropTable(name: "HaloConfig");
         }
     }
 }

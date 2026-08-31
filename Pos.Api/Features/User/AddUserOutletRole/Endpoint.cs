@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.User.AddUserOutletRole;
 
@@ -29,8 +29,8 @@ public class Endpoint : Endpoint<Request>
             throw new Exception("Could not find outlet for user");
         }
 
-        var roleExists = await _dbContext.UserRoleOutlet
-            .Where(x => x.UserId == req.UserId && x.RoleId == req.RoleId && x.OutletId == userOutlet.OutletId)
+        var roleExists = await _dbContext
+            .UserRoleOutlet.Where(x => x.UserId == req.UserId && x.RoleId == req.RoleId && x.OutletId == userOutlet.OutletId)
             .FirstOrDefaultAsync(c);
         if (roleExists != null)
         {
@@ -41,7 +41,7 @@ public class Endpoint : Endpoint<Request>
         {
             RoleId = req.RoleId,
             UserId = req.UserId,
-            OutletId = userOutlet.OutletId
+            OutletId = userOutlet.OutletId,
         };
 
         _dbContext.UserRoleOutlet.Add(roleEntity);

@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Clock.ClockIn;
 
@@ -41,13 +41,11 @@ public class Endpoint : Endpoint<Request>
                 UserId = _user.UserId,
                 StartDate = DateTime.Now,
                 EndDate = null,
-                OutletId = req.OutletId
+                OutletId = req.OutletId,
             };
             await _dbContext.Clock.AddAsync(entity);
             await _dbContext.SaveChangesAsync();
             await Send.NoContentAsync();
         }
-
     }
-
 }

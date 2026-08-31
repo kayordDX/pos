@@ -10,19 +10,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "OutletId",
-                table: "Role",
-                type: "integer",
-                nullable: true);
+            migrationBuilder.AddColumn<int>(name: "OutletId", table: "Role", type: "integer", nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "OutletId",
-                table: "Role");
+            migrationBuilder.DropColumn(name: "OutletId", table: "Role");
         }
     }
 }

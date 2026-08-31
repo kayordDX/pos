@@ -10,16 +10,15 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("""
-                ALTER TABLE adjustment_type_outlet ALTER "id" RESTART 150;
-                ALTER TABLE adjustment_type ALTER adjustment_type_id RESTART 150;
-            """);
+            migrationBuilder.Sql(
+                """
+                    ALTER TABLE adjustment_type_outlet ALTER "id" RESTART 150;
+                    ALTER TABLE adjustment_type ALTER adjustment_type_id RESTART 150;
+                """
+            );
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
-        }
+        protected override void Down(MigrationBuilder migrationBuilder) { }
     }
 }

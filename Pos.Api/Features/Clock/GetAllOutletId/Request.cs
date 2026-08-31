@@ -6,7 +6,6 @@ public class Request
 {
     public int OutletId { get; set; }
     public int StatusId { get; set; }
-
 }
 
 public class Validator : Validator<Request>

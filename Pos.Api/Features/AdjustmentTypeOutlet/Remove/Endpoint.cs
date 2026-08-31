@@ -1,7 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.AdjustmentTypeOutlet.Remove;
 
@@ -29,7 +29,9 @@ public class Endpoint : Endpoint<Request, Entities.AdjustmentTypeOutlet>
             return;
         }
 
-        Entities.AdjustmentTypeOutlet? entity = await _dbContext.AdjustmentTypeOutlet.FirstOrDefaultAsync(x => x.AdjustmentTypeId == req.AdjustmentTypeId && x.OutletId == req.OutletId);
+        Entities.AdjustmentTypeOutlet? entity = await _dbContext.AdjustmentTypeOutlet.FirstOrDefaultAsync(x =>
+            x.AdjustmentTypeId == req.AdjustmentTypeId && x.OutletId == req.OutletId
+        );
         if (entity == null)
         {
             await Send.NotFoundAsync();

@@ -1,11 +1,10 @@
 using System.Globalization;
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.SalesPeriod.CashUp;
-
 
 public class Endpoint : Endpoint<Request, CashUp>
 {
@@ -41,7 +40,11 @@ public class Endpoint : Endpoint<Request, CashUp>
         List<TableBookingDTO> bookings = new();
         var userIdsCashedUp = _dbContext.CashUp.Where(x => x.SalesPeriodId == req.SalesPeriodId && x.SignOffDate != null).Select(rd => rd.UserId).ToList();
         if (req.UserId == string.Empty)
-            bookings = await _dbContext.TableBooking.Where(x => x.SalesPeriodId == req.SalesPeriodId).Where(oi => !userIdsCashedUp.Contains(oi.UserId)).ProjectToDto().ToListAsync();
+            bookings = await _dbContext
+                .TableBooking.Where(x => x.SalesPeriodId == req.SalesPeriodId)
+                .Where(oi => !userIdsCashedUp.Contains(oi.UserId))
+                .ProjectToDto()
+                .ToListAsync();
         else
             bookings = await _dbContext.TableBooking.Where(x => x.SalesPeriodId == req.SalesPeriodId).ProjectToDto().ToListAsync();
         cashUp.OpenTableCount = bookings.Where(x => x.CloseDate == null).Count();
@@ -52,29 +55,26 @@ public class Endpoint : Endpoint<Request, CashUp>
             TableCashUp tableCashUp = new();
             tableCashUp.Total = 0;
 
-
             var paymentStatusIds = _dbContext.OrderItemStatus.Where(x => x.IsBillable == true).Select(rd => rd.OrderItemStatusId).ToList();
             tableCashUp.UserId = tb.UserId;
 
-            tableCashUp.OrderItems = await _dbContext.OrderItem
-            .Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tb.Id)
-            .ProjectToDto()
-            .ToListAsync();
-            tableCashUp.PaymentsReceived = await _dbContext.Payment
-                .Where(x => x.TableBookingId == tb.Id)
-                .Include(x => x.PaymentType)
+            tableCashUp.OrderItems = await _dbContext
+                .OrderItem.Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tb.Id)
+                .ProjectToDto()
                 .ToListAsync();
+            tableCashUp.PaymentsReceived = await _dbContext.Payment.Where(x => x.TableBookingId == tb.Id).Include(x => x.PaymentType).ToListAsync();
 
             tableCashUp.Total += tableCashUp.OrderItems.Sum(item => item.MenuItem.Price);
 
-            tableCashUp.Total += tableCashUp.OrderItems.Where(item => item.OrderItemOptions != null)
-                                          .Sum(item => item.OrderItemOptions!.Sum(option => option.Option.Price));
+            tableCashUp.Total += tableCashUp
+                .OrderItems.Where(item => item.OrderItemOptions != null)
+                .Sum(item => item.OrderItemOptions!.Sum(option => option.Option.Price));
 
-            tableCashUp.Total += tableCashUp.OrderItems.Where(item => item.OrderItemExtras != null)
-                                          .Sum(item => item.OrderItemExtras!.Sum(extra => extra.Extra.Price));
+            tableCashUp.Total += tableCashUp
+                .OrderItems.Where(item => item.OrderItemExtras != null)
+                .Sum(item => item.OrderItemExtras!.Sum(extra => extra.Extra.Price));
 
-            tableCashUp.TablePaymentTotal += tableCashUp.PaymentsReceived.Where(item => item.TableBookingId! == tb.Id)
-                                          .Sum(item => item.Amount);
+            tableCashUp.TablePaymentTotal += tableCashUp.PaymentsReceived.Where(item => item.TableBookingId! == tb.Id).Sum(item => item.Amount);
             tableCashUp.Balance = tableCashUp.Total - tableCashUp.TablePaymentTotal;
             tableCashUp.Balance = tableCashUp.Balance < 0 ? 0 : tableCashUp.Balance;
             tableCashUp.User = tb.User;
@@ -89,12 +89,9 @@ public class Endpoint : Endpoint<Request, CashUp>
                 u.UserId = userId;
                 var scash = salesPeriodTableCashUps.FirstOrDefault(x => x.UserId == userId) ?? new();
                 u.User = scash.User ?? new();
-                u.UserTotal += salesPeriodTableCashUps.Where(item => item.UserId! == userId)
-                                              .Sum(item => item.Total);
-                u.UserBalance += salesPeriodTableCashUps.Where(item => item.UserId! == userId)
-                                              .Sum(item => item.Balance);
-                u.UserPaymentTotal += salesPeriodTableCashUps.Where(item => item.UserId! == userId)
-                                              .Sum(item => item.TablePaymentTotal);
+                u.UserTotal += salesPeriodTableCashUps.Where(item => item.UserId! == userId).Sum(item => item.Total);
+                u.UserBalance += salesPeriodTableCashUps.Where(item => item.UserId! == userId).Sum(item => item.Balance);
+                u.UserPaymentTotal += salesPeriodTableCashUps.Where(item => item.UserId! == userId).Sum(item => item.TablePaymentTotal);
                 u.TableCashUps.AddRange(salesPeriodTableCashUps.Where(item => item.UserId! == userId).ToList());
 
                 u.UserTipTotal = u.UserPaymentTotal - u.UserTotal;

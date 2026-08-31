@@ -2,7 +2,6 @@ using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Services;
 
-
 namespace Pos.Api.Features.AdjustmentTypeOutlet.Create;
 
 public class Endpoint(AppDbContext dbContext, RedisClient redisClient, UserService userService) : Endpoint<Request, Pos.Api.Entities.Menu>
@@ -24,22 +23,13 @@ public class Endpoint(AppDbContext dbContext, RedisClient redisClient, UserServi
             return;
         }
 
-        var adjustmentTypeEntity = new AdjustmentType
-        {
-            Name = req.Name,
-            Description = req.Description
-        };
+        var adjustmentTypeEntity = new AdjustmentType { Name = req.Name, Description = req.Description };
 
         await _dbContext.AdjustmentType.AddAsync(adjustmentTypeEntity, ct);
 
         await _dbContext.SaveChangesAsync(ct);
-        var adjustmentTypeOutlet = new Entities.AdjustmentTypeOutlet
-        {
-            OutletId = req.OutletId,
-            AdjustmentTypeId = adjustmentTypeEntity.AdjustmentTypeId
-        };
+        var adjustmentTypeOutlet = new Entities.AdjustmentTypeOutlet { OutletId = req.OutletId, AdjustmentTypeId = adjustmentTypeEntity.AdjustmentTypeId };
         await _dbContext.AdjustmentTypeOutlet.AddAsync(adjustmentTypeOutlet, ct);
-
 
         await _dbContext.SaveChangesAsync(ct);
         CashUpUserItemType cashUpUserItemType = new()
@@ -49,7 +39,7 @@ public class Endpoint(AppDbContext dbContext, RedisClient redisClient, UserServi
             AffectsGrossBalance = false,
             Position = 99,
             IsAuto = true,
-            ItemType = adjustmentTypeEntity.Name
+            ItemType = adjustmentTypeEntity.Name,
         };
 
         await _dbContext.CashUpUserItemType.AddAsync(cashUpUserItemType, ct);

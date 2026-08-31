@@ -4,7 +4,6 @@ using Google.Apis.Auth.OAuth2;
 using Pos.Api.Data;
 using Pos.Api.Services;
 
-
 namespace Pos.Api.Features.Test;
 
 public class TokenResult
@@ -32,10 +31,7 @@ public class TokenTest : EndpointWithoutRequest<TokenResult>
         var uid = "92jlIC3p9uUavQOw5Pf5bX61ck13";
         var token = await _userService.GetIdToken(uid);
 
-        TokenResult result = new()
-        {
-            Token = token.IdToken
-        };
+        TokenResult result = new() { Token = token.IdToken };
         await Send.OkAsync(result);
     }
 }

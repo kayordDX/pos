@@ -1,6 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
-using Microsoft.EntityFrameworkCore;
+
 namespace Pos.Api.Features.Stock.Link.Update;
 
 public class Endpoint : Endpoint<Request>

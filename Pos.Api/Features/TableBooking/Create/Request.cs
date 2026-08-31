@@ -16,6 +16,5 @@ public class Validator : Validator<Request>
         RuleFor(v => v.TableId).GreaterThan(0).WithMessage("TableId must be greater than 0");
         RuleFor(v => v.BookingName).NotEmpty().WithMessage("BookingName is required");
         RuleFor(v => v.SalesPeriodId).GreaterThan(0).WithMessage("SalesPeriodId must be greater than 0");
-
     }
 }

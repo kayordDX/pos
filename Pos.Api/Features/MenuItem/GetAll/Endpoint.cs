@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Common.Extensions;
 using Pos.Api.Common.Models;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.MenuItem.GetAll;
 
@@ -27,8 +27,8 @@ public class Endpoint : Endpoint<Request, PaginatedList<MenuItemAdminDTO>>
         int outletId = await Helper.GetUserOutlet(_dbContext, _cu.UserId ?? string.Empty);
 
         // Filter on outlet
-        var query = _dbContext.MenuItem
-            .Include(x => x.MenuSection)
+        var query = _dbContext
+            .MenuItem.Include(x => x.MenuSection)
                 .ThenInclude(x => x.Menu)
             .Where(x => x.MenuSection.Menu.OutletId == outletId)
             .ProjectToAdminDto();

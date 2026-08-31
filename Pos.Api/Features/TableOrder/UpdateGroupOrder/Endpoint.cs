@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Entities;
 using Pos.Api.Events;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.TableOrder.UpdateGroupOrder;
 
@@ -28,8 +28,8 @@ public class Endpoint : Endpoint<Request, Response>
 
         List<int> divisionIds = req.DivisionIds != null ? req.DivisionIds.Split(",").Select(int.Parse).ToList() : [];
 
-        var orderItems = await _dbContext.OrderItem
-            .Include(x => x.TableBooking)
+        var orderItems = await _dbContext
+            .OrderItem.Include(x => x.TableBooking)
                 .ThenInclude(b => b.Table)
             .Include(x => x.MenuItem)
                 .ThenInclude(x => x.Division)

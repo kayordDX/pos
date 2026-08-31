@@ -6,6 +6,7 @@ public class PayLinkReceivedHandler : IEventHandler<PayLinkReceivedEvent>
 {
     private readonly IServiceScopeFactory _scopeFactory;
     private readonly ILogger _logger;
+
     public PayLinkReceivedHandler(IServiceScopeFactory scopeFactory, ILogger<PayLinkReceivedHandler> logger)
     {
         _logger = logger;

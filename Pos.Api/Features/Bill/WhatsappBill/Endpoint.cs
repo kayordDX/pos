@@ -48,33 +48,36 @@ public class Endpoint : Endpoint<Request, bool>
             return new string(buffer);
         }
 
-        var textResponse = await _whatsappService.SendText(new()
-        {
-            Phone = phone,
-            Body =
-            $"""
-            Dear {req.Name},
+        var textResponse = await _whatsappService.SendText(
+            new()
+            {
+                Phone = phone,
+                Body = $"""
+                Dear {req.Name},
 
-            Thank you for choosing {pdfRequest.OutletName}.
-            We appreciate your recent visit.
+                Thank you for choosing {pdfRequest.OutletName}.
+                We appreciate your recent visit.
 
-            Please find the attached invoice for your reference.
+                Please find the attached invoice for your reference.
 
-            If you have any questions or need further assistance, feel free to reach out.
+                If you have any questions or need further assistance, feel free to reach out.
 
-            Best regards,
-            {pdfRequest.OutletName}
-            """
-        });
+                Best regards,
+                {pdfRequest.OutletName}
+                """,
+            }
+        );
 
         if (textResponse.Success)
         {
-            await _whatsappService.SendDocument(new()
-            {
-                Phone = phone,
-                FileName = $"Invoice-{pdfRequest.TableBookingId}.pdf",
-                Document = ConcatDataUri(base64)
-            });
+            await _whatsappService.SendDocument(
+                new()
+                {
+                    Phone = phone,
+                    FileName = $"Invoice-{pdfRequest.TableBookingId}.pdf",
+                    Document = ConcatDataUri(base64),
+                }
+            );
         }
         else
         {

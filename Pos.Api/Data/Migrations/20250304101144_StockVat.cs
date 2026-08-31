@@ -10,31 +10,17 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "amount",
-                table: "menu_item_stock");
+            migrationBuilder.DropColumn(name: "amount", table: "menu_item_stock");
 
-            migrationBuilder.AddColumn<bool>(
-                name: "has_vat",
-                table: "stock",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
+            migrationBuilder.AddColumn<bool>(name: "has_vat", table: "stock", type: "boolean", nullable: false, defaultValue: false);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "has_vat",
-                table: "stock");
+            migrationBuilder.DropColumn(name: "has_vat", table: "stock");
 
-            migrationBuilder.AddColumn<decimal>(
-                name: "amount",
-                table: "menu_item_stock",
-                type: "numeric",
-                nullable: false,
-                defaultValue: 0m);
+            migrationBuilder.AddColumn<decimal>(name: "amount", table: "menu_item_stock", type: "numeric", nullable: false, defaultValue: 0m);
         }
     }
 }

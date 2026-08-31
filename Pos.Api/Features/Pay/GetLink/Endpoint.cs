@@ -1,8 +1,8 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Common.Wrapper;
 using Pos.Api.Data;
 using Pos.Api.Events;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Pay.GetLink;
 
@@ -41,13 +41,16 @@ public class Endpoint : Endpoint<Request, Result<Response>>
         var results = await _halo.GetLink(req.Amount, req.TableBookingId, _cu.UserId, userOutlet.OutletId);
         if (!results.Failure)
         {
-            await PublishAsync(new PayLinkReceivedEvent
-            {
-                url = results.Value.url,
-                reference = results.Value.reference,
-                UserId = _cu.UserId,
-                OutletId = userOutlet.OutletId
-            }, Mode.WaitForNone);
+            await PublishAsync(
+                new PayLinkReceivedEvent
+                {
+                    url = results.Value.url,
+                    reference = results.Value.reference,
+                    UserId = _cu.UserId,
+                    OutletId = userOutlet.OutletId,
+                },
+                Mode.WaitForNone
+            );
         }
         await Send.OkAsync(results);
     }

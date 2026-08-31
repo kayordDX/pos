@@ -1,7 +1,7 @@
 using System.Text.Json;
+using Microsoft.AspNetCore.SignalR;
 using Pos.Api.Features.Printer;
 using Pos.Api.Hubs;
-using Microsoft.AspNetCore.SignalR;
 using StackExchange.Redis;
 
 namespace Pos.Api.Services;
@@ -18,6 +18,7 @@ public class PrintService
         _hub = hub;
         _configuration = configuration;
     }
+
     public async Task Print(int outletId, int deviceId, PrintMessage printMessage)
     {
         string transport = (_configuration.GetValue<string>("Print:Transport") ?? "redis").ToLowerInvariant();

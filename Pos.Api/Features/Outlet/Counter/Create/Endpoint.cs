@@ -20,11 +20,7 @@ public class Endpoint : Endpoint<Request, Guid>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
-        OutletCounter entity = new OutletCounter()
-        {
-            DeviceName = req.DeviceName,
-            OutletId = req.OutletId
-        };
+        OutletCounter entity = new OutletCounter() { DeviceName = req.DeviceName, OutletId = req.OutletId };
 
         await _dbContext.OutletCounter.AddAsync(entity);
         await _dbContext.SaveChangesAsync();

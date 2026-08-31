@@ -11,19 +11,13 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<DateTime>(
-                name: "CashUpDate",
-                table: "CashUpUser",
-                type: "timestamp with time zone",
-                nullable: true);
+            migrationBuilder.AddColumn<DateTime>(name: "CashUpDate", table: "CashUpUser", type: "timestamp with time zone", nullable: true);
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropColumn(
-                name: "CashUpDate",
-                table: "CashUpUser");
+            migrationBuilder.DropColumn(name: "CashUpDate", table: "CashUpUser");
         }
     }
 }

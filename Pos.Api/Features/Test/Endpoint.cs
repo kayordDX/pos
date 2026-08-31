@@ -1,4 +1,3 @@
-
 using Pos.Api.Data;
 using Pos.Api.Features.Bill;
 using Pos.Api.Features.Bill.EmailBill;

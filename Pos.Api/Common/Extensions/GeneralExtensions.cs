@@ -1,6 +1,6 @@
+using Microsoft.AspNetCore.SignalR;
 using Pos.Api.Hubs;
 using Pos.Api.Services;
-using Microsoft.AspNetCore.SignalR;
 using QuestPDF.Infrastructure;
 
 namespace Pos.Api.Common.Extensions;

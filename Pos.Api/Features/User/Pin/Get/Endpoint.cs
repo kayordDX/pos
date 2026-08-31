@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.User.Pin.Get;
 
@@ -24,8 +24,15 @@ public class Endpoint : EndpointWithoutRequest<Response>
 
     public override async Task HandleAsync(CancellationToken ct)
     {
-        var userOutlet = await _dbContext.UserOutlet
-            .Select(x => new { x.Id, x.IsCurrent, x.UserId, OutletId = x.Outlet.Id, OutletName = x.Outlet.Name })
+        var userOutlet = await _dbContext
+            .UserOutlet.Select(x => new
+            {
+                x.Id,
+                x.IsCurrent,
+                x.UserId,
+                OutletId = x.Outlet.Id,
+                OutletName = x.Outlet.Name,
+            })
             .FirstOrDefaultAsync(x => x.UserId == _cu.UserId && x.IsCurrent);
 
         if (userOutlet == null)
@@ -33,9 +40,7 @@ public class Endpoint : EndpointWithoutRequest<Response>
             ValidationContext.Instance.ThrowError("Could not find outlet for user");
         }
 
-        var userOutletPin = await _dbContext.UserOutletPin
-            .Where(x => x.UserId == _cu.UserId && x.OutletId == userOutlet.OutletId)
-            .FirstOrDefaultAsync(ct);
+        var userOutletPin = await _dbContext.UserOutletPin.Where(x => x.UserId == _cu.UserId && x.OutletId == userOutlet.OutletId).FirstOrDefaultAsync(ct);
 
         if (userOutletPin == null)
         {

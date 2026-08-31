@@ -10,18 +10,19 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("""
-                ALTER TABLE "MenuSection" ALTER "MenuSectionId" RESTART 400;
-            """);
-            migrationBuilder.Sql("""
-                ALTER TABLE "MenuItem" ALTER "MenuItemId" RESTART 3000;
-            """);
+            migrationBuilder.Sql(
+                """
+                    ALTER TABLE "MenuSection" ALTER "MenuSectionId" RESTART 400;
+                """
+            );
+            migrationBuilder.Sql(
+                """
+                    ALTER TABLE "MenuItem" ALTER "MenuItemId" RESTART 3000;
+                """
+            );
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
-        }
+        protected override void Down(MigrationBuilder migrationBuilder) { }
     }
 }

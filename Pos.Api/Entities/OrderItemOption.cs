@@ -7,5 +7,4 @@ public class OrderItemOption
     public OrderItem OrderItem { get; set; } = default!;
     public int OptionId { get; set; }
     public Option Option { get; set; } = default!;
-
 }

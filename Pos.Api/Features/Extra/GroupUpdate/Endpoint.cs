@@ -1,8 +1,7 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Data.Migrations;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
-
 
 namespace Pos.Api.Features.Extra.GroupUpdate;
 
@@ -33,7 +32,9 @@ public class Endpoint : Endpoint<Request>
             throw new Exception("Extra Group Not Found");
         }
 
-        Entities.OutletExtraGroup? outletExtraGroupExist = await _dbContext.OutletExtraGroup.FirstOrDefaultAsync(x => x.ExtraGroupId == req.ExtraGroupId && x.OutletId == outletId);
+        Entities.OutletExtraGroup? outletExtraGroupExist = await _dbContext.OutletExtraGroup.FirstOrDefaultAsync(x =>
+            x.ExtraGroupId == req.ExtraGroupId && x.OutletId == outletId
+        );
 
         extraGroupEntity.ExtraGroupId = req.ExtraGroupId;
         extraGroupEntity.OutletId = outletId;
@@ -43,14 +44,9 @@ public class Endpoint : Endpoint<Request>
         {
             if (outletExtraGroupExist == null)
             {
-                Entities.OutletExtraGroup outletExtraGroup = new()
-                {
-                    OutletId = outletId,
-                    ExtraGroupId = req.ExtraGroupId
-                };
+                Entities.OutletExtraGroup outletExtraGroup = new() { OutletId = outletId, ExtraGroupId = req.ExtraGroupId };
                 await _dbContext.OutletExtraGroup.AddAsync(outletExtraGroup);
             }
-
         }
         if (!req.isGlobal && outletExtraGroupExist != null)
         {
@@ -60,8 +56,5 @@ public class Endpoint : Endpoint<Request>
         await _dbContext.SaveChangesAsync();
         await Send.NoContentAsync();
         // await Helper.ClearCacheOutlet(_dbContext, _redisClient, req.OutletId);
-
     }
-
-
 }

@@ -10,16 +10,15 @@ namespace Pos.Api.Data.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.Sql("""
-                insert into feature(id, name) values(3, 'Dynamic Threshold');
-                insert into feature(id, name) values(4, 'AI');
-            """);
+            migrationBuilder.Sql(
+                """
+                    insert into feature(id, name) values(3, 'Dynamic Threshold');
+                    insert into feature(id, name) values(4, 'AI');
+                """
+            );
         }
 
         /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-
-        }
+        protected override void Down(MigrationBuilder migrationBuilder) { }
     }
 }

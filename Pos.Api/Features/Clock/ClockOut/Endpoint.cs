@@ -1,6 +1,6 @@
+using Microsoft.EntityFrameworkCore;
 using Pos.Api.Data;
 using Pos.Api.Services;
-using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.Clock.ClockOut;
 
@@ -34,7 +34,5 @@ public class Endpoint : Endpoint<Request>
             await _dbContext.SaveChangesAsync();
             await Send.NoContentAsync();
         }
-
     }
-
 }

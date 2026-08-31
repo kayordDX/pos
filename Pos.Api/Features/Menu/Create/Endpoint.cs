@@ -1,7 +1,6 @@
 using Pos.Api.Data;
 using Pos.Api.Services;
 
-
 namespace Pos.Api.Features.Menu.Create;
 
 public class Endpoint : Endpoint<Request, Pos.Api.Entities.Menu>
