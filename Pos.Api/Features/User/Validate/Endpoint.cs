@@ -4,16 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pos.Api.Features.User.Validate;
 
-public class Endpoint : Endpoint<Request, Response>
+public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<Request, Response>
 {
-    private readonly AppDbContext _dbContext;
-    private readonly CurrentUserService _cu;
-
-    public Endpoint(AppDbContext dbContext, CurrentUserService cu)
-    {
-        _dbContext = dbContext;
-        _cu = cu;
-    }
+    private readonly AppDbContext _dbContext = dbContext;
+    private readonly CurrentUserService _cu = cu;
 
     public override void Configure()
     {
@@ -54,6 +48,6 @@ public class Endpoint : Endpoint<Request, Response>
         {
             UserId = userId
         };
-        await Send.OkAsync(r);
+        await Send.OkAsync(r, ct);
     }
 }
