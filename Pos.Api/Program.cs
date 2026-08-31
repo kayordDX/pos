@@ -40,6 +40,17 @@ builder.Services.AddSignalR().AddStackExchangeRedis(builder.Configuration.GetCon
 
 var app = builder.Build();
 
+if (!app.Environment.IsDevelopment())
+{
+    var appConfig = builder.Configuration.GetSection("App");
+    var encKey = appConfig["EncryptionKey"];
+    var encSalt = appConfig["EncryptionSalt"];
+    if (string.IsNullOrEmpty(encKey) || encKey == "Your16CharKeyHere")
+        throw new InvalidOperationException("App:EncryptionKey must be set to a secure value for non-development environments.");
+    if (string.IsNullOrEmpty(encSalt) || encSalt == "Your16CharSaltHere")
+        throw new InvalidOperationException("App:EncryptionSalt must be set to a secure value for non-development environments.");
+}
+
 await app.Services.ApplyMigrations(app.Environment, app.Lifetime.ApplicationStopping);
 
 app.UseCorsKayord();

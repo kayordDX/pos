@@ -9,6 +9,11 @@ public static class Constants
         public const string PrinterKeyScheme = "PrinterKey";
     }
 
+    public static class RateLimitPolicy
+    {
+        public const string PinLogin = "pin-login";
+    }
+
     public static class Claim
     {
         public const string OutletId = "outlet_id";

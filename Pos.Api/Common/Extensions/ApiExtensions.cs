@@ -1,8 +1,10 @@
 using FastEndpoints.Swagger;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
 using Pos.Api.Common.Extensions.Swagger;
 using Pos.Api.Features.Auth;
 using Scalar.AspNetCore;
+using System.Threading.RateLimiting;
 
 namespace Pos.Api.Common.Extensions;
 
@@ -16,6 +18,18 @@ public static class ApiExtensions
         });
         services.AddTransient<IAuthorizationHandler, RoleTypeHandler>();
         services.AddFastEndpoints();
+
+        services.AddRateLimiter(options =>
+        {
+            options.AddFixedWindowLimiter(Constants.RateLimitPolicy.PinLogin, opt =>
+            {
+                opt.PermitLimit = 10;
+                opt.Window = TimeSpan.FromMinutes(5);
+                opt.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                opt.QueueLimit = 0;
+            });
+            options.RejectionStatusCode = StatusCodes.Status429TooManyRequests;
+        });
 
         services.AddAuthorization(o =>
         {
@@ -40,6 +54,7 @@ public static class ApiExtensions
     public static IApplicationBuilder UseApi(this WebApplication app)
     {
         app.UseResponseCompression();
+        app.UseRateLimiter();
         app.UseDefaultExceptionHandler()
             .UseFastEndpoints(c =>
             {

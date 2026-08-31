@@ -21,6 +21,7 @@ public class Endpoint : Endpoint<Request, Response>
     {
         Post("/user/pin/login");
         AllowAnonymous();
+        Options(x => x.RequireRateLimiting(Constants.RateLimitPolicy.PinLogin));
     }
 
     public override async Task HandleAsync(Request r, CancellationToken ct)

@@ -43,6 +43,8 @@ public static class TickerExtensions
                     configuration["TickerQBasicAuth:Username"] ?? throw new InvalidOperationException("TickerQBasicAuth:Username is not configured.");
                 var password =
                     configuration["TickerQBasicAuth:Password"] ?? throw new InvalidOperationException("TickerQBasicAuth:Password is not configured.");
+                if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+                    throw new InvalidOperationException("TickerQBasicAuth:Username and Password must be set to non-empty values.");
                 o.WithBasicAuth(username, password);
             });
         });
