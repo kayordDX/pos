@@ -74,7 +74,6 @@ public class Endpoint : Endpoint<Request, Response>
                 {
                     divisions.Add(divisionId);
                 }
-                await _dbContext.SaveChangesAsync();
                 await PublishAsync(new StockEvent() { OrderItemIds = [orderItem.OrderItemId], IsReverse = false }, Mode.WaitForAll);
             }
             else

@@ -168,7 +168,7 @@ public static class CashUp
             .Include(x => x.Payments)
             .Include(x => x.Adjustments!)
                 .ThenInclude(x => x.AdjustmentType)
-            .Include(x => x.OrderItems)
+            .AsSplitQuery()
             .ToListAsync();
 
         List<int> paymentWithLevyIds = outletPayTypes.Where(x => x.PaymentType.TipLevyPercentage != 0m).Select(rd => rd.PaymentTypeId).ToList();
@@ -367,10 +367,18 @@ public static class CashUp
             response.CashUpUserItems.Add(adjust);
         }
 
+        List<int> configIds =
+        [
+            .. cashUpUserItemTypes.Where(x => x.CashUpUserItemRule == Common.Enums.CashUpUserItemRule.Config).Select(x => x.CashupConfigId ?? 0),
+        ];
+        Dictionary<int, CashUpConfig> configItemsById = await _dbContext
+            .CashUpConfig.AsNoTracking()
+            .Where(x => configIds.Contains(x.Id) && x.OutletId == OutletId)
+            .ToDictionaryAsync(x => x.Id);
+
         foreach (CashUpUserItemTypeDTO cashItem in cashUpUserItemTypes.Where(x => x.CashUpUserItemRule == Common.Enums.CashUpUserItemRule.Config))
         {
-            CashUpConfig? configItem = await _dbContext.CashUpConfig.FirstOrDefaultAsync(x => x.Id == cashItem.CashupConfigId && x.OutletId == OutletId);
-            if (configItem != null)
+            if (configItemsById.TryGetValue(cashItem.CashupConfigId.GetValueOrDefault(), out CashUpConfig? configItem))
             {
                 CashUpUserItemDTO configType = new()
                 {

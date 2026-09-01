@@ -26,11 +26,16 @@ public class Endpoint : Endpoint<Request, Response>
         Response response = new() { Total = 0 };
         var tableBooking = await _dbContext.TableBooking.FirstOrDefaultAsync(x => x.Id == req.TableBookingId);
         if (tableBooking == null)
+        {
             await Send.NotFoundAsync();
+            return;
+        }
         response.OrderItems = await _dbContext
             .OrderItem.Where(x => x.TableBookingId == req.TableBookingId && x.OrderItemStatusId == 1)
             .ProjectToDto()
             .ToListAsync();
+
+        var quantitiesByMenuItemId = response.OrderItems.GroupBy(x => x.MenuItemId).ToDictionary(g => g.Key, g => g.Count());
 
         foreach (BillOrderItemDTO item in response.OrderItems)
         {
@@ -51,7 +56,7 @@ public class Endpoint : Endpoint<Request, Response>
                     item.MenuItem.Price += extra.Extra.Price;
                 }
             }
-            item.Quantity = response.OrderItems.Sum(x => x.MenuItemId == item.MenuItemId ? 1 : 0);
+            item.Quantity = quantitiesByMenuItemId.GetValueOrDefault(item.MenuItemId);
         }
         await Send.OkAsync(response);
     }

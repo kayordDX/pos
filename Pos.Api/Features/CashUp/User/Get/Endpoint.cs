@@ -69,47 +69,60 @@ public class Endpoint : Endpoint<Request, Response>
     )
     {
         List<Items> items = new();
-        foreach (var userId in userIds)
+        if (userIds.Count == 0)
         {
+            return items;
+        }
+
+        var bookingQuery = _dbContext.TableBooking.AsNoTracking().Where(x => x.SalesPeriodId == salesPeriodId && userIds.Contains(x.UserId));
+
+        bookingQuery = isCashedUp ? bookingQuery.Where(x => x.CashUpUserId != null) : bookingQuery.Where(x => x.CashUpUserId == null);
+
+        var bookingsByUser = (await bookingQuery.ToListAsync()).ToLookup(x => x.UserId);
+
+        Dictionary<string, Entities.User> usersById = await _dbContext
+            .User.AsNoTracking()
+            .Where(x => userIds.Contains(x.UserId))
+            .ToDictionaryAsync(x => x.UserId);
+
+        Dictionary<string, int> cashUpUserIdsByUser = new();
+        if (isCashedUp)
+        {
+            List<Entities.CashUpUser> cashUps = await _dbContext
+                .CashUpUser.AsNoTracking()
+                .Where(x => x.OutletId == outletId && x.SalesPeriodId == salesPeriodId && userIds.Contains(x.UserId))
+                .ToListAsync();
+            foreach (Entities.CashUpUser c in cashUps)
+            {
+                if (!cashUpUserIdsByUser.ContainsKey(c.UserId))
+                {
+                    cashUpUserIdsByUser[c.UserId] = c.Id;
+                }
+            }
+        }
+
+        foreach (string userId in userIds)
+        {
+            if (!usersById.TryGetValue(userId, out Entities.User? u))
+            {
+                continue;
+            }
+
             decimal sales = 0;
             decimal tips = 0;
             decimal totalPayments = 0;
             int openTableCount = 0;
-            int userCashUpId = 0;
 
-            var booking = _dbContext.TableBooking.Where(x => x.SalesPeriodId == salesPeriodId).Where(x => x.UserId == userId);
-
-            if (!isCashedUp)
+            foreach (var b in bookingsByUser[userId])
             {
-                booking = booking.Where(x => x.CashUpUserId == null);
-            }
-            else
-            {
-                booking = booking.Where(x => x.CashUpUserId != null);
+                sales += b.Total ?? 0;
+                tips += b.TotalTips ?? 0;
+                totalPayments += b.TotalPayments ?? 0;
+                openTableCount += b.CloseDate == null ? 1 : 0;
             }
 
-            if (isCashedUp)
-            {
-                var cashUp = await _dbContext
-                    .CashUpUser.Where(x => x.OutletId == outletId)
-                    .Where(x => x.UserId == userId)
-                    .Where(x => x.SalesPeriodId == salesPeriodId)
-                    .FirstOrDefaultAsync();
-                userCashUpId = cashUp?.Id ?? 0;
-            }
-            var bookings = await booking.ToListAsync();
-
-            foreach (var b in bookings)
-            {
-                sales += b?.Total ?? 0;
-                tips += b?.TotalTips ?? 0;
-                totalPayments += b?.TotalPayments ?? 0;
-                openTableCount += b?.CloseDate == null ? 1 : 0;
-            }
-            Entities.User? u = await _dbContext.User.FirstOrDefaultAsync(x => x.UserId == userId);
-            if (u != null)
-            {
-                Items r = new Items
+            items.Add(
+                new Items
                 {
                     Sales = sales,
                     Tips = tips,
@@ -117,10 +130,9 @@ public class Endpoint : Endpoint<Request, Response>
                     User = u,
                     UserId = u.UserId,
                     OpenTableCount = openTableCount,
-                    CashUpUserId = userCashUpId,
-                };
-                items.Add(r);
-            }
+                    CashUpUserId = cashUpUserIdsByUser.GetValueOrDefault(userId),
+                }
+            );
         }
         return items;
     }
