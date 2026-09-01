@@ -60,8 +60,18 @@ public class Endpoint : Endpoint<Request, Response>
             }
             var token = await _userService.GetCustomToken(_userService.GetCurrentUserService().UserId!);
 
+            if (string.IsNullOrEmpty(result.ConnectionId))
+            {
+                Response noConnectionResponse = new() { IsSuccess = false, Message = "Code is no longer valid" };
+                audit.Detail = noConnectionResponse.Message;
+                await _dbContext.Audit.AddAsync(audit);
+                await _dbContext.SaveChangesAsync(ct);
+                await Send.OkAsync(noConnectionResponse);
+                return;
+            }
+
             await _hub
-                .Clients.Group(req.OTP)
+                .Clients.Client(result.ConnectionId)
                 .DeviceAuth(
                     new DeviceAuthEvent()
                     {
