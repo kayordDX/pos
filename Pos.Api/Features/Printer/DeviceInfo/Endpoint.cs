@@ -38,19 +38,9 @@ public class Endpoint : Endpoint<Request, bool>
             return;
         }
 
-        // Action "deviceinfo" tells the device to collect its machine details
-        // (hostname, platform, versions, network interfaces) and report them
-        // back over the hub.
-        PrintMessage printMessage = new()
-        {
-            PrinterName = "device-info",
-            IPAddress = string.Empty,
-            Port = 0,
-            PrintInstructions = [],
-            Action = "deviceinfo",
-        };
-
-        await _printService.Print(outletId, req.DeviceId, printMessage);
+        // Ask the device to collect its machine details (hostname, platform,
+        // versions, network interfaces) and report them back over the hub.
+        await _printService.RequestDeviceInfo(outletId, req.DeviceId);
         await Send.OkAsync(true, ct);
     }
 }

@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using System.Text.Json;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
@@ -12,7 +13,7 @@ public interface IPrinterHub
 {
     Task ReceivePrint(Features.Printer.PrintMessage message);
     Task SyncPrinters(List<PrinterTarget> printers);
-    Task ReportDeviceInfo(string info);
+    Task RequestDeviceInfo();
 }
 
 public class PrinterHub : Hub<IPrinterHub>
@@ -84,10 +85,33 @@ public class PrinterHub : Hub<IPrinterHub>
         return Task.CompletedTask;
     }
 
-    public Task ReportDeviceInfo(string info)
+    public Task ReportPrintResult(string jobId, bool ok, string detail)
     {
         (int outletId, int deviceId, _) = GetIdentity();
-        _memoryCache.Set(PrinterCacheKeys.DeviceInfo(outletId, deviceId), info, ScanCacheTtl);
+        if (string.IsNullOrWhiteSpace(jobId))
+        {
+            return Task.CompletedTask;
+        }
+
+        _memoryCache.Set(
+            PrinterCacheKeys.PrintResult(outletId, deviceId, jobId),
+            new Features.Printer.PrintResult
+            {
+                JobId = jobId,
+                Ok = ok,
+                Detail = detail,
+            },
+            ScanCacheTtl
+        );
+        return Task.CompletedTask;
+    }
+
+    // The device reports a typed object (print-service model.DeviceInfo); it is
+    // stored as JSON so the DeviceInfoResults endpoint can read it unchanged.
+    public Task ReportDeviceInfo(Features.Printer.DeviceInfoReport info)
+    {
+        (int outletId, int deviceId, _) = GetIdentity();
+        _memoryCache.Set(PrinterCacheKeys.DeviceInfo(outletId, deviceId), JsonSerializer.Serialize(info, JsonSerializerOptions.Web), ScanCacheTtl);
         return Task.CompletedTask;
     }
 

@@ -22,6 +22,11 @@ public class PrintService
     public async Task Print(int outletId, int deviceId, PrintMessage printMessage)
     {
         string transport = (_configuration.GetValue<string>("Print:Transport") ?? "redis").ToLowerInvariant();
+
+        // The device echoes this back via ReportPrintResult; with transport
+        // "both" the same id also lets the server dedup double delivery.
+        printMessage.JobId ??= Guid.NewGuid().ToString("N");
+
         string printInstructionsSerialized = JsonSerializer.Serialize(printMessage);
 
         if (transport is "redis" or "both")
@@ -35,5 +40,12 @@ public class PrintService
         {
             await _hub.Clients.Group(PrinterHub.DeviceGroup(outletId, deviceId)).ReceivePrint(printMessage);
         }
+    }
+
+    // Matches print-service's RequestDeviceInfo receiver method — the device
+    // answers with ReportDeviceInfo. Delivered over the hub only.
+    public Task RequestDeviceInfo(int outletId, int deviceId)
+    {
+        return _hub.Clients.Group(PrinterHub.DeviceGroup(outletId, deviceId)).RequestDeviceInfo();
     }
 }
