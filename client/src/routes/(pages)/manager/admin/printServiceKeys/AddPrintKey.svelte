@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { createPrintServiceKeyCreate } from "$lib/api";
-	import { Button, Card, Dialog, Input } from "@kayord/ui";
+	import { Button, Card, Dialog } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
 	import { getError } from "$lib/types";
 	import { status } from "$lib/stores/status.svelte";
@@ -98,14 +98,6 @@
 						placeholder="Front desk Pi"
 						class="border-input bg-background ring-offset-background placeholder:text-muted-foreground focus-visible:ring-ring flex h-10 w-full rounded-md border px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-none"
 					/>
-				</label>
-				<label class="flex flex-col gap-2">
-					<span class="text-sm font-medium">Outlet</span>
-					<Input bind:value={outletId} type="number" />
-				</label>
-				<label class="flex flex-col gap-2">
-					<span class="text-sm font-medium">Device ID</span>
-					<Input bind:value={deviceId} type="number" min="1" />
 				</label>
 			</div>
 			<Dialog.Footer class="gap-2">

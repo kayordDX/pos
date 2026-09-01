@@ -27,11 +27,10 @@ public class Endpoint : Endpoint<Request, PrintServiceKeyDTO>
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
         int outletId = await _userService.GetOutletId();
-        if (req.OutletId != outletId)
-        {
-            await Send.ForbiddenAsync(ct);
-            return;
-        }
+
+        // Keys are always bound to the caller's current outlet and device 1 (the
+        // scan/device-info features address a connected print device by this exact
+        // identity, so a key bound to any other outlet/device can never receive them).
 
         string keyId = await GenerateKeyIdAsync(ct);
         byte[] secretBytes = RandomNumberGenerator.GetBytes(32);
@@ -40,7 +39,7 @@ public class Endpoint : Endpoint<Request, PrintServiceKeyDTO>
         var entity = new Pos.Api.Entities.PrintServiceKey
         {
             OutletId = outletId,
-            DeviceId = req.DeviceId,
+            DeviceId = 1,
             KeyId = keyId,
             SecretHash = Convert.ToHexString(SHA256.HashData(secretBytes)),
             Name = req.Name,
