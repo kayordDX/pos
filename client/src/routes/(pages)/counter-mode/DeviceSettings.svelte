@@ -55,27 +55,29 @@
 	const { form: formData, enhance } = form;
 </script>
 
-<Card.Root class="m-5 p-5">
-	<Card.Header>
-		<Card.Title>Device Settings enable Counter Mode</Card.Title>
-		<Card.Description>This will log you out and activate counter mode on device</Card.Description>
-	</Card.Header>
-	<form method="POST" use:enhance>
-		<Card.Content>
-			<Form.Field {form} name="deviceName">
-				<Form.Control>
-					{#snippet children({ props })}
-						<Form.Label>Device Name</Form.Label>
-						<Input {...props} class="max-w-xs" bind:value={$formData.deviceName} />
-					{/snippet}
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
-		</Card.Content>
-		<Card.Footer class="mt-4">
-			<Button variant="destructive" type="submit">
-				<TvMinimalIcon /> Enable Counter Mode
-			</Button>
-		</Card.Footer>
-	</form>
-</Card.Root>
+<div class="m-5">
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>Device Settings enable Counter Mode</Card.Title>
+			<Card.Description>This will log you out and activate counter mode on device</Card.Description>
+		</Card.Header>
+		<form method="POST" use:enhance>
+			<Card.Content>
+				<Form.Field {form} name="deviceName">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Device Name</Form.Label>
+							<Input {...props} class="max-w-xs" bind:value={$formData.deviceName} />
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
+			</Card.Content>
+			<Card.Footer class="mt-4">
+				<Button variant="destructive" type="submit">
+					<TvMinimalIcon /> Enable Counter Mode
+				</Button>
+			</Card.Footer>
+		</form>
+	</Card.Root>
+</div>

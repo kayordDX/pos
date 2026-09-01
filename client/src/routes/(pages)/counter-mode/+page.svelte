@@ -55,33 +55,35 @@
 <Header />
 
 <form method="POST" use:enhance>
-	<Card.Root class="m-5 p-5">
-		<Card.Header>
-			<Card.Title>User Settings</Card.Title>
-			<Card.Description>Enable or Disable Counter Mode for current user</Card.Description>
-		</Card.Header>
-		<Card.Content class="flex flex-col gap-4">
-			<Form.Field {form} name="IsEnabled">
-				<div class="flex items-center space-x-2">
-					<Switch id="different-outlet" bind:checked={$formData.IsEnabled} />
-					<Label for="different-outlet">Pin Enabled</Label>
-				</div>
-			</Form.Field>
-			<Form.Field {form} name="pin">
-				<Form.Control>
-					{#snippet children({ props })}
-						<Form.Label>Pin</Form.Label>
-						<Input {...props} class="max-w-xs" type="password" bind:value={$formData.pin} autocomplete="off" />
-					{/snippet}
-				</Form.Control>
-				<Form.Description>Set pin for counter mode</Form.Description>
-				<Form.FieldErrors />
-			</Form.Field>
-		</Card.Content>
-		<Card.Footer>
-			<Form.Button type="submit">Save</Form.Button>
-		</Card.Footer>
-	</Card.Root>
+	<div class="m-5">
+		<Card.Root>
+			<Card.Header>
+				<Card.Title>User Settings</Card.Title>
+				<Card.Description>Enable or Disable Counter Mode for current user</Card.Description>
+			</Card.Header>
+			<Card.Content class="flex flex-col gap-4">
+				<Form.Field {form} name="IsEnabled">
+					<div class="flex items-center space-x-2">
+						<Switch id="different-outlet" bind:checked={$formData.IsEnabled} />
+						<Label for="different-outlet">Pin Enabled</Label>
+					</div>
+				</Form.Field>
+				<Form.Field {form} name="pin">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Pin</Form.Label>
+							<Input {...props} class="max-w-xs" type="password" bind:value={$formData.pin} autocomplete="off" />
+						{/snippet}
+					</Form.Control>
+					<Form.Description>Set pin for counter mode</Form.Description>
+					<Form.FieldErrors />
+				</Form.Field>
+			</Card.Content>
+			<Card.Footer>
+				<Form.Button type="submit">Save</Form.Button>
+			</Card.Footer>
+		</Card.Root>
+	</div>
 </form>
 {#if status.hasRole("manager")}
 	<DeviceSettings />

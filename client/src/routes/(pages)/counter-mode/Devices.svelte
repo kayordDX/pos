@@ -32,44 +32,46 @@
 	};
 </script>
 
-<Card.Root class="m-5 p-5">
-	<Card.Header>
-		<Card.Title>Outlet Counter Devices</Card.Title>
-		<Card.Description>Current active counter mode devices</Card.Description>
-	</Card.Header>
-	<Card.Content class="flex flex-col gap-2">
-		{#if data.length == 0}
-			<Alert.Root>
-				<CircleAlertIcon />
-				<Alert.Title>No Counter Devices</Alert.Title>
-				<Alert.Description>This outlet does not have any active counter devices.</Alert.Description>
-			</Alert.Root>
-		{/if}
-		{#each data as counter (counter.id)}
-			<Card.Root class="flex flex-row items-center justify-between gap-2 p-4">
-				<div>
-					<div class="font-bold">{counter.deviceName}</div>
-					<div class="text-muted-foreground text-xs">
-						Created: {stringToFDate(counter.created)}
+<div class="m-5">
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>Outlet Counter Devices</Card.Title>
+			<Card.Description>Current active counter mode devices</Card.Description>
+		</Card.Header>
+		<Card.Content class="flex flex-col gap-2">
+			{#if data.length == 0}
+				<Alert.Root>
+					<CircleAlertIcon />
+					<Alert.Title>No Counter Devices</Alert.Title>
+					<Alert.Description>This outlet does not have any active counter devices.</Alert.Description>
+				</Alert.Root>
+			{/if}
+			{#each data as counter (counter.id)}
+				<Card.Root class="flex flex-row items-center justify-between gap-2 p-4">
+					<div>
+						<div class="font-bold">{counter.deviceName}</div>
+						<div class="text-muted-foreground text-xs">
+							Created: {stringToFDate(counter.created)}
+						</div>
 					</div>
-				</div>
-				<Button
-					size="icon"
-					variant="destructive"
-					onclick={() => {
-						deviceId = counter.id;
-						open = true;
-					}}
-				>
-					<XIcon />
-				</Button>
-			</Card.Root>
-		{/each}
-	</Card.Content>
-	<Card.Footer class="text-muted-foreground mt-4 text-xs"
-		>Please note removing devices from counter devices list will stop all counter mode logins from the device
-	</Card.Footer>
-</Card.Root>
+					<Button
+						size="icon"
+						variant="destructive"
+						onclick={() => {
+							deviceId = counter.id;
+							open = true;
+						}}
+					>
+						<XIcon />
+					</Button>
+				</Card.Root>
+			{/each}
+		</Card.Content>
+		<Card.Footer class="text-muted-foreground mt-4 text-xs"
+			>Please note removing devices from counter devices list will stop all counter mode logins from the device
+		</Card.Footer>
+	</Card.Root>
+</div>
 
 <AlertDialog.Root bind:open>
 	<AlertDialog.Content>

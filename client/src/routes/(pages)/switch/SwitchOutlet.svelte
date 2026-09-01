@@ -56,42 +56,44 @@
 	const outletList = $derived(query.data?.find((i) => i.id === $formData.outletId)?.name ?? "Select outlet to link to device");
 </script>
 
-<Card.Root class="m-5 p-5">
-	<Card.Header>
-		<Card.Title>
-			<h3 class="text-lg">Switch Outlet</h3>
-		</Card.Title>
-	</Card.Header>
-	<Card.Content>
-		<form method="POST" use:enhance>
-			<Form.Field {form} name="outletId">
-				<Form.Control>
-					{#snippet children({ props })}
-						<Form.Label>Outlet</Form.Label>
-						<Select.Root
-							type="single"
-							allowDeselect={false}
-							onValueChange={(v: string) => {
-								v && ($formData.outletId = Number(v));
-							}}
-						>
-							<Select.Trigger {...props}>
-								{outletList}
-							</Select.Trigger>
-							<Select.Content>
-								{#each query.data ?? [] as outlet (outlet.id)}
-									<Select.Item value={outlet.id.toString()}>{outlet.name}</Select.Item>
-								{/each}
-							</Select.Content>
-						</Select.Root>
-						<input hidden bind:value={$formData.outletId} name={props.name} />
-					{/snippet}
-				</Form.Control>
-				<Form.FieldErrors />
-			</Form.Field>
+<div class="m-5">
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>
+				<h3 class="text-lg">Switch Outlet</h3>
+			</Card.Title>
+		</Card.Header>
+		<Card.Content>
+			<form method="POST" use:enhance>
+				<Form.Field {form} name="outletId">
+					<Form.Control>
+						{#snippet children({ props })}
+							<Form.Label>Outlet</Form.Label>
+							<Select.Root
+								type="single"
+								allowDeselect={false}
+								onValueChange={(v: string) => {
+									v && ($formData.outletId = Number(v));
+								}}
+							>
+								<Select.Trigger {...props}>
+									{outletList}
+								</Select.Trigger>
+								<Select.Content>
+									{#each query.data ?? [] as outlet (outlet.id)}
+										<Select.Item value={outlet.id.toString()}>{outlet.name}</Select.Item>
+									{/each}
+								</Select.Content>
+							</Select.Root>
+							<input hidden bind:value={$formData.outletId} name={props.name} />
+						{/snippet}
+					</Form.Control>
+					<Form.FieldErrors />
+				</Form.Field>
 
-			<Form.Button type="submit">Submit</Form.Button>
-			<Button variant="link" href="/">Cancel</Button>
-		</form>
-	</Card.Content>
-</Card.Root>
+				<Form.Button type="submit">Submit</Form.Button>
+				<Button variant="link" href="/">Cancel</Button>
+			</form>
+		</Card.Content>
+	</Card.Root>
+</div>
