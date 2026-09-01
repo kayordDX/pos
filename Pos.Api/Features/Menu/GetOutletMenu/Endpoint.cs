@@ -21,29 +21,16 @@ public class GetOutletMenusEndpoint : Endpoint<Request, List<Pos.Api.Entities.Me
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
         var menus = await _dbContext
-            .Menu.Where(m => m.OutletId == req.OutletId)
-            .Include(m => m.MenuSections!)
-                .ThenInclude(s => s.MenuItems!)
-            // .ThenInclude(mi => mi.Options)
+            .Menu.AsNoTracking()
+            .Where(m => m.OutletId == req.OutletId)
             .Include(m => m.MenuSections!)
                 .ThenInclude(s => s.MenuItems!)
                     .ThenInclude(mi => mi.Tags)
             .Include(m => m.MenuSections!)
-                .ThenInclude(s => s.MenuItems!)
-            .Include(m => m.MenuSections!)
-                .ThenInclude(s => s.SubMenuSections!)
-                    .ThenInclude(ss => ss.MenuItems!)
-            //   .ThenInclude(mi => mi.Options)
-            .Include(m => m.MenuSections!)
                 .ThenInclude(s => s.SubMenuSections!)
                     .ThenInclude(ss => ss.MenuItems!)
                         .ThenInclude(mi => mi.Tags)
-            .Include(m => m.MenuSections!)
-                .ThenInclude(s => s.SubMenuSections!)
-                    .ThenInclude(ss => ss.MenuItems!)
-            .Include(m => m.MenuSections!)
-                .ThenInclude(s => s.SubMenuSections!)
-                    .ThenInclude(ss => ss.MenuItems)
+            .AsSplitQuery()
             .ToListAsync();
 
         await Send.OkAsync(menus);

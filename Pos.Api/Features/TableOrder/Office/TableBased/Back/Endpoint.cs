@@ -27,10 +27,11 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
 
         List<int> divisionIds = await RoleHelper.GetDivisionsForRoles(req.RoleIds, _dbContext, userOutlet.OutletId, _cu.UserId);
 
-        var statusIds = _dbContext
-            .OrderItemStatus.Where(x => x.IsBackOffice && x.IsComplete != true && x.IsCancelled != true)
+        var statusIds = await _dbContext
+            .OrderItemStatus.AsNoTracking()
+            .Where(x => x.IsBackOffice && x.IsComplete != true && x.IsCancelled != true)
             .Select(rd => rd.OrderItemStatusId)
-            .ToList();
+            .ToListAsync(ct);
 
         var result = await _dbContext
             .TableBooking.Where(x => x.SalesPeriod.OutletId == userOutlet.Id && x.CloseDate == null)

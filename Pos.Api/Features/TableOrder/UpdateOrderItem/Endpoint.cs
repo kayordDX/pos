@@ -45,38 +45,65 @@ public class Endpoint : Endpoint<Request, Response>
         int outletId = 0;
         bool soundNotify = false;
 
+        var loadedItems = await _dbContext
+            .OrderItem.Where(x => req.OrderItemIds.Contains(x.OrderItemId))
+            .Include(x => x.TableBooking)
+                .ThenInclude(x => x.SalesPeriod)
+            .Include(x => x.TableBooking)
+                .ThenInclude(x => x.Table)
+            .Include(x => x.MenuItem)
+            .Include(x => x.OrderItemExtras)!
+                .ThenInclude(x => x.Extra)
+            .Include(x => x.OrderItemOptions)!
+                .ThenInclude(x => x.Option)
+            .ToListAsync();
+        var itemsById = loadedItems.ToDictionary(x => x.OrderItemId);
+
         foreach (int r in req.OrderItemIds)
         {
-            OrderItem? entity = await _dbContext
-                .OrderItem.Include(x => x.TableBooking)
-                    .ThenInclude(x => x.SalesPeriod)
-                .Include(x => x.TableBooking)
-                    .ThenInclude(x => x.Table)
-                .Include(x => x.MenuItem)
-                .Include(x => x.OrderItemExtras)!
-                    .ThenInclude(x => x.Extra)
-                .Include(x => x.OrderItemOptions)!
-                    .ThenInclude(x => x.Option)
-                .FirstOrDefaultAsync(x => x.OrderItemId == r);
-
-            if (entity != null)
+            if (!itemsById.TryGetValue(r, out OrderItem? entity))
             {
-                // Do not update if cancelled or wasted
-                if (entity.OrderItemStatusId == 4 || entity.OrderItemStatusId == 8)
-                {
-                    ValidationContext.Instance.ThrowError("Cannot update cancelled or wasted items");
-                }
+                await Send.OkAsync(new Response() { IsSuccess = false, Message = "Order not found" });
+                continue;
+            }
 
-                // If send to kitchen add extra validation
-                if (req.OrderItemStatusId == 2)
-                {
-                    if (entity.TableBooking.CloseDate != null)
-                    {
-                        ValidationContext.Instance.ThrowError("Table is closed");
-                    }
-                }
+            // Do not update if cancelled or wasted
+            if (entity.OrderItemStatusId == 4 || entity.OrderItemStatusId == 8)
+            {
+                ValidationContext.Instance.ThrowError("Cannot update cancelled or wasted items");
+            }
 
-                if (req.OrderItemStatusId != 2)
+            // If send to kitchen add extra validation
+            if (req.OrderItemStatusId == 2)
+            {
+                if (entity.TableBooking.CloseDate != null)
+                {
+                    ValidationContext.Instance.ThrowError("Table is closed");
+                }
+            }
+
+            if (req.OrderItemStatusId != 2)
+            {
+                entity.OrderItemStatusId = req.OrderItemStatusId;
+                if (oIS?.AssignGroup ?? false)
+                {
+                    entity.OrderGroup = order;
+                }
+                entity.OrderUpdated = DateTime.UtcNow;
+                if (oIS?.IsComplete ?? false)
+                    entity.OrderCompleted = DateTime.Now;
+            }
+
+            status = oIS?.Status;
+
+            if (req.OrderItemStatusId == 2)
+            {
+                // Check if item has stock
+                bool isMenuItemAvailable = await StockManager.IsMenuItemAvailable(entity.MenuItemId, _dbContext, ct);
+                bool isExtrasAvailable = await StockManager.IsExtrasAvailable(entity.OrderItemId, entity.MenuItem.DivisionId, _dbContext, ct);
+                bool isOptionsAvailable = await StockManager.IsOptionsAvailable(entity.OrderItemId, entity.MenuItem.DivisionId, _dbContext, ct);
+
+                if (isMenuItemAvailable && isExtrasAvailable && isOptionsAvailable)
                 {
                     entity.OrderItemStatusId = req.OrderItemStatusId;
                     if (oIS?.AssignGroup ?? false)
@@ -86,79 +113,48 @@ public class Endpoint : Endpoint<Request, Response>
                     entity.OrderUpdated = DateTime.UtcNow;
                     if (oIS?.IsComplete ?? false)
                         entity.OrderCompleted = DateTime.Now;
+                    await PublishAsync(new StockEvent() { OrderItemIds = [entity.OrderItemId], IsReverse = false }, Mode.WaitForAll);
                 }
-
-                status = oIS?.Status;
-
-                if (req.OrderItemStatusId == 2)
+                else
                 {
-                    // Check if item has stock
-                    bool isMenuItemAvailable = await StockManager.IsMenuItemAvailable(entity.MenuItemId, _dbContext, ct);
-                    bool isExtrasAvailable = await StockManager.IsExtrasAvailable(entity.OrderItemId, entity.MenuItem.DivisionId, _dbContext, ct);
-                    bool isOptionsAvailable = await StockManager.IsOptionsAvailable(entity.OrderItemId, entity.MenuItem.DivisionId, _dbContext, ct);
-
-                    if (isMenuItemAvailable && isExtrasAvailable && isOptionsAvailable)
+                    List<string> unavailableComponents = new();
+                    if (!isMenuItemAvailable)
                     {
-                        entity.OrderItemStatusId = req.OrderItemStatusId;
-                        if (oIS?.AssignGroup ?? false)
-                        {
-                            entity.OrderGroup = order;
-                        }
-                        entity.OrderUpdated = DateTime.UtcNow;
-                        if (oIS?.IsComplete ?? false)
-                            entity.OrderCompleted = DateTime.Now;
-                        await _dbContext.SaveChangesAsync();
-                        await PublishAsync(new StockEvent() { OrderItemIds = [entity.OrderItemId], IsReverse = false }, Mode.WaitForAll);
+                        unavailableComponents.Add("Menu Item");
                     }
-                    else
+                    if (!isExtrasAvailable)
                     {
-                        List<string> unavailableComponents = new();
-                        if (!isMenuItemAvailable)
-                        {
-                            unavailableComponents.Add("Menu Item");
-                        }
-                        if (!isExtrasAvailable)
-                        {
-                            unavailableComponents.Add("Extras");
-                        }
-                        if (!isOptionsAvailable)
-                        {
-                            unavailableComponents.Add("Options");
-                        }
-
-                        isSuccess = false;
-                        message = $"Selected items(s) out of stock - {string.Join(", ", unavailableComponents)}";
-                        continue;
+                        unavailableComponents.Add("Extras");
                     }
-                }
-
-                if (oIS?.IsNotify ?? false)
-                {
-                    Entities.MenuItem? i = await _dbContext.MenuItem.FirstOrDefaultAsync(x => x.MenuItemId == entity.MenuItemId);
-                    if (i != null)
+                    if (!isOptionsAvailable)
                     {
-                        nC++;
-                        tableName = entity.TableBooking.Table.Name;
-                        notification = notification == "" ? i.Name : notification + ", " + i.Name;
-                        tUserId = entity.TableBooking.UserId;
+                        unavailableComponents.Add("Options");
                     }
-                }
 
-                if (oIS?.IsBackOffice ?? false)
-                {
-                    soundNotify = true;
-                }
-
-                outletId = entity.TableBooking.SalesPeriod.OutletId;
-                var divisionId = entity.MenuItem.DivisionId;
-                if (!divisions.Contains(divisionId))
-                {
-                    divisions.Add(divisionId);
+                    isSuccess = false;
+                    message = $"Selected items(s) out of stock - {string.Join(", ", unavailableComponents)}";
+                    continue;
                 }
             }
-            else
+
+            if (oIS?.IsNotify ?? false)
             {
-                await Send.OkAsync(new Response() { IsSuccess = false, Message = "Order not found" });
+                nC++;
+                tableName = entity.TableBooking.Table.Name;
+                notification = notification == "" ? entity.MenuItem.Name : notification + ", " + entity.MenuItem.Name;
+                tUserId = entity.TableBooking.UserId;
+            }
+
+            if (oIS?.IsBackOffice ?? false)
+            {
+                soundNotify = true;
+            }
+
+            outletId = entity.TableBooking.SalesPeriod.OutletId;
+            var divisionId = entity.MenuItem.DivisionId;
+            if (!divisions.Contains(divisionId))
+            {
+                divisions.Add(divisionId);
             }
         }
 

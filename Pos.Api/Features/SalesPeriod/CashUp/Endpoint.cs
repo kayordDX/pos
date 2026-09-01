@@ -38,7 +38,11 @@ public class Endpoint : Endpoint<Request, CashUp>
         UserCashUp userCashUp = new();
         cashUp.TableCount = 0;
         List<TableBookingDTO> bookings = new();
-        var userIdsCashedUp = _dbContext.CashUp.Where(x => x.SalesPeriodId == req.SalesPeriodId && x.SignOffDate != null).Select(rd => rd.UserId).ToList();
+        var userIdsCashedUp = await _dbContext
+            .CashUp.AsNoTracking()
+            .Where(x => x.SalesPeriodId == req.SalesPeriodId && x.SignOffDate != null)
+            .Select(rd => rd.UserId)
+            .ToListAsync(ct);
         if (req.UserId == string.Empty)
             bookings = await _dbContext
                 .TableBooking.Where(x => x.SalesPeriodId == req.SalesPeriodId)
@@ -49,20 +53,34 @@ public class Endpoint : Endpoint<Request, CashUp>
             bookings = await _dbContext.TableBooking.Where(x => x.SalesPeriodId == req.SalesPeriodId).ProjectToDto().ToListAsync();
         cashUp.OpenTableCount = bookings.Where(x => x.CloseDate == null).Count();
 
+        var paymentStatusIds = await _dbContext
+            .OrderItemStatus.AsNoTracking()
+            .Where(x => x.IsBillable == true)
+            .Select(rd => rd.OrderItemStatusId)
+            .ToListAsync(ct);
+
+        int[] bookingIds = [.. bookings.Select(b => b.Id)];
+        var orderItemsByBooking = (
+            await _dbContext
+                .OrderItem.AsNoTracking()
+                .Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && bookingIds.Contains(x.TableBookingId))
+                .ProjectToDto()
+                .ToListAsync(ct)
+        ).ToLookup(x => x.TableBookingId);
+        var paymentsByBooking = (
+            await _dbContext.Payment.AsNoTracking().Where(x => bookingIds.Contains(x.TableBookingId)).Include(x => x.PaymentType).ToListAsync(ct)
+        ).ToLookup(x => x.TableBookingId);
+
         foreach (TableBookingDTO tb in bookings)
         {
             cashUp.TableCount++;
             TableCashUp tableCashUp = new();
             tableCashUp.Total = 0;
 
-            var paymentStatusIds = _dbContext.OrderItemStatus.Where(x => x.IsBillable == true).Select(rd => rd.OrderItemStatusId).ToList();
             tableCashUp.UserId = tb.UserId;
 
-            tableCashUp.OrderItems = await _dbContext
-                .OrderItem.Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tb.Id)
-                .ProjectToDto()
-                .ToListAsync();
-            tableCashUp.PaymentsReceived = await _dbContext.Payment.Where(x => x.TableBookingId == tb.Id).Include(x => x.PaymentType).ToListAsync();
+            tableCashUp.OrderItems = [.. orderItemsByBooking[tb.Id]];
+            tableCashUp.PaymentsReceived = [.. paymentsByBooking[tb.Id]];
 
             tableCashUp.Total += tableCashUp.OrderItems.Sum(item => item.MenuItem.Price);
 

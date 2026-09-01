@@ -33,12 +33,13 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
 
         int tableBookingOutletId = tableBooking.SalesPeriod.OutletId;
 
+        Dictionary<int, Entities.MenuItem> menuItemsById = new();
         OrderItem orderItem = new();
         foreach (Order order in req.Orders)
         {
-            for (int q = 1; q <= order.Quantity; q++)
+            if (!menuItemsById.TryGetValue(order.MenuItemId, out Entities.MenuItem? menuItem))
             {
-                var menuItem = await _dbContext
+                menuItem = await _dbContext
                     .MenuItem.Include(x => x.MenuSection)!
                         .ThenInclude(x => x.Menu)
                     .FirstOrDefaultAsync(x => x.MenuItemId == order.MenuItemId, ct);
@@ -49,6 +50,11 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
                     return;
                 }
 
+                menuItemsById[order.MenuItemId] = menuItem;
+            }
+
+            for (int q = 1; q <= order.Quantity; q++)
+            {
                 int menuOutletId = menuItem.MenuSection.Menu.OutletId;
 
                 if (tableBookingOutletId != menuOutletId)
