@@ -56,6 +56,7 @@ public class Endpoint : Endpoint<Request, Response>
                 .ThenInclude(x => x.Extra)
             .Include(x => x.OrderItemOptions)!
                 .ThenInclude(x => x.Option)
+            .AsSplitQuery()
             .ToListAsync();
         var itemsById = loadedItems.ToDictionary(x => x.OrderItemId);
 

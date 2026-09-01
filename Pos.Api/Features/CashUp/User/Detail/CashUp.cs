@@ -168,6 +168,7 @@ public static class CashUp
             .Include(x => x.Payments)
             .Include(x => x.Adjustments!)
                 .ThenInclude(x => x.AdjustmentType)
+            .AsSplitQuery()
             .ToListAsync();
 
         List<int> paymentWithLevyIds = outletPayTypes.Where(x => x.PaymentType.TipLevyPercentage != 0m).Select(rd => rd.PaymentTypeId).ToList();
