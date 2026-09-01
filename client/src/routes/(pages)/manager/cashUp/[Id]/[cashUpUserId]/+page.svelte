@@ -76,7 +76,7 @@
 			<Card.Content>
 				<div class="mt-5 text-left font-semibold">Cash Up Items</div>
 				<div class="mt-2 flex flex-col items-center gap-2">
-					{#each autoItems as item (item.id)}
+					{#each autoItems as item (item)}
 						<CashUpItem {item} />
 					{/each}
 				</div>
