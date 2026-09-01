@@ -42,7 +42,6 @@
 					data: { deviceId },
 				})
 			);
-			console.log(started);
 			if (!started) {
 				toast.error("No print device available to report its info");
 			}
@@ -70,8 +69,6 @@
 			{ label: "Uptime", value: formatUptime(info.uptimeSeconds) },
 		].filter((row) => row.value != null && row.value !== "");
 	});
-
-	const rawJson = $derived(info ? JSON.stringify(info, null, 2) : "");
 
 	function formatUptime(seconds: number) {
 		const days = Math.floor(seconds / 86400);
