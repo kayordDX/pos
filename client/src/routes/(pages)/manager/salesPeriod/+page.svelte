@@ -25,16 +25,18 @@
 	};
 </script>
 
-<Card.Root class="m-5 p-5">
-	<Card.Header>
-		<Card.Title>Open Sales Period</Card.Title>
-	</Card.Header>
-	<Card.Content>
-		<Label for="name">Name</Label>
-		<Input type="text" id="name" placeholder="name" bind:value={name} />
-	</Card.Content>
-	<Card.Footer class="gap-2">
-		<Button variant="secondary" href="/manager">Cancel</Button>
-		<Button onclick={openSalesPeriod}>Open</Button>
-	</Card.Footer>
-</Card.Root>
+<div class="p-3">
+	<Card.Root class="">
+		<Card.Header>
+			<Card.Title>Open Sales Period</Card.Title>
+		</Card.Header>
+		<Card.Content class="flex flex-col gap-2">
+			<Label for="name">Name</Label>
+			<Input type="text" id="name" placeholder="name" bind:value={name} />
+		</Card.Content>
+		<Card.Footer class="gap-2">
+			<Button variant="secondary" href="/manager">Cancel</Button>
+			<Button onclick={openSalesPeriod}>Open</Button>
+		</Card.Footer>
+	</Card.Root>
+</div>
