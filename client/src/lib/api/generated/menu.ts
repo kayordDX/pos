@@ -4,706 +4,567 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  DTOMenuItemDTO,
-  DTOMenuItemDTOBasic,
-  EntitiesMenu,
-  ErrorResponse,
-  InternalErrorResponse,
-  MenuCreateRequest,
-  MenuGetItemGetMenuItemsParams,
-  MenuGetItemsGetMenuItemsParams,
-  MenuGetOutletMenuGetOutletMenusParams,
-  MenuGetSectionsGetMenusSectionsParams,
-  MenuGetSectionsResponse,
-  MenuListParams,
-  MenuUpdateRequest
-} from './api.schemas';
+	DTOMenuItemDTO,
+	DTOMenuItemDTOBasic,
+	EntitiesMenu,
+	ErrorResponse,
+	InternalErrorResponse,
+	MenuCreateRequest,
+	MenuGetItemGetMenuItemsParams,
+	MenuGetItemsGetMenuItemsParams,
+	MenuGetOutletMenuGetOutletMenusParams,
+	MenuGetSectionsGetMenusSectionsParams,
+	MenuGetSectionsResponse,
+	MenuListParams,
+	MenuUpdateRequest,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getMenuUpdateUrl = () => {
-
-
-
-
-  return `/menu`
-}
+	return `/menu`;
+};
 
 export const menuUpdate = async (menuUpdateRequest: MenuUpdateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesMenu> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesMenu>(getMenuUpdateUrl(), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(menuUpdateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesMenu>(getMenuUpdateUrl(),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(menuUpdateRequest)
-  }
-);}
+export const getMenuUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuUpdate>>, TError, MenuUpdateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof menuUpdate>>, TError, MenuUpdateMutationVariables, TContext> => {
+	const mutationKey = ["menuUpdate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuUpdate>>, MenuUpdateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return menuUpdate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type MenuUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof menuUpdate>>>;
+export type MenuUpdateMutationBody = BodyType<MenuUpdateRequest>;
+export type MenuUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type MenuUpdateMutationVariables = { data: BodyType<MenuUpdateRequest> };
 
-export const getMenuUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuUpdate>>, TError,MenuUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof menuUpdate>>, TError,MenuUpdateMutationVariables, TContext> => {
+export const createMenuUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuUpdate>>, TError, MenuUpdateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof menuUpdate>>, TError, MenuUpdateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getMenuUpdateMutationOptions(options?.()) }), queryClient);
+};
+export const getMenuListUrl = (params: MenuListParams) => {
+	const normalizedParams = new URLSearchParams();
 
-const mutationKey = ['menuUpdate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuUpdate>>, MenuUpdateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  menuUpdate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type MenuUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof menuUpdate>>>
-    export type MenuUpdateMutationBody = BodyType<MenuUpdateRequest>
-    export type MenuUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type MenuUpdateMutationVariables = {data: BodyType<MenuUpdateRequest>}
-
-    export const createMenuUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuUpdate>>, TError,MenuUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof menuUpdate>>,
-        TError,
-        MenuUpdateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getMenuUpdateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getMenuListUrl = (params: MenuListParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/menu?${stringifiedParams}` : `/menu`
-}
+	return stringifiedParams.length > 0 ? `/menu?${stringifiedParams}` : `/menu`;
+};
 
 export const menuList = async (params: MenuListParams, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesMenu[]> => {
+	return customInstance<EntitiesMenu[]>(getMenuListUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<EntitiesMenu[]>(getMenuListUrl(params),
-  {
-    ...options,
-    method: 'GET'
+export const getMenuListQueryKey = (params?: MenuListParams) => {
+	return [`/menu`, ...(params ? [params] : [])] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getMenuListQueryKey = (params?: MenuListParams,) => {
-    return [
-    `/menu`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getMenuListQueryOptions = <TData = Awaited<ReturnType<typeof menuList>>, TError = ErrorType<void | InternalErrorResponse>>(params: MenuListParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getMenuListQueryOptions = <TData = Awaited<ReturnType<typeof menuList>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: MenuListParams,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getMenuListQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getMenuListQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuList>>> = () => menuList(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof menuList>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof menuList>>> = () => menuList(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof menuList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type MenuListQueryResult = NonNullable<Awaited<ReturnType<typeof menuList>>>
-export type MenuListQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type MenuListQueryResult = NonNullable<Awaited<ReturnType<typeof menuList>>>;
+export type MenuListQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createMenuList<TData = Awaited<ReturnType<typeof menuList>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  MenuListParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => MenuListParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuList>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getMenuListQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getMenuListQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getMenuCreateUrl = () => {
-
-
-
-
-  return `/menu`
-}
+	return `/menu`;
+};
 
 export const menuCreate = async (menuCreateRequest: MenuCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesMenu> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesMenu>(getMenuCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(menuCreateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesMenu>(getMenuCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(menuCreateRequest)
-  }
-);}
+export const getMenuCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuCreate>>, TError, MenuCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof menuCreate>>, TError, MenuCreateMutationVariables, TContext> => {
+	const mutationKey = ["menuCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuCreate>>, MenuCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return menuCreate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type MenuCreateMutationResult = NonNullable<Awaited<ReturnType<typeof menuCreate>>>;
+export type MenuCreateMutationBody = BodyType<MenuCreateRequest>;
+export type MenuCreateMutationError = ErrorType<void | InternalErrorResponse>;
+export type MenuCreateMutationVariables = { data: BodyType<MenuCreateRequest> };
 
-export const getMenuCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuCreate>>, TError,MenuCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof menuCreate>>, TError,MenuCreateMutationVariables, TContext> => {
+export const createMenuCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuCreate>>, TError, MenuCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof menuCreate>>, TError, MenuCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getMenuCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getMenuGetSectionsGetMenusSectionsUrl = (params: MenuGetSectionsGetMenusSectionsParams) => {
+	const normalizedParams = new URLSearchParams();
 
-const mutationKey = ['menuCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/menu/sections?${stringifiedParams}` : `/menu/sections`;
+};
 
+export const menuGetSectionsGetMenusSections = async (
+	params: MenuGetSectionsGetMenusSectionsParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<MenuGetSectionsResponse> => {
+	return customInstance<MenuGetSectionsResponse>(getMenuGetSectionsGetMenusSectionsUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuCreate>>, MenuCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
+export const getMenuGetSectionsGetMenusSectionsQueryKey = (params?: MenuGetSectionsGetMenusSectionsParams) => {
+	return [`/menu/sections`, ...(params ? [params] : [])] as const;
+};
 
-          return  menuCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type MenuCreateMutationResult = NonNullable<Awaited<ReturnType<typeof menuCreate>>>
-    export type MenuCreateMutationBody = BodyType<MenuCreateRequest>
-    export type MenuCreateMutationError = ErrorType<void | InternalErrorResponse>
-    export type MenuCreateMutationVariables = {data: BodyType<MenuCreateRequest>}
-
-    export const createMenuCreate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuCreate>>, TError,MenuCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof menuCreate>>,
-        TError,
-        MenuCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getMenuCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getMenuGetSectionsGetMenusSectionsUrl = (params: MenuGetSectionsGetMenusSectionsParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/menu/sections?${stringifiedParams}` : `/menu/sections`
-}
-
-export const menuGetSectionsGetMenusSections = async (params: MenuGetSectionsGetMenusSectionsParams, options?: Parameters<typeof customInstance>[1]): Promise<MenuGetSectionsResponse> => {
-
-  return customInstance<MenuGetSectionsResponse>(getMenuGetSectionsGetMenusSectionsUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getMenuGetSectionsGetMenusSectionsQueryKey = (params?: MenuGetSectionsGetMenusSectionsParams,) => {
-    return [
-    `/menu/sections`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getMenuGetSectionsGetMenusSectionsQueryOptions = <TData = Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>, TError = ErrorType<void | InternalErrorResponse>>(params: MenuGetSectionsGetMenusSectionsParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getMenuGetSectionsGetMenusSectionsQueryOptions = <
+	TData = Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: MenuGetSectionsGetMenusSectionsParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getMenuGetSectionsGetMenusSectionsQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getMenuGetSectionsGetMenusSectionsQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>> = () => menuGetSectionsGetMenusSections(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
+export type MenuGetSectionsGetMenusSectionsQueryResult = NonNullable<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>>;
+export type MenuGetSectionsGetMenusSectionsQueryError = ErrorType<void | InternalErrorResponse>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>> = () => menuGetSectionsGetMenusSections(params, requestOptions);
+export function createMenuGetSectionsGetMenusSections<
+	TData = Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: () => MenuGetSectionsGetMenusSectionsParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getMenuGetSectionsGetMenusSectionsQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+	return query;
 }
 
-export type MenuGetSectionsGetMenusSectionsQueryResult = NonNullable<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>>
-export type MenuGetSectionsGetMenusSectionsQueryError = ErrorType<void | InternalErrorResponse>
+export const getMenuGetOutletMenuGetOutletMenusUrl = (params: MenuGetOutletMenuGetOutletMenusParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
-export function createMenuGetSectionsGetMenusSections<TData = Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  MenuGetSectionsGetMenusSectionsParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetSectionsGetMenusSections>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	return stringifiedParams.length > 0 ? `/menu/outletMenus?${stringifiedParams}` : `/menu/outletMenus`;
+};
 
+export const menuGetOutletMenuGetOutletMenus = async (
+	params: MenuGetOutletMenuGetOutletMenusParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesMenu[]> => {
+	return customInstance<EntitiesMenu[]>(getMenuGetOutletMenuGetOutletMenusUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
+export const getMenuGetOutletMenuGetOutletMenusQueryKey = (params?: MenuGetOutletMenuGetOutletMenusParams) => {
+	return [`/menu/outletMenus`, ...(params ? [params] : [])] as const;
+};
 
-  const query = createQuery(() => getMenuGetSectionsGetMenusSectionsQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
-}
-
-
-
-
-
-
-export const getMenuGetOutletMenuGetOutletMenusUrl = (params: MenuGetOutletMenuGetOutletMenusParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/menu/outletMenus?${stringifiedParams}` : `/menu/outletMenus`
-}
-
-export const menuGetOutletMenuGetOutletMenus = async (params: MenuGetOutletMenuGetOutletMenusParams, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesMenu[]> => {
-
-  return customInstance<EntitiesMenu[]>(getMenuGetOutletMenuGetOutletMenusUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getMenuGetOutletMenuGetOutletMenusQueryKey = (params?: MenuGetOutletMenuGetOutletMenusParams,) => {
-    return [
-    `/menu/outletMenus`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getMenuGetOutletMenuGetOutletMenusQueryOptions = <TData = Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>, TError = ErrorType<void | InternalErrorResponse>>(params: MenuGetOutletMenuGetOutletMenusParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getMenuGetOutletMenuGetOutletMenusQueryOptions = <
+	TData = Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: MenuGetOutletMenuGetOutletMenusParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getMenuGetOutletMenuGetOutletMenusQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getMenuGetOutletMenuGetOutletMenusQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>> = () => menuGetOutletMenuGetOutletMenus(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
+export type MenuGetOutletMenuGetOutletMenusQueryResult = NonNullable<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>>;
+export type MenuGetOutletMenuGetOutletMenusQueryError = ErrorType<void | InternalErrorResponse>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>> = () => menuGetOutletMenuGetOutletMenus(params, requestOptions);
+export function createMenuGetOutletMenuGetOutletMenus<
+	TData = Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: () => MenuGetOutletMenuGetOutletMenusParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getMenuGetOutletMenuGetOutletMenusQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+	return query;
 }
 
-export type MenuGetOutletMenuGetOutletMenusQueryResult = NonNullable<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>>
-export type MenuGetOutletMenuGetOutletMenusQueryError = ErrorType<void | InternalErrorResponse>
+export const getMenuGetItemsGetMenuItemsUrl = (params: MenuGetItemsGetMenuItemsParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
-export function createMenuGetOutletMenuGetOutletMenus<TData = Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  MenuGetOutletMenuGetOutletMenusParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetOutletMenuGetOutletMenus>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	return stringifiedParams.length > 0 ? `/menu/items?${stringifiedParams}` : `/menu/items`;
+};
 
+export const menuGetItemsGetMenuItems = async (
+	params: MenuGetItemsGetMenuItemsParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<DTOMenuItemDTOBasic[]> => {
+	return customInstance<DTOMenuItemDTOBasic[]>(getMenuGetItemsGetMenuItemsUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
+export const getMenuGetItemsGetMenuItemsQueryKey = (params?: MenuGetItemsGetMenuItemsParams) => {
+	return [`/menu/items`, ...(params ? [params] : [])] as const;
+};
 
-  const query = createQuery(() => getMenuGetOutletMenuGetOutletMenusQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
-}
-
-
-
-
-
-
-export const getMenuGetItemsGetMenuItemsUrl = (params: MenuGetItemsGetMenuItemsParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/menu/items?${stringifiedParams}` : `/menu/items`
-}
-
-export const menuGetItemsGetMenuItems = async (params: MenuGetItemsGetMenuItemsParams, options?: Parameters<typeof customInstance>[1]): Promise<DTOMenuItemDTOBasic[]> => {
-
-  return customInstance<DTOMenuItemDTOBasic[]>(getMenuGetItemsGetMenuItemsUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getMenuGetItemsGetMenuItemsQueryKey = (params?: MenuGetItemsGetMenuItemsParams,) => {
-    return [
-    `/menu/items`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getMenuGetItemsGetMenuItemsQueryOptions = <TData = Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError = ErrorType<void | InternalErrorResponse>>(params: MenuGetItemsGetMenuItemsParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getMenuGetItemsGetMenuItemsQueryOptions = <
+	TData = Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: MenuGetItemsGetMenuItemsParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getMenuGetItemsGetMenuItemsQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getMenuGetItemsGetMenuItemsQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>> = () => menuGetItemsGetMenuItems(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>> = () => menuGetItemsGetMenuItems(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type MenuGetItemsGetMenuItemsQueryResult = NonNullable<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>>
-export type MenuGetItemsGetMenuItemsQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type MenuGetItemsGetMenuItemsQueryResult = NonNullable<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>>;
+export type MenuGetItemsGetMenuItemsQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createMenuGetItemsGetMenuItems<TData = Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  MenuGetItemsGetMenuItemsParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => MenuGetItemsGetMenuItemsParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemsGetMenuItems>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getMenuGetItemsGetMenuItemsQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getMenuGetItemsGetMenuItemsQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getMenuGetItemGetMenuItemsUrl = (params: MenuGetItemGetMenuItemsParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/menu/item?${stringifiedParams}` : `/menu/item`;
+};
 
+export const menuGetItemGetMenuItems = async (
+	params: MenuGetItemGetMenuItemsParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<DTOMenuItemDTO> => {
+	return customInstance<DTOMenuItemDTO>(getMenuGetItemGetMenuItemsUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-export const getMenuGetItemGetMenuItemsUrl = (params: MenuGetItemGetMenuItemsParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getMenuGetItemGetMenuItemsQueryKey = (params?: MenuGetItemGetMenuItemsParams) => {
+	return [`/menu/item`, ...(params ? [params] : [])] as const;
+};
 
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/menu/item?${stringifiedParams}` : `/menu/item`
-}
-
-export const menuGetItemGetMenuItems = async (params: MenuGetItemGetMenuItemsParams, options?: Parameters<typeof customInstance>[1]): Promise<DTOMenuItemDTO> => {
-
-  return customInstance<DTOMenuItemDTO>(getMenuGetItemGetMenuItemsUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getMenuGetItemGetMenuItemsQueryKey = (params?: MenuGetItemGetMenuItemsParams,) => {
-    return [
-    `/menu/item`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getMenuGetItemGetMenuItemsQueryOptions = <TData = Awaited<ReturnType<typeof menuGetItemGetMenuItems>>, TError = ErrorType<void | InternalErrorResponse>>(params: MenuGetItemGetMenuItemsParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getMenuGetItemGetMenuItemsQueryOptions = <
+	TData = Awaited<ReturnType<typeof menuGetItemGetMenuItems>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: MenuGetItemGetMenuItemsParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getMenuGetItemGetMenuItemsQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getMenuGetItemGetMenuItemsQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>> = () => menuGetItemGetMenuItems(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>> = () => menuGetItemGetMenuItems(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type MenuGetItemGetMenuItemsQueryResult = NonNullable<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>>
-export type MenuGetItemGetMenuItemsQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type MenuGetItemGetMenuItemsQueryResult = NonNullable<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>>;
+export type MenuGetItemGetMenuItemsQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createMenuGetItemGetMenuItems<TData = Awaited<ReturnType<typeof menuGetItemGetMenuItems>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  MenuGetItemGetMenuItemsParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => MenuGetItemGetMenuItemsParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGetItemGetMenuItems>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getMenuGetItemGetMenuItemsQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getMenuGetItemGetMenuItemsQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
-
-
-
-
-
-export const getMenuGetUrl = (menuId: number,) => {
-
-
-
-
-  return `/menu/${menuId}`
-}
+export const getMenuGetUrl = (menuId: number) => {
+	return `/menu/${menuId}`;
+};
 
 export const menuGet = async (menuId: number, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesMenu> => {
+	return customInstance<EntitiesMenu>(getMenuGetUrl(menuId), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<EntitiesMenu>(getMenuGetUrl(menuId),
-  {
-    ...options,
-    method: 'GET'
+export const getMenuGetQueryKey = (menuId: number) => {
+	return [`/menu/${menuId}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getMenuGetQueryKey = (menuId: number,) => {
-    return [
-    `/menu/${menuId}`
-    ] as const;
-    }
-
-
-export const getMenuGetQueryOptions = <TData = Awaited<ReturnType<typeof menuGet>>, TError = ErrorType<void | InternalErrorResponse>>(menuId: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getMenuGetQueryOptions = <TData = Awaited<ReturnType<typeof menuGet>>, TError = ErrorType<void | InternalErrorResponse>>(
+	menuId: number,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGet>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getMenuGetQueryKey(menuId);
 
-  const queryKey =  queryOptions?.queryKey ?? getMenuGetQueryKey(menuId);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGet>>> = () => menuGet(menuId, requestOptions);
 
+	return { queryKey, queryFn, enabled: menuId !== null && menuId !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof menuGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof menuGet>>> = () => menuGet(menuId, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: menuId !== null && menuId !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof menuGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type MenuGetQueryResult = NonNullable<Awaited<ReturnType<typeof menuGet>>>
-export type MenuGetQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type MenuGetQueryResult = NonNullable<Awaited<ReturnType<typeof menuGet>>>;
+export type MenuGetQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createMenuGet<TData = Awaited<ReturnType<typeof menuGet>>, TError = ErrorType<void | InternalErrorResponse>>(
- menuId: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	menuId: () => number,
+	options?: () => { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof menuGet>>, TError, TData>>; request?: SecondParameter<typeof customInstance> },
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getMenuGetQueryOptions(menuId(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getMenuGetQueryOptions(menuId(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
-
-
-
-
-
-export const getMenuDeleteUrl = (id: number,) => {
-
-
-
-
-  return `/menu/${id}`
-}
+export const getMenuDeleteUrl = (id: number) => {
+	return `/menu/${id}`;
+};
 
 export const menuDelete = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	return customInstance<void>(getMenuDeleteUrl(id), {
+		...options,
+		method: "DELETE",
+	});
+};
 
-  return customInstance<void>(getMenuDeleteUrl(id),
-  {
-    ...options,
-    method: 'DELETE'
+export const getMenuDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuDelete>>, TError, MenuDeleteMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof menuDelete>>, TError, MenuDeleteMutationVariables, TContext> => {
+	const mutationKey = ["menuDelete"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuDelete>>, MenuDeleteMutationVariables> = (props) => {
+		const { id } = props ?? {};
 
-  }
-);}
+		return menuDelete(id, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type MenuDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof menuDelete>>>;
 
+export type MenuDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type MenuDeleteMutationVariables = { id: number };
 
-
-export const getMenuDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuDelete>>, TError,MenuDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof menuDelete>>, TError,MenuDeleteMutationVariables, TContext> => {
-
-const mutationKey = ['menuDelete'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuDelete>>, MenuDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  menuDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type MenuDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof menuDelete>>>
-
-    export type MenuDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type MenuDeleteMutationVariables = {id: number}
-
-    export const createMenuDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuDelete>>, TError,MenuDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof menuDelete>>,
-        TError,
-        MenuDeleteMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getMenuDeleteMutationOptions(options?.()) }), queryClient);
-    }
+export const createMenuDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuDelete>>, TError, MenuDeleteMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof menuDelete>>, TError, MenuDeleteMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getMenuDeleteMutationOptions(options?.()) }), queryClient);
+};

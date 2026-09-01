@@ -4,773 +4,620 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  EntitiesOrderItem,
-  InternalErrorResponse,
-  TableOrderAddItemsRequest,
-  TableOrderClearBasketRequest,
-  TableOrderCopyItemRequest,
-  TableOrderCopyItemResponse,
-  TableOrderGetBasketParams,
-  TableOrderGetBasketResponse,
-  TableOrderGetBillParams,
-  TableOrderGetBillResponse,
-  TableOrderRemoveItemRequest,
-  TableOrderRemoveItemResponse,
-  TableOrderSendToKitchenRequest,
-  TableOrderSendToKitchenResponse,
-  TableOrderUpdateGroupOrderRequest,
-  TableOrderUpdateGroupOrderResponse,
-  TableOrderUpdateOrderItemRequest,
-  TableOrderUpdateOrderItemResponse,
-  TableOrderUpdateTableOrderRequest,
-  TableOrderUpdateTableOrderResponse
-} from './api.schemas';
+	EntitiesOrderItem,
+	InternalErrorResponse,
+	TableOrderAddItemsRequest,
+	TableOrderClearBasketRequest,
+	TableOrderCopyItemRequest,
+	TableOrderCopyItemResponse,
+	TableOrderGetBasketParams,
+	TableOrderGetBasketResponse,
+	TableOrderGetBillParams,
+	TableOrderGetBillResponse,
+	TableOrderRemoveItemRequest,
+	TableOrderRemoveItemResponse,
+	TableOrderSendToKitchenRequest,
+	TableOrderSendToKitchenResponse,
+	TableOrderUpdateGroupOrderRequest,
+	TableOrderUpdateGroupOrderResponse,
+	TableOrderUpdateOrderItemRequest,
+	TableOrderUpdateOrderItemResponse,
+	TableOrderUpdateTableOrderRequest,
+	TableOrderUpdateTableOrderResponse,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getTableOrderUpdateTableOrderUrl = () => {
-
-
-
-
-  return `/order/updateTableOrder`
-}
-
-export const tableOrderUpdateTableOrder = async (tableOrderUpdateTableOrderRequest: TableOrderUpdateTableOrderRequest, options?: Parameters<typeof customInstance>[1]): Promise<TableOrderUpdateTableOrderResponse> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<TableOrderUpdateTableOrderResponse>(getTableOrderUpdateTableOrderUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableOrderUpdateTableOrderRequest)
-  }
-);}
-
-
-
-
-
-export const getTableOrderUpdateTableOrderMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TError,TableOrderUpdateTableOrderMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TError,TableOrderUpdateTableOrderMutationVariables, TContext> => {
-
-const mutationKey = ['tableOrderUpdateTableOrder'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TableOrderUpdateTableOrderMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableOrderUpdateTableOrder(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableOrderUpdateTableOrderMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>>
-    export type TableOrderUpdateTableOrderMutationBody = BodyType<TableOrderUpdateTableOrderRequest>
-    export type TableOrderUpdateTableOrderMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableOrderUpdateTableOrderMutationVariables = {data: BodyType<TableOrderUpdateTableOrderRequest>}
-
-    export const createTableOrderUpdateTableOrder = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TError,TableOrderUpdateTableOrderMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>,
-        TError,
-        TableOrderUpdateTableOrderMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableOrderUpdateTableOrderMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableOrderUpdateOrderItemUrl = () => {
-
-
-
-
-  return `/order/updateOrderItem`
-}
-
-export const tableOrderUpdateOrderItem = async (tableOrderUpdateOrderItemRequest: TableOrderUpdateOrderItemRequest, options?: Parameters<typeof customInstance>[1]): Promise<TableOrderUpdateOrderItemResponse> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<TableOrderUpdateOrderItemResponse>(getTableOrderUpdateOrderItemUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableOrderUpdateOrderItemRequest)
-  }
-);}
-
-
-
-
-
-export const getTableOrderUpdateOrderItemMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TError,TableOrderUpdateOrderItemMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TError,TableOrderUpdateOrderItemMutationVariables, TContext> => {
-
-const mutationKey = ['tableOrderUpdateOrderItem'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TableOrderUpdateOrderItemMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableOrderUpdateOrderItem(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableOrderUpdateOrderItemMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>>
-    export type TableOrderUpdateOrderItemMutationBody = BodyType<TableOrderUpdateOrderItemRequest>
-    export type TableOrderUpdateOrderItemMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableOrderUpdateOrderItemMutationVariables = {data: BodyType<TableOrderUpdateOrderItemRequest>}
-
-    export const createTableOrderUpdateOrderItem = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TError,TableOrderUpdateOrderItemMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>,
-        TError,
-        TableOrderUpdateOrderItemMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableOrderUpdateOrderItemMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableOrderUpdateGroupOrderUrl = () => {
-
-
-
-
-  return `/order/updateOrderGroup`
-}
-
-export const tableOrderUpdateGroupOrder = async (tableOrderUpdateGroupOrderRequest: TableOrderUpdateGroupOrderRequest, options?: Parameters<typeof customInstance>[1]): Promise<TableOrderUpdateGroupOrderResponse> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<TableOrderUpdateGroupOrderResponse>(getTableOrderUpdateGroupOrderUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableOrderUpdateGroupOrderRequest)
-  }
-);}
-
-
-
-
-
-export const getTableOrderUpdateGroupOrderMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TError,TableOrderUpdateGroupOrderMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TError,TableOrderUpdateGroupOrderMutationVariables, TContext> => {
-
-const mutationKey = ['tableOrderUpdateGroupOrder'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TableOrderUpdateGroupOrderMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableOrderUpdateGroupOrder(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableOrderUpdateGroupOrderMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>>
-    export type TableOrderUpdateGroupOrderMutationBody = BodyType<TableOrderUpdateGroupOrderRequest>
-    export type TableOrderUpdateGroupOrderMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableOrderUpdateGroupOrderMutationVariables = {data: BodyType<TableOrderUpdateGroupOrderRequest>}
-
-    export const createTableOrderUpdateGroupOrder = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TError,TableOrderUpdateGroupOrderMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>,
-        TError,
-        TableOrderUpdateGroupOrderMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableOrderUpdateGroupOrderMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableOrderSendToKitchenUrl = () => {
-
-
-
-
-  return `/order/sendKitchen`
-}
-
-export const tableOrderSendToKitchen = async (tableOrderSendToKitchenRequest: TableOrderSendToKitchenRequest, options?: Parameters<typeof customInstance>[1]): Promise<TableOrderSendToKitchenResponse> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<TableOrderSendToKitchenResponse>(getTableOrderSendToKitchenUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableOrderSendToKitchenRequest)
-  }
-);}
-
-
-
-
-
-export const getTableOrderSendToKitchenMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TError,TableOrderSendToKitchenMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TError,TableOrderSendToKitchenMutationVariables, TContext> => {
-
-const mutationKey = ['tableOrderSendToKitchen'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TableOrderSendToKitchenMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableOrderSendToKitchen(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableOrderSendToKitchenMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderSendToKitchen>>>
-    export type TableOrderSendToKitchenMutationBody = BodyType<TableOrderSendToKitchenRequest>
-    export type TableOrderSendToKitchenMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableOrderSendToKitchenMutationVariables = {data: BodyType<TableOrderSendToKitchenRequest>}
-
-    export const createTableOrderSendToKitchen = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TError,TableOrderSendToKitchenMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableOrderSendToKitchen>>,
-        TError,
-        TableOrderSendToKitchenMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableOrderSendToKitchenMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableOrderRemoveItemUrl = () => {
-
-
-
-
-  return `/order/removeItem`
-}
-
-export const tableOrderRemoveItem = async (tableOrderRemoveItemRequest: TableOrderRemoveItemRequest, options?: Parameters<typeof customInstance>[1]): Promise<TableOrderRemoveItemResponse> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<TableOrderRemoveItemResponse>(getTableOrderRemoveItemUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableOrderRemoveItemRequest)
-  }
-);}
-
-
-
-
-
-export const getTableOrderRemoveItemMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TError,TableOrderRemoveItemMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TError,TableOrderRemoveItemMutationVariables, TContext> => {
-
-const mutationKey = ['tableOrderRemoveItem'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TableOrderRemoveItemMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableOrderRemoveItem(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableOrderRemoveItemMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderRemoveItem>>>
-    export type TableOrderRemoveItemMutationBody = BodyType<TableOrderRemoveItemRequest>
-    export type TableOrderRemoveItemMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableOrderRemoveItemMutationVariables = {data: BodyType<TableOrderRemoveItemRequest>}
-
-    export const createTableOrderRemoveItem = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TError,TableOrderRemoveItemMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableOrderRemoveItem>>,
-        TError,
-        TableOrderRemoveItemMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableOrderRemoveItemMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableOrderGetBillUrl = (params: TableOrderGetBillParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/order/getBill?${stringifiedParams}` : `/order/getBill`
-}
-
-export const tableOrderGetBill = async (params: TableOrderGetBillParams, options?: Parameters<typeof customInstance>[1]): Promise<TableOrderGetBillResponse> => {
-
-  return customInstance<TableOrderGetBillResponse>(getTableOrderGetBillUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getTableOrderGetBillQueryKey = (params?: TableOrderGetBillParams,) => {
-    return [
-    `/order/getBill`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getTableOrderGetBillQueryOptions = <TData = Awaited<ReturnType<typeof tableOrderGetBill>>, TError = ErrorType<void | InternalErrorResponse>>(params: TableOrderGetBillParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBill>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+	return `/order/updateTableOrder`;
+};
+
+export const tableOrderUpdateTableOrder = async (
+	tableOrderUpdateTableOrderRequest: TableOrderUpdateTableOrderRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<TableOrderUpdateTableOrderResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<TableOrderUpdateTableOrderResponse>(getTableOrderUpdateTableOrderUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableOrderUpdateTableOrderRequest),
+	});
+};
+
+export const getTableOrderUpdateTableOrderMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TError, TableOrderUpdateTableOrderMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TError, TableOrderUpdateTableOrderMutationVariables, TContext> => {
+	const mutationKey = ["tableOrderUpdateTableOrder"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TableOrderUpdateTableOrderMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderUpdateTableOrder(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderUpdateTableOrderMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>>;
+export type TableOrderUpdateTableOrderMutationBody = BodyType<TableOrderUpdateTableOrderRequest>;
+export type TableOrderUpdateTableOrderMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderUpdateTableOrderMutationVariables = { data: BodyType<TableOrderUpdateTableOrderRequest> };
+
+export const createTableOrderUpdateTableOrder = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TError, TableOrderUpdateTableOrderMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TError, TableOrderUpdateTableOrderMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableOrderUpdateTableOrderMutationOptions(options?.()) }), queryClient);
+};
+export const getTableOrderUpdateOrderItemUrl = () => {
+	return `/order/updateOrderItem`;
+};
+
+export const tableOrderUpdateOrderItem = async (
+	tableOrderUpdateOrderItemRequest: TableOrderUpdateOrderItemRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<TableOrderUpdateOrderItemResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<TableOrderUpdateOrderItemResponse>(getTableOrderUpdateOrderItemUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableOrderUpdateOrderItemRequest),
+	});
+};
+
+export const getTableOrderUpdateOrderItemMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TError, TableOrderUpdateOrderItemMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TError, TableOrderUpdateOrderItemMutationVariables, TContext> => {
+	const mutationKey = ["tableOrderUpdateOrderItem"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TableOrderUpdateOrderItemMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderUpdateOrderItem(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderUpdateOrderItemMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>>;
+export type TableOrderUpdateOrderItemMutationBody = BodyType<TableOrderUpdateOrderItemRequest>;
+export type TableOrderUpdateOrderItemMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderUpdateOrderItemMutationVariables = { data: BodyType<TableOrderUpdateOrderItemRequest> };
+
+export const createTableOrderUpdateOrderItem = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TError, TableOrderUpdateOrderItemMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TError, TableOrderUpdateOrderItemMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableOrderUpdateOrderItemMutationOptions(options?.()) }), queryClient);
+};
+export const getTableOrderUpdateGroupOrderUrl = () => {
+	return `/order/updateOrderGroup`;
+};
+
+export const tableOrderUpdateGroupOrder = async (
+	tableOrderUpdateGroupOrderRequest: TableOrderUpdateGroupOrderRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<TableOrderUpdateGroupOrderResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<TableOrderUpdateGroupOrderResponse>(getTableOrderUpdateGroupOrderUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableOrderUpdateGroupOrderRequest),
+	});
+};
+
+export const getTableOrderUpdateGroupOrderMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TError, TableOrderUpdateGroupOrderMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TError, TableOrderUpdateGroupOrderMutationVariables, TContext> => {
+	const mutationKey = ["tableOrderUpdateGroupOrder"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TableOrderUpdateGroupOrderMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderUpdateGroupOrder(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderUpdateGroupOrderMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>>;
+export type TableOrderUpdateGroupOrderMutationBody = BodyType<TableOrderUpdateGroupOrderRequest>;
+export type TableOrderUpdateGroupOrderMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderUpdateGroupOrderMutationVariables = { data: BodyType<TableOrderUpdateGroupOrderRequest> };
+
+export const createTableOrderUpdateGroupOrder = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TError, TableOrderUpdateGroupOrderMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TError, TableOrderUpdateGroupOrderMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableOrderUpdateGroupOrderMutationOptions(options?.()) }), queryClient);
+};
+export const getTableOrderSendToKitchenUrl = () => {
+	return `/order/sendKitchen`;
+};
+
+export const tableOrderSendToKitchen = async (
+	tableOrderSendToKitchenRequest: TableOrderSendToKitchenRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<TableOrderSendToKitchenResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<TableOrderSendToKitchenResponse>(getTableOrderSendToKitchenUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableOrderSendToKitchenRequest),
+	});
+};
+
+export const getTableOrderSendToKitchenMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TError, TableOrderSendToKitchenMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TError, TableOrderSendToKitchenMutationVariables, TContext> => {
+	const mutationKey = ["tableOrderSendToKitchen"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TableOrderSendToKitchenMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderSendToKitchen(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderSendToKitchenMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderSendToKitchen>>>;
+export type TableOrderSendToKitchenMutationBody = BodyType<TableOrderSendToKitchenRequest>;
+export type TableOrderSendToKitchenMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderSendToKitchenMutationVariables = { data: BodyType<TableOrderSendToKitchenRequest> };
+
+export const createTableOrderSendToKitchen = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TError, TableOrderSendToKitchenMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TError, TableOrderSendToKitchenMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableOrderSendToKitchenMutationOptions(options?.()) }), queryClient);
+};
+export const getTableOrderRemoveItemUrl = () => {
+	return `/order/removeItem`;
+};
+
+export const tableOrderRemoveItem = async (
+	tableOrderRemoveItemRequest: TableOrderRemoveItemRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<TableOrderRemoveItemResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<TableOrderRemoveItemResponse>(getTableOrderRemoveItemUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableOrderRemoveItemRequest),
+	});
+};
+
+export const getTableOrderRemoveItemMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TError, TableOrderRemoveItemMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TError, TableOrderRemoveItemMutationVariables, TContext> => {
+	const mutationKey = ["tableOrderRemoveItem"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TableOrderRemoveItemMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderRemoveItem(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderRemoveItemMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderRemoveItem>>>;
+export type TableOrderRemoveItemMutationBody = BodyType<TableOrderRemoveItemRequest>;
+export type TableOrderRemoveItemMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderRemoveItemMutationVariables = { data: BodyType<TableOrderRemoveItemRequest> };
+
+export const createTableOrderRemoveItem = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TError, TableOrderRemoveItemMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TError, TableOrderRemoveItemMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableOrderRemoveItemMutationOptions(options?.()) }), queryClient);
+};
+export const getTableOrderGetBillUrl = (params: TableOrderGetBillParams) => {
+	const normalizedParams = new URLSearchParams();
+
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
+
+	const stringifiedParams = normalizedParams.toString();
+
+	return stringifiedParams.length > 0 ? `/order/getBill?${stringifiedParams}` : `/order/getBill`;
+};
+
+export const tableOrderGetBill = async (
+	params: TableOrderGetBillParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<TableOrderGetBillResponse> => {
+	return customInstance<TableOrderGetBillResponse>(getTableOrderGetBillUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
+
+export const getTableOrderGetBillQueryKey = (params?: TableOrderGetBillParams) => {
+	return [`/order/getBill`, ...(params ? [params] : [])] as const;
+};
+
+export const getTableOrderGetBillQueryOptions = <TData = Awaited<ReturnType<typeof tableOrderGetBill>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: TableOrderGetBillParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBill>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getTableOrderGetBillQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getTableOrderGetBillQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableOrderGetBill>>> = () => tableOrderGetBill(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBill>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tableOrderGetBill>>> = () => tableOrderGetBill(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBill>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TableOrderGetBillQueryResult = NonNullable<Awaited<ReturnType<typeof tableOrderGetBill>>>
-export type TableOrderGetBillQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type TableOrderGetBillQueryResult = NonNullable<Awaited<ReturnType<typeof tableOrderGetBill>>>;
+export type TableOrderGetBillQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createTableOrderGetBill<TData = Awaited<ReturnType<typeof tableOrderGetBill>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  TableOrderGetBillParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBill>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => TableOrderGetBillParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBill>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getTableOrderGetBillQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getTableOrderGetBillQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getTableOrderGetBasketUrl = (params: TableOrderGetBasketParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/order/getBasket?${stringifiedParams}` : `/order/getBasket`;
+};
 
+export const tableOrderGetBasket = async (
+	params: TableOrderGetBasketParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<TableOrderGetBasketResponse> => {
+	return customInstance<TableOrderGetBasketResponse>(getTableOrderGetBasketUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-export const getTableOrderGetBasketUrl = (params: TableOrderGetBasketParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getTableOrderGetBasketQueryKey = (params?: TableOrderGetBasketParams) => {
+	return [`/order/getBasket`, ...(params ? [params] : [])] as const;
+};
 
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/order/getBasket?${stringifiedParams}` : `/order/getBasket`
-}
-
-export const tableOrderGetBasket = async (params: TableOrderGetBasketParams, options?: Parameters<typeof customInstance>[1]): Promise<TableOrderGetBasketResponse> => {
-
-  return customInstance<TableOrderGetBasketResponse>(getTableOrderGetBasketUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getTableOrderGetBasketQueryKey = (params?: TableOrderGetBasketParams,) => {
-    return [
-    `/order/getBasket`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getTableOrderGetBasketQueryOptions = <TData = Awaited<ReturnType<typeof tableOrderGetBasket>>, TError = ErrorType<void | InternalErrorResponse>>(params: TableOrderGetBasketParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBasket>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTableOrderGetBasketQueryOptions = <TData = Awaited<ReturnType<typeof tableOrderGetBasket>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: TableOrderGetBasketParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBasket>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getTableOrderGetBasketQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getTableOrderGetBasketQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableOrderGetBasket>>> = () => tableOrderGetBasket(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBasket>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tableOrderGetBasket>>> = () => tableOrderGetBasket(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBasket>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TableOrderGetBasketQueryResult = NonNullable<Awaited<ReturnType<typeof tableOrderGetBasket>>>
-export type TableOrderGetBasketQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type TableOrderGetBasketQueryResult = NonNullable<Awaited<ReturnType<typeof tableOrderGetBasket>>>;
+export type TableOrderGetBasketQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createTableOrderGetBasket<TData = Awaited<ReturnType<typeof tableOrderGetBasket>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  TableOrderGetBasketParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBasket>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => TableOrderGetBasketParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderGetBasket>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getTableOrderGetBasketQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getTableOrderGetBasketQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getTableOrderCopyItemUrl = () => {
-
-
-
-
-  return `/order/copyItem`
-}
-
-export const tableOrderCopyItem = async (tableOrderCopyItemRequest: TableOrderCopyItemRequest, options?: Parameters<typeof customInstance>[1]): Promise<TableOrderCopyItemResponse> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<TableOrderCopyItemResponse>(getTableOrderCopyItemUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableOrderCopyItemRequest)
-  }
-);}
-
-
-
-
-
-export const getTableOrderCopyItemMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderCopyItem>>, TError,TableOrderCopyItemMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderCopyItem>>, TError,TableOrderCopyItemMutationVariables, TContext> => {
-
-const mutationKey = ['tableOrderCopyItem'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderCopyItem>>, TableOrderCopyItemMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableOrderCopyItem(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableOrderCopyItemMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderCopyItem>>>
-    export type TableOrderCopyItemMutationBody = BodyType<TableOrderCopyItemRequest>
-    export type TableOrderCopyItemMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableOrderCopyItemMutationVariables = {data: BodyType<TableOrderCopyItemRequest>}
-
-    export const createTableOrderCopyItem = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderCopyItem>>, TError,TableOrderCopyItemMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableOrderCopyItem>>,
-        TError,
-        TableOrderCopyItemMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableOrderCopyItemMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableOrderClearBasketUrl = () => {
-
-
-
-
-  return `/order/clearBasket`
-}
-
-export const tableOrderClearBasket = async (tableOrderClearBasketRequest: TableOrderClearBasketRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOrderItem> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesOrderItem>(getTableOrderClearBasketUrl(),
-  {
-    ...options,
-    method: 'DELETE',
-    headers: { 'Content-Type': '*/*', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableOrderClearBasketRequest)
-  }
-);}
-
-
-
-
-
-export const getTableOrderClearBasketMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderClearBasket>>, TError,TableOrderClearBasketMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderClearBasket>>, TError,TableOrderClearBasketMutationVariables, TContext> => {
-
-const mutationKey = ['tableOrderClearBasket'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderClearBasket>>, TableOrderClearBasketMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableOrderClearBasket(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableOrderClearBasketMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderClearBasket>>>
-    export type TableOrderClearBasketMutationBody = BodyType<TableOrderClearBasketRequest>
-    export type TableOrderClearBasketMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableOrderClearBasketMutationVariables = {data: BodyType<TableOrderClearBasketRequest>}
-
-    export const createTableOrderClearBasket = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderClearBasket>>, TError,TableOrderClearBasketMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableOrderClearBasket>>,
-        TError,
-        TableOrderClearBasketMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableOrderClearBasketMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableOrderAddItemsUrl = () => {
-
-
-
-
-  return `/order/addItems`
-}
-
-export const tableOrderAddItems = async (tableOrderAddItemsRequest: TableOrderAddItemsRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOrderItem> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesOrderItem>(getTableOrderAddItemsUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableOrderAddItemsRequest)
-  }
-);}
-
-
-
-
-
-export const getTableOrderAddItemsMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderAddItems>>, TError,TableOrderAddItemsMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderAddItems>>, TError,TableOrderAddItemsMutationVariables, TContext> => {
-
-const mutationKey = ['tableOrderAddItems'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderAddItems>>, TableOrderAddItemsMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableOrderAddItems(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableOrderAddItemsMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderAddItems>>>
-    export type TableOrderAddItemsMutationBody = BodyType<TableOrderAddItemsRequest>
-    export type TableOrderAddItemsMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableOrderAddItemsMutationVariables = {data: BodyType<TableOrderAddItemsRequest>}
-
-    export const createTableOrderAddItems = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableOrderAddItems>>, TError,TableOrderAddItemsMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableOrderAddItems>>,
-        TError,
-        TableOrderAddItemsMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableOrderAddItemsMutationOptions(options?.()) }), queryClient);
-    }
+	return `/order/copyItem`;
+};
+
+export const tableOrderCopyItem = async (
+	tableOrderCopyItemRequest: TableOrderCopyItemRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<TableOrderCopyItemResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<TableOrderCopyItemResponse>(getTableOrderCopyItemUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableOrderCopyItemRequest),
+	});
+};
+
+export const getTableOrderCopyItemMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderCopyItem>>, TError, TableOrderCopyItemMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderCopyItem>>, TError, TableOrderCopyItemMutationVariables, TContext> => {
+	const mutationKey = ["tableOrderCopyItem"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderCopyItem>>, TableOrderCopyItemMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderCopyItem(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderCopyItemMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderCopyItem>>>;
+export type TableOrderCopyItemMutationBody = BodyType<TableOrderCopyItemRequest>;
+export type TableOrderCopyItemMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderCopyItemMutationVariables = { data: BodyType<TableOrderCopyItemRequest> };
+
+export const createTableOrderCopyItem = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderCopyItem>>, TError, TableOrderCopyItemMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableOrderCopyItem>>, TError, TableOrderCopyItemMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableOrderCopyItemMutationOptions(options?.()) }), queryClient);
+};
+export const getTableOrderClearBasketUrl = () => {
+	return `/order/clearBasket`;
+};
+
+export const tableOrderClearBasket = async (
+	tableOrderClearBasketRequest: TableOrderClearBasketRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesOrderItem> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesOrderItem>(getTableOrderClearBasketUrl(), {
+		...options,
+		method: "DELETE",
+		headers: { "Content-Type": "*/*", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableOrderClearBasketRequest),
+	});
+};
+
+export const getTableOrderClearBasketMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderClearBasket>>, TError, TableOrderClearBasketMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderClearBasket>>, TError, TableOrderClearBasketMutationVariables, TContext> => {
+	const mutationKey = ["tableOrderClearBasket"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderClearBasket>>, TableOrderClearBasketMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderClearBasket(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderClearBasketMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderClearBasket>>>;
+export type TableOrderClearBasketMutationBody = BodyType<TableOrderClearBasketRequest>;
+export type TableOrderClearBasketMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderClearBasketMutationVariables = { data: BodyType<TableOrderClearBasketRequest> };
+
+export const createTableOrderClearBasket = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderClearBasket>>, TError, TableOrderClearBasketMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableOrderClearBasket>>, TError, TableOrderClearBasketMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableOrderClearBasketMutationOptions(options?.()) }), queryClient);
+};
+export const getTableOrderAddItemsUrl = () => {
+	return `/order/addItems`;
+};
+
+export const tableOrderAddItems = async (
+	tableOrderAddItemsRequest: TableOrderAddItemsRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesOrderItem> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesOrderItem>(getTableOrderAddItemsUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableOrderAddItemsRequest),
+	});
+};
+
+export const getTableOrderAddItemsMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderAddItems>>, TError, TableOrderAddItemsMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderAddItems>>, TError, TableOrderAddItemsMutationVariables, TContext> => {
+	const mutationKey = ["tableOrderAddItems"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableOrderAddItems>>, TableOrderAddItemsMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return tableOrderAddItems(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type TableOrderAddItemsMutationResult = NonNullable<Awaited<ReturnType<typeof tableOrderAddItems>>>;
+export type TableOrderAddItemsMutationBody = BodyType<TableOrderAddItemsRequest>;
+export type TableOrderAddItemsMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableOrderAddItemsMutationVariables = { data: BodyType<TableOrderAddItemsRequest> };
+
+export const createTableOrderAddItems = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderAddItems>>, TError, TableOrderAddItemsMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableOrderAddItems>>, TError, TableOrderAddItemsMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableOrderAddItemsMutationOptions(options?.()) }), queryClient);
+};

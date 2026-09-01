@@ -4,248 +4,185 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
-import type {
-  DTOPrintServiceKeyDTO,
-  ErrorResponse,
-  InternalErrorResponse,
-  PrintServiceKeyCreateRequest,
-  PrintServiceKeyRevokeRequest
-} from './api.schemas';
+import type { DTOPrintServiceKeyDTO, ErrorResponse, InternalErrorResponse, PrintServiceKeyCreateRequest, PrintServiceKeyRevokeRequest } from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getPrintServiceKeyRevokeUrl = () => {
+	return `/printerservicekey/revoke`;
+};
 
+export const printServiceKeyRevoke = async (
+	printServiceKeyRevokeRequest: PrintServiceKeyRevokeRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getPrintServiceKeyRevokeUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(printServiceKeyRevokeRequest),
+	});
+};
 
+export const getPrintServiceKeyRevokeMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyRevoke>>, TError, PrintServiceKeyRevokeMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyRevoke>>, TError, PrintServiceKeyRevokeMutationVariables, TContext> => {
+	const mutationKey = ["printServiceKeyRevoke"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof printServiceKeyRevoke>>, PrintServiceKeyRevokeMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/printerservicekey/revoke`
-}
+		return printServiceKeyRevoke(data, requestOptions);
+	};
 
-export const printServiceKeyRevoke = async (printServiceKeyRevokeRequest: PrintServiceKeyRevokeRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getPrintServiceKeyRevokeUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(printServiceKeyRevokeRequest)
-  }
-);}
+export type PrintServiceKeyRevokeMutationResult = NonNullable<Awaited<ReturnType<typeof printServiceKeyRevoke>>>;
+export type PrintServiceKeyRevokeMutationBody = BodyType<PrintServiceKeyRevokeRequest>;
+export type PrintServiceKeyRevokeMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PrintServiceKeyRevokeMutationVariables = { data: BodyType<PrintServiceKeyRevokeRequest> };
 
+export const createPrintServiceKeyRevoke = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyRevoke>>, TError, PrintServiceKeyRevokeMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof printServiceKeyRevoke>>, TError, PrintServiceKeyRevokeMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPrintServiceKeyRevokeMutationOptions(options?.()) }), queryClient);
+};
+export const getPrintServiceKeyListUrl = () => {
+	return `/printerservicekey`;
+};
 
-
-
-
-export const getPrintServiceKeyRevokeMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyRevoke>>, TError,PrintServiceKeyRevokeMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyRevoke>>, TError,PrintServiceKeyRevokeMutationVariables, TContext> => {
-
-const mutationKey = ['printServiceKeyRevoke'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof printServiceKeyRevoke>>, PrintServiceKeyRevokeMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  printServiceKeyRevoke(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PrintServiceKeyRevokeMutationResult = NonNullable<Awaited<ReturnType<typeof printServiceKeyRevoke>>>
-    export type PrintServiceKeyRevokeMutationBody = BodyType<PrintServiceKeyRevokeRequest>
-    export type PrintServiceKeyRevokeMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type PrintServiceKeyRevokeMutationVariables = {data: BodyType<PrintServiceKeyRevokeRequest>}
-
-    export const createPrintServiceKeyRevoke = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyRevoke>>, TError,PrintServiceKeyRevokeMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof printServiceKeyRevoke>>,
-        TError,
-        PrintServiceKeyRevokeMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPrintServiceKeyRevokeMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPrintServiceKeyListUrl = () => {
-
-
-
-
-  return `/printerservicekey`
-}
-
-export const printServiceKeyList = async ( options?: Parameters<typeof customInstance>[1]): Promise<DTOPrintServiceKeyDTO[]> => {
-
-  return customInstance<DTOPrintServiceKeyDTO[]>(getPrintServiceKeyListUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
+export const printServiceKeyList = async (options?: Parameters<typeof customInstance>[1]): Promise<DTOPrintServiceKeyDTO[]> => {
+	return customInstance<DTOPrintServiceKeyDTO[]>(getPrintServiceKeyListUrl(), {
+		...options,
+		method: "GET",
+	});
+};
 
 export const getPrintServiceKeyListQueryKey = () => {
-    return [
-    `/printerservicekey`
-    ] as const;
-    }
+	return [`/printerservicekey`] as const;
+};
 
+export const getPrintServiceKeyListQueryOptions = <
+	TData = Awaited<ReturnType<typeof printServiceKeyList>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printServiceKeyList>>, TError, TData>>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getPrintServiceKeyListQueryOptions = <TData = Awaited<ReturnType<typeof printServiceKeyList>>, TError = ErrorType<void | InternalErrorResponse>>( options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof printServiceKeyList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+	const queryKey = queryOptions?.queryKey ?? getPrintServiceKeyListQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof printServiceKeyList>>> = () => printServiceKeyList(requestOptions);
 
-  const queryKey =  queryOptions?.queryKey ?? getPrintServiceKeyListQueryKey();
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof printServiceKeyList>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof printServiceKeyList>>> = () => printServiceKeyList(requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof printServiceKeyList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PrintServiceKeyListQueryResult = NonNullable<Awaited<ReturnType<typeof printServiceKeyList>>>
-export type PrintServiceKeyListQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type PrintServiceKeyListQueryResult = NonNullable<Awaited<ReturnType<typeof printServiceKeyList>>>;
+export type PrintServiceKeyListQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createPrintServiceKeyList<TData = Awaited<ReturnType<typeof printServiceKeyList>>, TError = ErrorType<void | InternalErrorResponse>>(
-  options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof printServiceKeyList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printServiceKeyList>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getPrintServiceKeyListQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getPrintServiceKeyListQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getPrintServiceKeyCreateUrl = () => {
+	return `/printerservicekey`;
+};
 
+export const printServiceKeyCreate = async (
+	printServiceKeyCreateRequest: PrintServiceKeyCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<DTOPrintServiceKeyDTO> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<DTOPrintServiceKeyDTO>(getPrintServiceKeyCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(printServiceKeyCreateRequest),
+	});
+};
 
+export const getPrintServiceKeyCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyCreate>>, TError, PrintServiceKeyCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyCreate>>, TError, PrintServiceKeyCreateMutationVariables, TContext> => {
+	const mutationKey = ["printServiceKeyCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof printServiceKeyCreate>>, PrintServiceKeyCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/printerservicekey`
-}
+		return printServiceKeyCreate(data, requestOptions);
+	};
 
-export const printServiceKeyCreate = async (printServiceKeyCreateRequest: PrintServiceKeyCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<DTOPrintServiceKeyDTO> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<DTOPrintServiceKeyDTO>(getPrintServiceKeyCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(printServiceKeyCreateRequest)
-  }
-);}
+export type PrintServiceKeyCreateMutationResult = NonNullable<Awaited<ReturnType<typeof printServiceKeyCreate>>>;
+export type PrintServiceKeyCreateMutationBody = BodyType<PrintServiceKeyCreateRequest>;
+export type PrintServiceKeyCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PrintServiceKeyCreateMutationVariables = { data: BodyType<PrintServiceKeyCreateRequest> };
 
-
-
-
-
-export const getPrintServiceKeyCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyCreate>>, TError,PrintServiceKeyCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyCreate>>, TError,PrintServiceKeyCreateMutationVariables, TContext> => {
-
-const mutationKey = ['printServiceKeyCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof printServiceKeyCreate>>, PrintServiceKeyCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  printServiceKeyCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PrintServiceKeyCreateMutationResult = NonNullable<Awaited<ReturnType<typeof printServiceKeyCreate>>>
-    export type PrintServiceKeyCreateMutationBody = BodyType<PrintServiceKeyCreateRequest>
-    export type PrintServiceKeyCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type PrintServiceKeyCreateMutationVariables = {data: BodyType<PrintServiceKeyCreateRequest>}
-
-    export const createPrintServiceKeyCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyCreate>>, TError,PrintServiceKeyCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof printServiceKeyCreate>>,
-        TError,
-        PrintServiceKeyCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPrintServiceKeyCreateMutationOptions(options?.()) }), queryClient);
-    }
+export const createPrintServiceKeyCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyCreate>>, TError, PrintServiceKeyCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof printServiceKeyCreate>>, TError, PrintServiceKeyCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPrintServiceKeyCreateMutationOptions(options?.()) }), queryClient);
+};

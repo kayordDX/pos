@@ -20,22 +20,24 @@
 
 	const mutation = createBillPrintBill();
 	const testMutation = createPrinterTest();
-	const printerReachableLabel = $derived(
-		printer.printerReachable == null ? "Unknown" : printer.printerReachable ? "Reachable" : "Unreachable"
-	);
-	const printerReachableClass = $derived(
-		printer.printerReachable == null
-			? "bg-muted text-muted-foreground"
-			: printer.printerReachable
-				? "bg-primary/10 text-primary"
-				: "bg-destructive/10 text-destructive"
-	);
-	const deviceOnlineClass = $derived(
-		printer.deviceOnline ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"
-	);
-	const legacyStatusClass = $derived(
-		printer.isConnected ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
-	);
+	// Status badges temporarily hidden while devices run on the Redis transport only.
+	// Re-enable when the SignalR rollout is complete (see docs/print-service-signalr-migration.md).
+	// const printerReachableLabel = $derived(
+	// 	printer.printerReachable == null ? "Unknown" : printer.printerReachable ? "Reachable" : "Unreachable"
+	// );
+	// const printerReachableClass = $derived(
+	// 	printer.printerReachable == null
+	// 		? "bg-muted text-muted-foreground"
+	// 		: printer.printerReachable
+	// 			? "bg-primary/10 text-primary"
+	// 			: "bg-destructive/10 text-destructive"
+	// );
+	// const deviceOnlineClass = $derived(
+	// 	printer.deviceOnline ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"
+	// );
+	// const legacyStatusClass = $derived(
+	// 	printer.isConnected ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
+	// );
 
 	const testPrinter = async () => {
 		try {
@@ -69,12 +71,12 @@
 			<div class="flex items-center gap-2">
 				<Avatar.Root>
 					<Avatar.Fallback>
-						{#if printer.deviceOnline || printer.isConnected}
+						{#if printer.isConnected}
 							<Tooltip.Provider>
 								<Tooltip.Root>
 									<Tooltip.Trigger><CloudUploadIcon class="text-primary" /></Tooltip.Trigger>
 									<Tooltip.Content>
-										<p>Print device is online</p>
+										<p>Printer is connected</p>
 									</Tooltip.Content>
 								</Tooltip.Root>
 							</Tooltip.Provider>
@@ -83,15 +85,18 @@
 								<Tooltip.Root>
 									<Tooltip.Trigger><CloudOffIcon class="text-destructive" /></Tooltip.Trigger>
 									<Tooltip.Content>
-										<p>Print device is offline</p>
+										<p>Printer currently not connected</p>
 									</Tooltip.Content>
 								</Tooltip.Root>
 							</Tooltip.Provider>
 						{/if}
 					</Avatar.Fallback>
 				</Avatar.Root>
+				<Card.Title>{printer.printerName}</Card.Title>
+				<!-- Status badges (Device / Printer / Legacy) temporarily hidden while devices run on
+				     the Redis transport only. Re-enable with the derived classes in the script block
+				     when the SignalR rollout is complete (see docs/print-service-signalr-migration.md).
 				<div class="flex flex-col gap-2">
-					<Card.Title>{printer.printerName}</Card.Title>
 					<div class="flex flex-wrap gap-2 text-xs">
 						<span class={`rounded-full px-2 py-1 font-medium ${deviceOnlineClass}`}>
 							Device {printer.deviceOnline ? "online" : "offline"}
@@ -103,7 +108,7 @@
 							Legacy {printer.isConnected ? "connected" : "disconnected"}
 						</span>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<div class="flex flex-row items-center gap-2">

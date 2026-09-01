@@ -4,107 +4,82 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createQuery
-} from '@tanstack/svelte-query';
-import type {
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+import { createQuery } from "@tanstack/svelte-query";
+import type { CreateQueryOptions, CreateQueryResult, DataTag, QueryClient, QueryFunction, QueryKey } from "@tanstack/svelte-query";
 
-import type {
-  InternalErrorResponse,
-  TableOrderOfficeTableBasedBackParams,
-  TableOrderOfficeTableBasedBackResponse
-} from './api.schemas';
+import type { InternalErrorResponse, TableOrderOfficeTableBasedBackParams, TableOrderOfficeTableBasedBackResponse } from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+export const getTableOrderOfficeTableBasedBackUrl = (params?: TableOrderOfficeTableBasedBackParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
-export const getTableOrderOfficeTableBasedBackUrl = (params?: TableOrderOfficeTableBasedBackParams,) => {
-  const normalizedParams = new URLSearchParams();
+	const stringifiedParams = normalizedParams.toString();
 
-  Object.entries(params || {}).forEach(([key, value]) => {
+	return stringifiedParams.length > 0 ? `/backOffice/getOrders?${stringifiedParams}` : `/backOffice/getOrders`;
+};
 
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
+export const tableOrderOfficeTableBasedBack = async (
+	params?: TableOrderOfficeTableBasedBackParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<TableOrderOfficeTableBasedBackResponse> => {
+	return customInstance<TableOrderOfficeTableBasedBackResponse>(getTableOrderOfficeTableBasedBackUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  const stringifiedParams = normalizedParams.toString();
+export const getTableOrderOfficeTableBasedBackQueryKey = (params?: TableOrderOfficeTableBasedBackParams) => {
+	return [`/backOffice/getOrders`, ...(params ? [params] : [])] as const;
+};
 
-  return stringifiedParams.length > 0 ? `/backOffice/getOrders?${stringifiedParams}` : `/backOffice/getOrders`
-}
-
-export const tableOrderOfficeTableBasedBack = async (params?: TableOrderOfficeTableBasedBackParams, options?: Parameters<typeof customInstance>[1]): Promise<TableOrderOfficeTableBasedBackResponse> => {
-
-  return customInstance<TableOrderOfficeTableBasedBackResponse>(getTableOrderOfficeTableBasedBackUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getTableOrderOfficeTableBasedBackQueryKey = (params?: TableOrderOfficeTableBasedBackParams,) => {
-    return [
-    `/backOffice/getOrders`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getTableOrderOfficeTableBasedBackQueryOptions = <TData = Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>, TError = ErrorType<void | InternalErrorResponse>>(params?: TableOrderOfficeTableBasedBackParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTableOrderOfficeTableBasedBackQueryOptions = <
+	TData = Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params?: TableOrderOfficeTableBasedBackParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getTableOrderOfficeTableBasedBackQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getTableOrderOfficeTableBasedBackQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>> = () => tableOrderOfficeTableBasedBack(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
+export type TableOrderOfficeTableBasedBackQueryResult = NonNullable<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>>;
+export type TableOrderOfficeTableBasedBackQueryError = ErrorType<void | InternalErrorResponse>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>> = () => tableOrderOfficeTableBasedBack(params, requestOptions);
+export function createTableOrderOfficeTableBasedBack<
+	TData = Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params?: () => TableOrderOfficeTableBasedBackParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getTableOrderOfficeTableBasedBackQueryOptions(params?.(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+	return query;
 }
-
-export type TableOrderOfficeTableBasedBackQueryResult = NonNullable<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>>
-export type TableOrderOfficeTableBasedBackQueryError = ErrorType<void | InternalErrorResponse>
-
-
-
-export function createTableOrderOfficeTableBasedBack<TData = Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>, TError = ErrorType<void | InternalErrorResponse>>(
- params?: () =>  TableOrderOfficeTableBasedBackParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableOrderOfficeTableBasedBack>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-
-
-  const query = createQuery(() => getTableOrderOfficeTableBasedBackQueryOptions(params?.(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
-}
-
-
-
-
-
-

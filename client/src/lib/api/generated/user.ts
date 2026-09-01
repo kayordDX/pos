@@ -4,1287 +4,973 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  CommonModelsPaginatedListOfResponse,
-  CommonModelsPaginatedListOfUserResponse,
-  EntitiesUserOutlet,
-  ErrorResponse,
-  InternalErrorResponse,
-  UserAddUserOutletRoleRequest,
-  UserApplyOutletRequest,
-  UserAssignOutletRequest,
-  UserGetCounterUsersParams,
-  UserGetCounterUsersResponse,
-  UserGetRolesParams,
-  UserGetStatusResponse,
-  UserLinkAccountRequest,
-  UserLinkAccountResponse,
-  UserPinCreateRequest,
-  UserPinGetResponse,
-  UserPinLoginRequest,
-  UserPinLoginResponse,
-  UserTasksParams,
-  UserUnassignedUsersParams,
-  UserUserResponse,
-  UserUsersParams,
-  UserUsersTypeParams,
-  UserValidateRequest,
-  UserValidateResponse
-} from './api.schemas';
+	CommonModelsPaginatedListOfResponse,
+	CommonModelsPaginatedListOfUserResponse,
+	EntitiesUserOutlet,
+	ErrorResponse,
+	InternalErrorResponse,
+	UserAddUserOutletRoleRequest,
+	UserApplyOutletRequest,
+	UserAssignOutletRequest,
+	UserGetCounterUsersParams,
+	UserGetCounterUsersResponse,
+	UserGetRolesParams,
+	UserGetStatusResponse,
+	UserLinkAccountRequest,
+	UserLinkAccountResponse,
+	UserPinCreateRequest,
+	UserPinGetResponse,
+	UserPinLoginRequest,
+	UserPinLoginResponse,
+	UserTasksParams,
+	UserUnassignedUsersParams,
+	UserUserResponse,
+	UserUsersParams,
+	UserUsersTypeParams,
+	UserValidateRequest,
+	UserValidateResponse,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getUserValidateUrl = () => {
-
-
-
-
-  return `/user/validate`
-}
+	return `/user/validate`;
+};
 
 export const userValidate = async (userValidateRequest: UserValidateRequest, options?: Parameters<typeof customInstance>[1]): Promise<UserValidateResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<UserValidateResponse>(getUserValidateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(userValidateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<UserValidateResponse>(getUserValidateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(userValidateRequest)
-  }
-);}
+export const getUserValidateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userValidate>>, TError, UserValidateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof userValidate>>, TError, UserValidateMutationVariables, TContext> => {
+	const mutationKey = ["userValidate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof userValidate>>, UserValidateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return userValidate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type UserValidateMutationResult = NonNullable<Awaited<ReturnType<typeof userValidate>>>;
+export type UserValidateMutationBody = BodyType<UserValidateRequest>;
+export type UserValidateMutationError = ErrorType<void | InternalErrorResponse>;
+export type UserValidateMutationVariables = { data: BodyType<UserValidateRequest> };
 
-export const getUserValidateMutationOptions = <TError = ErrorType<InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userValidate>>, TError,UserValidateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof userValidate>>, TError,UserValidateMutationVariables, TContext> => {
+export const createUserValidate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userValidate>>, TError, UserValidateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof userValidate>>, TError, UserValidateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getUserValidateMutationOptions(options?.()) }), queryClient);
+};
+export const getUserUsersTypeUrl = (params: UserUsersTypeParams) => {
+	const normalizedParams = new URLSearchParams();
 
-const mutationKey = ['userValidate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userValidate>>, UserValidateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  userValidate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserValidateMutationResult = NonNullable<Awaited<ReturnType<typeof userValidate>>>
-    export type UserValidateMutationBody = BodyType<UserValidateRequest>
-    export type UserValidateMutationError = ErrorType<InternalErrorResponse>
-    export type UserValidateMutationVariables = {data: BodyType<UserValidateRequest>}
-
-    export const createUserValidate = <TError = ErrorType<InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userValidate>>, TError,UserValidateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof userValidate>>,
-        TError,
-        UserValidateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getUserValidateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getUserUsersTypeUrl = (params: UserUsersTypeParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/user/typeList?${stringifiedParams}` : `/user/typeList`
-}
+	return stringifiedParams.length > 0 ? `/user/typeList?${stringifiedParams}` : `/user/typeList`;
+};
 
 export const userUsersType = async (params: UserUsersTypeParams, options?: Parameters<typeof customInstance>[1]): Promise<UserUserResponse[]> => {
+	return customInstance<UserUserResponse[]>(getUserUsersTypeUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<UserUserResponse[]>(getUserUsersTypeUrl(params),
-  {
-    ...options,
-    method: 'GET'
+export const getUserUsersTypeQueryKey = (params?: UserUsersTypeParams) => {
+	return [`/user/typeList`, ...(params ? [params] : [])] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getUserUsersTypeQueryKey = (params?: UserUsersTypeParams,) => {
-    return [
-    `/user/typeList`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getUserUsersTypeQueryOptions = <TData = Awaited<ReturnType<typeof userUsersType>>, TError = ErrorType<void | InternalErrorResponse>>(params: UserUsersTypeParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsersType>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getUserUsersTypeQueryOptions = <TData = Awaited<ReturnType<typeof userUsersType>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: UserUsersTypeParams,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsersType>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getUserUsersTypeQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getUserUsersTypeQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userUsersType>>> = () => userUsersType(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof userUsersType>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof userUsersType>>> = () => userUsersType(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof userUsersType>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UserUsersTypeQueryResult = NonNullable<Awaited<ReturnType<typeof userUsersType>>>
-export type UserUsersTypeQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type UserUsersTypeQueryResult = NonNullable<Awaited<ReturnType<typeof userUsersType>>>;
+export type UserUsersTypeQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createUserUsersType<TData = Awaited<ReturnType<typeof userUsersType>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  UserUsersTypeParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsersType>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => UserUsersTypeParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsersType>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getUserUsersTypeQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getUserUsersTypeQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getUserUsersUrl = (params?: UserUsersParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
-
-
-export const getUserUsersUrl = (params?: UserUsersParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/user/list?${stringifiedParams}` : `/user/list`
-}
+	return stringifiedParams.length > 0 ? `/user/list?${stringifiedParams}` : `/user/list`;
+};
 
 export const userUsers = async (params?: UserUsersParams, options?: Parameters<typeof customInstance>[1]): Promise<CommonModelsPaginatedListOfUserResponse> => {
+	return customInstance<CommonModelsPaginatedListOfUserResponse>(getUserUsersUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<CommonModelsPaginatedListOfUserResponse>(getUserUsersUrl(params),
-  {
-    ...options,
-    method: 'GET'
+export const getUserUsersQueryKey = (params?: UserUsersParams) => {
+	return [`/user/list`, ...(params ? [params] : [])] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getUserUsersQueryKey = (params?: UserUsersParams,) => {
-    return [
-    `/user/list`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getUserUsersQueryOptions = <TData = Awaited<ReturnType<typeof userUsers>>, TError = ErrorType<void | InternalErrorResponse>>(params?: UserUsersParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsers>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getUserUsersQueryOptions = <TData = Awaited<ReturnType<typeof userUsers>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params?: UserUsersParams,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsers>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getUserUsersQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getUserUsersQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userUsers>>> = () => userUsers(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof userUsers>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof userUsers>>> = () => userUsers(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof userUsers>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UserUsersQueryResult = NonNullable<Awaited<ReturnType<typeof userUsers>>>
-export type UserUsersQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type UserUsersQueryResult = NonNullable<Awaited<ReturnType<typeof userUsers>>>;
+export type UserUsersQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createUserUsers<TData = Awaited<ReturnType<typeof userUsers>>, TError = ErrorType<void | InternalErrorResponse>>(
- params?: () =>  UserUsersParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsers>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params?: () => UserUsersParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUsers>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getUserUsersQueryOptions(params?.(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getUserUsersQueryOptions(params?.(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getUserUnassignedUsersUrl = (params?: UserUnassignedUsersParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/user/unassigned?${stringifiedParams}` : `/user/unassigned`;
+};
 
+export const userUnassignedUsers = async (
+	params?: UserUnassignedUsersParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<CommonModelsPaginatedListOfUserResponse> => {
+	return customInstance<CommonModelsPaginatedListOfUserResponse>(getUserUnassignedUsersUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-export const getUserUnassignedUsersUrl = (params?: UserUnassignedUsersParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getUserUnassignedUsersQueryKey = (params?: UserUnassignedUsersParams) => {
+	return [`/user/unassigned`, ...(params ? [params] : [])] as const;
+};
 
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/user/unassigned?${stringifiedParams}` : `/user/unassigned`
-}
-
-export const userUnassignedUsers = async (params?: UserUnassignedUsersParams, options?: Parameters<typeof customInstance>[1]): Promise<CommonModelsPaginatedListOfUserResponse> => {
-
-  return customInstance<CommonModelsPaginatedListOfUserResponse>(getUserUnassignedUsersUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getUserUnassignedUsersQueryKey = (params?: UserUnassignedUsersParams,) => {
-    return [
-    `/user/unassigned`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getUserUnassignedUsersQueryOptions = <TData = Awaited<ReturnType<typeof userUnassignedUsers>>, TError = ErrorType<void | InternalErrorResponse>>(params?: UserUnassignedUsersParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUnassignedUsers>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getUserUnassignedUsersQueryOptions = <TData = Awaited<ReturnType<typeof userUnassignedUsers>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params?: UserUnassignedUsersParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUnassignedUsers>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getUserUnassignedUsersQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getUserUnassignedUsersQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userUnassignedUsers>>> = () => userUnassignedUsers(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof userUnassignedUsers>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof userUnassignedUsers>>> = () => userUnassignedUsers(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof userUnassignedUsers>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UserUnassignedUsersQueryResult = NonNullable<Awaited<ReturnType<typeof userUnassignedUsers>>>
-export type UserUnassignedUsersQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type UserUnassignedUsersQueryResult = NonNullable<Awaited<ReturnType<typeof userUnassignedUsers>>>;
+export type UserUnassignedUsersQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createUserUnassignedUsers<TData = Awaited<ReturnType<typeof userUnassignedUsers>>, TError = ErrorType<void | InternalErrorResponse>>(
- params?: () =>  UserUnassignedUsersParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUnassignedUsers>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params?: () => UserUnassignedUsersParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userUnassignedUsers>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getUserUnassignedUsersQueryOptions(params?.(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getUserUnassignedUsersQueryOptions(params?.(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getUserTasksUrl = (params?: UserTasksParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
-
-
-export const getUserTasksUrl = (params?: UserTasksParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/user/tasks?${stringifiedParams}` : `/user/tasks`
-}
+	return stringifiedParams.length > 0 ? `/user/tasks?${stringifiedParams}` : `/user/tasks`;
+};
 
 export const userTasks = async (params?: UserTasksParams, options?: Parameters<typeof customInstance>[1]): Promise<CommonModelsPaginatedListOfResponse> => {
+	return customInstance<CommonModelsPaginatedListOfResponse>(getUserTasksUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<CommonModelsPaginatedListOfResponse>(getUserTasksUrl(params),
-  {
-    ...options,
-    method: 'GET'
+export const getUserTasksQueryKey = (params?: UserTasksParams) => {
+	return [`/user/tasks`, ...(params ? [params] : [])] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getUserTasksQueryKey = (params?: UserTasksParams,) => {
-    return [
-    `/user/tasks`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getUserTasksQueryOptions = <TData = Awaited<ReturnType<typeof userTasks>>, TError = ErrorType<void | InternalErrorResponse>>(params?: UserTasksParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userTasks>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getUserTasksQueryOptions = <TData = Awaited<ReturnType<typeof userTasks>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params?: UserTasksParams,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userTasks>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getUserTasksQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getUserTasksQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userTasks>>> = () => userTasks(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof userTasks>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof userTasks>>> = () => userTasks(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof userTasks>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UserTasksQueryResult = NonNullable<Awaited<ReturnType<typeof userTasks>>>
-export type UserTasksQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type UserTasksQueryResult = NonNullable<Awaited<ReturnType<typeof userTasks>>>;
+export type UserTasksQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createUserTasks<TData = Awaited<ReturnType<typeof userTasks>>, TError = ErrorType<void | InternalErrorResponse>>(
- params?: () =>  UserTasksParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userTasks>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params?: () => UserTasksParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userTasks>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getUserTasksQueryOptions(params?.(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getUserTasksQueryOptions(params?.(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getUserRemoveUserOutletRoleUrl = (userId: string, role: string) => {
+	return `/user/role/${userId}/${role}`;
+};
 
+export const userRemoveUserOutletRole = async (userId: string, role: string, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	return customInstance<void>(getUserRemoveUserOutletRoleUrl(userId, role), {
+		...options,
+		method: "DELETE",
+	});
+};
 
+export const getUserRemoveUserOutletRoleMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, TError, UserRemoveUserOutletRoleMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, TError, UserRemoveUserOutletRoleMutationVariables, TContext> => {
+	const mutationKey = ["userRemoveUserOutletRole"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, UserRemoveUserOutletRoleMutationVariables> = (props) => {
+		const { userId, role } = props ?? {};
 
+		return userRemoveUserOutletRole(userId, role, requestOptions);
+	};
 
-export const getUserRemoveUserOutletRoleUrl = (userId: string,
-    role: string,) => {
+	return { mutationFn, ...mutationOptions };
+};
 
+export type UserRemoveUserOutletRoleMutationResult = NonNullable<Awaited<ReturnType<typeof userRemoveUserOutletRole>>>;
 
+export type UserRemoveUserOutletRoleMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type UserRemoveUserOutletRoleMutationVariables = { userId: string; role: string };
 
-
-  return `/user/role/${userId}/${role}`
-}
-
-export const userRemoveUserOutletRole = async (userId: string,
-    role: string, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
-
-  return customInstance<void>(getUserRemoveUserOutletRoleUrl(userId,role),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
-
-
-
-
-export const getUserRemoveUserOutletRoleMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, TError,UserRemoveUserOutletRoleMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, TError,UserRemoveUserOutletRoleMutationVariables, TContext> => {
-
-const mutationKey = ['userRemoveUserOutletRole'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, UserRemoveUserOutletRoleMutationVariables> = (props) => {
-          const {userId,role} = props ?? {};
-
-          return  userRemoveUserOutletRole(userId,role,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserRemoveUserOutletRoleMutationResult = NonNullable<Awaited<ReturnType<typeof userRemoveUserOutletRole>>>
-
-    export type UserRemoveUserOutletRoleMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type UserRemoveUserOutletRoleMutationVariables = {userId: string;role: string}
-
-    export const createUserRemoveUserOutletRole = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, TError,UserRemoveUserOutletRoleMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof userRemoveUserOutletRole>>,
-        TError,
-        UserRemoveUserOutletRoleMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getUserRemoveUserOutletRoleMutationOptions(options?.()) }), queryClient);
-    }
-    export const getUserRemoveUserOutletUrl = (userId: string,) => {
-
-
-
-
-  return `/user/outlet/${userId}`
-}
+export const createUserRemoveUserOutletRole = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, TError, UserRemoveUserOutletRoleMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, TError, UserRemoveUserOutletRoleMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getUserRemoveUserOutletRoleMutationOptions(options?.()) }), queryClient);
+};
+export const getUserRemoveUserOutletUrl = (userId: string) => {
+	return `/user/outlet/${userId}`;
+};
 
 export const userRemoveUserOutlet = async (userId: string, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	return customInstance<void>(getUserRemoveUserOutletUrl(userId), {
+		...options,
+		method: "DELETE",
+	});
+};
 
-  return customInstance<void>(getUserRemoveUserOutletUrl(userId),
-  {
-    ...options,
-    method: 'DELETE'
+export const getUserRemoveUserOutletMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutlet>>, TError, UserRemoveUserOutletMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutlet>>, TError, UserRemoveUserOutletMutationVariables, TContext> => {
+	const mutationKey = ["userRemoveUserOutlet"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof userRemoveUserOutlet>>, UserRemoveUserOutletMutationVariables> = (props) => {
+		const { userId } = props ?? {};
 
-  }
-);}
+		return userRemoveUserOutlet(userId, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type UserRemoveUserOutletMutationResult = NonNullable<Awaited<ReturnType<typeof userRemoveUserOutlet>>>;
 
+export type UserRemoveUserOutletMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type UserRemoveUserOutletMutationVariables = { userId: string };
 
-
-export const getUserRemoveUserOutletMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutlet>>, TError,UserRemoveUserOutletMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutlet>>, TError,UserRemoveUserOutletMutationVariables, TContext> => {
-
-const mutationKey = ['userRemoveUserOutlet'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userRemoveUserOutlet>>, UserRemoveUserOutletMutationVariables> = (props) => {
-          const {userId} = props ?? {};
-
-          return  userRemoveUserOutlet(userId,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserRemoveUserOutletMutationResult = NonNullable<Awaited<ReturnType<typeof userRemoveUserOutlet>>>
-
-    export type UserRemoveUserOutletMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type UserRemoveUserOutletMutationVariables = {userId: string}
-
-    export const createUserRemoveUserOutlet = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutlet>>, TError,UserRemoveUserOutletMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof userRemoveUserOutlet>>,
-        TError,
-        UserRemoveUserOutletMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getUserRemoveUserOutletMutationOptions(options?.()) }), queryClient);
-    }
-    export const getUserPinLoginUrl = () => {
-
-
-
-
-  return `/user/pin/login`
-}
+export const createUserRemoveUserOutlet = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutlet>>, TError, UserRemoveUserOutletMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof userRemoveUserOutlet>>, TError, UserRemoveUserOutletMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getUserRemoveUserOutletMutationOptions(options?.()) }), queryClient);
+};
+export const getUserPinLoginUrl = () => {
+	return `/user/pin/login`;
+};
 
 export const userPinLogin = async (userPinLoginRequest: UserPinLoginRequest, options?: Parameters<typeof customInstance>[1]): Promise<UserPinLoginResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<UserPinLoginResponse>(getUserPinLoginUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(userPinLoginRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<UserPinLoginResponse>(getUserPinLoginUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(userPinLoginRequest)
-  }
-);}
+export const getUserPinLoginMutationOptions = <TError = ErrorType<InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userPinLogin>>, TError, UserPinLoginMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof userPinLogin>>, TError, UserPinLoginMutationVariables, TContext> => {
+	const mutationKey = ["userPinLogin"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof userPinLogin>>, UserPinLoginMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return userPinLogin(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type UserPinLoginMutationResult = NonNullable<Awaited<ReturnType<typeof userPinLogin>>>;
+export type UserPinLoginMutationBody = BodyType<UserPinLoginRequest>;
+export type UserPinLoginMutationError = ErrorType<InternalErrorResponse>;
+export type UserPinLoginMutationVariables = { data: BodyType<UserPinLoginRequest> };
 
-export const getUserPinLoginMutationOptions = <TError = ErrorType<InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userPinLogin>>, TError,UserPinLoginMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof userPinLogin>>, TError,UserPinLoginMutationVariables, TContext> => {
+export const createUserPinLogin = <TError = ErrorType<InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userPinLogin>>, TError, UserPinLoginMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof userPinLogin>>, TError, UserPinLoginMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getUserPinLoginMutationOptions(options?.()) }), queryClient);
+};
+export const getUserPinGetUrl = () => {
+	return `/user/pin`;
+};
 
-const mutationKey = ['userPinLogin'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userPinLogin>>, UserPinLoginMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  userPinLogin(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserPinLoginMutationResult = NonNullable<Awaited<ReturnType<typeof userPinLogin>>>
-    export type UserPinLoginMutationBody = BodyType<UserPinLoginRequest>
-    export type UserPinLoginMutationError = ErrorType<InternalErrorResponse>
-    export type UserPinLoginMutationVariables = {data: BodyType<UserPinLoginRequest>}
-
-    export const createUserPinLogin = <TError = ErrorType<InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userPinLogin>>, TError,UserPinLoginMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof userPinLogin>>,
-        TError,
-        UserPinLoginMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getUserPinLoginMutationOptions(options?.()) }), queryClient);
-    }
-    export const getUserPinGetUrl = () => {
-
-
-
-
-  return `/user/pin`
-}
-
-export const userPinGet = async ( options?: Parameters<typeof customInstance>[1]): Promise<UserPinGetResponse> => {
-
-  return customInstance<UserPinGetResponse>(getUserPinGetUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
+export const userPinGet = async (options?: Parameters<typeof customInstance>[1]): Promise<UserPinGetResponse> => {
+	return customInstance<UserPinGetResponse>(getUserPinGetUrl(), {
+		...options,
+		method: "GET",
+	});
+};
 
 export const getUserPinGetQueryKey = () => {
-    return [
-    `/user/pin`
-    ] as const;
-    }
+	return [`/user/pin`] as const;
+};
 
+export const getUserPinGetQueryOptions = <TData = Awaited<ReturnType<typeof userPinGet>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userPinGet>>, TError, TData>>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getUserPinGetQueryOptions = <TData = Awaited<ReturnType<typeof userPinGet>>, TError = ErrorType<void | InternalErrorResponse>>( options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userPinGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+	const queryKey = queryOptions?.queryKey ?? getUserPinGetQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userPinGet>>> = () => userPinGet(requestOptions);
 
-  const queryKey =  queryOptions?.queryKey ?? getUserPinGetQueryKey();
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof userPinGet>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof userPinGet>>> = () => userPinGet(requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof userPinGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UserPinGetQueryResult = NonNullable<Awaited<ReturnType<typeof userPinGet>>>
-export type UserPinGetQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type UserPinGetQueryResult = NonNullable<Awaited<ReturnType<typeof userPinGet>>>;
+export type UserPinGetQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createUserPinGet<TData = Awaited<ReturnType<typeof userPinGet>>, TError = ErrorType<void | InternalErrorResponse>>(
-  options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userPinGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userPinGet>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getUserPinGetQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getUserPinGetQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getUserPinCreateUrl = () => {
-
-
-
-
-  return `/user/pin`
-}
+	return `/user/pin`;
+};
 
 export const userPinCreate = async (userPinCreateRequest: UserPinCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getUserPinCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(userPinCreateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getUserPinCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(userPinCreateRequest)
-  }
-);}
+export const getUserPinCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userPinCreate>>, TError, UserPinCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof userPinCreate>>, TError, UserPinCreateMutationVariables, TContext> => {
+	const mutationKey = ["userPinCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof userPinCreate>>, UserPinCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return userPinCreate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type UserPinCreateMutationResult = NonNullable<Awaited<ReturnType<typeof userPinCreate>>>;
+export type UserPinCreateMutationBody = BodyType<UserPinCreateRequest>;
+export type UserPinCreateMutationError = ErrorType<void | InternalErrorResponse>;
+export type UserPinCreateMutationVariables = { data: BodyType<UserPinCreateRequest> };
 
-export const getUserPinCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userPinCreate>>, TError,UserPinCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof userPinCreate>>, TError,UserPinCreateMutationVariables, TContext> => {
+export const createUserPinCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userPinCreate>>, TError, UserPinCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof userPinCreate>>, TError, UserPinCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getUserPinCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getUserLinkAccountUrl = () => {
+	return `/user/linkAccount`;
+};
 
-const mutationKey = ['userPinCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export const userLinkAccount = async (
+	userLinkAccountRequest: UserLinkAccountRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<UserLinkAccountResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<UserLinkAccountResponse>(getUserLinkAccountUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(userLinkAccountRequest),
+	});
+};
 
+export const getUserLinkAccountMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userLinkAccount>>, TError, UserLinkAccountMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof userLinkAccount>>, TError, UserLinkAccountMutationVariables, TContext> => {
+	const mutationKey = ["userLinkAccount"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof userLinkAccount>>, UserLinkAccountMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return userLinkAccount(data, requestOptions);
+	};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userPinCreate>>, UserPinCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
+	return { mutationFn, ...mutationOptions };
+};
 
-          return  userPinCreate(data,requestOptions)
-        }
+export type UserLinkAccountMutationResult = NonNullable<Awaited<ReturnType<typeof userLinkAccount>>>;
+export type UserLinkAccountMutationBody = BodyType<UserLinkAccountRequest>;
+export type UserLinkAccountMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type UserLinkAccountMutationVariables = { data: BodyType<UserLinkAccountRequest> };
 
+export const createUserLinkAccount = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userLinkAccount>>, TError, UserLinkAccountMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof userLinkAccount>>, TError, UserLinkAccountMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getUserLinkAccountMutationOptions(options?.()) }), queryClient);
+};
+export const getUserGetStatusUrl = () => {
+	return `/user/getStatus`;
+};
 
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserPinCreateMutationResult = NonNullable<Awaited<ReturnType<typeof userPinCreate>>>
-    export type UserPinCreateMutationBody = BodyType<UserPinCreateRequest>
-    export type UserPinCreateMutationError = ErrorType<void | InternalErrorResponse>
-    export type UserPinCreateMutationVariables = {data: BodyType<UserPinCreateRequest>}
-
-    export const createUserPinCreate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userPinCreate>>, TError,UserPinCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof userPinCreate>>,
-        TError,
-        UserPinCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getUserPinCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getUserLinkAccountUrl = () => {
-
-
-
-
-  return `/user/linkAccount`
-}
-
-export const userLinkAccount = async (userLinkAccountRequest: UserLinkAccountRequest, options?: Parameters<typeof customInstance>[1]): Promise<UserLinkAccountResponse> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<UserLinkAccountResponse>(getUserLinkAccountUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(userLinkAccountRequest)
-  }
-);}
-
-
-
-
-
-export const getUserLinkAccountMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userLinkAccount>>, TError,UserLinkAccountMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof userLinkAccount>>, TError,UserLinkAccountMutationVariables, TContext> => {
-
-const mutationKey = ['userLinkAccount'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userLinkAccount>>, UserLinkAccountMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  userLinkAccount(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserLinkAccountMutationResult = NonNullable<Awaited<ReturnType<typeof userLinkAccount>>>
-    export type UserLinkAccountMutationBody = BodyType<UserLinkAccountRequest>
-    export type UserLinkAccountMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type UserLinkAccountMutationVariables = {data: BodyType<UserLinkAccountRequest>}
-
-    export const createUserLinkAccount = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userLinkAccount>>, TError,UserLinkAccountMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof userLinkAccount>>,
-        TError,
-        UserLinkAccountMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getUserLinkAccountMutationOptions(options?.()) }), queryClient);
-    }
-    export const getUserGetStatusUrl = () => {
-
-
-
-
-  return `/user/getStatus`
-}
-
-export const userGetStatus = async ( options?: Parameters<typeof customInstance>[1]): Promise<UserGetStatusResponse> => {
-
-  return customInstance<UserGetStatusResponse>(getUserGetStatusUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
+export const userGetStatus = async (options?: Parameters<typeof customInstance>[1]): Promise<UserGetStatusResponse> => {
+	return customInstance<UserGetStatusResponse>(getUserGetStatusUrl(), {
+		...options,
+		method: "GET",
+	});
+};
 
 export const getUserGetStatusQueryKey = () => {
-    return [
-    `/user/getStatus`
-    ] as const;
-    }
+	return [`/user/getStatus`] as const;
+};
 
+export const getUserGetStatusQueryOptions = <TData = Awaited<ReturnType<typeof userGetStatus>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetStatus>>, TError, TData>>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getUserGetStatusQueryOptions = <TData = Awaited<ReturnType<typeof userGetStatus>>, TError = ErrorType<void | InternalErrorResponse>>( options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetStatus>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+	const queryKey = queryOptions?.queryKey ?? getUserGetStatusQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userGetStatus>>> = () => userGetStatus(requestOptions);
 
-  const queryKey =  queryOptions?.queryKey ?? getUserGetStatusQueryKey();
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof userGetStatus>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof userGetStatus>>> = () => userGetStatus(requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof userGetStatus>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UserGetStatusQueryResult = NonNullable<Awaited<ReturnType<typeof userGetStatus>>>
-export type UserGetStatusQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type UserGetStatusQueryResult = NonNullable<Awaited<ReturnType<typeof userGetStatus>>>;
+export type UserGetStatusQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createUserGetStatus<TData = Awaited<ReturnType<typeof userGetStatus>>, TError = ErrorType<void | InternalErrorResponse>>(
-  options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetStatus>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetStatus>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getUserGetStatusQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getUserGetStatusQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getUserGetRolesUrl = (params: UserGetRolesParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
-
-
-export const getUserGetRolesUrl = (params: UserGetRolesParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/user/getRoles?${stringifiedParams}` : `/user/getRoles`
-}
+	return stringifiedParams.length > 0 ? `/user/getRoles?${stringifiedParams}` : `/user/getRoles`;
+};
 
 export const userGetRoles = async (params: UserGetRolesParams, options?: Parameters<typeof customInstance>[1]): Promise<string[]> => {
+	return customInstance<string[]>(getUserGetRolesUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<string[]>(getUserGetRolesUrl(params),
-  {
-    ...options,
-    method: 'GET'
+export const getUserGetRolesQueryKey = (params?: UserGetRolesParams) => {
+	return [`/user/getRoles`, ...(params ? [params] : [])] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getUserGetRolesQueryKey = (params?: UserGetRolesParams,) => {
-    return [
-    `/user/getRoles`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getUserGetRolesQueryOptions = <TData = Awaited<ReturnType<typeof userGetRoles>>, TError = ErrorType<void | InternalErrorResponse>>(params: UserGetRolesParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetRoles>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getUserGetRolesQueryOptions = <TData = Awaited<ReturnType<typeof userGetRoles>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: UserGetRolesParams,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetRoles>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getUserGetRolesQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getUserGetRolesQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userGetRoles>>> = () => userGetRoles(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof userGetRoles>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof userGetRoles>>> = () => userGetRoles(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof userGetRoles>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UserGetRolesQueryResult = NonNullable<Awaited<ReturnType<typeof userGetRoles>>>
-export type UserGetRolesQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type UserGetRolesQueryResult = NonNullable<Awaited<ReturnType<typeof userGetRoles>>>;
+export type UserGetRolesQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createUserGetRoles<TData = Awaited<ReturnType<typeof userGetRoles>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  UserGetRolesParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetRoles>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => UserGetRolesParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetRoles>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getUserGetRolesQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getUserGetRolesQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getUserGetCounterUsersUrl = (params: UserGetCounterUsersParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/user/counter?${stringifiedParams}` : `/user/counter`;
+};
 
+export const userGetCounterUsers = async (
+	params: UserGetCounterUsersParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<UserGetCounterUsersResponse[]> => {
+	return customInstance<UserGetCounterUsersResponse[]>(getUserGetCounterUsersUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-export const getUserGetCounterUsersUrl = (params: UserGetCounterUsersParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getUserGetCounterUsersQueryKey = (params?: UserGetCounterUsersParams) => {
+	return [`/user/counter`, ...(params ? [params] : [])] as const;
+};
 
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/user/counter?${stringifiedParams}` : `/user/counter`
-}
-
-export const userGetCounterUsers = async (params: UserGetCounterUsersParams, options?: Parameters<typeof customInstance>[1]): Promise<UserGetCounterUsersResponse[]> => {
-
-  return customInstance<UserGetCounterUsersResponse[]>(getUserGetCounterUsersUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getUserGetCounterUsersQueryKey = (params?: UserGetCounterUsersParams,) => {
-    return [
-    `/user/counter`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getUserGetCounterUsersQueryOptions = <TData = Awaited<ReturnType<typeof userGetCounterUsers>>, TError = ErrorType<InternalErrorResponse>>(params: UserGetCounterUsersParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetCounterUsers>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getUserGetCounterUsersQueryOptions = <TData = Awaited<ReturnType<typeof userGetCounterUsers>>, TError = ErrorType<InternalErrorResponse>>(
+	params: UserGetCounterUsersParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetCounterUsers>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getUserGetCounterUsersQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getUserGetCounterUsersQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof userGetCounterUsers>>> = () => userGetCounterUsers(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof userGetCounterUsers>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof userGetCounterUsers>>> = () => userGetCounterUsers(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof userGetCounterUsers>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type UserGetCounterUsersQueryResult = NonNullable<Awaited<ReturnType<typeof userGetCounterUsers>>>
-export type UserGetCounterUsersQueryError = ErrorType<InternalErrorResponse>
-
-
+export type UserGetCounterUsersQueryResult = NonNullable<Awaited<ReturnType<typeof userGetCounterUsers>>>;
+export type UserGetCounterUsersQueryError = ErrorType<InternalErrorResponse>;
 
 export function createUserGetCounterUsers<TData = Awaited<ReturnType<typeof userGetCounterUsers>>, TError = ErrorType<InternalErrorResponse>>(
- params: () =>  UserGetCounterUsersParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetCounterUsers>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => UserGetCounterUsersParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof userGetCounterUsers>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getUserGetCounterUsersQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getUserGetCounterUsersQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getUserAssignOutletUrl = () => {
+	return `/user/assignOutlet`;
+};
 
+export const userAssignOutlet = async (
+	userAssignOutletRequest: UserAssignOutletRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesUserOutlet> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesUserOutlet>(getUserAssignOutletUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(userAssignOutletRequest),
+	});
+};
 
+export const getUserAssignOutletMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userAssignOutlet>>, TError, UserAssignOutletMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof userAssignOutlet>>, TError, UserAssignOutletMutationVariables, TContext> => {
+	const mutationKey = ["userAssignOutlet"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof userAssignOutlet>>, UserAssignOutletMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/user/assignOutlet`
-}
+		return userAssignOutlet(data, requestOptions);
+	};
 
-export const userAssignOutlet = async (userAssignOutletRequest: UserAssignOutletRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesUserOutlet> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesUserOutlet>(getUserAssignOutletUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(userAssignOutletRequest)
-  }
-);}
+export type UserAssignOutletMutationResult = NonNullable<Awaited<ReturnType<typeof userAssignOutlet>>>;
+export type UserAssignOutletMutationBody = BodyType<UserAssignOutletRequest>;
+export type UserAssignOutletMutationError = ErrorType<void | InternalErrorResponse>;
+export type UserAssignOutletMutationVariables = { data: BodyType<UserAssignOutletRequest> };
 
-
-
-
-
-export const getUserAssignOutletMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userAssignOutlet>>, TError,UserAssignOutletMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof userAssignOutlet>>, TError,UserAssignOutletMutationVariables, TContext> => {
-
-const mutationKey = ['userAssignOutlet'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userAssignOutlet>>, UserAssignOutletMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  userAssignOutlet(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserAssignOutletMutationResult = NonNullable<Awaited<ReturnType<typeof userAssignOutlet>>>
-    export type UserAssignOutletMutationBody = BodyType<UserAssignOutletRequest>
-    export type UserAssignOutletMutationError = ErrorType<void | InternalErrorResponse>
-    export type UserAssignOutletMutationVariables = {data: BodyType<UserAssignOutletRequest>}
-
-    export const createUserAssignOutlet = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userAssignOutlet>>, TError,UserAssignOutletMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof userAssignOutlet>>,
-        TError,
-        UserAssignOutletMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getUserAssignOutletMutationOptions(options?.()) }), queryClient);
-    }
-    export const getUserApplyOutletUrl = () => {
-
-
-
-
-  return `/user/applyOutlet`
-}
+export const createUserAssignOutlet = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userAssignOutlet>>, TError, UserAssignOutletMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof userAssignOutlet>>, TError, UserAssignOutletMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getUserAssignOutletMutationOptions(options?.()) }), queryClient);
+};
+export const getUserApplyOutletUrl = () => {
+	return `/user/applyOutlet`;
+};
 
 export const userApplyOutlet = async (userApplyOutletRequest: UserApplyOutletRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getUserApplyOutletUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(userApplyOutletRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getUserApplyOutletUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(userApplyOutletRequest)
-  }
-);}
+export const getUserApplyOutletMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userApplyOutlet>>, TError, UserApplyOutletMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof userApplyOutlet>>, TError, UserApplyOutletMutationVariables, TContext> => {
+	const mutationKey = ["userApplyOutlet"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof userApplyOutlet>>, UserApplyOutletMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return userApplyOutlet(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type UserApplyOutletMutationResult = NonNullable<Awaited<ReturnType<typeof userApplyOutlet>>>;
+export type UserApplyOutletMutationBody = BodyType<UserApplyOutletRequest>;
+export type UserApplyOutletMutationError = ErrorType<void | InternalErrorResponse>;
+export type UserApplyOutletMutationVariables = { data: BodyType<UserApplyOutletRequest> };
 
-export const getUserApplyOutletMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userApplyOutlet>>, TError,UserApplyOutletMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof userApplyOutlet>>, TError,UserApplyOutletMutationVariables, TContext> => {
+export const createUserApplyOutlet = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userApplyOutlet>>, TError, UserApplyOutletMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof userApplyOutlet>>, TError, UserApplyOutletMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getUserApplyOutletMutationOptions(options?.()) }), queryClient);
+};
+export const getUserAddUserOutletRoleUrl = () => {
+	return `/user/role`;
+};
 
-const mutationKey = ['userApplyOutlet'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export const userAddUserOutletRole = async (
+	userAddUserOutletRoleRequest: UserAddUserOutletRoleRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getUserAddUserOutletRoleUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(userAddUserOutletRoleRequest),
+	});
+};
 
+export const getUserAddUserOutletRoleMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userAddUserOutletRole>>, TError, UserAddUserOutletRoleMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof userAddUserOutletRole>>, TError, UserAddUserOutletRoleMutationVariables, TContext> => {
+	const mutationKey = ["userAddUserOutletRole"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof userAddUserOutletRole>>, UserAddUserOutletRoleMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return userAddUserOutletRole(data, requestOptions);
+	};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userApplyOutlet>>, UserApplyOutletMutationVariables> = (props) => {
-          const {data} = props ?? {};
+	return { mutationFn, ...mutationOptions };
+};
 
-          return  userApplyOutlet(data,requestOptions)
-        }
+export type UserAddUserOutletRoleMutationResult = NonNullable<Awaited<ReturnType<typeof userAddUserOutletRole>>>;
+export type UserAddUserOutletRoleMutationBody = BodyType<UserAddUserOutletRoleRequest>;
+export type UserAddUserOutletRoleMutationError = ErrorType<void | InternalErrorResponse>;
+export type UserAddUserOutletRoleMutationVariables = { data: BodyType<UserAddUserOutletRoleRequest> };
 
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserApplyOutletMutationResult = NonNullable<Awaited<ReturnType<typeof userApplyOutlet>>>
-    export type UserApplyOutletMutationBody = BodyType<UserApplyOutletRequest>
-    export type UserApplyOutletMutationError = ErrorType<void | InternalErrorResponse>
-    export type UserApplyOutletMutationVariables = {data: BodyType<UserApplyOutletRequest>}
-
-    export const createUserApplyOutlet = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userApplyOutlet>>, TError,UserApplyOutletMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof userApplyOutlet>>,
-        TError,
-        UserApplyOutletMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getUserApplyOutletMutationOptions(options?.()) }), queryClient);
-    }
-    export const getUserAddUserOutletRoleUrl = () => {
-
-
-
-
-  return `/user/role`
-}
-
-export const userAddUserOutletRole = async (userAddUserOutletRoleRequest: UserAddUserOutletRoleRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getUserAddUserOutletRoleUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(userAddUserOutletRoleRequest)
-  }
-);}
-
-
-
-
-
-export const getUserAddUserOutletRoleMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userAddUserOutletRole>>, TError,UserAddUserOutletRoleMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof userAddUserOutletRole>>, TError,UserAddUserOutletRoleMutationVariables, TContext> => {
-
-const mutationKey = ['userAddUserOutletRole'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof userAddUserOutletRole>>, UserAddUserOutletRoleMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  userAddUserOutletRole(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type UserAddUserOutletRoleMutationResult = NonNullable<Awaited<ReturnType<typeof userAddUserOutletRole>>>
-    export type UserAddUserOutletRoleMutationBody = BodyType<UserAddUserOutletRoleRequest>
-    export type UserAddUserOutletRoleMutationError = ErrorType<void | InternalErrorResponse>
-    export type UserAddUserOutletRoleMutationVariables = {data: BodyType<UserAddUserOutletRoleRequest>}
-
-    export const createUserAddUserOutletRole = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof userAddUserOutletRole>>, TError,UserAddUserOutletRoleMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof userAddUserOutletRole>>,
-        TError,
-        UserAddUserOutletRoleMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getUserAddUserOutletRoleMutationOptions(options?.()) }), queryClient);
-    }
+export const createUserAddUserOutletRole = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userAddUserOutletRole>>, TError, UserAddUserOutletRoleMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof userAddUserOutletRole>>, TError, UserAddUserOutletRoleMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getUserAddUserOutletRoleMutationOptions(options?.()) }), queryClient);
+};

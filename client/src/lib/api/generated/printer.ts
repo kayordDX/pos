@@ -4,687 +4,608 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  DTOPrinterDTO,
-  ErrorResponse,
-  InternalErrorResponse,
-  PrinterCreateRequest,
-  PrinterDeviceInfoRequest,
-  PrinterDeviceInfoResultsParams,
-  PrinterDeviceInfoResultsResults,
-  PrinterEditRequest,
-  PrinterScanRequest,
-  PrinterScanResultsParams,
-  PrinterScanResultsResults,
-  PrinterTestRequest
-} from './api.schemas';
+	DTOPrinterDTO,
+	ErrorResponse,
+	InternalErrorResponse,
+	PrinterCreateRequest,
+	PrinterDeviceInfoRequest,
+	PrinterDeviceInfoResultsParams,
+	PrinterDeviceInfoResultsResults,
+	PrinterEditRequest,
+	PrinterPrintResult,
+	PrinterPrintResultsParams,
+	PrinterScanRequest,
+	PrinterScanResultsParams,
+	PrinterScanResultsResults,
+	PrinterTestRequest,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getPrinterTestUrl = () => {
-
-
-
-
-  return `/printer/test`
-}
+	return `/printer/test`;
+};
 
 export const printerTest = async (printerTestRequest: PrinterTestRequest, options?: Parameters<typeof customInstance>[1]): Promise<boolean> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<boolean>(getPrinterTestUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(printerTestRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<boolean>(getPrinterTestUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(printerTestRequest)
-  }
-);}
+export const getPrinterTestMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerTest>>, TError, PrinterTestMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof printerTest>>, TError, PrinterTestMutationVariables, TContext> => {
+	const mutationKey = ["printerTest"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerTest>>, PrinterTestMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return printerTest(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type PrinterTestMutationResult = NonNullable<Awaited<ReturnType<typeof printerTest>>>;
+export type PrinterTestMutationBody = BodyType<PrinterTestRequest>;
+export type PrinterTestMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PrinterTestMutationVariables = { data: BodyType<PrinterTestRequest> };
 
-export const getPrinterTestMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerTest>>, TError,PrinterTestMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof printerTest>>, TError,PrinterTestMutationVariables, TContext> => {
+export const createPrinterTest = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerTest>>, TError, PrinterTestMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof printerTest>>, TError, PrinterTestMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPrinterTestMutationOptions(options?.()) }), queryClient);
+};
+export const getPrinterScanResultsUrl = (params: PrinterScanResultsParams) => {
+	const normalizedParams = new URLSearchParams();
 
-const mutationKey = ['printerTest'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/printer/scan?${stringifiedParams}` : `/printer/scan`;
+};
 
+export const printerScanResults = async (
+	params: PrinterScanResultsParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<PrinterScanResultsResults> => {
+	return customInstance<PrinterScanResultsResults>(getPrinterScanResultsUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerTest>>, PrinterTestMutationVariables> = (props) => {
-          const {data} = props ?? {};
+export const getPrinterScanResultsQueryKey = (params?: PrinterScanResultsParams) => {
+	return [`/printer/scan`, ...(params ? [params] : [])] as const;
+};
 
-          return  printerTest(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PrinterTestMutationResult = NonNullable<Awaited<ReturnType<typeof printerTest>>>
-    export type PrinterTestMutationBody = BodyType<PrinterTestRequest>
-    export type PrinterTestMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type PrinterTestMutationVariables = {data: BodyType<PrinterTestRequest>}
-
-    export const createPrinterTest = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerTest>>, TError,PrinterTestMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof printerTest>>,
-        TError,
-        PrinterTestMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPrinterTestMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPrinterScanResultsUrl = (params: PrinterScanResultsParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/printer/scan?${stringifiedParams}` : `/printer/scan`
-}
-
-export const printerScanResults = async (params: PrinterScanResultsParams, options?: Parameters<typeof customInstance>[1]): Promise<PrinterScanResultsResults> => {
-
-  return customInstance<PrinterScanResultsResults>(getPrinterScanResultsUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getPrinterScanResultsQueryKey = (params?: PrinterScanResultsParams,) => {
-    return [
-    `/printer/scan`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getPrinterScanResultsQueryOptions = <TData = Awaited<ReturnType<typeof printerScanResults>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(params: PrinterScanResultsParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerScanResults>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getPrinterScanResultsQueryOptions = <
+	TData = Awaited<ReturnType<typeof printerScanResults>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: PrinterScanResultsParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerScanResults>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getPrinterScanResultsQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getPrinterScanResultsQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof printerScanResults>>> = () => printerScanResults(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof printerScanResults>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
+export type PrinterScanResultsQueryResult = NonNullable<Awaited<ReturnType<typeof printerScanResults>>>;
+export type PrinterScanResultsQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof printerScanResults>>> = () => printerScanResults(params, requestOptions);
+export function createPrinterScanResults<
+	TData = Awaited<ReturnType<typeof printerScanResults>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: () => PrinterScanResultsParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerScanResults>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getPrinterScanResultsQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof printerScanResults>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+	return query;
 }
-
-export type PrinterScanResultsQueryResult = NonNullable<Awaited<ReturnType<typeof printerScanResults>>>
-export type PrinterScanResultsQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-
-
-
-export function createPrinterScanResults<TData = Awaited<ReturnType<typeof printerScanResults>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(
- params: () =>  PrinterScanResultsParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerScanResults>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-
-
-  const query = createQuery(() => getPrinterScanResultsQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
-}
-
-
-
-
-
 
 export const getPrinterScanUrl = () => {
-
-
-
-
-  return `/printer/scan`
-}
+	return `/printer/scan`;
+};
 
 export const printerScan = async (printerScanRequest: PrinterScanRequest, options?: Parameters<typeof customInstance>[1]): Promise<boolean> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<boolean>(getPrinterScanUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(printerScanRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<boolean>(getPrinterScanUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(printerScanRequest)
-  }
-);}
+export const getPrinterScanMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerScan>>, TError, PrinterScanMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof printerScan>>, TError, PrinterScanMutationVariables, TContext> => {
+	const mutationKey = ["printerScan"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerScan>>, PrinterScanMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return printerScan(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type PrinterScanMutationResult = NonNullable<Awaited<ReturnType<typeof printerScan>>>;
+export type PrinterScanMutationBody = BodyType<PrinterScanRequest>;
+export type PrinterScanMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PrinterScanMutationVariables = { data: BodyType<PrinterScanRequest> };
 
-export const getPrinterScanMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerScan>>, TError,PrinterScanMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof printerScan>>, TError,PrinterScanMutationVariables, TContext> => {
+export const createPrinterScan = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerScan>>, TError, PrinterScanMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof printerScan>>, TError, PrinterScanMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPrinterScanMutationOptions(options?.()) }), queryClient);
+};
+export const getPrinterPrintResultsUrl = (params: PrinterPrintResultsParams) => {
+	const normalizedParams = new URLSearchParams();
 
-const mutationKey = ['printerScan'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/printer/print-result?${stringifiedParams}` : `/printer/print-result`;
+};
 
+export const printerPrintResults = async (params: PrinterPrintResultsParams, options?: Parameters<typeof customInstance>[1]): Promise<PrinterPrintResult> => {
+	return customInstance<PrinterPrintResult>(getPrinterPrintResultsUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerScan>>, PrinterScanMutationVariables> = (props) => {
-          const {data} = props ?? {};
+export const getPrinterPrintResultsQueryKey = (params?: PrinterPrintResultsParams) => {
+	return [`/printer/print-result`, ...(params ? [params] : [])] as const;
+};
 
-          return  printerScan(data,requestOptions)
-        }
+export const getPrinterPrintResultsQueryOptions = <
+	TData = Awaited<ReturnType<typeof printerPrintResults>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: PrinterPrintResultsParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerPrintResults>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
+) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
+	const queryKey = queryOptions?.queryKey ?? getPrinterPrintResultsQueryKey(params);
 
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof printerPrintResults>>> = () => printerPrintResults(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof printerPrintResults>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
+export type PrinterPrintResultsQueryResult = NonNullable<Awaited<ReturnType<typeof printerPrintResults>>>;
+export type PrinterPrintResultsQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
+export function createPrinterPrintResults<
+	TData = Awaited<ReturnType<typeof printerPrintResults>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: () => PrinterPrintResultsParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerPrintResults>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getPrinterPrintResultsQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PrinterScanMutationResult = NonNullable<Awaited<ReturnType<typeof printerScan>>>
-    export type PrinterScanMutationBody = BodyType<PrinterScanRequest>
-    export type PrinterScanMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type PrinterScanMutationVariables = {data: BodyType<PrinterScanRequest>}
-
-    export const createPrinterScan = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerScan>>, TError,PrinterScanMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof printerScan>>,
-        TError,
-        PrinterScanMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPrinterScanMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPrinterListUrl = (outletId: number,) => {
-
-
-
-
-  return `/printer/${outletId}`
+	return query;
 }
+
+export const getPrinterListUrl = (outletId: number) => {
+	return `/printer/${outletId}`;
+};
 
 export const printerList = async (outletId: number, options?: Parameters<typeof customInstance>[1]): Promise<DTOPrinterDTO[]> => {
+	return customInstance<DTOPrinterDTO[]>(getPrinterListUrl(outletId), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<DTOPrinterDTO[]>(getPrinterListUrl(outletId),
-  {
-    ...options,
-    method: 'GET'
+export const getPrinterListQueryKey = (outletId: number) => {
+	return [`/printer/${outletId}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getPrinterListQueryKey = (outletId: number,) => {
-    return [
-    `/printer/${outletId}`
-    ] as const;
-    }
-
-
-export const getPrinterListQueryOptions = <TData = Awaited<ReturnType<typeof printerList>>, TError = ErrorType<void | InternalErrorResponse>>(outletId: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getPrinterListQueryOptions = <TData = Awaited<ReturnType<typeof printerList>>, TError = ErrorType<void | InternalErrorResponse>>(
+	outletId: number,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerList>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getPrinterListQueryKey(outletId);
 
-  const queryKey =  queryOptions?.queryKey ?? getPrinterListQueryKey(outletId);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof printerList>>> = () => printerList(outletId, requestOptions);
 
+	return { queryKey, queryFn, enabled: outletId !== null && outletId !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof printerList>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof printerList>>> = () => printerList(outletId, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: outletId !== null && outletId !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof printerList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PrinterListQueryResult = NonNullable<Awaited<ReturnType<typeof printerList>>>
-export type PrinterListQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type PrinterListQueryResult = NonNullable<Awaited<ReturnType<typeof printerList>>>;
+export type PrinterListQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createPrinterList<TData = Awaited<ReturnType<typeof printerList>>, TError = ErrorType<void | InternalErrorResponse>>(
- outletId: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	outletId: () => number,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerList>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getPrinterListQueryOptions(outletId(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getPrinterListQueryOptions(outletId(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getPrinterEditUrl = () => {
-
-
-
-
-  return `/printer`
-}
+	return `/printer`;
+};
 
 export const printerEdit = async (printerEditRequest: PrinterEditRequest, options?: Parameters<typeof customInstance>[1]): Promise<DTOPrinterDTO> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<DTOPrinterDTO>(getPrinterEditUrl(), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(printerEditRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<DTOPrinterDTO>(getPrinterEditUrl(),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(printerEditRequest)
-  }
-);}
+export const getPrinterEditMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerEdit>>, TError, PrinterEditMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof printerEdit>>, TError, PrinterEditMutationVariables, TContext> => {
+	const mutationKey = ["printerEdit"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerEdit>>, PrinterEditMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return printerEdit(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type PrinterEditMutationResult = NonNullable<Awaited<ReturnType<typeof printerEdit>>>;
+export type PrinterEditMutationBody = BodyType<PrinterEditRequest>;
+export type PrinterEditMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PrinterEditMutationVariables = { data: BodyType<PrinterEditRequest> };
 
-export const getPrinterEditMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerEdit>>, TError,PrinterEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof printerEdit>>, TError,PrinterEditMutationVariables, TContext> => {
-
-const mutationKey = ['printerEdit'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerEdit>>, PrinterEditMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  printerEdit(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PrinterEditMutationResult = NonNullable<Awaited<ReturnType<typeof printerEdit>>>
-    export type PrinterEditMutationBody = BodyType<PrinterEditRequest>
-    export type PrinterEditMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type PrinterEditMutationVariables = {data: BodyType<PrinterEditRequest>}
-
-    export const createPrinterEdit = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerEdit>>, TError,PrinterEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof printerEdit>>,
-        TError,
-        PrinterEditMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPrinterEditMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPrinterCreateUrl = () => {
-
-
-
-
-  return `/printer`
-}
+export const createPrinterEdit = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerEdit>>, TError, PrinterEditMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof printerEdit>>, TError, PrinterEditMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPrinterEditMutationOptions(options?.()) }), queryClient);
+};
+export const getPrinterCreateUrl = () => {
+	return `/printer`;
+};
 
 export const printerCreate = async (printerCreateRequest: PrinterCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<DTOPrinterDTO> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<DTOPrinterDTO>(getPrinterCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(printerCreateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<DTOPrinterDTO>(getPrinterCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(printerCreateRequest)
-  }
-);}
+export const getPrinterCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerCreate>>, TError, PrinterCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof printerCreate>>, TError, PrinterCreateMutationVariables, TContext> => {
+	const mutationKey = ["printerCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerCreate>>, PrinterCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return printerCreate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type PrinterCreateMutationResult = NonNullable<Awaited<ReturnType<typeof printerCreate>>>;
+export type PrinterCreateMutationBody = BodyType<PrinterCreateRequest>;
+export type PrinterCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PrinterCreateMutationVariables = { data: BodyType<PrinterCreateRequest> };
 
-export const getPrinterCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerCreate>>, TError,PrinterCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof printerCreate>>, TError,PrinterCreateMutationVariables, TContext> => {
+export const createPrinterCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerCreate>>, TError, PrinterCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof printerCreate>>, TError, PrinterCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPrinterCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getPrinterDeviceInfoResultsUrl = (params: PrinterDeviceInfoResultsParams) => {
+	const normalizedParams = new URLSearchParams();
 
-const mutationKey = ['printerCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/printer/device-info?${stringifiedParams}` : `/printer/device-info`;
+};
 
+export const printerDeviceInfoResults = async (
+	params: PrinterDeviceInfoResultsParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<PrinterDeviceInfoResultsResults> => {
+	return customInstance<PrinterDeviceInfoResultsResults>(getPrinterDeviceInfoResultsUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerCreate>>, PrinterCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
+export const getPrinterDeviceInfoResultsQueryKey = (params?: PrinterDeviceInfoResultsParams) => {
+	return [`/printer/device-info`, ...(params ? [params] : [])] as const;
+};
 
-          return  printerCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PrinterCreateMutationResult = NonNullable<Awaited<ReturnType<typeof printerCreate>>>
-    export type PrinterCreateMutationBody = BodyType<PrinterCreateRequest>
-    export type PrinterCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type PrinterCreateMutationVariables = {data: BodyType<PrinterCreateRequest>}
-
-    export const createPrinterCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerCreate>>, TError,PrinterCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof printerCreate>>,
-        TError,
-        PrinterCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPrinterCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPrinterDeviceInfoResultsUrl = (params: PrinterDeviceInfoResultsParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/printer/device-info?${stringifiedParams}` : `/printer/device-info`
-}
-
-export const printerDeviceInfoResults = async (params: PrinterDeviceInfoResultsParams, options?: Parameters<typeof customInstance>[1]): Promise<PrinterDeviceInfoResultsResults> => {
-
-  return customInstance<PrinterDeviceInfoResultsResults>(getPrinterDeviceInfoResultsUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getPrinterDeviceInfoResultsQueryKey = (params?: PrinterDeviceInfoResultsParams,) => {
-    return [
-    `/printer/device-info`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getPrinterDeviceInfoResultsQueryOptions = <TData = Awaited<ReturnType<typeof printerDeviceInfoResults>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(params: PrinterDeviceInfoResultsParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerDeviceInfoResults>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getPrinterDeviceInfoResultsQueryOptions = <
+	TData = Awaited<ReturnType<typeof printerDeviceInfoResults>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: PrinterDeviceInfoResultsParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerDeviceInfoResults>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getPrinterDeviceInfoResultsQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getPrinterDeviceInfoResultsQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof printerDeviceInfoResults>>> = () => printerDeviceInfoResults(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof printerDeviceInfoResults>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
+export type PrinterDeviceInfoResultsQueryResult = NonNullable<Awaited<ReturnType<typeof printerDeviceInfoResults>>>;
+export type PrinterDeviceInfoResultsQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof printerDeviceInfoResults>>> = () => printerDeviceInfoResults(params, requestOptions);
+export function createPrinterDeviceInfoResults<
+	TData = Awaited<ReturnType<typeof printerDeviceInfoResults>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	params: () => PrinterDeviceInfoResultsParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerDeviceInfoResults>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getPrinterDeviceInfoResultsQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof printerDeviceInfoResults>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+	return query;
 }
-
-export type PrinterDeviceInfoResultsQueryResult = NonNullable<Awaited<ReturnType<typeof printerDeviceInfoResults>>>
-export type PrinterDeviceInfoResultsQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-
-
-
-export function createPrinterDeviceInfoResults<TData = Awaited<ReturnType<typeof printerDeviceInfoResults>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(
- params: () =>  PrinterDeviceInfoResultsParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof printerDeviceInfoResults>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-
-
-  const query = createQuery(() => getPrinterDeviceInfoResultsQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
-}
-
-
-
-
-
 
 export const getPrinterDeviceInfoUrl = () => {
+	return `/printer/device-info`;
+};
 
+export const printerDeviceInfo = async (
+	printerDeviceInfoRequest: PrinterDeviceInfoRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<boolean> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<boolean>(getPrinterDeviceInfoUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(printerDeviceInfoRequest),
+	});
+};
 
+export const getPrinterDeviceInfoMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerDeviceInfo>>, TError, PrinterDeviceInfoMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof printerDeviceInfo>>, TError, PrinterDeviceInfoMutationVariables, TContext> => {
+	const mutationKey = ["printerDeviceInfo"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerDeviceInfo>>, PrinterDeviceInfoMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/printer/device-info`
-}
+		return printerDeviceInfo(data, requestOptions);
+	};
 
-export const printerDeviceInfo = async (printerDeviceInfoRequest: PrinterDeviceInfoRequest, options?: Parameters<typeof customInstance>[1]): Promise<boolean> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<boolean>(getPrinterDeviceInfoUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(printerDeviceInfoRequest)
-  }
-);}
+export type PrinterDeviceInfoMutationResult = NonNullable<Awaited<ReturnType<typeof printerDeviceInfo>>>;
+export type PrinterDeviceInfoMutationBody = BodyType<PrinterDeviceInfoRequest>;
+export type PrinterDeviceInfoMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PrinterDeviceInfoMutationVariables = { data: BodyType<PrinterDeviceInfoRequest> };
 
-
-
-
-
-export const getPrinterDeviceInfoMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerDeviceInfo>>, TError,PrinterDeviceInfoMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof printerDeviceInfo>>, TError,PrinterDeviceInfoMutationVariables, TContext> => {
-
-const mutationKey = ['printerDeviceInfo'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerDeviceInfo>>, PrinterDeviceInfoMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  printerDeviceInfo(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PrinterDeviceInfoMutationResult = NonNullable<Awaited<ReturnType<typeof printerDeviceInfo>>>
-    export type PrinterDeviceInfoMutationBody = BodyType<PrinterDeviceInfoRequest>
-    export type PrinterDeviceInfoMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type PrinterDeviceInfoMutationVariables = {data: BodyType<PrinterDeviceInfoRequest>}
-
-    export const createPrinterDeviceInfo = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerDeviceInfo>>, TError,PrinterDeviceInfoMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof printerDeviceInfo>>,
-        TError,
-        PrinterDeviceInfoMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPrinterDeviceInfoMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPrinterDeleteUrl = (id: number,) => {
-
-
-
-
-  return `/printer/${id}`
-}
+export const createPrinterDeviceInfo = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerDeviceInfo>>, TError, PrinterDeviceInfoMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof printerDeviceInfo>>, TError, PrinterDeviceInfoMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPrinterDeviceInfoMutationOptions(options?.()) }), queryClient);
+};
+export const getPrinterDeleteUrl = (id: number) => {
+	return `/printer/${id}`;
+};
 
 export const printerDelete = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	return customInstance<void>(getPrinterDeleteUrl(id), {
+		...options,
+		method: "DELETE",
+	});
+};
 
-  return customInstance<void>(getPrinterDeleteUrl(id),
-  {
-    ...options,
-    method: 'DELETE'
+export const getPrinterDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerDelete>>, TError, PrinterDeleteMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof printerDelete>>, TError, PrinterDeleteMutationVariables, TContext> => {
+	const mutationKey = ["printerDelete"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerDelete>>, PrinterDeleteMutationVariables> = (props) => {
+		const { id } = props ?? {};
 
-  }
-);}
+		return printerDelete(id, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type PrinterDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof printerDelete>>>;
 
+export type PrinterDeleteMutationError = ErrorType<void | InternalErrorResponse>;
+export type PrinterDeleteMutationVariables = { id: number };
 
-
-export const getPrinterDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerDelete>>, TError,PrinterDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof printerDelete>>, TError,PrinterDeleteMutationVariables, TContext> => {
-
-const mutationKey = ['printerDelete'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerDelete>>, PrinterDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  printerDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PrinterDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof printerDelete>>>
-
-    export type PrinterDeleteMutationError = ErrorType<void | InternalErrorResponse>
-    export type PrinterDeleteMutationVariables = {id: number}
-
-    export const createPrinterDelete = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof printerDelete>>, TError,PrinterDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof printerDelete>>,
-        TError,
-        PrinterDeleteMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPrinterDeleteMutationOptions(options?.()) }), queryClient);
-    }
+export const createPrinterDelete = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerDelete>>, TError, PrinterDeleteMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof printerDelete>>, TError, PrinterDeleteMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPrinterDeleteMutationOptions(options?.()) }), queryClient);
+};

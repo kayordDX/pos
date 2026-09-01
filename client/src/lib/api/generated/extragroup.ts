@@ -4,235 +4,164 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation
-} from '@tanstack/svelte-query';
-import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  MutationFunction,
-  QueryClient
-} from '@tanstack/svelte-query';
+import { createMutation } from "@tanstack/svelte-query";
+import type { CreateMutationOptions, CreateMutationResult, MutationFunction, QueryClient } from "@tanstack/svelte-query";
 
-import type {
-  ExtraGroupCreateRequest,
-  ExtraGroupUpdateRequest,
-  InternalErrorResponse
-} from './api.schemas';
+import type { ExtraGroupCreateRequest, ExtraGroupUpdateRequest, InternalErrorResponse } from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getExtraGroupUpdateUrl = () => {
-
-
-
-
-  return `/extraGroup`
-}
+	return `/extraGroup`;
+};
 
 export const extraGroupUpdate = async (extraGroupUpdateRequest: ExtraGroupUpdateRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getExtraGroupUpdateUrl(), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(extraGroupUpdateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getExtraGroupUpdateUrl(),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(extraGroupUpdateRequest)
-  }
-);}
+export const getExtraGroupUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraGroupUpdate>>, TError, ExtraGroupUpdateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof extraGroupUpdate>>, TError, ExtraGroupUpdateMutationVariables, TContext> => {
+	const mutationKey = ["extraGroupUpdate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraGroupUpdate>>, ExtraGroupUpdateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return extraGroupUpdate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type ExtraGroupUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof extraGroupUpdate>>>;
+export type ExtraGroupUpdateMutationBody = BodyType<ExtraGroupUpdateRequest>;
+export type ExtraGroupUpdateMutationError = ErrorType<void | InternalErrorResponse>;
+export type ExtraGroupUpdateMutationVariables = { data: BodyType<ExtraGroupUpdateRequest> };
 
-export const getExtraGroupUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraGroupUpdate>>, TError,ExtraGroupUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof extraGroupUpdate>>, TError,ExtraGroupUpdateMutationVariables, TContext> => {
-
-const mutationKey = ['extraGroupUpdate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraGroupUpdate>>, ExtraGroupUpdateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  extraGroupUpdate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type ExtraGroupUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof extraGroupUpdate>>>
-    export type ExtraGroupUpdateMutationBody = BodyType<ExtraGroupUpdateRequest>
-    export type ExtraGroupUpdateMutationError = ErrorType<void | InternalErrorResponse>
-    export type ExtraGroupUpdateMutationVariables = {data: BodyType<ExtraGroupUpdateRequest>}
-
-    export const createExtraGroupUpdate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraGroupUpdate>>, TError,ExtraGroupUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof extraGroupUpdate>>,
-        TError,
-        ExtraGroupUpdateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getExtraGroupUpdateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getExtraGroupCreateUrl = () => {
-
-
-
-
-  return `/extraGroup`
-}
+export const createExtraGroupUpdate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraGroupUpdate>>, TError, ExtraGroupUpdateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof extraGroupUpdate>>, TError, ExtraGroupUpdateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getExtraGroupUpdateMutationOptions(options?.()) }), queryClient);
+};
+export const getExtraGroupCreateUrl = () => {
+	return `/extraGroup`;
+};
 
 export const extraGroupCreate = async (extraGroupCreateRequest: ExtraGroupCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getExtraGroupCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(extraGroupCreateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getExtraGroupCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(extraGroupCreateRequest)
-  }
-);}
+export const getExtraGroupCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraGroupCreate>>, TError, ExtraGroupCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof extraGroupCreate>>, TError, ExtraGroupCreateMutationVariables, TContext> => {
+	const mutationKey = ["extraGroupCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraGroupCreate>>, ExtraGroupCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return extraGroupCreate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type ExtraGroupCreateMutationResult = NonNullable<Awaited<ReturnType<typeof extraGroupCreate>>>;
+export type ExtraGroupCreateMutationBody = BodyType<ExtraGroupCreateRequest>;
+export type ExtraGroupCreateMutationError = ErrorType<void | InternalErrorResponse>;
+export type ExtraGroupCreateMutationVariables = { data: BodyType<ExtraGroupCreateRequest> };
 
-export const getExtraGroupCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraGroupCreate>>, TError,ExtraGroupCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof extraGroupCreate>>, TError,ExtraGroupCreateMutationVariables, TContext> => {
-
-const mutationKey = ['extraGroupCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraGroupCreate>>, ExtraGroupCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  extraGroupCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type ExtraGroupCreateMutationResult = NonNullable<Awaited<ReturnType<typeof extraGroupCreate>>>
-    export type ExtraGroupCreateMutationBody = BodyType<ExtraGroupCreateRequest>
-    export type ExtraGroupCreateMutationError = ErrorType<void | InternalErrorResponse>
-    export type ExtraGroupCreateMutationVariables = {data: BodyType<ExtraGroupCreateRequest>}
-
-    export const createExtraGroupCreate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraGroupCreate>>, TError,ExtraGroupCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof extraGroupCreate>>,
-        TError,
-        ExtraGroupCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getExtraGroupCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getExtraGroupDeleteUrl = (id: number,) => {
-
-
-
-
-  return `/extraGroup/${id}`
-}
+export const createExtraGroupCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraGroupCreate>>, TError, ExtraGroupCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof extraGroupCreate>>, TError, ExtraGroupCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getExtraGroupCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getExtraGroupDeleteUrl = (id: number) => {
+	return `/extraGroup/${id}`;
+};
 
 export const extraGroupDelete = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	return customInstance<void>(getExtraGroupDeleteUrl(id), {
+		...options,
+		method: "DELETE",
+	});
+};
 
-  return customInstance<void>(getExtraGroupDeleteUrl(id),
-  {
-    ...options,
-    method: 'DELETE'
+export const getExtraGroupDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraGroupDelete>>, TError, ExtraGroupDeleteMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof extraGroupDelete>>, TError, ExtraGroupDeleteMutationVariables, TContext> => {
+	const mutationKey = ["extraGroupDelete"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraGroupDelete>>, ExtraGroupDeleteMutationVariables> = (props) => {
+		const { id } = props ?? {};
 
-  }
-);}
+		return extraGroupDelete(id, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type ExtraGroupDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof extraGroupDelete>>>;
 
+export type ExtraGroupDeleteMutationError = ErrorType<void | InternalErrorResponse>;
+export type ExtraGroupDeleteMutationVariables = { id: number };
 
-
-export const getExtraGroupDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraGroupDelete>>, TError,ExtraGroupDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof extraGroupDelete>>, TError,ExtraGroupDeleteMutationVariables, TContext> => {
-
-const mutationKey = ['extraGroupDelete'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraGroupDelete>>, ExtraGroupDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  extraGroupDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type ExtraGroupDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof extraGroupDelete>>>
-
-    export type ExtraGroupDeleteMutationError = ErrorType<void | InternalErrorResponse>
-    export type ExtraGroupDeleteMutationVariables = {id: number}
-
-    export const createExtraGroupDelete = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraGroupDelete>>, TError,ExtraGroupDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof extraGroupDelete>>,
-        TError,
-        ExtraGroupDeleteMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getExtraGroupDeleteMutationOptions(options?.()) }), queryClient);
-    }
+export const createExtraGroupDelete = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraGroupDelete>>, TError, ExtraGroupDeleteMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof extraGroupDelete>>, TError, ExtraGroupDeleteMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getExtraGroupDeleteMutationOptions(options?.()) }), queryClient);
+};

@@ -4,257 +4,207 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  EntitiesStockCategory,
-  ErrorResponse,
-  InternalErrorResponse,
-  StockCategoryCreateRequest,
-  StockCategoryGetAllParams,
-  StockCategoryUpdateRequest
-} from './api.schemas';
+	EntitiesStockCategory,
+	ErrorResponse,
+	InternalErrorResponse,
+	StockCategoryCreateRequest,
+	StockCategoryGetAllParams,
+	StockCategoryUpdateRequest,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+export const getStockCategoryUpdateUrl = (id: number) => {
+	return `/stockCategory/${id}`;
+};
 
+export const stockCategoryUpdate = async (
+	id: number,
+	stockCategoryUpdateRequest: StockCategoryUpdateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesStockCategory> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesStockCategory>(getStockCategoryUpdateUrl(id), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(stockCategoryUpdateRequest),
+	});
+};
 
-export const getStockCategoryUpdateUrl = (id: number,) => {
+export const getStockCategoryUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryUpdate>>, TError, StockCategoryUpdateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryUpdate>>, TError, StockCategoryUpdateMutationVariables, TContext> => {
+	const mutationKey = ["stockCategoryUpdate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof stockCategoryUpdate>>, StockCategoryUpdateMutationVariables> = (props) => {
+		const { id, data } = props ?? {};
 
+		return stockCategoryUpdate(id, data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
-  return `/stockCategory/${id}`
-}
+export type StockCategoryUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof stockCategoryUpdate>>>;
+export type StockCategoryUpdateMutationBody = BodyType<StockCategoryUpdateRequest>;
+export type StockCategoryUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type StockCategoryUpdateMutationVariables = { id: number; data: BodyType<StockCategoryUpdateRequest> };
 
-export const stockCategoryUpdate = async (id: number,
-    stockCategoryUpdateRequest: StockCategoryUpdateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesStockCategory> => {
+export const createStockCategoryUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryUpdate>>, TError, StockCategoryUpdateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof stockCategoryUpdate>>, TError, StockCategoryUpdateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getStockCategoryUpdateMutationOptions(options?.()) }), queryClient);
+};
+export const getStockCategoryGetAllUrl = (params: StockCategoryGetAllParams) => {
+	const normalizedParams = new URLSearchParams();
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesStockCategory>(getStockCategoryUpdateUrl(id),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(stockCategoryUpdateRequest)
-  }
-);}
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/stockCategory?${stringifiedParams}` : `/stockCategory`;
+};
 
+export const stockCategoryGetAll = async (
+	params: StockCategoryGetAllParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesStockCategory[]> => {
+	return customInstance<EntitiesStockCategory[]>(getStockCategoryGetAllUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
+export const getStockCategoryGetAllQueryKey = (params?: StockCategoryGetAllParams) => {
+	return [`/stockCategory`, ...(params ? [params] : [])] as const;
+};
 
-export const getStockCategoryUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryUpdate>>, TError,StockCategoryUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryUpdate>>, TError,StockCategoryUpdateMutationVariables, TContext> => {
-
-const mutationKey = ['stockCategoryUpdate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof stockCategoryUpdate>>, StockCategoryUpdateMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  stockCategoryUpdate(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type StockCategoryUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof stockCategoryUpdate>>>
-    export type StockCategoryUpdateMutationBody = BodyType<StockCategoryUpdateRequest>
-    export type StockCategoryUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type StockCategoryUpdateMutationVariables = {id: number;data: BodyType<StockCategoryUpdateRequest>}
-
-    export const createStockCategoryUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryUpdate>>, TError,StockCategoryUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof stockCategoryUpdate>>,
-        TError,
-        StockCategoryUpdateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getStockCategoryUpdateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getStockCategoryGetAllUrl = (params: StockCategoryGetAllParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/stockCategory?${stringifiedParams}` : `/stockCategory`
-}
-
-export const stockCategoryGetAll = async (params: StockCategoryGetAllParams, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesStockCategory[]> => {
-
-  return customInstance<EntitiesStockCategory[]>(getStockCategoryGetAllUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getStockCategoryGetAllQueryKey = (params?: StockCategoryGetAllParams,) => {
-    return [
-    `/stockCategory`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getStockCategoryGetAllQueryOptions = <TData = Awaited<ReturnType<typeof stockCategoryGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(params: StockCategoryGetAllParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockCategoryGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getStockCategoryGetAllQueryOptions = <TData = Awaited<ReturnType<typeof stockCategoryGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: StockCategoryGetAllParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockCategoryGetAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getStockCategoryGetAllQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getStockCategoryGetAllQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof stockCategoryGetAll>>> = () => stockCategoryGetAll(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof stockCategoryGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof stockCategoryGetAll>>> = () => stockCategoryGetAll(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof stockCategoryGetAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type StockCategoryGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof stockCategoryGetAll>>>
-export type StockCategoryGetAllQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type StockCategoryGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof stockCategoryGetAll>>>;
+export type StockCategoryGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createStockCategoryGetAll<TData = Awaited<ReturnType<typeof stockCategoryGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  StockCategoryGetAllParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockCategoryGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => StockCategoryGetAllParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof stockCategoryGetAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getStockCategoryGetAllQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getStockCategoryGetAllQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getStockCategoryCreateUrl = () => {
+	return `/stockCategory`;
+};
 
+export const stockCategoryCreate = async (
+	stockCategoryCreateRequest: StockCategoryCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesStockCategory> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesStockCategory>(getStockCategoryCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(stockCategoryCreateRequest),
+	});
+};
 
+export const getStockCategoryCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryCreate>>, TError, StockCategoryCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryCreate>>, TError, StockCategoryCreateMutationVariables, TContext> => {
+	const mutationKey = ["stockCategoryCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof stockCategoryCreate>>, StockCategoryCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/stockCategory`
-}
+		return stockCategoryCreate(data, requestOptions);
+	};
 
-export const stockCategoryCreate = async (stockCategoryCreateRequest: StockCategoryCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesStockCategory> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesStockCategory>(getStockCategoryCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(stockCategoryCreateRequest)
-  }
-);}
+export type StockCategoryCreateMutationResult = NonNullable<Awaited<ReturnType<typeof stockCategoryCreate>>>;
+export type StockCategoryCreateMutationBody = BodyType<StockCategoryCreateRequest>;
+export type StockCategoryCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type StockCategoryCreateMutationVariables = { data: BodyType<StockCategoryCreateRequest> };
 
-
-
-
-
-export const getStockCategoryCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryCreate>>, TError,StockCategoryCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryCreate>>, TError,StockCategoryCreateMutationVariables, TContext> => {
-
-const mutationKey = ['stockCategoryCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof stockCategoryCreate>>, StockCategoryCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  stockCategoryCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type StockCategoryCreateMutationResult = NonNullable<Awaited<ReturnType<typeof stockCategoryCreate>>>
-    export type StockCategoryCreateMutationBody = BodyType<StockCategoryCreateRequest>
-    export type StockCategoryCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type StockCategoryCreateMutationVariables = {data: BodyType<StockCategoryCreateRequest>}
-
-    export const createStockCategoryCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryCreate>>, TError,StockCategoryCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof stockCategoryCreate>>,
-        TError,
-        StockCategoryCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getStockCategoryCreateMutationOptions(options?.()) }), queryClient);
-    }
+export const createStockCategoryCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryCreate>>, TError, StockCategoryCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof stockCategoryCreate>>, TError, StockCategoryCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getStockCategoryCreateMutationOptions(options?.()) }), queryClient);
+};

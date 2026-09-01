@@ -4,483 +4,378 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  CashUpUserCloseRequest,
-  CashUpUserCreateRequest,
-  CashUpUserDetailParams,
-  CashUpUserDetailResponse,
-  CashUpUserGetResponse,
-  CashUpUserItemTypeParams,
-  EntitiesCashUpUserItem,
-  EntitiesCashUpUserItemType,
-  InternalErrorResponse
-} from './api.schemas';
+	CashUpUserCloseRequest,
+	CashUpUserCreateRequest,
+	CashUpUserDetailParams,
+	CashUpUserDetailResponse,
+	CashUpUserGetResponse,
+	CashUpUserItemTypeParams,
+	EntitiesCashUpUserItem,
+	EntitiesCashUpUserItemType,
+	InternalErrorResponse,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+export const getCashUpUserItemTypeUrl = (params: CashUpUserItemTypeParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
-export const getCashUpUserItemTypeUrl = (params: CashUpUserItemTypeParams,) => {
-  const normalizedParams = new URLSearchParams();
+	const stringifiedParams = normalizedParams.toString();
 
-  Object.entries(params || {}).forEach(([key, value]) => {
+	return stringifiedParams.length > 0 ? `/cashUp/user/itemType?${stringifiedParams}` : `/cashUp/user/itemType`;
+};
 
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
+export const cashUpUserItemType = async (
+	params: CashUpUserItemTypeParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesCashUpUserItemType[]> => {
+	return customInstance<EntitiesCashUpUserItemType[]>(getCashUpUserItemTypeUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  const stringifiedParams = normalizedParams.toString();
+export const getCashUpUserItemTypeQueryKey = (params?: CashUpUserItemTypeParams) => {
+	return [`/cashUp/user/itemType`, ...(params ? [params] : [])] as const;
+};
 
-  return stringifiedParams.length > 0 ? `/cashUp/user/itemType?${stringifiedParams}` : `/cashUp/user/itemType`
-}
-
-export const cashUpUserItemType = async (params: CashUpUserItemTypeParams, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesCashUpUserItemType[]> => {
-
-  return customInstance<EntitiesCashUpUserItemType[]>(getCashUpUserItemTypeUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getCashUpUserItemTypeQueryKey = (params?: CashUpUserItemTypeParams,) => {
-    return [
-    `/cashUp/user/itemType`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getCashUpUserItemTypeQueryOptions = <TData = Awaited<ReturnType<typeof cashUpUserItemType>>, TError = ErrorType<void | InternalErrorResponse>>(params: CashUpUserItemTypeParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getCashUpUserItemTypeQueryOptions = <TData = Awaited<ReturnType<typeof cashUpUserItemType>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: CashUpUserItemTypeParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getCashUpUserItemTypeQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getCashUpUserItemTypeQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof cashUpUserItemType>>> = () => cashUpUserItemType(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof cashUpUserItemType>>> = () => cashUpUserItemType(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type CashUpUserItemTypeQueryResult = NonNullable<Awaited<ReturnType<typeof cashUpUserItemType>>>
-export type CashUpUserItemTypeQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type CashUpUserItemTypeQueryResult = NonNullable<Awaited<ReturnType<typeof cashUpUserItemType>>>;
+export type CashUpUserItemTypeQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createCashUpUserItemType<TData = Awaited<ReturnType<typeof cashUpUserItemType>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  CashUpUserItemTypeParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => CashUpUserItemTypeParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserItemType>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getCashUpUserItemTypeQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getCashUpUserItemTypeQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
-
-
-
-
-
-export const getCashUpUserGetUrl = (outletId: number,) => {
-
-
-
-
-  return `/cashUp/user/${outletId}`
-}
+export const getCashUpUserGetUrl = (outletId: number) => {
+	return `/cashUp/user/${outletId}`;
+};
 
 export const cashUpUserGet = async (outletId: number, options?: Parameters<typeof customInstance>[1]): Promise<CashUpUserGetResponse> => {
+	return customInstance<CashUpUserGetResponse>(getCashUpUserGetUrl(outletId), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<CashUpUserGetResponse>(getCashUpUserGetUrl(outletId),
-  {
-    ...options,
-    method: 'GET'
+export const getCashUpUserGetQueryKey = (outletId: number) => {
+	return [`/cashUp/user/${outletId}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getCashUpUserGetQueryKey = (outletId: number,) => {
-    return [
-    `/cashUp/user/${outletId}`
-    ] as const;
-    }
-
-
-export const getCashUpUserGetQueryOptions = <TData = Awaited<ReturnType<typeof cashUpUserGet>>, TError = ErrorType<void | InternalErrorResponse>>(outletId: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getCashUpUserGetQueryOptions = <TData = Awaited<ReturnType<typeof cashUpUserGet>>, TError = ErrorType<void | InternalErrorResponse>>(
+	outletId: number,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserGet>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getCashUpUserGetQueryKey(outletId);
 
-  const queryKey =  queryOptions?.queryKey ?? getCashUpUserGetQueryKey(outletId);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof cashUpUserGet>>> = () => cashUpUserGet(outletId, requestOptions);
 
+	return { queryKey, queryFn, enabled: outletId !== null && outletId !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof cashUpUserGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof cashUpUserGet>>> = () => cashUpUserGet(outletId, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: outletId !== null && outletId !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type CashUpUserGetQueryResult = NonNullable<Awaited<ReturnType<typeof cashUpUserGet>>>
-export type CashUpUserGetQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type CashUpUserGetQueryResult = NonNullable<Awaited<ReturnType<typeof cashUpUserGet>>>;
+export type CashUpUserGetQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createCashUpUserGet<TData = Awaited<ReturnType<typeof cashUpUserGet>>, TError = ErrorType<void | InternalErrorResponse>>(
- outletId: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	outletId: () => number,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserGet>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getCashUpUserGetQueryOptions(outletId(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getCashUpUserGetQueryOptions(outletId(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getCashUpUserDetailUrl = (userId: string, outletId: number, params: CashUpUserDetailParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/cashUp/user/detail/${userId}/${outletId}?${stringifiedParams}` : `/cashUp/user/detail/${userId}/${outletId}`;
+};
 
+export const cashUpUserDetail = async (
+	userId: string,
+	outletId: number,
+	params: CashUpUserDetailParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<CashUpUserDetailResponse> => {
+	return customInstance<CashUpUserDetailResponse>(getCashUpUserDetailUrl(userId, outletId, params), {
+		...options,
+		method: "GET",
+	});
+};
 
-export const getCashUpUserDetailUrl = (userId: string,
-    outletId: number,
-    params: CashUpUserDetailParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getCashUpUserDetailQueryKey = (userId: string, outletId: number, params?: CashUpUserDetailParams) => {
+	return [`/cashUp/user/detail/${userId}/${outletId}`, ...(params ? [params] : [])] as const;
+};
 
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/cashUp/user/detail/${userId}/${outletId}?${stringifiedParams}` : `/cashUp/user/detail/${userId}/${outletId}`
-}
-
-export const cashUpUserDetail = async (userId: string,
-    outletId: number,
-    params: CashUpUserDetailParams, options?: Parameters<typeof customInstance>[1]): Promise<CashUpUserDetailResponse> => {
-
-  return customInstance<CashUpUserDetailResponse>(getCashUpUserDetailUrl(userId,outletId,params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getCashUpUserDetailQueryKey = (userId: string,
-    outletId: number,
-    params?: CashUpUserDetailParams,) => {
-    return [
-    `/cashUp/user/detail/${userId}/${outletId}`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getCashUpUserDetailQueryOptions = <TData = Awaited<ReturnType<typeof cashUpUserDetail>>, TError = ErrorType<void | InternalErrorResponse>>(userId: string,
-    outletId: number,
-    params: CashUpUserDetailParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserDetail>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getCashUpUserDetailQueryOptions = <TData = Awaited<ReturnType<typeof cashUpUserDetail>>, TError = ErrorType<void | InternalErrorResponse>>(
+	userId: string,
+	outletId: number,
+	params: CashUpUserDetailParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserDetail>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getCashUpUserDetailQueryKey(userId, outletId, params);
 
-  const queryKey =  queryOptions?.queryKey ?? getCashUpUserDetailQueryKey(userId,outletId,params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof cashUpUserDetail>>> = () => cashUpUserDetail(userId, outletId, params, requestOptions);
 
+	return {
+		queryKey,
+		queryFn,
+		enabled: userId !== null && userId !== undefined && outletId !== null && outletId !== undefined,
+		...queryOptions,
+	} as CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserDetail>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof cashUpUserDetail>>> = () => cashUpUserDetail(userId,outletId,params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: userId !== null && userId !== undefined && outletId !== null && outletId !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserDetail>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type CashUpUserDetailQueryResult = NonNullable<Awaited<ReturnType<typeof cashUpUserDetail>>>
-export type CashUpUserDetailQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type CashUpUserDetailQueryResult = NonNullable<Awaited<ReturnType<typeof cashUpUserDetail>>>;
+export type CashUpUserDetailQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createCashUpUserDetail<TData = Awaited<ReturnType<typeof cashUpUserDetail>>, TError = ErrorType<void | InternalErrorResponse>>(
- userId: () =>  string,
-    outletId: () =>  number,
-    params: () =>  CashUpUserDetailParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserDetail>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	userId: () => string,
+	outletId: () => number,
+	params: () => CashUpUserDetailParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof cashUpUserDetail>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getCashUpUserDetailQueryOptions(userId(), outletId(), params(), options?.()), queryClient) as CreateQueryResult<
+		TData,
+		TError
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-
-
-  const query = createQuery(() => getCashUpUserDetailQueryOptions(userId(),
-    outletId(),
-    params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
-
-
-
-
-
-export const getCashUpUserDeleteUrl = (id: number,) => {
-
-
-
-
-  return `/cashUp/user/${id}`
-}
+export const getCashUpUserDeleteUrl = (id: number) => {
+	return `/cashUp/user/${id}`;
+};
 
 export const cashUpUserDelete = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesCashUpUserItem> => {
-
-  return customInstance<EntitiesCashUpUserItem>(getCashUpUserDeleteUrl(id),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
-
-
-
-
-export const getCashUpUserDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserDelete>>, TError,CashUpUserDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserDelete>>, TError,CashUpUserDeleteMutationVariables, TContext> => {
-
-const mutationKey = ['cashUpUserDelete'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof cashUpUserDelete>>, CashUpUserDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  cashUpUserDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CashUpUserDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof cashUpUserDelete>>>
-
-    export type CashUpUserDeleteMutationError = ErrorType<void | InternalErrorResponse>
-    export type CashUpUserDeleteMutationVariables = {id: number}
-
-    export const createCashUpUserDelete = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserDelete>>, TError,CashUpUserDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof cashUpUserDelete>>,
-        TError,
-        CashUpUserDeleteMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getCashUpUserDeleteMutationOptions(options?.()) }), queryClient);
-    }
-    export const getCashUpUserCreateUrl = () => {
-
-
-
-
-  return `/cashUp/user`
-}
-
-export const cashUpUserCreate = async (cashUpUserCreateRequest: CashUpUserCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesCashUpUserItem> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesCashUpUserItem>(getCashUpUserCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(cashUpUserCreateRequest)
-  }
-);}
-
-
-
-
-
-export const getCashUpUserCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserCreate>>, TError,CashUpUserCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserCreate>>, TError,CashUpUserCreateMutationVariables, TContext> => {
-
-const mutationKey = ['cashUpUserCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof cashUpUserCreate>>, CashUpUserCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  cashUpUserCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CashUpUserCreateMutationResult = NonNullable<Awaited<ReturnType<typeof cashUpUserCreate>>>
-    export type CashUpUserCreateMutationBody = BodyType<CashUpUserCreateRequest>
-    export type CashUpUserCreateMutationError = ErrorType<void | InternalErrorResponse>
-    export type CashUpUserCreateMutationVariables = {data: BodyType<CashUpUserCreateRequest>}
-
-    export const createCashUpUserCreate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserCreate>>, TError,CashUpUserCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof cashUpUserCreate>>,
-        TError,
-        CashUpUserCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getCashUpUserCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getCashUpUserCloseUrl = () => {
-
-
-
-
-  return `/cashUp/close`
-}
-
-export const cashUpUserClose = async (cashUpUserCloseRequest: CashUpUserCloseRequest, options?: Parameters<typeof customInstance>[1]): Promise<CashUpUserDetailResponse> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<CashUpUserDetailResponse>(getCashUpUserCloseUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(cashUpUserCloseRequest)
-  }
-);}
-
-
-
-
-
-export const getCashUpUserCloseMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserClose>>, TError,CashUpUserCloseMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserClose>>, TError,CashUpUserCloseMutationVariables, TContext> => {
-
-const mutationKey = ['cashUpUserClose'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof cashUpUserClose>>, CashUpUserCloseMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  cashUpUserClose(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type CashUpUserCloseMutationResult = NonNullable<Awaited<ReturnType<typeof cashUpUserClose>>>
-    export type CashUpUserCloseMutationBody = BodyType<CashUpUserCloseRequest>
-    export type CashUpUserCloseMutationError = ErrorType<void | InternalErrorResponse>
-    export type CashUpUserCloseMutationVariables = {data: BodyType<CashUpUserCloseRequest>}
-
-    export const createCashUpUserClose = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserClose>>, TError,CashUpUserCloseMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof cashUpUserClose>>,
-        TError,
-        CashUpUserCloseMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getCashUpUserCloseMutationOptions(options?.()) }), queryClient);
-    }
+	return customInstance<EntitiesCashUpUserItem>(getCashUpUserDeleteUrl(id), {
+		...options,
+		method: "DELETE",
+	});
+};
+
+export const getCashUpUserDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserDelete>>, TError, CashUpUserDeleteMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserDelete>>, TError, CashUpUserDeleteMutationVariables, TContext> => {
+	const mutationKey = ["cashUpUserDelete"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof cashUpUserDelete>>, CashUpUserDeleteMutationVariables> = (props) => {
+		const { id } = props ?? {};
+
+		return cashUpUserDelete(id, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type CashUpUserDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof cashUpUserDelete>>>;
+
+export type CashUpUserDeleteMutationError = ErrorType<void | InternalErrorResponse>;
+export type CashUpUserDeleteMutationVariables = { id: number };
+
+export const createCashUpUserDelete = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserDelete>>, TError, CashUpUserDeleteMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof cashUpUserDelete>>, TError, CashUpUserDeleteMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getCashUpUserDeleteMutationOptions(options?.()) }), queryClient);
+};
+export const getCashUpUserCreateUrl = () => {
+	return `/cashUp/user`;
+};
+
+export const cashUpUserCreate = async (
+	cashUpUserCreateRequest: CashUpUserCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesCashUpUserItem> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesCashUpUserItem>(getCashUpUserCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(cashUpUserCreateRequest),
+	});
+};
+
+export const getCashUpUserCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserCreate>>, TError, CashUpUserCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserCreate>>, TError, CashUpUserCreateMutationVariables, TContext> => {
+	const mutationKey = ["cashUpUserCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof cashUpUserCreate>>, CashUpUserCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return cashUpUserCreate(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type CashUpUserCreateMutationResult = NonNullable<Awaited<ReturnType<typeof cashUpUserCreate>>>;
+export type CashUpUserCreateMutationBody = BodyType<CashUpUserCreateRequest>;
+export type CashUpUserCreateMutationError = ErrorType<void | InternalErrorResponse>;
+export type CashUpUserCreateMutationVariables = { data: BodyType<CashUpUserCreateRequest> };
+
+export const createCashUpUserCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserCreate>>, TError, CashUpUserCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof cashUpUserCreate>>, TError, CashUpUserCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getCashUpUserCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getCashUpUserCloseUrl = () => {
+	return `/cashUp/close`;
+};
+
+export const cashUpUserClose = async (
+	cashUpUserCloseRequest: CashUpUserCloseRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<CashUpUserDetailResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<CashUpUserDetailResponse>(getCashUpUserCloseUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(cashUpUserCloseRequest),
+	});
+};
+
+export const getCashUpUserCloseMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserClose>>, TError, CashUpUserCloseMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserClose>>, TError, CashUpUserCloseMutationVariables, TContext> => {
+	const mutationKey = ["cashUpUserClose"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof cashUpUserClose>>, CashUpUserCloseMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return cashUpUserClose(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type CashUpUserCloseMutationResult = NonNullable<Awaited<ReturnType<typeof cashUpUserClose>>>;
+export type CashUpUserCloseMutationBody = BodyType<CashUpUserCloseRequest>;
+export type CashUpUserCloseMutationError = ErrorType<void | InternalErrorResponse>;
+export type CashUpUserCloseMutationVariables = { data: BodyType<CashUpUserCloseRequest> };
+
+export const createCashUpUserClose = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserClose>>, TError, CashUpUserCloseMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof cashUpUserClose>>, TError, CashUpUserCloseMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getCashUpUserCloseMutationOptions(options?.()) }), queryClient);
+};

@@ -4,534 +4,391 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  DTOExtraDTO,
-  DTOExtraGroupAdminDTO,
-  EntitiesExtra,
-  ErrorResponse,
-  ExtraCreateRequest,
-  ExtraGetAllMenuParams,
-  ExtraGetAllMenuSpecialExtrasDTO,
-  ExtraUpdateRequest,
-  InternalErrorResponse
-} from './api.schemas';
+	DTOExtraDTO,
+	DTOExtraGroupAdminDTO,
+	EntitiesExtra,
+	ErrorResponse,
+	ExtraCreateRequest,
+	ExtraGetAllMenuParams,
+	ExtraGetAllMenuSpecialExtrasDTO,
+	ExtraUpdateRequest,
+	InternalErrorResponse,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getExtraUpdateUrl = () => {
-
-
-
-
-  return `/extra`
-}
+	return `/extra`;
+};
 
 export const extraUpdate = async (extraUpdateRequest: ExtraUpdateRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getExtraUpdateUrl(), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(extraUpdateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getExtraUpdateUrl(),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(extraUpdateRequest)
-  }
-);}
+export const getExtraUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError, ExtraUpdateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError, ExtraUpdateMutationVariables, TContext> => {
+	const mutationKey = ["extraUpdate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraUpdate>>, ExtraUpdateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return extraUpdate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type ExtraUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof extraUpdate>>>;
+export type ExtraUpdateMutationBody = BodyType<ExtraUpdateRequest>;
+export type ExtraUpdateMutationError = ErrorType<void | InternalErrorResponse>;
+export type ExtraUpdateMutationVariables = { data: BodyType<ExtraUpdateRequest> };
 
-export const getExtraUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError,ExtraUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError,ExtraUpdateMutationVariables, TContext> => {
+export const createExtraUpdate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError, ExtraUpdateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof extraUpdate>>, TError, ExtraUpdateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getExtraUpdateMutationOptions(options?.()) }), queryClient);
+};
+export const getExtraGroupUrl = () => {
+	return `/extra`;
+};
 
-const mutationKey = ['extraUpdate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraUpdate>>, ExtraUpdateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  extraUpdate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type ExtraUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof extraUpdate>>>
-    export type ExtraUpdateMutationBody = BodyType<ExtraUpdateRequest>
-    export type ExtraUpdateMutationError = ErrorType<void | InternalErrorResponse>
-    export type ExtraUpdateMutationVariables = {data: BodyType<ExtraUpdateRequest>}
-
-    export const createExtraUpdate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError,ExtraUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof extraUpdate>>,
-        TError,
-        ExtraUpdateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getExtraUpdateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getExtraGroupUrl = () => {
-
-
-
-
-  return `/extra`
-}
-
-export const extraGroup = async ( options?: Parameters<typeof customInstance>[1]): Promise<DTOExtraGroupAdminDTO[]> => {
-
-  return customInstance<DTOExtraGroupAdminDTO[]>(getExtraGroupUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
+export const extraGroup = async (options?: Parameters<typeof customInstance>[1]): Promise<DTOExtraGroupAdminDTO[]> => {
+	return customInstance<DTOExtraGroupAdminDTO[]>(getExtraGroupUrl(), {
+		...options,
+		method: "GET",
+	});
+};
 
 export const getExtraGroupQueryKey = () => {
-    return [
-    `/extra`
-    ] as const;
-    }
+	return [`/extra`] as const;
+};
 
+export const getExtraGroupQueryOptions = <TData = Awaited<ReturnType<typeof extraGroup>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData>>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getExtraGroupQueryOptions = <TData = Awaited<ReturnType<typeof extraGroup>>, TError = ErrorType<void | InternalErrorResponse>>( options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+	const queryKey = queryOptions?.queryKey ?? getExtraGroupQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGroup>>> = () => extraGroup(requestOptions);
 
-  const queryKey =  queryOptions?.queryKey ?? getExtraGroupQueryKey();
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGroup>>> = () => extraGroup(requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ExtraGroupQueryResult = NonNullable<Awaited<ReturnType<typeof extraGroup>>>
-export type ExtraGroupQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type ExtraGroupQueryResult = NonNullable<Awaited<ReturnType<typeof extraGroup>>>;
+export type ExtraGroupQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createExtraGroup<TData = Awaited<ReturnType<typeof extraGroup>>, TError = ErrorType<void | InternalErrorResponse>>(
-  options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGroup>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getExtraGroupQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getExtraGroupQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getExtraCreateUrl = () => {
-
-
-
-
-  return `/extra`
-}
+	return `/extra`;
+};
 
 export const extraCreate = async (extraCreateRequest: ExtraCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getExtraCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(extraCreateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getExtraCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(extraCreateRequest)
-  }
-);}
+export const getExtraCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError, ExtraCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError, ExtraCreateMutationVariables, TContext> => {
+	const mutationKey = ["extraCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraCreate>>, ExtraCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return extraCreate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type ExtraCreateMutationResult = NonNullable<Awaited<ReturnType<typeof extraCreate>>>;
+export type ExtraCreateMutationBody = BodyType<ExtraCreateRequest>;
+export type ExtraCreateMutationError = ErrorType<void | InternalErrorResponse>;
+export type ExtraCreateMutationVariables = { data: BodyType<ExtraCreateRequest> };
 
-export const getExtraCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError,ExtraCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError,ExtraCreateMutationVariables, TContext> => {
-
-const mutationKey = ['extraCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraCreate>>, ExtraCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  extraCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type ExtraCreateMutationResult = NonNullable<Awaited<ReturnType<typeof extraCreate>>>
-    export type ExtraCreateMutationBody = BodyType<ExtraCreateRequest>
-    export type ExtraCreateMutationError = ErrorType<void | InternalErrorResponse>
-    export type ExtraCreateMutationVariables = {data: BodyType<ExtraCreateRequest>}
-
-    export const createExtraCreate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError,ExtraCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof extraCreate>>,
-        TError,
-        ExtraCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getExtraCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getExtraItemsUrl = (id: number,) => {
-
-
-
-
-  return `/extra/${id}`
-}
+export const createExtraCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError, ExtraCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof extraCreate>>, TError, ExtraCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getExtraCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getExtraItemsUrl = (id: number) => {
+	return `/extra/${id}`;
+};
 
 export const extraItems = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<DTOExtraDTO[]> => {
+	return customInstance<DTOExtraDTO[]>(getExtraItemsUrl(id), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<DTOExtraDTO[]>(getExtraItemsUrl(id),
-  {
-    ...options,
-    method: 'GET'
+export const getExtraItemsQueryKey = (id: number) => {
+	return [`/extra/${id}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getExtraItemsQueryKey = (id: number,) => {
-    return [
-    `/extra/${id}`
-    ] as const;
-    }
-
-
-export const getExtraItemsQueryOptions = <TData = Awaited<ReturnType<typeof extraItems>>, TError = ErrorType<void | InternalErrorResponse>>(id: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getExtraItemsQueryOptions = <TData = Awaited<ReturnType<typeof extraItems>>, TError = ErrorType<void | InternalErrorResponse>>(
+	id: number,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getExtraItemsQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getExtraItemsQueryKey(id);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraItems>>> = () => extraItems(id, requestOptions);
 
+	return { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof extraItems>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof extraItems>>> = () => extraItems(id, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ExtraItemsQueryResult = NonNullable<Awaited<ReturnType<typeof extraItems>>>
-export type ExtraItemsQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type ExtraItemsQueryResult = NonNullable<Awaited<ReturnType<typeof extraItems>>>;
+export type ExtraItemsQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createExtraItems<TData = Awaited<ReturnType<typeof extraItems>>, TError = ErrorType<void | InternalErrorResponse>>(
- id: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	id: () => number,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraItems>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getExtraItemsQueryOptions(id(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getExtraItemsQueryOptions(id(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
-
-
-
-
-
-export const getExtraDeleteUrl = (id: number,) => {
-
-
-
-
-  return `/extra/${id}`
-}
+export const getExtraDeleteUrl = (id: number) => {
+	return `/extra/${id}`;
+};
 
 export const extraDelete = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	return customInstance<void>(getExtraDeleteUrl(id), {
+		...options,
+		method: "DELETE",
+	});
+};
 
-  return customInstance<void>(getExtraDeleteUrl(id),
-  {
-    ...options,
-    method: 'DELETE'
+export const getExtraDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError, ExtraDeleteMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError, ExtraDeleteMutationVariables, TContext> => {
+	const mutationKey = ["extraDelete"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraDelete>>, ExtraDeleteMutationVariables> = (props) => {
+		const { id } = props ?? {};
 
-  }
-);}
+		return extraDelete(id, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type ExtraDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof extraDelete>>>;
 
+export type ExtraDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type ExtraDeleteMutationVariables = { id: number };
 
+export const createExtraDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError, ExtraDeleteMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof extraDelete>>, TError, ExtraDeleteMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getExtraDeleteMutationOptions(options?.()) }), queryClient);
+};
+export const getExtraGetAllMenuUrl = (params: ExtraGetAllMenuParams) => {
+	const normalizedParams = new URLSearchParams();
 
-export const getExtraDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError,ExtraDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError,ExtraDeleteMutationVariables, TContext> => {
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
-const mutationKey = ['extraDelete'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/extra/menu?${stringifiedParams}` : `/extra/menu`;
+};
 
+export const extraGetAllMenu = async (
+	params: ExtraGetAllMenuParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<ExtraGetAllMenuSpecialExtrasDTO[]> => {
+	return customInstance<ExtraGetAllMenuSpecialExtrasDTO[]>(getExtraGetAllMenuUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
+export const getExtraGetAllMenuQueryKey = (params?: ExtraGetAllMenuParams) => {
+	return [`/extra/menu`, ...(params ? [params] : [])] as const;
+};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof extraDelete>>, ExtraDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  extraDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type ExtraDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof extraDelete>>>
-
-    export type ExtraDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type ExtraDeleteMutationVariables = {id: number}
-
-    export const createExtraDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError,ExtraDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof extraDelete>>,
-        TError,
-        ExtraDeleteMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getExtraDeleteMutationOptions(options?.()) }), queryClient);
-    }
-    export const getExtraGetAllMenuUrl = (params: ExtraGetAllMenuParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/extra/menu?${stringifiedParams}` : `/extra/menu`
-}
-
-export const extraGetAllMenu = async (params: ExtraGetAllMenuParams, options?: Parameters<typeof customInstance>[1]): Promise<ExtraGetAllMenuSpecialExtrasDTO[]> => {
-
-  return customInstance<ExtraGetAllMenuSpecialExtrasDTO[]>(getExtraGetAllMenuUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getExtraGetAllMenuQueryKey = (params?: ExtraGetAllMenuParams,) => {
-    return [
-    `/extra/menu`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getExtraGetAllMenuQueryOptions = <TData = Awaited<ReturnType<typeof extraGetAllMenu>>, TError = ErrorType<void | InternalErrorResponse>>(params: ExtraGetAllMenuParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getExtraGetAllMenuQueryOptions = <TData = Awaited<ReturnType<typeof extraGetAllMenu>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: ExtraGetAllMenuParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getExtraGetAllMenuQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getExtraGetAllMenuQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAllMenu>>> = () => extraGetAllMenu(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAllMenu>>> = () => extraGetAllMenu(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ExtraGetAllMenuQueryResult = NonNullable<Awaited<ReturnType<typeof extraGetAllMenu>>>
-export type ExtraGetAllMenuQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type ExtraGetAllMenuQueryResult = NonNullable<Awaited<ReturnType<typeof extraGetAllMenu>>>;
+export type ExtraGetAllMenuQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createExtraGetAllMenu<TData = Awaited<ReturnType<typeof extraGetAllMenu>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  ExtraGetAllMenuParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => ExtraGetAllMenuParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAllMenu>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getExtraGetAllMenuQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getExtraGetAllMenuQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getExtraGetAllUrl = () => {
+	return `/extra/all`;
+};
 
-
-
-
-  return `/extra/all`
-}
-
-export const extraGetAll = async ( options?: Parameters<typeof customInstance>[1]): Promise<EntitiesExtra[]> => {
-
-  return customInstance<EntitiesExtra[]>(getExtraGetAllUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
+export const extraGetAll = async (options?: Parameters<typeof customInstance>[1]): Promise<EntitiesExtra[]> => {
+	return customInstance<EntitiesExtra[]>(getExtraGetAllUrl(), {
+		...options,
+		method: "GET",
+	});
+};
 
 export const getExtraGetAllQueryKey = () => {
-    return [
-    `/extra/all`
-    ] as const;
-    }
+	return [`/extra/all`] as const;
+};
 
+export const getExtraGetAllQueryOptions = <TData = Awaited<ReturnType<typeof extraGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getExtraGetAllQueryOptions = <TData = Awaited<ReturnType<typeof extraGetAll>>, TError = ErrorType<void | InternalErrorResponse>>( options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+	const queryKey = queryOptions?.queryKey ?? getExtraGetAllQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAll>>> = () => extraGetAll(requestOptions);
 
-  const queryKey =  queryOptions?.queryKey ?? getExtraGetAllQueryKey();
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof extraGetAll>>> = () => extraGetAll(requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type ExtraGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof extraGetAll>>>
-export type ExtraGetAllQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type ExtraGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof extraGetAll>>>;
+export type ExtraGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createExtraGetAll<TData = Awaited<ReturnType<typeof extraGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
-  options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof extraGetAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getExtraGetAllQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getExtraGetAllQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
-

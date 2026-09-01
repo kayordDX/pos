@@ -4,719 +4,599 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  CommonModelsPaginatedListOfResponse2,
-  EntitiesCashUpUserItem,
-  EntitiesTableBooking,
-  ErrorResponse,
-  InternalErrorResponse,
-  TableBookingCloseRequest,
-  TableBookingCreateRequest,
-  TableBookingGetResponse,
-  TableBookingHistoryAllParams,
-  TableBookingHistoryParams,
-  TableBookingHistoryUserParams,
-  TableBookingPaymentEditRequest,
-  TableBookingPeriodHistoryParams,
-  TableBookingTransferRequest
-} from './api.schemas';
+	CommonModelsPaginatedListOfResponse2,
+	EntitiesCashUpUserItem,
+	EntitiesTableBooking,
+	ErrorResponse,
+	InternalErrorResponse,
+	TableBookingCloseRequest,
+	TableBookingCreateRequest,
+	TableBookingGetResponse,
+	TableBookingHistoryAllParams,
+	TableBookingHistoryParams,
+	TableBookingHistoryUserParams,
+	TableBookingPaymentEditRequest,
+	TableBookingPeriodHistoryParams,
+	TableBookingTransferRequest,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getTableBookingTransferUrl = () => {
+	return `/tableBooking/transfer`;
+};
 
+export const tableBookingTransfer = async (
+	tableBookingTransferRequest: TableBookingTransferRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getTableBookingTransferUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableBookingTransferRequest),
+	});
+};
 
+export const getTableBookingTransferMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingTransfer>>, TError, TableBookingTransferMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingTransfer>>, TError, TableBookingTransferMutationVariables, TContext> => {
+	const mutationKey = ["tableBookingTransfer"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableBookingTransfer>>, TableBookingTransferMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/tableBooking/transfer`
-}
+		return tableBookingTransfer(data, requestOptions);
+	};
 
-export const tableBookingTransfer = async (tableBookingTransferRequest: TableBookingTransferRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getTableBookingTransferUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableBookingTransferRequest)
-  }
-);}
+export type TableBookingTransferMutationResult = NonNullable<Awaited<ReturnType<typeof tableBookingTransfer>>>;
+export type TableBookingTransferMutationBody = BodyType<TableBookingTransferRequest>;
+export type TableBookingTransferMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type TableBookingTransferMutationVariables = { data: BodyType<TableBookingTransferRequest> };
 
+export const createTableBookingTransfer = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingTransfer>>, TError, TableBookingTransferMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableBookingTransfer>>, TError, TableBookingTransferMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableBookingTransferMutationOptions(options?.()) }), queryClient);
+};
+export const getTableBookingPeriodHistoryUrl = (salesPeriodId: number, params: TableBookingPeriodHistoryParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0
+		? `/tableBooking/history/salesPeriod/${salesPeriodId}?${stringifiedParams}`
+		: `/tableBooking/history/salesPeriod/${salesPeriodId}`;
+};
 
-export const getTableBookingTransferMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableBookingTransfer>>, TError,TableBookingTransferMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingTransfer>>, TError,TableBookingTransferMutationVariables, TContext> => {
+export const tableBookingPeriodHistory = async (
+	salesPeriodId: number,
+	params: TableBookingPeriodHistoryParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<CommonModelsPaginatedListOfResponse2> => {
+	return customInstance<CommonModelsPaginatedListOfResponse2>(getTableBookingPeriodHistoryUrl(salesPeriodId, params), {
+		...options,
+		method: "GET",
+	});
+};
 
-const mutationKey = ['tableBookingTransfer'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export const getTableBookingPeriodHistoryQueryKey = (salesPeriodId: number, params?: TableBookingPeriodHistoryParams) => {
+	return [`/tableBooking/history/salesPeriod/${salesPeriodId}`, ...(params ? [params] : [])] as const;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableBookingTransfer>>, TableBookingTransferMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableBookingTransfer(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableBookingTransferMutationResult = NonNullable<Awaited<ReturnType<typeof tableBookingTransfer>>>
-    export type TableBookingTransferMutationBody = BodyType<TableBookingTransferRequest>
-    export type TableBookingTransferMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type TableBookingTransferMutationVariables = {data: BodyType<TableBookingTransferRequest>}
-
-    export const createTableBookingTransfer = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableBookingTransfer>>, TError,TableBookingTransferMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableBookingTransfer>>,
-        TError,
-        TableBookingTransferMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableBookingTransferMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableBookingPeriodHistoryUrl = (salesPeriodId: number,
-    params: TableBookingPeriodHistoryParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/tableBooking/history/salesPeriod/${salesPeriodId}?${stringifiedParams}` : `/tableBooking/history/salesPeriod/${salesPeriodId}`
-}
-
-export const tableBookingPeriodHistory = async (salesPeriodId: number,
-    params: TableBookingPeriodHistoryParams, options?: Parameters<typeof customInstance>[1]): Promise<CommonModelsPaginatedListOfResponse2> => {
-
-  return customInstance<CommonModelsPaginatedListOfResponse2>(getTableBookingPeriodHistoryUrl(salesPeriodId,params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getTableBookingPeriodHistoryQueryKey = (salesPeriodId: number,
-    params?: TableBookingPeriodHistoryParams,) => {
-    return [
-    `/tableBooking/history/salesPeriod/${salesPeriodId}`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getTableBookingPeriodHistoryQueryOptions = <TData = Awaited<ReturnType<typeof tableBookingPeriodHistory>>, TError = ErrorType<void | InternalErrorResponse>>(salesPeriodId: number,
-    params: TableBookingPeriodHistoryParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingPeriodHistory>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTableBookingPeriodHistoryQueryOptions = <
+	TData = Awaited<ReturnType<typeof tableBookingPeriodHistory>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	salesPeriodId: number,
+	params: TableBookingPeriodHistoryParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingPeriodHistory>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getTableBookingPeriodHistoryQueryKey(salesPeriodId, params);
 
-  const queryKey =  queryOptions?.queryKey ?? getTableBookingPeriodHistoryQueryKey(salesPeriodId,params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingPeriodHistory>>> = () => tableBookingPeriodHistory(salesPeriodId, params, requestOptions);
 
+	return { queryKey, queryFn, enabled: salesPeriodId !== null && salesPeriodId !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof tableBookingPeriodHistory>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
+export type TableBookingPeriodHistoryQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingPeriodHistory>>>;
+export type TableBookingPeriodHistoryQueryError = ErrorType<void | InternalErrorResponse>;
 
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingPeriodHistory>>> = () => tableBookingPeriodHistory(salesPeriodId,params, requestOptions);
+export function createTableBookingPeriodHistory<
+	TData = Awaited<ReturnType<typeof tableBookingPeriodHistory>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	salesPeriodId: () => number,
+	params: () => TableBookingPeriodHistoryParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingPeriodHistory>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getTableBookingPeriodHistoryQueryOptions(salesPeriodId(), params(), options?.()), queryClient) as CreateQueryResult<
+		TData,
+		TError
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
 
-
-
-
-
-   return  { queryKey, queryFn, enabled: salesPeriodId !== null && salesPeriodId !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof tableBookingPeriodHistory>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
+	return query;
 }
-
-export type TableBookingPeriodHistoryQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingPeriodHistory>>>
-export type TableBookingPeriodHistoryQueryError = ErrorType<void | InternalErrorResponse>
-
-
-
-export function createTableBookingPeriodHistory<TData = Awaited<ReturnType<typeof tableBookingPeriodHistory>>, TError = ErrorType<void | InternalErrorResponse>>(
- salesPeriodId: () =>  number,
-    params: () =>  TableBookingPeriodHistoryParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingPeriodHistory>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
-
-
-
-  const query = createQuery(() => getTableBookingPeriodHistoryQueryOptions(salesPeriodId(),
-    params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
-}
-
-
-
-
-
 
 export const getTableBookingPaymentEditUrl = () => {
+	return `/tableBooking/payment`;
+};
 
+export const tableBookingPaymentEdit = async (
+	tableBookingPaymentEditRequest: TableBookingPaymentEditRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesCashUpUserItem> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesCashUpUserItem>(getTableBookingPaymentEditUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableBookingPaymentEditRequest),
+	});
+};
 
+export const getTableBookingPaymentEditMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TError, TableBookingPaymentEditMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TError, TableBookingPaymentEditMutationVariables, TContext> => {
+	const mutationKey = ["tableBookingPaymentEdit"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TableBookingPaymentEditMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/tableBooking/payment`
-}
+		return tableBookingPaymentEdit(data, requestOptions);
+	};
 
-export const tableBookingPaymentEdit = async (tableBookingPaymentEditRequest: TableBookingPaymentEditRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesCashUpUserItem> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesCashUpUserItem>(getTableBookingPaymentEditUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableBookingPaymentEditRequest)
-  }
-);}
+export type TableBookingPaymentEditMutationResult = NonNullable<Awaited<ReturnType<typeof tableBookingPaymentEdit>>>;
+export type TableBookingPaymentEditMutationBody = BodyType<TableBookingPaymentEditRequest>;
+export type TableBookingPaymentEditMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableBookingPaymentEditMutationVariables = { data: BodyType<TableBookingPaymentEditRequest> };
 
+export const createTableBookingPaymentEdit = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TError, TableBookingPaymentEditMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TError, TableBookingPaymentEditMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableBookingPaymentEditMutationOptions(options?.()) }), queryClient);
+};
+export const getTableBookingHistoryUserUrl = (userId: string, params: TableBookingHistoryUserParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/tableBooking/myHistory/${userId}?${stringifiedParams}` : `/tableBooking/myHistory/${userId}`;
+};
 
-export const getTableBookingPaymentEditMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TError,TableBookingPaymentEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TError,TableBookingPaymentEditMutationVariables, TContext> => {
+export const tableBookingHistoryUser = async (
+	userId: string,
+	params: TableBookingHistoryUserParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<CommonModelsPaginatedListOfResponse2> => {
+	return customInstance<CommonModelsPaginatedListOfResponse2>(getTableBookingHistoryUserUrl(userId, params), {
+		...options,
+		method: "GET",
+	});
+};
 
-const mutationKey = ['tableBookingPaymentEdit'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export const getTableBookingHistoryUserQueryKey = (userId: string, params?: TableBookingHistoryUserParams) => {
+	return [`/tableBooking/myHistory/${userId}`, ...(params ? [params] : [])] as const;
+};
 
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TableBookingPaymentEditMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableBookingPaymentEdit(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableBookingPaymentEditMutationResult = NonNullable<Awaited<ReturnType<typeof tableBookingPaymentEdit>>>
-    export type TableBookingPaymentEditMutationBody = BodyType<TableBookingPaymentEditRequest>
-    export type TableBookingPaymentEditMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableBookingPaymentEditMutationVariables = {data: BodyType<TableBookingPaymentEditRequest>}
-
-    export const createTableBookingPaymentEdit = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TError,TableBookingPaymentEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableBookingPaymentEdit>>,
-        TError,
-        TableBookingPaymentEditMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableBookingPaymentEditMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableBookingHistoryUserUrl = (userId: string,
-    params: TableBookingHistoryUserParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/tableBooking/myHistory/${userId}?${stringifiedParams}` : `/tableBooking/myHistory/${userId}`
-}
-
-export const tableBookingHistoryUser = async (userId: string,
-    params: TableBookingHistoryUserParams, options?: Parameters<typeof customInstance>[1]): Promise<CommonModelsPaginatedListOfResponse2> => {
-
-  return customInstance<CommonModelsPaginatedListOfResponse2>(getTableBookingHistoryUserUrl(userId,params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getTableBookingHistoryUserQueryKey = (userId: string,
-    params?: TableBookingHistoryUserParams,) => {
-    return [
-    `/tableBooking/myHistory/${userId}`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getTableBookingHistoryUserQueryOptions = <TData = Awaited<ReturnType<typeof tableBookingHistoryUser>>, TError = ErrorType<void | InternalErrorResponse>>(userId: string,
-    params: TableBookingHistoryUserParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryUser>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTableBookingHistoryUserQueryOptions = <
+	TData = Awaited<ReturnType<typeof tableBookingHistoryUser>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	userId: string,
+	params: TableBookingHistoryUserParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryUser>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getTableBookingHistoryUserQueryKey(userId, params);
 
-  const queryKey =  queryOptions?.queryKey ?? getTableBookingHistoryUserQueryKey(userId,params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistoryUser>>> = () => tableBookingHistoryUser(userId, params, requestOptions);
 
+	return { queryKey, queryFn, enabled: userId !== null && userId !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof tableBookingHistoryUser>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistoryUser>>> = () => tableBookingHistoryUser(userId,params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: userId !== null && userId !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryUser>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TableBookingHistoryUserQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingHistoryUser>>>
-export type TableBookingHistoryUserQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type TableBookingHistoryUserQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingHistoryUser>>>;
+export type TableBookingHistoryUserQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createTableBookingHistoryUser<TData = Awaited<ReturnType<typeof tableBookingHistoryUser>>, TError = ErrorType<void | InternalErrorResponse>>(
- userId: () =>  string,
-    params: () =>  TableBookingHistoryUserParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryUser>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	userId: () => string,
+	params: () => TableBookingHistoryUserParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryUser>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getTableBookingHistoryUserQueryOptions(userId(), params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getTableBookingHistoryUserQueryOptions(userId(),
-    params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getTableBookingHistoryAllUrl = (params: TableBookingHistoryAllParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/tableBooking/history/all?${stringifiedParams}` : `/tableBooking/history/all`;
+};
 
+export const tableBookingHistoryAll = async (
+	params: TableBookingHistoryAllParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<CommonModelsPaginatedListOfResponse2> => {
+	return customInstance<CommonModelsPaginatedListOfResponse2>(getTableBookingHistoryAllUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-export const getTableBookingHistoryAllUrl = (params: TableBookingHistoryAllParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getTableBookingHistoryAllQueryKey = (params?: TableBookingHistoryAllParams) => {
+	return [`/tableBooking/history/all`, ...(params ? [params] : [])] as const;
+};
 
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/tableBooking/history/all?${stringifiedParams}` : `/tableBooking/history/all`
-}
-
-export const tableBookingHistoryAll = async (params: TableBookingHistoryAllParams, options?: Parameters<typeof customInstance>[1]): Promise<CommonModelsPaginatedListOfResponse2> => {
-
-  return customInstance<CommonModelsPaginatedListOfResponse2>(getTableBookingHistoryAllUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getTableBookingHistoryAllQueryKey = (params?: TableBookingHistoryAllParams,) => {
-    return [
-    `/tableBooking/history/all`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getTableBookingHistoryAllQueryOptions = <TData = Awaited<ReturnType<typeof tableBookingHistoryAll>>, TError = ErrorType<void | InternalErrorResponse>>(params: TableBookingHistoryAllParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTableBookingHistoryAllQueryOptions = <
+	TData = Awaited<ReturnType<typeof tableBookingHistoryAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(
+	params: TableBookingHistoryAllParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getTableBookingHistoryAllQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getTableBookingHistoryAllQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistoryAll>>> = () => tableBookingHistoryAll(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistoryAll>>> = () => tableBookingHistoryAll(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TableBookingHistoryAllQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingHistoryAll>>>
-export type TableBookingHistoryAllQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type TableBookingHistoryAllQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingHistoryAll>>>;
+export type TableBookingHistoryAllQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createTableBookingHistoryAll<TData = Awaited<ReturnType<typeof tableBookingHistoryAll>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  TableBookingHistoryAllParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => TableBookingHistoryAllParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistoryAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getTableBookingHistoryAllQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getTableBookingHistoryAllQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getTableBookingHistoryUrl = (params: TableBookingHistoryParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/tableBooking/myHistory?${stringifiedParams}` : `/tableBooking/myHistory`;
+};
 
+export const tableBookingHistory = async (
+	params: TableBookingHistoryParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<CommonModelsPaginatedListOfResponse2> => {
+	return customInstance<CommonModelsPaginatedListOfResponse2>(getTableBookingHistoryUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-export const getTableBookingHistoryUrl = (params: TableBookingHistoryParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getTableBookingHistoryQueryKey = (params?: TableBookingHistoryParams) => {
+	return [`/tableBooking/myHistory`, ...(params ? [params] : [])] as const;
+};
 
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/tableBooking/myHistory?${stringifiedParams}` : `/tableBooking/myHistory`
-}
-
-export const tableBookingHistory = async (params: TableBookingHistoryParams, options?: Parameters<typeof customInstance>[1]): Promise<CommonModelsPaginatedListOfResponse2> => {
-
-  return customInstance<CommonModelsPaginatedListOfResponse2>(getTableBookingHistoryUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getTableBookingHistoryQueryKey = (params?: TableBookingHistoryParams,) => {
-    return [
-    `/tableBooking/myHistory`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getTableBookingHistoryQueryOptions = <TData = Awaited<ReturnType<typeof tableBookingHistory>>, TError = ErrorType<void | InternalErrorResponse>>(params: TableBookingHistoryParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTableBookingHistoryQueryOptions = <TData = Awaited<ReturnType<typeof tableBookingHistory>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: TableBookingHistoryParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getTableBookingHistoryQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getTableBookingHistoryQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistory>>> = () => tableBookingHistory(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingHistory>>> = () => tableBookingHistory(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TableBookingHistoryQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingHistory>>>
-export type TableBookingHistoryQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type TableBookingHistoryQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingHistory>>>;
+export type TableBookingHistoryQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createTableBookingHistory<TData = Awaited<ReturnType<typeof tableBookingHistory>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  TableBookingHistoryParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => TableBookingHistoryParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingHistory>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getTableBookingHistoryQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getTableBookingHistoryQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
-
-
-
-
-
-export const getTableBookingGetUrl = (id: number,) => {
-
-
-
-
-  return `/tableBooking/${id}`
-}
+export const getTableBookingGetUrl = (id: number) => {
+	return `/tableBooking/${id}`;
+};
 
 export const tableBookingGet = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<TableBookingGetResponse> => {
+	return customInstance<TableBookingGetResponse>(getTableBookingGetUrl(id), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<TableBookingGetResponse>(getTableBookingGetUrl(id),
-  {
-    ...options,
-    method: 'GET'
+export const getTableBookingGetQueryKey = (id: number) => {
+	return [`/tableBooking/${id}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getTableBookingGetQueryKey = (id: number,) => {
-    return [
-    `/tableBooking/${id}`
-    ] as const;
-    }
-
-
-export const getTableBookingGetQueryOptions = <TData = Awaited<ReturnType<typeof tableBookingGet>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(id: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getTableBookingGetQueryOptions = <
+	TData = Awaited<ReturnType<typeof tableBookingGet>>,
+	TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
+>(
+	id: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingGet>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getTableBookingGetQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getTableBookingGetQueryKey(id);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingGet>>> = () => tableBookingGet(id, requestOptions);
 
+	return { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof tableBookingGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof tableBookingGet>>> = () => tableBookingGet(id, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof tableBookingGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type TableBookingGetQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingGet>>>
-export type TableBookingGetQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-
-
+export type TableBookingGetQueryResult = NonNullable<Awaited<ReturnType<typeof tableBookingGet>>>;
+export type TableBookingGetQueryError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
 
 export function createTableBookingGet<TData = Awaited<ReturnType<typeof tableBookingGet>>, TError = ErrorType<ErrorResponse | void | InternalErrorResponse>>(
- id: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	id: () => number,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof tableBookingGet>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getTableBookingGetQueryOptions(id(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getTableBookingGetQueryOptions(id(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getTableBookingCreateUrl = () => {
+	return `/tableBooking`;
+};
 
+export const tableBookingCreate = async (
+	tableBookingCreateRequest: TableBookingCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesTableBooking> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesTableBooking>(getTableBookingCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableBookingCreateRequest),
+	});
+};
 
+export const getTableBookingCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingCreate>>, TError, TableBookingCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingCreate>>, TError, TableBookingCreateMutationVariables, TContext> => {
+	const mutationKey = ["tableBookingCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableBookingCreate>>, TableBookingCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/tableBooking`
-}
+		return tableBookingCreate(data, requestOptions);
+	};
 
-export const tableBookingCreate = async (tableBookingCreateRequest: TableBookingCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesTableBooking> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesTableBooking>(getTableBookingCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableBookingCreateRequest)
-  }
-);}
+export type TableBookingCreateMutationResult = NonNullable<Awaited<ReturnType<typeof tableBookingCreate>>>;
+export type TableBookingCreateMutationBody = BodyType<TableBookingCreateRequest>;
+export type TableBookingCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type TableBookingCreateMutationVariables = { data: BodyType<TableBookingCreateRequest> };
 
+export const createTableBookingCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingCreate>>, TError, TableBookingCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableBookingCreate>>, TError, TableBookingCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableBookingCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getTableBookingCloseUrl = () => {
+	return `/tableBooking/close`;
+};
 
+export const tableBookingClose = async (
+	tableBookingCloseRequest: TableBookingCloseRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesTableBooking> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesTableBooking>(getTableBookingCloseUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(tableBookingCloseRequest),
+	});
+};
 
+export const getTableBookingCloseMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingClose>>, TError, TableBookingCloseMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingClose>>, TError, TableBookingCloseMutationVariables, TContext> => {
+	const mutationKey = ["tableBookingClose"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableBookingClose>>, TableBookingCloseMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-export const getTableBookingCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableBookingCreate>>, TError,TableBookingCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingCreate>>, TError,TableBookingCreateMutationVariables, TContext> => {
+		return tableBookingClose(data, requestOptions);
+	};
 
-const mutationKey = ['tableBookingCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	return { mutationFn, ...mutationOptions };
+};
 
+export type TableBookingCloseMutationResult = NonNullable<Awaited<ReturnType<typeof tableBookingClose>>>;
+export type TableBookingCloseMutationBody = BodyType<TableBookingCloseRequest>;
+export type TableBookingCloseMutationError = ErrorType<void | InternalErrorResponse>;
+export type TableBookingCloseMutationVariables = { data: BodyType<TableBookingCloseRequest> };
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableBookingCreate>>, TableBookingCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableBookingCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableBookingCreateMutationResult = NonNullable<Awaited<ReturnType<typeof tableBookingCreate>>>
-    export type TableBookingCreateMutationBody = BodyType<TableBookingCreateRequest>
-    export type TableBookingCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type TableBookingCreateMutationVariables = {data: BodyType<TableBookingCreateRequest>}
-
-    export const createTableBookingCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableBookingCreate>>, TError,TableBookingCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableBookingCreate>>,
-        TError,
-        TableBookingCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableBookingCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getTableBookingCloseUrl = () => {
-
-
-
-
-  return `/tableBooking/close`
-}
-
-export const tableBookingClose = async (tableBookingCloseRequest: TableBookingCloseRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesTableBooking> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesTableBooking>(getTableBookingCloseUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(tableBookingCloseRequest)
-  }
-);}
-
-
-
-
-
-export const getTableBookingCloseMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableBookingClose>>, TError,TableBookingCloseMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingClose>>, TError,TableBookingCloseMutationVariables, TContext> => {
-
-const mutationKey = ['tableBookingClose'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof tableBookingClose>>, TableBookingCloseMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  tableBookingClose(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type TableBookingCloseMutationResult = NonNullable<Awaited<ReturnType<typeof tableBookingClose>>>
-    export type TableBookingCloseMutationBody = BodyType<TableBookingCloseRequest>
-    export type TableBookingCloseMutationError = ErrorType<void | InternalErrorResponse>
-    export type TableBookingCloseMutationVariables = {data: BodyType<TableBookingCloseRequest>}
-
-    export const createTableBookingClose = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof tableBookingClose>>, TError,TableBookingCloseMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof tableBookingClose>>,
-        TError,
-        TableBookingCloseMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getTableBookingCloseMutationOptions(options?.()) }), queryClient);
-    }
+export const createTableBookingClose = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingClose>>, TError, TableBookingCloseMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof tableBookingClose>>, TError, TableBookingCloseMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getTableBookingCloseMutationOptions(options?.()) }), queryClient);
+};

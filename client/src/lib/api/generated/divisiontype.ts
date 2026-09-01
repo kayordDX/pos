@@ -4,256 +4,200 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  DivisionTypeCreateRequest,
-  DivisionTypeEditRequest,
-  DivisionTypeGetAllParams,
-  EntitiesDivisionType,
-  ErrorResponse,
-  InternalErrorResponse
-} from './api.schemas';
+	DivisionTypeCreateRequest,
+	DivisionTypeEditRequest,
+	DivisionTypeGetAllParams,
+	EntitiesDivisionType,
+	ErrorResponse,
+	InternalErrorResponse,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+export const getDivisionTypeGetAllUrl = (params: DivisionTypeGetAllParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
-export const getDivisionTypeGetAllUrl = (params: DivisionTypeGetAllParams,) => {
-  const normalizedParams = new URLSearchParams();
+	const stringifiedParams = normalizedParams.toString();
 
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/divisionType?${stringifiedParams}` : `/divisionType`
-}
+	return stringifiedParams.length > 0 ? `/divisionType?${stringifiedParams}` : `/divisionType`;
+};
 
 export const divisionTypeGetAll = async (params: DivisionTypeGetAllParams, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesDivisionType[]> => {
+	return customInstance<EntitiesDivisionType[]>(getDivisionTypeGetAllUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<EntitiesDivisionType[]>(getDivisionTypeGetAllUrl(params),
-  {
-    ...options,
-    method: 'GET'
+export const getDivisionTypeGetAllQueryKey = (params?: DivisionTypeGetAllParams) => {
+	return [`/divisionType`, ...(params ? [params] : [])] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getDivisionTypeGetAllQueryKey = (params?: DivisionTypeGetAllParams,) => {
-    return [
-    `/divisionType`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getDivisionTypeGetAllQueryOptions = <TData = Awaited<ReturnType<typeof divisionTypeGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(params: DivisionTypeGetAllParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof divisionTypeGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getDivisionTypeGetAllQueryOptions = <TData = Awaited<ReturnType<typeof divisionTypeGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: DivisionTypeGetAllParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof divisionTypeGetAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getDivisionTypeGetAllQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getDivisionTypeGetAllQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof divisionTypeGetAll>>> = () => divisionTypeGetAll(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof divisionTypeGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof divisionTypeGetAll>>> = () => divisionTypeGetAll(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof divisionTypeGetAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type DivisionTypeGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof divisionTypeGetAll>>>
-export type DivisionTypeGetAllQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type DivisionTypeGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof divisionTypeGetAll>>>;
+export type DivisionTypeGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createDivisionTypeGetAll<TData = Awaited<ReturnType<typeof divisionTypeGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  DivisionTypeGetAllParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof divisionTypeGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => DivisionTypeGetAllParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof divisionTypeGetAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getDivisionTypeGetAllQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getDivisionTypeGetAllQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getDivisionTypeEditUrl = () => {
-
-
-
-
-  return `/divisionType`
-}
+	return `/divisionType`;
+};
 
 export const divisionTypeEdit = async (divisionTypeEditRequest: DivisionTypeEditRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getDivisionTypeEditUrl(), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(divisionTypeEditRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getDivisionTypeEditUrl(),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(divisionTypeEditRequest)
-  }
-);}
+export const getDivisionTypeEditMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeEdit>>, TError, DivisionTypeEditMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeEdit>>, TError, DivisionTypeEditMutationVariables, TContext> => {
+	const mutationKey = ["divisionTypeEdit"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof divisionTypeEdit>>, DivisionTypeEditMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return divisionTypeEdit(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type DivisionTypeEditMutationResult = NonNullable<Awaited<ReturnType<typeof divisionTypeEdit>>>;
+export type DivisionTypeEditMutationBody = BodyType<DivisionTypeEditRequest>;
+export type DivisionTypeEditMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type DivisionTypeEditMutationVariables = { data: BodyType<DivisionTypeEditRequest> };
 
-export const getDivisionTypeEditMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeEdit>>, TError,DivisionTypeEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeEdit>>, TError,DivisionTypeEditMutationVariables, TContext> => {
+export const createDivisionTypeEdit = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeEdit>>, TError, DivisionTypeEditMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof divisionTypeEdit>>, TError, DivisionTypeEditMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getDivisionTypeEditMutationOptions(options?.()) }), queryClient);
+};
+export const getDivisionTypeCreateUrl = () => {
+	return `/divisionType`;
+};
 
-const mutationKey = ['divisionTypeEdit'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export const divisionTypeCreate = async (
+	divisionTypeCreateRequest: DivisionTypeCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesDivisionType> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesDivisionType>(getDivisionTypeCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(divisionTypeCreateRequest),
+	});
+};
 
+export const getDivisionTypeCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeCreate>>, TError, DivisionTypeCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeCreate>>, TError, DivisionTypeCreateMutationVariables, TContext> => {
+	const mutationKey = ["divisionTypeCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof divisionTypeCreate>>, DivisionTypeCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return divisionTypeCreate(data, requestOptions);
+	};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof divisionTypeEdit>>, DivisionTypeEditMutationVariables> = (props) => {
-          const {data} = props ?? {};
+	return { mutationFn, ...mutationOptions };
+};
 
-          return  divisionTypeEdit(data,requestOptions)
-        }
+export type DivisionTypeCreateMutationResult = NonNullable<Awaited<ReturnType<typeof divisionTypeCreate>>>;
+export type DivisionTypeCreateMutationBody = BodyType<DivisionTypeCreateRequest>;
+export type DivisionTypeCreateMutationError = ErrorType<void | InternalErrorResponse>;
+export type DivisionTypeCreateMutationVariables = { data: BodyType<DivisionTypeCreateRequest> };
 
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DivisionTypeEditMutationResult = NonNullable<Awaited<ReturnType<typeof divisionTypeEdit>>>
-    export type DivisionTypeEditMutationBody = BodyType<DivisionTypeEditRequest>
-    export type DivisionTypeEditMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type DivisionTypeEditMutationVariables = {data: BodyType<DivisionTypeEditRequest>}
-
-    export const createDivisionTypeEdit = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeEdit>>, TError,DivisionTypeEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof divisionTypeEdit>>,
-        TError,
-        DivisionTypeEditMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getDivisionTypeEditMutationOptions(options?.()) }), queryClient);
-    }
-    export const getDivisionTypeCreateUrl = () => {
-
-
-
-
-  return `/divisionType`
-}
-
-export const divisionTypeCreate = async (divisionTypeCreateRequest: DivisionTypeCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesDivisionType> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesDivisionType>(getDivisionTypeCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(divisionTypeCreateRequest)
-  }
-);}
-
-
-
-
-
-export const getDivisionTypeCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeCreate>>, TError,DivisionTypeCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeCreate>>, TError,DivisionTypeCreateMutationVariables, TContext> => {
-
-const mutationKey = ['divisionTypeCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof divisionTypeCreate>>, DivisionTypeCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  divisionTypeCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type DivisionTypeCreateMutationResult = NonNullable<Awaited<ReturnType<typeof divisionTypeCreate>>>
-    export type DivisionTypeCreateMutationBody = BodyType<DivisionTypeCreateRequest>
-    export type DivisionTypeCreateMutationError = ErrorType<void | InternalErrorResponse>
-    export type DivisionTypeCreateMutationVariables = {data: BodyType<DivisionTypeCreateRequest>}
-
-    export const createDivisionTypeCreate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeCreate>>, TError,DivisionTypeCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof divisionTypeCreate>>,
-        TError,
-        DivisionTypeCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getDivisionTypeCreateMutationOptions(options?.()) }), queryClient);
-    }
+export const createDivisionTypeCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof divisionTypeCreate>>, TError, DivisionTypeCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof divisionTypeCreate>>, TError, DivisionTypeCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getDivisionTypeCreateMutationOptions(options?.()) }), queryClient);
+};

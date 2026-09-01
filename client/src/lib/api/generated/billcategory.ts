@@ -4,257 +4,204 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  BillCategoryCreateRequest,
-  BillCategoryGetAllParams,
-  BillCategoryUpdateRequest,
-  EntitiesBillCategory,
-  ErrorResponse,
-  InternalErrorResponse
-} from './api.schemas';
+	BillCategoryCreateRequest,
+	BillCategoryGetAllParams,
+	BillCategoryUpdateRequest,
+	EntitiesBillCategory,
+	ErrorResponse,
+	InternalErrorResponse,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+export const getBillCategoryUpdateUrl = (id: number) => {
+	return `/billCategory/${id}`;
+};
 
+export const billCategoryUpdate = async (
+	id: number,
+	billCategoryUpdateRequest: BillCategoryUpdateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesBillCategory> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesBillCategory>(getBillCategoryUpdateUrl(id), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(billCategoryUpdateRequest),
+	});
+};
 
-export const getBillCategoryUpdateUrl = (id: number,) => {
+export const getBillCategoryUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError, BillCategoryUpdateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError, BillCategoryUpdateMutationVariables, TContext> => {
+	const mutationKey = ["billCategoryUpdate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof billCategoryUpdate>>, BillCategoryUpdateMutationVariables> = (props) => {
+		const { id, data } = props ?? {};
 
+		return billCategoryUpdate(id, data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
-  return `/billCategory/${id}`
-}
+export type BillCategoryUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof billCategoryUpdate>>>;
+export type BillCategoryUpdateMutationBody = BodyType<BillCategoryUpdateRequest>;
+export type BillCategoryUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type BillCategoryUpdateMutationVariables = { id: number; data: BodyType<BillCategoryUpdateRequest> };
 
-export const billCategoryUpdate = async (id: number,
-    billCategoryUpdateRequest: BillCategoryUpdateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesBillCategory> => {
+export const createBillCategoryUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError, BillCategoryUpdateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof billCategoryUpdate>>, TError, BillCategoryUpdateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getBillCategoryUpdateMutationOptions(options?.()) }), queryClient);
+};
+export const getBillCategoryGetAllUrl = (params: BillCategoryGetAllParams) => {
+	const normalizedParams = new URLSearchParams();
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesBillCategory>(getBillCategoryUpdateUrl(id),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(billCategoryUpdateRequest)
-  }
-);}
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
-
-
-
-export const getBillCategoryUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError,BillCategoryUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError,BillCategoryUpdateMutationVariables, TContext> => {
-
-const mutationKey = ['billCategoryUpdate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof billCategoryUpdate>>, BillCategoryUpdateMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  billCategoryUpdate(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BillCategoryUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof billCategoryUpdate>>>
-    export type BillCategoryUpdateMutationBody = BodyType<BillCategoryUpdateRequest>
-    export type BillCategoryUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type BillCategoryUpdateMutationVariables = {id: number;data: BodyType<BillCategoryUpdateRequest>}
-
-    export const createBillCategoryUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError,BillCategoryUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof billCategoryUpdate>>,
-        TError,
-        BillCategoryUpdateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getBillCategoryUpdateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getBillCategoryGetAllUrl = (params: BillCategoryGetAllParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/BillCategory?${stringifiedParams}` : `/BillCategory`
-}
+	return stringifiedParams.length > 0 ? `/BillCategory?${stringifiedParams}` : `/BillCategory`;
+};
 
 export const billCategoryGetAll = async (params: BillCategoryGetAllParams, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesBillCategory[]> => {
+	return customInstance<EntitiesBillCategory[]>(getBillCategoryGetAllUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<EntitiesBillCategory[]>(getBillCategoryGetAllUrl(params),
-  {
-    ...options,
-    method: 'GET'
+export const getBillCategoryGetAllQueryKey = (params?: BillCategoryGetAllParams) => {
+	return [`/BillCategory`, ...(params ? [params] : [])] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getBillCategoryGetAllQueryKey = (params?: BillCategoryGetAllParams,) => {
-    return [
-    `/BillCategory`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getBillCategoryGetAllQueryOptions = <TData = Awaited<ReturnType<typeof billCategoryGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(params: BillCategoryGetAllParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getBillCategoryGetAllQueryOptions = <TData = Awaited<ReturnType<typeof billCategoryGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: BillCategoryGetAllParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getBillCategoryGetAllQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getBillCategoryGetAllQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof billCategoryGetAll>>> = () => billCategoryGetAll(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof billCategoryGetAll>>> = () => billCategoryGetAll(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type BillCategoryGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof billCategoryGetAll>>>
-export type BillCategoryGetAllQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type BillCategoryGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof billCategoryGetAll>>>;
+export type BillCategoryGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createBillCategoryGetAll<TData = Awaited<ReturnType<typeof billCategoryGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  BillCategoryGetAllParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => BillCategoryGetAllParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof billCategoryGetAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getBillCategoryGetAllQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getBillCategoryGetAllQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getBillCategoryCreateUrl = () => {
+	return `/billCategory`;
+};
 
+export const billCategoryCreate = async (
+	billCategoryCreateRequest: BillCategoryCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesBillCategory> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesBillCategory>(getBillCategoryCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(billCategoryCreateRequest),
+	});
+};
 
+export const getBillCategoryCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError, BillCategoryCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError, BillCategoryCreateMutationVariables, TContext> => {
+	const mutationKey = ["billCategoryCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof billCategoryCreate>>, BillCategoryCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/billCategory`
-}
+		return billCategoryCreate(data, requestOptions);
+	};
 
-export const billCategoryCreate = async (billCategoryCreateRequest: BillCategoryCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesBillCategory> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesBillCategory>(getBillCategoryCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(billCategoryCreateRequest)
-  }
-);}
+export type BillCategoryCreateMutationResult = NonNullable<Awaited<ReturnType<typeof billCategoryCreate>>>;
+export type BillCategoryCreateMutationBody = BodyType<BillCategoryCreateRequest>;
+export type BillCategoryCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type BillCategoryCreateMutationVariables = { data: BodyType<BillCategoryCreateRequest> };
 
-
-
-
-
-export const getBillCategoryCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError,BillCategoryCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError,BillCategoryCreateMutationVariables, TContext> => {
-
-const mutationKey = ['billCategoryCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof billCategoryCreate>>, BillCategoryCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  billCategoryCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BillCategoryCreateMutationResult = NonNullable<Awaited<ReturnType<typeof billCategoryCreate>>>
-    export type BillCategoryCreateMutationBody = BodyType<BillCategoryCreateRequest>
-    export type BillCategoryCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type BillCategoryCreateMutationVariables = {data: BodyType<BillCategoryCreateRequest>}
-
-    export const createBillCategoryCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError,BillCategoryCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof billCategoryCreate>>,
-        TError,
-        BillCategoryCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getBillCategoryCreateMutationOptions(options?.()) }), queryClient);
-    }
+export const createBillCategoryCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError, BillCategoryCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof billCategoryCreate>>, TError, BillCategoryCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getBillCategoryCreateMutationOptions(options?.()) }), queryClient);
+};

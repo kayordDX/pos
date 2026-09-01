@@ -4,681 +4,520 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  CommonWrapperResultOfResponse,
-  CommonWrapperResultOfStatusResultDto,
-  EntitiesHaloConfig,
-  EntitiesPayment,
-  ErrorResponse,
-  InternalErrorResponse,
-  PayCheckRequest,
-  PayCheckResponse,
-  PayGetLinkParams,
-  PayManualPaymentRequest,
-  PayPayConfigCreateRequest,
-  PayPayConfigSetActiveRequest,
-  PayPayConfigTestConfigRequest
-} from './api.schemas';
+	CommonWrapperResultOfResponse,
+	CommonWrapperResultOfStatusResultDto,
+	EntitiesHaloConfig,
+	EntitiesPayment,
+	ErrorResponse,
+	InternalErrorResponse,
+	PayCheckRequest,
+	PayCheckResponse,
+	PayGetLinkParams,
+	PayManualPaymentRequest,
+	PayPayConfigCreateRequest,
+	PayPayConfigSetActiveRequest,
+	PayPayConfigTestConfigRequest,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-export const getPayStatusUrl = (reference: string,) => {
-
-
-
-
-  return `/pay/status/${reference}`
-}
+export const getPayStatusUrl = (reference: string) => {
+	return `/pay/status/${reference}`;
+};
 
 export const payStatus = async (reference: string, options?: Parameters<typeof customInstance>[1]): Promise<CommonWrapperResultOfStatusResultDto> => {
+	return customInstance<CommonWrapperResultOfStatusResultDto>(getPayStatusUrl(reference), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<CommonWrapperResultOfStatusResultDto>(getPayStatusUrl(reference),
-  {
-    ...options,
-    method: 'GET'
+export const getPayStatusQueryKey = (reference: string) => {
+	return [`/pay/status/${reference}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getPayStatusQueryKey = (reference: string,) => {
-    return [
-    `/pay/status/${reference}`
-    ] as const;
-    }
-
-
-export const getPayStatusQueryOptions = <TData = Awaited<ReturnType<typeof payStatus>>, TError = ErrorType<void | InternalErrorResponse>>(reference: string, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof payStatus>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getPayStatusQueryOptions = <TData = Awaited<ReturnType<typeof payStatus>>, TError = ErrorType<void | InternalErrorResponse>>(
+	reference: string,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof payStatus>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getPayStatusQueryKey(reference);
 
-  const queryKey =  queryOptions?.queryKey ?? getPayStatusQueryKey(reference);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof payStatus>>> = () => payStatus(reference, requestOptions);
 
+	return { queryKey, queryFn, enabled: reference !== null && reference !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof payStatus>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof payStatus>>> = () => payStatus(reference, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: reference !== null && reference !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof payStatus>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PayStatusQueryResult = NonNullable<Awaited<ReturnType<typeof payStatus>>>
-export type PayStatusQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type PayStatusQueryResult = NonNullable<Awaited<ReturnType<typeof payStatus>>>;
+export type PayStatusQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createPayStatus<TData = Awaited<ReturnType<typeof payStatus>>, TError = ErrorType<void | InternalErrorResponse>>(
- reference: () =>  string, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof payStatus>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	reference: () => string,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof payStatus>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getPayStatusQueryOptions(reference(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getPayStatusQueryOptions(reference(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getPayPayConfigTestConfigUrl = () => {
+	return `/pay/config/test`;
+};
 
+export const payPayConfigTestConfig = async (
+	payPayConfigTestConfigRequest: PayPayConfigTestConfigRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<boolean> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<boolean>(getPayPayConfigTestConfigUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(payPayConfigTestConfigRequest),
+	});
+};
 
+export const getPayPayConfigTestConfigMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigTestConfig>>, TError, PayPayConfigTestConfigMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigTestConfig>>, TError, PayPayConfigTestConfigMutationVariables, TContext> => {
+	const mutationKey = ["payPayConfigTestConfig"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof payPayConfigTestConfig>>, PayPayConfigTestConfigMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/pay/config/test`
-}
+		return payPayConfigTestConfig(data, requestOptions);
+	};
 
-export const payPayConfigTestConfig = async (payPayConfigTestConfigRequest: PayPayConfigTestConfigRequest, options?: Parameters<typeof customInstance>[1]): Promise<boolean> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<boolean>(getPayPayConfigTestConfigUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(payPayConfigTestConfigRequest)
-  }
-);}
+export type PayPayConfigTestConfigMutationResult = NonNullable<Awaited<ReturnType<typeof payPayConfigTestConfig>>>;
+export type PayPayConfigTestConfigMutationBody = BodyType<PayPayConfigTestConfigRequest>;
+export type PayPayConfigTestConfigMutationError = ErrorType<void | InternalErrorResponse>;
+export type PayPayConfigTestConfigMutationVariables = { data: BodyType<PayPayConfigTestConfigRequest> };
 
+export const createPayPayConfigTestConfig = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigTestConfig>>, TError, PayPayConfigTestConfigMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof payPayConfigTestConfig>>, TError, PayPayConfigTestConfigMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPayPayConfigTestConfigMutationOptions(options?.()) }), queryClient);
+};
+export const getPayPayConfigSetActiveUrl = () => {
+	return `/pay/config/activate`;
+};
 
+export const payPayConfigSetActive = async (
+	payPayConfigSetActiveRequest: PayPayConfigSetActiveRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getPayPayConfigSetActiveUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(payPayConfigSetActiveRequest),
+	});
+};
 
+export const getPayPayConfigSetActiveMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigSetActive>>, TError, PayPayConfigSetActiveMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigSetActive>>, TError, PayPayConfigSetActiveMutationVariables, TContext> => {
+	const mutationKey = ["payPayConfigSetActive"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof payPayConfigSetActive>>, PayPayConfigSetActiveMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-export const getPayPayConfigTestConfigMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigTestConfig>>, TError,PayPayConfigTestConfigMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigTestConfig>>, TError,PayPayConfigTestConfigMutationVariables, TContext> => {
+		return payPayConfigSetActive(data, requestOptions);
+	};
 
-const mutationKey = ['payPayConfigTestConfig'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	return { mutationFn, ...mutationOptions };
+};
 
+export type PayPayConfigSetActiveMutationResult = NonNullable<Awaited<ReturnType<typeof payPayConfigSetActive>>>;
+export type PayPayConfigSetActiveMutationBody = BodyType<PayPayConfigSetActiveRequest>;
+export type PayPayConfigSetActiveMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PayPayConfigSetActiveMutationVariables = { data: BodyType<PayPayConfigSetActiveRequest> };
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof payPayConfigTestConfig>>, PayPayConfigTestConfigMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  payPayConfigTestConfig(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PayPayConfigTestConfigMutationResult = NonNullable<Awaited<ReturnType<typeof payPayConfigTestConfig>>>
-    export type PayPayConfigTestConfigMutationBody = BodyType<PayPayConfigTestConfigRequest>
-    export type PayPayConfigTestConfigMutationError = ErrorType<void | InternalErrorResponse>
-    export type PayPayConfigTestConfigMutationVariables = {data: BodyType<PayPayConfigTestConfigRequest>}
-
-    export const createPayPayConfigTestConfig = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigTestConfig>>, TError,PayPayConfigTestConfigMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof payPayConfigTestConfig>>,
-        TError,
-        PayPayConfigTestConfigMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPayPayConfigTestConfigMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPayPayConfigSetActiveUrl = () => {
-
-
-
-
-  return `/pay/config/activate`
-}
-
-export const payPayConfigSetActive = async (payPayConfigSetActiveRequest: PayPayConfigSetActiveRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getPayPayConfigSetActiveUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(payPayConfigSetActiveRequest)
-  }
-);}
-
-
-
-
-
-export const getPayPayConfigSetActiveMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigSetActive>>, TError,PayPayConfigSetActiveMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigSetActive>>, TError,PayPayConfigSetActiveMutationVariables, TContext> => {
-
-const mutationKey = ['payPayConfigSetActive'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof payPayConfigSetActive>>, PayPayConfigSetActiveMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  payPayConfigSetActive(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PayPayConfigSetActiveMutationResult = NonNullable<Awaited<ReturnType<typeof payPayConfigSetActive>>>
-    export type PayPayConfigSetActiveMutationBody = BodyType<PayPayConfigSetActiveRequest>
-    export type PayPayConfigSetActiveMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type PayPayConfigSetActiveMutationVariables = {data: BodyType<PayPayConfigSetActiveRequest>}
-
-    export const createPayPayConfigSetActive = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigSetActive>>, TError,PayPayConfigSetActiveMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof payPayConfigSetActive>>,
-        TError,
-        PayPayConfigSetActiveMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPayPayConfigSetActiveMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPayPayConfigGetUrl = (outletId: number,) => {
-
-
-
-
-  return `/pay/config/${outletId}`
-}
+export const createPayPayConfigSetActive = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigSetActive>>, TError, PayPayConfigSetActiveMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof payPayConfigSetActive>>, TError, PayPayConfigSetActiveMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPayPayConfigSetActiveMutationOptions(options?.()) }), queryClient);
+};
+export const getPayPayConfigGetUrl = (outletId: number) => {
+	return `/pay/config/${outletId}`;
+};
 
 export const payPayConfigGet = async (outletId: number, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesHaloConfig[]> => {
+	return customInstance<EntitiesHaloConfig[]>(getPayPayConfigGetUrl(outletId), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<EntitiesHaloConfig[]>(getPayPayConfigGetUrl(outletId),
-  {
-    ...options,
-    method: 'GET'
+export const getPayPayConfigGetQueryKey = (outletId: number) => {
+	return [`/pay/config/${outletId}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getPayPayConfigGetQueryKey = (outletId: number,) => {
-    return [
-    `/pay/config/${outletId}`
-    ] as const;
-    }
-
-
-export const getPayPayConfigGetQueryOptions = <TData = Awaited<ReturnType<typeof payPayConfigGet>>, TError = ErrorType<void | InternalErrorResponse>>(outletId: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof payPayConfigGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getPayPayConfigGetQueryOptions = <TData = Awaited<ReturnType<typeof payPayConfigGet>>, TError = ErrorType<void | InternalErrorResponse>>(
+	outletId: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof payPayConfigGet>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getPayPayConfigGetQueryKey(outletId);
 
-  const queryKey =  queryOptions?.queryKey ?? getPayPayConfigGetQueryKey(outletId);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof payPayConfigGet>>> = () => payPayConfigGet(outletId, requestOptions);
 
+	return { queryKey, queryFn, enabled: outletId !== null && outletId !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof payPayConfigGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof payPayConfigGet>>> = () => payPayConfigGet(outletId, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: outletId !== null && outletId !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof payPayConfigGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PayPayConfigGetQueryResult = NonNullable<Awaited<ReturnType<typeof payPayConfigGet>>>
-export type PayPayConfigGetQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type PayPayConfigGetQueryResult = NonNullable<Awaited<ReturnType<typeof payPayConfigGet>>>;
+export type PayPayConfigGetQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createPayPayConfigGet<TData = Awaited<ReturnType<typeof payPayConfigGet>>, TError = ErrorType<void | InternalErrorResponse>>(
- outletId: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof payPayConfigGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	outletId: () => number,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof payPayConfigGet>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getPayPayConfigGetQueryOptions(outletId(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getPayPayConfigGetQueryOptions(outletId(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
-
-
-
-
-
-export const getPayPayConfigDeleteUrl = (id: number,) => {
-
-
-
-
-  return `/pay/config/${id}`
-}
+export const getPayPayConfigDeleteUrl = (id: number) => {
+	return `/pay/config/${id}`;
+};
 
 export const payPayConfigDelete = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
-
-  return customInstance<void>(getPayPayConfigDeleteUrl(id),
-  {
-    ...options,
-    method: 'DELETE'
-
-
-  }
-);}
-
-
-
-
-
-export const getPayPayConfigDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigDelete>>, TError,PayPayConfigDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigDelete>>, TError,PayPayConfigDeleteMutationVariables, TContext> => {
-
-const mutationKey = ['payPayConfigDelete'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof payPayConfigDelete>>, PayPayConfigDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  payPayConfigDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PayPayConfigDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof payPayConfigDelete>>>
-
-    export type PayPayConfigDeleteMutationError = ErrorType<void | InternalErrorResponse>
-    export type PayPayConfigDeleteMutationVariables = {id: number}
-
-    export const createPayPayConfigDelete = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigDelete>>, TError,PayPayConfigDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof payPayConfigDelete>>,
-        TError,
-        PayPayConfigDeleteMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPayPayConfigDeleteMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPayPayConfigCreateUrl = () => {
-
-
-
-
-  return `/pay/config`
-}
-
-export const payPayConfigCreate = async (payPayConfigCreateRequest: PayPayConfigCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesHaloConfig> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesHaloConfig>(getPayPayConfigCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(payPayConfigCreateRequest)
-  }
-);}
-
-
-
-
-
-export const getPayPayConfigCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigCreate>>, TError,PayPayConfigCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigCreate>>, TError,PayPayConfigCreateMutationVariables, TContext> => {
-
-const mutationKey = ['payPayConfigCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof payPayConfigCreate>>, PayPayConfigCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  payPayConfigCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PayPayConfigCreateMutationResult = NonNullable<Awaited<ReturnType<typeof payPayConfigCreate>>>
-    export type PayPayConfigCreateMutationBody = BodyType<PayPayConfigCreateRequest>
-    export type PayPayConfigCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type PayPayConfigCreateMutationVariables = {data: BodyType<PayPayConfigCreateRequest>}
-
-    export const createPayPayConfigCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigCreate>>, TError,PayPayConfigCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof payPayConfigCreate>>,
-        TError,
-        PayPayConfigCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPayPayConfigCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPayManualPaymentUrl = () => {
-
-
-
-
-  return `/pay/manual`
-}
-
-export const payManualPayment = async (payManualPaymentRequest: PayManualPaymentRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesPayment> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesPayment>(getPayManualPaymentUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(payManualPaymentRequest)
-  }
-);}
-
-
-
-
-
-export const getPayManualPaymentMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payManualPayment>>, TError,PayManualPaymentMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof payManualPayment>>, TError,PayManualPaymentMutationVariables, TContext> => {
-
-const mutationKey = ['payManualPayment'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof payManualPayment>>, PayManualPaymentMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  payManualPayment(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PayManualPaymentMutationResult = NonNullable<Awaited<ReturnType<typeof payManualPayment>>>
-    export type PayManualPaymentMutationBody = BodyType<PayManualPaymentRequest>
-    export type PayManualPaymentMutationError = ErrorType<void | InternalErrorResponse>
-    export type PayManualPaymentMutationVariables = {data: BodyType<PayManualPaymentRequest>}
-
-    export const createPayManualPayment = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payManualPayment>>, TError,PayManualPaymentMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof payManualPayment>>,
-        TError,
-        PayManualPaymentMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPayManualPaymentMutationOptions(options?.()) }), queryClient);
-    }
-    export const getPayGetLinkUrl = (params: PayGetLinkParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/pay/getLink?${stringifiedParams}` : `/pay/getLink`
-}
+	return customInstance<void>(getPayPayConfigDeleteUrl(id), {
+		...options,
+		method: "DELETE",
+	});
+};
+
+export const getPayPayConfigDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigDelete>>, TError, PayPayConfigDeleteMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigDelete>>, TError, PayPayConfigDeleteMutationVariables, TContext> => {
+	const mutationKey = ["payPayConfigDelete"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof payPayConfigDelete>>, PayPayConfigDeleteMutationVariables> = (props) => {
+		const { id } = props ?? {};
+
+		return payPayConfigDelete(id, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type PayPayConfigDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof payPayConfigDelete>>>;
+
+export type PayPayConfigDeleteMutationError = ErrorType<void | InternalErrorResponse>;
+export type PayPayConfigDeleteMutationVariables = { id: number };
+
+export const createPayPayConfigDelete = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigDelete>>, TError, PayPayConfigDeleteMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof payPayConfigDelete>>, TError, PayPayConfigDeleteMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPayPayConfigDeleteMutationOptions(options?.()) }), queryClient);
+};
+export const getPayPayConfigCreateUrl = () => {
+	return `/pay/config`;
+};
+
+export const payPayConfigCreate = async (
+	payPayConfigCreateRequest: PayPayConfigCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesHaloConfig> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesHaloConfig>(getPayPayConfigCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(payPayConfigCreateRequest),
+	});
+};
+
+export const getPayPayConfigCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigCreate>>, TError, PayPayConfigCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigCreate>>, TError, PayPayConfigCreateMutationVariables, TContext> => {
+	const mutationKey = ["payPayConfigCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof payPayConfigCreate>>, PayPayConfigCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return payPayConfigCreate(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type PayPayConfigCreateMutationResult = NonNullable<Awaited<ReturnType<typeof payPayConfigCreate>>>;
+export type PayPayConfigCreateMutationBody = BodyType<PayPayConfigCreateRequest>;
+export type PayPayConfigCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PayPayConfigCreateMutationVariables = { data: BodyType<PayPayConfigCreateRequest> };
+
+export const createPayPayConfigCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigCreate>>, TError, PayPayConfigCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof payPayConfigCreate>>, TError, PayPayConfigCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPayPayConfigCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getPayManualPaymentUrl = () => {
+	return `/pay/manual`;
+};
+
+export const payManualPayment = async (
+	payManualPaymentRequest: PayManualPaymentRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesPayment> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesPayment>(getPayManualPaymentUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(payManualPaymentRequest),
+	});
+};
+
+export const getPayManualPaymentMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payManualPayment>>, TError, PayManualPaymentMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof payManualPayment>>, TError, PayManualPaymentMutationVariables, TContext> => {
+	const mutationKey = ["payManualPayment"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof payManualPayment>>, PayManualPaymentMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return payManualPayment(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type PayManualPaymentMutationResult = NonNullable<Awaited<ReturnType<typeof payManualPayment>>>;
+export type PayManualPaymentMutationBody = BodyType<PayManualPaymentRequest>;
+export type PayManualPaymentMutationError = ErrorType<void | InternalErrorResponse>;
+export type PayManualPaymentMutationVariables = { data: BodyType<PayManualPaymentRequest> };
+
+export const createPayManualPayment = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payManualPayment>>, TError, PayManualPaymentMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof payManualPayment>>, TError, PayManualPaymentMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPayManualPaymentMutationOptions(options?.()) }), queryClient);
+};
+export const getPayGetLinkUrl = (params: PayGetLinkParams) => {
+	const normalizedParams = new URLSearchParams();
+
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
+
+	const stringifiedParams = normalizedParams.toString();
+
+	return stringifiedParams.length > 0 ? `/pay/getLink?${stringifiedParams}` : `/pay/getLink`;
+};
 
 export const payGetLink = async (params: PayGetLinkParams, options?: Parameters<typeof customInstance>[1]): Promise<CommonWrapperResultOfResponse> => {
+	return customInstance<CommonWrapperResultOfResponse>(getPayGetLinkUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<CommonWrapperResultOfResponse>(getPayGetLinkUrl(params),
-  {
-    ...options,
-    method: 'GET'
+export const getPayGetLinkQueryKey = (params?: PayGetLinkParams) => {
+	return [`/pay/getLink`, ...(params ? [params] : [])] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getPayGetLinkQueryKey = (params?: PayGetLinkParams,) => {
-    return [
-    `/pay/getLink`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getPayGetLinkQueryOptions = <TData = Awaited<ReturnType<typeof payGetLink>>, TError = ErrorType<void | InternalErrorResponse>>(params: PayGetLinkParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof payGetLink>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getPayGetLinkQueryOptions = <TData = Awaited<ReturnType<typeof payGetLink>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: PayGetLinkParams,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof payGetLink>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getPayGetLinkQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getPayGetLinkQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof payGetLink>>> = () => payGetLink(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof payGetLink>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof payGetLink>>> = () => payGetLink(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof payGetLink>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type PayGetLinkQueryResult = NonNullable<Awaited<ReturnType<typeof payGetLink>>>
-export type PayGetLinkQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type PayGetLinkQueryResult = NonNullable<Awaited<ReturnType<typeof payGetLink>>>;
+export type PayGetLinkQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createPayGetLink<TData = Awaited<ReturnType<typeof payGetLink>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  PayGetLinkParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof payGetLink>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => PayGetLinkParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof payGetLink>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getPayGetLinkQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getPayGetLinkQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getPayCheckUrl = () => {
-
-
-
-
-  return `/pay/check`
-}
+	return `/pay/check`;
+};
 
 export const payCheck = async (payCheckRequest: PayCheckRequest, options?: Parameters<typeof customInstance>[1]): Promise<PayCheckResponse> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<PayCheckResponse>(getPayCheckUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(payCheckRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<PayCheckResponse>(getPayCheckUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(payCheckRequest)
-  }
-);}
+export const getPayCheckMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payCheck>>, TError, PayCheckMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof payCheck>>, TError, PayCheckMutationVariables, TContext> => {
+	const mutationKey = ["payCheck"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof payCheck>>, PayCheckMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return payCheck(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type PayCheckMutationResult = NonNullable<Awaited<ReturnType<typeof payCheck>>>;
+export type PayCheckMutationBody = BodyType<PayCheckRequest>;
+export type PayCheckMutationError = ErrorType<void | InternalErrorResponse>;
+export type PayCheckMutationVariables = { data: BodyType<PayCheckRequest> };
 
-export const getPayCheckMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payCheck>>, TError,PayCheckMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof payCheck>>, TError,PayCheckMutationVariables, TContext> => {
-
-const mutationKey = ['payCheck'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof payCheck>>, PayCheckMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  payCheck(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type PayCheckMutationResult = NonNullable<Awaited<ReturnType<typeof payCheck>>>
-    export type PayCheckMutationBody = BodyType<PayCheckRequest>
-    export type PayCheckMutationError = ErrorType<void | InternalErrorResponse>
-    export type PayCheckMutationVariables = {data: BodyType<PayCheckRequest>}
-
-    export const createPayCheck = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof payCheck>>, TError,PayCheckMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof payCheck>>,
-        TError,
-        PayCheckMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getPayCheckMutationOptions(options?.()) }), queryClient);
-    }
+export const createPayCheck = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payCheck>>, TError, PayCheckMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof payCheck>>, TError, PayCheckMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPayCheckMutationOptions(options?.()) }), queryClient);
+};

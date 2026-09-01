@@ -50,18 +50,18 @@
 			title: "Print",
 			href: "/manager/admin/printers",
 			icon: PrinterIcon,
-			items: [
-				{
-					title: "Printers",
-					href: "/manager/admin/printers",
-					icon: PrinterIcon,
-				},
-				{
-					title: "Print Service Keys",
-					href: "/manager/admin/printServiceKeys",
-					icon: PrinterIcon,
-				},
-			],
+			// items: [
+			// 	{
+			// 		title: "Printers",
+			// 		href: "/manager/admin/printers",
+			// 		icon: PrinterIcon,
+			// 	},
+			// 	{
+			// 		title: "Print Service Keys",
+			// 		href: "/manager/admin/printServiceKeys",
+			// 		icon: PrinterIcon,
+			// 	},
+			// ],
 		},
 		{
 			title: "Users",

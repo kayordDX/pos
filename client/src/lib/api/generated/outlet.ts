@@ -4,669 +4,494 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  DTOOutletDTOBasic,
-  EntitiesOutlet,
-  EntitiesOutletCounter,
-  EntitiesPaymentType,
-  ErrorResponse,
-  InternalErrorResponse,
-  OutletCounterCreateRequest,
-  OutletCreateRequest,
-  OutletUpdateRequest
-} from './api.schemas';
+	DTOOutletDTOBasic,
+	EntitiesOutlet,
+	EntitiesOutletCounter,
+	EntitiesPaymentType,
+	ErrorResponse,
+	InternalErrorResponse,
+	OutletCounterCreateRequest,
+	OutletCreateRequest,
+	OutletUpdateRequest,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+export const getOutletUpdateUrl = (id: number) => {
+	return `/outlet/${id}`;
+};
 
+export const outletUpdate = async (
+	id: number,
+	outletUpdateRequest: OutletUpdateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesOutlet> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesOutlet>(getOutletUpdateUrl(id), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(outletUpdateRequest),
+	});
+};
 
-export const getOutletUpdateUrl = (id: number,) => {
+export const getOutletUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletUpdate>>, TError, OutletUpdateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof outletUpdate>>, TError, OutletUpdateMutationVariables, TContext> => {
+	const mutationKey = ["outletUpdate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof outletUpdate>>, OutletUpdateMutationVariables> = (props) => {
+		const { id, data } = props ?? {};
 
+		return outletUpdate(id, data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
-  return `/outlet/${id}`
-}
+export type OutletUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof outletUpdate>>>;
+export type OutletUpdateMutationBody = BodyType<OutletUpdateRequest>;
+export type OutletUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type OutletUpdateMutationVariables = { id: number; data: BodyType<OutletUpdateRequest> };
 
-export const outletUpdate = async (id: number,
-    outletUpdateRequest: OutletUpdateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOutlet> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesOutlet>(getOutletUpdateUrl(id),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(outletUpdateRequest)
-  }
-);}
-
-
-
-
-
-export const getOutletUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof outletUpdate>>, TError,OutletUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof outletUpdate>>, TError,OutletUpdateMutationVariables, TContext> => {
-
-const mutationKey = ['outletUpdate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof outletUpdate>>, OutletUpdateMutationVariables> = (props) => {
-          const {id,data} = props ?? {};
-
-          return  outletUpdate(id,data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type OutletUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof outletUpdate>>>
-    export type OutletUpdateMutationBody = BodyType<OutletUpdateRequest>
-    export type OutletUpdateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type OutletUpdateMutationVariables = {id: number;data: BodyType<OutletUpdateRequest>}
-
-    export const createOutletUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof outletUpdate>>, TError,OutletUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof outletUpdate>>,
-        TError,
-        OutletUpdateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getOutletUpdateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getOutletGetUrl = (id: number,) => {
-
-
-
-
-  return `/outlet/${id}`
-}
+export const createOutletUpdate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletUpdate>>, TError, OutletUpdateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof outletUpdate>>, TError, OutletUpdateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getOutletUpdateMutationOptions(options?.()) }), queryClient);
+};
+export const getOutletGetUrl = (id: number) => {
+	return `/outlet/${id}`;
+};
 
 export const outletGet = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOutlet> => {
+	return customInstance<EntitiesOutlet>(getOutletGetUrl(id), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<EntitiesOutlet>(getOutletGetUrl(id),
-  {
-    ...options,
-    method: 'GET'
+export const getOutletGetQueryKey = (id: number) => {
+	return [`/outlet/${id}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getOutletGetQueryKey = (id: number,) => {
-    return [
-    `/outlet/${id}`
-    ] as const;
-    }
-
-
-export const getOutletGetQueryOptions = <TData = Awaited<ReturnType<typeof outletGet>>, TError = ErrorType<void | InternalErrorResponse>>(id: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getOutletGetQueryOptions = <TData = Awaited<ReturnType<typeof outletGet>>, TError = ErrorType<void | InternalErrorResponse>>(
+	id: number,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGet>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getOutletGetQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getOutletGetQueryKey(id);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGet>>> = () => outletGet(id, requestOptions);
 
+	return { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof outletGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGet>>> = () => outletGet(id, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof outletGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type OutletGetQueryResult = NonNullable<Awaited<ReturnType<typeof outletGet>>>
-export type OutletGetQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type OutletGetQueryResult = NonNullable<Awaited<ReturnType<typeof outletGet>>>;
+export type OutletGetQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createOutletGet<TData = Awaited<ReturnType<typeof outletGet>>, TError = ErrorType<void | InternalErrorResponse>>(
- id: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	id: () => number,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGet>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getOutletGetQueryOptions(id(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getOutletGetQueryOptions(id(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getOutletListUrl = () => {
+	return `/outlet`;
+};
 
-
-
-
-  return `/outlet`
-}
-
-export const outletList = async ( options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOutlet[]> => {
-
-  return customInstance<EntitiesOutlet[]>(getOutletListUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
+export const outletList = async (options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOutlet[]> => {
+	return customInstance<EntitiesOutlet[]>(getOutletListUrl(), {
+		...options,
+		method: "GET",
+	});
+};
 
 export const getOutletListQueryKey = () => {
-    return [
-    `/outlet`
-    ] as const;
-    }
+	return [`/outlet`] as const;
+};
 
+export const getOutletListQueryOptions = <TData = Awaited<ReturnType<typeof outletList>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletList>>, TError, TData>>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getOutletListQueryOptions = <TData = Awaited<ReturnType<typeof outletList>>, TError = ErrorType<void | InternalErrorResponse>>( options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+	const queryKey = queryOptions?.queryKey ?? getOutletListQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletList>>> = () => outletList(requestOptions);
 
-  const queryKey =  queryOptions?.queryKey ?? getOutletListQueryKey();
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof outletList>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof outletList>>> = () => outletList(requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof outletList>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type OutletListQueryResult = NonNullable<Awaited<ReturnType<typeof outletList>>>
-export type OutletListQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type OutletListQueryResult = NonNullable<Awaited<ReturnType<typeof outletList>>>;
+export type OutletListQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createOutletList<TData = Awaited<ReturnType<typeof outletList>>, TError = ErrorType<void | InternalErrorResponse>>(
-  options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletList>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletList>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getOutletListQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getOutletListQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getOutletCreateUrl = () => {
-
-
-
-
-  return `/outlet`
-}
+	return `/outlet`;
+};
 
 export const outletCreate = async (outletCreateRequest: OutletCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOutlet> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesOutlet>(getOutletCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(outletCreateRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesOutlet>(getOutletCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(outletCreateRequest)
-  }
-);}
+export const getOutletCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletCreate>>, TError, OutletCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof outletCreate>>, TError, OutletCreateMutationVariables, TContext> => {
+	const mutationKey = ["outletCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof outletCreate>>, OutletCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return outletCreate(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type OutletCreateMutationResult = NonNullable<Awaited<ReturnType<typeof outletCreate>>>;
+export type OutletCreateMutationBody = BodyType<OutletCreateRequest>;
+export type OutletCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type OutletCreateMutationVariables = { data: BodyType<OutletCreateRequest> };
 
-export const getOutletCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof outletCreate>>, TError,OutletCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof outletCreate>>, TError,OutletCreateMutationVariables, TContext> => {
-
-const mutationKey = ['outletCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof outletCreate>>, OutletCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  outletCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type OutletCreateMutationResult = NonNullable<Awaited<ReturnType<typeof outletCreate>>>
-    export type OutletCreateMutationBody = BodyType<OutletCreateRequest>
-    export type OutletCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type OutletCreateMutationVariables = {data: BodyType<OutletCreateRequest>}
-
-    export const createOutletCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof outletCreate>>, TError,OutletCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof outletCreate>>,
-        TError,
-        OutletCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getOutletCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getOutletGetPaymentTypeUrl = (id: number,) => {
-
-
-
-
-  return `/outlet/paymentTypes/${id}`
-}
+export const createOutletCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletCreate>>, TError, OutletCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof outletCreate>>, TError, OutletCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getOutletCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getOutletGetPaymentTypeUrl = (id: number) => {
+	return `/outlet/paymentTypes/${id}`;
+};
 
 export const outletGetPaymentType = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesPaymentType[]> => {
+	return customInstance<EntitiesPaymentType[]>(getOutletGetPaymentTypeUrl(id), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<EntitiesPaymentType[]>(getOutletGetPaymentTypeUrl(id),
-  {
-    ...options,
-    method: 'GET'
+export const getOutletGetPaymentTypeQueryKey = (id: number) => {
+	return [`/outlet/paymentTypes/${id}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getOutletGetPaymentTypeQueryKey = (id: number,) => {
-    return [
-    `/outlet/paymentTypes/${id}`
-    ] as const;
-    }
-
-
-export const getOutletGetPaymentTypeQueryOptions = <TData = Awaited<ReturnType<typeof outletGetPaymentType>>, TError = ErrorType<void | InternalErrorResponse>>(id: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGetPaymentType>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getOutletGetPaymentTypeQueryOptions = <TData = Awaited<ReturnType<typeof outletGetPaymentType>>, TError = ErrorType<void | InternalErrorResponse>>(
+	id: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGetPaymentType>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getOutletGetPaymentTypeQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getOutletGetPaymentTypeQueryKey(id);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGetPaymentType>>> = () => outletGetPaymentType(id, requestOptions);
 
+	return { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof outletGetPaymentType>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGetPaymentType>>> = () => outletGetPaymentType(id, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof outletGetPaymentType>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type OutletGetPaymentTypeQueryResult = NonNullable<Awaited<ReturnType<typeof outletGetPaymentType>>>
-export type OutletGetPaymentTypeQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type OutletGetPaymentTypeQueryResult = NonNullable<Awaited<ReturnType<typeof outletGetPaymentType>>>;
+export type OutletGetPaymentTypeQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createOutletGetPaymentType<TData = Awaited<ReturnType<typeof outletGetPaymentType>>, TError = ErrorType<void | InternalErrorResponse>>(
- id: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGetPaymentType>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	id: () => number,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGetPaymentType>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getOutletGetPaymentTypeQueryOptions(id(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getOutletGetPaymentTypeQueryOptions(id(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getOutletGetAllAssignedUrl = () => {
+	return `/outlet/assigned`;
+};
 
-
-
-
-  return `/outlet/assigned`
-}
-
-export const outletGetAllAssigned = async ( options?: Parameters<typeof customInstance>[1]): Promise<DTOOutletDTOBasic[]> => {
-
-  return customInstance<DTOOutletDTOBasic[]>(getOutletGetAllAssignedUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
+export const outletGetAllAssigned = async (options?: Parameters<typeof customInstance>[1]): Promise<DTOOutletDTOBasic[]> => {
+	return customInstance<DTOOutletDTOBasic[]>(getOutletGetAllAssignedUrl(), {
+		...options,
+		method: "GET",
+	});
+};
 
 export const getOutletGetAllAssignedQueryKey = () => {
-    return [
-    `/outlet/assigned`
-    ] as const;
-    }
+	return [`/outlet/assigned`] as const;
+};
 
+export const getOutletGetAllAssignedQueryOptions = <
+	TData = Awaited<ReturnType<typeof outletGetAllAssigned>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getOutletGetAllAssignedQueryOptions = <TData = Awaited<ReturnType<typeof outletGetAllAssigned>>, TError = ErrorType<void | InternalErrorResponse>>( options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+	const queryKey = queryOptions?.queryKey ?? getOutletGetAllAssignedQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGetAllAssigned>>> = () => outletGetAllAssigned(requestOptions);
 
-  const queryKey =  queryOptions?.queryKey ?? getOutletGetAllAssignedQueryKey();
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof outletGetAllAssigned>>> = () => outletGetAllAssigned(requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type OutletGetAllAssignedQueryResult = NonNullable<Awaited<ReturnType<typeof outletGetAllAssigned>>>
-export type OutletGetAllAssignedQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type OutletGetAllAssignedQueryResult = NonNullable<Awaited<ReturnType<typeof outletGetAllAssigned>>>;
+export type OutletGetAllAssignedQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createOutletGetAllAssigned<TData = Awaited<ReturnType<typeof outletGetAllAssigned>>, TError = ErrorType<void | InternalErrorResponse>>(
-  options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletGetAllAssigned>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getOutletGetAllAssignedQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getOutletGetAllAssignedQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getOutletCounterGetAllUrl = () => {
+	return `/outlet/counter`;
+};
 
-
-
-
-  return `/outlet/counter`
-}
-
-export const outletCounterGetAll = async ( options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOutletCounter[]> => {
-
-  return customInstance<EntitiesOutletCounter[]>(getOutletCounterGetAllUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
+export const outletCounterGetAll = async (options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOutletCounter[]> => {
+	return customInstance<EntitiesOutletCounter[]>(getOutletCounterGetAllUrl(), {
+		...options,
+		method: "GET",
+	});
+};
 
 export const getOutletCounterGetAllQueryKey = () => {
-    return [
-    `/outlet/counter`
-    ] as const;
-    }
+	return [`/outlet/counter`] as const;
+};
 
+export const getOutletCounterGetAllQueryOptions = <
+	TData = Awaited<ReturnType<typeof outletCounterGetAll>>,
+	TError = ErrorType<void | InternalErrorResponse>,
+>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletCounterGetAll>>, TError, TData>>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getOutletCounterGetAllQueryOptions = <TData = Awaited<ReturnType<typeof outletCounterGetAll>>, TError = ErrorType<void | InternalErrorResponse>>( options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletCounterGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+	const queryKey = queryOptions?.queryKey ?? getOutletCounterGetAllQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof outletCounterGetAll>>> = () => outletCounterGetAll(requestOptions);
 
-  const queryKey =  queryOptions?.queryKey ?? getOutletCounterGetAllQueryKey();
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof outletCounterGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof outletCounterGetAll>>> = () => outletCounterGetAll(requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof outletCounterGetAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type OutletCounterGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof outletCounterGetAll>>>
-export type OutletCounterGetAllQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type OutletCounterGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof outletCounterGetAll>>>;
+export type OutletCounterGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createOutletCounterGetAll<TData = Awaited<ReturnType<typeof outletCounterGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
-  options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletCounterGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof outletCounterGetAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getOutletCounterGetAllQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getOutletCounterGetAllQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getOutletCounterCreateUrl = () => {
+	return `/outlet/counter`;
+};
 
+export const outletCounterCreate = async (
+	outletCounterCreateRequest: OutletCounterCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<string> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<string>(getOutletCounterCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(outletCounterCreateRequest),
+	});
+};
 
+export const getOutletCounterCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletCounterCreate>>, TError, OutletCounterCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof outletCounterCreate>>, TError, OutletCounterCreateMutationVariables, TContext> => {
+	const mutationKey = ["outletCounterCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof outletCounterCreate>>, OutletCounterCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/outlet/counter`
-}
+		return outletCounterCreate(data, requestOptions);
+	};
 
-export const outletCounterCreate = async (outletCounterCreateRequest: OutletCounterCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<string> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<string>(getOutletCounterCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(outletCounterCreateRequest)
-  }
-);}
+export type OutletCounterCreateMutationResult = NonNullable<Awaited<ReturnType<typeof outletCounterCreate>>>;
+export type OutletCounterCreateMutationBody = BodyType<OutletCounterCreateRequest>;
+export type OutletCounterCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type OutletCounterCreateMutationVariables = { data: BodyType<OutletCounterCreateRequest> };
 
-
-
-
-
-export const getOutletCounterCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof outletCounterCreate>>, TError,OutletCounterCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof outletCounterCreate>>, TError,OutletCounterCreateMutationVariables, TContext> => {
-
-const mutationKey = ['outletCounterCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof outletCounterCreate>>, OutletCounterCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  outletCounterCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type OutletCounterCreateMutationResult = NonNullable<Awaited<ReturnType<typeof outletCounterCreate>>>
-    export type OutletCounterCreateMutationBody = BodyType<OutletCounterCreateRequest>
-    export type OutletCounterCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type OutletCounterCreateMutationVariables = {data: BodyType<OutletCounterCreateRequest>}
-
-    export const createOutletCounterCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof outletCounterCreate>>, TError,OutletCounterCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof outletCounterCreate>>,
-        TError,
-        OutletCounterCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getOutletCounterCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getOutletCounterDeleteUrl = (deviceId: string,) => {
-
-
-
-
-  return `/outlet/counter/${deviceId}`
-}
+export const createOutletCounterCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletCounterCreate>>, TError, OutletCounterCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof outletCounterCreate>>, TError, OutletCounterCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getOutletCounterCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getOutletCounterDeleteUrl = (deviceId: string) => {
+	return `/outlet/counter/${deviceId}`;
+};
 
 export const outletCounterDelete = async (deviceId: string, options?: Parameters<typeof customInstance>[1]): Promise<string> => {
+	return customInstance<string>(getOutletCounterDeleteUrl(deviceId), {
+		...options,
+		method: "DELETE",
+	});
+};
 
-  return customInstance<string>(getOutletCounterDeleteUrl(deviceId),
-  {
-    ...options,
-    method: 'DELETE'
+export const getOutletCounterDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletCounterDelete>>, TError, OutletCounterDeleteMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof outletCounterDelete>>, TError, OutletCounterDeleteMutationVariables, TContext> => {
+	const mutationKey = ["outletCounterDelete"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof outletCounterDelete>>, OutletCounterDeleteMutationVariables> = (props) => {
+		const { deviceId } = props ?? {};
 
-  }
-);}
+		return outletCounterDelete(deviceId, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type OutletCounterDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof outletCounterDelete>>>;
 
+export type OutletCounterDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type OutletCounterDeleteMutationVariables = { deviceId: string };
 
-
-export const getOutletCounterDeleteMutationOptions = <TError = ErrorType<ErrorResponse | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof outletCounterDelete>>, TError,OutletCounterDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof outletCounterDelete>>, TError,OutletCounterDeleteMutationVariables, TContext> => {
-
-const mutationKey = ['outletCounterDelete'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof outletCounterDelete>>, OutletCounterDeleteMutationVariables> = (props) => {
-          const {deviceId} = props ?? {};
-
-          return  outletCounterDelete(deviceId,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type OutletCounterDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof outletCounterDelete>>>
-
-    export type OutletCounterDeleteMutationError = ErrorType<ErrorResponse | InternalErrorResponse>
-    export type OutletCounterDeleteMutationVariables = {deviceId: string}
-
-    export const createOutletCounterDelete = <TError = ErrorType<ErrorResponse | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof outletCounterDelete>>, TError,OutletCounterDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof outletCounterDelete>>,
-        TError,
-        OutletCounterDeleteMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getOutletCounterDeleteMutationOptions(options?.()) }), queryClient);
-    }
+export const createOutletCounterDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletCounterDelete>>, TError, OutletCounterDeleteMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof outletCounterDelete>>, TError, OutletCounterDeleteMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getOutletCounterDeleteMutationOptions(options?.()) }), queryClient);
+};

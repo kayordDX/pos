@@ -4,99 +4,69 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation
-} from '@tanstack/svelte-query';
-import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  MutationFunction,
-  QueryClient
-} from '@tanstack/svelte-query';
+import { createMutation } from "@tanstack/svelte-query";
+import type { CreateMutationOptions, CreateMutationResult, MutationFunction, QueryClient } from "@tanstack/svelte-query";
 
-import type {
-  AdjustmentTypeOutletCreateRequest,
-  EntitiesMenu,
-  InternalErrorResponse
-} from './api.schemas';
+import type { AdjustmentTypeOutletCreateRequest, EntitiesMenu, InternalErrorResponse } from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getAdjustmentTypeOutletCreateUrl = () => {
+	return `/adjustmentType`;
+};
 
+export const adjustmentTypeOutletCreate = async (
+	adjustmentTypeOutletCreateRequest: AdjustmentTypeOutletCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesMenu> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesMenu>(getAdjustmentTypeOutletCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(adjustmentTypeOutletCreateRequest),
+	});
+};
 
+export const getAdjustmentTypeOutletCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, TError, AdjustmentTypeOutletCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, TError, AdjustmentTypeOutletCreateMutationVariables, TContext> => {
+	const mutationKey = ["adjustmentTypeOutletCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, AdjustmentTypeOutletCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/adjustmentType`
-}
+		return adjustmentTypeOutletCreate(data, requestOptions);
+	};
 
-export const adjustmentTypeOutletCreate = async (adjustmentTypeOutletCreateRequest: AdjustmentTypeOutletCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesMenu> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesMenu>(getAdjustmentTypeOutletCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(adjustmentTypeOutletCreateRequest)
-  }
-);}
+export type AdjustmentTypeOutletCreateMutationResult = NonNullable<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>>;
+export type AdjustmentTypeOutletCreateMutationBody = BodyType<AdjustmentTypeOutletCreateRequest>;
+export type AdjustmentTypeOutletCreateMutationError = ErrorType<void | InternalErrorResponse>;
+export type AdjustmentTypeOutletCreateMutationVariables = { data: BodyType<AdjustmentTypeOutletCreateRequest> };
 
-
-
-
-
-export const getAdjustmentTypeOutletCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, TError,AdjustmentTypeOutletCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, TError,AdjustmentTypeOutletCreateMutationVariables, TContext> => {
-
-const mutationKey = ['adjustmentTypeOutletCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, AdjustmentTypeOutletCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  adjustmentTypeOutletCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type AdjustmentTypeOutletCreateMutationResult = NonNullable<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>>
-    export type AdjustmentTypeOutletCreateMutationBody = BodyType<AdjustmentTypeOutletCreateRequest>
-    export type AdjustmentTypeOutletCreateMutationError = ErrorType<void | InternalErrorResponse>
-    export type AdjustmentTypeOutletCreateMutationVariables = {data: BodyType<AdjustmentTypeOutletCreateRequest>}
-
-    export const createAdjustmentTypeOutletCreate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, TError,AdjustmentTypeOutletCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>,
-        TError,
-        AdjustmentTypeOutletCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getAdjustmentTypeOutletCreateMutationOptions(options?.()) }), queryClient);
-    }
+export const createAdjustmentTypeOutletCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, TError, AdjustmentTypeOutletCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, TError, AdjustmentTypeOutletCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getAdjustmentTypeOutletCreateMutationOptions(options?.()) }), queryClient);
+};

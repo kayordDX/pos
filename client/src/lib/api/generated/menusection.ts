@@ -4,237 +4,170 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation
-} from '@tanstack/svelte-query';
-import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  MutationFunction,
-  QueryClient
-} from '@tanstack/svelte-query';
+import { createMutation } from "@tanstack/svelte-query";
+import type { CreateMutationOptions, CreateMutationResult, MutationFunction, QueryClient } from "@tanstack/svelte-query";
 
-import type {
-  EntitiesMenuSection,
-  ErrorResponse,
-  InternalErrorResponse,
-  MenuSectionsCreateRequest,
-  MenuSectionsUpdateRequest
-} from './api.schemas';
+import type { EntitiesMenuSection, ErrorResponse, InternalErrorResponse, MenuSectionsCreateRequest, MenuSectionsUpdateRequest } from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
 export const getMenuSectionsUpdateUrl = () => {
+	return `/menuSection`;
+};
 
+export const menuSectionsUpdate = async (
+	menuSectionsUpdateRequest: MenuSectionsUpdateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesMenuSection> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesMenuSection>(getMenuSectionsUpdateUrl(), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(menuSectionsUpdateRequest),
+	});
+};
 
+export const getMenuSectionsUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsUpdate>>, TError, MenuSectionsUpdateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsUpdate>>, TError, MenuSectionsUpdateMutationVariables, TContext> => {
+	const mutationKey = ["menuSectionsUpdate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuSectionsUpdate>>, MenuSectionsUpdateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-  return `/menuSection`
-}
+		return menuSectionsUpdate(data, requestOptions);
+	};
 
-export const menuSectionsUpdate = async (menuSectionsUpdateRequest: MenuSectionsUpdateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesMenuSection> => {
+	return { mutationFn, ...mutationOptions };
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesMenuSection>(getMenuSectionsUpdateUrl(),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(menuSectionsUpdateRequest)
-  }
-);}
+export type MenuSectionsUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof menuSectionsUpdate>>>;
+export type MenuSectionsUpdateMutationBody = BodyType<MenuSectionsUpdateRequest>;
+export type MenuSectionsUpdateMutationError = ErrorType<void | InternalErrorResponse>;
+export type MenuSectionsUpdateMutationVariables = { data: BodyType<MenuSectionsUpdateRequest> };
 
+export const createMenuSectionsUpdate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsUpdate>>, TError, MenuSectionsUpdateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof menuSectionsUpdate>>, TError, MenuSectionsUpdateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getMenuSectionsUpdateMutationOptions(options?.()) }), queryClient);
+};
+export const getMenuSectionsCreateUrl = () => {
+	return `/menuSection`;
+};
 
+export const menuSectionsCreate = async (
+	menuSectionsCreateRequest: MenuSectionsCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesMenuSection> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesMenuSection>(getMenuSectionsCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(menuSectionsCreateRequest),
+	});
+};
 
+export const getMenuSectionsCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsCreate>>, TError, MenuSectionsCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsCreate>>, TError, MenuSectionsCreateMutationVariables, TContext> => {
+	const mutationKey = ["menuSectionsCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuSectionsCreate>>, MenuSectionsCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
-export const getMenuSectionsUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsUpdate>>, TError,MenuSectionsUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsUpdate>>, TError,MenuSectionsUpdateMutationVariables, TContext> => {
+		return menuSectionsCreate(data, requestOptions);
+	};
 
-const mutationKey = ['menuSectionsUpdate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+	return { mutationFn, ...mutationOptions };
+};
 
+export type MenuSectionsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof menuSectionsCreate>>>;
+export type MenuSectionsCreateMutationBody = BodyType<MenuSectionsCreateRequest>;
+export type MenuSectionsCreateMutationError = ErrorType<void | InternalErrorResponse>;
+export type MenuSectionsCreateMutationVariables = { data: BodyType<MenuSectionsCreateRequest> };
 
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuSectionsUpdate>>, MenuSectionsUpdateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  menuSectionsUpdate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type MenuSectionsUpdateMutationResult = NonNullable<Awaited<ReturnType<typeof menuSectionsUpdate>>>
-    export type MenuSectionsUpdateMutationBody = BodyType<MenuSectionsUpdateRequest>
-    export type MenuSectionsUpdateMutationError = ErrorType<void | InternalErrorResponse>
-    export type MenuSectionsUpdateMutationVariables = {data: BodyType<MenuSectionsUpdateRequest>}
-
-    export const createMenuSectionsUpdate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsUpdate>>, TError,MenuSectionsUpdateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof menuSectionsUpdate>>,
-        TError,
-        MenuSectionsUpdateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getMenuSectionsUpdateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getMenuSectionsCreateUrl = () => {
-
-
-
-
-  return `/menuSection`
-}
-
-export const menuSectionsCreate = async (menuSectionsCreateRequest: MenuSectionsCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesMenuSection> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesMenuSection>(getMenuSectionsCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(menuSectionsCreateRequest)
-  }
-);}
-
-
-
-
-
-export const getMenuSectionsCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsCreate>>, TError,MenuSectionsCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsCreate>>, TError,MenuSectionsCreateMutationVariables, TContext> => {
-
-const mutationKey = ['menuSectionsCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuSectionsCreate>>, MenuSectionsCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  menuSectionsCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type MenuSectionsCreateMutationResult = NonNullable<Awaited<ReturnType<typeof menuSectionsCreate>>>
-    export type MenuSectionsCreateMutationBody = BodyType<MenuSectionsCreateRequest>
-    export type MenuSectionsCreateMutationError = ErrorType<void | InternalErrorResponse>
-    export type MenuSectionsCreateMutationVariables = {data: BodyType<MenuSectionsCreateRequest>}
-
-    export const createMenuSectionsCreate = <TError = ErrorType<void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsCreate>>, TError,MenuSectionsCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof menuSectionsCreate>>,
-        TError,
-        MenuSectionsCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getMenuSectionsCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getMenuSectionsDeleteUrl = (id: number,) => {
-
-
-
-
-  return `/menuSection/${id}`
-}
+export const createMenuSectionsCreate = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsCreate>>, TError, MenuSectionsCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof menuSectionsCreate>>, TError, MenuSectionsCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getMenuSectionsCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getMenuSectionsDeleteUrl = (id: number) => {
+	return `/menuSection/${id}`;
+};
 
 export const menuSectionsDelete = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesMenuSection> => {
+	return customInstance<EntitiesMenuSection>(getMenuSectionsDeleteUrl(id), {
+		...options,
+		method: "DELETE",
+	});
+};
 
-  return customInstance<EntitiesMenuSection>(getMenuSectionsDeleteUrl(id),
-  {
-    ...options,
-    method: 'DELETE'
+export const getMenuSectionsDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsDelete>>, TError, MenuSectionsDeleteMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsDelete>>, TError, MenuSectionsDeleteMutationVariables, TContext> => {
+	const mutationKey = ["menuSectionsDelete"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuSectionsDelete>>, MenuSectionsDeleteMutationVariables> = (props) => {
+		const { id } = props ?? {};
 
-  }
-);}
+		return menuSectionsDelete(id, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type MenuSectionsDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof menuSectionsDelete>>>;
 
+export type MenuSectionsDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type MenuSectionsDeleteMutationVariables = { id: number };
 
-
-export const getMenuSectionsDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsDelete>>, TError,MenuSectionsDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsDelete>>, TError,MenuSectionsDeleteMutationVariables, TContext> => {
-
-const mutationKey = ['menuSectionsDelete'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof menuSectionsDelete>>, MenuSectionsDeleteMutationVariables> = (props) => {
-          const {id} = props ?? {};
-
-          return  menuSectionsDelete(id,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type MenuSectionsDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof menuSectionsDelete>>>
-
-    export type MenuSectionsDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type MenuSectionsDeleteMutationVariables = {id: number}
-
-    export const createMenuSectionsDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsDelete>>, TError,MenuSectionsDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof menuSectionsDelete>>,
-        TError,
-        MenuSectionsDeleteMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getMenuSectionsDeleteMutationOptions(options?.()) }), queryClient);
-    }
+export const createMenuSectionsDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsDelete>>, TError, MenuSectionsDeleteMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof menuSectionsDelete>>, TError, MenuSectionsDeleteMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getMenuSectionsDeleteMutationOptions(options?.()) }), queryClient);
+};

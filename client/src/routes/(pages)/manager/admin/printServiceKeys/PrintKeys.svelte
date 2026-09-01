@@ -47,7 +47,7 @@
 					<div class="flex flex-wrap items-start justify-between gap-3">
 						<div class="flex flex-col gap-1">
 							<div class="font-medium">{item.name}</div>
-							<div class="text-muted-foreground text-sm font-mono">{item.maskedKey}</div>
+							<div class="text-muted-foreground font-mono text-sm">{item.maskedKey}</div>
 						</div>
 						<div class="flex items-center gap-2">
 							{#if item.revokedAt}
@@ -66,13 +66,7 @@
 						<div>Last seen: {formatDate(item.lastSeenAt)}</div>
 					</div>
 				</div>
-				<RevokePrintKey
-					id={item.id}
-					name={item.name}
-					open={revokeOpenId === item.id}
-					onClose={() => (revokeOpenId = null)}
-					{refetch}
-				/>
+				<RevokePrintKey id={item.id} name={item.name} open={revokeOpenId === item.id} onClose={() => (revokeOpenId = null)} {refetch} />
 			{/each}
 		</div>
 	{/if}

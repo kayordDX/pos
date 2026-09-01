@@ -4,265 +4,206 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createQuery
-} from '@tanstack/svelte-query';
-import type {
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+import { createQuery } from "@tanstack/svelte-query";
+import type { CreateQueryOptions, CreateQueryResult, DataTag, QueryClient, QueryFunction, QueryKey } from "@tanstack/svelte-query";
 
 import type {
-  InternalErrorResponse,
-  StatsCashUpParams,
-  StatsCashUpResponse,
-  StatsPaymentTypesParams,
-  StatsPaymentTypesResponse,
-  StatsTopSalesPeriodParams,
-  StatsTopSalesPeriodResponse
-} from './api.schemas';
+	InternalErrorResponse,
+	StatsCashUpParams,
+	StatsCashUpResponse,
+	StatsPaymentTypesParams,
+	StatsPaymentTypesResponse,
+	StatsTopSalesPeriodParams,
+	StatsTopSalesPeriodResponse,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
+export const getStatsTopSalesPeriodUrl = (params: StatsTopSalesPeriodParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
-export const getStatsTopSalesPeriodUrl = (params: StatsTopSalesPeriodParams,) => {
-  const normalizedParams = new URLSearchParams();
+	const stringifiedParams = normalizedParams.toString();
 
-  Object.entries(params || {}).forEach(([key, value]) => {
+	return stringifiedParams.length > 0 ? `/stats/salesPeriod?${stringifiedParams}` : `/stats/salesPeriod`;
+};
 
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
+export const statsTopSalesPeriod = async (
+	params: StatsTopSalesPeriodParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<StatsTopSalesPeriodResponse[]> => {
+	return customInstance<StatsTopSalesPeriodResponse[]>(getStatsTopSalesPeriodUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  const stringifiedParams = normalizedParams.toString();
+export const getStatsTopSalesPeriodQueryKey = (params?: StatsTopSalesPeriodParams) => {
+	return [`/stats/salesPeriod`, ...(params ? [params] : [])] as const;
+};
 
-  return stringifiedParams.length > 0 ? `/stats/salesPeriod?${stringifiedParams}` : `/stats/salesPeriod`
-}
-
-export const statsTopSalesPeriod = async (params: StatsTopSalesPeriodParams, options?: Parameters<typeof customInstance>[1]): Promise<StatsTopSalesPeriodResponse[]> => {
-
-  return customInstance<StatsTopSalesPeriodResponse[]>(getStatsTopSalesPeriodUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getStatsTopSalesPeriodQueryKey = (params?: StatsTopSalesPeriodParams,) => {
-    return [
-    `/stats/salesPeriod`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getStatsTopSalesPeriodQueryOptions = <TData = Awaited<ReturnType<typeof statsTopSalesPeriod>>, TError = ErrorType<void | InternalErrorResponse>>(params: StatsTopSalesPeriodParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsTopSalesPeriod>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getStatsTopSalesPeriodQueryOptions = <TData = Awaited<ReturnType<typeof statsTopSalesPeriod>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: StatsTopSalesPeriodParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsTopSalesPeriod>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getStatsTopSalesPeriodQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getStatsTopSalesPeriodQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof statsTopSalesPeriod>>> = () => statsTopSalesPeriod(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof statsTopSalesPeriod>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof statsTopSalesPeriod>>> = () => statsTopSalesPeriod(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof statsTopSalesPeriod>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type StatsTopSalesPeriodQueryResult = NonNullable<Awaited<ReturnType<typeof statsTopSalesPeriod>>>
-export type StatsTopSalesPeriodQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type StatsTopSalesPeriodQueryResult = NonNullable<Awaited<ReturnType<typeof statsTopSalesPeriod>>>;
+export type StatsTopSalesPeriodQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createStatsTopSalesPeriod<TData = Awaited<ReturnType<typeof statsTopSalesPeriod>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  StatsTopSalesPeriodParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsTopSalesPeriod>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => StatsTopSalesPeriodParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsTopSalesPeriod>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getStatsTopSalesPeriodQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getStatsTopSalesPeriodQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getStatsPaymentTypesUrl = (params: StatsPaymentTypesParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
+	return stringifiedParams.length > 0 ? `/stats/paymentTypes?${stringifiedParams}` : `/stats/paymentTypes`;
+};
 
+export const statsPaymentTypes = async (
+	params: StatsPaymentTypesParams,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<StatsPaymentTypesResponse[]> => {
+	return customInstance<StatsPaymentTypesResponse[]>(getStatsPaymentTypesUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-export const getStatsPaymentTypesUrl = (params: StatsPaymentTypesParams,) => {
-  const normalizedParams = new URLSearchParams();
+export const getStatsPaymentTypesQueryKey = (params?: StatsPaymentTypesParams) => {
+	return [`/stats/paymentTypes`, ...(params ? [params] : [])] as const;
+};
 
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/stats/paymentTypes?${stringifiedParams}` : `/stats/paymentTypes`
-}
-
-export const statsPaymentTypes = async (params: StatsPaymentTypesParams, options?: Parameters<typeof customInstance>[1]): Promise<StatsPaymentTypesResponse[]> => {
-
-  return customInstance<StatsPaymentTypesResponse[]>(getStatsPaymentTypesUrl(params),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
-
-export const getStatsPaymentTypesQueryKey = (params?: StatsPaymentTypesParams,) => {
-    return [
-    `/stats/paymentTypes`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getStatsPaymentTypesQueryOptions = <TData = Awaited<ReturnType<typeof statsPaymentTypes>>, TError = ErrorType<void | InternalErrorResponse>>(params: StatsPaymentTypesParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsPaymentTypes>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getStatsPaymentTypesQueryOptions = <TData = Awaited<ReturnType<typeof statsPaymentTypes>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: StatsPaymentTypesParams,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsPaymentTypes>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getStatsPaymentTypesQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getStatsPaymentTypesQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof statsPaymentTypes>>> = () => statsPaymentTypes(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof statsPaymentTypes>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof statsPaymentTypes>>> = () => statsPaymentTypes(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof statsPaymentTypes>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type StatsPaymentTypesQueryResult = NonNullable<Awaited<ReturnType<typeof statsPaymentTypes>>>
-export type StatsPaymentTypesQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type StatsPaymentTypesQueryResult = NonNullable<Awaited<ReturnType<typeof statsPaymentTypes>>>;
+export type StatsPaymentTypesQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createStatsPaymentTypes<TData = Awaited<ReturnType<typeof statsPaymentTypes>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  StatsPaymentTypesParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsPaymentTypes>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => StatsPaymentTypesParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsPaymentTypes>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getStatsPaymentTypesQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getStatsPaymentTypesQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
 
+export const getStatsCashUpUrl = (params: StatsCashUpParams) => {
+	const normalizedParams = new URLSearchParams();
 
+	Object.entries(params || {}).forEach(([key, value]) => {
+		if (value !== undefined) {
+			normalizedParams.append(key, value === null ? "null" : String(value));
+		}
+	});
 
+	const stringifiedParams = normalizedParams.toString();
 
-
-
-export const getStatsCashUpUrl = (params: StatsCashUpParams,) => {
-  const normalizedParams = new URLSearchParams();
-
-  Object.entries(params || {}).forEach(([key, value]) => {
-
-    if (value !== undefined) {
-      normalizedParams.append(key, value === null ? 'null' : String(value))
-    }
-  });
-
-  const stringifiedParams = normalizedParams.toString();
-
-  return stringifiedParams.length > 0 ? `/stats/cashUp?${stringifiedParams}` : `/stats/cashUp`
-}
+	return stringifiedParams.length > 0 ? `/stats/cashUp?${stringifiedParams}` : `/stats/cashUp`;
+};
 
 export const statsCashUp = async (params: StatsCashUpParams, options?: Parameters<typeof customInstance>[1]): Promise<StatsCashUpResponse[]> => {
+	return customInstance<StatsCashUpResponse[]>(getStatsCashUpUrl(params), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<StatsCashUpResponse[]>(getStatsCashUpUrl(params),
-  {
-    ...options,
-    method: 'GET'
+export const getStatsCashUpQueryKey = (params?: StatsCashUpParams) => {
+	return [`/stats/cashUp`, ...(params ? [params] : [])] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getStatsCashUpQueryKey = (params?: StatsCashUpParams,) => {
-    return [
-    `/stats/cashUp`, ...(params ? [params] : [])
-    ] as const;
-    }
-
-
-export const getStatsCashUpQueryOptions = <TData = Awaited<ReturnType<typeof statsCashUp>>, TError = ErrorType<void | InternalErrorResponse>>(params: StatsCashUpParams, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsCashUp>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getStatsCashUpQueryOptions = <TData = Awaited<ReturnType<typeof statsCashUp>>, TError = ErrorType<void | InternalErrorResponse>>(
+	params: StatsCashUpParams,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsCashUp>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getStatsCashUpQueryKey(params);
 
-  const queryKey =  queryOptions?.queryKey ?? getStatsCashUpQueryKey(params);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof statsCashUp>>> = () => statsCashUp(params, requestOptions);
 
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof statsCashUp>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof statsCashUp>>> = () => statsCashUp(params, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof statsCashUp>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type StatsCashUpQueryResult = NonNullable<Awaited<ReturnType<typeof statsCashUp>>>
-export type StatsCashUpQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type StatsCashUpQueryResult = NonNullable<Awaited<ReturnType<typeof statsCashUp>>>;
+export type StatsCashUpQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createStatsCashUp<TData = Awaited<ReturnType<typeof statsCashUp>>, TError = ErrorType<void | InternalErrorResponse>>(
- params: () =>  StatsCashUpParams, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsCashUp>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	params: () => StatsCashUpParams,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof statsCashUp>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getStatsCashUpQueryOptions(params(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getStatsCashUpQueryOptions(params(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
-

@@ -4,461 +4,342 @@
  * Pos.Api
  * OpenAPI spec version: v1
  */
-import {
-  createMutation,
-  createQuery
-} from '@tanstack/svelte-query';
+import { createMutation, createQuery } from "@tanstack/svelte-query";
 import type {
-  CreateMutationOptions,
-  CreateMutationResult,
-  CreateQueryOptions,
-  CreateQueryResult,
-  DataTag,
-  MutationFunction,
-  QueryClient,
-  QueryFunction,
-  QueryKey
-} from '@tanstack/svelte-query';
+	CreateMutationOptions,
+	CreateMutationResult,
+	CreateQueryOptions,
+	CreateQueryResult,
+	DataTag,
+	MutationFunction,
+	QueryClient,
+	QueryFunction,
+	QueryKey,
+} from "@tanstack/svelte-query";
 
 import type {
-  BusinessCreateRequest,
-  BusinessDeleteRequest,
-  BusinessEditRequest,
-  EntitiesBusiness,
-  EntitiesOutlet,
-  ErrorResponse,
-  InternalErrorResponse
-} from './api.schemas';
+	BusinessCreateRequest,
+	BusinessDeleteRequest,
+	BusinessEditRequest,
+	EntitiesBusiness,
+	EntitiesOutlet,
+	ErrorResponse,
+	InternalErrorResponse,
+} from "./api.schemas";
 
-import { customInstance } from '../mutator/customInstance.svelte';
-import type { ErrorType , BodyType } from '../mutator/customInstance.svelte';
-
-
+import { customInstance } from "../mutator/customInstance.svelte";
+import type { ErrorType, BodyType } from "../mutator/customInstance.svelte";
 
 type SecondParameter<T extends (...args: never) => unknown> = Parameters<T>[1];
 
-
-
-export const getBusinessGetOutletsUrl = (outletId: number,) => {
-
-
-
-
-  return `/business/outlets/${outletId}`
-}
+export const getBusinessGetOutletsUrl = (outletId: number) => {
+	return `/business/outlets/${outletId}`;
+};
 
 export const businessGetOutlets = async (outletId: number, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesOutlet[]> => {
+	return customInstance<EntitiesOutlet[]>(getBusinessGetOutletsUrl(outletId), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<EntitiesOutlet[]>(getBusinessGetOutletsUrl(outletId),
-  {
-    ...options,
-    method: 'GET'
+export const getBusinessGetOutletsQueryKey = (outletId: number) => {
+	return [`/business/outlets/${outletId}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getBusinessGetOutletsQueryKey = (outletId: number,) => {
-    return [
-    `/business/outlets/${outletId}`
-    ] as const;
-    }
-
-
-export const getBusinessGetOutletsQueryOptions = <TData = Awaited<ReturnType<typeof businessGetOutlets>>, TError = ErrorType<void | InternalErrorResponse>>(outletId: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGetOutlets>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getBusinessGetOutletsQueryOptions = <TData = Awaited<ReturnType<typeof businessGetOutlets>>, TError = ErrorType<void | InternalErrorResponse>>(
+	outletId: number,
+	options?: {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGetOutlets>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	}
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getBusinessGetOutletsQueryKey(outletId);
 
-  const queryKey =  queryOptions?.queryKey ?? getBusinessGetOutletsQueryKey(outletId);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGetOutlets>>> = () => businessGetOutlets(outletId, requestOptions);
 
+	return { queryKey, queryFn, enabled: outletId !== null && outletId !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof businessGetOutlets>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGetOutlets>>> = () => businessGetOutlets(outletId, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: outletId !== null && outletId !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof businessGetOutlets>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type BusinessGetOutletsQueryResult = NonNullable<Awaited<ReturnType<typeof businessGetOutlets>>>
-export type BusinessGetOutletsQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type BusinessGetOutletsQueryResult = NonNullable<Awaited<ReturnType<typeof businessGetOutlets>>>;
+export type BusinessGetOutletsQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createBusinessGetOutlets<TData = Awaited<ReturnType<typeof businessGetOutlets>>, TError = ErrorType<void | InternalErrorResponse>>(
- outletId: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGetOutlets>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	outletId: () => number,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGetOutlets>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getBusinessGetOutletsQueryOptions(outletId(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getBusinessGetOutletsQueryOptions(outletId(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getBusinessGetAllUrl = () => {
+	return `/business`;
+};
 
-
-
-
-  return `/business`
-}
-
-export const businessGetAll = async ( options?: Parameters<typeof customInstance>[1]): Promise<EntitiesBusiness[]> => {
-
-  return customInstance<EntitiesBusiness[]>(getBusinessGetAllUrl(),
-  {
-    ...options,
-    method: 'GET'
-
-
-  }
-);}
-
-
-
-
+export const businessGetAll = async (options?: Parameters<typeof customInstance>[1]): Promise<EntitiesBusiness[]> => {
+	return customInstance<EntitiesBusiness[]>(getBusinessGetAllUrl(), {
+		...options,
+		method: "GET",
+	});
+};
 
 export const getBusinessGetAllQueryKey = () => {
-    return [
-    `/business`
-    ] as const;
-    }
+	return [`/business`] as const;
+};
 
+export const getBusinessGetAllQueryOptions = <TData = Awaited<ReturnType<typeof businessGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(options?: {
+	query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGetAll>>, TError, TData>>;
+	request?: SecondParameter<typeof customInstance>;
+}) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-export const getBusinessGetAllQueryOptions = <TData = Awaited<ReturnType<typeof businessGetAll>>, TError = ErrorType<void | InternalErrorResponse>>( options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
-) => {
+	const queryKey = queryOptions?.queryKey ?? getBusinessGetAllQueryKey();
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGetAll>>> = () => businessGetAll(requestOptions);
 
-  const queryKey =  queryOptions?.queryKey ?? getBusinessGetAllQueryKey();
+	return { queryKey, queryFn, ...queryOptions } as CreateQueryOptions<Awaited<ReturnType<typeof businessGetAll>>, TError, TData> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
+};
 
-
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGetAll>>> = () => businessGetAll(requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof businessGetAll>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type BusinessGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof businessGetAll>>>
-export type BusinessGetAllQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type BusinessGetAllQueryResult = NonNullable<Awaited<ReturnType<typeof businessGetAll>>>;
+export type BusinessGetAllQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createBusinessGetAll<TData = Awaited<ReturnType<typeof businessGetAll>>, TError = ErrorType<void | InternalErrorResponse>>(
-  options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGetAll>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGetAll>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getBusinessGetAllQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getBusinessGetAllQueryOptions(options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
 
 export const getBusinessEditUrl = () => {
-
-
-
-
-  return `/business`
-}
+	return `/business`;
+};
 
 export const businessEdit = async (businessEditRequest: BusinessEditRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getBusinessEditUrl(), {
+		...options,
+		method: "PUT",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(businessEditRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getBusinessEditUrl(),
-  {
-    ...options,
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(businessEditRequest)
-  }
-);}
+export const getBusinessEditMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof businessEdit>>, TError, BusinessEditMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof businessEdit>>, TError, BusinessEditMutationVariables, TContext> => {
+	const mutationKey = ["businessEdit"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof businessEdit>>, BusinessEditMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return businessEdit(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type BusinessEditMutationResult = NonNullable<Awaited<ReturnType<typeof businessEdit>>>;
+export type BusinessEditMutationBody = BodyType<BusinessEditRequest>;
+export type BusinessEditMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type BusinessEditMutationVariables = { data: BodyType<BusinessEditRequest> };
 
-export const getBusinessEditMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof businessEdit>>, TError,BusinessEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof businessEdit>>, TError,BusinessEditMutationVariables, TContext> => {
-
-const mutationKey = ['businessEdit'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof businessEdit>>, BusinessEditMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  businessEdit(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BusinessEditMutationResult = NonNullable<Awaited<ReturnType<typeof businessEdit>>>
-    export type BusinessEditMutationBody = BodyType<BusinessEditRequest>
-    export type BusinessEditMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type BusinessEditMutationVariables = {data: BodyType<BusinessEditRequest>}
-
-    export const createBusinessEdit = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof businessEdit>>, TError,BusinessEditMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof businessEdit>>,
-        TError,
-        BusinessEditMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getBusinessEditMutationOptions(options?.()) }), queryClient);
-    }
-    export const getBusinessDeleteUrl = () => {
-
-
-
-
-  return `/business`
-}
+export const createBusinessEdit = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof businessEdit>>, TError, BusinessEditMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof businessEdit>>, TError, BusinessEditMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getBusinessEditMutationOptions(options?.()) }), queryClient);
+};
+export const getBusinessDeleteUrl = () => {
+	return `/business`;
+};
 
 export const businessDelete = async (businessDeleteRequest: BusinessDeleteRequest, options?: Parameters<typeof customInstance>[1]): Promise<void> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<void>(getBusinessDeleteUrl(), {
+		...options,
+		method: "DELETE",
+		headers: { "Content-Type": "*/*", ...getHeaders(options?.headers) },
+		body: JSON.stringify(businessDeleteRequest),
+	});
+};
 
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<void>(getBusinessDeleteUrl(),
-  {
-    ...options,
-    method: 'DELETE',
-    headers: { 'Content-Type': '*/*', ...getHeaders(options?.headers) },
-    body: JSON.stringify(businessDeleteRequest)
-  }
-);}
+export const getBusinessDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof businessDelete>>, TError, BusinessDeleteMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof businessDelete>>, TError, BusinessDeleteMutationVariables, TContext> => {
+	const mutationKey = ["businessDelete"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof businessDelete>>, BusinessDeleteMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return businessDelete(data, requestOptions);
+	};
 
+	return { mutationFn, ...mutationOptions };
+};
 
+export type BusinessDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof businessDelete>>>;
+export type BusinessDeleteMutationBody = BodyType<BusinessDeleteRequest>;
+export type BusinessDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type BusinessDeleteMutationVariables = { data: BodyType<BusinessDeleteRequest> };
 
-export const getBusinessDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof businessDelete>>, TError,BusinessDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof businessDelete>>, TError,BusinessDeleteMutationVariables, TContext> => {
+export const createBusinessDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof businessDelete>>, TError, BusinessDeleteMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof businessDelete>>, TError, BusinessDeleteMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getBusinessDeleteMutationOptions(options?.()) }), queryClient);
+};
+export const getBusinessCreateUrl = () => {
+	return `/business`;
+};
 
-const mutationKey = ['businessDelete'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
+export const businessCreate = async (
+	businessCreateRequest: BusinessCreateRequest,
+	options?: Parameters<typeof customInstance>[1]
+): Promise<EntitiesBusiness> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<EntitiesBusiness>(getBusinessCreateUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(businessCreateRequest),
+	});
+};
 
+export const getBusinessCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof businessCreate>>, TError, BusinessCreateMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof businessCreate>>, TError, BusinessCreateMutationVariables, TContext> => {
+	const mutationKey = ["businessCreate"];
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
 
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof businessCreate>>, BusinessCreateMutationVariables> = (props) => {
+		const { data } = props ?? {};
 
+		return businessCreate(data, requestOptions);
+	};
 
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof businessDelete>>, BusinessDeleteMutationVariables> = (props) => {
-          const {data} = props ?? {};
+	return { mutationFn, ...mutationOptions };
+};
 
-          return  businessDelete(data,requestOptions)
-        }
+export type BusinessCreateMutationResult = NonNullable<Awaited<ReturnType<typeof businessCreate>>>;
+export type BusinessCreateMutationBody = BodyType<BusinessCreateRequest>;
+export type BusinessCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type BusinessCreateMutationVariables = { data: BodyType<BusinessCreateRequest> };
 
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BusinessDeleteMutationResult = NonNullable<Awaited<ReturnType<typeof businessDelete>>>
-    export type BusinessDeleteMutationBody = BodyType<BusinessDeleteRequest>
-    export type BusinessDeleteMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type BusinessDeleteMutationVariables = {data: BodyType<BusinessDeleteRequest>}
-
-    export const createBusinessDelete = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof businessDelete>>, TError,BusinessDeleteMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof businessDelete>>,
-        TError,
-        BusinessDeleteMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getBusinessDeleteMutationOptions(options?.()) }), queryClient);
-    }
-    export const getBusinessCreateUrl = () => {
-
-
-
-
-  return `/business`
-}
-
-export const businessCreate = async (businessCreateRequest: BusinessCreateRequest, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesBusiness> => {
-
-    const getHeaders = (h?: NonNullable<RequestInit['headers']>): Record<string, string | readonly string[]> => {
-    if (!h) return {};
-    if (h instanceof Headers) return Object.fromEntries(h.entries());
-    if (Array.isArray(h)) return Object.fromEntries(h);
-    return h;
-  };
-return customInstance<EntitiesBusiness>(getBusinessCreateUrl(),
-  {
-    ...options,
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json', ...getHeaders(options?.headers) },
-    body: JSON.stringify(businessCreateRequest)
-  }
-);}
-
-
-
-
-
-export const getBusinessCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof businessCreate>>, TError,BusinessCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
-): CreateMutationOptions<Awaited<ReturnType<typeof businessCreate>>, TError,BusinessCreateMutationVariables, TContext> => {
-
-const mutationKey = ['businessCreate'];
-const {mutation: mutationOptions, request: requestOptions} = options ?
-      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
-      options
-      : {...options, mutation: {...options.mutation, mutationKey}}
-      : {mutation: { mutationKey, }, request: undefined};
-
-
-
-
-      const mutationFn: MutationFunction<Awaited<ReturnType<typeof businessCreate>>, BusinessCreateMutationVariables> = (props) => {
-          const {data} = props ?? {};
-
-          return  businessCreate(data,requestOptions)
-        }
-
-
-
-
-
-
-  return  { mutationFn, ...mutationOptions }}
-
-    export type BusinessCreateMutationResult = NonNullable<Awaited<ReturnType<typeof businessCreate>>>
-    export type BusinessCreateMutationBody = BodyType<BusinessCreateRequest>
-    export type BusinessCreateMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>
-    export type BusinessCreateMutationVariables = {data: BodyType<BusinessCreateRequest>}
-
-    export const createBusinessCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>,
-    TContext = unknown>(options?: () => { mutation?:CreateMutationOptions<Awaited<ReturnType<typeof businessCreate>>, TError,BusinessCreateMutationVariables, TContext>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient): CreateMutationResult<
-        Awaited<ReturnType<typeof businessCreate>>,
-        TError,
-        BusinessCreateMutationVariables,
-        TContext
-      > => {
-      return createMutation(() => ({ ...getBusinessCreateMutationOptions(options?.()) }), queryClient);
-    }
-    export const getBusinessGetUrl = (id: number,) => {
-
-
-
-
-  return `/business/${id}`
-}
+export const createBusinessCreate = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof businessCreate>>, TError, BusinessCreateMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof businessCreate>>, TError, BusinessCreateMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getBusinessCreateMutationOptions(options?.()) }), queryClient);
+};
+export const getBusinessGetUrl = (id: number) => {
+	return `/business/${id}`;
+};
 
 export const businessGet = async (id: number, options?: Parameters<typeof customInstance>[1]): Promise<EntitiesBusiness> => {
+	return customInstance<EntitiesBusiness>(getBusinessGetUrl(id), {
+		...options,
+		method: "GET",
+	});
+};
 
-  return customInstance<EntitiesBusiness>(getBusinessGetUrl(id),
-  {
-    ...options,
-    method: 'GET'
+export const getBusinessGetQueryKey = (id: number) => {
+	return [`/business/${id}`] as const;
+};
 
-
-  }
-);}
-
-
-
-
-
-export const getBusinessGetQueryKey = (id: number,) => {
-    return [
-    `/business/${id}`
-    ] as const;
-    }
-
-
-export const getBusinessGetQueryOptions = <TData = Awaited<ReturnType<typeof businessGet>>, TError = ErrorType<void | InternalErrorResponse>>(id: number, options?: { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
+export const getBusinessGetQueryOptions = <TData = Awaited<ReturnType<typeof businessGet>>, TError = ErrorType<void | InternalErrorResponse>>(
+	id: number,
+	options?: { query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGet>>, TError, TData>>; request?: SecondParameter<typeof customInstance> }
 ) => {
+	const { query: queryOptions, request: requestOptions } = options ?? {};
 
-const {query: queryOptions, request: requestOptions} = options ?? {};
+	const queryKey = queryOptions?.queryKey ?? getBusinessGetQueryKey(id);
 
-  const queryKey =  queryOptions?.queryKey ?? getBusinessGetQueryKey(id);
+	const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGet>>> = () => businessGet(id, requestOptions);
 
+	return { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions } as CreateQueryOptions<
+		Awaited<ReturnType<typeof businessGet>>,
+		TError,
+		TData
+	> & { queryKey: DataTag<QueryKey, TData, TError> };
+};
 
-
-    const queryFn: QueryFunction<Awaited<ReturnType<typeof businessGet>>> = () => businessGet(id, requestOptions);
-
-
-
-
-
-   return  { queryKey, queryFn, enabled: id !== null && id !== undefined, ...queryOptions} as CreateQueryOptions<Awaited<ReturnType<typeof businessGet>>, TError, TData> & { queryKey: DataTag<QueryKey, TData, TError> }
-}
-
-export type BusinessGetQueryResult = NonNullable<Awaited<ReturnType<typeof businessGet>>>
-export type BusinessGetQueryError = ErrorType<void | InternalErrorResponse>
-
-
+export type BusinessGetQueryResult = NonNullable<Awaited<ReturnType<typeof businessGet>>>;
+export type BusinessGetQueryError = ErrorType<void | InternalErrorResponse>;
 
 export function createBusinessGet<TData = Awaited<ReturnType<typeof businessGet>>, TError = ErrorType<void | InternalErrorResponse>>(
- id: () =>  number, options?: () => { query?:Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGet>>, TError, TData>>, request?: SecondParameter<typeof customInstance>}
- , queryClient?: () => QueryClient
- ): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	id: () => number,
+	options?: () => {
+		query?: Partial<CreateQueryOptions<Awaited<ReturnType<typeof businessGet>>, TError, TData>>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> } {
+	const query = createQuery(() => getBusinessGetQueryOptions(id(), options?.()), queryClient) as CreateQueryResult<TData, TError> & {
+		queryKey: DataTag<QueryKey, TData, TError>;
+	};
 
-
-
-  const query = createQuery(() => getBusinessGetQueryOptions(id(),options?.()), queryClient) as CreateQueryResult<TData, TError> & { queryKey: DataTag<QueryKey, TData, TError> };
-
-  return query
+	return query;
 }
-
-
-
-
-
-
