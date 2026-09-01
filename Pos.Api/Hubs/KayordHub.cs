@@ -17,7 +17,9 @@ public interface IKayordHub
     Task DeviceAuth(DeviceAuthEvent deviceAuthEvent);
 }
 
-[Authorize]
+// NB: no class-level [Authorize] — in .NET the attribute is enforced at the HTTP
+// connection layer (negotiate/connect), which would block the anonymous
+// device-link (OTP) flow. Authorization is enforced per method instead.
 public class KayordHub : Hub<IKayordHub>
 {
     private readonly RedisClient _redisClient;
@@ -27,11 +29,13 @@ public class KayordHub : Hub<IKayordHub>
         _redisClient = redisClient;
     }
 
+    [Authorize]
     public async Task JoinGroup(string group)
     {
         await Groups.AddToGroupAsync(Context.ConnectionId, group);
     }
 
+    [Authorize]
     public async Task LeaveGroup(string group)
     {
         await Groups.RemoveFromGroupAsync(Context.ConnectionId, group);
@@ -50,7 +54,16 @@ public class KayordHub : Hub<IKayordHub>
 
         // Bind the OTP to the connection that created it so the login token is
         // only ever pushed back to that exact connection.
-        await _redisClient.SetObjectAsync($"auth:{otp}", new DeviceAuthEvent { ExpireDate = expireDate, OTP = otp, ConnectionId = Context.ConnectionId }, expire);
+        await _redisClient.SetObjectAsync(
+            $"auth:{otp}",
+            new DeviceAuthEvent
+            {
+                ExpireDate = expireDate,
+                OTP = otp,
+                ConnectionId = Context.ConnectionId,
+            },
+            expire
+        );
 
         await Clients.Caller.DeviceAuth(new DeviceAuthEvent() { OTP = otp, ExpireDate = DateTime.Now.AddMinutes(5) });
     }

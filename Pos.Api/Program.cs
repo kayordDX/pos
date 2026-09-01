@@ -47,8 +47,10 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.UseApi();
 app.UseHealth();
-// Authorization is enforced per hub method ([Authorize] on the class) so that
-// unauthenticated devices can connect for the device-link (OTP) flow.
+
+// The hub itself must stay open to anonymous connections: the device-link
+// (OTP) flow connects before login. Authorization is enforced per hub method
+// (JoinGroup/LeaveGroup are [Authorize], GetToken is [AllowAnonymous]).
 app.MapHub<KayordHub>("/hub");
 app.MapHub<PrinterHub>("/printer-hub").RequireAuthorization(new AuthorizeAttribute { AuthenticationSchemes = Constants.Policy.PrinterKeyScheme });
 app.UseTickerQ();
