@@ -9,7 +9,7 @@ class Hub {
 	// plain counter to cancel pending connect retries on disconnect/re-init
 	#generation = 0;
 
-	public async init() {
+	public async init(options?: { anonymous?: boolean }) {
 		if (this.connection && this.connection.state !== HubConnectionState.Disconnected) {
 			return;
 		}
@@ -17,8 +17,9 @@ class Hub {
 		const generation = ++this.#generation;
 		const connection = new HubConnectionBuilder()
 			.withUrl(`${info.kayordURL()}/hub`, {
-				// fetch a fresh token on every (re)connect — Firebase tokens expire after 1 hour
-				accessTokenFactory: async () => (await session.user?.getIdToken()) ?? "",
+				// fetch a fresh token on every (re)connect — Firebase tokens expire after 1 hour.
+				// anonymous connections (device-link flow) must not send a token at all
+				accessTokenFactory: options?.anonymous ? undefined : async () => (await session.user?.getIdToken()) ?? "",
 				withCredentials: false,
 			})
 			.withAutomaticReconnect()
@@ -81,10 +82,11 @@ class Hub {
 		this.connection.off(methodName, method);
 	}
 
-	public disconnect() {
+	public async disconnect() {
 		this.#generation++;
-		this.connection?.stop();
 		this.state = HubConnectionState.Disconnected;
+		// await stop so a follow-up init() doesn't see the old connection as still open
+		await this.connection?.stop();
 	}
 }
 export const hub = new Hub();

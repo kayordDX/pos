@@ -16,15 +16,16 @@
 
 	// Disconnect the device-link connection when the component unmounts.
 	// The hub is a shared singleton — if the user is logged in, Hub.svelte owns
-	// the connection, so bring it straight back up.
+	// the connection, so bring it straight back up (after stop() has finished).
 	$effect(() => {
 		if (init) {
 			return () => {
 				untrack(() => {
-					hub.disconnect();
-					if (session.user) {
-						hub.init();
-					}
+					void hub.disconnect().then(() => {
+						if (session.user) {
+							hub.init();
+						}
+					});
 				});
 			};
 		}
@@ -64,7 +65,8 @@
 	const requestToken = async () => {
 		if (!init) {
 			isLoading = true;
-			await hub.init();
+			// the device-link flow runs before login, so connect without credentials
+			await hub.init({ anonymous: true });
 		}
 		init = true;
 		open = true;
