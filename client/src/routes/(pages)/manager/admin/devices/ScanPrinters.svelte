@@ -11,7 +11,7 @@
 		deviceId: number;
 		deviceName?: string;
 		/** Called when the user picks a discovered host to add as a printer. */
-		onAddPrinter?: (_host: { ipAddress: string; port: number }) => void;
+		onAddPrinter?: (_host: { ipAddress: string; port: number; deviceId: number }) => void;
 	}
 	let { open = $bindable(), deviceId, deviceName, onAddPrinter }: Props = $props();
 
@@ -60,7 +60,7 @@
 	};
 
 	const addPrinter = (hit: ScanHit) => {
-		onAddPrinter?.(hit);
+		onAddPrinter?.({ ...hit, deviceId });
 	};
 </script>
 

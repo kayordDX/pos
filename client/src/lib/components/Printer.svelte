@@ -20,24 +20,15 @@
 
 	const mutation = createBillPrintBill();
 	const testMutation = createPrinterTest();
-	// Status badges temporarily hidden while devices run on the Redis transport only.
-	// Re-enable when the SignalR rollout is complete (see docs/print-service-signalr-migration.md).
-	// const printerReachableLabel = $derived(
-	// 	printer.printerReachable == null ? "Unknown" : printer.printerReachable ? "Reachable" : "Unreachable"
-	// );
-	// const printerReachableClass = $derived(
-	// 	printer.printerReachable == null
-	// 		? "bg-muted text-muted-foreground"
-	// 		: printer.printerReachable
-	// 			? "bg-primary/10 text-primary"
-	// 			: "bg-destructive/10 text-destructive"
-	// );
-	// const deviceOnlineClass = $derived(
-	// 	printer.deviceOnline ? "bg-primary/10 text-primary" : "bg-destructive/10 text-destructive"
-	// );
-	// const legacyStatusClass = $derived(
-	// 	printer.isConnected ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground"
-	// );
+	const printerReachableLabel = $derived(printer.printerReachable == null ? "Unknown" : printer.printerReachable ? "Reachable" : "Unreachable");
+	const printerReachableClass = $derived(
+		printer.printerReachable == null
+			? "bg-muted text-muted-foreground"
+			: printer.printerReachable
+				? "bg-primary/10 text-primary"
+				: "bg-destructive/10 text-destructive"
+	);
+	const deviceOnlineClass = $derived(printer.deviceOnline ? "bg-primary/10 text-primary" : "bg-muted text-muted-foreground");
 
 	const testPrinter = async () => {
 		try {
@@ -93,9 +84,6 @@
 					</Avatar.Fallback>
 				</Avatar.Root>
 				<Card.Title>{printer.printerName}</Card.Title>
-				<!-- Status badges (Device / Printer / Legacy) temporarily hidden while devices run on
-				     the Redis transport only. Re-enable with the derived classes in the script block
-				     when the SignalR rollout is complete (see docs/print-service-signalr-migration.md).
 				<div class="flex flex-col gap-2">
 					<div class="flex flex-wrap gap-2 text-xs">
 						<span class={`rounded-full px-2 py-1 font-medium ${deviceOnlineClass}`}>
@@ -104,11 +92,8 @@
 						<span class={`rounded-full px-2 py-1 font-medium ${printerReachableClass}`}>
 							Printer {printerReachableLabel}
 						</span>
-						<span class={`rounded-full px-2 py-1 font-medium ${legacyStatusClass}`}>
-							Legacy {printer.isConnected ? "connected" : "disconnected"}
-						</span>
 					</div>
-				</div> -->
+				</div>
 			</div>
 		</div>
 		<div class="flex flex-row items-center gap-2">
