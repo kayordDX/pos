@@ -18,7 +18,7 @@
 
 	import { type DTOStockAllocateDTO, createStockAllocateGetAll } from "$lib/api";
 	import { status } from "$lib/stores/status.svelte";
-	import { type ColumnDef, type ColumnFiltersState, type PaginationState, type SortingState, type Updater } from "@tanstack/svelte-table";
+	import { type ColumnDef } from "@tanstack/svelte-table";
 	import { PlusIcon } from "@lucide/svelte";
 	import Search from "$lib/components/Search.svelte";
 	import { QueryBuilder } from "fluent-querykit";
@@ -76,29 +76,18 @@
 		},
 	];
 
-	let pagination: PaginationState = $state({ pageIndex: 0, pageSize: 10 });
-	const setPagination = (updater: Updater<PaginationState>) => {
-		if (updater instanceof Function) {
-			pagination = updater(pagination);
-		} else pagination = updater;
-	};
+	let controlledState = $state({
+		pagination: { pageIndex: 0, pageSize: 10 },
+		sorting: [{ id: "Created", desc: true }],
+		columnFilters: decodeColumnFilters() ?? [],
+		search: decodeColumnFilters()?.find((x) => x.id == "comment")?.value ?? "",
+	});
 
-	let sorting: SortingState = $state([{ id: "Created", desc: true }]);
-	const setSorting = (updater: Updater<SortingState>) => {
-		if (updater instanceof Function) {
-			sorting = updater(sorting);
-		}
-	};
-
-	let search = $state(decodeColumnFilters()?.find((x) => x.id == "comment")?.value ?? "");
-	let columnFilters = $state<ColumnFiltersState>(decodeColumnFilters() ?? []);
 	let filters = $state("");
-
-	// Replacing _ with . to fix sorting issue
-	const sorts = $derived(sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id.replaceAll("_", ".")}`).join(","));
+	const sorts = $derived(controlledState.sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id.replaceAll("_", ".")}`).join(","));
 
 	const query = createStockAllocateGetAll(() => ({
-		page: pagination.pageIndex + 1,
+		page: controlledState.pagination.pageIndex + 1,
 		pageSize: 10,
 		filters,
 		sorts,
@@ -109,39 +98,17 @@
 	let rowCount = $derived(query.data?.totalCount ?? 0);
 
 	const table = createShadTable({
+		controlledState: controlledState,
 		columns,
 		get data() {
 			return data;
 		},
-		onColumnFiltersChange: (updater) => {
-			if (typeof updater === "function") {
-				columnFilters = updater(columnFilters);
-			} else {
-				columnFilters = updater;
-			}
+		get rowCount() {
+			return rowCount;
 		},
 		manualPagination: true,
 		manualFiltering: true,
 		manualSorting: true,
-		state: {
-			get pagination() {
-				return pagination;
-			},
-			get sorting() {
-				return sorting;
-			},
-			get columnFilters() {
-				return columnFilters;
-			},
-			get columnVisibility() {
-				return { menuId: false };
-			},
-		},
-		get rowCount() {
-			return rowCount;
-		},
-		onPaginationChange: setPagination,
-		onSortingChange: setSorting,
 		enableRowSelection: false,
 	});
 
@@ -149,11 +116,11 @@
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
-		if (search) {
-			columnFilters = [{ id: "comment", value: search }];
-			qb.containsCaseInsensitive("comment", search);
+		if (controlledState.search) {
+			controlledState.columnFilters = [{ id: "comment", value: controlledState.search }];
+			qb.containsCaseInsensitive("comment", controlledState.search);
 		} else {
-			columnFilters = [];
+			controlledState.columnFilters = [];
 		}
 		filters = qb.build();
 	});
@@ -185,7 +152,7 @@
 		<div class="flex items-center gap-2">
 			<div class="flex flex-col gap-1">
 				<h2>Allocate</h2>
-				<Search bind:search name="Allocations" />
+				<Search bind:search={controlledState.search} name="Allocations" />
 			</div>
 		</div>
 		<div class="flex items-center gap-2">
@@ -198,6 +165,8 @@
 		</div>
 	</div>
 {/snippet}
+
+<pre>{JSON.stringify(controlledState)}</pre>
 
 <div class="m-2">
 	<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No allocations" />
