@@ -28,6 +28,7 @@ import type {
 	PrinterEditRequest,
 	PrinterPrintResult,
 	PrinterPrintResultsParams,
+	PrinterProbeRequest,
 	PrinterScanRequest,
 	PrinterScanResultsParams,
 	PrinterScanResultsResults,
@@ -218,6 +219,61 @@ export const createPrinterScan = <TError = ErrorType<ErrorResponse | void | Inte
 	queryClient?: () => QueryClient
 ): CreateMutationResult<Awaited<ReturnType<typeof printerScan>>, TError, PrinterScanMutationVariables, TContext> => {
 	return createMutation(() => ({ ...getPrinterScanMutationOptions(options?.()) }), queryClient);
+};
+export const getPrinterProbeUrl = () => {
+	return `/printer/probe`;
+};
+
+export const printerProbe = async (printerProbeRequest: PrinterProbeRequest, options?: Parameters<typeof customInstance>[1]): Promise<boolean> => {
+	const getHeaders = (h?: NonNullable<RequestInit["headers"]>): Record<string, string | readonly string[]> => {
+		if (!h) return {};
+		if (h instanceof Headers) return Object.fromEntries(h.entries());
+		if (Array.isArray(h)) return Object.fromEntries(h);
+		return h;
+	};
+	return customInstance<boolean>(getPrinterProbeUrl(), {
+		...options,
+		method: "POST",
+		headers: { "Content-Type": "application/json", ...getHeaders(options?.headers) },
+		body: JSON.stringify(printerProbeRequest),
+	});
+};
+
+export const getPrinterProbeMutationKey = () => ["printerProbe"] as const;
+
+export const getPrinterProbeMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
+	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerProbe>>, TError, PrinterProbeMutationVariables, TContext>;
+	request?: SecondParameter<typeof customInstance>;
+}): CreateMutationOptions<Awaited<ReturnType<typeof printerProbe>>, TError, PrinterProbeMutationVariables, TContext> => {
+	const mutationKey = getPrinterProbeMutationKey();
+	const { mutation: mutationOptions, request: requestOptions } = options
+		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
+			? options
+			: { ...options, mutation: { ...options.mutation, mutationKey } }
+		: { mutation: { mutationKey }, request: undefined };
+
+	const mutationFn: MutationFunction<Awaited<ReturnType<typeof printerProbe>>, PrinterProbeMutationVariables> = (props) => {
+		const { data } = props ?? {};
+
+		return printerProbe(data, requestOptions);
+	};
+
+	return { mutationFn, ...mutationOptions };
+};
+
+export type PrinterProbeMutationResult = NonNullable<Awaited<ReturnType<typeof printerProbe>>>;
+export type PrinterProbeMutationBody = BodyType<PrinterProbeRequest>;
+export type PrinterProbeMutationError = ErrorType<ErrorResponse | void | InternalErrorResponse>;
+export type PrinterProbeMutationVariables = { data: BodyType<PrinterProbeRequest> };
+
+export const createPrinterProbe = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(
+	options?: () => {
+		mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerProbe>>, TError, PrinterProbeMutationVariables, TContext>;
+		request?: SecondParameter<typeof customInstance>;
+	},
+	queryClient?: () => QueryClient
+): CreateMutationResult<Awaited<ReturnType<typeof printerProbe>>, TError, PrinterProbeMutationVariables, TContext> => {
+	return createMutation(() => ({ ...getPrinterProbeMutationOptions(options?.()) }), queryClient);
 };
 export const getPrinterPrintResultsUrl = (params: PrinterPrintResultsParams) => {
 	const normalizedParams = new URLSearchParams();

@@ -2165,6 +2165,11 @@ export interface PrinterScanRequest {
 	port: number;
 }
 
+export interface PrinterProbeRequest {
+	/** @exclusiveMinimum 0 */
+	printerId: number;
+}
+
 export interface PrinterPrintResult {
 	jobId: string;
 	ok: boolean;

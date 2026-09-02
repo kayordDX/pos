@@ -48,4 +48,12 @@ public class PrintService
     {
         return _hub.Clients.Group(PrinterHub.DeviceGroup(outletId, deviceId)).RequestDeviceInfo();
     }
+
+    // Matches print-service's RequestProbe receiver method — the device dials
+    // the printer immediately instead of waiting for the probe interval and
+    // answers via ReportPrinterProbe (which broadcasts PrinterStatusChanged).
+    public Task RequestProbe(int outletId, int deviceId, int printerId)
+    {
+        return _hub.Clients.Group(PrinterHub.DeviceGroup(outletId, deviceId)).RequestProbe(printerId);
+    }
 }

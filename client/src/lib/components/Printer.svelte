@@ -1,10 +1,20 @@
 <script lang="ts">
 	import type { DTOPrinterDTO } from "$lib/api";
-	import { createBillPrintBill, createPrinterTest } from "$lib/api";
+	import { createBillPrintBill, createPrinterProbe, createPrinterTest } from "$lib/api";
 	import { getError } from "$lib/types";
 	import { Button, Card, Switch, Table, Avatar, DropdownMenu, Tooltip } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
-	import { PrinterIcon, EllipsisVerticalIcon, PencilIcon, TestTubeIcon, Trash, CloudUploadIcon, CloudOffIcon } from "@lucide/svelte";
+	import {
+		PrinterIcon,
+		EllipsisVerticalIcon,
+		PencilIcon,
+		TestTubeIcon,
+		Trash,
+		CloudUploadIcon,
+		CloudOffIcon,
+		ActivityIcon,
+		LoaderCircleIcon,
+	} from "@lucide/svelte";
 	import AddPrinter from "../../routes/(pages)/manager/admin/printers/AddPrinter.svelte";
 	import DeletePrinter from "../../routes/(pages)/manager/admin/printers/DeletePrinter.svelte";
 	import { page } from "$app/state";
@@ -20,6 +30,7 @@
 
 	const mutation = createBillPrintBill();
 	const testMutation = createPrinterTest();
+	const probeMutation = createPrinterProbe();
 	const printerReachableLabel = $derived(printer.printerReachable == null ? "Unknown" : printer.printerReachable ? "Reachable" : "Unreachable");
 	const printerReachableClass = $derived(
 		printer.printerReachable == null
@@ -36,6 +47,22 @@
 				data: { printerId: printer.id },
 			});
 			toast.info("Printing Test");
+		} catch (err) {
+			toast.error(getError(err).message);
+		}
+	};
+
+	const checkPrinter = async () => {
+		try {
+			const ok = await probeMutation.mutateAsync({
+				data: { printerId: printer.id },
+			});
+			// The badge updates when the device reports back via PrinterStatusChanged.
+			if (ok) {
+				toast.info("Checking printer connection");
+			} else {
+				toast.warning("No print device online to check this printer");
+			}
 		} catch (err) {
 			toast.error(getError(err).message);
 		}
@@ -97,6 +124,26 @@
 			</div>
 		</div>
 		<div class="flex flex-row items-center gap-2">
+			{#if isAdmin}
+				<Tooltip.Provider>
+					<Tooltip.Root>
+						<Tooltip.Trigger>
+							{#snippet child({ props })}
+								<Button {...props} size="icon" variant="secondary" class="h-8" onclick={checkPrinter} disabled={probeMutation.isPending}>
+									{#if probeMutation.isPending}
+										<LoaderCircleIcon class="animate-spin" />
+									{:else}
+										<ActivityIcon />
+									{/if}
+								</Button>
+							{/snippet}
+						</Tooltip.Trigger>
+						<Tooltip.Content>
+							<p>Check connection now</p>
+						</Tooltip.Content>
+					</Tooltip.Root>
+				</Tooltip.Provider>
+			{/if}
 			<Switch bind:checked={showDetail} />
 			{#if isAdmin}
 				<DropdownMenu.Root>

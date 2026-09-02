@@ -13,6 +13,11 @@ row, not a separate table; rotation replaces it in place. Device online/reachabi
 is read from the SignalR connection tracker/probe cache in realtime — there is no
 `LastSeenAt` column. Removing a device cascades its printers and key.
 
+Probe results are observations made by the device: when the last connection of a
+device drops, `OnDisconnectedAsync` clears its `PrinterProbeCache` entries and
+`Printer/List` reports `PrinterReachable = null` (unknown) for offline devices —
+a stale "reachable" is never served.
+
 ## Endpoint & auth
 
 | Concern   | Value |
@@ -32,6 +37,7 @@ the `/hub` (`KayordHub`) outlet group `outlet:{outletId}`.
 | `ReceivePrint` | `PrintMessage` | Print job (`action` empty) or scan request (`action: "nmap"`) |
 | `SyncPrinters` | `PrinterTarget[]` | The device's printer set; sent on connect and whenever assignments change |
 | `RequestDeviceInfo` | — | Ask the device to collect hostname, platform, versions, network interfaces and report them back |
+| `RequestProbe` | `printerId: int` | Ask the device to TCP-dial that printer immediately (bypasses the probe interval) and report via `ReportPrinterProbe` |
 
 Note: the device treats any non-`nmap` action as a print job — do not invent
 new action values; add an invocation instead.
@@ -72,6 +78,9 @@ DeviceInfoReport { hostname, platform, osVersion?, goVersion?, appVersion?,
   `GET /printer/scan`.
 - Device info: `POST /printer/device-info` → `RequestDeviceInfo()` → device
   calls `ReportDeviceInfo` → UI polls `GET /printer/device-info`.
+- Probe ("check now"): `POST /printer/probe` → `RequestProbe(printerId)` →
+  device dials once → `ReportPrinterProbe` → `PrinterProbeCache` updated +
+  `PrinterStatusChanged` broadcast on `KayordHub` (no polling needed).
 
 ## Legacy Redis transport
 

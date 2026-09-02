@@ -43,7 +43,7 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%] overflow-auto">
+	<Dialog.Content class="max-h-[98%] overflow-auto md:min-w-3xl">
 		{#if rotatedKey}
 			<Dialog.Header>
 				<Dialog.Title>Key rotated</Dialog.Title>

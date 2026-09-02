@@ -32,6 +32,11 @@ public class PrinterProbeCache
 
         return status;
     }
+
+    public void Remove(int printerId)
+    {
+        _cache.TryRemove(printerId, out _);
+    }
 }
 
 public class PrinterProbeStatus

@@ -35,7 +35,9 @@
 				? {
 						...printer,
 						deviceOnline: event.online,
-						printerReachable: event.reachable ?? printer.printerReachable,
+						// The server sends reachable=null when the result is unknown
+						// (e.g. device went offline and its probe cache was cleared).
+						printerReachable: event.reachable ?? null,
 					}
 				: printer
 		);

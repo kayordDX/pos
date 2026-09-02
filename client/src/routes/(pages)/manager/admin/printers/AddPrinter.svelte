@@ -34,7 +34,7 @@
 		port: printer?.port ?? defaultPort ?? 9100,
 		lineCharacters: printer?.lineCharacters ?? 64,
 		isEnabled: printer?.isEnabled ?? true,
-		deviceId: printer?.deviceId ?? defaultDeviceId ?? 1,
+		deviceId: printer?.deviceId ?? defaultDeviceId ?? 0,
 	});
 
 	const isEdit = $derived(printer != null);
@@ -62,7 +62,7 @@
 						port: data.port,
 						printerName: data.printerName,
 						isEnabled: data.isEnabled,
-						deviceId: data.deviceId ?? 1,
+						deviceId: data.deviceId,
 					},
 				});
 				toast.info("Edited Printer");
@@ -75,7 +75,7 @@
 						lineCharacters: data.lineCharacters,
 						port: data.port,
 						printerName: data.printerName,
-						deviceId: data.deviceId ?? 1,
+						deviceId: data.deviceId,
 					},
 				});
 				toast.info("Created Printer");
@@ -105,7 +105,7 @@
 
 	const { form: formData, enhance, reset } = form;
 
-	const selectedDeviceLabel = $derived(devices.find((d) => d.id === $formData.deviceId)?.name ?? `Device #${$formData.deviceId}`);
+	const selectedDeviceLabel = $derived(devices.find((d) => d.id === $formData.deviceId)?.name ?? "Select Device");
 
 	// Reset form to default when open
 	$effect(() => {

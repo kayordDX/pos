@@ -14,6 +14,7 @@ public interface IPrinterHub
     Task ReceivePrint(Features.Printer.PrintMessage message);
     Task SyncPrinters(List<PrinterTarget> printers);
     Task RequestDeviceInfo();
+    Task RequestProbe(int printerId);
 }
 
 public class PrinterHub : Hub<IPrinterHub>
@@ -63,6 +64,19 @@ public class PrinterHub : Hub<IPrinterHub>
         if (TryGetIdentity(out int outletId, out int deviceId))
         {
             _connectionTracker.Disconnected(outletId, deviceId);
+
+            // Probe results were observed by this device. Once it is fully gone
+            // they are stale by definition — drop them so the UI reports
+            // unknown instead of "reachable" for up to the cache TTL.
+            if (!_connectionTracker.IsOnline(outletId, deviceId))
+            {
+                var printers = await GetPrinterTargetsAsync(outletId, deviceId, Context.ConnectionAborted);
+                foreach (var printer in printers)
+                {
+                    _probeCache.Remove(printer.PrinterId);
+                }
+            }
+
             await BroadcastDeviceStateAsync(outletId, deviceId, Context.ConnectionAborted);
         }
 

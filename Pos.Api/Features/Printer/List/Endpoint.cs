@@ -39,7 +39,9 @@ public class Endpoint : Endpoint<Request, List<PrinterDTO>>
             bool online = _connectionTracker.IsOnline(x.OutletId, x.DeviceId);
             x.IsConnected = online;
             x.DeviceOnline = online;
-            x.PrinterReachable = _probeCache.Get(x.Id)?.Reachable;
+            // A probe result was observed by the device — without a live device
+            // there is nothing recent enough to trust, so report unknown.
+            x.PrinterReachable = online ? _probeCache.Get(x.Id)?.Reachable : null;
         });
 
         await Send.OkAsync(result, ct);

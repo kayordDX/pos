@@ -16,6 +16,7 @@ exponential backoff. Method-name matching is case-insensitive.
 | `ReceivePrint` | `model.PrintMessage` | `action == "nmap"` → native subnet scan (async); anything else → per-printer print queue. **Unknown actions are printed, not ignored** — the server must not invent new action values |
 | `SyncPrinters` | `[]model.PrinterTarget` | Replaces the probe set; each target is TCP-dialed every `PROBE_INTERVAL_SECONDS` |
 | `RequestDeviceInfo` | — | Gathers platform/addresses/versions and replies via `ReportDeviceInfo` |
+| `RequestProbe` | `printerId: int` | TCP-dials that single target immediately and replies via `ReportPrinterProbe` |
 
 ## Device → server (invocations)
 
@@ -23,7 +24,7 @@ exponential backoff. Method-name matching is case-insensitive.
 | ------ | --------- | ---- |
 | `ReportScanStarted` | — | Scan begun (server shows progress) |
 | `ReportScanResult` | `output: string` | Scan finished; human-readable summary |
-| `ReportPrinterProbe` | `printerId: int`, `reachable: bool`, `latencyMs: int64` | Every probe cycle per target |
+| `ReportPrinterProbe` | `printerId: int`, `reachable: bool`, `latencyMs: int64` | Every probe cycle per target, and immediately after a `RequestProbe` (which bypasses the device's failure threshold); ids outside the device's probe set are never reported |
 | `ReportPrintResult` | `jobId: string`, `ok: bool`, `detail: string` | After each queued print — only when `jobId` is non-empty (legacy servers) |
 | `ReportDeviceInfo` | `model.DeviceInfo` (object) | In answer to `RequestDeviceInfo` |
 

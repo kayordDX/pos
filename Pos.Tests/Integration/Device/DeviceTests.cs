@@ -49,9 +49,11 @@ public class DeviceTests(App app) : TestBase<App>
 
             if (!await db.UserOutlet.AnyAsync(x => x.UserId == ManagerUid, app.Context.CancellationToken))
             {
-                var roleType = new Pos.Api.Entities.RoleType { Name = "manager", Description = "test manager" };
-                db.RoleType.Add(roleType);
-                await db.SaveChangesAsync(app.Context.CancellationToken);
+                await App.EnsureUserAsync(db, ManagerUid);
+
+                // The seed migration already provides the "manager" role type;
+                // inserting a new one collides with the seeded identity range.
+                var roleType = await db.RoleType.FirstAsync(x => x.Name == "manager", app.Context.CancellationToken);
 
                 var role = new Pos.Api.Entities.Role
                 {

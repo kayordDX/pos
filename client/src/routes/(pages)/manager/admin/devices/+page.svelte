@@ -69,16 +69,6 @@
 		addPrinterOpen = true;
 	};
 
-	const keyLabel = (item: DTODeviceDTO) => {
-		if (!item.maskedKey) return "No key";
-		return item.revokedAt ? "Key revoked" : "Key active";
-	};
-
-	const keyBadgeClass = (item: DTODeviceDTO) => {
-		if (!item.maskedKey || item.revokedAt) return "bg-muted text-muted-foreground";
-		return "bg-primary/10 text-primary";
-	};
-
 	const openRotate = (item: DTODeviceDTO) => {
 		rotateDevice = item;
 		rotateOpen = true;
@@ -117,16 +107,25 @@
 									{/if}
 								</div>
 								<div class="flex items-center gap-2">
+									<Badge variant="default">{item.printerCount} printer{item.printerCount === 1 ? "" : "s"}</Badge>
 									{#if item.isOnline}
-										<Badge class="bg-primary/10 text-primary gap-1">
+										<Badge>
 											<WifiIcon class="size-3.5" />Online
 										</Badge>
 									{:else}
-										<Badge class="bg-muted text-muted-foreground gap-1">
+										<Badge variant="destructive">
 											<WifiOffIcon class="size-3.5" />Offline
 										</Badge>
 									{/if}
-									<Badge class={keyBadgeClass(item)}>{keyLabel(item)}</Badge>
+									{#if !item.maskedKey || item.revokedAt}
+										<Badge variant="destructive">
+											<KeyRoundIcon class="size-3.5" />Key revoked
+										</Badge>
+									{:else}
+										<Badge>
+											<KeyRoundIcon class="size-3.5" />Key active
+										</Badge>
+									{/if}
 									<DropdownMenu.Root>
 										<DropdownMenu.Trigger>
 											<Button size="icon" variant="secondary" class="h-8"><EllipsisVerticalIcon /></Button>
@@ -163,10 +162,6 @@
 										</DropdownMenu.Content>
 									</DropdownMenu.Root>
 								</div>
-							</div>
-							<div class="flex flex-wrap items-center gap-1 text-sm">
-								<Badge variant="default">{item.printerCount} printer{item.printerCount === 1 ? "" : "s"}</Badge>
-								<Badge variant="outline">Created {formatDate(item.created)}</Badge>
 							</div>
 						</div>
 					{/each}
