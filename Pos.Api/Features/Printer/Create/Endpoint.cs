@@ -1,6 +1,10 @@
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
+using Pos.Api.Common.Printer;
 using Pos.Api.Data;
 using Pos.Api.DTO;
+using Pos.Api.Hubs;
 using Pos.Api.Services;
 
 namespace Pos.Api.Features.Printer.Create;
@@ -8,10 +12,16 @@ namespace Pos.Api.Features.Printer.Create;
 public class Endpoint : Endpoint<Request, PrinterDTO>
 {
     private readonly AppDbContext _dbContext;
+    private readonly IMemoryCache _memoryCache;
+    private readonly PrinterTargetService _printerTargets;
+    private readonly IHubContext<PrinterHub, IPrinterHub> _printerHub;
 
-    public Endpoint(AppDbContext dbContext)
+    public Endpoint(AppDbContext dbContext, IMemoryCache memoryCache, PrinterTargetService printerTargets, IHubContext<PrinterHub, IPrinterHub> printerHub)
     {
         _dbContext = dbContext;
+        _memoryCache = memoryCache;
+        _printerTargets = printerTargets;
+        _printerHub = printerHub;
     }
 
     public override void Configure()
@@ -38,9 +48,13 @@ public class Endpoint : Endpoint<Request, PrinterDTO>
             DeviceId = req.DeviceId,
         };
         await _dbContext.Printer.AddAsync(entity);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(ct);
 
-        var result = await _dbContext.Printer.ProjectToDto().FirstOrDefaultAsync(x => x.Id == entity.Id);
+        _memoryCache.Remove(PrinterCacheKeys.Targets(req.OutletId, req.DeviceId));
+        var targets = await _printerTargets.GetAsync(req.OutletId, req.DeviceId, ct);
+        await _printerHub.Clients.Group(PrinterHub.DeviceGroup(req.OutletId, req.DeviceId)).SyncPrinters(targets);
+
+        var result = await _dbContext.Printer.ProjectToDto().FirstOrDefaultAsync(x => x.Id == entity.Id, ct);
         if (result == null)
         {
             await Send.NotFoundAsync();

@@ -1,11 +1,10 @@
 using System.Security.Claims;
 using System.Text.Json;
 using Microsoft.AspNetCore.SignalR;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Caching.Memory;
 using Pos.Api.Common.Printer;
-using Pos.Api.Data;
 using Pos.Api.Events;
+using Pos.Api.Services;
 
 namespace Pos.Api.Hubs;
 
@@ -20,26 +19,25 @@ public interface IPrinterHub
 public class PrinterHub : Hub<IPrinterHub>
 {
     private static readonly TimeSpan ScanCacheTtl = TimeSpan.FromMinutes(5);
-    private static readonly TimeSpan TargetsCacheTtl = TimeSpan.FromMinutes(30);
 
-    private readonly AppDbContext _dbContext;
     private readonly IMemoryCache _memoryCache;
     private readonly PrinterConnectionTracker _connectionTracker;
     private readonly PrinterProbeCache _probeCache;
+    private readonly PrinterTargetService _printerTargets;
     private readonly IHubContext<KayordHub, IKayordHub> _kayordHub;
 
     public PrinterHub(
-        AppDbContext dbContext,
         IMemoryCache memoryCache,
         PrinterConnectionTracker connectionTracker,
         PrinterProbeCache probeCache,
+        PrinterTargetService printerTargets,
         IHubContext<KayordHub, IKayordHub> kayordHub
     )
     {
-        _dbContext = dbContext;
         _memoryCache = memoryCache;
         _connectionTracker = connectionTracker;
         _probeCache = probeCache;
+        _printerTargets = printerTargets;
         _kayordHub = kayordHub;
     }
 
@@ -52,7 +50,7 @@ public class PrinterHub : Hub<IPrinterHub>
 
         _connectionTracker.Connected(outletId, deviceId);
 
-        var printers = await GetPrinterTargetsAsync(outletId, deviceId, Context.ConnectionAborted);
+        var printers = await _printerTargets.GetAsync(outletId, deviceId, Context.ConnectionAborted);
         await Clients.Caller.SyncPrinters(printers);
         await BroadcastDeviceStateAsync(outletId, deviceId, Context.ConnectionAborted);
 
@@ -70,7 +68,7 @@ public class PrinterHub : Hub<IPrinterHub>
             // unknown instead of "reachable" for up to the cache TTL.
             if (!_connectionTracker.IsOnline(outletId, deviceId))
             {
-                var printers = await GetPrinterTargetsAsync(outletId, deviceId, Context.ConnectionAborted);
+                var printers = await _printerTargets.GetAsync(outletId, deviceId, Context.ConnectionAborted);
                 foreach (var printer in printers)
                 {
                     _probeCache.Remove(printer.PrinterId);
@@ -132,7 +130,7 @@ public class PrinterHub : Hub<IPrinterHub>
     public async Task ReportPrinterProbe(int printerId, bool reachable, long latencyMs)
     {
         (int outletId, int deviceId, _) = GetIdentity();
-        var printers = await GetPrinterTargetsAsync(outletId, deviceId, Context.ConnectionAborted);
+        var printers = await _printerTargets.GetAsync(outletId, deviceId, Context.ConnectionAborted);
 
         if (!printers.Any(x => x.PrinterId == printerId))
         {
@@ -189,34 +187,9 @@ public class PrinterHub : Hub<IPrinterHub>
         return int.TryParse(outlet, out outletId) && int.TryParse(device, out deviceId) && !string.IsNullOrWhiteSpace(keyId);
     }
 
-    private async Task<List<PrinterTarget>> GetPrinterTargetsAsync(int outletId, int deviceId, CancellationToken ct)
-    {
-        string cacheKey = PrinterCacheKeys.Targets(outletId, deviceId);
-        if (_memoryCache.TryGetValue(cacheKey, out List<PrinterTarget>? cachedTargets) && cachedTargets != null)
-        {
-            return cachedTargets;
-        }
-
-        var printers = await _dbContext
-            .Printer.Where(x => x.OutletId == outletId && x.DeviceId == deviceId)
-            .OrderBy(x => x.PrinterName)
-            .Select(x => new PrinterTarget
-            {
-                PrinterId = x.Id,
-                Name = x.PrinterName,
-                IPAddress = x.IPAddress,
-                Port = x.Port,
-            })
-            .ToListAsync(ct);
-
-        _memoryCache.Set(cacheKey, printers, TargetsCacheTtl);
-
-        return printers;
-    }
-
     private async Task BroadcastDeviceStateAsync(int outletId, int deviceId, CancellationToken ct)
     {
-        var printers = await GetPrinterTargetsAsync(outletId, deviceId, ct);
+        var printers = await _printerTargets.GetAsync(outletId, deviceId, ct);
         bool online = _connectionTracker.IsOnline(outletId, deviceId);
 
         foreach (var printer in printers)

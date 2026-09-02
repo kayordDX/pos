@@ -9,6 +9,7 @@ public static class PrintExtensions
         services.AddSingleton<PrintService>();
         services.AddSingleton<Hubs.PrinterConnectionTracker>();
         services.AddSingleton<Hubs.PrinterProbeCache>();
+        services.AddScoped<PrinterTargetService>();
         return services;
     }
 }
