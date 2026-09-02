@@ -68,7 +68,7 @@
 								bind:value={() => $formData.roleId.toString(), (v) => ($formData.roleId = Number(v))}
 							>
 								<Select.Trigger {...props}>{roleSelect}</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each rolesQuery.data ?? [] as item (item.roleId)}
 										<Select.Item value={item.roleId.toString()} label={item.name}>{item.name}</Select.Item>
 									{/each}

@@ -101,7 +101,7 @@
 								<Select.Trigger {...props}>
 									{paymentTypeSelect}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each paymentTypeQuery.data ?? [] as paymentType (paymentType.paymentTypeId)}
 										{#if paymentType.canEdit}
 											<Select.Item value={paymentType.paymentTypeId.toString()}>

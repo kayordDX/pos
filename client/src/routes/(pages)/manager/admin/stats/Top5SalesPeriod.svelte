@@ -25,7 +25,7 @@
 	<Select.Trigger class="w-[180px]">
 		{triggerContent}
 	</Select.Trigger>
-	<Select.Content>
+	<Select.Content class="max-h-100">
 		<Select.Group>
 			<Select.Label>Sales Period</Select.Label>
 			{#each salesPeriods as salesPeriod (salesPeriod.id)}

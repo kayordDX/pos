@@ -136,7 +136,7 @@
 								<Select.Trigger {...props}>
 									{divTypeValue ? divTypeValue : "Select Divsion Type"}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each divTypeList as divType (divType.value)}
 										<Select.Item value={divType.value}>{divType.label}</Select.Item>
 									{/each}

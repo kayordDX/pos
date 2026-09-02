@@ -79,7 +79,7 @@
 								<Select.Trigger {...props}>
 									{outletList}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each query.data ?? [] as outlet (outlet.id)}
 										<Select.Item value={outlet.id.toString()}>{outlet.name}</Select.Item>
 									{/each}

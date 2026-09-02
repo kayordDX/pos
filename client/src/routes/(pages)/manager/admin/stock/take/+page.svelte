@@ -162,7 +162,7 @@
 				<Select.Trigger class="min-w-25">
 					{divisionValue ? divisionValue : "Select Division"}
 				</Select.Trigger>
-				<Select.Content>
+				<Select.Content class="max-h-100">
 					{#each divisionList as division (division)}
 						<Select.Item value={division.value}>{division.label}</Select.Item>
 					{/each}

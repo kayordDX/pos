@@ -129,7 +129,7 @@
 								<Select.Trigger {...props}>
 									{divisionSelect}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each divisions ?? [] as result (result.divisionId)}
 										<Select.Item value={result.divisionId.toString()}>{result.divisionName}</Select.Item>
 									{/each}
@@ -153,7 +153,7 @@
 								<Select.Trigger {...props}>
 									{supplierSelect}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each suppliers ?? [] as result (result.id)}
 										<Select.Item value={result.id.toString()}>{result.name}</Select.Item>
 									{/each}

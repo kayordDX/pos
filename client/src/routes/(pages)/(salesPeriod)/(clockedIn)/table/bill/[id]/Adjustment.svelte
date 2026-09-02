@@ -99,7 +99,7 @@
 								<Select.Trigger {...props}>
 									{typeSelect}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each query.data ?? [] as result (result.adjustmentTypeId)}
 										<Select.Item value={result.adjustmentTypeId.toString()}>{result.name}</Select.Item>
 									{/each}

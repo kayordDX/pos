@@ -166,7 +166,7 @@
 									<Select.Trigger {...props}>
 										{outletSelect}
 									</Select.Trigger>
-									<Select.Content>
+									<Select.Content class="max-h-100">
 										{#each outlets ?? [] as result (result.id)}
 											<Select.Item value={result.id.toString()}>
 												{result.name}
@@ -193,7 +193,7 @@
 								<Select.Trigger {...props}>
 									{fromDivisionSelect}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each fromDivisions ?? [] as result (result.divisionId)}
 										<Select.Item value={result.divisionId.toString()}>
 											{result.divisionName}
@@ -219,7 +219,7 @@
 								<Select.Trigger {...props}>
 									{toDivisionSelect}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each toDivisions ?? [] as result (result.divisionId)}
 										<Select.Item value={result.divisionId.toString()}>
 											{result.divisionName}

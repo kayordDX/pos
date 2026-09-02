@@ -135,7 +135,7 @@
 								<Select.Trigger {...props}>
 									{unitSelect}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each units ?? [] as result (result.id)}
 										<Select.Item value={result.id.toString()}>
 											{result.name}
@@ -161,7 +161,7 @@
 								<Select.Trigger {...props}>
 									{categorySelect}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each category ?? [] as result (result.id)}
 										<Select.Item value={result.id.toString()}>
 											{result.displayName}

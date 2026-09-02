@@ -253,7 +253,7 @@
 									<Select.Trigger {...props}>
 										{itemStatusValue ? itemStatusValue : "Select Status"}
 									</Select.Trigger>
-									<Select.Content>
+									<Select.Content class="max-h-100">
 										{#each itemStatus as status (status.id)}
 											<Select.Item value={status.id.toString()}>{status.name}</Select.Item>
 										{/each}

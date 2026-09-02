@@ -24,7 +24,7 @@
 					<Popover.Content class="flex flex-col gap-2">
 						<Select.Root type="single">
 							<Select.Trigger>Value</Select.Trigger>
-							<Select.Content>
+							<Select.Content class="max-h-100">
 								<Select.Item value="light">Light</Select.Item>
 								<Select.Item value="dark">Dark</Select.Item>
 								<Select.Item value="system">System</Select.Item>

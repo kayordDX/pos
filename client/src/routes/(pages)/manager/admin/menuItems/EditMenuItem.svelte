@@ -227,7 +227,7 @@
 								<Select.Trigger {...props}>
 									{menuValue ? menuValue : "Select Menu"}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each menuList as menu (menu.value)}
 										<Select.Item value={menu.value}>{menu.label}</Select.Item>
 									{/each}
@@ -250,7 +250,7 @@
 								<Select.Trigger {...props}>
 									{sectionValue ? sectionValue : "Select Section"}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each sectionList as section (section.value)}
 										<Select.Item value={section.value}>{section.label}</Select.Item>
 									{/each}
@@ -273,7 +273,7 @@
 								<Select.Trigger {...props}>
 									{divisionValue ? divisionValue : "Select Division"}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each divisionList as division (division.value)}
 										<Select.Item value={division.value}>{division.label}</Select.Item>
 									{/each}
@@ -296,7 +296,7 @@
 								<Select.Trigger {...props}>
 									{billCategoryValue ? billCategoryValue : "Select Bill Category"}
 								</Select.Trigger>
-								<Select.Content>
+								<Select.Content class="max-h-100">
 									{#each billCatList as cat (cat.value)}
 										<Select.Item value={cat.value}>{cat.label}</Select.Item>
 									{/each}
