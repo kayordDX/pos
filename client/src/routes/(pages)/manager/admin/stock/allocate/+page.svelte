@@ -166,8 +166,6 @@
 	</div>
 {/snippet}
 
-<pre>{JSON.stringify(controlledState)}</pre>
-
 <div class="m-2">
 	<DataTable {table} {header} headerClass="pb-2" isLoading={query.isPending} noDataMessage="No allocations" />
 </div>
