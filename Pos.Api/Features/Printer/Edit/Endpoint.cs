@@ -27,6 +27,12 @@ public class Endpoint : Endpoint<Request, PrinterDTO>
             return;
         }
 
+        bool deviceExists = await _dbContext.Device.AnyAsync(x => x.Id == req.DeviceId && x.OutletId == entity.OutletId);
+        if (!deviceExists)
+        {
+            ValidationContext.Instance.ThrowError("Device does not exist for this outlet.");
+        }
+
         entity.Port = req.Port;
         entity.PrinterName = req.PrinterName;
         entity.IPAddress = req.IPAddress;

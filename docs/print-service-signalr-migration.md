@@ -1,6 +1,6 @@
 # Print Service: Redis Pub/Sub → SignalR Migration Plan
 
-> **Superseded as an implementation guide** by `docs/Print.md` (server side) and `docs/Print-service.md` (Go client). This document is kept as architecture background and rationale.
+> **Superseded as an implementation guide** by `docs/Print.md` (server side) and `docs/Print-service.md` (Go client). This document is kept as architecture background and rationale. The final device model went one step further than this plan: `PrintServiceKey` was folded into a `Device` entity (the key is a column on the device), `LastSeenAt` was dropped in favour of the SignalR connection tracker, and printers/key/device sit on the same row/subtree.
 
 ## Current state
 

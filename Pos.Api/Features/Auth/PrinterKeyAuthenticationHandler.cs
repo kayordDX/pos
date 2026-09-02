@@ -14,7 +14,6 @@ namespace Pos.Api.Features.Auth;
 public class PrinterKeyAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
 {
     private static readonly TimeSpan AuthCacheTtl = TimeSpan.FromMinutes(5);
-    private static readonly TimeSpan LastSeenThrottle = TimeSpan.FromMinutes(1);
 
     private readonly AppDbContext _dbContext;
     private readonly IMemoryCache _memoryCache;
@@ -72,8 +71,6 @@ public class PrinterKeyAuthenticationHandler : AuthenticationHandler<Authenticat
             return AuthenticateResult.Fail("Invalid printer key.");
         }
 
-        await TouchLastSeenAsync(cachedKey.Id, keyId);
-
         var claims = new[]
         {
             new Claim(Constants.Claim.OutletId, cachedKey.OutletId.ToString()),
@@ -105,28 +102,27 @@ public class PrinterKeyAuthenticationHandler : AuthenticationHandler<Authenticat
         return string.IsNullOrWhiteSpace(queryToken) ? null : queryToken;
     }
 
-    private async Task<ValidatedPrinterKey?> GetValidatedKeyAsync(string keyId)
+    private async Task<ValidatedKey?> GetValidatedKeyAsync(string keyId)
     {
-        if (_memoryCache.TryGetValue(PrinterCacheKeys.Auth(keyId), out ValidatedPrinterKey? cachedKey) && cachedKey != null)
+        if (_memoryCache.TryGetValue(PrinterCacheKeys.Auth(keyId), out ValidatedKey? cachedKey) && cachedKey != null)
         {
             return cachedKey;
         }
 
         var key = await _dbContext
-            .PrintServiceKey.AsNoTracking()
+            .Device.AsNoTracking()
             .Where(x => x.KeyId == keyId)
-            .Select(x => new ValidatedPrinterKey
+            .Select(x => new ValidatedKey
             {
-                Id = x.Id,
                 OutletId = x.OutletId,
-                DeviceId = x.DeviceId,
-                KeyId = x.KeyId,
-                SecretHash = x.SecretHash,
+                DeviceId = x.Id,
+                KeyId = x.KeyId!,
+                SecretHash = x.SecretHash!,
                 RevokedAt = x.RevokedAt,
             })
             .FirstOrDefaultAsync();
 
-        if (key == null || key.RevokedAt != null)
+        if (key == null || key.RevokedAt != null || key.SecretHash.Length == 0)
         {
             return null;
         }
@@ -136,29 +132,8 @@ public class PrinterKeyAuthenticationHandler : AuthenticationHandler<Authenticat
         return key;
     }
 
-    private async Task TouchLastSeenAsync(int id, string keyId)
+    private class ValidatedKey
     {
-        string throttleKey = PrinterCacheKeys.LastSeenThrottle(keyId);
-        if (_memoryCache.TryGetValue(throttleKey, out _))
-        {
-            return;
-        }
-
-        _memoryCache.Set(throttleKey, true, LastSeenThrottle);
-
-        var key = await _dbContext.PrintServiceKey.FirstOrDefaultAsync(x => x.Id == id);
-        if (key == null || key.RevokedAt != null)
-        {
-            return;
-        }
-
-        key.LastSeenAt = DateTime.UtcNow;
-        await _dbContext.SaveChangesAsync();
-    }
-
-    private class ValidatedPrinterKey
-    {
-        public int Id { get; set; }
         public int OutletId { get; set; }
         public int DeviceId { get; set; }
         public string KeyId { get; set; } = string.Empty;

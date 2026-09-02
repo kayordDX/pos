@@ -30,6 +30,7 @@ public class AppDbContext : DbContext
     public DbSet<CashUpUserItem> CashUpUserItem => Set<CashUpUserItem>();
     public DbSet<CashUpUserItemType> CashUpUserItemType => Set<CashUpUserItemType>();
     public DbSet<Clock> Clock => Set<Clock>();
+    public DbSet<Device> Device => Set<Device>();
     public DbSet<Division> Division => Set<Division>();
     public DbSet<DivisionType> DivisionType => Set<DivisionType>();
     public DbSet<EmailLog> EmailLog => Set<EmailLog>();
@@ -65,7 +66,6 @@ public class AppDbContext : DbContext
     public DbSet<Payment> Payment => Set<Payment>();
     public DbSet<PaymentType> PaymentType => Set<PaymentType>();
     public DbSet<Printer> Printer => Set<Printer>();
-    public DbSet<PrintServiceKey> PrintServiceKey => Set<PrintServiceKey>();
     public DbSet<Role> Role => Set<Role>();
     public DbSet<RoleDivision> RoleDivision => Set<RoleDivision>();
     public DbSet<RoleType> RoleType => Set<RoleType>();

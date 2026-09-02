@@ -21,6 +21,12 @@ public class Endpoint : Endpoint<Request, PrinterDTO>
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
+        bool deviceExists = await _dbContext.Device.AnyAsync(x => x.Id == req.DeviceId && x.OutletId == req.OutletId, ct);
+        if (!deviceExists)
+        {
+            ValidationContext.Instance.ThrowError("Device does not exist for this outlet.");
+        }
+
         Entities.Printer entity = new Entities.Printer()
         {
             OutletId = req.OutletId,

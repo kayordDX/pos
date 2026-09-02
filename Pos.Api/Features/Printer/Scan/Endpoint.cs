@@ -27,10 +27,10 @@ public class Endpoint : Endpoint<Request, bool>
     {
         int outletId = await _userService.GetOutletId();
 
-        // A scan is executed by a print device, so there must be an active key
-        // for the outlet + device pair being asked to scan.
+        // A scan is executed by a print device, so there must be an active
+        // device with a live key for the outlet + device pair being asked to scan.
         bool deviceExists = await _dbContext
-            .PrintServiceKey.Where(x => x.OutletId == outletId && x.DeviceId == req.DeviceId && x.RevokedAt == null)
+            .Device.Where(x => x.OutletId == outletId && x.Id == req.DeviceId && x.KeyId != null && x.RevokedAt == null)
             .AnyAsync(ct);
         if (!deviceExists)
         {
