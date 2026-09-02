@@ -33,11 +33,13 @@ export const adminToken = async (adminTokenRequest: AdminTokenRequest, options?:
 	});
 };
 
+export const getAdminTokenMutationKey = () => ["adminToken"] as const;
+
 export const getAdminTokenMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof adminToken>>, TError, AdminTokenMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof adminToken>>, TError, AdminTokenMutationVariables, TContext> => {
-	const mutationKey = ["adminToken"];
+	const mutationKey = getAdminTokenMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

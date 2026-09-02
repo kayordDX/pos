@@ -52,11 +52,13 @@ export const userCreateRole = async (userCreateRoleRequest: UserCreateRoleReques
 	});
 };
 
+export const getUserCreateRoleMutationKey = () => ["userCreateRole"] as const;
+
 export const getUserCreateRoleMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userCreateRole>>, TError, UserCreateRoleMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userCreateRole>>, TError, UserCreateRoleMutationVariables, TContext> => {
-	const mutationKey = ["userCreateRole"];
+	const mutationKey = getUserCreateRoleMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -105,11 +107,13 @@ export const roleUpdate = async (id: number, roleUpdateRequest: RoleUpdateReques
 	});
 };
 
+export const getRoleUpdateMutationKey = () => ["roleUpdate"] as const;
+
 export const getRoleUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof roleUpdate>>, TError, RoleUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof roleUpdate>>, TError, RoleUpdateMutationVariables, TContext> => {
-	const mutationKey = ["roleUpdate"];
+	const mutationKey = getRoleUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -150,11 +154,13 @@ export const roleDelete = async (id: number, options?: Parameters<typeof customI
 	});
 };
 
+export const getRoleDeleteMutationKey = () => ["roleDelete"] as const;
+
 export const getRoleDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof roleDelete>>, TError, RoleDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof roleDelete>>, TError, RoleDeleteMutationVariables, TContext> => {
-	const mutationKey = ["roleDelete"];
+	const mutationKey = getRoleDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -348,11 +354,13 @@ export const roleDivisionDelete = async (roleId: number, divisionId: number, opt
 	});
 };
 
+export const getRoleDivisionDeleteMutationKey = () => ["roleDivisionDelete"] as const;
+
 export const getRoleDivisionDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof roleDivisionDelete>>, TError, RoleDivisionDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof roleDivisionDelete>>, TError, RoleDivisionDeleteMutationVariables, TContext> => {
-	const mutationKey = ["roleDivisionDelete"];
+	const mutationKey = getRoleDivisionDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -404,11 +412,13 @@ export const roleDivisionCreate = async (
 	});
 };
 
+export const getRoleDivisionCreateMutationKey = () => ["roleDivisionCreate"] as const;
+
 export const getRoleDivisionCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof roleDivisionCreate>>, TError, RoleDivisionCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof roleDivisionCreate>>, TError, RoleDivisionCreateMutationVariables, TContext> => {
-	const mutationKey = ["roleDivisionCreate"];
+	const mutationKey = getRoleDivisionCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -457,11 +467,13 @@ export const roleCreate = async (roleCreateRequest: RoleCreateRequest, options?:
 	});
 };
 
+export const getRoleCreateMutationKey = () => ["roleCreate"] as const;
+
 export const getRoleCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof roleCreate>>, TError, RoleCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof roleCreate>>, TError, RoleCreateMutationVariables, TContext> => {
-	const mutationKey = ["roleCreate"];
+	const mutationKey = getRoleCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

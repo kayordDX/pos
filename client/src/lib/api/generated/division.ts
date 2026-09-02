@@ -179,11 +179,13 @@ export const divisionEdit = async (divisionEditRequest: DivisionEditRequest, opt
 	});
 };
 
+export const getDivisionEditMutationKey = () => ["divisionEdit"] as const;
+
 export const getDivisionEditMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof divisionEdit>>, TError, DivisionEditMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof divisionEdit>>, TError, DivisionEditMutationVariables, TContext> => {
-	const mutationKey = ["divisionEdit"];
+	const mutationKey = getDivisionEditMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -235,11 +237,13 @@ export const divisionCreate = async (
 	});
 };
 
+export const getDivisionCreateMutationKey = () => ["divisionCreate"] as const;
+
 export const getDivisionCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof divisionCreate>>, TError, DivisionCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof divisionCreate>>, TError, DivisionCreateMutationVariables, TContext> => {
-	const mutationKey = ["divisionCreate"];
+	const mutationKey = getDivisionCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -280,11 +284,13 @@ export const divisionDelete = async (id: number, options?: Parameters<typeof cus
 	});
 };
 
+export const getDivisionDeleteMutationKey = () => ["divisionDelete"] as const;
+
 export const getDivisionDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof divisionDelete>>, TError, DivisionDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof divisionDelete>>, TError, DivisionDeleteMutationVariables, TContext> => {
-	const mutationKey = ["divisionDelete"];
+	const mutationKey = getDivisionDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

@@ -110,11 +110,13 @@ export const payPayConfigTestConfig = async (
 	});
 };
 
+export const getPayPayConfigTestConfigMutationKey = () => ["payPayConfigTestConfig"] as const;
+
 export const getPayPayConfigTestConfigMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigTestConfig>>, TError, PayPayConfigTestConfigMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigTestConfig>>, TError, PayPayConfigTestConfigMutationVariables, TContext> => {
-	const mutationKey = ["payPayConfigTestConfig"];
+	const mutationKey = getPayPayConfigTestConfigMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -166,11 +168,13 @@ export const payPayConfigSetActive = async (
 	});
 };
 
+export const getPayPayConfigSetActiveMutationKey = () => ["payPayConfigSetActive"] as const;
+
 export const getPayPayConfigSetActiveMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigSetActive>>, TError, PayPayConfigSetActiveMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigSetActive>>, TError, PayPayConfigSetActiveMutationVariables, TContext> => {
-	const mutationKey = ["payPayConfigSetActive"];
+	const mutationKey = getPayPayConfigSetActiveMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -264,11 +268,13 @@ export const payPayConfigDelete = async (id: number, options?: Parameters<typeof
 	});
 };
 
+export const getPayPayConfigDeleteMutationKey = () => ["payPayConfigDelete"] as const;
+
 export const getPayPayConfigDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigDelete>>, TError, PayPayConfigDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigDelete>>, TError, PayPayConfigDeleteMutationVariables, TContext> => {
-	const mutationKey = ["payPayConfigDelete"];
+	const mutationKey = getPayPayConfigDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -320,11 +326,13 @@ export const payPayConfigCreate = async (
 	});
 };
 
+export const getPayPayConfigCreateMutationKey = () => ["payPayConfigCreate"] as const;
+
 export const getPayPayConfigCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigCreate>>, TError, PayPayConfigCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof payPayConfigCreate>>, TError, PayPayConfigCreateMutationVariables, TContext> => {
-	const mutationKey = ["payPayConfigCreate"];
+	const mutationKey = getPayPayConfigCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -376,11 +384,13 @@ export const payManualPayment = async (
 	});
 };
 
+export const getPayManualPaymentMutationKey = () => ["payManualPayment"] as const;
+
 export const getPayManualPaymentMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payManualPayment>>, TError, PayManualPaymentMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof payManualPayment>>, TError, PayManualPaymentMutationVariables, TContext> => {
-	const mutationKey = ["payManualPayment"];
+	const mutationKey = getPayManualPaymentMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -487,11 +497,13 @@ export const payCheck = async (payCheckRequest: PayCheckRequest, options?: Param
 	});
 };
 
+export const getPayCheckMutationKey = () => ["payCheck"] as const;
+
 export const getPayCheckMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof payCheck>>, TError, PayCheckMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof payCheck>>, TError, PayCheckMutationVariables, TContext> => {
-	const mutationKey = ["payCheck"];
+	const mutationKey = getPayCheckMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

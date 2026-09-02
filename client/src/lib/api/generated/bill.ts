@@ -43,11 +43,13 @@ export const billWhatsappBill = async (billWhatsappBillRequest: BillWhatsappBill
 	});
 };
 
+export const getBillWhatsappBillMutationKey = () => ["billWhatsappBill"] as const;
+
 export const getBillWhatsappBillMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billWhatsappBill>>, TError, BillWhatsappBillMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof billWhatsappBill>>, TError, BillWhatsappBillMutationVariables, TContext> => {
-	const mutationKey = ["billWhatsappBill"];
+	const mutationKey = getBillWhatsappBillMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -96,11 +98,13 @@ export const billPrintBill = async (billPrintBillRequest: BillPrintBillRequest, 
 	});
 };
 
+export const getBillPrintBillMutationKey = () => ["billPrintBill"] as const;
+
 export const getBillPrintBillMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billPrintBill>>, TError, BillPrintBillMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof billPrintBill>>, TError, BillPrintBillMutationVariables, TContext> => {
-	const mutationKey = ["billPrintBill"];
+	const mutationKey = getBillPrintBillMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -149,11 +153,13 @@ export const billEmailBill = async (billEmailBillRequest: BillEmailBillRequest, 
 	});
 };
 
+export const getBillEmailBillMutationKey = () => ["billEmailBill"] as const;
+
 export const getBillEmailBillMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billEmailBill>>, TError, BillEmailBillMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof billEmailBill>>, TError, BillEmailBillMutationVariables, TContext> => {
-	const mutationKey = ["billEmailBill"];
+	const mutationKey = getBillEmailBillMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

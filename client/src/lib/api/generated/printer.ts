@@ -58,11 +58,13 @@ export const printerTest = async (printerTestRequest: PrinterTestRequest, option
 	});
 };
 
+export const getPrinterTestMutationKey = () => ["printerTest"] as const;
+
 export const getPrinterTestMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerTest>>, TError, PrinterTestMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof printerTest>>, TError, PrinterTestMutationVariables, TContext> => {
-	const mutationKey = ["printerTest"];
+	const mutationKey = getPrinterTestMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -181,11 +183,13 @@ export const printerScan = async (printerScanRequest: PrinterScanRequest, option
 	});
 };
 
+export const getPrinterScanMutationKey = () => ["printerScan"] as const;
+
 export const getPrinterScanMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerScan>>, TError, PrinterScanMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof printerScan>>, TError, PrinterScanMutationVariables, TContext> => {
-	const mutationKey = ["printerScan"];
+	const mutationKey = getPrinterScanMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -351,11 +355,13 @@ export const printerEdit = async (printerEditRequest: PrinterEditRequest, option
 	});
 };
 
+export const getPrinterEditMutationKey = () => ["printerEdit"] as const;
+
 export const getPrinterEditMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerEdit>>, TError, PrinterEditMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof printerEdit>>, TError, PrinterEditMutationVariables, TContext> => {
-	const mutationKey = ["printerEdit"];
+	const mutationKey = getPrinterEditMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -404,11 +410,13 @@ export const printerCreate = async (printerCreateRequest: PrinterCreateRequest, 
 	});
 };
 
+export const getPrinterCreateMutationKey = () => ["printerCreate"] as const;
+
 export const getPrinterCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerCreate>>, TError, PrinterCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof printerCreate>>, TError, PrinterCreateMutationVariables, TContext> => {
-	const mutationKey = ["printerCreate"];
+	const mutationKey = getPrinterCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -530,11 +538,13 @@ export const printerDeviceInfo = async (
 	});
 };
 
+export const getPrinterDeviceInfoMutationKey = () => ["printerDeviceInfo"] as const;
+
 export const getPrinterDeviceInfoMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerDeviceInfo>>, TError, PrinterDeviceInfoMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof printerDeviceInfo>>, TError, PrinterDeviceInfoMutationVariables, TContext> => {
-	const mutationKey = ["printerDeviceInfo"];
+	const mutationKey = getPrinterDeviceInfoMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -575,11 +585,13 @@ export const printerDelete = async (id: number, options?: Parameters<typeof cust
 	});
 };
 
+export const getPrinterDeleteMutationKey = () => ["printerDelete"] as const;
+
 export const getPrinterDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printerDelete>>, TError, PrinterDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof printerDelete>>, TError, PrinterDeleteMutationVariables, TContext> => {
-	const mutationKey = ["printerDelete"];
+	const mutationKey = getPrinterDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

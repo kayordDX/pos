@@ -57,11 +57,13 @@ export const outletUpdate = async (
 	});
 };
 
+export const getOutletUpdateMutationKey = () => ["outletUpdate"] as const;
+
 export const getOutletUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletUpdate>>, TError, OutletUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof outletUpdate>>, TError, OutletUpdateMutationVariables, TContext> => {
-	const mutationKey = ["outletUpdate"];
+	const mutationKey = getOutletUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -207,11 +209,13 @@ export const outletCreate = async (outletCreateRequest: OutletCreateRequest, opt
 	});
 };
 
+export const getOutletCreateMutationKey = () => ["outletCreate"] as const;
+
 export const getOutletCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletCreate>>, TError, OutletCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof outletCreate>>, TError, OutletCreateMutationVariables, TContext> => {
-	const mutationKey = ["outletCreate"];
+	const mutationKey = getOutletCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -416,11 +420,13 @@ export const outletCounterCreate = async (
 	});
 };
 
+export const getOutletCounterCreateMutationKey = () => ["outletCounterCreate"] as const;
+
 export const getOutletCounterCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletCounterCreate>>, TError, OutletCounterCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof outletCounterCreate>>, TError, OutletCounterCreateMutationVariables, TContext> => {
-	const mutationKey = ["outletCounterCreate"];
+	const mutationKey = getOutletCounterCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -461,11 +467,13 @@ export const outletCounterDelete = async (deviceId: string, options?: Parameters
 	});
 };
 
+export const getOutletCounterDeleteMutationKey = () => ["outletCounterDelete"] as const;
+
 export const getOutletCounterDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof outletCounterDelete>>, TError, OutletCounterDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof outletCounterDelete>>, TError, OutletCounterDeleteMutationVariables, TContext> => {
-	const mutationKey = ["outletCounterDelete"];
+	const mutationKey = getOutletCounterDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

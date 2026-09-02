@@ -52,11 +52,13 @@ export const optionUpdate = async (optionUpdateRequest: OptionUpdateRequest, opt
 	});
 };
 
+export const getOptionUpdateMutationKey = () => ["optionUpdate"] as const;
+
 export const getOptionUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionUpdate>>, TError, OptionUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof optionUpdate>>, TError, OptionUpdateMutationVariables, TContext> => {
-	const mutationKey = ["optionUpdate"];
+	const mutationKey = getOptionUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -152,11 +154,13 @@ export const optionCreate = async (optionCreateRequest: OptionCreateRequest, opt
 	});
 };
 
+export const getOptionCreateMutationKey = () => ["optionCreate"] as const;
+
 export const getOptionCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionCreate>>, TError, OptionCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof optionCreate>>, TError, OptionCreateMutationVariables, TContext> => {
-	const mutationKey = ["optionCreate"];
+	const mutationKey = getOptionCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -247,11 +251,13 @@ export const optionDelete = async (id: number, options?: Parameters<typeof custo
 	});
 };
 
+export const getOptionDeleteMutationKey = () => ["optionDelete"] as const;
+
 export const getOptionDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionDelete>>, TError, OptionDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof optionDelete>>, TError, OptionDeleteMutationVariables, TContext> => {
-	const mutationKey = ["optionDelete"];
+	const mutationKey = getOptionDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -300,11 +306,13 @@ export const optionGroupUpdate = async (optionGroupUpdateRequest: OptionGroupUpd
 	});
 };
 
+export const getOptionGroupUpdateMutationKey = () => ["optionGroupUpdate"] as const;
+
 export const getOptionGroupUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionGroupUpdate>>, TError, OptionGroupUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof optionGroupUpdate>>, TError, OptionGroupUpdateMutationVariables, TContext> => {
-	const mutationKey = ["optionGroupUpdate"];
+	const mutationKey = getOptionGroupUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -353,11 +361,13 @@ export const optionGroupCreate = async (optionGroupCreateRequest: OptionGroupCre
 	});
 };
 
+export const getOptionGroupCreateMutationKey = () => ["optionGroupCreate"] as const;
+
 export const getOptionGroupCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionGroupCreate>>, TError, OptionGroupCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof optionGroupCreate>>, TError, OptionGroupCreateMutationVariables, TContext> => {
-	const mutationKey = ["optionGroupCreate"];
+	const mutationKey = getOptionGroupCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -398,11 +408,13 @@ export const optionGroupDelete = async (id: number, options?: Parameters<typeof 
 	});
 };
 
+export const getOptionGroupDeleteMutationKey = () => ["optionGroupDelete"] as const;
+
 export const getOptionGroupDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof optionGroupDelete>>, TError, OptionGroupDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof optionGroupDelete>>, TError, OptionGroupDeleteMutationVariables, TContext> => {
-	const mutationKey = ["optionGroupDelete"];
+	const mutationKey = getOptionGroupDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

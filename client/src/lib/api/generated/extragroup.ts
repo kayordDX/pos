@@ -33,11 +33,13 @@ export const extraGroupUpdate = async (extraGroupUpdateRequest: ExtraGroupUpdate
 	});
 };
 
+export const getExtraGroupUpdateMutationKey = () => ["extraGroupUpdate"] as const;
+
 export const getExtraGroupUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraGroupUpdate>>, TError, ExtraGroupUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof extraGroupUpdate>>, TError, ExtraGroupUpdateMutationVariables, TContext> => {
-	const mutationKey = ["extraGroupUpdate"];
+	const mutationKey = getExtraGroupUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -86,11 +88,13 @@ export const extraGroupCreate = async (extraGroupCreateRequest: ExtraGroupCreate
 	});
 };
 
+export const getExtraGroupCreateMutationKey = () => ["extraGroupCreate"] as const;
+
 export const getExtraGroupCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraGroupCreate>>, TError, ExtraGroupCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof extraGroupCreate>>, TError, ExtraGroupCreateMutationVariables, TContext> => {
-	const mutationKey = ["extraGroupCreate"];
+	const mutationKey = getExtraGroupCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -131,11 +135,13 @@ export const extraGroupDelete = async (id: number, options?: Parameters<typeof c
 	});
 };
 
+export const getExtraGroupDeleteMutationKey = () => ["extraGroupDelete"] as const;
+
 export const getExtraGroupDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraGroupDelete>>, TError, ExtraGroupDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof extraGroupDelete>>, TError, ExtraGroupDeleteMutationVariables, TContext> => {
-	const mutationKey = ["extraGroupDelete"];
+	const mutationKey = getExtraGroupDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

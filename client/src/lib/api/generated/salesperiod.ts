@@ -173,11 +173,13 @@ export const salesPeriodCreate = async (
 	});
 };
 
+export const getSalesPeriodCreateMutationKey = () => ["salesPeriodCreate"] as const;
+
 export const getSalesPeriodCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodCreate>>, TError, SalesPeriodCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodCreate>>, TError, SalesPeriodCreateMutationVariables, TContext> => {
-	const mutationKey = ["salesPeriodCreate"];
+	const mutationKey = getSalesPeriodCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -229,11 +231,13 @@ export const salesPeriodClose = async (
 	});
 };
 
+export const getSalesPeriodCloseMutationKey = () => ["salesPeriodClose"] as const;
+
 export const getSalesPeriodCloseMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodClose>>, TError, SalesPeriodCloseMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof salesPeriodClose>>, TError, SalesPeriodCloseMutationVariables, TContext> => {
-	const mutationKey = ["salesPeriodClose"];
+	const mutationKey = getSalesPeriodCloseMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

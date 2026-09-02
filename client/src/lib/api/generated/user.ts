@@ -69,11 +69,13 @@ export const userValidate = async (userValidateRequest: UserValidateRequest, opt
 	});
 };
 
+export const getUserValidateMutationKey = () => ["userValidate"] as const;
+
 export const getUserValidateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userValidate>>, TError, UserValidateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userValidate>>, TError, UserValidateMutationVariables, TContext> => {
-	const mutationKey = ["userValidate"];
+	const mutationKey = getUserValidateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -352,11 +354,13 @@ export const userRemoveUserOutletRole = async (userId: string, role: string, opt
 	});
 };
 
+export const getUserRemoveUserOutletRoleMutationKey = () => ["userRemoveUserOutletRole"] as const;
+
 export const getUserRemoveUserOutletRoleMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, TError, UserRemoveUserOutletRoleMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutletRole>>, TError, UserRemoveUserOutletRoleMutationVariables, TContext> => {
-	const mutationKey = ["userRemoveUserOutletRole"];
+	const mutationKey = getUserRemoveUserOutletRoleMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -397,11 +401,13 @@ export const userRemoveUserOutlet = async (userId: string, options?: Parameters<
 	});
 };
 
+export const getUserRemoveUserOutletMutationKey = () => ["userRemoveUserOutlet"] as const;
+
 export const getUserRemoveUserOutletMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutlet>>, TError, UserRemoveUserOutletMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userRemoveUserOutlet>>, TError, UserRemoveUserOutletMutationVariables, TContext> => {
-	const mutationKey = ["userRemoveUserOutlet"];
+	const mutationKey = getUserRemoveUserOutletMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -450,11 +456,13 @@ export const userPinLogin = async (userPinLoginRequest: UserPinLoginRequest, opt
 	});
 };
 
+export const getUserPinLoginMutationKey = () => ["userPinLogin"] as const;
+
 export const getUserPinLoginMutationOptions = <TError = ErrorType<InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userPinLogin>>, TError, UserPinLoginMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userPinLogin>>, TError, UserPinLoginMutationVariables, TContext> => {
-	const mutationKey = ["userPinLogin"];
+	const mutationKey = getUserPinLoginMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -550,11 +558,13 @@ export const userPinCreate = async (userPinCreateRequest: UserPinCreateRequest, 
 	});
 };
 
+export const getUserPinCreateMutationKey = () => ["userPinCreate"] as const;
+
 export const getUserPinCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userPinCreate>>, TError, UserPinCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userPinCreate>>, TError, UserPinCreateMutationVariables, TContext> => {
-	const mutationKey = ["userPinCreate"];
+	const mutationKey = getUserPinCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -606,11 +616,13 @@ export const userLinkAccount = async (
 	});
 };
 
+export const getUserLinkAccountMutationKey = () => ["userLinkAccount"] as const;
+
 export const getUserLinkAccountMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userLinkAccount>>, TError, UserLinkAccountMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userLinkAccount>>, TError, UserLinkAccountMutationVariables, TContext> => {
-	const mutationKey = ["userLinkAccount"];
+	const mutationKey = getUserLinkAccountMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -831,11 +843,13 @@ export const userAssignOutlet = async (
 	});
 };
 
+export const getUserAssignOutletMutationKey = () => ["userAssignOutlet"] as const;
+
 export const getUserAssignOutletMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userAssignOutlet>>, TError, UserAssignOutletMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userAssignOutlet>>, TError, UserAssignOutletMutationVariables, TContext> => {
-	const mutationKey = ["userAssignOutlet"];
+	const mutationKey = getUserAssignOutletMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -884,11 +898,13 @@ export const userApplyOutlet = async (userApplyOutletRequest: UserApplyOutletReq
 	});
 };
 
+export const getUserApplyOutletMutationKey = () => ["userApplyOutlet"] as const;
+
 export const getUserApplyOutletMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userApplyOutlet>>, TError, UserApplyOutletMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userApplyOutlet>>, TError, UserApplyOutletMutationVariables, TContext> => {
-	const mutationKey = ["userApplyOutlet"];
+	const mutationKey = getUserApplyOutletMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -940,11 +956,13 @@ export const userAddUserOutletRole = async (
 	});
 };
 
+export const getUserAddUserOutletRoleMutationKey = () => ["userAddUserOutletRole"] as const;
+
 export const getUserAddUserOutletRoleMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof userAddUserOutletRole>>, TError, UserAddUserOutletRoleMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof userAddUserOutletRole>>, TError, UserAddUserOutletRoleMutationVariables, TContext> => {
-	const mutationKey = ["userAddUserOutletRole"];
+	const mutationKey = getUserAddUserOutletRoleMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

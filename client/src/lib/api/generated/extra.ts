@@ -53,11 +53,13 @@ export const extraUpdate = async (extraUpdateRequest: ExtraUpdateRequest, option
 	});
 };
 
+export const getExtraUpdateMutationKey = () => ["extraUpdate"] as const;
+
 export const getExtraUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError, ExtraUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof extraUpdate>>, TError, ExtraUpdateMutationVariables, TContext> => {
-	const mutationKey = ["extraUpdate"];
+	const mutationKey = getExtraUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -153,11 +155,13 @@ export const extraCreate = async (extraCreateRequest: ExtraCreateRequest, option
 	});
 };
 
+export const getExtraCreateMutationKey = () => ["extraCreate"] as const;
+
 export const getExtraCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError, ExtraCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof extraCreate>>, TError, ExtraCreateMutationVariables, TContext> => {
-	const mutationKey = ["extraCreate"];
+	const mutationKey = getExtraCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -248,11 +252,13 @@ export const extraDelete = async (id: number, options?: Parameters<typeof custom
 	});
 };
 
+export const getExtraDeleteMutationKey = () => ["extraDelete"] as const;
+
 export const getExtraDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError, ExtraDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof extraDelete>>, TError, ExtraDeleteMutationVariables, TContext> => {
-	const mutationKey = ["extraDelete"];
+	const mutationKey = getExtraDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

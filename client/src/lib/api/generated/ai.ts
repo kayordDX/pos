@@ -110,11 +110,13 @@ export const aIGenerateMenuDescription = async (
 	});
 };
 
+export const getAIGenerateMenuDescriptionMutationKey = () => ["aIGenerateMenuDescription"] as const;
+
 export const getAIGenerateMenuDescriptionMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof aIGenerateMenuDescription>>, TError, AIGenerateMenuDescriptionMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof aIGenerateMenuDescription>>, TError, AIGenerateMenuDescriptionMutationVariables, TContext> => {
-	const mutationKey = ["aIGenerateMenuDescription"];
+	const mutationKey = getAIGenerateMenuDescriptionMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -163,11 +165,13 @@ export const aIGenerate = async (aIGenerateRequest: AIGenerateRequest, options?:
 	});
 };
 
+export const getAIGenerateMutationKey = () => ["aIGenerate"] as const;
+
 export const getAIGenerateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof aIGenerate>>, TError, AIGenerateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof aIGenerate>>, TError, AIGenerateMutationVariables, TContext> => {
-	const mutationKey = ["aIGenerate"];
+	const mutationKey = getAIGenerateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

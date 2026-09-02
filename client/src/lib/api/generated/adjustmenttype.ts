@@ -36,11 +36,13 @@ export const adjustmentTypeOutletCreate = async (
 	});
 };
 
+export const getAdjustmentTypeOutletCreateMutationKey = () => ["adjustmentTypeOutletCreate"] as const;
+
 export const getAdjustmentTypeOutletCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, TError, AdjustmentTypeOutletCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof adjustmentTypeOutletCreate>>, TError, AdjustmentTypeOutletCreateMutationVariables, TContext> => {
-	const mutationKey = ["adjustmentTypeOutletCreate"];
+	const mutationKey = getAdjustmentTypeOutletCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

@@ -54,11 +54,13 @@ export const billCategoryUpdate = async (
 	});
 };
 
+export const getBillCategoryUpdateMutationKey = () => ["billCategoryUpdate"] as const;
+
 export const getBillCategoryUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError, BillCategoryUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof billCategoryUpdate>>, TError, BillCategoryUpdateMutationVariables, TContext> => {
-	const mutationKey = ["billCategoryUpdate"];
+	const mutationKey = getBillCategoryUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -171,11 +173,13 @@ export const billCategoryCreate = async (
 	});
 };
 
+export const getBillCategoryCreateMutationKey = () => ["billCategoryCreate"] as const;
+
 export const getBillCategoryCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError, BillCategoryCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof billCategoryCreate>>, TError, BillCategoryCreateMutationVariables, TContext> => {
-	const mutationKey = ["billCategoryCreate"];
+	const mutationKey = getBillCategoryCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

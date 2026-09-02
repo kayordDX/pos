@@ -110,11 +110,13 @@ export const clockClockOut = async (clockClockOutRequest: ClockClockOutRequest, 
 	});
 };
 
+export const getClockClockOutMutationKey = () => ["clockClockOut"] as const;
+
 export const getClockClockOutMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof clockClockOut>>, TError, ClockClockOutMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof clockClockOut>>, TError, ClockClockOutMutationVariables, TContext> => {
-	const mutationKey = ["clockClockOut"];
+	const mutationKey = getClockClockOutMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -163,11 +165,13 @@ export const clockClockIn = async (clockClockInRequest: ClockClockInRequest, opt
 	});
 };
 
+export const getClockClockInMutationKey = () => ["clockClockIn"] as const;
+
 export const getClockClockInMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof clockClockIn>>, TError, ClockClockInMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof clockClockIn>>, TError, ClockClockInMutationVariables, TContext> => {
-	const mutationKey = ["clockClockIn"];
+	const mutationKey = getClockClockInMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

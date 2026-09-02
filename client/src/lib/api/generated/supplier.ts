@@ -51,11 +51,13 @@ export const supplierUpdate = async (supplierUpdateRequest: SupplierUpdateReques
 	});
 };
 
+export const getSupplierUpdateMutationKey = () => ["supplierUpdate"] as const;
+
 export const getSupplierUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof supplierUpdate>>, TError, SupplierUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof supplierUpdate>>, TError, SupplierUpdateMutationVariables, TContext> => {
-	const mutationKey = ["supplierUpdate"];
+	const mutationKey = getSupplierUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -165,11 +167,13 @@ export const supplierCreate = async (
 	});
 };
 
+export const getSupplierCreateMutationKey = () => ["supplierCreate"] as const;
+
 export const getSupplierCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof supplierCreate>>, TError, SupplierCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof supplierCreate>>, TError, SupplierCreateMutationVariables, TContext> => {
-	const mutationKey = ["supplierCreate"];
+	const mutationKey = getSupplierCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -210,11 +214,13 @@ export const supplierDelete = async (id: number, options?: Parameters<typeof cus
 	});
 };
 
+export const getSupplierDeleteMutationKey = () => ["supplierDelete"] as const;
+
 export const getSupplierDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof supplierDelete>>, TError, SupplierDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof supplierDelete>>, TError, SupplierDeleteMutationVariables, TContext> => {
-	const mutationKey = ["supplierDelete"];
+	const mutationKey = getSupplierDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

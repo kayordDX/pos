@@ -57,11 +57,13 @@ export const tableUpdate = async (
 	});
 };
 
+export const getTableUpdateMutationKey = () => ["tableUpdate"] as const;
+
 export const getTableUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableUpdate>>, TError, TableUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableUpdate>>, TError, TableUpdateMutationVariables, TContext> => {
-	const mutationKey = ["tableUpdate"];
+	const mutationKey = getTableUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -233,11 +235,13 @@ export const tableDelete = async (id: number, options?: Parameters<typeof custom
 	});
 };
 
+export const getTableDeleteMutationKey = () => ["tableDelete"] as const;
+
 export const getTableDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableDelete>>, TError, TableDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableDelete>>, TError, TableDeleteMutationVariables, TContext> => {
-	const mutationKey = ["tableDelete"];
+	const mutationKey = getTableDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -286,11 +290,13 @@ export const tableCreate = async (tableCreateRequest: TableCreateRequest, option
 	});
 };
 
+export const getTableCreateMutationKey = () => ["tableCreate"] as const;
+
 export const getTableCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableCreate>>, TError, TableCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableCreate>>, TError, TableCreateMutationVariables, TContext> => {
-	const mutationKey = ["tableCreate"];
+	const mutationKey = getTableCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

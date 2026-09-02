@@ -39,11 +39,13 @@ export const notificationUser = async (notificationUserRequest: NotificationUser
 	});
 };
 
+export const getNotificationUserMutationKey = () => ["notificationUser"] as const;
+
 export const getNotificationUserMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof notificationUser>>, TError, NotificationUserMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof notificationUser>>, TError, NotificationUserMutationVariables, TContext> => {
-	const mutationKey = ["notificationUser"];
+	const mutationKey = getNotificationUserMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -95,11 +97,13 @@ export const notificationTestNew = async (
 	});
 };
 
+export const getNotificationTestNewMutationKey = () => ["notificationTestNew"] as const;
+
 export const getNotificationTestNewMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof notificationTestNew>>, TError, NotificationTestNewMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof notificationTestNew>>, TError, NotificationTestNewMutationVariables, TContext> => {
-	const mutationKey = ["notificationTestNew"];
+	const mutationKey = getNotificationTestNewMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -148,11 +152,13 @@ export const notificationTest = async (notificationTestRequest: NotificationTest
 	});
 };
 
+export const getNotificationTestMutationKey = () => ["notificationTest"] as const;
+
 export const getNotificationTestMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof notificationTest>>, TError, NotificationTestMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof notificationTest>>, TError, NotificationTestMutationVariables, TContext> => {
-	const mutationKey = ["notificationTest"];
+	const mutationKey = getNotificationTestMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -193,11 +199,13 @@ export const notificationSound = async (options?: Parameters<typeof customInstan
 	});
 };
 
+export const getNotificationSoundMutationKey = () => ["notificationSound"] as const;
+
 export const getNotificationSoundMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof notificationSound>>, TError, void, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof notificationSound>>, TError, void, TContext> => {
-	const mutationKey = ["notificationSound"];
+	const mutationKey = getNotificationSoundMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -246,11 +254,13 @@ export const notificationAddUser = async (
 	});
 };
 
+export const getNotificationAddUserMutationKey = () => ["notificationAddUser"] as const;
+
 export const getNotificationAddUserMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof notificationAddUser>>, TError, NotificationAddUserMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof notificationAddUser>>, TError, NotificationAddUserMutationVariables, TContext> => {
-	const mutationKey = ["notificationAddUser"];
+	const mutationKey = getNotificationAddUserMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

@@ -36,11 +36,13 @@ export const menuSectionsUpdate = async (
 	});
 };
 
+export const getMenuSectionsUpdateMutationKey = () => ["menuSectionsUpdate"] as const;
+
 export const getMenuSectionsUpdateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsUpdate>>, TError, MenuSectionsUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsUpdate>>, TError, MenuSectionsUpdateMutationVariables, TContext> => {
-	const mutationKey = ["menuSectionsUpdate"];
+	const mutationKey = getMenuSectionsUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -92,11 +94,13 @@ export const menuSectionsCreate = async (
 	});
 };
 
+export const getMenuSectionsCreateMutationKey = () => ["menuSectionsCreate"] as const;
+
 export const getMenuSectionsCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsCreate>>, TError, MenuSectionsCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsCreate>>, TError, MenuSectionsCreateMutationVariables, TContext> => {
-	const mutationKey = ["menuSectionsCreate"];
+	const mutationKey = getMenuSectionsCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -137,11 +141,13 @@ export const menuSectionsDelete = async (id: number, options?: Parameters<typeof
 	});
 };
 
+export const getMenuSectionsDeleteMutationKey = () => ["menuSectionsDelete"] as const;
+
 export const getMenuSectionsDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsDelete>>, TError, MenuSectionsDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof menuSectionsDelete>>, TError, MenuSectionsDeleteMutationVariables, TContext> => {
-	const mutationKey = ["menuSectionsDelete"];
+	const mutationKey = getMenuSectionsDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

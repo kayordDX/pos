@@ -67,11 +67,13 @@ export const tableOrderUpdateTableOrder = async (
 	});
 };
 
+export const getTableOrderUpdateTableOrderMutationKey = () => ["tableOrderUpdateTableOrder"] as const;
+
 export const getTableOrderUpdateTableOrderMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TError, TableOrderUpdateTableOrderMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateTableOrder>>, TError, TableOrderUpdateTableOrderMutationVariables, TContext> => {
-	const mutationKey = ["tableOrderUpdateTableOrder"];
+	const mutationKey = getTableOrderUpdateTableOrderMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -123,11 +125,13 @@ export const tableOrderUpdateOrderItem = async (
 	});
 };
 
+export const getTableOrderUpdateOrderItemMutationKey = () => ["tableOrderUpdateOrderItem"] as const;
+
 export const getTableOrderUpdateOrderItemMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TError, TableOrderUpdateOrderItemMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateOrderItem>>, TError, TableOrderUpdateOrderItemMutationVariables, TContext> => {
-	const mutationKey = ["tableOrderUpdateOrderItem"];
+	const mutationKey = getTableOrderUpdateOrderItemMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -179,11 +183,13 @@ export const tableOrderUpdateGroupOrder = async (
 	});
 };
 
+export const getTableOrderUpdateGroupOrderMutationKey = () => ["tableOrderUpdateGroupOrder"] as const;
+
 export const getTableOrderUpdateGroupOrderMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TError, TableOrderUpdateGroupOrderMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderUpdateGroupOrder>>, TError, TableOrderUpdateGroupOrderMutationVariables, TContext> => {
-	const mutationKey = ["tableOrderUpdateGroupOrder"];
+	const mutationKey = getTableOrderUpdateGroupOrderMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -235,11 +241,13 @@ export const tableOrderSendToKitchen = async (
 	});
 };
 
+export const getTableOrderSendToKitchenMutationKey = () => ["tableOrderSendToKitchen"] as const;
+
 export const getTableOrderSendToKitchenMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TError, TableOrderSendToKitchenMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderSendToKitchen>>, TError, TableOrderSendToKitchenMutationVariables, TContext> => {
-	const mutationKey = ["tableOrderSendToKitchen"];
+	const mutationKey = getTableOrderSendToKitchenMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -291,11 +299,13 @@ export const tableOrderRemoveItem = async (
 	});
 };
 
+export const getTableOrderRemoveItemMutationKey = () => ["tableOrderRemoveItem"] as const;
+
 export const getTableOrderRemoveItemMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TError, TableOrderRemoveItemMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderRemoveItem>>, TError, TableOrderRemoveItemMutationVariables, TContext> => {
-	const mutationKey = ["tableOrderRemoveItem"];
+	const mutationKey = getTableOrderRemoveItemMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -475,11 +485,13 @@ export const tableOrderCopyItem = async (
 	});
 };
 
+export const getTableOrderCopyItemMutationKey = () => ["tableOrderCopyItem"] as const;
+
 export const getTableOrderCopyItemMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderCopyItem>>, TError, TableOrderCopyItemMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderCopyItem>>, TError, TableOrderCopyItemMutationVariables, TContext> => {
-	const mutationKey = ["tableOrderCopyItem"];
+	const mutationKey = getTableOrderCopyItemMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -531,11 +543,13 @@ export const tableOrderClearBasket = async (
 	});
 };
 
+export const getTableOrderClearBasketMutationKey = () => ["tableOrderClearBasket"] as const;
+
 export const getTableOrderClearBasketMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderClearBasket>>, TError, TableOrderClearBasketMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderClearBasket>>, TError, TableOrderClearBasketMutationVariables, TContext> => {
-	const mutationKey = ["tableOrderClearBasket"];
+	const mutationKey = getTableOrderClearBasketMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -587,11 +601,13 @@ export const tableOrderAddItems = async (
 	});
 };
 
+export const getTableOrderAddItemsMutationKey = () => ["tableOrderAddItems"] as const;
+
 export const getTableOrderAddItemsMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableOrderAddItems>>, TError, TableOrderAddItemsMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableOrderAddItems>>, TError, TableOrderAddItemsMutationVariables, TContext> => {
-	const mutationKey = ["tableOrderAddItems"];
+	const mutationKey = getTableOrderAddItemsMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

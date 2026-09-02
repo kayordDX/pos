@@ -54,11 +54,13 @@ export const stockCategoryUpdate = async (
 	});
 };
 
+export const getStockCategoryUpdateMutationKey = () => ["stockCategoryUpdate"] as const;
+
 export const getStockCategoryUpdateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryUpdate>>, TError, StockCategoryUpdateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryUpdate>>, TError, StockCategoryUpdateMutationVariables, TContext> => {
-	const mutationKey = ["stockCategoryUpdate"];
+	const mutationKey = getStockCategoryUpdateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -174,11 +176,13 @@ export const stockCategoryCreate = async (
 	});
 };
 
+export const getStockCategoryCreateMutationKey = () => ["stockCategoryCreate"] as const;
+
 export const getStockCategoryCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryCreate>>, TError, StockCategoryCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof stockCategoryCreate>>, TError, StockCategoryCreateMutationVariables, TContext> => {
-	const mutationKey = ["stockCategoryCreate"];
+	const mutationKey = getStockCategoryCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

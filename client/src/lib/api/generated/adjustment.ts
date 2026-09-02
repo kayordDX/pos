@@ -96,11 +96,13 @@ export const adjustmentCreate = async (adjustmentCreateRequest: AdjustmentCreate
 	});
 };
 
+export const getAdjustmentCreateMutationKey = () => ["adjustmentCreate"] as const;
+
 export const getAdjustmentCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof adjustmentCreate>>, TError, AdjustmentCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof adjustmentCreate>>, TError, AdjustmentCreateMutationVariables, TContext> => {
-	const mutationKey = ["adjustmentCreate"];
+	const mutationKey = getAdjustmentCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

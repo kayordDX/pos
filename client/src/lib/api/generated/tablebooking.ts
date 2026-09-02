@@ -61,11 +61,13 @@ export const tableBookingTransfer = async (
 	});
 };
 
+export const getTableBookingTransferMutationKey = () => ["tableBookingTransfer"] as const;
+
 export const getTableBookingTransferMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingTransfer>>, TError, TableBookingTransferMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingTransfer>>, TError, TableBookingTransferMutationVariables, TContext> => {
-	const mutationKey = ["tableBookingTransfer"];
+	const mutationKey = getTableBookingTransferMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -195,11 +197,13 @@ export const tableBookingPaymentEdit = async (
 	});
 };
 
+export const getTableBookingPaymentEditMutationKey = () => ["tableBookingPaymentEdit"] as const;
+
 export const getTableBookingPaymentEditMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TError, TableBookingPaymentEditMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingPaymentEdit>>, TError, TableBookingPaymentEditMutationVariables, TContext> => {
-	const mutationKey = ["tableBookingPaymentEdit"];
+	const mutationKey = getTableBookingPaymentEditMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -510,11 +514,13 @@ export const tableBookingCreate = async (
 	});
 };
 
+export const getTableBookingCreateMutationKey = () => ["tableBookingCreate"] as const;
+
 export const getTableBookingCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingCreate>>, TError, TableBookingCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingCreate>>, TError, TableBookingCreateMutationVariables, TContext> => {
-	const mutationKey = ["tableBookingCreate"];
+	const mutationKey = getTableBookingCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -566,11 +572,13 @@ export const tableBookingClose = async (
 	});
 };
 
+export const getTableBookingCloseMutationKey = () => ["tableBookingClose"] as const;
+
 export const getTableBookingCloseMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof tableBookingClose>>, TError, TableBookingCloseMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof tableBookingClose>>, TError, TableBookingCloseMutationVariables, TContext> => {
-	const mutationKey = ["tableBookingClose"];
+	const mutationKey = getTableBookingCloseMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

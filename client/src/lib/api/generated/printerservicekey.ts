@@ -46,11 +46,13 @@ export const printServiceKeyRevoke = async (
 	});
 };
 
+export const getPrintServiceKeyRevokeMutationKey = () => ["printServiceKeyRevoke"] as const;
+
 export const getPrintServiceKeyRevokeMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyRevoke>>, TError, PrintServiceKeyRevokeMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyRevoke>>, TError, PrintServiceKeyRevokeMutationVariables, TContext> => {
-	const mutationKey = ["printServiceKeyRevoke"];
+	const mutationKey = getPrintServiceKeyRevokeMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -152,11 +154,13 @@ export const printServiceKeyCreate = async (
 	});
 };
 
+export const getPrintServiceKeyCreateMutationKey = () => ["printServiceKeyCreate"] as const;
+
 export const getPrintServiceKeyCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyCreate>>, TError, PrintServiceKeyCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof printServiceKeyCreate>>, TError, PrintServiceKeyCreateMutationVariables, TContext> => {
-	const mutationKey = ["printServiceKeyCreate"];
+	const mutationKey = getPrintServiceKeyCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

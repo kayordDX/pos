@@ -135,11 +135,13 @@ export const whatsappLogout = async (options?: Parameters<typeof customInstance>
 	});
 };
 
+export const getWhatsappLogoutMutationKey = () => ["whatsappLogout"] as const;
+
 export const getWhatsappLogoutMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof whatsappLogout>>, TError, void, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof whatsappLogout>>, TError, void, TContext> => {
-	const mutationKey = ["whatsappLogout"];
+	const mutationKey = getWhatsappLogoutMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -177,11 +179,13 @@ export const whatsappConnect = async (options?: Parameters<typeof customInstance
 	});
 };
 
+export const getWhatsappConnectMutationKey = () => ["whatsappConnect"] as const;
+
 export const getWhatsappConnectMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof whatsappConnect>>, TError, void, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof whatsappConnect>>, TError, void, TContext> => {
-	const mutationKey = ["whatsappConnect"];
+	const mutationKey = getWhatsappConnectMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

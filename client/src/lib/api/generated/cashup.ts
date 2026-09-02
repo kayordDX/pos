@@ -233,11 +233,13 @@ export const cashUpUserDelete = async (id: number, options?: Parameters<typeof c
 	});
 };
 
+export const getCashUpUserDeleteMutationKey = () => ["cashUpUserDelete"] as const;
+
 export const getCashUpUserDeleteMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserDelete>>, TError, CashUpUserDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserDelete>>, TError, CashUpUserDeleteMutationVariables, TContext> => {
-	const mutationKey = ["cashUpUserDelete"];
+	const mutationKey = getCashUpUserDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -289,11 +291,13 @@ export const cashUpUserCreate = async (
 	});
 };
 
+export const getCashUpUserCreateMutationKey = () => ["cashUpUserCreate"] as const;
+
 export const getCashUpUserCreateMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserCreate>>, TError, CashUpUserCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserCreate>>, TError, CashUpUserCreateMutationVariables, TContext> => {
-	const mutationKey = ["cashUpUserCreate"];
+	const mutationKey = getCashUpUserCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -345,11 +349,13 @@ export const cashUpUserClose = async (
 	});
 };
 
+export const getCashUpUserCloseMutationKey = () => ["cashUpUserClose"] as const;
+
 export const getCashUpUserCloseMutationOptions = <TError = ErrorType<void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserClose>>, TError, CashUpUserCloseMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof cashUpUserClose>>, TError, CashUpUserCloseMutationVariables, TContext> => {
-	const mutationKey = ["cashUpUserClose"];
+	const mutationKey = getCashUpUserCloseMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

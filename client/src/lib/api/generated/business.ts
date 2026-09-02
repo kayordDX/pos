@@ -151,11 +151,13 @@ export const businessEdit = async (businessEditRequest: BusinessEditRequest, opt
 	});
 };
 
+export const getBusinessEditMutationKey = () => ["businessEdit"] as const;
+
 export const getBusinessEditMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof businessEdit>>, TError, BusinessEditMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof businessEdit>>, TError, BusinessEditMutationVariables, TContext> => {
-	const mutationKey = ["businessEdit"];
+	const mutationKey = getBusinessEditMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -204,11 +206,13 @@ export const businessDelete = async (businessDeleteRequest: BusinessDeleteReques
 	});
 };
 
+export const getBusinessDeleteMutationKey = () => ["businessDelete"] as const;
+
 export const getBusinessDeleteMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof businessDelete>>, TError, BusinessDeleteMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof businessDelete>>, TError, BusinessDeleteMutationVariables, TContext> => {
-	const mutationKey = ["businessDelete"];
+	const mutationKey = getBusinessDeleteMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options
@@ -260,11 +264,13 @@ export const businessCreate = async (
 	});
 };
 
+export const getBusinessCreateMutationKey = () => ["businessCreate"] as const;
+
 export const getBusinessCreateMutationOptions = <TError = ErrorType<ErrorResponse | void | InternalErrorResponse>, TContext = unknown>(options?: {
 	mutation?: CreateMutationOptions<Awaited<ReturnType<typeof businessCreate>>, TError, BusinessCreateMutationVariables, TContext>;
 	request?: SecondParameter<typeof customInstance>;
 }): CreateMutationOptions<Awaited<ReturnType<typeof businessCreate>>, TError, BusinessCreateMutationVariables, TContext> => {
-	const mutationKey = ["businessCreate"];
+	const mutationKey = getBusinessCreateMutationKey();
 	const { mutation: mutationOptions, request: requestOptions } = options
 		? options.mutation && "mutationKey" in options.mutation && options.mutation.mutationKey
 			? options

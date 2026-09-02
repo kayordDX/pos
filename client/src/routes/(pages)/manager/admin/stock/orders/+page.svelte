@@ -65,7 +65,7 @@
 		},
 	];
 
-	let pagination: PaginationState = $state({ pageIndex: decodePageIndex(), pageSize: 10 });
+	let pagination: PaginationState = $state({ pageIndex: decodePageIndex() ?? 0, pageSize: 10 });
 	const setPagination = (updater: Updater<PaginationState>) => {
 		if (updater instanceof Function) {
 			pagination = updater(pagination);
