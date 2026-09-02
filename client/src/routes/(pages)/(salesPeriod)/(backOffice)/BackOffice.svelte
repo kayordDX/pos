@@ -91,7 +91,7 @@
 		</div>
 		<Hub refetch={query.refetch} {divisionIds} />
 
-		<Masonry items={query.data?.orderGroups ?? []} {minColWidth} {maxColWidth} {maxColHeight} {gap} idKey="orderGroupId">
+		<Masonry items={query.data?.orderGroups ?? []} {minColWidth} {maxColWidth} {maxColHeight} {gap}>
 			{#snippet itemChild(item)}
 				<Group group={item} refetch={query.refetch} {isHistory} {divisionIds} />
 			{/snippet}
