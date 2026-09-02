@@ -131,11 +131,21 @@
 										<DropdownMenu.Trigger>
 											<Button size="icon" variant="secondary" class="h-8"><EllipsisVerticalIcon /></Button>
 										</DropdownMenu.Trigger>
-										<DropdownMenu.Content>
-											<DropdownMenu.Item onclick={() => (scanDevice = item)}>
+										<DropdownMenu.Content class="w-40">
+											<DropdownMenu.Item
+												onclick={() => {
+													scanDevice = item;
+													scanOpen = true;
+												}}
+											>
 												<RadarIcon class="mr-2 h-4 w-4" />Scan network
 											</DropdownMenu.Item>
-											<DropdownMenu.Item onclick={() => (infoDevice = item)}>
+											<DropdownMenu.Item
+												onclick={() => {
+													infoDevice = item;
+													infoOpen = true;
+												}}
+											>
 												<InfoIcon class="mr-2 h-4 w-4" />Device info
 											</DropdownMenu.Item>
 											<DropdownMenu.Item onclick={() => openRotate(item)}>
@@ -155,8 +165,7 @@
 								</div>
 							</div>
 							<div class="flex flex-wrap items-center gap-1 text-sm">
-								<Badge variant="outline">ID {item.id}</Badge>
-								<Badge variant="outline">{item.printerCount} printer{item.printerCount === 1 ? "" : "s"}</Badge>
+								<Badge variant="default">{item.printerCount} printer{item.printerCount === 1 ? "" : "s"}</Badge>
 								<Badge variant="outline">Created {formatDate(item.created)}</Badge>
 							</div>
 						</div>
