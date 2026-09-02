@@ -12,7 +12,6 @@
 		animate?: boolean;
 		duration?: number;
 		gap: number;
-		idKey: string;
 		items: T[];
 		maxColWidth: number;
 		minColWidth: number;
@@ -26,7 +25,6 @@
 		animate = true,
 		duration = 200,
 		gap = 20,
-		idKey = `id`,
 		items = [],
 		maxColWidth = 500,
 		minColWidth = 330,
@@ -34,12 +32,6 @@
 	}: Props = $props();
 
 	let masonryWidth = $state(0);
-
-	const getId = (item: T): string | number => {
-		if (typeof item === `number`) return item;
-		if (typeof item === `string`) return item;
-		return (item as Record<string, string | number>)[idKey] ?? "";
-	};
 
 	const nCols = $derived(Math.min(items.length, Math.floor((masonryWidth + gap) / (minColWidth + gap)) || 1));
 
@@ -63,10 +55,10 @@
 </script>
 
 <div class="box-border flex justify-center break-normal {className}" bind:clientWidth={masonryWidth} style="gap: {gap}px;">
-	{#each itemsToCols as col (col)}
+	{#each itemsToCols as col, colIndex (colIndex)}
 		<div class="grid w-full {columnClass}" style={itemStyles}>
 			{#if animate}
-				{#each col as [item] (getId(item))}
+				{#each col as [item, idx] (idx)}
 					<div in:fade={{ delay: 100, duration }} out:fade={{ delay: 0, duration }} animate:flip={{ duration }}>
 						{#if itemChild}
 							{@render itemChild(item)}
@@ -76,7 +68,7 @@
 					</div>
 				{/each}
 			{:else}
-				{#each col as [item] (getId(item))}
+				{#each col as [item, idx] (idx)}
 					{#if itemChild}
 						{@render itemChild(item)}
 					{:else}

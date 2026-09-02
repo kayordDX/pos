@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { arrayUnique } from "$lib/util";
 	import Role from "./Role.svelte";
 
 	interface Props {
@@ -8,7 +9,7 @@
 	}
 
 	let { roles, refetch, userId }: Props = $props();
-	const rolesArray = $derived(roles.split(","));
+	const rolesArray = $derived(arrayUnique(roles.split(",")));
 </script>
 
 <div class="flex gap-2">
