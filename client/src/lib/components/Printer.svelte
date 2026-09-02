@@ -84,7 +84,7 @@
 </script>
 
 <Card.Root class={`border-l-8 p-0 ${printer.isEnabled ? "border-l-primary" : "border-l-destructive"}`}>
-	<Card.Header class="bg-muted/50 flex flex-row items-start p-4">
+	<Card.Header class="flex flex-row items-start p-4">
 		<div class="flex w-full items-center justify-between">
 			<div class="flex items-center gap-2">
 				<Avatar.Root>

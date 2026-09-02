@@ -9,24 +9,26 @@
 	const enabledPrinters = $derived((query.data ?? []).filter((x) => x.isEnabled == true));
 </script>
 
-<Card.Root class="m-4">
-	<Card.Header>
-		<Card.Title>Available Printers</Card.Title>
-		<Card.Description>Printers that can be used in outlet</Card.Description>
-	</Card.Header>
-	<Card.Content>
-		{#if query.data?.length === 0}
-			<Alert.Root>
-				<TriangleAlertIcon class="size-4" />
-				<Alert.Title>No printers available</Alert.Title>
-				<Alert.Description>Could not find any available printers for outlet</Alert.Description>
-			</Alert.Root>
-		{:else}
-			<div class="flex flex-col gap-4">
-				{#each enabledPrinters as printer (printer.id)}
-					<Printer {printer} refetch={query.refetch} canPrint={true} />
-				{/each}
-			</div>
-		{/if}
-	</Card.Content>
-</Card.Root>
+<div class="p-4">
+	<Card.Root>
+		<Card.Header>
+			<Card.Title>Available Printers</Card.Title>
+			<Card.Description>Printers that can be used in outlet</Card.Description>
+		</Card.Header>
+		<Card.Content class="p-4">
+			{#if query.data?.length === 0}
+				<Alert.Root>
+					<TriangleAlertIcon class="size-4" />
+					<Alert.Title>No printers available</Alert.Title>
+					<Alert.Description>Could not find any available printers for outlet</Alert.Description>
+				</Alert.Root>
+			{:else}
+				<div class="flex flex-col gap-4">
+					{#each enabledPrinters as printer (printer.id)}
+						<Printer {printer} refetch={query.refetch} canPrint={true} />
+					{/each}
+				</div>
+			{/if}
+		</Card.Content>
+	</Card.Root>
+</div>
