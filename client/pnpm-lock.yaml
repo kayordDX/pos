@@ -24,8 +24,8 @@ importers:
         specifier: ^3.12.3
         version: 3.12.3
       '@kayord/ui':
-        specifier: 4.0.5
-        version: 4.0.5(983c0015677ec6e39ed052958b41496b)
+        specifier: 4.0.6
+        version: 4.0.6(983c0015677ec6e39ed052958b41496b)
       '@lucide/svelte':
         specifier: ^1.38.0
         version: 1.38.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))
@@ -686,8 +686,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@kayord/ui@4.0.5':
-    resolution: {integrity: sha512-nBeS+am66fq5rfThCLhNeTJtVlM+5ys2ixjUJ8e/OG3zHhdDhX9s5PuW0ZMOgaiKwhOG67iNAZrLIx051l8O0Q==}
+  '@kayord/ui@4.0.6':
+    resolution: {integrity: sha512-DizJGKUi4uRQlS3xGuZpsyqVO7rS2HV+Vu4ZpAIJNXk+a5gXl/nHSJSoiLh9F1scjmuQ9swlkefoYOPgutU7cQ==}
     peerDependencies:
       '@internationalized/date': ^3.10.0
       '@lucide/svelte': '>= 1.0.0 < 2.0.0'
@@ -3631,7 +3631,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@kayord/ui@4.0.5(983c0015677ec6e39ed052958b41496b)':
+  '@kayord/ui@4.0.6(983c0015677ec6e39ed052958b41496b)':
     dependencies:
       '@lucide/svelte': 1.38.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))
       '@sveltejs/kit': 2.70.3(@opentelemetry/api@1.9.0)(@sveltejs/vite-plugin-svelte@7.3.0(svelte@5.57.0(@typescript-eslint/types@8.68.0))(vite@8.2.2(@types/node@25.2.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.0)))(svelte@5.57.0(@typescript-eslint/types@8.68.0))(typescript@6.0.3)(vite@8.2.2(@types/node@25.2.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.0))

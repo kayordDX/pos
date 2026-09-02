@@ -7,6 +7,7 @@
 		renderSnippet,
 		decodeColumnFilters,
 		type DataTableFeatures,
+		type ControlledState,
 		useTableUrlSync,
 	} from "@kayord/ui/data-table";
 	import Actions from "./Actions.svelte";
@@ -76,12 +77,13 @@
 		},
 	];
 
+	let search = $state(decodeColumnFilters()?.find((x) => x.id == "comment")?.value ?? "");
+
 	let controlledState = $state({
 		pagination: { pageIndex: 0, pageSize: 10 },
 		sorting: [{ id: "Created", desc: true }],
 		columnFilters: decodeColumnFilters() ?? [],
-		search: decodeColumnFilters()?.find((x) => x.id == "comment")?.value ?? "",
-	});
+	} satisfies ControlledState);
 
 	let filters = $state("");
 	const sorts = $derived(controlledState.sorting.map((sort) => `${sort.desc ? "-" : ""}${sort.id.replaceAll("_", ".")}`).join(","));
@@ -116,9 +118,9 @@
 
 	$effect(() => {
 		const qb = new QueryBuilder(false, false);
-		if (controlledState.search) {
-			controlledState.columnFilters = [{ id: "comment", value: controlledState.search }];
-			qb.containsCaseInsensitive("comment", controlledState.search);
+		if (search) {
+			controlledState.columnFilters = [{ id: "comment", value: search }];
+			qb.containsCaseInsensitive("comment", search);
 		} else {
 			controlledState.columnFilters = [];
 		}
@@ -152,7 +154,7 @@
 		<div class="flex items-center gap-2">
 			<div class="flex flex-col gap-1">
 				<h2>Allocate</h2>
-				<Search bind:search={controlledState.search} name="Allocations" />
+				<Search bind:search name="Allocations" />
 			</div>
 		</div>
 		<div class="flex items-center gap-2">
