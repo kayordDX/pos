@@ -9,6 +9,10 @@ public class OrderItem
     public TableBooking TableBooking { get; set; } = default!;
     public int MenuItemId { get; set; }
     public MenuItem MenuItem { get; set; } = default!;
+    public decimal UnitPrice { get; set; }
+    public string Name { get; set; } = string.Empty;
+    public int? BillCategoryId { get; set; }
+    public string? BillCategoryName { get; set; }
     public DateTime OrderReceived { get; set; } = DateTime.UtcNow;
     public DateTime OrderUpdated { get; set; } = DateTime.Now;
     public DateTime? OrderCompleted { get; set; }

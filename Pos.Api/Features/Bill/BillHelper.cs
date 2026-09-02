@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Common.Extensions;
 using Pos.Api.Data;
 using Pos.Api.Features.Bill.EmailBill;
 
@@ -29,10 +30,12 @@ public static class BillHelper
         }
         response.BillDate = tableBooking.CloseDate ?? tableBooking.BookingDate;
 
-        response.OrderItems = await _dbContext
-            .OrderItem.Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tableBookingId)
-            .ProjectToDto()
-            .ToListAsync();
+        response.OrderItems = (
+            await _dbContext
+                .OrderItem.Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tableBookingId)
+                .ProjectToDto()
+                .ToListAsync()
+        ).ApplySnapshots();
 
         response.PaymentsReceived = await _dbContext.Payment.Where(x => x.TableBookingId == tableBookingId).Include(x => x.PaymentType).ToListAsync();
 
@@ -51,15 +54,23 @@ public static class BillHelper
         response.Total = response.Total < 0 ? 0m : response.Total;
         response.Balance = response.Total - TotalPayments;
         response.TipAmount = (response.Total - TotalPayments) * -1;
-        var vatRateEntity = await _dbContext
-            .VATRate.AsNoTracking()
-            .Where(x => tableBooking.BookingDate >= x.StartDate && tableBooking.BookingDate <= x.EndDate)
-            .FirstOrDefaultAsync();
-        if (vatRateEntity == null)
+        decimal vatRate;
+        if (tableBooking.VatRate is not null)
         {
-            throw new Exception("Vat rate not found");
+            vatRate = tableBooking.VatRate.Value;
         }
-        decimal vatRate = 1 + vatRateEntity.Value;
+        else
+        {
+            var vatRateEntity = await _dbContext
+                .VATRate.AsNoTracking()
+                .Where(x => tableBooking.BookingDate >= x.StartDate && tableBooking.BookingDate <= x.EndDate)
+                .FirstOrDefaultAsync();
+            if (vatRateEntity == null)
+            {
+                throw new Exception("Vat rate not found");
+            }
+            vatRate = 1 + vatRateEntity.Value;
+        }
 
         response.TotalExVAT = Math.Round(response.Total / vatRate, 2);
         response.VAT = response.Total - response.TotalExVAT;
@@ -87,10 +98,12 @@ public static class BillHelper
             throw new Exception("Table not found");
         }
 
-        var orderItems = await _dbContext
-            .OrderItem.Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tableBookingId)
-            .ProjectToDto()
-            .ToListAsync();
+        var orderItems = (
+            await _dbContext
+                .OrderItem.Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tableBookingId)
+                .ProjectToDto()
+                .ToListAsync()
+        ).ApplySnapshots();
 
         var payments = await _dbContext.Payment.Where(x => x.TableBookingId == tableBookingId).Include(x => x.PaymentType).ToListAsync();
 

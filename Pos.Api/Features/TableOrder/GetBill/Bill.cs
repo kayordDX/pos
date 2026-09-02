@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Common.Extensions;
 using Pos.Api.Data;
 
 namespace Pos.Api.Features.TableOrder.GetBill;
@@ -30,17 +31,19 @@ public static class Bill
             throw new Exception("Table not found");
         }
 
-        response.TableName = tableBooking.Table.Name;
-        response.Waiter = tableBooking.User.Name;
+        response.TableName = tableBooking.TableName ?? tableBooking.Table.Name;
+        response.Waiter = tableBooking.WaiterName ?? tableBooking.User.Name;
         response.IsClosed = tableBooking.CloseDate != null;
 
         response.BillDate = tableBooking.CloseDate ?? tableBooking.BookingDate;
 
-        response.OrderItems = await _dbContext
-            .OrderItem.AsNoTracking()
-            .Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == req.TableBookingId)
-            .ProjectToDto()
-            .ToListAsync();
+        response.OrderItems = (
+            await _dbContext
+                .OrderItem.AsNoTracking()
+                .Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == req.TableBookingId)
+                .ProjectToDto()
+                .ToListAsync()
+        ).ApplySnapshots();
 
         response.PaymentsReceived = await _dbContext
             .Payment.AsNoTracking()
@@ -68,15 +71,23 @@ public static class Bill
         response.Balance = response.Total - TotalPayments;
         response.TipAmount = (response.Total - TotalPayments) * -1;
 
-        var vatRateEntity = await _dbContext
-            .VATRate.AsNoTracking()
-            .Where(x => tableBooking.BookingDate >= x.StartDate && tableBooking.BookingDate <= x.EndDate)
-            .FirstOrDefaultAsync();
-        if (vatRateEntity == null)
+        decimal vatRate;
+        if (tableBooking.VatRate is not null)
         {
-            throw new Exception("Vat rate not found");
+            vatRate = tableBooking.VatRate.Value;
         }
-        decimal vatRate = 1 + vatRateEntity.Value;
+        else
+        {
+            var vatRateEntity = await _dbContext
+                .VATRate.AsNoTracking()
+                .Where(x => tableBooking.BookingDate >= x.StartDate && tableBooking.BookingDate <= x.EndDate)
+                .FirstOrDefaultAsync();
+            if (vatRateEntity == null)
+            {
+                throw new Exception("Vat rate not found");
+            }
+            vatRate = 1 + vatRateEntity.Value;
+        }
 
         response.TotalExVAT = Math.Round(response.Total / vatRate, 2);
         response.VAT = response.Total - response.TotalExVAT;
@@ -120,7 +131,7 @@ public static class Bill
 
                 response.SummaryOrderItems.Add(newItem);
             }
-            var existingDivision = response.BillCategories.FirstOrDefault(d => d.BilLCategoryId == x.MenuItem.BillCategoryId);
+            var existingDivision = response.BillCategories.FirstOrDefault(d => d.BilLCategoryId == x.BillCategoryId);
             if (existingDivision != null)
             {
                 existingDivision.Total += totalPerItem;
@@ -130,8 +141,8 @@ public static class Bill
                 response.BillCategories.Add(
                     new BillCategoryDTO
                     {
-                        BilLCategoryId = x.MenuItem.BillCategoryId,
-                        Name = x.MenuItem.BillCategory?.Name ?? "Other",
+                        BilLCategoryId = x.BillCategoryId,
+                        Name = x.BillCategoryName ?? "Other",
                         Total = totalPerItem,
                     }
                 );
@@ -158,11 +169,13 @@ public static class Bill
             throw new Exception("Table not found");
         }
 
-        var orderItems = await _dbContext
-            .OrderItem.AsNoTracking()
-            .Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tableBookingId)
-            .ProjectToDto()
-            .ToListAsync();
+        var orderItems = (
+            await _dbContext
+                .OrderItem.AsNoTracking()
+                .Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && x.TableBookingId == tableBookingId)
+                .ProjectToDto()
+                .ToListAsync()
+        ).ApplySnapshots();
 
         var payments = await _dbContext.Payment.AsNoTracking().Where(x => x.TableBookingId == tableBookingId).Include(x => x.PaymentType).ToListAsync();
 

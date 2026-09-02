@@ -10,6 +10,8 @@ public class BillOrderItemDTO
     public int MenuItemId { get; set; }
     public int Quantity { get; set; }
     public BillMenuItemDTO MenuItem { get; set; } = default!;
+    public decimal UnitPrice { get; set; }
+    public string Name { get; set; } = string.Empty;
     public List<OrderItemOptionDTO>? OrderItemOptions { get; set; }
     public List<OrderItemExtraDTO>? OrderItemExtras { get; set; }
     public string? Note { get; set; }
