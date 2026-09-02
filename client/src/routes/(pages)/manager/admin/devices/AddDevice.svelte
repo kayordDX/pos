@@ -48,7 +48,7 @@
 </script>
 
 <Dialog.Root bind:open>
-	<Dialog.Content class="max-h-[98%] overflow-auto">
+	<Dialog.Content class="max-h-[98%] overflow-auto  md:min-w-3xl">
 		<Dialog.Header>
 			<Dialog.Title>Create print device</Dialog.Title>
 			<Dialog.Description>Add a device that runs the print service. It gets a key for the outlet.</Dialog.Description>
