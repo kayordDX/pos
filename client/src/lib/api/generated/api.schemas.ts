@@ -2134,38 +2134,6 @@ export interface RoleCreateRequest {
 	roleTypeId: number;
 }
 
-export interface PrintServiceKeyRevokeRequest {
-	/** @exclusiveMinimum 0 */
-	id: number;
-}
-
-export interface DTOPrintServiceKeyDTO {
-	id: number;
-	keyId: string;
-	name: string;
-	deviceId: number;
-	maskedKey: string;
-	/** @nullable */
-	lastSeenAt?: string | null;
-	/** @nullable */
-	revokedAt?: string | null;
-	created: string;
-	/** @nullable */
-	fullKey?: string | null;
-}
-
-export interface PrintServiceKeyCreateRequest {
-	/** @exclusiveMinimum 0 */
-	outletId: number;
-	/** @exclusiveMinimum 0 */
-	deviceId: number;
-	/**
-	 * @minLength 0
-	 * @maxLength 200
-	 */
-	name: string;
-}
-
 export interface PrinterTestRequest {
 	/** @minLength 1 */
 	printerId: number;
@@ -2878,6 +2846,41 @@ export interface DivisionDeleteRequest {
 export interface DivisionCreateRequest {
 	outletId: number;
 	divisionTypeId: number;
+	name: string;
+}
+
+export interface DTODeviceDTO {
+	id: number;
+	outletId: number;
+	name: string;
+	/** @nullable */
+	maskedKey?: string | null;
+	/** @nullable */
+	revokedAt?: string | null;
+	created: string;
+	printerCount: number;
+	isOnline: boolean;
+	/** @nullable */
+	fullKey?: string | null;
+}
+
+export interface DeviceKeyRotateRequest {
+	[key: string]: unknown;
+}
+
+export interface DeviceKeyRevokeRequest {
+	[key: string]: unknown;
+}
+
+export interface DeviceDeleteRequest {
+	[key: string]: unknown;
+}
+
+export interface DeviceCreateRequest {
+	/**
+	 * @minLength 0
+	 * @maxLength 200
+	 */
 	name: string;
 }
 

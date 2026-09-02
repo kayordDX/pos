@@ -4,13 +4,11 @@ using Pos.Api.Entities;
 
 namespace Pos.Api.Data.Configuration;
 
-public class PrintServiceKeyConfiguration : IEntityTypeConfiguration<PrintServiceKey>
+public class DeviceConfiguration : IEntityTypeConfiguration<Device>
 {
-    public void Configure(EntityTypeBuilder<PrintServiceKey> builder)
+    public void Configure(EntityTypeBuilder<Device> builder)
     {
         builder.Property(t => t.Id).UseIdentityColumn();
-        builder.Property(t => t.KeyId).IsRequired();
-        builder.Property(t => t.SecretHash).IsRequired();
         builder.Property(t => t.Name).IsRequired();
         builder.HasIndex(t => t.KeyId).IsUnique();
     }

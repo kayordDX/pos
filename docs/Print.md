@@ -5,6 +5,14 @@
 > `Pos.Api/Features/Printer/DeviceInfoReport.cs`, `Pos.Api/Hubs/PrinterTarget.cs`
 > and print-service `internal/model`.
 
+## Device model
+
+Print devices (`Pos.Api/Entities/Device.cs`) own their printer set and their API
+key. The key (`kpos_{keyId}.{secret}`, hashed at rest) is a column on the device
+row, not a separate table; rotation replaces it in place. Device online/reachability
+is read from the SignalR connection tracker/probe cache in realtime — there is no
+`LastSeenAt` column. Removing a device cascades its printers and key.
+
 ## Endpoint & auth
 
 | Concern   | Value |

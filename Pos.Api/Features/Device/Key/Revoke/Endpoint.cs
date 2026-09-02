@@ -4,7 +4,7 @@ using Pos.Api.Common.Printer;
 using Pos.Api.Data;
 using Pos.Api.Services;
 
-namespace Pos.Api.Features.PrintServiceKey.Revoke;
+namespace Pos.Api.Features.Device.Key.Revoke;
 
 public class Endpoint : Endpoint<Request>
 {
@@ -21,26 +21,28 @@ public class Endpoint : Endpoint<Request>
 
     public override void Configure()
     {
-        Post("/printerservicekey/revoke");
+        Post("/device/{id}/key/revoke");
         Policies(Constants.Policy.Manager);
     }
 
     public override async Task HandleAsync(Request req, CancellationToken ct)
     {
         int outletId = await _userService.GetOutletId();
-        var entity = await _dbContext.PrintServiceKey.Where(x => x.Id == req.Id && x.OutletId == outletId).FirstOrDefaultAsync(ct);
 
+        var entity = await _dbContext.Device.FirstOrDefaultAsync(x => x.Id == req.Id && x.OutletId == outletId, ct);
         if (entity == null)
         {
             await Send.NotFoundAsync(ct);
             return;
         }
 
+        if (entity.KeyId != null)
+        {
+            _memoryCache.Remove(PrinterCacheKeys.Auth(entity.KeyId));
+        }
+
         entity.RevokedAt = DateTime.UtcNow;
         await _dbContext.SaveChangesAsync(ct);
-
-        _memoryCache.Remove(PrinterCacheKeys.Auth(entity.KeyId));
-        _memoryCache.Remove(PrinterCacheKeys.LastSeenThrottle(entity.KeyId));
 
         await Send.NoContentAsync(ct);
     }

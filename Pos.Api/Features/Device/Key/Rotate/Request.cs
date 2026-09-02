@@ -1,6 +1,6 @@
 using FluentValidation;
 
-namespace Pos.Api.Features.PrintServiceKey.Revoke;
+namespace Pos.Api.Features.Device.Key.Rotate;
 
 public class Request
 {

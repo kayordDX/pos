@@ -48,20 +48,20 @@
 		},
 		{
 			title: "Print",
-			href: "/manager/admin/printers",
+			href: "",
 			icon: PrinterIcon,
-			// items: [
-			// 	{
-			// 		title: "Printers",
-			// 		href: "/manager/admin/printers",
-			// 		icon: PrinterIcon,
-			// 	},
-			// 	{
-			// 		title: "Print Service Keys",
-			// 		href: "/manager/admin/printServiceKeys",
-			// 		icon: PrinterIcon,
-			// 	},
-			// ],
+			items: [
+				{
+					title: "Printers",
+					href: "/manager/admin/printers",
+					icon: PrinterIcon,
+				},
+				{
+					title: "Devices",
+					href: "/manager/admin/devices",
+					icon: PrinterIcon,
+				},
+			],
 		},
 		{
 			title: "Users",

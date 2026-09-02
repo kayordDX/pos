@@ -1,6 +1,6 @@
 <script lang="ts">
-	import { createPrinterCreate, createPrinterEdit, type DTOPrinterDTO } from "$lib/api";
-	import { Button, Dialog, Input, Switch } from "@kayord/ui";
+	import { createPrinterCreate, createPrinterEdit, createDeviceList, type DTOPrinterDTO } from "$lib/api";
+	import { Button, Dialog, Input, Select, Switch } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
 	import { Form } from "@kayord/ui/form";
 	import { defaults, superForm } from "sveltekit-superforms";
@@ -12,6 +12,10 @@
 
 	const createMutation = createPrinterCreate();
 	const editMutation = createPrinterEdit();
+
+	/** Print devices are the owners of printers — pick the device this printer belongs to. */
+	const devicesQuery = createDeviceList();
+	const devices = $derived(devicesQuery.data ?? []);
 
 	interface Props {
 		refetch: () => void;
@@ -101,6 +105,8 @@
 
 	const { form: formData, enhance, reset } = form;
 
+	const selectedDeviceLabel = $derived(devices.find((d) => d.id === $formData.deviceId)?.name ?? `Device #${$formData.deviceId}`);
+
 	// Reset form to default when open
 	$effect(() => {
 		if (open == true) {
@@ -172,11 +178,30 @@
 				<Form.Field {form} name="deviceId">
 					<Form.Control>
 						{#snippet children({ props })}
-							<Form.Label>Device Id</Form.Label>
-							<Input {...props} bind:value={$formData.deviceId} type="number" />
+							<Form.Label>Device</Form.Label>
+							<Select.Root
+								type="single"
+								allowDeselect={false}
+								name={props.name}
+								bind:value={() => $formData.deviceId.toString(), (v) => ($formData.deviceId = Number(v))}
+							>
+								<Select.Trigger {...props}>{selectedDeviceLabel}</Select.Trigger>
+								<Select.Content class="max-h-100">
+									{#if devices.length === 0}
+										<Select.Item value="" label="No devices" disabled>No devices — create one under Print Devices first</Select.Item>
+									{:else}
+										{#each devices as device (device.id)}
+											<Select.Item value={device.id.toString()} label={device.name}>
+												{device.name} · {device.printerCount} printer{device.printerCount === 1 ? "" : "s"}
+											</Select.Item>
+										{/each}
+									{/if}
+								</Select.Content>
+							</Select.Root>
+							<input hidden bind:value={$formData.deviceId} name={props.name} />
 						{/snippet}
 					</Form.Control>
-					<Form.Description>Advanced usage. Leave as 1</Form.Description>
+					<Form.Description>The print device this printer is assigned to.</Form.Description>
 					<Form.FieldErrors />
 				</Form.Field>
 			</div>

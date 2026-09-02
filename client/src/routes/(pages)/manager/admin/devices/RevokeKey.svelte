@@ -1,28 +1,28 @@
 <script lang="ts">
-	import { createPrintServiceKeyRevoke } from "$lib/api";
+	import { createDeviceKeyRevoke } from "$lib/api";
 	import { AlertDialog } from "@kayord/ui";
 	import { toast } from "@kayord/ui/sonner";
 	import { getError } from "$lib/types";
 
 	interface Props {
-		id: number;
-		name: string;
+		deviceId: number;
+		deviceName: string;
 		open: boolean;
 		refetch: () => void | Promise<void>;
 		onClose: () => void;
 	}
 
-	let { id, name, open = $bindable(false), refetch, onClose }: Props = $props();
+	let { deviceId, deviceName, open = $bindable(false), refetch, onClose }: Props = $props();
 
-	const mutation = createPrintServiceKeyRevoke();
+	const mutation = createDeviceKeyRevoke();
 
 	const revokeKey = async () => {
 		try {
 			open = false;
-			await mutation.mutateAsync({ data: { id } });
+			await mutation.mutateAsync({ id: deviceId });
 			await refetch();
 			onClose();
-			toast.info("Revoked print service key");
+			toast.info("Revoked device key");
 		} catch (err) {
 			toast.error(getError(err).message);
 		}
@@ -33,9 +33,9 @@
 	<AlertDialog.Content>
 		<AlertDialog.Header>
 			<AlertDialog.Title>Revoke key?</AlertDialog.Title>
-			<AlertDialog.Description>
-				This will immediately revoke the key for {name}.
-			</AlertDialog.Description>
+			<AlertDialog.Description
+				>This immediately revokes the key for "{deviceName}". The device can no longer connect until you rotate or create a new key.</AlertDialog.Description
+			>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
