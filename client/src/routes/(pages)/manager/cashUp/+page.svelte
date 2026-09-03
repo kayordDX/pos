@@ -59,7 +59,7 @@
 		{/if}
 		<!-- <CashUpSummary /> -->
 		<div class="flex flex-col items-center gap-2">
-			{#each query.data.items as cash (cash.userId)}
+			{#each query.data.items as cash (cash)}
 				<CashUpUser {cash} />
 			{/each}
 		</div>
