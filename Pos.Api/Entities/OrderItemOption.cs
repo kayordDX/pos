@@ -7,4 +7,6 @@ public class OrderItemOption
     public OrderItem OrderItem { get; set; } = default!;
     public int OptionId { get; set; }
     public Option Option { get; set; } = default!;
+    public decimal Price { get; set; }
+    public string Name { get; set; } = string.Empty;
 }

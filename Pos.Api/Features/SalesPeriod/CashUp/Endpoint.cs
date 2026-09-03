@@ -1,5 +1,6 @@
 using System.Globalization;
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Common.Extensions;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Services;
@@ -66,7 +67,9 @@ public class Endpoint : Endpoint<Request, CashUp>
                 .Where(x => paymentStatusIds.Contains(x.OrderItemStatusId) && bookingIds.Contains(x.TableBookingId))
                 .ProjectToDto()
                 .ToListAsync(ct)
-        ).ToLookup(x => x.TableBookingId);
+        )
+            .ApplySnapshots()
+            .ToLookup(x => x.TableBookingId);
         var paymentsByBooking = (
             await _dbContext.Payment.AsNoTracking().Where(x => bookingIds.Contains(x.TableBookingId)).Include(x => x.PaymentType).ToListAsync(ct)
         ).ToLookup(x => x.TableBookingId);
