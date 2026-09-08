@@ -9,11 +9,13 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuItem>
 {
     private readonly AppDbContext _dbContext;
     private readonly RedisClient _redisClient;
+    private readonly CurrentUserService _cu;
 
-    public Endpoint(AppDbContext dbContext, RedisClient redisClient)
+    public Endpoint(AppDbContext dbContext, RedisClient redisClient, CurrentUserService cu)
     {
         _dbContext = dbContext;
         _redisClient = redisClient;
+        _cu = cu;
     }
 
     public override void Configure()
@@ -28,6 +30,7 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuItem>
 
         if (menuItem != null)
         {
+            decimal oldPrice = menuItem.Price;
             menuItem.MenuSectionId = req.MenuSectionId;
             menuItem.Name = req.Name;
             menuItem.Description = req.Description;
@@ -72,6 +75,20 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.MenuItem>
 
                 var optionGroupsToRemove = existingOptionGroups.Where(x => idsToRemove.Contains(x.OptionGroupId));
                 _dbContext.MenuItemOptionGroup.RemoveRange(optionGroupsToRemove);
+            }
+
+            if (oldPrice != menuItem.Price)
+            {
+                _dbContext.PriceAudit.Add(
+                    new PriceAudit
+                    {
+                        EntityType = PriceAuditEntityType.MenuItem,
+                        EntityId = menuItem.MenuItemId,
+                        OldPrice = oldPrice,
+                        NewPrice = menuItem.Price,
+                        UserId = _cu.UserId,
+                    }
+                );
             }
 
             await _dbContext.SaveChangesAsync(ct);
