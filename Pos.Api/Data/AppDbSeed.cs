@@ -562,6 +562,9 @@ public static class AppDbSeed
                 new OrderItem()
                 {
                     MenuItemId = 1,
+                    UnitPrice = 21.80M,
+                    Name = "Coffee",
+                    BillCategoryName = "Other",
                     OrderItemStatusId = 6,
                     TableBookingId = 1,
                 }
@@ -571,6 +574,9 @@ public static class AppDbSeed
                 new OrderItem()
                 {
                     MenuItemId = 2,
+                    UnitPrice = 28.90M,
+                    Name = "Cappucino",
+                    BillCategoryName = "Other",
                     OrderItemStatusId = 6,
                     TableBookingId = 1,
                 }
@@ -579,6 +585,9 @@ public static class AppDbSeed
                 new OrderItem()
                 {
                     MenuItemId = 2,
+                    UnitPrice = 28.90M,
+                    Name = "Cappucino",
+                    BillCategoryName = "Other",
                     OrderItemStatusId = 6,
                     TableBookingId = 2,
                 }
@@ -587,6 +596,9 @@ public static class AppDbSeed
                 new OrderItem()
                 {
                     MenuItemId = 2,
+                    UnitPrice = 28.90M,
+                    Name = "Cappucino",
+                    BillCategoryName = "Other",
                     OrderItemStatusId = 6,
                     TableBookingId = 1,
                 }
@@ -595,6 +607,9 @@ public static class AppDbSeed
                 new OrderItem()
                 {
                     MenuItemId = 2,
+                    UnitPrice = 28.90M,
+                    Name = "Cappucino",
+                    BillCategoryName = "Other",
                     OrderItemStatusId = 6,
                     TableBookingId = 2,
                 }
@@ -603,16 +618,59 @@ public static class AppDbSeed
                 new OrderItem()
                 {
                     MenuItemId = 2,
+                    UnitPrice = 28.90M,
+                    Name = "Cappucino",
+                    BillCategoryName = "Other",
                     OrderItemStatusId = 6,
                     TableBookingId = 1,
                 }
             );
             await context.SaveChangesAsync(cancellationToken);
-            await context.OrderItemOption.AddAsync(new OrderItemOption() { OrderItemId = 1, OptionId = 1 });
-            await context.OrderItemOption.AddAsync(new OrderItemOption() { OrderItemId = 2, OptionId = 2 });
-            await context.OrderItemExtra.AddAsync(new OrderItemExtra() { OrderItemId = 3, ExtraId = 2 });
-            await context.OrderItemOption.AddAsync(new OrderItemOption() { OrderItemId = 3, OptionId = 2 });
-            await context.OrderItemExtra.AddAsync(new OrderItemExtra() { OrderItemId = 2, ExtraId = 2 });
+            await context.OrderItemOption.AddAsync(
+                new OrderItemOption()
+                {
+                    OrderItemId = 1,
+                    OptionId = 1,
+                    Price = 5,
+                    Name = "Avo",
+                }
+            );
+            await context.OrderItemOption.AddAsync(
+                new OrderItemOption()
+                {
+                    OrderItemId = 2,
+                    OptionId = 2,
+                    Price = 5,
+                    Name = "Double Cheese",
+                }
+            );
+            await context.OrderItemExtra.AddAsync(
+                new OrderItemExtra()
+                {
+                    OrderItemId = 3,
+                    ExtraId = 2,
+                    Price = 25.80M,
+                    Name = "Bacon",
+                }
+            );
+            await context.OrderItemOption.AddAsync(
+                new OrderItemOption()
+                {
+                    OrderItemId = 3,
+                    OptionId = 2,
+                    Price = 5,
+                    Name = "Double Cheese",
+                }
+            );
+            await context.OrderItemExtra.AddAsync(
+                new OrderItemExtra()
+                {
+                    OrderItemId = 2,
+                    ExtraId = 2,
+                    Price = 25.80M,
+                    Name = "Bacon",
+                }
+            );
             await context.Payment.AddAsync(
                 new Payment()
                 {

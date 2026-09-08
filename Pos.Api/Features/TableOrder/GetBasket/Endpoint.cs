@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Pos.Api.Common.Extensions;
 using Pos.Api.Data;
 using Pos.Api.DTO;
 using Pos.Api.Services;
@@ -30,10 +31,9 @@ public class Endpoint : Endpoint<Request, Response>
             await Send.NotFoundAsync();
             return;
         }
-        response.OrderItems = await _dbContext
-            .OrderItem.Where(x => x.TableBookingId == req.TableBookingId && x.OrderItemStatusId == 1)
-            .ProjectToDto()
-            .ToListAsync();
+        response.OrderItems = (
+            await _dbContext.OrderItem.Where(x => x.TableBookingId == req.TableBookingId && x.OrderItemStatusId == 1).ProjectToDto().ToListAsync()
+        ).ApplySnapshots();
 
         var quantitiesByMenuItemId = response.OrderItems.GroupBy(x => x.MenuItemId).ToDictionary(g => g.Key, g => g.Count());
 

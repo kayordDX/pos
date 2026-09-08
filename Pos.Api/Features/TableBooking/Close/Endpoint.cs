@@ -28,7 +28,10 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.TableBooking>
             return;
         }
 
-        Entities.TableBooking? entity = await _dbContext.TableBooking.FirstOrDefaultAsync(x => x.Id == req.TableBookingId && x.CloseDate == null);
+        Entities.TableBooking? entity = await _dbContext
+            .TableBooking.Include(x => x.Table)
+            .Include(x => x.User)
+            .FirstOrDefaultAsync(x => x.Id == req.TableBookingId && x.CloseDate == null);
 
         if (entity == null)
         {
@@ -42,6 +45,13 @@ public class Endpoint : Endpoint<Request, Pos.Api.Entities.TableBooking>
             throw new Exception("Cannot close table with outstanding balance");
         }
 
+        var vatRateEntity = await _dbContext
+            .VATRate.AsNoTracking()
+            .Where(x => entity.BookingDate >= x.StartDate && entity.BookingDate <= x.EndDate)
+            .FirstOrDefaultAsync(ct);
+        entity.VatRate = vatRateEntity == null ? null : 1 + vatRateEntity.Value;
+        entity.TableName = entity.Table.Name;
+        entity.WaiterName = entity.User.Name;
         entity.CloseDate = DateTime.UtcNow;
         await _dbContext.SaveChangesAsync();
 

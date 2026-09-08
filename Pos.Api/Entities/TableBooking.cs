@@ -18,6 +18,9 @@ public class TableBooking
     public decimal? Total { get; set; }
     public decimal? TotalTips { get; set; }
     public decimal? TotalPayments { get; set; }
+    public decimal? VatRate { get; set; }
+    public string? TableName { get; set; }
+    public string? WaiterName { get; set; }
     public CashUpUser? CashUpUser { get; set; }
     public List<Payment>? Payments { get; set; }
 }
