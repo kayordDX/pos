@@ -20,10 +20,9 @@
 		data: TableOrderGetBillResponse;
 		bookingId: number;
 		refetch: () => void;
-		isReadOnly?: boolean;
 	}
 
-	let { data, bookingId, isReadOnly = false, refetch }: Props = $props();
+	let { data, bookingId, refetch }: Props = $props();
 
 	const closeTableMut = createTableBookingClose();
 	const recheckHaloPayment = createPayCheck();
@@ -59,6 +58,7 @@
 	let adjustmentOpen = $state(false);
 
 	const isManager = $derived(status.hasRole("manager"));
+	const isReadOnly = $derived(data.isClosed);
 	const showAdjustment = $derived(!isReadOnly || (isManager && !data.isCashedUp));
 
 	let showDetail = $state(false);

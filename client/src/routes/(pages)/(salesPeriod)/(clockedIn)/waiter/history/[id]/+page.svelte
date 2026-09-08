@@ -18,5 +18,5 @@
 {/if}
 
 {#if query.data}
-	<Bill data={query.data} bookingId={Number(page.params.id)} isReadOnly refetch={query.refetch} />
+	<Bill data={query.data} bookingId={Number(page.params.id)} refetch={query.refetch} />
 {/if}
