@@ -57,10 +57,7 @@ public class Endpoint(AppDbContext dbContext, CurrentUserService cu) : Endpoint<
             Dictionary<int, Entities.Option>? optionsById = null;
             if (order.OptionIds != null)
             {
-                optionsById = await _dbContext
-                    .Option.AsNoTracking()
-                    .Where(x => order.OptionIds.Contains(x.OptionId))
-                    .ToDictionaryAsync(x => x.OptionId, ct);
+                optionsById = await _dbContext.Option.AsNoTracking().Where(x => order.OptionIds.Contains(x.OptionId)).ToDictionaryAsync(x => x.OptionId, ct);
             }
             Dictionary<int, Entities.Extra>? extrasById = null;
             if (order.ExtraIds != null)

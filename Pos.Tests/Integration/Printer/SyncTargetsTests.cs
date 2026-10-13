@@ -157,11 +157,14 @@ public class SyncTargetsTests(App app) : TestBase<App>
             )
             .Build();
 
-        connection.On<List<PrinterTarget>>("SyncPrinters", printers =>
-        {
-            received.Enqueue(printers.ToList());
-            return Task.CompletedTask;
-        });
+        connection.On<List<PrinterTarget>>(
+            "SyncPrinters",
+            printers =>
+            {
+                received.Enqueue(printers.ToList());
+                return Task.CompletedTask;
+            }
+        );
 
         await connection.StartAsync(TestContext.Current.CancellationToken);
         return connection;
@@ -223,8 +226,8 @@ public class SyncTargetsTests(App app) : TestBase<App>
 
             // The targets set no longer includes the printer, so probes for it
             // must be rejected the same way as unassigned printers.
-            await Assert.ThrowsAnyAsync<HubException>(
-                () => connection.InvokeAsync("ReportPrinterProbe", printer.Id, true, 12L, TestContext.Current.CancellationToken)
+            await Assert.ThrowsAnyAsync<HubException>(() =>
+                connection.InvokeAsync("ReportPrinterProbe", printer.Id, true, 12L, TestContext.Current.CancellationToken)
             );
         }
         finally
