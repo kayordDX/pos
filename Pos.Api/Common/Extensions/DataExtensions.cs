@@ -27,7 +27,17 @@ public static class DataExtensions
         var tickerDb = scope.ServiceProvider.GetRequiredService<TickerQDbContext>();
         if (db.Database.IsNpgsql())
         {
-            await db.Database.MigrateAsync(ct);
+            var commandTimeout = db.Database.GetCommandTimeout();
+            try
+            {
+                // Backfilling production data can exceed the normal query timeout.
+                db.Database.SetCommandTimeout(TimeSpan.FromMinutes(5));
+                await db.Database.MigrateAsync(ct);
+            }
+            finally
+            {
+                db.Database.SetCommandTimeout(commandTimeout);
+            }
         }
         if (tickerDb.Database.IsNpgsql())
         {
